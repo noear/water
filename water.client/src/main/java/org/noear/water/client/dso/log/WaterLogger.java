@@ -1,15 +1,15 @@
 package org.noear.water.client.dso.log;
 
 import org.noear.water.client.dso.LoggerApi;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import org.noear.water.client.utils.AssertUtils;
 
 public class WaterLogger implements Logger {
     private String _name;
 
     public WaterLogger(String name) {
         _name = name;
+
+        AssertUtils.notEmpty(name, "name");
     }
 
     public String getName() {
