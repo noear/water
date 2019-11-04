@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.client.utils.Base64Utils;
 import org.noear.water.client.utils.StringUtils;
 import org.noear.water.client.utils.ext.Fun1;
+import org.noear.weed.utils.EncryptUtils;
 
 /**
  * 消息模型
@@ -22,6 +23,9 @@ public class MessageModel {
     /** 签名 */
     public String sgin;
 
+    /**
+     * 初始化
+     * */
     public MessageModel(Fun1<String,String> args) {
         this.key = args.run("key");
 
@@ -41,15 +45,23 @@ public class MessageModel {
         this.message = Base64Utils.decode(this.message);
     }
 
-    public String toJson(){
-        ONode d = new ONode();
+    /**
+     * 检查是否ok
+     * */
+    public boolean checkIsOk(String receive_secret){
+        if (id < 1) {
+            return false;
+        }
 
-        d.set("id",id);
-        d.set("key",key);
-        d.set("topic",topic);
-        d.set("message",message);
-        d.set("sgin",sgin);
+        StringBuilder sb = new StringBuilder(200);
+        sb.append(id).append("#");
+        sb.append(key).append("#");
+        sb.append(topic).append("#");
+        sb.append(message).append("#");
+        sb.append(receive_secret);
 
-        return d.toJson();
+        String sgin_slf = EncryptUtils.md5(sb.toString());
+
+        return sgin_slf.equals(sgin);
     }
 }

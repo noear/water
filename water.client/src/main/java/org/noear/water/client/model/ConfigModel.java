@@ -10,9 +10,26 @@ import java.util.Properties;
  * 配置模型
  * */
 public class ConfigModel {
-    public String tag;
-    public String key;
-    public String value;
+    private String tag;
+    private String key;
+    private String value;
+
+    public ConfigModel(String tag,String key, String value){
+        this.tag = tag;
+        this.key = key;
+        this.value = value;
+    }
+
+    //获取标签
+    public String getTag(){
+        return tag;
+    }
+
+    //获取key
+    public String getKey(){
+        return key;
+    }
+
 
     //转为String
     public String toString(){

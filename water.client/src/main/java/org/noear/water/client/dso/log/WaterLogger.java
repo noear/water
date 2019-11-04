@@ -17,122 +17,122 @@ public class WaterLogger implements Logger {
     }
 
     @Override
-    public void trace(String content) {
+    public void trace(Object content) {
         trace(null, null, null, null, null, content);
     }
 
     @Override
-    public void trace(String summary, String content) {
+    public void trace(String summary, Object content) {
         trace(null, null, null, null, summary, content);
     }
 
     @Override
-    public void trace(String tag, String summary, String content) {
+    public void trace(String tag, String summary, Object content) {
         trace(tag, null, null, null, summary, content);
     }
 
     @Override
-    public void trace(String tag, String tag1, String summary, String content) {
+    public void trace(String tag, String tag1, String summary, Object content) {
         trace(tag, tag1, null, null, summary, content);
     }
 
     @Override
-    public void trace(String tag, String tag1, String tag2, String summary, String content) {
+    public void trace(String tag, String tag1, String tag2, String summary, Object content) {
         trace(tag, tag1, tag2, null, summary, content);
     }
 
     @Override
-    public void trace(String tag, String tag1, String tag2, String tag3, String summary, String content) {
+    public void trace(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         LoggerApi.append(_name, Level.TRACE, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
-    public void debug(String content) {
+    public void debug(Object content) {
         debug(null, null, null, null, null, content);
     }
 
     @Override
-    public void debug(String summary, String content) {
+    public void debug(String summary, Object content) {
         debug(null, null, null, null, summary, content);
     }
 
     @Override
-    public void debug(String tag, String summary, String content) {
+    public void debug(String tag, String summary, Object content) {
         debug(tag, null, null, null, summary, content);
     }
 
     @Override
-    public void debug(String tag, String tag1, String summary, String content) {
+    public void debug(String tag, String tag1, String summary, Object content) {
         debug(tag, tag1, null, null, summary, content);
     }
 
     @Override
-    public void debug(String tag, String tag1, String tag2, String summary, String content) {
+    public void debug(String tag, String tag1, String tag2, String summary, Object content) {
         debug(tag, tag1, tag2, null, summary, content);
     }
 
     @Override
-    public void debug(String tag, String tag1, String tag2, String tag3, String summary, String content) {
+    public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         LoggerApi.append(_name, Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
-    public void info(String content) {
+    public void info(Object content) {
         info(null, null, null, null, null, content);
     }
 
     @Override
-    public void info(String summary, String content) {
+    public void info(String summary, Object content) {
         info(null, null, null, null, summary, content);
     }
 
     @Override
-    public void info(String tag, String summary, String content) {
+    public void info(String tag, String summary, Object content) {
         info(tag, null, null, null, summary, content);
     }
 
     @Override
-    public void info(String tag, String tag1, String summary, String content) {
+    public void info(String tag, String tag1, String summary, Object content) {
         info(tag, tag1, null, null, summary, content);
     }
 
     @Override
-    public void info(String tag, String tag1, String tag2, String summary, String content) {
+    public void info(String tag, String tag1, String tag2, String summary, Object content) {
         info(tag, tag1, tag2, null, summary, content);
     }
 
     @Override
-    public void info(String tag, String tag1, String tag2, String tag3, String summary, String content) {
+    public void info(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         LoggerApi.append(_name, Level.INFO, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
-    public void warn(String content) {
+    public void warn(Object content) {
         warn(null, null, null, null, null, content);
     }
 
     @Override
-    public void warn(String summary, String content) {
+    public void warn(String summary, Object content) {
         warn(null, null, null, null, summary, content);
     }
 
     @Override
-    public void warn(String tag, String summary, String content) {
+    public void warn(String tag, String summary, Object content) {
         warn(tag, null, null, null, summary, content);
     }
 
     @Override
-    public void warn(String tag, String tag1, String summary, String content) {
+    public void warn(String tag, String tag1, String summary, Object content) {
         warn(tag, tag1, null, null, summary, content);
     }
 
     @Override
-    public void warn(String tag, String tag1, String tag2, String summary, String content) {
+    public void warn(String tag, String tag1, String tag2, String summary, Object content) {
         warn(tag, tag1, tag2, null, summary, content);
     }
 
     @Override
-    public void warn(String tag, String tag1, String tag2, String tag3, String summary, String content) {
+    public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         LoggerApi.append(_name, Level.WARN, tag, tag1, tag2, tag3, summary, content);
     }
 

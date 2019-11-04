@@ -7,7 +7,7 @@ public class MessageUtil {
     /**
      * 检查消息
      */
-    public static boolean checkMessage(MessageModel msg, String access_key) {
+    public static boolean checkMessage(MessageModel msg, String receive_secret) {
 
         if (msg.id < 1) {
             return false;
@@ -18,7 +18,7 @@ public class MessageUtil {
         sb.append(msg.key).append("#");
         sb.append(msg.topic).append("#");
         sb.append(msg.message).append("#");
-        sb.append(access_key);
+        sb.append(receive_secret);
 
         String sgin_slf = EncryptUtils.md5(sb.toString());
 
