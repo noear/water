@@ -189,7 +189,8 @@ public class StringUtils {
 
     //释放StringBuilder（基于Stack管理）
     public static String releaseBuilder(StringBuilder sb) {
-        AssertUtils.notNull(sb);
+        AssertUtils.notNull(sb, "sb");
+
         String string = sb.toString();
         if (sb.length() > MaxCachedBuilderSize) {
             sb = new StringBuilder(MaxCachedBuilderSize);
