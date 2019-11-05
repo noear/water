@@ -1,11 +1,11 @@
 package webapp;
 
-import org.noear.solon.XApp;
 import org.noear.water.tools.RedisX;
 import org.noear.water.tools.ServerUtil;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.memcached.MemCache;
 import webapp.dso.db.DbApi;
 import webapp.dso.db.DbServiceApi;
@@ -38,10 +38,12 @@ public class Config {
             WeedConfig.isDebug = false;
             WeedConfig.isUsingValueExpression = false;
 
-            water = new DbContext(prop);
+            water = new DbContext(prop)
+                    .fieldFormatSet("`%`")
+                    .objectFormatSet("`%`");
 
-            water_msg = getDbConfig("water_msg");
-            water_log = getDbConfig("water_log");
+            water_msg = getDbConfig("water_msg", water);
+            water_log = getDbConfig("water_log", water);
 
             rd_ids= getRdConfig("water_redis",1);
             rd_track = getRdConfig("water_redis",5);
@@ -69,20 +71,22 @@ public class Config {
 
     public static ConfigModel getConfig(String key){
         try{
-            return DbApi.getConfig(water_config_tag,key);
+            return DbApi.getConfigNoCache(water_config_tag,key);
         }catch (Exception ex){
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
     }
 
-    public static DbContext getDbConfig(String key) {
+    public static DbContext getDbConfig(String key, DbContext def) {
         ConfigModel cfg = getConfig(key);
 
-        if (cfg == null) {
-            return null;
+        if (cfg == null || cfg.value == null) {
+            return def;
         } else {
-            return new DbContext(cfg.toProp());
+            return new DbContext(cfg.toProp())
+                    .fieldFormatSet("`%`")
+                    .objectFormatSet("`%`");
         }
     }
 
@@ -90,7 +94,7 @@ public class Config {
     public static RedisX getRdConfig(String key, int db) {
         ConfigModel cfg = getConfig(key);
 
-        if (cfg == null) {
+        if (cfg == null || cfg.value == null) {
             return null;
         } else {
             return new RedisX(cfg.toProp(), db);
@@ -101,8 +105,8 @@ public class Config {
     public static ICacheServiceEx getChConfig(String key, String keyHeader, int defSeconds) {
         ConfigModel cfg = getConfig(key);
 
-        if (cfg == null) {
-            return new org.noear.weed.cache.EmptyCache();
+        if (cfg == null || cfg.value == null) {
+            return new LocalCache(keyHeader,defSeconds);
         } else {
             return new MemCache(cfg.toProp(), keyHeader, defSeconds);
         }
@@ -115,7 +119,7 @@ public class Config {
     public static String getValConfig(String key, String def) {
         ConfigModel cfg = getConfig(key);
 
-        if (cfg == null) {
+        if (cfg == null || cfg.value == null) {
             return def;
         } else {
             return cfg.value;

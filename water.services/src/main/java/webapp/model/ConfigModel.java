@@ -22,23 +22,40 @@ public class ConfigModel {
 
     /** 转为Int */
     public int toInt(){
+        if(value == null){
+            return 0;
+        }
+
         return Integer.parseInt(value);
     }
 
     /** 转为Long */
     public long toLong(){
+        if(value == null){
+            return 0;
+        }
+
         return Long.parseLong(value);
     }
 
     /** 转为Properties */
     public Properties toProp(){
         Properties tmp = new Properties();
+
+        if(value == null){
+            return tmp;
+        }
+
         RunUtil.runActEx(()->tmp.load(new StringReader(value)));
         return tmp;
     }
 
     /** 转为ONode */
     public ONode toNode(){
+        if(value == null){
+            return new ONode();
+        }
+
         return ONode.load(value);
     }
 }

@@ -34,6 +34,14 @@ public class DbApi {
         }
     }
 
+    public static List<ConfigModel> getConfigByTag(String tag) throws SQLException {
+        return db().table("water_base_config")
+                .whereEq("tag", tag)
+                .select("*")
+                .caching(CacheUtil.data)
+                .getList(ConfigModel.class);
+    }
+
     public static ConfigModel getConfig(String tag, String key) throws SQLException {
         return db().table("water_base_config")
                 .where("tag=? AND `key`=?", tag, key)
