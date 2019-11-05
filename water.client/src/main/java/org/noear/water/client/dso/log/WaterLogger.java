@@ -1,15 +1,12 @@
 package org.noear.water.client.dso.log;
 
 import org.noear.water.client.WaterClient;
-import org.noear.water.client.dso.LogApi;
 import org.noear.water.tools.AssertUtils;
 
 public class WaterLogger implements Logger {
     public static Logger get(String name){
         return new WaterLogger(name);
     }
-
-
 
     private String _name;
 

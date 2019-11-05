@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * config pk = tag + key
  * */
-public class ConfigurationApi {
+public class ConfigApi {
 
     private Map<String, ONode> _cfgs = Collections.synchronizedMap(new HashMap());
 
