@@ -1,11 +1,8 @@
 server:
-  port: 8080
+  port: 8081
   request.maxRequestSize: 2Mb
   session.timeout: 7200
 
-extend: ~/jt_ext/
 
 water:
   host: http://water.noear.org
-  message:
-    ser: xxx
