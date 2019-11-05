@@ -1,6 +1,7 @@
 package webapp.controller.cmds;
 
-import waterapi.dao.db.DbMsgApi;
+
+import webapp.dso.db.DbMessageApi;
 
 /**
  * Created by yuety on 2017/7/19.
@@ -34,6 +35,6 @@ public class CMD_msg_unsubscribe extends CMDBase {
     }
 
     private boolean do_unsubscprebe(String key, String topic) throws Exception {
-        return DbMsgApi.removeSubscriber(key, topic);
+        return DbMessageApi.removeSubscriber(key, topic);
     }
 }

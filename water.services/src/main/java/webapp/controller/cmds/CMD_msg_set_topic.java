@@ -1,11 +1,8 @@
 package webapp.controller.cmds;
 
-import waterapi.dao.db.DbMsgApi;
-import waterapi.models.TopicModel;
+import webapp.dso.db.DbMessageApi;
+import webapp.model.TopicModel;
 
-/**
- * Created by yuety on 2017/7/19.
- */
 public class CMD_msg_set_topic extends CMDBase {
     @Override
     protected void cmd_exec() throws Exception {
@@ -17,7 +14,7 @@ public class CMD_msg_set_topic extends CMDBase {
 
         //如果不需要修改，检查是否已存在
         //
-        TopicModel topic = DbMsgApi.getTopicID(name);
+        TopicModel topic = DbMessageApi.getTopicID(name);
 
         data.set("max_msg_num:old", topic.max_msg_num);
 

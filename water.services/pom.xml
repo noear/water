@@ -69,6 +69,11 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>solon.extend.properties.yaml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
             <version>3.1.0</version>
         </dependency>
@@ -82,7 +87,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.cache.memcached</artifactId>
-            <version>3.2.1.1</version>
+            <version>3.2.1.2</version>
         </dependency>
     </dependencies>
 

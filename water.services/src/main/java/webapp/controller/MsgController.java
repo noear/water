@@ -4,11 +4,8 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import waterapi.controller.cmds.*;
+import webapp.controller.cmds.*;
 
-/**
- * Created by yuety on 2017/7/17.
- */
 @XMapping("/msg/**")
 @XController
 public class MsgController implements XHandler {

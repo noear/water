@@ -1,0 +1,7 @@
+water.dataSource:
+  schema: water1
+  url: jdbc:mysql://mysql.dev.zmapi.cn:3306/water1?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+  jdbcUrl: jdbc:mysql://mysql.dev.zmapi.cn:3306/water1?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+  username: root
+  password: gXWTCL18
+  driverClassName: com.mysql.jdbc.Driver

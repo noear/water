@@ -2,7 +2,7 @@ package webapp.controller.cmds;
 
 
 import org.noear.water.tools.TextUtils;
-import webapp.dso.db.DbMsgApi;
+import webapp.dso.db.DbMessageApi;
 
 public class CMD_msg_cancel extends CMDBase {
     @Override
@@ -17,9 +17,9 @@ public class CMD_msg_cancel extends CMDBase {
         //如果不需要修改，检查是否已存在
         //
         if (TextUtils.isEmpty(subscriber_key)) {
-            DbMsgApi.cancelMessage(key);
+            DbMessageApi.cancelMessage(key);
         } else {
-            DbMsgApi.cancelMsgDistribution(key, subscriber_key);
+            DbMessageApi.cancelMsgDistribution(key, subscriber_key);
         }
     }
 }

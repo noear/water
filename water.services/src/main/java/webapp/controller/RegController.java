@@ -4,7 +4,7 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import waterapi.controller.cmds.*;
+import webapp.controller.cmds.CMD_sev_reg;
 
 @XMapping("/reg/**")
 @XController

@@ -1,17 +1,15 @@
 package webapp.controller.cmds;
 
 import org.noear.snack.ONode;
-import waterapi.dao.db.DbApi;
-import waterapi.dao.db.DbSevApi;
-import waterapi.models.ConfigModel;
-import waterapi.models.ServiceModel;
-import waterapi.utils.TextUtils;
+import org.noear.water.tools.TextUtils;
+import webapp.dso.db.DbApi;
+import webapp.dso.db.DbServiceApi;
+import webapp.model.ConfigModel;
+import webapp.model.ServiceModel;
 
 import java.util.List;
+import java.util.Properties;
 
-/**
- * Created by yuety on 2017/7/19.
- */
 public class CMD_sev_discover extends CMDBase {
     @Override
     protected void cmd_exec() throws Exception {
@@ -24,23 +22,26 @@ public class CMD_sev_discover extends CMDBase {
             return;
         }
 
-        DbSevApi.logConsume(service, consumer, consumer_address);
+        DbServiceApi.logConsume(service, consumer, consumer_address);
 
-        List<ServiceModel> list = DbSevApi.getServiceList(service);
+        List<ServiceModel> list = DbServiceApi.getServiceList(service);
 
         ConfigModel cfg = DbApi.getConfigNoCache("_service", service);
 
-        if (TextUtils.isEmpty(cfg.explain)) {
-            cfg.explain = "default";
-        }
+        Properties prop = cfg.toProp();
+
 
         data.set("code", 1);
         data.set("msg", "success");
 
         ONode rst = data.get("data");
 
-        rst.set("url", cfg.url);
-        rst.set("policy", cfg.explain); //default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希)
+        //代理url
+        rst.set("url", prop.getProperty("url"));
+
+        //策略： default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希)
+        //
+        rst.set("policy", prop.getProperty("policy"));
 
         rst.get("list").addAll(list, (n, m) -> {
             n.set("protocol", "http");

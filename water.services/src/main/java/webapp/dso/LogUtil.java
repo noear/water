@@ -2,109 +2,88 @@ package webapp.dso;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
+import org.noear.water.tools.ThrowableUtils;
+import org.noear.water.tools.log.Level;
 import webapp.dso.db.DbLogApi;
 import webapp.utils.IPUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Map;
-
 public class LogUtil {
-    private static final String logger_debug = "water_log_api_debug";
-    private static final String logger_error = "water_log_api_error";
-    private static final String logger_api = "water_log_api";
+    private static final String logger_name = "water_log_api";
 
-
-    public static void write(String label, XContext context) {
-        try {
-            String tag = context.path();
-
-            if (tag == null) {
-                return;
-            }
-
-            String ip = IPUtil.getIP(context);
-
-            Map<String,String> pnames = context.paramMap();
-
-            ONode args = new ONode();
-            if(pnames != null) {
-                pnames.forEach((k, v) -> {
-                    args.set(k, v);
-                });
-            }
-
-            DbLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
-        } catch (Exception ee) {
-            ee.printStackTrace();
-        }
+    public static void info(XContext context) {
+        info(null, context);
     }
 
-    public static void write(String tag, String label, String content) {
-        doWrite(tag, null, label, content);
+    public static void info(String summary, XContext context) {
+        ONode data = new ONode().setAll(context.paramMap());
+
+        info(context.path(), summary, data.toJson());
     }
 
-    public static void doWrite(String tag, String tag1, String label, String content) {
+    public static void info(String tag, String summary, String content) {
+        doInfo(tag, null, summary, content);
+    }
+
+    public static void doInfo(String tag, String tag1, String summary, String content) {
         try {
-            DbLogApi.addLog(logger_api, tag, tag1, "", label, content);
+            String from = IPUtil.getIP(XContext.current());
+
+            DbLogApi.addLog(logger_name, Level.INFO, tag, tag1, null, null, summary, content, from);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        System.out.print(tag + "::\r\n");
+        System.out.print("INFO::" + tag + "::\r\n");
         System.out.print(content);
         System.out.print("\r\n");
     }
 
-    public static void debug(String tag, String label , String txt) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(txt);
-
+    public static void debug(String tag, String summary , String txt) {
         try {
-            DbLogApi.addLog(logger_debug, tag, "", "", label, sb.toString());
-        }catch (Exception ex){
+            String from = IPUtil.getIP(XContext.current());
+
+            DbLogApi.addLog(logger_name, Level.DEBUG, tag, null, null, null, summary, txt, from);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(sb.toString());
+        System.out.print("DEBUG::" + tag + "::\r\n");
+        System.out.print(txt);
         System.out.print("\r\n");
     }
 
     public static void error(XContext context, Exception ex) {
+        String tag = context.path();
+        String content = ThrowableUtils.getString(ex);
+
         try {
-            Map<String,String> pnames = context.paramMap();
-            String tag = context.path();
+            String from = IPUtil.getIP(XContext.current());
+            ONode summary = new ONode().setAll(context.paramMap());
 
-            String content = getFullStackTrace(ex);
-            ONode label = new ONode();
-
-            if(pnames!=null){
-                pnames.forEach((k,v)->{
-                    label.set(k, v);
-                });
-            }
-
-            DbLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
+            DbLogApi.addLog(logger_name, Level.ERROR, tag, null, null, null, summary.toJson(), content, from);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
+
+        System.out.print("ERROR::" + tag + "\r\n");
+        System.out.print(content);
+        System.out.print("\r\n");
     }
 
-    public static void error(String tag, String tag1, String label, Exception ex) {
-        try {
-            String content = getFullStackTrace(ex);
+    public static void error(String tag, String tag1, String summary, Exception ex) {
+        String content = ThrowableUtils.getString(ex);
 
-            DbLogApi.addLog(logger_error, tag, tag1, "", label, content);
+        try {
+            String from = IPUtil.getIP(XContext.current());
+
+            DbLogApi.addLog(logger_name, Level.ERROR, tag, tag1, null,null, summary, content, from);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
-    }
 
-    public static String getFullStackTrace(Throwable e) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        e.printStackTrace(new PrintStream(baos));
-        return baos.toString();
+        System.out.print("ERROR::" + tag + "\r\n");
+        System.out.print(content);
+        System.out.print("\r\n");
     }
 
 }

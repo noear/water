@@ -3,6 +3,7 @@ package webapp.dso.db;
 import org.noear.water.tools.Datetime;
 import org.noear.water.tools.EncryptUtils;
 import org.noear.water.tools.TextUtils;
+import org.noear.water.tools.log.Level;
 import org.noear.weed.DbContext;
 import webapp.Config;
 import webapp.dso.CacheUtil;
@@ -11,9 +12,6 @@ import webapp.model.LoggerModel;
 
 import java.sql.SQLException;
 
-/**
- * Created by yuety on 2017/7/18.
- */
 public final class DbLogApi {
     private static DbContext db(){
         return Config.water;
@@ -33,13 +31,13 @@ public final class DbLogApi {
     }
 
     //添加日志
-    public static void addLog(String logger, int level, String tag, String tag1, String tag2, String tag3, String summary, String content,String from) throws SQLException {
+    public static void addLog(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, String content, String from) throws SQLException {
 
         DbContext db = loggerSource(logger);
 
         db.table(logger).usingExpr(true)
                 .set("log_id", IDUtil.buildLogID())
-                .set("level", level)
+                .set("level", level.code)
                 .set("tag", tag)
                 .set("tag1", tag1)
                 .set("tag2", tag2)

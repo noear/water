@@ -1,8 +1,11 @@
 package webapp.dso;
 
-import waterapi.Config;
-import waterapi.utils.Datetime;
-import waterapi.utils.RedisX;
+
+import org.noear.water.tools.Datetime;
+import org.noear.water.tools.RedisX;
+import webapp.Config;
+
+import java.util.Map;
 
 public class TrackUtil {
 
@@ -54,11 +57,11 @@ public class TrackUtil {
         });
     }
 
-    private static long do_track_key_minute(RedisX.RedisUsing ru,String rdkey_bef, String rdkey, long timespan) {
-        RedisX.RedisHash hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
+    private static long do_track_key_minute(RedisX.RedisUsing ru, String rdkey_bef, String rdkey, long timespan) {
+        Map<String,String> hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
 
-        long total_time0 =  hash.val("total_time");
-        long total_num0  =  hash.val("total_num");
+        long total_time0 =  Long.parseLong(hash.getOrDefault("total_time","0"));
+        long total_num0  =  Long.parseLong(hash.getOrDefault("total_num","0"));
 
         ru.key(rdkey).expire(60 * 3); //10分钟
 
@@ -72,7 +75,7 @@ public class TrackUtil {
     }
 
     private static void do_track_key_hour(RedisX.RedisUsing ru, String rdkey, long timespan) {
-        RedisX.RedisHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        Map<String,String> hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 3);
 
         long total_time = ru.hashIncr("total_time", timespan);
@@ -94,8 +97,8 @@ public class TrackUtil {
 
         ru.hashSet("average", average);
 
-        long slowest = hash.val("slowest"); //ru.hashVal("slowest");
-        long fastest = hash.val("fastest"); //ru.hashVal("fastest");
+        long slowest = Long.parseLong(hash.getOrDefault("slowest","0")); //ru.hashVal("slowest");
+        long fastest = Long.parseLong(hash.getOrDefault("fastest","0")); //ru.hashVal("fastest");
 
         if (timespan > slowest) { //更大，就是更慢 //可能会一直没有这个数据，注意后续处理
             ru.hashSet("slowest", timespan);
@@ -107,7 +110,7 @@ public class TrackUtil {
     }
 
     private static void do_track_key_date(RedisX.RedisUsing ru, String rdkey, long timespan, long average) {
-        RedisX.RedisHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        Map<String,String> hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 24);
 
         ru.hashIncr("total_time", timespan); //没有必要了
@@ -127,8 +130,8 @@ public class TrackUtil {
 
         ru.hashSet("average", average); //每分钟的平均值
 
-        long slowest = hash.val("slowest"); //ru.hashVal("slowest");
-        long fastest = hash.val("fastest"); //ru.hashVal("fastest");
+        long slowest = Long.parseLong(hash.getOrDefault("slowest","0")); //ru.hashVal("slowest");
+        long fastest = Long.parseLong(hash.getOrDefault("fastest","0")); //ru.hashVal("fastest");
 
         if (timespan > slowest) { //更大，就是更慢 //可能会一直没有这个数据，注意后续处理
             ru.hashSet("slowest", timespan);

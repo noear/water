@@ -2,19 +2,16 @@ package webapp.controller.cmds;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
-import waterapi.Config;
-import waterapi.dao.LogUtil;
-import waterapi.dao.TrackUtil;
-import waterapi.dao.db.DbApi;
-import waterapi.utils.IPUtil;
-import waterapi.utils.TextUtils;
-import waterapi.utils.Timecount;
+import org.noear.water.tools.TextUtils;
+import org.noear.water.tools.Timecount;
+import webapp.Config;
+import webapp.dso.LogUtil;
+import webapp.dso.TrackUtil;
+import webapp.dso.db.DbApi;
+import webapp.utils.IPUtil;
 
 import java.sql.SQLException;
 
-/**
- * Created by yuety on 2017/7/19.
- */
 public abstract class CMDBase {
     protected XContext context;
     protected ONode data;
@@ -68,7 +65,7 @@ public abstract class CMDBase {
         try {
             if (do1_check_ip()) {
                 if(isLogging()) {
-                    LogUtil.write("", context);
+                    LogUtil.info( context);
                 }
 
                 do2_exec();

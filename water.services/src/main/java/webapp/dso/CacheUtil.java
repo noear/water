@@ -1,11 +1,8 @@
 package webapp.dso;
 
 import org.noear.weed.cache.ICacheServiceEx;
-import waterapi.Config;
+import webapp.Config;
 
-/**
- * Created by yuety on 2017/7/17.
- */
 public class CacheUtil {
     public static boolean isUsingCache = true;
     //public static ICacheService data = new LocalCache("data", 60 * 10);

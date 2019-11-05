@@ -1,10 +1,8 @@
 package webapp.controller.cmds;
 
-import waterapi.dao.db.DbSevApi;
 
-/**
- * Created by yuety on 2017/7/19.
- */
+import webapp.dso.db.DbServiceApi;
+
 public class CMD_sev_reg extends CMDBase {
     @Override
     protected boolean isLogging() {
@@ -40,7 +38,7 @@ public class CMD_sev_reg extends CMDBase {
         }
 
 
-        DbSevApi.addService(service, address, note, alarm_mobile,check_url, check_type);
+        DbServiceApi.addService(service, address, note, alarm_mobile,check_url, check_type);
         data.set("code", 1);
         data.set("msg", "success");
     }

@@ -1,7 +1,7 @@
 package webapp.controller.cmds;
 
-import webapp.dso.DisttimeUtil;
-import webapp.dso.db.DbMsgApi;
+import org.noear.water.tools.DisttimeUtil;
+import webapp.dso.db.DbMessageApi;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class CMD_msg_send extends CMDBase {
 
         //如果不需要修改，检查是否已存在
         //
-        if (DbMsgApi.hasMessage(key)) {
+        if (DbMessageApi.hasMessage(key)) {
             data.set("code", 1);
             data.set("msg", "success");
             return;
@@ -28,7 +28,7 @@ public class CMD_msg_send extends CMDBase {
 
         Date time2 = DisttimeUtil.getDate(time, "yyyy-MM-dd HH:mm:ss");
 
-        if (DbMsgApi.addMessage(key, topic, message, time2) > 0) {
+        if (DbMessageApi.addMessage(key, topic, message, time2) > 0) {
             data.set("code", 1);
             data.set("msg", "success");
             return;

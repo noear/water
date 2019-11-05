@@ -1,6 +1,6 @@
 package webapp.model;
 
-public class SubscriberModel  {
+public class SubscribeModel {
     public int subscriber_id;
 
     public String alarm_mobile;

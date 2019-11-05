@@ -4,11 +4,8 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import waterapi.controller.cmds.*;
+import webapp.controller.cmds.CMD_log_add;
 
-/**
- * Created by yuety on 2017/7/18.
- */
 @XMapping("/log/**")
 @XController
 public class LogController implements XHandler {

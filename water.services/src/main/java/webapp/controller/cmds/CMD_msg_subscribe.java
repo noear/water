@@ -1,6 +1,6 @@
 package webapp.controller.cmds;
 
-import waterapi.dao.db.DbMsgApi;
+import webapp.dso.db.DbMessageApi;
 
 /**
  * Created by yuety on 2017/7/19.
@@ -43,12 +43,12 @@ public class CMD_msg_subscribe extends CMDBase {
             return false;
         }
 
-        if (DbMsgApi.hasSubscriber(key, topic)) {
-            DbMsgApi.udpSubscriber(key, note, alarm_mobile, topic, receive_url, access_key, receive_way);
+        if (DbMessageApi.hasSubscriber(key, topic)) {
+            DbMessageApi.udpSubscriber(key, note, alarm_mobile, topic, receive_url, access_key, receive_way);
             return true;
         }
 
-        if (DbMsgApi.addSubscriber(key, note, alarm_mobile,topic, receive_url, access_key, receive_way) > 0) {
+        if (DbMessageApi.addSubscriber(key, note, alarm_mobile,topic, receive_url, access_key, receive_way) > 0) {
             return true;
         }
 

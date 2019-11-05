@@ -1,7 +1,8 @@
 package webapp.controller.cmds;
 
-import waterapi.dao.db.DbMsgApi;
-import waterapi.utils.TextUtils;
+
+import org.noear.water.tools.TextUtils;
+import webapp.dso.db.DbMessageApi;
 
 /**
  * Created by yuety on 2017/7/19.
@@ -17,9 +18,9 @@ public class CMD_msg_succeed extends CMDBase {
         }
 
         if(TextUtils.isEmpty(subscriber_key)){
-            DbMsgApi.succeedMessage(key);
+            DbMessageApi.succeedMessage(key);
         }else {
-            DbMsgApi.succeedMsgDistribution(key, subscriber_key);
+            DbMessageApi.succeedMsgDistribution(key, subscriber_key);
         }
     }
 }
