@@ -2,7 +2,7 @@ package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.client.dso.log.Level;
-import org.noear.water.client.utils.ThrowableUtils;
+import org.noear.water.tools.ThrowableUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class LoggerApi {
     }
 
     public static void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("logger", logger);
         params.put("level", String.valueOf(level.code));
 
@@ -63,7 +63,7 @@ public class LoggerApi {
                 params.put("content", tmp);
             } else if (content instanceof String) {
                 //处理字符串
-                params.put("content", content);
+                params.put("content", (String) content);
             } else {
                 //处理其它对象（进行json）
                 String tmp = ONode.load(content).toJson();

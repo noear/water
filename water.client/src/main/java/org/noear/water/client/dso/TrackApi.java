@@ -1,7 +1,7 @@
 package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
-import org.noear.water.client.utils.StringUtils;
+import org.noear.water.tools.StringUtils;
 import org.noear.weed.Command;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class TrackApi {
     }
 
     public static void track(String service, String tag, String name, long timespan, String _node, String _from) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         if (_node != null) {
             params.put("_node", _node);
         }
@@ -56,7 +56,7 @@ public class TrackApi {
 
         Map<String, Object> map = cmd.paramMap();
 
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         try {
             params.put("service", service);

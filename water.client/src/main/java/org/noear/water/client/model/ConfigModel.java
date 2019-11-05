@@ -1,7 +1,7 @@
 package org.noear.water.client.model;
 
 import org.noear.snack.ONode;
-import org.noear.water.client.utils.RunUtil;
+import org.noear.water.tools.RunUtil;
 
 import java.io.StringReader;
 import java.util.Properties;
@@ -13,11 +13,13 @@ public class ConfigModel {
     private String tag;
     private String key;
     private String value;
+    private long lastModified;
 
-    public ConfigModel(String tag,String key, String value){
+    public ConfigModel(String tag,String key, String value, long lastModified){
         this.tag = tag;
         this.key = key;
         this.value = value;
+        this.lastModified = lastModified;
     }
 
     //获取标签
@@ -28,6 +30,11 @@ public class ConfigModel {
     //获取key
     public String getKey(){
         return key;
+    }
+
+    //最后更新时间
+    public long getLastModified(){
+        return lastModified;
     }
 
 

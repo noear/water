@@ -21,7 +21,7 @@ public class RegistryApi {
     }
 
     public static void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
         params.put("note", note);
@@ -42,7 +42,7 @@ public class RegistryApi {
      * 设置启用状态
      */
     public static void set(String service, String address, String note, boolean enabled) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
         params.put("note", note);
@@ -56,7 +56,7 @@ public class RegistryApi {
     }
 
     public static DiscoverModel discover(String service, String consumer, String consumer_address) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("consumer", consumer);
         params.put("consumer_address", consumer_address);

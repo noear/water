@@ -1,7 +1,7 @@
 package org.noear.water.client.dso.log;
 
 import org.noear.water.client.dso.LoggerApi;
-import org.noear.water.client.utils.AssertUtils;
+import org.noear.water.tools.AssertUtils;
 
 public class WaterLogger implements Logger {
     private String _name;

@@ -2,10 +2,10 @@ package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.client.model.ReceiveWay;
-import org.noear.water.client.utils.AssertUtils;
-import org.noear.water.client.utils.Datetime;
-import org.noear.water.client.utils.IDUtil;
-import org.noear.water.client.utils.StringUtils;
+import org.noear.water.tools.AssertUtils;
+import org.noear.water.tools.Datetime;
+import org.noear.water.tools.IDUtil;
+import org.noear.water.tools.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class MessageApi {
      * 订阅主题
      */
     public static ONode subscribe(String subscriber_key, String subscriber_note, String receiver_url, String receive_secret, String alarm_mobile, ReceiveWay receive_way, String... topics) throws Exception {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         params.put("subscriber_key", subscriber_key);
         params.put("subscriber_note", subscriber_note);
@@ -52,7 +52,7 @@ public class MessageApi {
      * 取消订阅主题
      */
     public static ONode unsubscribe(String subscriber_key, String... topics) throws Exception {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         params.put("subscriber_key", subscriber_key);
 
@@ -91,7 +91,7 @@ public class MessageApi {
 
         String msg_key = IDUtil.guid();
 
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
         if (topic != null) {
@@ -138,7 +138,7 @@ public class MessageApi {
      * @param subscriber_key 订阅者KEY
      */
     public static ONode messageCancel(String msg_key, String subscriber_key) throws Exception {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
         if (StringUtils.isEmpty(subscriber_key) == false) {
@@ -163,7 +163,7 @@ public class MessageApi {
      * @param subscriber_key 订阅者KEY
      */
     public static ONode messageSucceed(String msg_key, String subscriber_key) throws Exception {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
         if (StringUtils.isEmpty(subscriber_key) == false) {
