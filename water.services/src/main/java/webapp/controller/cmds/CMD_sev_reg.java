@@ -16,7 +16,7 @@ public class CMD_sev_reg extends CMDBase {
         String note = get("note");
         String alarm_mobile = get("alarm_mobile");
 
-        if(alarm_mobile == null){
+        if (alarm_mobile == null) {
             alarm_mobile = "";
         }
 
@@ -38,7 +38,7 @@ public class CMD_sev_reg extends CMDBase {
         }
 
 
-        DbServiceApi.addService(service, address, note, alarm_mobile,check_url, check_type);
+        DbServiceApi.addService(service, address, note, check_url, check_type, alarm_mobile);
         data.set("code", 1);
         data.set("msg", "success");
     }

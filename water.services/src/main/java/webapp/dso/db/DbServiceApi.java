@@ -31,7 +31,11 @@ public final class DbServiceApi {
     /**
      * 添加服务（key）
      * */
-    public static void addService(String service, String address, String note, String alarm_mobile, String check_url, int check_type) throws SQLException {
+    public static void addService(String service, String address, String check_url,  String alarm_mobile) throws SQLException {
+        addService(service, address, "", check_url, 0, alarm_mobile);
+    }
+
+    public static void addService(String service, String address, String note, String check_url, int check_type, String alarm_mobile) throws SQLException {
         if (note == null) {
             note = "";
         }

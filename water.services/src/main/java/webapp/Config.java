@@ -1,7 +1,9 @@
 package webapp;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.noear.water.tools.RedisX;
 import org.noear.water.tools.ServerUtil;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -38,26 +40,23 @@ public class Config {
             WeedConfig.isDebug = false;
             WeedConfig.isUsingValueExpression = false;
 
-            water = new DbContext(prop)
-                    .fieldFormatSet("`%`")
-                    .objectFormatSet("`%`");
+
+            water = getDb(prop);
 
             water_msg = getDbConfig("water_msg", water);
             water_log = getDbConfig("water_log", water);
 
-            rd_ids= getRdConfig("water_redis",1);
-            rd_track = getRdConfig("water_redis",5);
+            rd_ids = getRdConfig("water_redis", 1);
+            rd_track = getRdConfig("water_redis", 5);
 
-            water_cache_header = getValConfig("water_cache_header","WATER_CACHE") +"_API";
+            water_cache_header = getValConfig("water_cache_header", "WATER_CACHE") + "_API";
             water_msg_queue = getValConfig("water_msg_queue");
 
             try {
                 DbServiceApi.addService(water_service_name,
                         ServerUtil.getFullAddress(service_port),
-                        "",
-                        "",
                         "/run/check/",
-                        0);
+                        "");
             } catch (Throwable ex) {
                 ex.printStackTrace();
             }
@@ -78,15 +77,51 @@ public class Config {
         }
     }
 
+    public static DbContext getDb(Properties prop) {
+        if (prop.size() < 4) {
+            throw new RuntimeException("Data source configuration error!");
+        }
+
+        HikariDataSource source = new HikariDataSource();
+
+        String schema = prop.getProperty("schema");
+        String url = prop.getProperty("url");
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+        String driverClassName = prop.getProperty("driverClassName");
+
+        if (TextUtils.isEmpty(url) == false) {
+            source.setJdbcUrl(url);
+        }
+
+        if (TextUtils.isEmpty(username) == false) {
+            source.setUsername(username);
+        }
+
+        if (TextUtils.isEmpty(password) == false) {
+            source.setPassword(password);
+        }
+
+        if (TextUtils.isEmpty(schema) == false) {
+            source.setSchema(schema);
+        }
+
+        if (TextUtils.isEmpty(driverClassName) == false) {
+            source.setDriverClassName(driverClassName);
+        }
+
+        return new DbContext(schema, source)
+                .fieldFormatSet("`%`")
+                .objectFormatSet("`%`");
+    }
+
     public static DbContext getDbConfig(String key, DbContext def) {
         ConfigModel cfg = getConfig(key);
 
         if (cfg == null || cfg.value == null) {
             return def;
         } else {
-            return new DbContext(cfg.toProp())
-                    .fieldFormatSet("`%`")
-                    .objectFormatSet("`%`");
+            return getDb(cfg.toProp());
         }
     }
 
