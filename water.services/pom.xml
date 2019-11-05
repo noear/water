@@ -39,8 +39,51 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <dependencies>
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solon-parent</artifactId>
+        <version>1.0.3.17</version>
+    </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>water.tools</artifactId>
+            <version>0.0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.boot.jlhttp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.serialization.snack3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack3</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.cache.memcached</artifactId>
+            <version>3.2.1.1</version>
+        </dependency>
     </dependencies>
 
     <profiles>
