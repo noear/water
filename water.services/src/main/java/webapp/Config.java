@@ -31,14 +31,13 @@ public class Config {
      * 尝试初始化
      * */
     private static boolean _inited=false;
-    public static void tryInit(int service_port) {
+    public static void tryInit(int service_port, Properties prop) {
         if (_inited == false) {
             _inited = true;
 
             WeedConfig.isDebug = false;
             WeedConfig.isUsingValueExpression = false;
 
-            Properties prop = XApp.global().prop().getProp("water.dataSource");
             water = new DbContext(prop);
 
             water_msg = getDbConfig("water_msg");
