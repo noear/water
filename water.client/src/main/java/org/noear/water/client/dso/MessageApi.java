@@ -22,14 +22,14 @@ public class MessageApi {
     /**
      * 订阅主题
      */
-    public static ONode subscribe(String subscriber_key, String receiver_url, String receive_secret, String alarm_mobile, ReceiveWay receive_way, String... topics) throws Exception {
+    public  ONode subscribe(String subscriber_key, String receiver_url, String receive_secret, String alarm_mobile, ReceiveWay receive_way, String... topics) throws Exception {
         return subscribe(subscriber_key, "", receiver_url, receive_secret, alarm_mobile, receive_way, topics);
     }
 
     /**
      * 订阅主题
      */
-    public static ONode subscribe(String subscriber_key, String subscriber_note, String receiver_url, String receive_secret, String alarm_mobile, ReceiveWay receive_way, String... topics) throws Exception {
+    public  ONode subscribe(String subscriber_key, String subscriber_note, String receiver_url, String receive_secret, String alarm_mobile, ReceiveWay receive_way, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
 
         params.put("subscriber_key", subscriber_key);
@@ -51,7 +51,7 @@ public class MessageApi {
     /**
      * 取消订阅主题
      */
-    public static ONode unsubscribe(String subscriber_key, String... topics) throws Exception {
+    public  ONode unsubscribe(String subscriber_key, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
 
         params.put("subscriber_key", subscriber_key);
@@ -66,7 +66,7 @@ public class MessageApi {
     /**
      * 发送消息
      */
-    public static String messageSend(String topic, String message) throws Exception {
+    public  String messageSend(String topic, String message) throws Exception {
         return messageSend(topic,message,null,null,null);
     }
 
@@ -75,7 +75,7 @@ public class MessageApi {
      *
      * @param planTime 计划派发时间
      */
-    public static String messageSend(String topic, String message, Date planTime) throws Exception {
+    public  String messageSend(String topic, String message, Date planTime) throws Exception {
         return messageSend(topic,message,planTime,null,null);
     }
 
@@ -86,7 +86,7 @@ public class MessageApi {
      * @param receive_url 直接接收地址（不需要认阅）
      * @param receive_cehck 直接接收检查
      */
-    public static String messageSend(String topic, String message, Date planTime, String receive_url, String receive_cehck) throws Exception {
+    public  String messageSend(String topic, String message, Date planTime, String receive_url, String receive_cehck) throws Exception {
         AssertUtils.notEmpty(message,"message");
 
         String msg_key = IDUtil.guid();
@@ -128,7 +128,7 @@ public class MessageApi {
     /**
      * 取消消息
      */
-    public static ONode messageCancel(String msg_key) throws Exception {
+    public  ONode messageCancel(String msg_key) throws Exception {
         return messageCancel(msg_key, null);
     }
 
@@ -137,7 +137,7 @@ public class MessageApi {
      *
      * @param subscriber_key 订阅者KEY
      */
-    public static ONode messageCancel(String msg_key, String subscriber_key) throws Exception {
+    public  ONode messageCancel(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
@@ -153,7 +153,7 @@ public class MessageApi {
     /**
      * 完成消息
      */
-    public static ONode messageSucceed(String msg_key) throws Exception {
+    public  ONode messageSucceed(String msg_key) throws Exception {
         return messageSucceed(msg_key, null);
     }
 
@@ -162,7 +162,7 @@ public class MessageApi {
      *
      * @param subscriber_key 订阅者KEY
      */
-    public static ONode messageSucceed(String msg_key, String subscriber_key) throws Exception {
+    public  ONode messageSucceed(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 

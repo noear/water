@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TrackApi {
-    public static void track(String service, String tag, String name, long timespan) {
+    public  void track(String service, String tag, String name, long timespan) {
         track(service, tag, name, timespan, null, null);
     }
 
-    public static void track(String service, String tag, String name, long timespan, String _node) {
+    public  void track(String service, String tag, String name, long timespan, String _node) {
         track(service, tag, name, timespan, _node, null);
     }
 
-    public static void track(String service, String tag, String name, long timespan, String _node, String _from) {
+    public  void track(String service, String tag, String name, long timespan, String _node, String _from) {
         Map<String, String> params = new HashMap<>();
         if (_node != null) {
             params.put("_node", _node);
@@ -38,7 +38,7 @@ public class TrackApi {
         }
     }
 
-    public static void track(String service, Command cmd, long thresholdValue) {
+    public  void track(String service, Command cmd, long thresholdValue) {
         long timespan = cmd.timespan();
 
         if (timespan > thresholdValue) {
@@ -46,12 +46,12 @@ public class TrackApi {
         }
     }
 
-    public static void track(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
+    public  void track(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
 
         do_track(service, cmd, ua, path, operator, operator_ip, null);
     }
 
-    private static void do_track(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
+    private  void do_track(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
         long interval = cmd.timespan();
 
         Map<String, Object> map = cmd.paramMap();

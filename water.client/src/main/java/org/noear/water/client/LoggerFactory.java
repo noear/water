@@ -5,7 +5,7 @@ import org.noear.water.client.dso.log.Logger;
 import org.noear.water.client.dso.log.WaterLogger;
 
 public class LoggerFactory {
-    public static Logger getLogger(String name){
+    public static Logger get(String name){
         return new WaterLogger(name);
     }
 }

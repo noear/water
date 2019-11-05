@@ -10,17 +10,17 @@ import java.util.Map;
  * 注册接口
  * */
 public class RegistryApi {
-    public static void add(String service, String address, String check_url, String alarm_mobile) {
+    public  void add(String service, String address, String check_url, String alarm_mobile) {
         add(service, address, check_url, 0, alarm_mobile);
     }
 
     //@parme checkType: 0通过check_url检查，1自己定时签到
     //
-    public static void add(String service, String address, String check_url, int check_type, String alarm_mobile) {
+    public  void add(String service, String address, String check_url, int check_type, String alarm_mobile) {
         add(service, address, "", check_url, check_type, alarm_mobile);
     }
 
-    public static void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile) {
+    public  void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -41,7 +41,7 @@ public class RegistryApi {
     /**
      * 设置启用状态
      */
-    public static void set(String service, String address, String note, boolean enabled) {
+    public  void set(String service, String address, String note, boolean enabled) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -55,7 +55,7 @@ public class RegistryApi {
         }
     }
 
-    public static DiscoverModel discover(String service, String consumer, String consumer_address) {
+    public  DiscoverModel discover(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("consumer", consumer);

@@ -1,9 +1,16 @@
 package org.noear.water.client.dso.log;
 
-import org.noear.water.client.dso.LoggerApi;
+import org.noear.water.client.WaterClient;
+import org.noear.water.client.dso.LogApi;
 import org.noear.water.tools.AssertUtils;
 
 public class WaterLogger implements Logger {
+    public static Logger get(String name){
+        return new WaterLogger(name);
+    }
+
+
+
     private String _name;
 
     public WaterLogger(String name) {
@@ -43,7 +50,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public void trace(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        LoggerApi.append(_name, Level.TRACE, tag, tag1, tag2, tag3, summary, content);
+        WaterClient.log.append(_name, Level.TRACE, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -73,7 +80,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        LoggerApi.append(_name, Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
+        WaterClient.log.append(_name, Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -103,7 +110,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public void info(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        LoggerApi.append(_name, Level.INFO, tag, tag1, tag2, tag3, summary, content);
+        WaterClient.log.append(_name, Level.INFO, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -133,7 +140,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        LoggerApi.append(_name, Level.WARN, tag, tag1, tag2, tag3, summary, content);
+        WaterClient.log.append(_name, Level.WARN, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -163,6 +170,6 @@ public class WaterLogger implements Logger {
 
     @Override
     public void error(String tag, String tag1, String tag2, String tag3, String summary, Throwable content) {
-        LoggerApi.append(_name, Level.ERROR, tag, tag1, tag2, tag3, summary, content);
+        WaterClient.log.append(_name, Level.ERROR, tag, tag1, tag2, tag3, summary, content);
     }
 }
