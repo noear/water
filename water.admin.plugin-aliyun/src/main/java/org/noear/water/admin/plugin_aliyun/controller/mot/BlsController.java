@@ -10,8 +10,9 @@ import org.noear.water.admin.plugin_aliyun.model.aliyun.AliyunElineModel;
 import org.noear.water.admin.plugin_aliyun.model.aliyun.BlsTrackModel;
 import org.noear.water.admin.plugin_aliyun.model.aliyun.BlsViewModel;
 import org.noear.water.admin.plugin_aliyun.model.water.ConfigModel;
+import org.noear.water.admin.plugin_aliyun.model.water.ServerTrackBlsModel;
 import org.noear.water.admin.tools.controller.BaseController;
-import org.noear.water.client.model.ConfigM;
+import org.noear.water.tools.TextUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,28 @@ import java.util.Map;
 @XController
 @XMapping("/mot/")
 public class BlsController  extends BaseController {
+    @XMapping("bls")
+    public ModelAndView bls(String tag_name,String name, String sort) throws Exception {
+        List<ConfigModel> tags = DbWindApi.getServerBlsAccounts();
+
+        viewModel.put("tags",tags);
+
+        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
+            tag_name = tags.get(0).tag;
+        }
+
+        List<ServerTrackBlsModel> list =  DbWindApi.getServerBlsTracks(tag_name,name,sort);
+        for(ServerTrackBlsModel item: list){
+            item.traffic_tx=(int)(item.traffic_tx/1000.0);
+        }
+
+        viewModel.put("tag_name",tag_name);
+        viewModel.set("list",list);
+
+
+        return view("mot/bls");
+    }
+
     @XMapping("bls/inner")
     public ModelAndView bls_sinner(String id, String name) throws Exception {
         ConfigModel cfg = DbWindApi.getServerIaasAccount(id);
