@@ -3,6 +3,11 @@ server:
   request.maxRequestSize: 2Mb
   session.timeout: 7200
 
+solon.extend: wateradmin_ext
 
 water:
   host: http://water.noear.org
+  alarm_mobile: 18658857337
+  service_name: wateradmin
+  msg_subscriber_id: 1d7b1b834be448cc95aba405752e6799
+  msg_signature_key: b5fZK49x71Rnn5Cl

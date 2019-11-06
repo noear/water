@@ -1,6 +1,5 @@
 package webapp.widget;
 
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;

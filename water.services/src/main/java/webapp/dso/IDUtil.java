@@ -33,7 +33,7 @@ public class IDUtil {
             return getByTime();
         } else {
             try {
-                return _redis.open((ru) ->
+                return _redis.open1((ru) ->
                         ru.key("WATER_ID")
                           .expire(60 * 60 * 24 * 365)
                           .hashIncr(tag, 1l) + 1000000
@@ -58,7 +58,7 @@ public class IDUtil {
             try {
                 String date = Datetime.Now().toString("yyyyMMdd");
 
-                return _redis.open(ru->ru.key("WATER_ID_DATE")
+                return _redis.open1(ru->ru.key("WATER_ID_DATE")
                         .expire(60 * 60 * 25)
                         .hashIncr(tag + "_" + date, 1l) + start);
 
@@ -80,7 +80,7 @@ public class IDUtil {
             try {
                 String dh = Datetime.Now().toString("yyyyMMddHH");
 
-                return _redis.open(ru-> ru.key("WATER_ID_HOUR")
+                return _redis.open1(ru-> ru.key("WATER_ID_HOUR")
                         .expire(60 * 60 * 2)
                         .hashIncr(tag + "_" + dh, 1l) + start);
             } catch (Exception ex) {

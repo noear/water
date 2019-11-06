@@ -1,7 +1,7 @@
 package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
-import org.noear.water.client.model.ConfigModel;
+import org.noear.water.client.model.ConfigM;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,21 +47,21 @@ public class ConfigApi {
     }
 
     /** 获取配置 */
-    public ConfigModel get(String tag, String key) {
+    public ConfigM get(String tag, String key) {
         do_tryInit(tag);
 
         ONode _data = _cfgs.get(tag);
 
         if (_data.contains(key)) {
             return _data.get(key)
-                    .toBean(ConfigModel.class);
+                    .toBean(ConfigM.class);
         } else {
             return null;
         }
     }
 
     /** 获取配置 */
-    public ConfigModel getByTagKey(String tagKey) {
+    public ConfigM getByTagKey(String tagKey) {
         String[] ss = tagKey.split("/");
         return get(ss[0], ss[1]);
     }

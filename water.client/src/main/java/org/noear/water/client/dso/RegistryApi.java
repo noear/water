@@ -1,7 +1,7 @@
 package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
-import org.noear.water.client.model.DiscoverModel;
+import org.noear.water.client.model.DiscoverM;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public class RegistryApi {
         }
     }
 
-    public  DiscoverModel discover(String service, String consumer, String consumer_address) {
+    public DiscoverM discover(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("consumer", consumer);
@@ -67,7 +67,7 @@ public class RegistryApi {
 
             ONode data = ONode.loadStr(json).get("data");
 
-            DiscoverModel model = new DiscoverModel();
+            DiscoverM model = new DiscoverM();
             model.url = data.get("url").getString();
             model.policy = data.get("policy").getString();
             if (data.contains("list")) {

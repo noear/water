@@ -41,7 +41,7 @@ public class TrackUtil {
         String log_time = now.toString("yyyy-MM-dd HH:mm:ss");
 
         //记录key
-        Config.rd_track.open((ru) -> {
+        Config.rd_track.open0((ru) -> {
 
             long average = do_track_key_minute(ru,key_minute_bef, key_minute, timespan); //生成基于分的平均响应
 

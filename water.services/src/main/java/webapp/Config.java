@@ -68,10 +68,10 @@ public class Config {
     //
     //获取一个数据库配置
 
-    public static ConfigModel getConfig(String key){
-        try{
-            return DbApi.getConfigNoCache(water_config_tag,key);
-        }catch (Exception ex){
+    public static ConfigModel getConfig(String key) {
+        try {
+            return DbApi.getConfigNoCache(water_config_tag, key);
+        } catch (Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }

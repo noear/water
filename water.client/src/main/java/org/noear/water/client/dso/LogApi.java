@@ -1,8 +1,8 @@
 package org.noear.water.client.dso;
 
 import org.noear.snack.ONode;
-import org.noear.water.client.dso.log.Level;
 import org.noear.water.tools.ThrowableUtils;
+import org.noear.water.tools.log.Level;
 
 import java.util.HashMap;
 import java.util.Map;

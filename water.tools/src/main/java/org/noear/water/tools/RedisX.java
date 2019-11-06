@@ -4,21 +4,53 @@ import org.noear.water.tools.ext.Act1;
 import org.noear.water.tools.ext.Fun1;
 import redis.clients.jedis.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Redis 使用类
- * Created by noear on 2017/1/1.
  */
  public class RedisX {
     private JedisPool _jedisPool;
-    private static final Object lock = "";
+
+    public RedisX(Properties prop) {
+        String server = prop.getProperty("server");
+        String user = prop.getProperty("user");
+        String password = prop.getProperty("password");
+        String db = prop.getProperty("db");
+        String maxTotaol = prop.getProperty("maxTotaol");
+
+        doinit(server,
+                user,
+                password,
+                Integer.parseInt(db),
+                (maxTotaol == null ? 200 : Integer.parseInt(maxTotaol))
+        );
+    }
+
+    public RedisX(Properties prop, int db) {
+        String server = prop.getProperty("server");
+        String user = prop.getProperty("user");
+        String password = prop.getProperty("password");
+        String maxTotaol = prop.getProperty("maxTotaol");
+
+        doinit(server,
+                user,
+                password,
+                db,
+                (maxTotaol == null ? 200 : Integer.parseInt(maxTotaol))
+        );
+    }
+
+    public RedisX(String server, String user, String password, int db, int maxTotaol) {
+        doinit(server, user, password, db, maxTotaol);
+    }
 
     private void doinit(String server, String user, String password, int db, int maxTotaol) {
         JedisPoolConfig config = new JedisPoolConfig();
+
+        if (maxTotaol < 10) {
+            maxTotaol = 200;
+        }
 
         int maxIdle = maxTotaol / 5;
         if (maxIdle < 10) {

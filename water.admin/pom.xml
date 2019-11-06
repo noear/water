@@ -38,6 +38,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
+
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
@@ -48,14 +49,14 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water.client</artifactId>
-            <version>0.0.0.1</version>
+            <artifactId>water.client-solon</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>bcfclient</artifactId>
-            <version>1.0.0.1</version>
+            <artifactId>water.admin.tools</artifactId>
+            <version>0.0.1</version>
         </dependency>
 
         <dependency>
@@ -132,6 +133,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.14.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.59</version>
+            <scope>compile</scope>
         </dependency>
 
 

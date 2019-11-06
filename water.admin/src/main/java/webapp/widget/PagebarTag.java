@@ -7,6 +7,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
+import webapp.utils.MapExt;
 
 import java.io.IOException;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class PagebarTag implements TemplateDirectiveModel {
         }
     }
 
-    public void build(Environment env, Map map) throws Exception {
+    public void build(Environment env,Map map) throws Exception {
         MapExt mapExt = new MapExt(map);
         pageSize = mapExt.getInt("pageSize",1);
         rowCount = mapExt.getInt("rowCount",0);

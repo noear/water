@@ -1,6 +1,5 @@
 package webapp.widget;
 
-
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
@@ -12,15 +11,13 @@ import org.noear.bcf.models.BcfResourceModel;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
 import webapp.dao.Session;
+import webapp.utils.MapExt;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by yuety on 14-9-10.
- */
 @XBean("ftl:toolmenu")
 public class ToolmenuTag implements TemplateDirectiveModel {
     private String pack;
@@ -34,7 +31,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    public void build(Environment env, Map map) throws Exception {
+    public void build(Environment env,Map map) throws Exception {
         MapExt mapExt = new MapExt(map);
 
         pack = mapExt.get("pack");
@@ -67,7 +64,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    private void buildItem(XContext request, StringBuffer sb, String title, String url, String cPath) {
+    private void buildItem(XContext request,StringBuffer sb,String title,String url,String cPath) {
         String url2 = url + "?"+request.uri().getQuery();
 
         if(cPath.indexOf(url)>0)

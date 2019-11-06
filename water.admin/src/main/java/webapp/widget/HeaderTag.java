@@ -5,13 +5,13 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import org.apache.http.util.TextUtils;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfUtil;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
+import org.noear.water.tools.TextUtils;
 import webapp.Config;
 import webapp.dao.Session;
 

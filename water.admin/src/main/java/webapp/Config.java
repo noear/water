@@ -2,7 +2,7 @@ package webapp;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.water.client.WaterClient;
-import org.noear.water.client.model.ConfigModel;
+import org.noear.water.client.model.ConfigM;
 import org.noear.water.tools.RedisX;
 import org.noear.water.tools.ServerUtil;
 import org.noear.water.tools.TextUtils;
@@ -15,6 +15,8 @@ import org.noear.weed.cache.memcached.MemCache;
 import java.util.Properties;
 
 public class Config {
+    public static String web_title = "WATER";
+
     public static final String water_service_name = "wateradmin";
     public static final String water_config_tag = "water";
 
@@ -28,11 +30,18 @@ public class Config {
     public static String water_cache_header;
     public static String water_msg_queue;
 
+    //是否使用标答检查器？
+    public static boolean is_use_tag_checker() {
+        return "1".equals(getValConfig("is_use_tag_checker"));
+    }
+
+
     /**
      * 尝试初始化
-     * */
-    private static boolean _inited=false;
-    public static void tryInit(int service_port, Properties prop) {
+     */
+    private static boolean _inited = false;
+
+    public static void tryInit(int service_port) {
         if (_inited == false) {
             _inited = true;
 
@@ -40,7 +49,7 @@ public class Config {
             WeedConfig.isUsingValueExpression = false;
 
 
-            water = getDb(prop);
+            water = getDbConfig("water", null);
 
             water_msg = getDbConfig("water_msg", water);
             water_log = getDbConfig("water_log", water);
@@ -52,7 +61,7 @@ public class Config {
             water_msg_queue = getValConfig("water_msg_queue");
 
             try {
-                WaterClient.registry.add(water_service_name,
+                WaterClient.Registry.add(water_service_name,
                         ServerUtil.getFullAddress(service_port),
                         "/run/check/",
                         "");
@@ -67,10 +76,10 @@ public class Config {
     //
     //获取一个数据库配置
 
-    public static ConfigModel getConfig(String key){
-        try{
-            return WaterClient.config.get(water_config_tag,key);
-        }catch (Exception ex){
+    public static ConfigM getConfig(String key) {
+        try {
+            return WaterClient.Config.get(water_config_tag, key);
+        } catch (Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
@@ -115,7 +124,7 @@ public class Config {
     }
 
     public static DbContext getDbConfig(String key, DbContext def) {
-        ConfigModel cfg = getConfig(key);
+        ConfigM cfg = getConfig(key);
 
         if (cfg == null || cfg.value == null) {
             return def;
@@ -126,7 +135,7 @@ public class Config {
 
     //获取一个数据库配置
     public static RedisX getRdConfig(String key, int db) {
-        ConfigModel cfg = getConfig(key);
+        ConfigM cfg = getConfig(key);
 
         if (cfg == null || cfg.value == null) {
             return null;
@@ -137,21 +146,21 @@ public class Config {
 
     //获取一个缓存配置
     public static ICacheServiceEx getChConfig(String key, String keyHeader, int defSeconds) {
-        ConfigModel cfg = getConfig(key);
+        ConfigM cfg = getConfig(key);
 
         if (cfg == null || cfg.value == null) {
-            return new LocalCache(keyHeader,defSeconds);
+            return new LocalCache(keyHeader, defSeconds);
         } else {
             return new MemCache(cfg.toProp(), keyHeader, defSeconds);
         }
     }
 
     public static String getValConfig(String key) {
-        return getValConfig(key,null);
+        return getValConfig(key, null);
     }
 
     public static String getValConfig(String key, String def) {
-        ConfigModel cfg = getConfig(key);
+        ConfigM cfg = getConfig(key);
 
         if (cfg == null || cfg.value == null) {
             return def;

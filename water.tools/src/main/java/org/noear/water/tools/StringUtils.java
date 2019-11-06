@@ -2,10 +2,8 @@ package org.noear.water.tools;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Stack;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class StringUtils {
     static final String[] padding = new String[]{"", " ", "  ", "   ", "    ", "     ", "      ", "       ", "        ", "         ", "          ", "           ", "            ", "             ", "              ", "               ", "                ", "                 ", "                  ", "                   ", "                    "};
@@ -14,6 +12,37 @@ public class StringUtils {
     private static final int MaxIdleBuilders = 8;
 
     private StringUtils() {
+    }
+
+    public static String stringJoin(List<Double> input, String link) {
+        StringBuilder sb = new StringBuilder();
+        for (Double item : input) {
+            sb.append(item);
+            sb.append(link);
+        }
+        String res=sb.toString();
+        return res.substring(0,res.length()-1);
+    }
+
+    public static String doubleFormat(Double input){
+        DecimalFormat df = new DecimalFormat("#.00");
+        String res=df.format(input);
+        return res;
+    }
+
+
+    public static boolean equals(String cs1, String cs2) {
+        if (cs1 == cs2) {
+            return true;
+        } else if (cs1 != null && cs2 != null) {
+            if (cs1.length() != cs2.length()) {
+                return false;
+            } else {
+                return cs1.equals(cs2);
+            }
+        } else {
+            return false;
+        }
     }
 
     public static String join(Collection strings, String sep) {

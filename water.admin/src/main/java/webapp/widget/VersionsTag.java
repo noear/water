@@ -6,11 +6,12 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.solon.annotation.XBean;
-import org.noear.water.utils.TextUtil;
+import org.noear.water.tools.Datetime;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.IDUtil;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.VersionModel;
-import webapp.utils.Datetime;
+import webapp.utils.MapExt;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -36,7 +37,7 @@ public class VersionsTag implements TemplateDirectiveModel {
         }
     }
 
-    public void build(Environment env, Map map, TemplateDirectiveBody body) throws Exception {
+    public void build(Environment env,Map map,TemplateDirectiveBody body) throws Exception {
         StringWriter sw = new StringWriter();
         body.render(sw);
         script = sw.toString();
@@ -46,7 +47,9 @@ public class VersionsTag implements TemplateDirectiveModel {
         keyName = mapExt.get("keyName");
         keyValue = mapExt.get("keyValue");
 
-        if (TextUtil.isEmpty(table) == false && TextUtil.isEmpty(keyName) == false && TextUtil.isEmpty(keyValue) == false) {
+        if (TextUtils.isEmpty(table) == false
+                && TextUtils.isEmpty(keyName) == false
+                && TextUtils.isEmpty(keyValue) == false) {
             String tagHtml = buildHtml();
             env.getOut().write(tagHtml);
         }

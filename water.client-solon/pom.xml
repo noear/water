@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>water.client-solon</artifactId>
-    <version>0.0.0.1</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -44,6 +44,18 @@
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
             <version>1.0.3.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>water.client</artifactId>
+            <version>0.0.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>bcfclient</artifactId>
+            <version>1.0.0.1</version>
         </dependency>
     </dependencies>
 

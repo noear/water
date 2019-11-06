@@ -202,7 +202,7 @@ public final class DbMessageApi {
             String msg_key = msg_id + "";
             String msg_key_h = Config.water_msg_queue + "_" + msg_key;
 
-            _redisX.open((rs) -> {
+            _redisX.open0((rs) -> {
                 if (rs.key(msg_key_h).expire(30).lock()) {
                     rs.key(Config.water_msg_queue).listAdd(msg_key);
                 }

@@ -7,7 +7,9 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.solon.annotation.XBean;
 import org.noear.water.tools.TextUtils;
-import webapp.model.water.EnumModel;
+import webapp.dao.db.DbWaterApi;
+import webapp.models.water.EnumModel;
+import webapp.utils.MapExt;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -66,11 +68,11 @@ public class EnumTag implements TemplateDirectiveModel {
 
     private void buildHtmlForSelect(List<EnumModel> enumList, StringBuffer sb) {
         sb.append("<select ");
-        if (TextUtil.isEmpty(id) == false) {
+        if (TextUtils.isEmpty(id) == false) {
             sb.append("id=\"").append(id).append("\" ");
         }
 
-        if (TextUtil.isEmpty(name) == false) {
+        if (TextUtils.isEmpty(name) == false) {
             sb.append("name=\"").append(name).append("\" ");
         }
 
