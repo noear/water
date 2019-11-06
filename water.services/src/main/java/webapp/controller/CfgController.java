@@ -21,23 +21,27 @@ public class CfgController implements XHandler {
 
         ONode nList = new ONode().asObject();
 
-        if(TextUtils.isEmpty(tag) == false){
-            List<ConfigModel> list =  DbApi.getConfigByTag(tag);
+        if(TextUtils.isEmpty(tag) == false) {
+            List<ConfigModel> list = DbApi.getConfigByTag(tag);
 
             Date def_time = new Date();
 
-            for(ConfigModel m1: list){
-                if(m1.update_fulltime == null){
+            for (ConfigModel m1 : list) {
+                if (m1.update_fulltime == null) {
                     m1.update_fulltime = def_time;
                 }
 
                 ONode n = nList.getNew(m1.key);
-                n.set("key",m1.key);
-                n.set("value",m1.value);
-                n.set("lastModified",m1.update_fulltime);
+                n.set("key", m1.key);
+                n.set("value", m1.value);
+
+                if (m1.update_fulltime == null) {
+                    n.set("lastModified", 0);
+                } else {
+                    n.set("lastModified", m1.update_fulltime.getTime());
+                }
             }
         }
-
 
         ctx.outputAsJson(nList.toJson());
     }
