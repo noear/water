@@ -16,15 +16,15 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <form>
-                枚举名称：<input type="text"  name="type" placeholder="枚举名称" id="group"/>&nbsp;&nbsp;
+                type：<input type="text"  name="type" id="type"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>&nbsp;&nbsp;
                 <#if is_admin == 1>
                     <button type="button" class="edit" onclick="edit(0);" >新增</button>
                 </#if>
             </form>
-        </cell>
+        </left>
     </toolbar>
     <datagrid>
         <table>

@@ -51,13 +51,13 @@ public class HeaderTag implements TemplateDirectiveModel {
 
         StringBuffer sb = new StringBuffer();
         sb.append("<header>");
-        sb.append("<div>");
-        sb.append("<label>"); //new
-        //cls1
-        sb.append("<a>").append(Config.web_title).append("</a>");
 
-        sb.append("</label>");//new
-        sb.append("<nav>");//new
+        sb.append("<label>"); //new
+        sb.append(Config.web_title);
+        sb.append("</label>\n");//new
+
+
+        sb.append("<nav>");
 
         for(BcfGroupModel g :list) {
             BcfResourceModel res = BcfClient.getUserFirstResourceByPack(Session.current().getPUID(), g.pgid);
@@ -67,7 +67,7 @@ public class HeaderTag implements TemplateDirectiveModel {
             }
         }
 
-        sb.append("</nav>");
+        sb.append("</nav>\n");
 
         sb.append("<aside>");//new
         String temp = Session.current().getUserName();
@@ -78,8 +78,7 @@ public class HeaderTag implements TemplateDirectiveModel {
         sb.append(" （<a href='#' onclick='modifyMm();return false;' >修改密码</a>）");
         sb.append("</aside>");//new
 
-        sb.append("</div>");
-        sb.append("</header>");
+        sb.append("</header>\n");
 
         env.getOut().write(sb.toString());
     }

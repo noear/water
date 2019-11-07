@@ -53,14 +53,14 @@
 </script>
 <body>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     <#if is_admin == 1>
                         <button class="edit" onclick="add();" type="button">新增</button>
                     </#if>
                 </form>
-            </cell>
-            <cell><@stateselector items="启用,未启用"/></cell>
+            </left>
+            <right><@stateselector items="启用,未启用"/></right>
         </toolbar>
         <datagrid>
             <table>

@@ -103,9 +103,6 @@ public class StateSelectorTag implements TemplateDirectiveModel {
         int idx = 0;
         for (String item : items.split(","))
         {
-            if (idx > 0)
-                sb.append('|');
-
             if (idx == getState())
                 sb.append("<span class='stateItem selected' onclick='"+clientID+"_onStateSelect("+idx+",this)'>"+item+"</span>");
             else
