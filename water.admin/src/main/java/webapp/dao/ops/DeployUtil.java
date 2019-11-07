@@ -1,4 +1,4 @@
-package webapp.dao;
+package webapp.dao.ops;
 
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;

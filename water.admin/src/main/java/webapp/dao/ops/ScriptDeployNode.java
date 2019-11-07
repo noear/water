@@ -1,4 +1,4 @@
-package webapp.dao;
+package webapp.dao.ops;
 
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_wind.WindOperateModel;

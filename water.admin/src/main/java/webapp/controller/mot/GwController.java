@@ -8,7 +8,7 @@ import org.noear.water.tools.StringUtils;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
 import webapp.dao.db.DbWindApi;
-import webapp.models.vo.GatewayVoModel;
+import webapp.models.water_dev.GatewayVoModel;
 import webapp.models.water.ConfigModel;
 import webapp.models.water.ServiceConsumerModel;
 import webapp.models.water.ServiceModel;

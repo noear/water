@@ -1,4 +1,4 @@
-package webapp.models.vo;
+package webapp.models.water_dev;
 
 import lombok.Getter;
 import lombok.Setter;

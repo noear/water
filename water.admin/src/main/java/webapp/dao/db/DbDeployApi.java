@@ -4,7 +4,7 @@ import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import webapp.Config;
-import webapp.dao.DeployNode;
+import webapp.dao.ops.DeployNode;
 import webapp.models.water_wind.WindDeployFlowModel;
 
 import java.sql.SQLException;

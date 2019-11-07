@@ -1,4 +1,4 @@
-package webapp.dao;
+package webapp.dao.ops;
 
 import lombok.Getter;
 

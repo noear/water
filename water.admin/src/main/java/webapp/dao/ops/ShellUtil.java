@@ -1,4 +1,4 @@
-package webapp.dao;
+package webapp.dao.ops;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
