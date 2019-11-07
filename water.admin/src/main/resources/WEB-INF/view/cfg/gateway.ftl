@@ -9,13 +9,13 @@
     <script>
         $(function () {
             if ('${sev_key!}') {
-                $('#${sev_key}').addClass('sel');
+                $('#${sev_key!}').addClass('sel');
             } else {
                 $('tree li:first').addClass('sel');
             }
 
         });
-        var tagName = '${sev_key}';
+        var tagName = '${sev_key!}';
         function node_onclick(sev_key,obj) {
             tagName = sev_key;
             $('li.sel').removeClass('sel');

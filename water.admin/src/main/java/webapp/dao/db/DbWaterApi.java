@@ -508,7 +508,7 @@ public class DbWaterApi {
 
         ServiceModel m = getServiceById(service_id);
 
-        boolean isOk = db().table("water_base_service")
+        boolean isOk = db().table("water_service")
                 .where("id=?", service_id)
                 .delete() > 0;
 
@@ -522,7 +522,7 @@ public class DbWaterApi {
     public static boolean disService(Integer service_id, Integer is_enabled) throws SQLException {
         ServiceModel m = getServiceById(service_id);
 
-        boolean isOk = db().table("water_base_service")
+        boolean isOk = db().table("water_service")
                 .where("id = ?", service_id)
                 .set("is_enabled", is_enabled)
                 .update() > 0;
@@ -537,7 +537,7 @@ public class DbWaterApi {
     //获取service表中的数据。
     public static List<ServiceModel> getServices(String name, boolean is_web, int is_enabled) throws SQLException {
         return db()
-                .table("water_base_service")
+                .table("water_service")
                 .where("is_enabled = ?", is_enabled)
                 .expre(tb -> {
                     if(is_web){
@@ -561,7 +561,7 @@ public class DbWaterApi {
 
     public static ServiceModel getServiceById(int service_id) throws SQLException{
         return db()
-                .table("water_base_service")
+                .table("water_service")
                 .where("id = ?", service_id)
                 .select("*")
                 .getItem(new ServiceModel());
@@ -569,7 +569,7 @@ public class DbWaterApi {
 
     public static List<ServiceModel> getServicesByName(String name) throws SQLException {
 
-        return db().table("water_base_service")
+        return db().table("water_service")
                 .where("name = ?", name)
                 .select("*")
                 .getList(new ServiceModel());
@@ -586,7 +586,7 @@ public class DbWaterApi {
         }
 
         DbTableQuery query = db()
-                .table("water_base_service")
+                .table("water_service")
                 .set("name", name)
                 .set("address", address)
                 .set("note",note)
@@ -608,7 +608,7 @@ public class DbWaterApi {
 
     public static List<ServiceConsumerModel> getServiceConsumers(String service) throws SQLException {
 
-        return db().table("water_base_service_consumer")
+        return db().table("water_service_consumer")
                 .where("service = ?", service)
                 .orderBy("consumer asc")
                 .select("*")

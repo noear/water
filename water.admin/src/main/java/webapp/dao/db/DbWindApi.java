@@ -190,21 +190,21 @@ public class DbWindApi {
 
     //获取性能监控服务标签
     public static List<ServiceSpeedModel> getSpeedServices() throws SQLException {
-        return db().table("service_speed")
+        return db().table("water_service_speed")
                    .groupBy("service")
                    .select("service,count(*) counts")
                    .getList(new ServiceSpeedModel());
     }
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service) throws SQLException {
-        return db().table("service_speed")
+        return db().table("water_service_speed")
                    .where("service = ?", service)
                    .select("*")
                    .getList(new ServiceSpeedModel());
     }
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service, String tag) throws SQLException {
-        return db().table("service_speed")
+        return db().table("water_service_speed")
                 .where("service = ? AND tag=?", service,tag)
                 .select("*")
                 .getList(new ServiceSpeedModel());
@@ -222,7 +222,7 @@ public class DbWindApi {
         String tag1 = tag;
         String name1 =name;
 
-        return db().table("service_speed")
+        return db().table("water_service_speed")
                    .where("service = ?", service)
                    .expre(tb -> {
                        if (TextUtils.isEmpty(tag1) == false) {
@@ -252,7 +252,7 @@ public class DbWindApi {
 
 
         JSONObject resp = new JSONObject();
-        List<ServiceSpeedHourModel> threeDays = db().table("service_speed_hour")
+        List<ServiceSpeedHourModel> threeDays = db().table("water_service_speed_hour")
                                                     .where("tag = ?", tag)
                                                     .and("name = ?", name)
                                                     .and("service = ?", service)
@@ -298,7 +298,7 @@ public class DbWindApi {
 
     public static JSONObject getSpeedReqTate_bak(String tag, String name, String service, Integer type) throws SQLException {
         JSONObject resp = new JSONObject();
-        List<ServiceSpeedHourModel> threeDays = db().table("service_speed_hour")
+        List<ServiceSpeedHourModel> threeDays = db().table("water_service_speed_hour")
                                                     .where("tag = ?", tag)
                                                     .and("name = ?", name)
                                                     .and("service = ?", service)
@@ -319,7 +319,7 @@ public class DbWindApi {
             ServiceSpeedHourModel m = threeDays.get(i);
             JSONArray array = new JSONArray();
             try {
-                List<ServiceSpeedHourModel> list = db().table("service_speed_hour")
+                List<ServiceSpeedHourModel> list = db().table("water_service_speed_hour")
                                                        .where("tag = ?", tag)
                                                        .and("name = ?", name)
                                                        .and("service = ?", service)
@@ -354,7 +354,7 @@ public class DbWindApi {
     public static JSONObject getSpeedForMonth(String tag, String name, String service) throws SQLException {
         JSONObject resp = new JSONObject();
 
-        List<ServiceSpeedDateModel> list = db().table("service_speed_date")
+        List<ServiceSpeedDateModel> list = db().table("water_service_speed_date")
                                                .where("tag = ?", tag)
                                                .and("name = ?", name)
                                                .and("service = ?", service)
