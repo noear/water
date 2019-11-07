@@ -6,7 +6,7 @@ import org.noear.solon.core.ModelAndView;
 import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.admin.tools.dso.Session;
-import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterAccountApi;
 import webapp.models.water.AccountModel;
 import webapp.utils.CodeUtil;
 
@@ -21,7 +21,7 @@ public class AccountController extends BaseController {
     //账号列表
     @XMapping("account")
     public ModelAndView accountList(String name) throws Exception{
-        List<AccountModel> list = DbWaterApi.getAccountListByName(name);
+        List<AccountModel> list = DbWaterAccountApi.getAccountListByName(name);
         viewModel.put("list",list);
         return view("/cfg/account");
     }
@@ -37,7 +37,7 @@ public class AccountController extends BaseController {
     //跳转账户编辑页面
     @XMapping("account/edit")
     public  ModelAndView accountEdit(Integer account_id) throws Exception{
-        AccountModel account = DbWaterApi.getAccountById(account_id);
+        AccountModel account = DbWaterAccountApi.getAccountById(account_id);
         viewModel.put("account",account);
         return view("/cfg/account_edit");
     }
@@ -47,7 +47,7 @@ public class AccountController extends BaseController {
     public ViewModel saveAccountEdit(Integer account_id,String name,String alarm_mobile,String note,String access_id,String access_key) throws SQLException{
         int is_admin = Session.current().getIsAdmin();
         if(is_admin==1) {
-            boolean result = DbWaterApi.updateAccount(account_id,name,alarm_mobile,note,access_id,access_key);
+            boolean result = DbWaterAccountApi.setAccount(account_id,name,alarm_mobile,note,access_id,access_key);
             if (result) {
                 viewModel.code(1,"保存成功！");
             } else {
