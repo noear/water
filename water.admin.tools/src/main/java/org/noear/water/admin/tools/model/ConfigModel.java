@@ -22,7 +22,7 @@ import java.util.Properties;
 @Getter
 public class ConfigModel implements IBinder
 {
-    public int row_id;
+    public int id;
     public String tag;
     public String key;
     public int type;
@@ -32,7 +32,7 @@ public class ConfigModel implements IBinder
 	{
 		//1.source:数据源
 		//
-        row_id = s.get("row_id").value(0);
+        id = s.get("id").value(0);
         tag = s.get("tag").value(null);
         key = s.get("key").value(null);
         type = s.get("type").value(0);

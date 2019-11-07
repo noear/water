@@ -23,21 +23,21 @@ import java.util.Map;
 @XMapping("/mot/")
 public class BlsController  extends BaseController {
     @XMapping("bls")
-    public ModelAndView bls(String tag_name,String name, String sort) throws Exception {
+    public ModelAndView bls(String tag,String name, String sort) throws Exception {
         List<ConfigModel> tags = DbWindApi.getServerBlsAccounts();
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
-            tag_name = tags.get(0).tag;
+        if (TextUtils.isEmpty(tag) && tags.size()>0) {
+            tag = tags.get(0).tag;
         }
 
-        List<ServerTrackBlsModel> list =  DbWindApi.getServerBlsTracks(tag_name,name,sort);
+        List<ServerTrackBlsModel> list =  DbWindApi.getServerBlsTracks(tag,name,sort);
         for(ServerTrackBlsModel item: list){
             item.traffic_tx=(int)(item.traffic_tx/1000.0);
         }
 
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.set("list",list);
 
 

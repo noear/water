@@ -32,19 +32,19 @@ public class SchemeController extends BaseController {
 
     //获取计算方案分组列表
     @XMapping("scheme")
-    public ModelAndView scheme(Integer scheme_id,String tag_name, String name) throws SQLException {
+    public ModelAndView scheme(Integer scheme_id,String tag, String name) throws SQLException {
         List<SchemeModel> tags = DbRubberApi.getSchemeTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("name",name);
@@ -54,15 +54,15 @@ public class SchemeController extends BaseController {
 
     //获取计算方案列表
     @XMapping("scheme/inner")
-    public ModelAndView inner(Integer scheme_id, String tag_name, String name,String f) throws SQLException {
+    public ModelAndView inner(Integer scheme_id, String tag, String name,String f) throws SQLException {
         if(scheme_id!=null && scheme_id>0){
             return eventEdit(scheme_id,f);
         }
 
 
-        List<SchemeModel> schemes = DbRubberApi.getSchemeList(tag_name, name);
+        List<SchemeModel> schemes = DbRubberApi.getSchemeList(tag, name);
         viewModel.put("schemes",schemes);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("name",name);
         viewModel.put("f",f);
 
@@ -160,7 +160,7 @@ public class SchemeController extends BaseController {
 
     //跳转计算方案规则列表
     @XMapping("scheme/rule/design")
-    public ModelAndView rule_inner(Integer scheme_id,String tag_name,String name_display,String name,String f) throws SQLException {
+    public ModelAndView rule_inner(Integer scheme_id,String tag,String name_display,String name,String f) throws SQLException {
         List<SchemeRuleModel> rules = DbRubberApi.getSchemeRuleListBySchemeId(scheme_id,name);
         SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
 
@@ -175,7 +175,7 @@ public class SchemeController extends BaseController {
 
         viewModel.put("scheme",scheme);
         viewModel.put("scheme_id",scheme_id);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.put("name_display",name_display);
         viewModel.put("name",name);
         viewModel.put("rules",rules);
@@ -263,7 +263,7 @@ public class SchemeController extends BaseController {
         viewModel.put("scheme_id", scheme_id);
         viewModel.put("scheme",scheme);
         viewModel.put("debug_args",debug_args);
-        viewModel.put("tag_name",scheme.tag);
+        viewModel.put("tag",scheme.tag);
         viewModel.put("name_display",scheme.name_display);
         viewModel.put("leftList", leftList);
         viewModel.put("expr",expr);

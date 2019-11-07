@@ -22,7 +22,7 @@ public class BehaviorController extends BaseController {
 
     //消息异常记录
     @XMapping("behavior")
-    public ModelAndView behavior(String tag_name) throws SQLException {
+    public ModelAndView behavior(String tag) throws SQLException {
         List<LogSqlModel> tags = DbWaterLogApi.getSqlServiceTags(tableName);
 
 
@@ -30,10 +30,10 @@ public class BehaviorController extends BaseController {
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
-            viewModel.put("tag_name",tags.get(0).tag);
+        if (TextUtils.isEmpty(tag) && tags.size()>0) {
+            viewModel.put("tag",tags.get(0).tag);
         } else {
-            viewModel.put("tag_name",tag_name);
+            viewModel.put("tag",tag);
         }
 
         return view("mot/behavior");
@@ -41,12 +41,12 @@ public class BehaviorController extends BaseController {
 
     /** state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER */
     @XMapping("behavior/inner")
-    public ModelAndView behavior_inner(Integer page,String tag_name,String tagx,  String log_date, String path,Integer _state) throws SQLException {
+    public ModelAndView behavior_inner(Integer page,String tag,String tagx,  String log_date, String path,Integer _state) throws SQLException {
         if(page == null){
             page=1;
         }
 
-        List<LogSqlModel> tag2s = DbWaterLogApi.getSqlOperatorTags(tableName,tag_name);
+        List<LogSqlModel> tag2s = DbWaterLogApi.getSqlOperatorTags(tableName,tag);
         List<LogSqlModel> logs = new ArrayList<>();
 
         int i_hour = 0;
@@ -77,15 +77,15 @@ public class BehaviorController extends BaseController {
         }
 
         if (!TextUtils.isEmpty(tableName)) {
-            rowCount = DbWaterLogApi.getSqlLogsCount(tableName, tag_name, null, method,0,tagx,path, i_date,i_hour);
-            logs = DbWaterLogApi.getSqlLogsByPage(tableName, tag_name, null, method,0,tagx,path, i_date,i_hour,page,pageSize);
+            rowCount = DbWaterLogApi.getSqlLogsCount(tableName, tag, null, method,0,tagx,path, i_date,i_hour);
+            logs = DbWaterLogApi.getSqlLogsByPage(tableName, tag, null, method,0,tagx,path, i_date,i_hour,page,pageSize);
         }
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("rowCount", rowCount);
         viewModel.put("list",logs);
         viewModel.put("tag2s",tag2s);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
 
         return view("mot/behavior_inner");
     }

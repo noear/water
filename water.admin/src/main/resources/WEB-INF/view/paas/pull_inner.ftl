@@ -35,7 +35,7 @@
     <cell>
         <form>
             拉取：<input type="text"  name="pull_name" placeholder="名称" value="${tml_name!}"/>
-            <input type="hidden"  name="tag_name" value="${tag_name!}"/>
+            <input type="hidden"  name="tag" value="${tag!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
             <#if is_admin == 1>
                 <button onclick="addPull()" type="button" class="edit">新增</button>

@@ -13,7 +13,7 @@
 </head>
 <script>
     function add() {
-        location.href = "/ops/script/add?tag_name=${tag_name}";
+        location.href = "/ops/script/add?tag=${tag}";
     };
 </script>
 <body>

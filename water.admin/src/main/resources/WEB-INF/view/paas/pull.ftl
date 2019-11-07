@@ -20,7 +20,7 @@
             tagName = tg;
             $('li.sel').removeClass('sel');
             $(obj).addClass("sel");
-            $("#table").attr('src',"/paas/pull/inner?tag_name=" + tagName);
+            $("#table").attr('src',"/paas/pull/inner?tag=" + tagName);
         };
     </script>
 </head>
@@ -41,7 +41,7 @@
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/paas/pull/inner?tag_name=${tag!}&pull_name=${tml_name!}" frameborder="0" id="table"></iframe>
+        <iframe src="/paas/pull/inner?tag=${tag!}&pull_name=${tml_name!}" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>

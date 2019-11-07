@@ -66,7 +66,7 @@
                     if(data.code==1) {
                         top.layer.msg(data.msg)
                         setTimeout(function(){
-                            parent.location.href="/ops/script?tag_name="+tag;
+                            parent.location.href="/ops/script?tag="+tag;
                         },1000);
                     }else{
                         top.layer.msg(data.msg);
@@ -76,12 +76,12 @@
         };
 
 
-        function back(tag_name) {
+        function back(tag) {
             var tag = $('#tag').val();
             top.layer.confirm('确定返回？代码已保存?', {
                 btn: ['确定','取消'] //按钮
             }, function(){
-                parent.location.href="/ops/script/?tag_name="+tag_name;
+                parent.location.href="/ops/script/?tag="+tag;
                 top.layer.close(top.layer.index);
             });
         }
@@ -168,7 +168,7 @@
         <tr>
             <td></td>
             <td><button type="button" onclick="saveEdit()">保存</button>&nbsp;&nbsp;
-                <button type="button" onclick="back('${tag_name!}')">返回</button></td>
+                <button type="button" onclick="back('${tag!}')">返回</button></td>
         </tr>
     </table>
     </form>

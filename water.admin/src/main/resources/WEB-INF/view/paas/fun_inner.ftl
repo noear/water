@@ -8,12 +8,12 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
     <script>
-        function addPaas(tag_name) {
-            location.href="/paas/fun/add?tag_name="+tag_name;
+        function addPaas(tag) {
+            location.href="/paas/fun/add?tag="+tag;
         }
 
-        function impPaas(tag_name) {
-            $.getJSON('/paas/fun/ajax/import?tag='+tag_name,function (rst) {
+        function impPaas(tag) {
+            $.getJSON('/paas/fun/ajax/import?tag='+tag,function (rst) {
                 if(rst.code){
                     top.layer.msg(rst.msg);
                     setTimeout(location.reload,1000);
@@ -32,11 +32,11 @@
             <cell>
                 <form>
                     函数：<input type="text"  name="fun_name" placeholder="函数名" id="fun_name" value="${fun_name!}"/>
-                          <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+                          <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin == 1>
-                    <button onclick="addPaas('${tag_name!}')" type="button" class="edit">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="impPaas('${tag_name!}')" type="button" class="minor">导入</button>
+                    <button onclick="addPaas('${tag!}')" type="button" class="edit">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button onclick="impPaas('${tag!}')" type="button" class="minor">导入</button>
                     </#if>
                 </form>
             </cell>

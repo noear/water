@@ -9,7 +9,7 @@
     <script src="${js}/layer.js"></script>
     <script>
         function addModel() {
-            location.href="/rubber/actor/edit?tag_name=${tag_name}";
+            location.href="/rubber/actor/edit?tag=${tag}";
         }
 
     </script>
@@ -47,7 +47,7 @@
                 <td class="left">${m.name_display!}</td>
                 <td class="left">${m.note!}</td>
                 <td>
-                    <a  class="t2" href="/rubber/actor/edit?actor_id=${m.actor_id}&tag_name=${tag_name!}">编辑信息</a>
+                    <a  class="t2" href="/rubber/actor/edit?actor_id=${m.actor_id}&tag=${tag!}">编辑信息</a>
                 </td>
             </tr>
         </#list>

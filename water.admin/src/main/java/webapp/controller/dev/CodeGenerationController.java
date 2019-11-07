@@ -43,11 +43,11 @@ public class CodeGenerationController extends BaseController {
     }
 
     @XMapping("")
-    public ModelAndView code(String tag_name) throws SQLException {
+    public ModelAndView code(String tag) throws SQLException {
 
         List<TagCountsModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
 
-        viewModel.set("tag_name", TextUtils.isNotEmpty(tag_name) ? tag_name : (resp.size() > 0 ? resp.get(0).tag : null));
+        viewModel.set("tag", TextUtils.isNotEmpty(tag) ? tag : (resp.size() > 0 ? resp.get(0).tag : null));
 
         viewModel.set("resp", resp);
 
@@ -55,17 +55,17 @@ public class CodeGenerationController extends BaseController {
 
     }
 
-    @XMapping("inner/{tag_name}")
-    public ModelAndView inner(String tag_name) throws SQLException {
+    @XMapping("inner/{tag}")
+    public ModelAndView inner(String tag) throws SQLException {
 
-        List<ConfigModel> cfgs = DbWaterApi.getConfigByType(tag_name, CFG_TYPE_DB);
+        List<ConfigModel> cfgs = DbWaterApi.getConfigByType(tag, CFG_TYPE_DB);
 
         List<PaasTmlModel> tmls = DbPaaSApi.tmlGetList(TEMPLATE_TAG, null, 1);
 
         viewModel.set("cfgs", cfgs);
         viewModel.set("tmls", tmls);
 
-        viewModel.set("tag_name", tag_name);
+        viewModel.set("tag", tag);
 
         return view("dev/code_inner");
 

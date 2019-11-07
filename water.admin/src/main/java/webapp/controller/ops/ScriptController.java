@@ -24,23 +24,23 @@ import java.util.List;
 public class ScriptController extends BaseController {
 
     @XMapping("script")
-    public ModelAndView script(String tag_name) throws SQLException {
+    public ModelAndView script(String tag) throws SQLException {
         List<WindScriptModel> tags = DbWindApi.getScriptTags();
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag",null);
             }
         }
         return view("ops/script");
     }
 
     @XMapping("script/inner")
-    public ModelAndView scriptInner(String tag_name,Integer _state) throws SQLException {
+    public ModelAndView scriptInner(String tag,Integer _state) throws SQLException {
             if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -53,14 +53,14 @@ public class ScriptController extends BaseController {
         if (_state == null) {
             _state = 1;
         }
-        List<WindScriptModel> list = DbWindApi.getScriptByTagNameAndState(tag_name,_state);
+        List<WindScriptModel> list = DbWindApi.getScriptByTagNameAndState(tag,_state);
         viewModel.put("list",list);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         return view("ops/script_inner");
     }
 
     @XMapping("script/add")
-    public ModelAndView serverAdd(String tag_name) throws SQLException{
+    public ModelAndView serverAdd(String tag) throws SQLException{
         List<WindScriptModel> tags = DbWindApi.getScriptTags();
         List<ConfigModel> accounts = DbWindApi.getIAASAccionts();
 
@@ -73,7 +73,7 @@ public class ScriptController extends BaseController {
         viewModel.put("argsList",data.toJson());
         viewModel.put("accounts",accounts);
         viewModel.put("tags",tags);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.put("script",new WindScriptModel());
         return view("ops/script_edit");
     }

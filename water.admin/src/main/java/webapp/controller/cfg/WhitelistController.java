@@ -62,10 +62,10 @@ public class WhitelistController extends BaseController {
 
     //删除IP白名单记录
     @XMapping("whitelist/ajax/del")
-    public ViewModel saveWhitelistDel(Integer row_id) throws Exception{
+    public ViewModel saveWhitelistDel(Integer id) throws Exception{
         int is_admin = Session.current().getIsAdmin();
         if(is_admin==1) {
-            boolean result = DbWaterApi.deleteWhiteList(row_id);
+            boolean result = DbWaterApi.deleteWhiteList(id);
             if (result) {
                 DbWaterApi.reloadWhitelist();
 

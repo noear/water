@@ -59,7 +59,7 @@
                         top.layer.msg(data.msg);
                         if(api_id == 0){
                             setTimeout(function(){
-                                parent.location.href="/paas/api?tag_name="+tag;
+                                parent.location.href="/paas/api?tag="+tag;
                             },1000);
                         }
                     }else{
@@ -69,12 +69,12 @@
             });
         }
 
-        function back(tag_name) {
+        function back(tag) {
             var tag = $('#tag').val();
             top.layer.confirm('确定返回？代码已保存?', {
                 btn: ['确定','取消'] //按钮
             }, function(){
-                parent.location.href="/paas/api?tag_name="+tag_name;
+                parent.location.href="/paas/api?tag="+tag;
                 top.layer.close(top.layer.index);
             });
         };
@@ -198,7 +198,7 @@
                 <tr>
                     <td></td>
                     <td><button type="button" onclick="saveEdit()">保存</button>&nbsp;&nbsp;
-                        <button type="button" onclick="back('${tag_name!}')">返回</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" onclick="back('${tag!}')">返回</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type="button" onclick="debug()" class="minor">调试</button>&nbsp;&nbsp;
                         <button type="button" onclick="preview()" class="minor">预览</button>
                     </td>

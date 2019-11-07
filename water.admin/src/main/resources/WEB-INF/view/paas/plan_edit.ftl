@@ -61,7 +61,7 @@
                         top.layer.msg(data.msg)
                         if(plan_id==0) {
                             setTimeout(function () {
-                                parent.location.href = "/paas/plan?tag_name=" + tag;
+                                parent.location.href = "/paas/plan?tag=" + tag;
                             }, 1000);
                         }
                     }else{
@@ -71,12 +71,12 @@
             });
         }
 
-        function back(tag_name) {
+        function back(tag) {
             var tag = $('#tag').val();
             top.layer.confirm('确定返回？代码已保存?', {
                 btn: ['确定','取消'] //按钮
             }, function(){
-                parent.location.href="/paas/plan?tag_name=" + tag_name;
+                parent.location.href="/paas/plan?tag=" + tag;
                 top.layer.close(top.layer.index);
             });
         }

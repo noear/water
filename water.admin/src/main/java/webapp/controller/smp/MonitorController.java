@@ -24,19 +24,19 @@ public class MonitorController extends BaseController {
 
     //monitor视图跳转。
     @XMapping("monitor")
-    public ModelAndView MonitorIndex(String tag_name) throws SQLException {
+    public ModelAndView MonitorIndex(String tag) throws SQLException {
         List<MonitorModel> tags = DbWaterMotApi.getMonitorTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag",null);
             }
         }
         return view("smp/monitor");
@@ -44,7 +44,7 @@ public class MonitorController extends BaseController {
 
     //Monitor的 iframe inner视图。
     @XMapping("monitor/inner")
-    public ModelAndView monitorInner(String tag_name,String monitor_name,Integer _state) throws SQLException {
+    public ModelAndView monitorInner(String tag,String monitor_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -56,9 +56,9 @@ public class MonitorController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<MonitorModel> list = DbWaterMotApi.getMonitorList(tag_name,monitor_name, _state);
+        List<MonitorModel> list = DbWaterMotApi.getMonitorList(tag,monitor_name, _state);
         viewModel.put("monitors",list);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         return view("smp/monitor_inner");
     }
 

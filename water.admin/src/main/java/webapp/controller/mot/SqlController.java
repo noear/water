@@ -23,17 +23,17 @@ public class SqlController extends BaseController {
 
     //消息异常记录
     @XMapping("sql")
-    public ModelAndView sql(String tag_name) throws SQLException {
+    public ModelAndView sql(String tag) throws SQLException {
         List<LogSqlModel> tags = DbWaterLogApi.getSqlServiceTags(tableName);
 
         BcfServiceChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
-            viewModel.put("tag_name",tags.get(0).tag);
+        if (TextUtils.isEmpty(tag) && tags.size()>0) {
+            viewModel.put("tag",tags.get(0).tag);
         } else {
-            viewModel.put("tag_name",tag_name);
+            viewModel.put("tag",tag);
         }
 
         return view("mot/sql");
@@ -42,13 +42,13 @@ public class SqlController extends BaseController {
 
     /** state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER */
     @XMapping("sql/inner")
-    public ModelAndView behavior_inner(Integer page,String tag_name, String tagx,  String log_date,Integer _state) throws SQLException {
+    public ModelAndView behavior_inner(Integer page,String tag, String tagx,  String log_date,Integer _state) throws SQLException {
         if(page == null){
             page=1;
         }
 
 
-        List<LogSqlModel> tag2s = DbWaterLogApi.getSqlSecondsTags(tableName,tag_name);
+        List<LogSqlModel> tag2s = DbWaterLogApi.getSqlSecondsTags(tableName,tag);
         List<LogSqlModel> logs = new ArrayList<>();
 
         int i_hour = 0;
@@ -85,8 +85,8 @@ public class SqlController extends BaseController {
         }
 
         if (!TextUtils.isEmpty(tableName)) {
-            rowCount = DbWaterLogApi.getSqlLogsCount(tableName, tag_name, null, method, scs, null, null, i_date, i_hour);
-            logs = DbWaterLogApi.getSqlLogsByPage(tableName, tag_name, null, method, scs, null, null, i_date, i_hour, page, pageSize);
+            rowCount = DbWaterLogApi.getSqlLogsCount(tableName, tag, null, method, scs, null, null, i_date, i_hour);
+            logs = DbWaterLogApi.getSqlLogsByPage(tableName, tag, null, method, scs, null, null, i_date, i_hour, page, pageSize);
         }
 
         viewModel.put("refdate", Datetime.Now().addDay(-2).getDate());
@@ -94,7 +94,7 @@ public class SqlController extends BaseController {
         viewModel.put("rowCount", rowCount);
         viewModel.put("list",logs);
         viewModel.put("tag2s",tag2s);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
 
         return view("mot/sql_inner");
     }

@@ -13,7 +13,7 @@
 
     <script>
         function saveEdit() {
-            var row_id = '${row_id}';
+            var id = '${id}';
             var tag = $('#tag').val();
             var key = $('#key').val();
             var url = $('#url').val();
@@ -35,12 +35,12 @@
             $.ajax({
                 type:"POST",
                 url:"/cfg/prop/edit/ajax/save",
-                data:{"row_id":row_id,"name":name,"tag":tag,"key":key,"type":type,"url":url,"user":user,"password":password,"explain":explain},
+                data:{"id":id,"name":name,"tag":tag,"key":key,"type":type,"url":url,"user":user,"password":password,"explain":explain},
                 success:function (data) {
                     if(data.code==1) {
                         top.layer.msg(data.msg)
                         setTimeout(function(){
-                            parent.location.href="/cfg/prop?tag_name="+tag;
+                            parent.location.href="/cfg/prop?tag="+tag;
                         },1000);
                     }else{
                         top.layer.msg(data.msg);

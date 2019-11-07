@@ -12,14 +12,14 @@
             location.href = "/cfg/whitelist/add";
         };
 
-        function deleteIp(row_id){
+        function deleteIp(id){
             top.layer.confirm('确定删除', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                 $.ajax({
                     type:"POST",
                     url:"/cfg/whitelist/ajax/del",
-                    data:{"row_id":row_id},
+                    data:{"id":id},
                     success:function(data){
                         top.layer.msg(data.msg);
                         setTimeout(function(){
@@ -60,12 +60,12 @@
 
                 <#list list as m>
                     <tr>
-                        <td>${m.row_id}</td>
+                        <td>${m.id}</td>
                         <td style="text-align: left">${m.tag!}</td>
                         <td style="text-align: left">${m.ip!}</td>
                         <td style="text-align: left">${m.note!}</td>
                         <#if is_admin == 1>
-                            <td><a style="cursor: pointer;color: blue;" onclick="deleteIp('${m.row_id}');">删除</a></td>
+                            <td><a style="cursor: pointer;color: blue;" onclick="deleteIp('${m.id}');">删除</a></td>
                         </#if>
                     </tr>
                 </#list>

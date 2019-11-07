@@ -32,19 +32,19 @@ import java.util.List;
 public class PlanController extends BaseController {
     //plan视图跳转
     @XMapping("plan")
-    public ModelAndView plan(String tag_name,String plan_name) throws SQLException {
+    public ModelAndView plan(String tag,String plan_name) throws SQLException {
         List<PaasPlanModel> tags = DbPaaSApi.getPlanTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags", tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("plan_name",plan_name);
@@ -53,7 +53,7 @@ public class PlanController extends BaseController {
 
     //iframe 的inner视图。
     @XMapping("plan/inner")
-    public ModelAndView planInner(String tag_name, String plan_name, Integer _state) throws SQLException {
+    public ModelAndView planInner(String tag, String plan_name, Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -65,9 +65,9 @@ public class PlanController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<PaasPlanModel> list = DbPaaSApi.getPlanList(tag_name, plan_name, _state);
+        List<PaasPlanModel> list = DbPaaSApi.getPlanList(tag, plan_name, _state);
         viewModel.put("plans", list);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("plan_name",plan_name);
         return view("paas/plan_inner");
     }

@@ -50,7 +50,7 @@
 
         <input type="hidden" id="input_scheme_id" value="${scheme_id}"/>
         <input type="hidden" id="input_display" value="${name_display!}"/>
-        <input type="hidden" id="input_tag_name" value="${tag_name!}"/>
+        <input type="hidden" id="input_tag" value="${tag!}"/>
         <hr/>
         <table id="table_data">
             <tr>
@@ -318,8 +318,8 @@
                 if (data.code == 1) {
                     top.layer.msg(data.msg)
                     setTimeout(function () {
-                        location.href = "/rubber/scheme/rule/design?scheme_id="+ $("#input_scheme_id").val() + "&tag_name="+
-                                $("#input_tag_name").val() +"&name_display=" + $("#input_display").val()+"&f="+f;
+                        location.href = "/rubber/scheme/rule/design?scheme_id="+ $("#input_scheme_id").val() + "&tag="+
+                                $("#input_tag").val() +"&name_display=" + $("#input_display").val()+"&f="+f;
                     }, 1000);
                 } else {
                     top.layer.msg(data.msg);
@@ -361,7 +361,7 @@
                     if(data.code==1) {
                         top.layer.msg(data.msg);
                         setTimeout(function(){
-                            location.href="/rubber/scheme/rule/design?scheme_id=${scheme_id}&tag_name=${tag_name}"
+                            location.href="/rubber/scheme/rule/design?scheme_id=${scheme_id}&tag=${tag}"
                                     + "&name_display=${name_display}";
 
                         },1000);

@@ -13,7 +13,7 @@
     <cell>
         <form>
             方案：<input type="text"  name="name" placeholder="代号或显示名" id="name" value="${name!}"/>
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+            <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
             <#if is_operator == 1>
                 <button id="btn_add" type="button" class="edit">新建</button>
@@ -65,7 +65,7 @@
 
     $("a[id='a_rule']").on("click",function(){
         location.href="/rubber/scheme/rule/design?scheme_id=" + $(this).attr("scheme")
-             + "&tag_name=" + $("#tag_name").val() + "&name_display=" + $(this).attr("display")+"&f=${f}";
+             + "&tag=" + $("#tag").val() + "&name_display=" + $(this).attr("display")+"&f=${f}";
     });
 
     $("a[id='a_process']").on("click",function(){
@@ -81,8 +81,8 @@
     };
 
 
-    function impPaas(tag_name) {
-        $.getJSON('/paas/plan/ajax/import?tag='+tag_name,function (rst) {
+    function impPaas(tag) {
+        $.getJSON('/paas/plan/ajax/import?tag='+tag,function (rst) {
             if(rst.code){
                 top.layer.msg(rst.msg);
                 setTimeout(location.reload,1000);

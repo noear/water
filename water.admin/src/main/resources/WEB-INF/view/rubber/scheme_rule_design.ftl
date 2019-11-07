@@ -19,15 +19,15 @@
 <body>
 <main class="frm">
     <h2>
-    ${name_display}/规则设计（<a href="/rubber/scheme/inner?tag_name=${tag_name!}&f=water" class="t2 noline">返回</a>）
+    ${name_display}/规则设计（<a href="/rubber/scheme/inner?tag=${tag!}&f=water" class="t2 noline">返回</a>）
     </h2>
     <hr/>
     <toolbar>
         <cell>
-            <input type="hidden" name="tag_name" id="tag_name" value="${tag_name!}"/>
+            <input type="hidden" name="tag" id="tag" value="${tag!}"/>
             <input type="hidden" id="input_scheme_id" value="${scheme_id}"/>
             <input type="hidden" id="input_name_display" value="${name_display!}"/>
-            <input type="hidden" id="input_tag_name" value="${tag_name!}"/>
+            <input type="hidden" id="input_tag" value="${tag!}"/>
             规则关系:
             <select id="rule_relation">
                 <option value="0" <#if scheme.rule_relation == 0>selected</#if>>并且关系</option>
@@ -152,7 +152,7 @@
 
     $("#btn_search").on("click", function () {
         location.href = "/rubber/scheme/rule/design?scheme_id=" + $("#input_scheme_id").val()
-            + "&tag_name=" + $("#input_tag_name").val() + "&name_display=" + $("#input_name_display").val() + "&name=" + $("#input_search_name").val();
+            + "&tag=" + $("#input_tag").val() + "&name_display=" + $("#input_name_display").val() + "&name=" + $("#input_search_name").val();
     });
 
     $("#btn_save").on("click", function () {
@@ -190,7 +190,7 @@
                     top.layer.msg(data.msg);
                     // setTimeout(function () {
                     //     location.href = "/rubber/scheme/rule/design?scheme_id=" + $("#input_scheme_id").val()
-                    //         + "&tag_name=" + $("#input_tag_name").val() + "&name_display=" + $("#input_name_display").val() + "&name=" + $("#input_search_name").val();
+                    //         + "&tag=" + $("#input_tag").val() + "&name_display=" + $("#input_name_display").val() + "&name=" + $("#input_search_name").val();
                     // }, 1000);
                 } else {
                     top.layer.msg(data.msg);
@@ -207,8 +207,8 @@
         if (rule_id) {
             params = "&rule_id=" + rule_id;
         }
-        var url = "/rubber/scheme/rule/edit?scheme_id=" + $("#input_scheme_id").val() + "&tag_name=" +
-            $("#input_tag_name").val() + "&name_display=" + $("#input_name_display").val()+"&f=${f}";
+        var url = "/rubber/scheme/rule/edit?scheme_id=" + $("#input_scheme_id").val() + "&tag=" +
+            $("#input_tag").val() + "&name_display=" + $("#input_name_display").val()+"&f=${f}";
         location.href = url + params;
     }
 

@@ -24,19 +24,19 @@ import java.util.List;
 public class FunController extends BaseController {
 
     @XMapping("fun")
-    public ModelAndView fun(String tag_name,String fun_name) throws SQLException{
+    public ModelAndView fun(String tag,String fun_name) throws SQLException{
         List<PaasFunModel> tags = DbPaaSApi.getFunTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag",null);
             }
         }
         viewModel.put("fun_name",fun_name);
@@ -46,7 +46,7 @@ public class FunController extends BaseController {
 
     //公共函数的iframe 的inner视图。
     @XMapping("fun/inner")
-    public ModelAndView funInner(String tag_name,String fun_name,Integer _state) throws SQLException {
+    public ModelAndView funInner(String tag,String fun_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -58,9 +58,9 @@ public class FunController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<PaasFunModel> list = DbPaaSApi.getFunList(tag_name,fun_name, _state);
+        List<PaasFunModel> list = DbPaaSApi.getFunList(tag,fun_name, _state);
         viewModel.put("funs",list);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.put("fun_name",fun_name);
         return view("paas/fun_inner");
     }
@@ -70,7 +70,7 @@ public class FunController extends BaseController {
     @XMapping("fun/edit")
     public ModelAndView editFun(int fun_id) throws SQLException {
         PaasFunModel fun = DbPaaSApi.getFunById(fun_id);
-        viewModel.put("tag_name",fun.tag);
+        viewModel.put("tag",fun.tag);
         viewModel.put("fun",fun);
         viewModel.put("url_start",Config.paas_uri);
         return view("paas/fun_edit");
@@ -78,8 +78,8 @@ public class FunController extends BaseController {
 
     //新增函数跳转
     @XMapping("fun/add")
-    public ModelAndView addFun(String tag_name) {
-        viewModel.put("tag_name",tag_name);
+    public ModelAndView addFun(String tag) {
+        viewModel.put("tag",tag);
         viewModel.put("fun",new PaasFunModel());
         viewModel.put("url_start",Config.paas_uri);
         return view("paas/fun_edit");

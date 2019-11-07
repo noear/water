@@ -10,15 +10,15 @@
     </style>
     <script>
         $(function () {
-            if ('${tag_name!}') {
-                $('#${tag_name}').addClass('sel');
+            if ('${tag!}') {
+                $('#${tag}').addClass('sel');
             } else {
                 $('tree li:first').addClass('sel');
             }
         });
-        var tagName = '${tag_name!}';
-        function node_onclick(tag_name,obj) {
-            tagName = tag_name;
+        var tagName = '${tag!}';
+        function node_onclick(tag,obj) {
+            tagName = tag;
             $('li.sel').removeClass('sel');
             $(obj).addClass("sel");
             $("#table").attr('src',"/dev/code/inner/"+tagName);
@@ -37,7 +37,7 @@
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/dev/code/inner/${tag_name!}" frameborder="0" id="table"></iframe>
+        <iframe src="/dev/code/inner/${tag!}" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>

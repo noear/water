@@ -45,7 +45,7 @@
                 type:"POST",
                 url:"/dev/code/ajax/tb",
                 data:{
-                    tag: '${tag_name}',
+                    tag: '${tag}',
                     key: key
                 },
                 success:function (data) {
@@ -77,7 +77,7 @@
                 type:"POST",
                 url:"/dev/code/ajax/getcode",
                 data:{
-                    tag: '${tag_name!}',
+                    tag: '${tag!}',
                     key: key,
                     tb: tb,
                     tml_id: $("#tml").val()

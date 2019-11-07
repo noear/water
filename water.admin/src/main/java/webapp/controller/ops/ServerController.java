@@ -26,23 +26,23 @@ import java.util.stream.Collectors;
 public class ServerController extends BaseController {
 
     @XMapping("server")
-    public ModelAndView project(String tag_name) throws SQLException {
+    public ModelAndView project(String tag) throws SQLException {
         List<WindServerModel> tags = DbWindApi.getServerTags();
         viewModel.put("tags", tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         return view("ops/server");
     }
 
     @XMapping("server/inner")
-    public ModelAndView projectInner(String tag_name, Integer _state) throws SQLException {
+    public ModelAndView projectInner(String tag, Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -55,9 +55,9 @@ public class ServerController extends BaseController {
         if (_state == null)
             _state = 1;
 
-        List<WindServerModel> list = DbWindApi.getServerByTagNameAndState(tag_name, _state);
+        List<WindServerModel> list = DbWindApi.getServerByTagNameAndState(tag, _state);
         viewModel.put("list", list);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         return view("ops/server_inner");
     }
 
@@ -80,13 +80,13 @@ public class ServerController extends BaseController {
 
     //跳转服务新增页面
     @XMapping("server/add")
-    public ModelAndView serverAdd(String tag_name) throws SQLException {
+    public ModelAndView serverAdd(String tag) throws SQLException {
         List<WindServerModel> tags = DbWindApi.getServerTags();
         List<ConfigModel> accounts = DbWindApi.getIAASAccionts();
 
         viewModel.put("accounts", accounts);
         viewModel.put("tags", tags);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("server", new WindServerModel());
         return view("ops/server_edit");
     }

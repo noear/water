@@ -16,7 +16,7 @@
             <button type="button" onclick="location.reload();">刷新</button>&nbsp;&nbsp;
         </left>
         <right>
-            <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">
+            <select name="tag" id="tag" onchange="UrlQueryBy('tag',$(this).val())">
                 <#list tags as m>
                     <option value="${m.tag}">${m.tag} (${m.counts})</option>
                 </#list>

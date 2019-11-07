@@ -23,19 +23,19 @@ import java.util.List;
 public class ApiController extends BaseController {
 
     @XMapping("api")
-    public ModelAndView api(String tag_name,String api_name) throws SQLException{
+    public ModelAndView api(String tag,String api_name) throws SQLException{
         List<PaasApiModel> tags = DbPaaSApi.getApiTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag",null);
             }
         }
         viewModel.put("api_name",api_name);
@@ -45,7 +45,7 @@ public class ApiController extends BaseController {
 
     //iframe 的inner视图。
     @XMapping("api/inner")
-    public ModelAndView api_inner(String tag_name,String api_name,Integer _state) throws SQLException {
+    public ModelAndView api_inner(String tag,String api_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -57,11 +57,11 @@ public class ApiController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<PaasApiModel> list = DbPaaSApi.getApiList(tag_name,api_name, _state);
+        List<PaasApiModel> list = DbPaaSApi.getApiList(tag,api_name, _state);
         String url_start = Config.paas_uri;
         viewModel.put("url_start",url_start);
         viewModel.put("apis",list);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.put("api_name",api_name);
         return view("paas/api_inner");
     }
@@ -69,7 +69,7 @@ public class ApiController extends BaseController {
 
     //编辑接口跳转
     @XMapping("api/edit")
-    public ModelAndView api_edit(String tag_name, Integer api_id) throws SQLException {
+    public ModelAndView api_edit(String tag, Integer api_id) throws SQLException {
         if(api_id == null){
             api_id = 0;
         }
@@ -82,12 +82,12 @@ public class ApiController extends BaseController {
         }
         else{
             api = DbPaaSApi.getApiById(api_id);
-            tag_name = api.tag;
+            tag = api.tag;
         }
 
         List<PaasTmlModel> tmlList = DbPaaSApi.tmlGetTagNames();
 
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.put("url_start",Config.paas_uri);
         viewModel.put("api",api);
         viewModel.put("tmlList",tmlList);

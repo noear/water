@@ -12,14 +12,14 @@
             location.href = "/cfg/account/add";
         };
 
-        function deleteIp(row_id){
+        function deleteIp(id){
             top.layer.confirm('确定删除', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                 $.ajax({
                     type:"POST",
                     url:"/cfg/whitelist/delete",
-                    data:{"row_id":row_id},
+                    data:{"id":id},
                     success:function(data){
                         top.layer.msg(data.msg);
                         setTimeout(function(){

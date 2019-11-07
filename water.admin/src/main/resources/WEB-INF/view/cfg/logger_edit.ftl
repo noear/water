@@ -16,7 +16,6 @@
             document.getElementById('source').value="${log.source!}";
         });
 
-        var logger_id = '${log.logger_id}';
         function saveEdit() {
             var tag = $('#tag').val();
             var logger = $('#logger').val();
@@ -29,14 +28,11 @@
                 return;
             }
 
-            if(logger_id==null){
-                logger_id=0;
-            }
             $.ajax({
                 type:"POST",
                 url:"/cfg/logger/edit/ajax/save",
                 data:{
-                    "logger_id":logger_id,
+                    "id":${log.id!0},
                     "tag":tag,
                     "logger":logger,
                     "keep_days":keep_days,
@@ -47,7 +43,7 @@
                     if(data.code==1) {
                         top.layer.msg(data.msg)
                         setTimeout(function(){
-                            parent.location.href="/cfg/logger?tag_name="+tag;
+                            parent.location.href="/cfg/logger?tag="+tag;
                         },1000);
                     }else{
                         top.layer.msg(data.msg);

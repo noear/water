@@ -46,11 +46,11 @@ public class DbPaaSApi {
                 .getList(new PaasApiModel());
     }
 
-    //根据tag_name和api_name、state获取paas列表。
-    public static List<PaasApiModel> getApiList(String tag_name, String api_name, Integer state) throws SQLException {
+    //根据tag和api_name、state获取paas列表。
+    public static List<PaasApiModel> getApiList(String tag, String api_name, Integer state) throws SQLException {
         return db().table("paas_api")
                 .where("is_enabled = ?", state)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(api_name) == false) {
                         tb.and("api_name like ?", api_name + "%");
@@ -111,11 +111,11 @@ public class DbPaaSApi {
                 .getList(new PaasFunModel());
     }
 
-    //根据tag_name和fun_name、state获取函数列表。
-    public static List<PaasFunModel> getFunList(String tag_name, String fun_name, Integer state) throws SQLException {
+    //根据tag和fun_name、state获取函数列表。
+    public static List<PaasFunModel> getFunList(String tag, String fun_name, Integer state) throws SQLException {
         return db().table("paas_fun")
                 .where("is_enabled = ?", state)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(fun_name) == false) {
                         tb.and("fun_name like ?", fun_name + "%");
@@ -174,11 +174,11 @@ public class DbPaaSApi {
                 .getList(new PaasPlanModel());
     }
 
-    //根据tag_name plan_name 和 is_enabled查询计划任务数据。
-    public static List<PaasPlanModel> getPlanList(String tag_name, String plan_name, int is_enabled) throws SQLException {
+    //根据tag plan_name 和 is_enabled查询计划任务数据。
+    public static List<PaasPlanModel> getPlanList(String tag, String plan_name, int is_enabled) throws SQLException {
         return db().table("paas_plan")
                 .where("is_enabled = ?", is_enabled)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(plan_name) == false) {
                         tb.and("plan_name like ?", plan_name + "%");
@@ -253,10 +253,10 @@ public class DbPaaSApi {
     }
 
     //根据tag和是否启用获取etl任务列表
-    public static List<PaasEtlModel> getEtlList(String tag_name, String etl_name, int is_enabled) throws SQLException {
+    public static List<PaasEtlModel> getEtlList(String tag, String etl_name, int is_enabled) throws SQLException {
         return db().table("paas_etl")
                 .where("is_enabled = ?", is_enabled)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(etl_name) == false) {
                         tb.and("etl_name like ?", etl_name + "%");

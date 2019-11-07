@@ -13,16 +13,16 @@
     </style>
 </head>
 <script>
-    function editTask(row_id) {
-        location.href="/cfg/prop/edit?row_id="+row_id;
+    function editTask(id) {
+        location.href="/cfg/prop/edit?id="+id;
     };
 
     function add() {
         location.href = "/cfg/prop/add";
     };
 
-    function impCfg(tag_name) {
-        $.getJSON('/cfg/prop/ajax/import?tag='+tag_name,function (rst) {
+    function impCfg(tag) {
+        $.getJSON('/cfg/prop/ajax/import?tag='+tag,function (rst) {
             if(rst.code){
                 top.layer.msg(rst.msg);
                 setTimeout(location.reload,1000);
@@ -38,11 +38,11 @@
             <cell>
                 <form>
                     key：<input type="text"  name="key" placeholder="key" id="key"/>
-                    <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
+                    <input type="hidden"  name="tag" id="tag" value="${tag}"/>
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin == 1>
                         <button type='button' class="edit" onclick="add();" >新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type='button' class="minor" onclick="impCfg('${tag_name}')" >导入</button>
+                        <button type='button' class="minor" onclick="impCfg('${tag}')" >导入</button>
                     </#if>
                 </form>
             </cell>
@@ -72,7 +72,7 @@
                         <td style="word-wrap:break-word;word-break:break-all;text-align: left;">${cfg.user!}</td>
                         <td style="word-wrap:break-word;word-break:break-all;text-align: left;">${cfg.explain!}</td>
                         <#if is_admin == 1>
-                            <td><a onclick="editTask('${cfg.row_id}')" style="color: blue;cursor: pointer">编辑</a></td>
+                            <td><a onclick="editTask('${cfg.id}')" style="color: blue;cursor: pointer">编辑</a></td>
                         </#if>
                     </tr>
                 </#list>

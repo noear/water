@@ -22,26 +22,26 @@ import java.util.List;
 public class ActorController extends BaseController {
 
     @XMapping("actor")
-    public ModelAndView joiner(String tag_name,String name) throws SQLException {
+    public ModelAndView joiner(String tag,String name) throws SQLException {
         List<ModelModel> tags = DbRubberApi.getActorTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            boolean result = DbRubberApi.containActorTag(tags, tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            boolean result = DbRubberApi.containActorTag(tags, tag);
 
             if (result) {
-                viewModel.put("tag_name", tag_name);
+                viewModel.put("tag", tag);
             } else {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             }
 
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("name",name);
@@ -51,10 +51,10 @@ public class ActorController extends BaseController {
 
     //参与人员右侧列表
     @XMapping("actor/inner")
-    public ModelAndView inner(String tag_name,String name) throws SQLException {
-        List<ActorModel> models = DbRubberApi.getActorList(tag_name,name);
+    public ModelAndView inner(String tag,String name) throws SQLException {
+        List<ActorModel> models = DbRubberApi.getActorList(tag,name);
         viewModel.put("models",models);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("name",name);
         return view("rubber/actor_inner");
     }
@@ -62,9 +62,9 @@ public class ActorController extends BaseController {
 
     //参与人员编辑
     @XMapping("actor/edit")
-    public ModelAndView edit(Integer actor_id,String tag_name) throws SQLException{
+    public ModelAndView edit(Integer actor_id,String tag) throws SQLException{
         viewModel.put("actor_id",actor_id);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
 
         return view("rubber/actor_edit");
     }

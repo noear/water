@@ -13,7 +13,7 @@
 </head>
 <script>
     function add() {
-        location.href = "/ops/project/add?tag_name=${tag_name!}";
+        location.href = "/ops/project/add?tag=${tag!}";
     };
     
     function updateProjectStatus(project_id,is_enabled) {

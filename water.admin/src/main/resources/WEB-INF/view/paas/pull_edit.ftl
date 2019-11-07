@@ -41,7 +41,7 @@
                     if (1 == data.code) {
                         if(pull_id==0) {
                             setTimeout(function () {
-                                parent.location.href = "/paas/pull?tag_name=" + tag;
+                                parent.location.href = "/paas/pull?tag=" + tag;
                             }, 500);
                         }
                     }

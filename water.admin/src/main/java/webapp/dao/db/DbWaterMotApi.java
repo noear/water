@@ -50,11 +50,11 @@ public class DbWaterMotApi {
 
 
     //获取monitor表中的数据。
-    public static List<MonitorModel> getMonitorList(String tag_name, String monitor_name, Integer _state) throws SQLException {
+    public static List<MonitorModel> getMonitorList(String tag, String monitor_name, Integer _state) throws SQLException {
         return db()
                 .table("water_base_monitor")
                 .where("is_enabled = ?", _state)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre(tb -> {
                     if (!TextUtils.isEmpty(monitor_name))
                         tb.and("name like ?", monitor_name + "%");

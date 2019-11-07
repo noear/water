@@ -144,9 +144,9 @@
                     top.layer.msg(data.msg)
                     setTimeout(function () {
                         if('water'==f) {
-                            parent.location.href = "/rubber/scheme?tag_name="+tag+"&f="+f;
+                            parent.location.href = "/rubber/scheme?tag="+tag+"&f="+f;
                         } else if ('sponge'==f){
-                            parent.location.href = '${backUrl!}'+"push/scheme?tag_name="+tag+"&f="+f;
+                            parent.location.href = '${backUrl!}'+"push/scheme?tag="+tag+"&f="+f;
                         }
                     }, 1000);
                 } else {
@@ -191,9 +191,9 @@
                         top.layer.msg(data.msg)
                         setTimeout(function () {
                             if('water'==f) {
-                                parent.location.href = "/rubber/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = "/rubber/scheme?tag=${scheme.tag!}&f="+f;
                             } else if ('sponge'==f){
-                                parent.location.href = '${backUrl!}'+"push/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = '${backUrl!}'+"push/scheme?tag=${scheme.tag!}&f="+f;
                             }
                         }, 1000);
                     } else {
@@ -223,9 +223,9 @@
                         top.layer.msg(data.msg)
                         setTimeout(function () {
                             if('water'==f) {
-                                parent.location.href = "/rubber/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = "/rubber/scheme?tag=${scheme.tag!}&f="+f;
                             } else if ('sponge'==f){
-                                parent.location.href = '${backUrl!}'+"push/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = '${backUrl!}'+"push/scheme?tag=${scheme.tag!}&f="+f;
                             }
                         }, 1000);
                     } else {
@@ -254,9 +254,9 @@
                         top.layer.msg(data.msg)
                         setTimeout(function () {
                             if('water'==f) {
-                                parent.location.href = "/rubber/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = "/rubber/scheme?tag=${scheme.tag!}&f="+f;
                             } else if ('sponge'==f){
-                                parent.location.href = '${backUrl!}'+"push/scheme?tag_name=${scheme.tag!}&f="+f;
+                                parent.location.href = '${backUrl!}'+"push/scheme?tag=${scheme.tag!}&f="+f;
                             }
                         }, 1000);
                     } else {

@@ -23,18 +23,18 @@ import java.util.List;
 public class LoggerController extends BaseController {
 
     @XMapping("logger")
-    public ModelAndView logger(String tag_name) throws Exception {
+    public ModelAndView logger(String tag) throws Exception {
         List<TagCountsModel> tags = DbWaterApi.getLoggerTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag",null);
             }
         }
         viewModel.put("tags",tags);
@@ -42,7 +42,7 @@ public class LoggerController extends BaseController {
     }
 
     @XMapping("logger/inner")
-    public ModelAndView loggerInner(String tag_name,Integer _state) throws Exception {
+    public ModelAndView loggerInner(String tag,Integer _state) throws Exception {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -54,44 +54,52 @@ public class LoggerController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<LoggerModel> list = DbWaterApi.getLoggersByTag(tag_name,_state, null);
+        List<LoggerModel> list = DbWaterApi.getLoggersByTag(tag,_state, null);
         viewModel.put("loggers",list);
         viewModel.put("_state",_state);
         return view("cfg/logger_inner");
     }
     //日志配置编辑页面跳转。
     @XMapping("logger/edit")
-    public ModelAndView loggerEdit(Integer logger_id) throws Exception {
-        LoggerModel logger = DbWaterApi.getLoggerById(logger_id);
-        List<ConfigModel> configs= DbWaterApi.getDbConfigs();
+    public ModelAndView loggerEdit(Integer id) throws Exception {
+        LoggerModel logger = DbWaterApi.getLoggerById(id);
+
+        List<ConfigModel> configs = DbWaterApi.getDbConfigs();
         List<String> option_sources = new ArrayList<>();
-        for(ConfigModel config : configs){
-                option_sources.add(config.tag+"."+config.key);
+        for (ConfigModel config : configs) {
+            option_sources.add(config.tag + "." + config.key);
         }
-        viewModel.put("option_sources",option_sources);
-        viewModel.put("log",logger);
+
+        viewModel.put("option_sources", option_sources);
+        viewModel.put("log", logger);
+
         return view("cfg/logger_edit");
     }
     //日志配置新增页面跳转。
     @XMapping("logger/add")
     public ModelAndView loggerAdd() throws SQLException {
         List<ConfigModel> configs= DbWaterApi.getDbConfigs();
+
         List<String> option_sources = new ArrayList<>();
         for(ConfigModel config : configs){
             option_sources.add(config.tag+"."+config.key);
         }
+
         viewModel.put("option_sources",option_sources);
+
         LoggerModel log = new LoggerModel();
         log.keep_days = 15;
+
         viewModel.put("log",log);
+
         return view("cfg/logger_edit");
     }
     //日志配置ajax 保存功能。
     @XMapping("logger/edit/ajax/save")
-    public ViewModel saveLoggerEdit(Integer logger_id, String tag, String logger, String source, String note, int keep_days) throws SQLException {
+    public ViewModel saveLoggerEdit(Integer id, String tag, String logger, String source, String note, int keep_days) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if(is_admin==1) {
-            boolean result = DbWaterApi.updateLogger(logger_id,tag,logger,source,note,keep_days);
+            boolean result = DbWaterApi.updateLogger(id,tag,logger,source,note,keep_days);
             if (result) {
                 viewModel.code(1,"保存成功！");
             } else {
@@ -106,7 +114,7 @@ public class LoggerController extends BaseController {
 
     //日志启用/禁用
     @XMapping("logger/isEnable")
-    public boolean loggerDelete(Integer logger_id,Integer is_enabled) throws SQLException {
-        return DbWaterApi.isEnableLogger(logger_id,is_enabled);
+    public boolean loggerDelete(Integer id,Integer is_enabled) throws SQLException {
+        return DbWaterApi.isEnableLogger(id,is_enabled);
     }
 }

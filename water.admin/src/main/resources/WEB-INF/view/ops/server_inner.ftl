@@ -11,7 +11,7 @@
 </head>
 <script>
     function add() {
-        location.href = "/ops/server/add?tag_name=${tag_name!}";
+        location.href = "/ops/server/add?tag=${tag!}";
     };
 
     function disable(server_id,type) {

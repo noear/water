@@ -19,7 +19,7 @@
         <table>
             <tr>
                 <td>分类标签</td>
-                <td><input type="text" name="tag" value="${tag_name!}" id="tag"/>
+                <td><input type="text" name="tag" value="${tag!}" id="tag"/>
                     <input type="hidden" name="actor_id" value="${actor_id!}">
                 </td>
             </tr>
@@ -71,7 +71,7 @@
         $.post("/rubber/actor/edit/ajax/save",res, function (data) {
            if(data.code==1){
                top.layer.msg("保存成功");
-               parent.location.href="/rubber/actor?tag_name="+tag;
+               parent.location.href="/rubber/actor?tag="+tag;
            }else{
                top.layer.msg("保存失败");
            }
@@ -92,7 +92,7 @@
                 success: function (data) {
                     if(data.code==1){
                         top.layer.msg(data.msg);
-                        parent.location.href="/rubber/actor?tag_name=${tag_name!}";
+                        parent.location.href="/rubber/actor?tag=${tag!}";
                     }else{
                         top.layer.msg(data.msg);
                     }

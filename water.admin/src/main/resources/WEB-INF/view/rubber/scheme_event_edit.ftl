@@ -111,7 +111,7 @@
                 if (data.code == 1) {
                     top.layer.msg(data.msg)
                     setTimeout(function () {
-                        location.href = "/rubber/scheme/inner?tag_name=${scheme.tag!}"+"&f="+f;
+                        location.href = "/rubber/scheme/inner?tag=${scheme.tag!}"+"&f="+f;
                     }, 1000);
                 } else {
                     top.layer.msg(data.msg);

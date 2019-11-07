@@ -19,7 +19,7 @@
     <cell>
         <form>
             名称：<input type="text"  name="sync_name" placeholder="名称" id="sync_name"/>&nbsp;&nbsp;
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+            <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin = 1>
                         <button onclick="add();" type="button" class="edit">新增</button>

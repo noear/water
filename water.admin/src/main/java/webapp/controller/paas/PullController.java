@@ -18,13 +18,13 @@ import java.util.List;
 public class PullController extends BaseController {
 
     @XMapping("")
-    public ModelAndView template(String tag_name, String pull_name) throws Exception {
+    public ModelAndView template(String tag, String pull_name) throws Exception {
 
         List<String> tags = DbPaaSApi.pullGetTags();
 
         viewModel.set("tags", tags);
 
-        viewModel.set("tag", TextUtils.isNotEmpty(tag_name) ? tag_name : (tags.size() > 0 ? tags.get(0) : null));
+        viewModel.set("tag", TextUtils.isNotEmpty(tag) ? tag : (tags.size() > 0 ? tags.get(0) : null));
         viewModel.set("pull_name", pull_name);
 
         return view("paas/pull");
@@ -32,16 +32,16 @@ public class PullController extends BaseController {
     }
 
     @XMapping("inner")
-    public ModelAndView inner(String tag_name, String pull_name, Integer _state) throws Exception {
+    public ModelAndView inner(String tag, String pull_name, Integer _state) throws Exception {
 
         if (null == _state) {
             _state = 0;
         }
 
-        List<PaasPullModel> list = DbPaaSApi.pullGetList(tag_name, pull_name, _state ^ 1);
+        List<PaasPullModel> list = DbPaaSApi.pullGetList(tag, pull_name, _state ^ 1);
 
         viewModel.set("list", list);
-        viewModel.set("tag_name", tag_name);
+        viewModel.set("tag", tag);
         viewModel.set("pull_name", pull_name);
 
         return view("paas/pull_inner");

@@ -25,18 +25,18 @@ import java.util.List;
 public class DbsController extends BaseController {
 
     @XMapping("dbs")
-    public ModelAndView dbs(String tag_name, String name, String sort) throws Exception {
+    public ModelAndView dbs(String tag, String name, String sort) throws Exception {
         List<ConfigModel> tags = DbWindApi.getServerDbsAccounts();
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
-            tag_name = tags.get(0).tag;
+        if (TextUtils.isEmpty(tag) && tags.size()>0) {
+            tag = tags.get(0).tag;
         }
 
-        List<ServerTrackDbsModel> list = DbWindApi.getServerDbsTracks(tag_name,name, sort);
+        List<ServerTrackDbsModel> list = DbWindApi.getServerDbsTracks(tag,name, sort);
 
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.set("list", list);
 
         return view("mot/dbs");

@@ -34,15 +34,15 @@ public class QueryReportController extends BaseController {
     static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+)");
 
     @XMapping("")
-    public ModelAndView query(String tag_name) throws SQLException {
+    public ModelAndView query(String tag) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.getReportTags();
-        if (!TextUtils.isEmpty(tag_name)){
-            viewModel.put("tag_name",tag_name);
+        if (!TextUtils.isEmpty(tag)){
+            viewModel.put("tag",tag);
         } else {
             if (tags.size()>0){
-                viewModel.put("tag_name",tags.get(0).tag);
+                viewModel.put("tag",tags.get(0).tag);
             } else {
-                viewModel.put("tag_name","");
+                viewModel.put("tag","");
             }
         }
         viewModel.put("tags",tags);
@@ -50,24 +50,24 @@ public class QueryReportController extends BaseController {
     }
 
     @XMapping("report_inner")
-    public ModelAndView reportInner(String tag_name) throws SQLException{
+    public ModelAndView reportInner(String tag) throws SQLException{
         boolean is_admin = Session.current().getIsAdmin()>0;
-        List<ReportModel> reports = DbWaterApi.getReportByTag(tag_name);
+        List<ReportModel> reports = DbWaterApi.getReportByTag(tag);
         viewModel.put("reports",reports);
         viewModel.put("is_admin",is_admin);
         return view("dev/report_inner");
     }
 
     @XMapping("edit")
-    public ModelAndView edit(Integer row_id) throws SQLException{
-        ReportModel report = DbWaterApi.getReportById(row_id);
+    public ModelAndView edit(Integer id) throws SQLException{
+        ReportModel report = DbWaterApi.getReportById(id);
         viewModel.put("report",report);
         return view("dev/report_edit");
     }
 
     @XMapping("edit/ajax/save")
-    public ViewModel saveEdit(Integer row_id, String tag, String name, String code, String note, String args) throws SQLException{
-        boolean isOk = DbWaterApi.setReport(row_id, tag, name, code,note,args);
+    public ViewModel saveEdit(Integer id, String tag, String name, String code, String note, String args) throws SQLException{
+        boolean isOk = DbWaterApi.setReport(id, tag, name, code,note,args);
         if (isOk){
             viewModel.put("code",1);
             viewModel.put("msg","编辑成功");
@@ -79,9 +79,9 @@ public class QueryReportController extends BaseController {
     }
 
     @XMapping("ajax/getConditionBuild")
-    public ViewModel getConditionBuild(Integer row_id) throws SQLException{
+    public ViewModel getConditionBuild(Integer id) throws SQLException{
 
-        ReportModel report = DbWaterApi.getReportById(row_id);
+        ReportModel report = DbWaterApi.getReportById(id);
         boolean hasCondition = false;
         if (!TextUtils.isEmpty(report.args)){
             JtFunRunner  funRunner = new JtFunRunner("dev");
@@ -112,12 +112,12 @@ public class QueryReportController extends BaseController {
     }
 
     @XMapping(value = "ajax/do")
-    public String doQuery(Integer row_id,Boolean is_condition,String conditon_param) throws SQLException{
+    public String doQuery(Integer id,Boolean is_condition,String conditon_param) throws SQLException{
         JSONObject params = new JSONObject();
         if (!TextUtils.isEmpty(conditon_param))
             params = JSONObject.parseObject(conditon_param);
 
-        ReportModel report = DbWaterApi.getReportById(row_id);
+        ReportModel report = DbWaterApi.getReportById(id);
         String code = report.code;
         //1.对不良条件进行过滤
         if (TextUtils.isEmpty(code))

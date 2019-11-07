@@ -27,18 +27,18 @@ import java.util.Map;
 public class EcsController extends BaseController {
     //进入ecs视图
     @XMapping("ecs")
-    public ModelAndView ecs(String tag_name,String name, String sort) throws Exception {
+    public ModelAndView ecs(String tag,String name, String sort) throws Exception {
         List<ConfigModel> tags = DbWindApi.getServerEcsAccounts();
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) && tags.size()>0) {
-            tag_name = tags.get(0).tag;
+        if (TextUtils.isEmpty(tag) && tags.size()>0) {
+            tag = tags.get(0).tag;
         }
 
-        List<ServerTrackEcsModel> list =  DbWindApi.getServerEcsTracks(tag_name,name,sort);
+        List<ServerTrackEcsModel> list =  DbWindApi.getServerEcsTracks(tag,name,sort);
 
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         viewModel.set("list",list);
 
         return view("mot/ecs");

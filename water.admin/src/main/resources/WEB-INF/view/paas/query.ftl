@@ -66,19 +66,19 @@
     function edit(code_type,tag,name) {
         if (code_type == 0) {
             //接口代码
-            location.href = "/paas/api?tag_name="+tag+"&api_name="+name;
+            location.href = "/paas/api?tag="+tag+"&api_name="+name;
         } else if (code_type == 1) {
             //计划任务
-            location.href = "/paas/plan?tag_name="+tag+"&plan_name="+name;
+            location.href = "/paas/plan?tag="+tag+"&plan_name="+name;
         } else if (code_type == 2) {
             //同步任务
-            location.href = "/paas/etl?tag_name="+tag+"&etl_name="+name;
+            location.href = "/paas/etl?tag="+tag+"&etl_name="+name;
         } else if (code_type == 3) {
             //函数代码
-            location.href = "/paas/fun?tag_name="+tag+"&fun_name="+name;
+            location.href = "/paas/fun?tag="+tag+"&fun_name="+name;
         } else if (code_type == 4) {
             //模版代码
-            location.href = "/paas/tml?tag_name="+tag+"&tml_name="+name;
+            location.href = "/paas/tml?tag="+tag+"&tml_name="+name;
         }
     }
 </script>

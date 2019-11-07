@@ -22,7 +22,7 @@
 <main class="frm">
     <detail>
         <h2>
-            ${block.name_display!}/内容管理（<a href="/rubber/block/inner?tag_name=${block.tag!}" class="t2">返回</a>）
+            ${block.name_display!}/内容管理（<a href="/rubber/block/inner?tag=${block.tag!}" class="t2">返回</a>）
         </h2>
         <hr/>
     </detail>

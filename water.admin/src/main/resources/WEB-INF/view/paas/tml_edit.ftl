@@ -53,7 +53,7 @@
                     if (1 == data.code) {
                         if(tml_id == 0) {
                             setTimeout(function () {
-                                parent.location.href="/paas/tml?tag_name="+tag;
+                                parent.location.href="/paas/tml?tag="+tag;
                             }, 500);
                         }
                     }

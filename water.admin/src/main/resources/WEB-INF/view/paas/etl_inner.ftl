@@ -12,8 +12,8 @@
             location.href="/paas/etl/add";
         }
 
-        function impPaas(tag_name) {
-            $.getJSON('/paas/etl/ajax/import?tag='+tag_name,function (rst) {
+        function impPaas(tag) {
+            $.getJSON('/paas/etl/ajax/import?tag='+tag,function (rst) {
                 if(rst.code){
                     top.layer.msg(rst.msg);
                     setTimeout(location.reload,1000);
@@ -32,11 +32,11 @@
     <cell>
         <form>
             传输：<input type="text"  name="etl_name" placeholder="任务名" id="etl_name" value="${etl_name!}"/>
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+            <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
             <#if is_admin == 1>
             <button onclick="addPlan()" type="button"  class="edit">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onclick="impPaas('${tag_name!}')" type="button"  class="minor">导入</button>
+            <button onclick="impPaas('${tag!}')" type="button"  class="minor">导入</button>
             </#if>
         </form>
     </cell>

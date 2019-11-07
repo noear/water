@@ -10,12 +10,12 @@
     <script src="${js}/layer.js"></script>
     <script>
 
-        function addPaas(tag_name) {
-            location.href="/paas/api/edit?tag_name="+tag_name;
+        function addPaas(tag) {
+            location.href="/paas/api/edit?tag="+tag;
         }
 
-        function impPaas(tag_name) {
-            $.getJSON('/paas/api/ajax/import?tag='+tag_name,function (rst) {
+        function impPaas(tag) {
+            $.getJSON('/paas/api/ajax/import?tag='+tag,function (rst) {
                 if(rst.code){
                     top.layer.msg(rst.msg);
                     setTimeout(location.reload,1000);
@@ -40,11 +40,11 @@
             <cell>
                 <form>
                     接口：<input type="text"  name="api_name" placeholder="接口名" id="api_name" value="${api_name!}"/>
-                          <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
+                          <input type="hidden"  name="tag" id="tag" value="${tag}"/>
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin == 1>
-                    <button onclick="addPaas('${tag_name}')" class="edit" type="button">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="impPaas('${tag_name}')" class="minor" type="button">导入</button>
+                    <button onclick="addPaas('${tag}')" class="edit" type="button">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button onclick="impPaas('${tag}')" class="minor" type="button">导入</button>
                     </#if>
                 </form>
             </cell>
@@ -79,7 +79,7 @@
                             <td class="break">${api.cache_time!}</td>
                             <td class="left break">${api.args!}</td>
                             <td class="left break" title="${api.note_hint()!}">${api.methods()!}::${api.note_str()!}</td>
-                            <td><a class="a t2" data-clipboard-text="${url_start!}/${tag_name!}/${api.api_name!}" >复制地址</a>
+                            <td><a class="a t2" data-clipboard-text="${url_start!}/${tag!}/${api.api_name!}" >复制地址</a>
                                 <span> | </span>
                                 <a target="_parent" class="t2" href="/smp/log?project=water&tableName=water_log_paas_error&tagx=@${api.api_id}">日志</a>
                             </td>

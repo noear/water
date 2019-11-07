@@ -30,19 +30,19 @@ public class ModelController extends BaseController {
 
     //计算模型
     @XMapping("model")
-    public ModelAndView paas(Integer model_id,Integer field_id,String tag_name,String name,String f) throws SQLException {
+    public ModelAndView paas(Integer model_id,Integer field_id,String tag,String name,String f) throws SQLException {
         List<ModelModel> tags = DbRubberApi.getModelTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("name",name);
@@ -55,7 +55,7 @@ public class ModelController extends BaseController {
 
     //数据模型右侧列表
     @XMapping("model/inner")
-    public ModelAndView inner(Integer model_id, Integer field_id,String tag_name, String name,String f) throws SQLException {
+    public ModelAndView inner(Integer model_id, Integer field_id,String tag, String name,String f) throws SQLException {
 
         if(field_id!=null && field_id>0){
             return fieldEdit(model_id,field_id,f);
@@ -65,9 +65,9 @@ public class ModelController extends BaseController {
             return edit(model_id,f);
         }
 
-        List<ModelModel> models = DbRubberApi.getModelList(tag_name, name);
+        List<ModelModel> models = DbRubberApi.getModelList(tag, name);
         viewModel.put("models", models);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("name", name);
         viewModel.put("f",f);
 

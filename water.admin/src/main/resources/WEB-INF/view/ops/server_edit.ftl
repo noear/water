@@ -45,7 +45,7 @@
                     if(data.code==1) {
                         top.layer.msg(data.msg)
                         setTimeout(function(){
-                            parent.location.href="/ops/server?tag_name="+tag;
+                            parent.location.href="/ops/server?tag="+tag;
                         },1000);
                     }else{
                         top.layer.msg(data.msg);

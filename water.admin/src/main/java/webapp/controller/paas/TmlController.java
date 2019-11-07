@@ -18,13 +18,13 @@ import java.util.List;
 public class TmlController extends BaseController {
 
     @XMapping("")
-    public ModelAndView template(String tag_name, String tml_name) throws SQLException {
+    public ModelAndView template(String tag, String tml_name) throws SQLException {
 
         List<String> tags = DbPaaSApi.tmlGetTags();
 
         viewModel.set("tags", tags);
 
-        viewModel.set("tag", TextUtils.isNotEmpty(tag_name) ? tag_name : (tags.size() > 0 ? tags.get(0) : null));
+        viewModel.set("tag", TextUtils.isNotEmpty(tag) ? tag : (tags.size() > 0 ? tags.get(0) : null));
         viewModel.set("tml_name", tml_name);
 
         return view("paas/tml");
@@ -32,16 +32,16 @@ public class TmlController extends BaseController {
     }
 
     @XMapping("inner")
-    public ModelAndView inner(String tag_name, String tml_name, Integer _state) throws SQLException {
+    public ModelAndView inner(String tag, String tml_name, Integer _state) throws SQLException {
 
         if (null == _state) {
             _state = 0;
         }
 
-        List<PaasTmlModel> list = DbPaaSApi.tmlGetList(tag_name, tml_name, _state ^ 1);
+        List<PaasTmlModel> list = DbPaaSApi.tmlGetList(tag, tml_name, _state ^ 1);
 
         viewModel.set("list", list);
-        viewModel.set("tag_name", tag_name);
+        viewModel.set("tag", tag);
         viewModel.set("tml_name", tml_name);
 
         return view("paas/tml_inner");

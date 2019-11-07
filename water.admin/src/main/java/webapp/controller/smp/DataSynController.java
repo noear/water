@@ -18,19 +18,19 @@ import java.util.List;
 public class DataSynController extends BaseController {
     //plan视图跳转
     @XMapping("sync")
-    public ModelAndView plan(String tag_name) throws SQLException {
+    public ModelAndView plan(String tag) throws SQLException {
         List<SynchronousModel> tags = DbWaterSyncApi.getSyncTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags", tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         return view("smp/sync");
@@ -38,7 +38,7 @@ public class DataSynController extends BaseController {
 
     //数据同步的iframe inner视图。
     @XMapping("sync/inner")
-    public ModelAndView planInner(String tag_name,String sync_name,Integer _state) throws SQLException {
+    public ModelAndView planInner(String tag,String sync_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -50,9 +50,9 @@ public class DataSynController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<SynchronousModel> list = DbWaterSyncApi.getSyncList(tag_name,sync_name, _state);
+        List<SynchronousModel> list = DbWaterSyncApi.getSyncList(tag,sync_name, _state);
         viewModel.put("synchronous",list);
-        viewModel.put("tag_name",tag_name);
+        viewModel.put("tag",tag);
         return view("smp/sync_inner");
     }
 

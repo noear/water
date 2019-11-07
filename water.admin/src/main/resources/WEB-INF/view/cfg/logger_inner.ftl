@@ -13,13 +13,13 @@
     </style>
 </head>
 <script>
-    function editTask(logger_id) {
-        location.href="/cfg/logger/edit?logger_id="+logger_id;
+    function editTask(id) {
+        location.href="/cfg/logger/edit?id="+id;
     }
     function add() {
         location.href = "/cfg/logger/add";
     };
-    function deleteTask(logger_id,is_enabled) {
+    function deleteTask(id,is_enabled) {
         var text = '禁用';
         if (is_enabled == 0) {
             text = '启用';
@@ -33,7 +33,7 @@
             $.ajax({
                 type:"POST",
                 url:"/cfg/logger/isEnable",
-                data:{"logger_id":logger_id,"is_enabled":is_enabled},
+                data:{"id":id,"is_enabled":is_enabled},
                 success:function(data){
 
                     if (data == true) {
@@ -82,15 +82,15 @@
                     <tr ${logger.isHighlight()?string("class='t4'","")}>
                         <td>${logger.tag}</td>
                         <td class="left"><a href="/smp/log?tableName=${logger.logger}&project=${logger.tag}" target="_parent">${logger.logger}</a></td>
-                        <td class="center">${logger.keep_days}</td>
-                        <td class="right">${logger.row_num}</td>
-                        <td class="right">${logger.row_num_today}</td>
-                        <td class="left break">${logger.source}</td>
+                        <td class="center">${logger.keep_days!}</td>
+                        <td class="right">${logger.row_num!}</td>
+                        <td class="right">${logger.row_num_today!}</td>
+                        <td class="left break">${logger.source!}</td>
 
                         <#if is_admin == 1>
                             <td>
-                                <a  onclick="editTask('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a>&nbsp;&nbsp;
-                                <a  onclick="deleteTask('${logger.logger_id}','${logger.is_enabled}')" style="color: blue;cursor: pointer">
+                                <a  onclick="editTask('${logger.id}')" style="color: blue;cursor: pointer">编辑</a>&nbsp;&nbsp;
+                                <a  onclick="deleteTask('${logger.id}','${logger.is_enabled}')" style="color: blue;cursor: pointer">
                                     <#if logger.is_enabled == 0>启用</#if>
                                     <#if logger.is_enabled == 1>禁用</#if>
                                 </a>

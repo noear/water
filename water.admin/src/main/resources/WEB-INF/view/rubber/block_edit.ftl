@@ -195,7 +195,7 @@
 
                     if(is_back) {
                         setTimeout(function () {
-                            parent.location.href = "/rubber/block?tag_name=" + tag;
+                            parent.location.href = "/rubber/block?tag=" + tag;
                         }, 500);
                     }
                 }else{

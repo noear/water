@@ -16,11 +16,11 @@ public class DbWaterSyncApi {
     }
 
     //根据名称和状态列出同步列表。
-    public static List<SynchronousModel> getSyncList(String tag_name, String name, int _state) throws SQLException {
+    public static List<SynchronousModel> getSyncList(String tag, String name, int _state) throws SQLException {
         return db()
                 .table("water_base_synchronous")
                 .where("is_enabled = ?", _state)
-                .and("tag = ?", tag_name)
+                .and("tag = ?", tag)
                 .expre(tb -> {
                     if (!TextUtils.isEmpty(name))
                         tb.and("name like ?", name + "%");

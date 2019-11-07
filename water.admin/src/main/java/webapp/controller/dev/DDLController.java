@@ -37,18 +37,18 @@ public class DDLController extends BaseController {
     }
 
     @XMapping("")
-    public ModelAndView ddl(String tag_name) throws SQLException {
+    public ModelAndView ddl(String tag) throws SQLException {
         List<TagCountsModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
 
         BcfTagChecker.filter(resp, m -> m.tag);
 
-        if (!TextUtils.isEmpty(tag_name)) {
-            viewModel.put("tag_name", tag_name);
+        if (!TextUtils.isEmpty(tag)) {
+            viewModel.put("tag", tag);
         } else {
             if (!resp.isEmpty()) {
-                viewModel.put("tag_name", resp.get(0).tag);
+                viewModel.put("tag", resp.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("resp", resp);
@@ -63,7 +63,7 @@ public class DDLController extends BaseController {
 
         viewModel.put("cfgs", cfgs);
 
-        viewModel.put("tag_name", tagname);
+        viewModel.put("tag", tagname);
 
         return view("dev/ddl_inner");
     }

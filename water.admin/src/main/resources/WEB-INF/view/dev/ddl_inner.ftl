@@ -41,7 +41,7 @@
                 type:"POST",
                 url:"/dev/ddl/ajax/tb",
                 data:{
-                    tag: '${tag_name}',
+                    tag: '${tag}',
                     key: key
                 },
                 success:function (data) {
@@ -68,7 +68,7 @@
                 type:"POST",
                 url:"/dev/ddl/ajax/getddl",
                 data:{
-                    tag: '${tag_name!}',
+                    tag: '${tag!}',
                     key: key,
                     tb: tb
                 },

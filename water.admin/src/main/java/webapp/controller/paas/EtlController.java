@@ -30,19 +30,19 @@ public class EtlController extends BaseController {
 
     //进入etl视图
     @XMapping("etl")
-    public ModelAndView etl(String tag_name,String etl_name) throws SQLException {
+    public ModelAndView etl(String tag,String etl_name) throws SQLException {
         List<PaasEtlModel> tags = DbPaaSApi.getETLTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("etl_name",etl_name);
@@ -51,7 +51,7 @@ public class EtlController extends BaseController {
 
     //etl列表
     @XMapping("etl/inner")
-    public ModelAndView inner(String tag_name, String etl_name, Integer _state) throws SQLException {
+    public ModelAndView inner(String tag, String etl_name, Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -64,10 +64,10 @@ public class EtlController extends BaseController {
         if (_state == null)
             _state = 1;
 
-        List<PaasEtlModel> etls = DbPaaSApi.getEtlList(tag_name,etl_name,_state);
+        List<PaasEtlModel> etls = DbPaaSApi.getEtlList(tag,etl_name,_state);
 
         viewModel.put("etls",etls);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         viewModel.put("etl_name",etl_name);
         return view("paas/etl_inner");
     }

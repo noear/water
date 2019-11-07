@@ -12,8 +12,8 @@
             location.href="/paas/plan/add";
         }
 
-        function impPaas(tag_name) {
-            $.getJSON('/paas/plan/ajax/import?tag='+tag_name,function (rst) {
+        function impPaas(tag) {
+            $.getJSON('/paas/plan/ajax/import?tag='+tag,function (rst) {
                 if(rst.code){
                     top.layer.msg(rst.msg);
                     setTimeout(location.reload,1000);
@@ -48,11 +48,11 @@
             <cell>
                 <form>
                     任务：<input type="text"  name="plan_name" placeholder="任务名" id="plan_name" value="${plan_name!}"/>
-                          <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
+                          <input type="hidden"  name="tag" id="tag" value="${tag}"/>
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin == 1>
                     <button onclick="addPlan()" type="button" class="edit">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button onclick="impPaas('${tag_name}')" type="button" class="minor">导入</button>
+                    <button onclick="impPaas('${tag}')" type="button" class="minor">导入</button>
                     </#if>
                 </form>
             </cell>

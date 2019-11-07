@@ -63,16 +63,16 @@
     function edit(code_type,tag,pid,id) {
         if (code_type == 0) {
             //接口代码
-            location.href = "/rubber/model?tag_name="+tag+"&model_id="+id;
+            location.href = "/rubber/model?tag="+tag+"&model_id="+id;
         } else if (code_type == 1) {
             //计划任务
-            location.href = "/rubber/model?tag_name="+tag+"&model_id="+pid+"&field_id="+id;
+            location.href = "/rubber/model?tag="+tag+"&model_id="+pid+"&field_id="+id;
         } else if (code_type == 2) {
             //同步任务
-            location.href = "/rubber/scheme?tag_name="+tag+"&scheme_id="+id;
+            location.href = "/rubber/scheme?tag="+tag+"&scheme_id="+id;
         }else if (code_type == 3) {
             //同步任务
-            location.href = "/rubber/block?tag_name="+tag+"&block_id="+id;
+            location.href = "/rubber/block?tag="+tag+"&block_id="+id;
         }
     }
 </script>

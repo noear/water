@@ -68,9 +68,9 @@
                             top.layer.msg(data.msg);
                             setTimeout(function(){
                                 if('water'==f) {
-                                    parent.location.href="/rubber/model?tag_name="+tag;
+                                    parent.location.href="/rubber/model?tag="+tag;
                                 } else if ('sponge'==f){
-                                    parent.location.href='${backUrl!}'+"push/model?tag_name="+tag;
+                                    parent.location.href='${backUrl!}'+"push/model?tag="+tag;
                                 }
 
                             },1000);
@@ -98,9 +98,9 @@
                             top.layer.msg(data.msg);
                             setTimeout(function(){
                                 if('water'==f) {
-                                    parent.location.href="/rubber/model?tag_name="+tag;
+                                    parent.location.href="/rubber/model?tag="+tag;
                                 } else if ('sponge'==f){
-                                    parent.location.href='${backUrl!}'+"push/model?tag_name="+tag;
+                                    parent.location.href='${backUrl!}'+"push/model?tag="+tag;
                                 }
                             },1000);
                         }else{
@@ -119,7 +119,7 @@
                 $.getJSON('/rubber/model/ajax/import?model_id=${model.model_id}',function (rst) {
                     if(rst.code){
                         top.layer.msg(rst.msg);
-                        setTimeout(parent.location.href="/rubber/model?tag_name="+tag,1000);
+                        setTimeout(parent.location.href="/rubber/model?tag="+tag,1000);
                     }
                     else{
                         top.layer.msg(rst.msg);
@@ -162,9 +162,9 @@
                             top.layer.msg(data.msg);
                             setTimeout(function(){
                                 if('water'==f) {
-                                    parent.location.href="/rubber/model?tag_name="+tag;
+                                    parent.location.href="/rubber/model?tag="+tag;
                                 } else if ('sponge'==f){
-                                    parent.location.href='${backUrl!}'+"push/model?tag_name="+tag;
+                                    parent.location.href='${backUrl!}'+"push/model?tag="+tag;
                                 }
                             },1000);
                         }else{

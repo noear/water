@@ -16,7 +16,7 @@
         <h2>简报编辑（<a href="#" onclick="javascript:history.back(-1);" class="t2 online">返回</a>）
         </h2>
         <hr/>
-        <input value="${report.row_id}" id="row_id" style="display: none"/>
+        <input value="${report.id}" id="id" style="display: none"/>
         <table>
             <tr>
                 <td>标签*</td>
@@ -55,7 +55,7 @@
 </detail>
 <script>
     function saveEdit() {
-        var row_id = $('#row_id').val();
+        var id = $('#id').val();
         var tag = $('#tag').val();
         var name = $('#name').val();
         var code = $('#code').val();
@@ -77,7 +77,7 @@
             type: "POST",
             url: "/dev/report/edit/ajax/save",
             data: {
-                "row_id": row_id,
+                "id": id,
                 "tag": tag,
                 "name": name,
                 "code": code,
@@ -87,7 +87,7 @@
             success: function (data) {
                 if(data.code==1){
                     top.layer.msg(data.msg);
-                    parent.location.href="/dev/report?tag_name="+tag;
+                    parent.location.href="/dev/report?tag="+tag;
                 }else{
                     top.layer.msg(data.msg);
                 }

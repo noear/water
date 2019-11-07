@@ -50,11 +50,11 @@ public class DbWindApi {
         }
     }
 
-    public static List<ServerTrackEcsModel> getServerEcsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackEcsModel> getServerEcsTracks(String tag, String name, String sort) throws Exception {
         return db().table("wind_server s")
                 .leftJoin("wind_server_track_ecs t").on("s.iaas_type=0 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                 .where("s.iaas_type=0 AND s.is_enabled=1")
-                .and("s.iaas_account = ?", "wind/" + tag_name)
+                .and("s.iaas_account = ?", "wind/" + tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(name) == false) {
                         tb.and("s.name like ?", "%" + name + "%");
@@ -76,11 +76,11 @@ public class DbWindApi {
 
 
 
-    public static List<ServerTrackBlsModel> getServerBlsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackBlsModel> getServerBlsTracks(String tag, String name, String sort) throws Exception {
         return db().table("wind_server s")
                 .leftJoin("wind_server_track_bls t").on("s.iaas_type=1 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                 .where("s.iaas_type=1 AND s.is_enabled=1")
-                .and("s.iaas_account = ?", "wind/" + tag_name)
+                .and("s.iaas_account = ?", "wind/" + tag)
                 .expre((tb) -> {
 
                     if (TextUtils.isEmpty(name) == false) {
@@ -97,11 +97,11 @@ public class DbWindApi {
                 .getList(new ServerTrackBlsModel());
     }
 
-    public static List<ServerTrackDbsModel> getServerDbsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackDbsModel> getServerDbsTracks(String tag, String name, String sort) throws Exception {
         return db().table("wind_server s")
                 .leftJoin("wind_server_track_dbs t").on("s.iaas_type>=2 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                 .where("s.iaas_type>=2 AND s.is_enabled=1")
-                .and("s.iaas_account = ?", "wind/" + tag_name)
+                .and("s.iaas_account = ?", "wind/" + tag)
                 .expre((tb) -> {
                     if (TextUtils.isEmpty(name) == false) {
                         tb.and("s.name like ?", "%" + name + "%");

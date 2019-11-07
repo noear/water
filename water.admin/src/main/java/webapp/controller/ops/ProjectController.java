@@ -25,23 +25,23 @@ import java.util.stream.Collectors;
 public class ProjectController extends BaseController {
 
     @XMapping("project")
-    public ModelAndView project(String tag_name) throws SQLException {
+    public ModelAndView project(String tag) throws SQLException {
         List<WindProjectModel> tags = DbWindApi.getProjectTags();
         viewModel.put("tags", tags);
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         return view("ops/project");
     }
 
     @XMapping("project/inner")
-    public ModelAndView projectInner(String tag_name,Integer _state) throws SQLException {
+    public ModelAndView projectInner(String tag,Integer _state) throws SQLException {
         Integer is_enabled = 1;
         if (_state == null){
             _state = 0;
@@ -49,23 +49,23 @@ public class ProjectController extends BaseController {
         if (_state==1){
             is_enabled = 0;
         }
-        List<WindProjectModel> list = DbWindApi.getProjectByTagName(tag_name,is_enabled);
+        List<WindProjectModel> list = DbWindApi.getProjectByTagName(tag,is_enabled);
         viewModel.put("_state",_state);
         viewModel.put("list", list);
-        viewModel.put("tag_name", tag_name);
+        viewModel.put("tag", tag);
         return view("ops/project_inner");
     }
 
     //跳转新增项目配置页面
     @XMapping("project/add")
-    public ModelAndView projectAdd(String tag_name) throws SQLException {
+    public ModelAndView projectAdd(String tag) throws SQLException {
 //        List<WindProjectModel> tags = DbWindApi.getProjectTags();
 //        viewModel.put("tags", tags);
-//        viewModel.put("tag_name", tag_name);
+//        viewModel.put("tag", tag);
 //        viewModel.put("project", new WindProjectModel());
 //        return view("ops/project_edit");
 //
-        return projectEdit(0,tag_name); //以后把 add 和 edit 统一起来，不要分开了
+        return projectEdit(0,tag); //以后把 add 和 edit 统一起来，不要分开了
     }
 
     /**
@@ -74,7 +74,7 @@ public class ProjectController extends BaseController {
      * @Date:9:56 2018/12/26
      */
     @XMapping("project/edit")
-    public ModelAndView projectEdit(Integer project_id,String tag_name) throws SQLException {
+    public ModelAndView projectEdit(Integer project_id,String tag) throws SQLException {
         if(project_id==null){
             project_id =0;
         }

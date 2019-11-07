@@ -29,20 +29,20 @@ public class BlockController extends BaseController {
 
     //数据block
     @XMapping("block")
-    public ModelAndView block(Integer block_id,String tag_name) throws SQLException{
+    public ModelAndView block(Integer block_id,String tag) throws SQLException{
 
         List<BlockModel> tags = DbRubberApi.getBlockTags();
         BcfTagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name", null);
+                viewModel.put("tag", null);
             }
         }
         viewModel.put("block_id",block_id);
@@ -52,7 +52,7 @@ public class BlockController extends BaseController {
 
     //数据block右侧列表
     @XMapping("block/inner")
-    public ModelAndView blockInner(Integer block_id,String tag_name) throws SQLException{
+    public ModelAndView blockInner(Integer block_id,String tag) throws SQLException{
         if(block_id == null){
             block_id = 0;
         }
@@ -60,7 +60,7 @@ public class BlockController extends BaseController {
         if(block_id>0){
             return blockEdit(block_id);
         }else {
-            List<BlockModel> blocks = DbRubberApi.getBlocks(tag_name);
+            List<BlockModel> blocks = DbRubberApi.getBlocks(tag);
             viewModel.put("blocks", blocks);
             viewModel.put("raas_uri", Config.raas_uri);
 

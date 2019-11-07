@@ -22,23 +22,23 @@
         var Id = 0;
         function editSQL(type) {
             if (type==0){
-                location.href="/dev/report/edit?row_id=0";
+                location.href="/dev/report/edit?id=0";
             } else {
                 if (Id==0){
                     layer.msg("未选择脚本");
                     return;
                 }
-                location.href="/dev/report/edit?row_id="+Id;
+                location.href="/dev/report/edit?id="+Id;
             }
         };
-        function doSQL(row_id,obj) {
+        function doSQL(id,obj) {
             $('#params-toolbar').css("display","none");
             $('#query_rst').empty();
             $.ajax({
                 type: "POST",
                 url: "/dev/report/ajax/getConditionBuild",
                 data: {
-                    "row_id": row_id
+                    "id": id
                 },
                 success: function (data) {
                     if(data.hasCondition){
@@ -49,7 +49,7 @@
                         //直接查
                         query(document.getElementById("queryBtn"));
                     }else{
-                        $.post("/dev/report/ajax/do",{row_id:row_id,is_condition:false},function(rst){
+                        $.post("/dev/report/ajax/do",{id:id,is_condition:false},function(rst){
                             $("#query_rst").html(rst);
                         });
                     }
@@ -60,7 +60,7 @@
                 $("#edit").removeClass("minor");
                 $("#edit").addClass("edit");
             }
-            Id = row_id;
+            Id = id;
             $(obj).siblings().removeClass("sel");
             $(obj).addClass("sel");
         };
@@ -77,7 +77,7 @@
             }
             console.log(data);
 
-            $.post("/dev/report/ajax/do",{row_id:Id,is_condition:true,conditon_param:JSON.stringify(data)},function(rst){
+            $.post("/dev/report/ajax/do",{id:Id,is_condition:true,conditon_param:JSON.stringify(data)},function(rst){
                 $("#query_rst").html(rst);
             });
         };
@@ -88,7 +88,7 @@
     <block>
         <tabbar>
             <#list reports as m>
-                <button onclick="doSQL(${m.row_id!},this)" type="button">${m.name!}</button>
+                <button onclick="doSQL(${m.id!},this)" type="button">${m.name!}</button>
             </#list>
         </tabbar>
         <#if is_admin==1>

@@ -13,7 +13,7 @@
     <script>
         function do_query() {
             UrlQueryByDic({
-                tag_name:'${tag_name}',
+                tag:'${tag}',
                 tagx:$('#tagx').val(),
                 log_date:$('#log_date').val(),
                 path:$('#path').val()});

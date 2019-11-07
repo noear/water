@@ -10,19 +10,19 @@
     <script src="${js}/flow/go.js" async="async"></script>
     <script>
         $(function () {
-            if ('${tag_name!}') {
-                $('#${tag_name}').addClass('sel');
+            if ('${tag!}') {
+                $('#${tag}').addClass('sel');
             } else {
                 $('tree li:first').addClass('sel');
             }
 
         });
-        var tagName = '${tag_name!}';
-        function node_onclick(tag_name,obj) {
-            tagName = tag_name
+        var tagName = '${tag!}';
+        function node_onclick(tag,obj) {
+            tagName = tag
             $('li.sel').removeClass('sel');
             $(obj).addClass("sel");
-            $("#table").attr('src',"/rubber/scheme/inner?tag_name="+tagName+"&f=water");
+            $("#table").attr('src',"/rubber/scheme/inner?tag="+tagName+"&f=water");
         };
     </script>
 </head>
@@ -32,10 +32,10 @@
         <tree id="tree">
             <ul>
                 <#list tags as m>
-                    <#if m.tag == tag_name>
+                    <#if m.tag == tag>
                         <li onclick="node_onclick('${m.tag}',this)" id="${m.tag}" class="sel">${m.tag} (${m.counts})</li>
                     </#if>
-                    <#if m.tag != tag_name>
+                    <#if m.tag != tag>
                         <li onclick="node_onclick('${m.tag}',this)" id="${m.tag}">${m.tag} (${m.counts})</li>
                     </#if>
                 </#list>
@@ -43,7 +43,7 @@
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/rubber/scheme/inner?tag_name=${tag_name!}&scheme_id=${scheme_id!}&f=water" frameborder="0" id="table"></iframe>
+        <iframe src="/rubber/scheme/inner?tag=${tag!}&scheme_id=${scheme_id!}&f=water" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>

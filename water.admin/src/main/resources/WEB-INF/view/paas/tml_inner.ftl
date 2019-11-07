@@ -19,7 +19,7 @@
     <cell>
         <form>
             模板：<input type="text"  name="tml_name" placeholder="名称" id="tml_name" value="${tml_name!}"/>
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+            <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
             <#if is_admin == 1>
                 <button onclick="addPlan()" type="button" class="edit">新增</button>
