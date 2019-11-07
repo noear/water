@@ -9,14 +9,15 @@
     <script src="${js}/layer.js"></script>
     <script>
         function saveEdit() {
+            var tag = $('#tag').val();
             var type = $('#type').val();
-            var name = $('#name').val();
+            var title = $('#title').val();
             var value = $('#value').val();
 
             $.ajax({
                 type:"POST",
                 url:"/cfg/enum/edit/ajax/save",
-                data:{"id":${e.id},"type":type,"name":name,"value":value},
+                data:{"id":${e.id},"tag":tag,"type":type,"title":title,"value":value},
                 traditional: true,
                 success:function (data) {
                     if(data.code==1) {
@@ -40,16 +41,20 @@
                 <hr/>
                 <table>
                     <tr>
-                        <td>枚举名称</td>
+                        <td>tag</td>
+                        <td><input type="text" id="tag" value="${e.tag!}" autofocus/></td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
                         <td><input type="text" id="type" value="${e.type!}" autofocus/></td>
                     </tr>
                     <tr>
-                        <td>枚举值</td>
+                        <td>value</td>
                         <td><input type="text" id="value" value="${e.value!}"/></td>
                     </tr>
                     <tr>
-                        <td>枚举值名称</td>
-                        <td><input type="text" id="name" value="${e.name!}"/></td>
+                        <td>title</td>
+                        <td><input type="text" id="title" value="${e.title!}"/></td>
                     </tr>
                     <tr>
                         <td></td>

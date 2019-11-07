@@ -31,9 +31,11 @@
             <thead>
             <tr>
                 <td width="50px">ID</td>
-                <td width="150px">枚举组</td>
-                <td width="120px">枚举值</td>
-                <td width="150px">枚举值名称</td>
+                <td width="50px">tag</td>
+                <td width="150px">type</td>
+                <td width="120px">value</td>
+                <td width="150px">title</td>
+                <td width="30"></td>
                 <#if is_admin == 1>
                     <td width="60px">操作</td>
                 </#if>
@@ -44,9 +46,11 @@
             <#list list as m>
                 <tr>
                     <td>${m_index + 1}</td>
+                    <td style="text-align: left">${m.tag!}</td>
                     <td style="text-align: left">${m.type!}</td>
                     <td style="text-align: left">${m.value!}</td>
-                    <td style="text-align: left">${m.name!}</td>
+                    <td style="text-align: left">${m.title!}</td>
+                    <td style="text-align: left">${(m.is_enabled?default(0)=1)?string('启','禁')}</td>
                     <#if is_admin == 1>
                         <td><a href="/cfg/enum/edit?id=${m.id}" style="cursor: pointer;color: blue;">编辑</a></td>
                     </#if>

@@ -8,7 +8,8 @@ import org.noear.weed.IBinder;
 public class EnumModel //implements IBinder
 {
     public int id;
+    public String tag;
     public String type;
     public int value;
-    public String name;
+    public String title;
 }

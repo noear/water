@@ -28,15 +28,15 @@ public class EnumController extends BaseController {
         BcfTagChecker.filter(tags, m -> m.tag);
 
         if (TextUtils.isEmpty(tag) == false) {
-            viewModel.put("tag",tag);
+            viewModel.put("tag", tag);
         } else {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag",tags.get(0).tag);
+                viewModel.put("tag", tags.get(0).tag);
             } else {
-                viewModel.put("tag",null);
+                viewModel.put("tag", null);
             }
         }
-        viewModel.put("tags",tags);
+        viewModel.put("tags", tags);
         return view("cfg/enum");
     }
 
@@ -62,19 +62,19 @@ public class EnumController extends BaseController {
 
     //保存枚举编辑
     @XMapping("edit/ajax/save")
-    public ViewModel saveEnumEdit(Integer id, String type, String name, Integer value) throws SQLException {
+    public ViewModel saveEnumEdit(Integer id, String tag, String type, String title, Integer value) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
 
             type = type.trim();
-            name = name.trim();
+            title = title.trim();
 
-            if (TextUtils.isEmpty(type) || TextUtils.isEmpty(name)) {
+            if (TextUtils.isEmpty(type) || TextUtils.isEmpty(title)) {
                 viewModel.code(0, "值不能为空");
                 return viewModel;
             }
 
-            boolean result = DbWaterApi.updateEnum(id, type, name, value);
+            boolean result = DbWaterApi.updateEnum(id, tag, type, title, value);
 
             if (result) {
                 viewModel.code(1, "保存成功！");

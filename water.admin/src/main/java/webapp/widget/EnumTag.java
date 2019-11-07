@@ -85,7 +85,7 @@ public class EnumTag implements TemplateDirectiveModel {
                 sb.append(" selected=\"selected\"");
             }
 
-            sb.append(">").append(m.name).append("</option>");
+            sb.append(">").append(m.title).append("</option>");
         }
 
         sb.append("</select>");
@@ -105,7 +105,7 @@ public class EnumTag implements TemplateDirectiveModel {
                 sb.append(" checked ");
             }
 
-            sb.append("><a>").append(m.name).append("</a></label>\n");
+            sb.append("><a>").append(m.title).append("</a></label>\n");
         }
     }
 
@@ -118,7 +118,7 @@ public class EnumTag implements TemplateDirectiveModel {
                 sb.append(" checked ");
             }
 
-            sb.append("><a>").append(m.name).append("</a></label>\n");
+            sb.append("><a>").append(m.title).append("</a></label>\n");
         }
     }
 }

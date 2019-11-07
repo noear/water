@@ -254,18 +254,19 @@ public class DbWaterApi {
                 .getList(EnumModel.class);
     }
 
-    public static boolean updateEnum(Integer enum_id, String type, String name, Integer value) throws SQLException {
+    public static boolean updateEnum(Integer id, String tag, String type, String title, Integer value) throws SQLException {
 
-        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(title)) {
             return false;
         }
 
         DbTableQuery db = db().table("water_base_enum")
-                              .set("name", name)
-                              .set("type", type)
-                              .set("value", value);
-        if (enum_id > 0) {
-            return db.where("id = ?", enum_id).update() > 0;
+                .set("tag", tag)
+                .set("title", title)
+                .set("type", type)
+                .set("value", value);
+        if (id > 0) {
+            return db.where("id = ?", id).update() > 0;
         } else {
             return db.insert() > 0;
         }
