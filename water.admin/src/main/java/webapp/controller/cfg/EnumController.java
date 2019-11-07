@@ -7,7 +7,9 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import org.noear.water.admin.tools.dso.Session;
+import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.EnumModel;
 
 import java.sql.SQLException;
@@ -15,19 +17,40 @@ import java.util.List;
 
 
 @XController
-@XMapping("/cfg/")
+@XMapping("/cfg/enum")
 public class EnumController extends BaseController {
 
+    //枚举
+    @XMapping("")
+    public ModelAndView enum_(String tag) throws Exception {
+        List<TagCountsModel> tags = DbWaterApi.getLoggerTags();
+
+        BcfTagChecker.filter(tags, m -> m.tag);
+
+        if (TextUtils.isEmpty(tag) == false) {
+            viewModel.put("tag",tag);
+        } else {
+            if (tags.isEmpty() == false) {
+                viewModel.put("tag",tags.get(0).tag);
+            } else {
+                viewModel.put("tag",null);
+            }
+        }
+        viewModel.put("tags",tags);
+        return view("cfg/enum");
+    }
+
+
     //枚举列表
-    @XMapping("enum")
-    public ModelAndView enumList(String type) throws Exception {
+    @XMapping("inner")
+    public ModelAndView enumInner(String type) throws Exception {
         List<EnumModel> list = DbWaterApi.getEnumListByType(type);
         viewModel.put("list", list);
-        return view("/cfg/enum");
+        return view("/cfg/enum_inner");
     }
 
     //跳转枚举编辑页面
-    @XMapping("enum/edit")
+    @XMapping("edit")
     public ModelAndView enumEdit(Integer id) throws Exception {
         if (id == null) {
             id = 0;
@@ -38,7 +61,7 @@ public class EnumController extends BaseController {
     }
 
     //保存枚举编辑
-    @XMapping("enum/edit/ajax/save")
+    @XMapping("edit/ajax/save")
     public ViewModel saveEnumEdit(Integer id, String type, String name, Integer value) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {

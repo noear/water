@@ -224,6 +224,14 @@ public class DbWaterApi {
                 .delete() > 0;
     }
 
+    //获取logger表tag
+    public static List<TagCountsModel> getEnumTags() throws Exception {
+        return db().table("water_base_enum")
+                .groupBy("tag")
+                .select("tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
     public static List<EnumModel> getEnumListByType(String type) throws Exception {
         return db().table("water_base_enum")
                    .where("1 = 1")

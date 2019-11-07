@@ -13,7 +13,7 @@
 
     <script>
         $(function () {
-            document.getElementById('source').value="${log.source!}";
+            $('#source').val("${log.source!}");
         });
 
         function saveEdit() {
@@ -54,45 +54,45 @@
     </script>
 </head>
 <body>
-        <detail>
-            <form>
-            <h2>编辑日志配置（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2>
-            <hr/>
-            <table>
-                <tr>
-                <tr>
-                    <td>tag*</td>
-                    <td><input type="text" id="tag" autofocus value="${log.tag!}"/></td>
-                </tr>
-                <tr>
-                    <td>logger*</td>
-                    <td><input type="text" id="logger" value="${log.logger!}"/></td>
-                </tr>
-                <tr>
-                    <td>保留天数</td>
-                    <td><input type="text" id="keep_days" value="${log.keep_days!}"/></td>
-                </tr>
-                <tr>
-                    <td>数据源</td>
-                    <td>
-                        <select id="source">
-                            <option value=""></option>
-                            <#list option_sources as sss>
-                                <option value="${sss}">${sss}</option>
-                            </#list>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>备注</td>
-                    <td><input type="text" id="note" value="${log.note!}"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><button type="button" onclick="saveEdit()">保存</button></td>
-                </tr>
-            </table>
-            </form>
-        </detail>
+<detail>
+    <form>
+        <h2>编辑日志配置（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2>
+        <hr/>
+        <table>
+            <tr>
+            <tr>
+                <td>tag*</td>
+                <td><input type="text" id="tag" autofocus value="${log.tag!}"/></td>
+            </tr>
+            <tr>
+                <td>logger*</td>
+                <td><input type="text" id="logger" value="${log.logger!}"/></td>
+            </tr>
+            <tr>
+                <td>保留天数</td>
+                <td><input type="text" id="keep_days" value="${log.keep_days!}"/></td>
+            </tr>
+            <tr>
+                <td>数据源</td>
+                <td>
+                    <select id="source">
+                        <option value=""></option>
+                        <#list option_sources as sss>
+                            <option value="${sss}">${sss}</option>
+                        </#list>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td><input type="text" id="note" value="${log.note!}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="button" onclick="saveEdit()">保存</button></td>
+            </tr>
+        </table>
+    </form>
+</detail>
 </body>
 </html>

@@ -22,7 +22,7 @@
                     if(data.code==1) {
                         top.layer.msg(data.msg)
                         setTimeout(function(){
-                            location.href="/cfg/enum";
+                            parent.location.href="/cfg/enum?tag="+tag;
                         },1000);
                     }else{
                         top.layer.msg(data.msg);
