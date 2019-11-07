@@ -3,10 +3,8 @@ package org.noear.water.client_solon;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfUserModel;
 import org.noear.solon.core.XContext;
-import org.noear.water.client.WaterSession;
-import org.noear.water.tools.TextUtils;
 
-public abstract class XWaterSessionBcf extends WaterSession {
+public abstract class XWaterSessionBcf  {
     private static XWaterSessionBcf _global;
     public static XWaterSessionBcf global(){
         return _global;
@@ -17,40 +15,33 @@ public abstract class XWaterSessionBcf extends WaterSession {
         _global = this;
     }
 
-    @Override
-    public int expiry() {
-        return 60 * 60 * 2;
-    }
-
     public XContext context() {
         return XContext.current();
     }
 
+    protected <T> T doGet(String key, T def){
+        Object tmp = context().session(key);
+        if(tmp == null){
+            return def;
+        }else{
+            return (T)tmp;
+        }
+    }
+
+    protected void doSet(String key,Object val){
+        context().sessionSet(key,val);
+    }
+
+    protected boolean doHas(String key) {
+        return context().session(key) != null;
+    }
 
     public abstract String service();
 
     public abstract void loadModel(BcfUserModel model) throws Exception;
 
-    @Override
-    public String cookieGet(String key) {
-        String val = context().cookie(key);
-
-        if (TextUtils.isEmpty(val)) {
-            return stateGet(key);
-        } else {
-            return val;
-        }
-    }
-
-    @Override
-    public void cookieSet(String key, String val) {
-        context().cookieSet(key, val, domain(), expiry());
-
-        stateSet(key, val);
-    }
-
-    private int doGetPuid() {
-        return Integer.parseInt(doGet("puid", "0"));
+    private int doGetPuid(){
+        return doGet("puid", 0);
     }
 
     public final int getPUID() {
@@ -63,11 +54,6 @@ public abstract class XWaterSessionBcf extends WaterSession {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
-        } else {
-            if (stateHas("SESSION_UPDATE") == false) {
-                stateSet("SESSION_UPDATE", "1");
-                updateSessionID();
             }
         }
 
@@ -96,38 +82,26 @@ public abstract class XWaterSessionBcf extends WaterSession {
     }
 
     /////////////////////////////////////////////////
+    private boolean hasReload() {
+        return doGetPuid() != servicePUID();
+    }
 
     public boolean has(String key) {
         return doHas(service() + "_" + key);
     }
 
-    public boolean hasReload() {
-        return doGetPuid() != servicePUID();
-    }
-
     private int servicePUID() {
-        return getAsInt("puid", 0);
+        return get("puid", 0);
     }
 
     public void set(String key, Object val) {
         doSet(service() + "_" + key, val);
     }
 
-    public String get(String key, String def) {
+    public <T> T get(String key, T def) {
         return doGet(service() + "_" + key, def);
     }
 
-    public int getAsInt(String key, int def) {
-        return Integer.parseInt(get(key, String.valueOf(def)));
-    }
-
-    public long getAsLong(String key, long def) {
-        return Long.parseLong(get(key, String.valueOf(def)));
-    }
-
-    public double getAsDouble(String key, double def) {
-        return Double.parseDouble(get(key, String.valueOf(def)));
-    }
 
 
 

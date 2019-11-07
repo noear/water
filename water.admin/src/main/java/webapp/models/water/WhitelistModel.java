@@ -11,7 +11,7 @@ import java.util.*;
 @Getter
 public class WhitelistModel implements IBinder
 {
-    public int row_id;
+    public int id;
     public String tag;
     public String ip;
     public String note;
@@ -20,7 +20,7 @@ public class WhitelistModel implements IBinder
 	{
 		//1.source:数据源
 		//
-        row_id = s.get("row_id").value(0);
+        id = s.get("id").value(0);
         tag = s.get("tag").value(null);
         ip = s.get("ip").value(null);
         note = s.get("note").value(null);

@@ -45,7 +45,7 @@ public class DbWaterMotApi {
         return db().table("water_base_monitor")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
-                .getList(new MonitorModel());
+                .getList(MonitorModel.class);
     }
 
 
@@ -60,7 +60,7 @@ public class DbWaterMotApi {
                         tb.and("name like ?", monitor_name + "%");
                 })
                 .select("*")
-                .getList(new MonitorModel());
+                .getList(MonitorModel.class);
     }
 
     //根据id查找对应monitor，用于编辑功能。
@@ -69,6 +69,6 @@ public class DbWaterMotApi {
                 .table("water_base_monitor")
                 .where("id = ?", monitor_id)
                 .select("*")
-                .getItem(new MonitorModel());
+                .getItem(MonitorModel.class);
     }
 }

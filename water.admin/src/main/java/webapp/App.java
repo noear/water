@@ -11,6 +11,8 @@ public class App {
         System.setProperty("water.host", "http://106.15.45.208:9371");
 
         XApp.start(App.class, args, (app) -> {
+            Config.tryInit();
+
             app.sharedAdd("db",Config.water);
         });
     }

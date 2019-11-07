@@ -11,7 +11,7 @@ import java.util.*;
 @Getter
 public class SynchronousModel implements IBinder
 {
-    public int sync_id;
+    public int id;
     public String key;
     public String name;
     public int type;
@@ -32,7 +32,7 @@ public class SynchronousModel implements IBinder
 	{
 		//1.source:数据源
 		//
-        sync_id = s.get("sync_id").value(0);
+        id = s.get("id").value(0);
         key = s.get("key").value(null);
         name = s.get("name").value(null);
         type = s.get("type").value(0);

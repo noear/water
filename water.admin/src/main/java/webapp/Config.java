@@ -1,6 +1,9 @@
 package webapp;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.bcf.BcfClient;
+import org.noear.solon.XApp;
+import org.noear.water.admin.tools.dso.CacheUtil;
 import org.noear.water.client.WaterClient;
 import org.noear.water.client.model.ConfigM;
 import org.noear.water.tools.RedisX;
@@ -30,12 +33,12 @@ public class Config {
     public static String water_cache_header;
     public static String water_msg_queue;
 
-    public static String paas_uri = Config.getValConfig("paas_uri");
-    public static String raas_uri = Config.getValConfig("raas_uri");
+    public static String paas_uri ;
+    public static String raas_uri ;
 
-    public static String sponge_url = WaterClient.Config.get("sponge","sponge_url").value;
-    public static String private_key_path = WaterClient.Config.get("wind","private_key_path").value;
-    public static String ops_host = WaterClient.Config.get("wind","ops_host").value;
+    public static String sponge_url ;
+    public static String private_key_path ;
+    public static String ops_host;
 
 
     //是否使用标答检查器？
@@ -49,33 +52,43 @@ public class Config {
      */
     private static boolean _inited = false;
 
-    public static void tryInit(int service_port) {
-        if (_inited == false) {
-            _inited = true;
+    public static void tryInit() {
+        if (_inited) {
+            return;
+        }
+        _inited = true;
 
-            WeedConfig.isDebug = false;
-            WeedConfig.isUsingValueExpression = false;
+        WeedConfig.isDebug = false;
+        WeedConfig.isUsingValueExpression = false;
 
 
-            water = getDbConfig("water", null);
+        water = getDbConfig("water", null);
 
-            water_msg = getDbConfig("water_msg", water);
-            water_log = getDbConfig("water_log", water);
+        water_msg = getDbConfig("water_msg", water);
+        water_log = getDbConfig("water_log", water);
 
-            rd_ids = getRdConfig("water_redis", 1);
-            rd_track = getRdConfig("water_redis", 5);
+        rd_ids = getRdConfig("water_redis", 1);
+        rd_track = getRdConfig("water_redis", 5);
 
-            water_cache_header = getValConfig("water_cache_header", "WATER_CACHE") + "_API";
-            water_msg_queue = getValConfig("water_msg_queue");
+        water_cache_header = getValConfig("water_cache_header", "WATER_CACHE") + "_API";
+        water_msg_queue = getValConfig("water_msg_queue");
 
-            try {
-                WaterClient.Registry.add(water_service_name,
-                        ServerUtil.getFullAddress(service_port),
-                        "/run/check/",
-                        "");
-            } catch (Throwable ex) {
-                ex.printStackTrace();
-            }
+        paas_uri = Config.getValConfig("paas_uri");
+        raas_uri = Config.getValConfig("raas_uri");
+
+        sponge_url = WaterClient.Config.get("sponge", "sponge_url").value;
+        private_key_path = WaterClient.Config.get("wind", "private_key_path").value;
+        ops_host = WaterClient.Config.get("wind", "ops_host").value;
+
+        BcfClient.tryInit("water_admin", CacheUtil.data,water);
+
+        try {
+            WaterClient.Registry.add(water_service_name,
+                    ServerUtil.getFullAddress(XApp.global().port()),
+                    "/run/check/",
+                    "");
+        } catch (Throwable ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -134,7 +147,7 @@ public class Config {
     public static DbContext getDbConfig(String key, DbContext def) {
         ConfigM cfg = getConfig(key);
 
-        if (cfg == null || cfg.value == null) {
+        if (cfg.value == null) {
             return def;
         } else {
             return getDb(cfg.toProp());
@@ -145,7 +158,7 @@ public class Config {
     public static RedisX getRdConfig(String key, int db) {
         ConfigM cfg = getConfig(key);
 
-        if (cfg == null || cfg.value == null) {
+        if (cfg.value == null) {
             return null;
         } else {
             return new RedisX(cfg.toProp(), db);
@@ -156,7 +169,7 @@ public class Config {
     public static ICacheServiceEx getChConfig(String key, String keyHeader, int defSeconds) {
         ConfigM cfg = getConfig(key);
 
-        if (cfg == null || cfg.value == null) {
+        if (cfg.value == null) {
             return new LocalCache(keyHeader, defSeconds);
         } else {
             return new MemCache(cfg.toProp(), keyHeader, defSeconds);
@@ -170,7 +183,7 @@ public class Config {
     public static String getValConfig(String key, String def) {
         ConfigM cfg = getConfig(key);
 
-        if (cfg == null || cfg.value == null) {
+        if (cfg.value == null) {
             return def;
         } else {
             return cfg.value;

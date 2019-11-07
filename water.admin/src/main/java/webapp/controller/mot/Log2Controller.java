@@ -7,6 +7,7 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.LoggerModel;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class Log2Controller extends BaseController {
     //日志统计
     @XMapping("log")
     public ModelAndView logger(String tag_name) throws Exception {
-        List<LoggerModel> resp = DbWaterApi.getLoggerTags();
+        List<TagCountsModel> resp = DbWaterApi.getLoggerTags();
 
         BcfTagChecker.filter(resp, m -> m.tag);
 

@@ -7,12 +7,12 @@ import java.util.*;
 
 @Getter
 @Setter
-public class ServiceConsumerModel implements IBinder {
+public class ServiceConsumerModel  {
 
     /**
      *
      */
-    public int row_id;
+    public int id;
     /**
      *服务
      */
@@ -41,17 +41,5 @@ public class ServiceConsumerModel implements IBinder {
     public long traffic_num;
     public double traffic_per;
 
-    public void bind(GetHandlerEx s) {
-        row_id = s.get("row_id").value(0);
-        service = s.get("service").value("");
-        consumer = s.get("consumer").value("");
-        consumer_address = s.get("consumer_address").value("");
-        consumer_ip = s.get("consumer_ip").value("");
-        chk_fulltime = s.get("chk_fulltime").value(null);
-        log_fulltime = s.get("log_fulltime").value(null);
-    }
 
-    public IBinder clone() {
-        return new ServiceConsumerModel();
-    }
 }

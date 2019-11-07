@@ -8,6 +8,7 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
 import webapp.dao.db.DbWaterLogApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.LoggerModel;
 import webapp.models.water_log.LogModel;
 
@@ -20,7 +21,7 @@ public class LogController extends BaseController {
 
     @XMapping("log")
     public ModelAndView index(String tableName, String tagx,  Integer log_date,Long log_id,String project, Integer level) throws Exception {
-        List<LoggerModel> tags = DbWaterApi.getLoggerTags();
+        List<TagCountsModel> tags = DbWaterApi.getLoggerTags();
         List<LoggerModel> loggers = DbWaterApi.getLoggers(project);
 
         List<LogModel> logs = new ArrayList<>();

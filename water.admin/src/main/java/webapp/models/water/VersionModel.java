@@ -14,7 +14,7 @@ import java.util.*;
 @Getter
 public class VersionModel implements IBinder
 {
-    public int commit_id;
+    public int id;
     public String table;
     public String key_name;
     public String key_value;
@@ -29,7 +29,7 @@ public class VersionModel implements IBinder
     {
         //1.source:数据源
         //
-        commit_id = s.get("commit_id").value(0);
+        id = s.get("id").value(0);
         table = s.get("table").value(null);
         key_name = s.get("key_name").value(null);
         key_value = s.get("key_value").value(null);

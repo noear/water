@@ -8,6 +8,7 @@ import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.BcfTagChecker;
 import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.LoggerModel;
 import webapp.models.water.WhitelistModel;
 
@@ -20,7 +21,7 @@ public class WhitelistController extends BaseController {
     //IP白名单列表
     @XMapping("whitelist")
     public ModelAndView whitelist(String ip) throws Exception {
-        List<LoggerModel> tags = DbWaterApi.getLoggerTags();
+        List<TagCountsModel> tags = DbWaterApi.getLoggerTags();
 
         List<WhitelistModel> list = DbWaterApi.getWhiteList(ip);
 

@@ -1,4 +1,4 @@
-package webapp.models.water;
+package org.noear.water.admin.tools.model;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
@@ -15,31 +15,36 @@ import org.noear.weed.cache.memcached.MemCache;
 import java.io.StringReader;
 import java.util.Properties;
 
+/// <summary>
+/// 生成:2017/12/27 11:14:04
+/// 
+/// </summary>
 @Getter
-public class ConfigModel implements IBinder {
-    public int id;
+public class ConfigModel implements IBinder
+{
+    public int row_id;
     public String tag;
     public String key;
     public int type;
     public String value;
 
-    public void bind(GetHandlerEx s)
-    {
-        //1.source:数据源
-        //
-        id = s.get("id").value(0);
+	public void bind(GetHandlerEx s)
+	{
+		//1.source:数据源
+		//
+        row_id = s.get("row_id").value(0);
         tag = s.get("tag").value(null);
         key = s.get("key").value(null);
         type = s.get("type").value(0);
-    }
+	}
+	
+	public IBinder clone()
+	{
+		return new ConfigModel();
+	}
 
-    public IBinder clone()
-    {
-        return new ConfigModel();
-    }
-
-    public String type_str(){
-        switch (type){
+	public String type_str(){
+	    switch (type){
             case 10:return "数据库";
             case 11:return "Redis";
             case 12:return "MangoDb";

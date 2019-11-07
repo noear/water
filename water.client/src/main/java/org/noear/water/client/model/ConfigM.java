@@ -20,6 +20,10 @@ public class ConfigM {
     public String value;
     public long lastModified;
 
+    public ConfigM(){
+
+    }
+
     public ConfigM(String key, String value) {
         this.key = key;
         this.value = value;

@@ -42,9 +42,7 @@ public class GatewayController extends BaseController {
     public ModelAndView inner(String sev_key) throws SQLException {
 
         ConfigModel cfg = DbWaterApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
-        if(TextUtils.isEmpty(cfg.user)==false){ //通过 cfg.user, 实现别名与实名的情况
-            sev_key = cfg.user;
-        }
+
 
         double pdsTotal = 0.01;
 

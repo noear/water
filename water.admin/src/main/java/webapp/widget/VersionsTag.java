@@ -75,7 +75,7 @@ public class VersionsTag implements TemplateDirectiveModel {
         sb.append("<select onchange=\"versions_onselect(").append("this,").append(fun).append(")\">");
         sb.append("<option value='0'>历史版本...").append("</option>");
         for(VersionModel v : list){
-            sb.append("<option value='").append(v.commit_id).append("'>")
+            sb.append("<option value='").append(v.id).append("'>")
                     .append("ver:")
                     .append(new Datetime(v.log_fulltime).toString("yyyy-MM-dd HH:mm:ss"))
                     .append(",").append(v.log_user)

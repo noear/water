@@ -9,6 +9,7 @@ import org.noear.solon.core.ModelAndView;
 import webapp.dao.BcfTagChecker;
 import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.*;
 
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ import java.util.List;
 public class PropController extends BaseController {
     @XMapping("prop")
     public ModelAndView index(String tag_name) throws SQLException {
-        List<ConfigModel> resp = DbWaterApi.getTagGroup();
+        List<TagCountsModel> resp = DbWaterApi.getTagGroup();
 
         BcfTagChecker.filter(resp, m -> m.tag);
 

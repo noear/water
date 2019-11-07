@@ -16,6 +16,7 @@ import org.noear.solon.core.ModelAndView;
 import webapp.dao.JtFunRunner;
 import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.ReportModel;
 
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public class QueryReportController extends BaseController {
 
     @XMapping("")
     public ModelAndView query(String tag_name) throws SQLException {
-        List<ReportModel> tags = DbWaterApi.getReportTags();
+        List<TagCountsModel> tags = DbWaterApi.getReportTags();
         if (!TextUtils.isEmpty(tag_name)){
             viewModel.put("tag_name",tag_name);
         } else {

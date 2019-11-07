@@ -12,6 +12,7 @@ import org.noear.solon.core.ModelAndView;
 import org.noear.solon.view.freemarker.XRenderUtil;
 import webapp.dao.db.DbPaaSApi;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water_dev.FieldModel;
 import webapp.models.water.ConfigModel;
 import webapp.models.water_paas.PaasTmlModel;
@@ -44,7 +45,7 @@ public class CodeGenerationController extends BaseController {
     @XMapping("")
     public ModelAndView code(String tag_name) throws SQLException {
 
-        List<ConfigModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
+        List<TagCountsModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
 
         viewModel.set("tag_name", TextUtils.isNotEmpty(tag_name) ? tag_name : (resp.size() > 0 ? resp.get(0).tag : null));
 

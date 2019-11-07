@@ -9,14 +9,14 @@
     <script src="${js}/layer.js"></script>
     <script>
         function saveEdit() {
-            var group = $('#group').val();
+            var type = $('#type').val();
             var name = $('#name').val();
             var value = $('#value').val();
 
             $.ajax({
                 type:"POST",
                 url:"/cfg/enum/edit/ajax/save",
-                data:{"enum_id":${e.enum_id},"group":group,"name":name,"value":value},
+                data:{"id":${e.id},"type":type,"name":name,"value":value},
                 traditional: true,
                 success:function (data) {
                     if(data.code==1) {
@@ -41,7 +41,7 @@
                 <table>
                     <tr>
                         <td>枚举名称</td>
-                        <td><input type="text" id="group" value="${e.group!}" autofocus/></td>
+                        <td><input type="text" id="type" value="${e.type!}" autofocus/></td>
                     </tr>
                     <tr>
                         <td>枚举值</td>

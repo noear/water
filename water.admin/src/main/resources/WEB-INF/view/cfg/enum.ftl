@@ -18,7 +18,7 @@
         <toolbar>
             <cell>
                 <form>
-                    枚举名称：<input type="text"  name="group" placeholder="枚举名称" id="group"/>&nbsp;&nbsp;
+                    枚举名称：<input type="text"  name="type" placeholder="枚举名称" id="group"/>&nbsp;&nbsp;
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <#if is_admin == 1>
                         <button type="button" class="edit" onclick="edit(0);" >新增</button>
@@ -44,11 +44,11 @@
                 <#list list as m>
                     <tr>
                         <td>${m_index + 1}</td>
-                        <td style="text-align: left">${m.group}</td>
-                        <td style="text-align: left">${m.value}</td>
-                        <td style="text-align: left">${m.name}</td>
+                        <td style="text-align: left">${m.type!}</td>
+                        <td style="text-align: left">${m.value!}</td>
+                        <td style="text-align: left">${m.name!}</td>
                         <#if is_admin == 1>
-                            <td><a href="/cfg/enum/edit?enum_id=${m.enum_id}" style="cursor: pointer;color: blue;">编辑</a></td>
+                            <td><a href="/cfg/enum/edit?id=${m.id}" style="cursor: pointer;color: blue;">编辑</a></td>
                         </#if>
                     </tr>
                 </#list>

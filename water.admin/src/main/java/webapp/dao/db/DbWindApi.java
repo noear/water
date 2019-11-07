@@ -154,11 +154,7 @@ public class DbWindApi {
 
         ConfigModel cfg = DbWaterApi.getConfigByTagName(sm.iaas_account);
 
-        if (TextUtils.isEmpty(cfg.password)) {
-            return null;
-        } else {
-            return cfg;
-        }
+        return cfg;
     }
 
 

@@ -2,20 +2,11 @@ package org.noear.water.admin.tools.dso;
 
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfUserModel;
-import org.noear.solon.core.XContext;
 import org.noear.water.admin.tools.Config;
 import org.noear.water.client_solon.XWaterSessionBcf;
 
 //Session对象
 public class SessionBcf extends XWaterSessionBcf {
-    @Override
-    public String domain() {
-        if (XContext.current().url().indexOf("localhost") >= 0) {
-            return "localhost";
-        } else {
-            return "zmapi.cn";
-        }
-    }
 
     @Override
     public String service() {
@@ -43,7 +34,7 @@ public class SessionBcf extends XWaterSessionBcf {
     }
 
     public final int getIsAdmin() {
-        return getAsInt("Is_Admin", 0);
+        return get("Is_Admin", 0);
     }
 
     public final void setIsAdmin(int Is_Admin) {
@@ -51,7 +42,7 @@ public class SessionBcf extends XWaterSessionBcf {
     }
 
     public final int getIsOperator() {
-        return getAsInt("Is_Operator", 0);
+        return get("Is_Operator", 0);
     }
 
     public final void setIsOperator(int is_Operator) {

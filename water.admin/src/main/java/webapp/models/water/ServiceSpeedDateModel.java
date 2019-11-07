@@ -2,16 +2,10 @@ package webapp.models.water;
 
 import lombok.Getter;
 import org.noear.weed.*;
-import java.util.*;
 
-/// <summary>
-/// 生成:2018/04/26 09:46:37
-/// 
-/// </summary>
 @Getter
 public class ServiceSpeedDateModel implements IBinder
 {
-    public int row_id;
     public String service;
     public String tag;
     public String name;
@@ -28,7 +22,6 @@ public class ServiceSpeedDateModel implements IBinder
 	{
 		//1.source:数据源
 		//
-        row_id = s.get("row_id").value(0);
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);

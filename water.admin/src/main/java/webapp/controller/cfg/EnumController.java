@@ -20,38 +20,38 @@ public class EnumController extends BaseController {
 
     //枚举列表
     @XMapping("enum")
-    public ModelAndView enumList(String group) throws Exception {
-        List<EnumModel> list = DbWaterApi.getEnumListByGroup(group);
+    public ModelAndView enumList(String type) throws Exception {
+        List<EnumModel> list = DbWaterApi.getEnumListByType(type);
         viewModel.put("list", list);
         return view("/cfg/enum");
     }
 
     //跳转枚举编辑页面
     @XMapping("enum/edit")
-    public ModelAndView enumEdit(Integer enum_id) throws Exception {
-        if (enum_id == null) {
-            enum_id = 0;
+    public ModelAndView enumEdit(Integer id) throws Exception {
+        if (id == null) {
+            id = 0;
         }
-        EnumModel e = DbWaterApi.getEnumById(enum_id);
+        EnumModel e = DbWaterApi.getEnumById(id);
         viewModel.put("e", e);
         return view("/cfg/enum_edit");
     }
 
     //保存枚举编辑
     @XMapping("enum/edit/ajax/save")
-    public ViewModel saveEnumEdit(Integer enum_id, String group, String name, Integer value) throws SQLException {
+    public ViewModel saveEnumEdit(Integer id, String type, String name, Integer value) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
 
-            group = group.trim();
+            type = type.trim();
             name = name.trim();
 
-            if (TextUtils.isEmpty(group) || TextUtils.isEmpty(name)) {
+            if (TextUtils.isEmpty(type) || TextUtils.isEmpty(name)) {
                 viewModel.code(0, "值不能为空");
                 return viewModel;
             }
 
-            boolean result = DbWaterApi.updateEnum(enum_id, group, name, value);
+            boolean result = DbWaterApi.updateEnum(id, type, name, value);
 
             if (result) {
                 viewModel.code(1, "保存成功！");

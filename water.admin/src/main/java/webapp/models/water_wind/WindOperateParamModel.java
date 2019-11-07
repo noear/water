@@ -1,13 +1,9 @@
-package webapp.models.water;
+package webapp.models.water_wind;
 
 import lombok.Getter;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 
-/// <summary>
-/// 生成:2018/12/14 03:26:15
-/// 
-/// </summary>
 @Getter
 public class WindOperateParamModel implements IBinder
 {

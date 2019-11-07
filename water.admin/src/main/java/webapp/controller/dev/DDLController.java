@@ -12,6 +12,7 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.core.ModelAndView;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbWaterApi;
+import webapp.models.TagCountsModel;
 import webapp.models.water.ConfigModel;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,7 +38,7 @@ public class DDLController extends BaseController {
 
     @XMapping("")
     public ModelAndView ddl(String tag_name) throws SQLException {
-        List<ConfigModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
+        List<TagCountsModel> resp = DbWaterApi.getTagGroupWithType(CFG_TYPE_DB);
 
         BcfTagChecker.filter(resp, m -> m.tag);
 

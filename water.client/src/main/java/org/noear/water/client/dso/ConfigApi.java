@@ -55,10 +55,12 @@ public class ConfigApi {
         ONode _data = _cfgs.get(tag);
 
         if (_data.contains(key)) {
-            return _data.get(key)
-                    .toBean(ConfigM.class);
+            ONode n = _data.get(key);
+            return new ConfigM(n.get("key").getString(),
+                    n.get("value").getString(),
+                    n.get("lastModified").getLong());
         } else {
-            return null;
+            return new ConfigM();
         }
     }
 

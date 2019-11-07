@@ -11,6 +11,7 @@ import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import webapp.Config;
 import webapp.dao.IDUtil;
+import webapp.models.TagCountsModel;
 import webapp.models.water.*;
 import webapp.models.water.LoggerModel;
 
@@ -110,20 +111,20 @@ public class DbWaterApi {
     }
 
     //获取标签数组。
-    public static List<ConfigModel> getTagGroup() throws SQLException {
+    public static List<TagCountsModel> getTagGroup() throws SQLException {
         return db().table("water_base_config")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
-                .getList(new ConfigModel());
+                .getList(TagCountsModel.class);
     }
 
     // 获取有特定类型配置的TAG
-    public static List<ConfigModel> getTagGroupWithType(int type) throws SQLException {
+    public static List<TagCountsModel> getTagGroupWithType(int type) throws SQLException {
         return db().table("water_base_config")
                 .where("type = ?", type)
                 .groupBy("tag")
                 .select("tag, COUNT(*) AS counts")
-                .getList(new ConfigModel());
+                .getList(TagCountsModel.class);
     }
 
     //编辑功能，根据row_id获取config信息。
@@ -169,7 +170,7 @@ public class DbWaterApi {
 
     public static List<ConfigModel> getGateways() throws SQLException {
         return db().table("water_base_config")
-                .where("tag = ?", "_service").and("LENGTH(IFNULL(`user`,''))>1")
+                .where("tag = ?", "_service")
                 .select("*")
                 .getList(new ConfigModel());
     }
@@ -187,11 +188,11 @@ public class DbWaterApi {
     }
 
     //获取白名单表tag
-    public static List<LoggerModel> getWhiteListTags() throws Exception {
+    public static List<TagCountsModel> getWhiteListTags() throws Exception {
         return db().table("water_base_whitelist")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
-                .getList(LoggerModel.class);
+                .getList(TagCountsModel.class);
     }
 
     //获取ip白名单列表
@@ -223,37 +224,37 @@ public class DbWaterApi {
                 .delete() > 0;
     }
 
-    public static List<EnumModel> getEnumListByGroup(String group) throws Exception {
+    public static List<EnumModel> getEnumListByType(String type) throws Exception {
         return db().table("water_base_enum")
                    .where("1 = 1")
                    .expre(tb -> {
-                       if (TextUtils.isEmpty(group) == false) {
-                           tb.and("`group` = ?", group);
+                       if (TextUtils.isEmpty(type) == false) {
+                           tb.andEq("type",type);
                        }
                    })
-                   .orderBy("`group`, `value`")
+                   .orderBy("`type`, `value`")
                    .select("*")
                    .getList(EnumModel.class);
     }
 
-    public static List<EnumModel> getEnumListOfCache(String group) throws Exception {
+    public static List<EnumModel> getEnumListOfCache(String type) throws Exception {
         return db().table("water_base_enum")
-                .where("`group` = ?", group)
-                .orderBy("`group`, `value`")
+                .whereEq("type", type)
+                .orderBy("`type`, `value`")
                 .select("*")
                 .caching(CacheUtil.data)
                 .getList(EnumModel.class);
     }
 
-    public static boolean updateEnum(Integer enum_id, String group, String name, Integer value) throws SQLException {
+    public static boolean updateEnum(Integer enum_id, String type, String name, Integer value) throws SQLException {
 
-        if (TextUtils.isEmpty(group) || TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(name)) {
             return false;
         }
 
         DbTableQuery db = db().table("water_base_enum")
                               .set("name", name)
-                              .set("group", group)
+                              .set("type", type)
                               .set("value", value);
         if (enum_id > 0) {
             return db.where("id = ?", enum_id).update() > 0;
@@ -262,9 +263,9 @@ public class DbWaterApi {
         }
     }
 
-    public static EnumModel getEnumById(int enum_id) throws Exception {
+    public static EnumModel getEnumById(int id) throws Exception {
         return db().table("water_base_enum")
-                   .where("id = ?", enum_id)
+                   .where("id = ?", id)
                    .select("*")
                    .getItem(EnumModel.class);
     }
@@ -292,11 +293,11 @@ public class DbWaterApi {
 
 
     //获取logger表tag
-    public static List<LoggerModel> getLoggerTags() throws Exception {
+    public static List<TagCountsModel> getLoggerTags() throws Exception {
         return db().table("water_base_logger")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
-                .getList(LoggerModel.class);
+                .getList(TagCountsModel.class);
     }
 
     //根据tag获取列表。
@@ -435,25 +436,25 @@ public class DbWaterApi {
                 .getValue("");
     }
 
-    public static List<ReportModel> getReportTags() throws SQLException{
+    public static List<TagCountsModel> getReportTags() throws SQLException {
         return db().table("water_base_reportor")
                 .groupBy("tag")
-                .select("tag")
-                .getList(new ReportModel());
+                .select("tag, count(*) counts")
+                .getList(TagCountsModel.class);
     }
 
     public static List<ReportModel> getReportByTag(String tag) throws SQLException{
         return db().table("water_base_reportor")
                 .where("tag = ?",tag)
                 .select("*")
-                .getList(new ReportModel());
+                .getList(ReportModel.class);
     }
 
     public static ReportModel getReportById(int row_id) throws SQLException{
         return db().table("water_base_reportor")
                 .where("id = ?",row_id)
                 .select("*")
-                .getItem(new ReportModel());
+                .getItem(ReportModel.class);
     }
 
     public static boolean setReport(int row_id,String tag,String name,String code,String note,String args) throws SQLException{
@@ -589,7 +590,7 @@ public class DbWaterApi {
                 .where("service = ?", service)
                 .orderBy("consumer asc")
                 .select("*")
-                .getList(new ServiceConsumerModel());
+                .getList(ServiceConsumerModel.class);
 
     }
 
