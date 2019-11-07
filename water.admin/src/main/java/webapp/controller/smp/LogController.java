@@ -4,24 +4,19 @@ package webapp.controller.smp;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
 import webapp.dao.db.DbWaterLogApi;
 import webapp.models.water.LoggerModel;
 import webapp.models.water_log.LogModel;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:日志查询
- */
-
 @XController
 @XMapping("/smp/")
-public class LogController extends BaseController{
+public class LogController extends BaseController {
 
     @XMapping("log")
     public ModelAndView index(String tableName, String tagx,  Integer log_date,Long log_id,String project, Integer level) throws Exception {

@@ -3,9 +3,7 @@ package org.noear.water.client.dso;
 import org.noear.snack.ONode;
 import org.noear.water.client.model.ConfigM;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 配置接口
@@ -26,7 +24,7 @@ public class ConfigApi {
         }
     }
 
-    private void do_load(String tag){
+    private void do_load(String tag) {
         try {
             String temp = WaterApi.get("/cfg/?tag=" + tag);
             ONode conf = ONode.loadStr(temp);
@@ -37,8 +35,10 @@ public class ConfigApi {
         }
     }
 
-    /** 重新加载 */
-    public void reload(String tag){
+    /**
+     * 重新加载
+     */
+    public void reload(String tag) {
         if (_cfgs.containsKey(tag) == false) {
             return;
         }
@@ -46,7 +46,9 @@ public class ConfigApi {
         do_load(tag);
     }
 
-    /** 获取配置 */
+    /**
+     * 获取配置
+     */
     public ConfigM get(String tag, String key) {
         do_tryInit(tag);
 
@@ -60,7 +62,9 @@ public class ConfigApi {
         }
     }
 
-    /** 获取配置 */
+    /**
+     * 获取配置
+     */
     public ConfigM getByTagKey(String tagKey) {
         String[] ss = tagKey.split("/");
         return get(ss[0], ss[1]);

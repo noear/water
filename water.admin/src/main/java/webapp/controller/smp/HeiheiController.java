@@ -6,14 +6,13 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.client.WaterClient;
-import webapp.controller.BaseController;
-import webapp.viewModels.ViewModel;
-
 
 @XController
 @XMapping("/smp/")
-public class HeiheiController extends BaseController{
+public class HeiheiController extends BaseController {
     @XMapping("heihei")
     public ModelAndView index() {
         return view("smp/heihei");

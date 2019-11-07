@@ -1,5 +1,6 @@
 package webapp.dao;
 
+import org.noear.water.admin.tools.dso.CacheUtil;
 import org.noear.water.tools.EncryptUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;

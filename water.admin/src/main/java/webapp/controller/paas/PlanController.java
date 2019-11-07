@@ -1,19 +1,19 @@
 package webapp.controller.paas;
 
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
-import webapp.dao.Session;
-import webapp.viewModels.ViewModel;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbPaaSApi;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
@@ -26,10 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:计划任务
- */
 
 @XController
 @XMapping("/paas/")
@@ -148,37 +144,6 @@ public class PlanController extends BaseController {
             }
         } else {
             viewModel.code(0, "没有权限！");
-        }
-
-
-        return viewModel;
-    }
-
-    @XMapping("plan/ajax/import")
-    public ViewModel api_import(String tag) throws SQLException{
-        if(TextUtils.isEmpty(tag) == false) {
-            DbContext sdb = Config.water_dev_db();
-
-            if (sdb != null) {
-                DbContext tdb = Config.water;
-
-                DataList list = sdb.table("paas_plan").where("tag=?", tag).select("*").getDataList();
-
-                for (DataItem row : list.getRows()) {
-                    //只导入未存在的接口
-                    if (tdb.table("paas_plan").where("tag=? AND plan_name=?", tag, row.get("plan_name")).exists() == false) {
-                        row.remove("plan_id");
-                        tdb.table("paas_plan")
-                                .insert(row);
-                    }
-                }
-
-                viewModel.code(1, "同步成功");
-            } else {
-                viewModel.code(0, "没有开发环境配置");
-            }
-        }else{
-            viewModel.code(0, "请选择分类标签");
         }
 
 

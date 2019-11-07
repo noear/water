@@ -1,23 +1,18 @@
 package webapp.controller.paas;
 
-import org.noear.water.utils.ExceptionUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
+import org.noear.water.tools.ThrowableUtils;
 import webapp.dao.db.DbPaaSApi;
 import webapp.models.water_paas.PaasTmlModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * 2019.01.21
- *
- * @author cjl
- */
 @XController
 @XMapping("/paas/tml")
 public class TmlController extends BaseController {
@@ -29,7 +24,7 @@ public class TmlController extends BaseController {
 
         viewModel.set("tags", tags);
 
-        viewModel.set("tag", StringUtils.isNotEmpty(tag_name) ? tag_name : (tags.size() > 0 ? tags.get(0) : null));
+        viewModel.set("tag", TextUtils.isNotEmpty(tag_name) ? tag_name : (tags.size() > 0 ? tags.get(0) : null));
         viewModel.set("tml_name", tml_name);
 
         return view("paas/tml");
@@ -84,7 +79,7 @@ public class TmlController extends BaseController {
             viewModel.code(1, "成功");
 
         } catch (Exception e) {
-            viewModel.code(0, ExceptionUtil.getFullStackTrace(e));
+            viewModel.code(0, ThrowableUtils.getString(e));
         }
 
         return viewModel;

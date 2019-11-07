@@ -9,19 +9,17 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XMethod;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.utils.ImageUtil;
-import webapp.viewModels.ViewModel;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-/**
- * Created by yuety on 14-9-10.
- */
 @XController
 public class LoginController extends BaseController {
 

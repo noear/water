@@ -1,11 +1,11 @@
 package webapp.dao.db;
 
 import org.noear.water.tools.Datetime;
+import org.noear.water.tools.DisttimeUtil;
 import org.noear.water.tools.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import webapp.Config;
-import webapp.dao.DisttimeUtil;
 import webapp.dao.IDUtil;
 import webapp.models.water_msg.DistributionModel;
 import webapp.models.water_msg.MessageModel;
@@ -16,10 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:
- */
+
 public class DbWaterMsgApi {
     private static DbContext db() {
         return Config.water_msg;

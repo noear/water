@@ -1,32 +1,27 @@
 package webapp.controller.rubber;
 
 import com.alibaba.fastjson.JSONObject;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbRubberApi;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water_rebber.BlockModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 15:59 2018/06/12
- * @Description:数据block
- */
 
 @XController
 @XMapping("/rubber/")
@@ -116,8 +111,8 @@ public class BlockController extends BaseController {
 
     //保存数据块编辑
     @XMapping("block/edit/ajax/save")
-    public ViewModel editSave(Integer block_id,String tag,String name,String name_display,String related_db,String related_tb,
-                              String struct,String app_expr,Integer is_editable,String note) throws SQLException{
+    public ViewModel editSave(Integer block_id, String tag, String name, String name_display, String related_db, String related_tb,
+                              String struct, String app_expr, Integer is_editable, String note) throws SQLException{
         long result = DbRubberApi.setRubberBlock(block_id, tag, name, name_display, related_db, related_tb, struct, app_expr,is_editable,note);
 
         if (result>0) {

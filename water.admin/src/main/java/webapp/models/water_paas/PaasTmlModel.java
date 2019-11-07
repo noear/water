@@ -5,11 +5,6 @@ import lombok.Setter;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 
-/**
- * 2019.01.21
- *
- * @author cjl
- */
 @Getter
 @Setter
 public class PaasTmlModel implements IBinder {

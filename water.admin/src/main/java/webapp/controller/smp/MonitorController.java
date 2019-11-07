@@ -1,15 +1,13 @@
 package webapp.controller.smp;
 
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
-import webapp.viewModels.ViewModel;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water.MonitorModel;
@@ -18,14 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:监视状态
- */
 
 @XController
 @XMapping("/smp/")
-public class MonitorController extends BaseController{
+public class MonitorController extends BaseController {
 
     //monitor视图跳转。
     @XMapping("monitor")

@@ -1,9 +1,9 @@
 package webapp.models.water_log;
 
 import lombok.Getter;
+import org.noear.water.tools.HtmlEncode;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
-import webapp.utils.HtmlEncode;
 
 import java.util.Date;
 

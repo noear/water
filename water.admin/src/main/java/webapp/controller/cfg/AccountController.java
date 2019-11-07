@@ -5,7 +5,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.AccountModel;
 import webapp.utils.CodeUtil;

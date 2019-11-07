@@ -3,10 +3,6 @@ package webapp.models.water_rebber;
 import lombok.Getter;
 import org.noear.weed.*;
 
-/// <summary>
-/// 生成:2018/05/17 01:22:08
-/// 
-/// </summary>
 @Getter
 public class SchemeNodeDesignModel implements IBinder
 {

@@ -1,15 +1,11 @@
 package webapp.models.water_paas;
 
 import lombok.Getter;
+import org.noear.water.tools.Datetime;
 import org.noear.weed.*;
-import webapp.utils.Datetime;
 
 import java.util.*;
 
-/// <summary>
-/// 生成:2018/04/10 05:31:18
-///
-/// </summary>
 @Getter
 public class PaasEtlModel implements IBinder
 {

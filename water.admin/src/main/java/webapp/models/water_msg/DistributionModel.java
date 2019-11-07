@@ -4,10 +4,6 @@ import lombok.Getter;
 import org.noear.weed.*;
 import java.util.*;
 
-/// <summary>
-/// 生成:2017/12/21 04:30:34
-/// 
-/// </summary>
 @Getter
 public class DistributionModel implements IBinder
 {

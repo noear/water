@@ -5,10 +5,6 @@ import org.noear.weed.*;
 
 import java.util.*;
 
-/// <summary>
-/// 生成:2018/05/15 10:57:40
-/// 
-/// </summary>
 @Getter
 public class ModelModel implements IBinder
 {

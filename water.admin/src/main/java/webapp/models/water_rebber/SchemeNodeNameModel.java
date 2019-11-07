@@ -2,11 +2,6 @@ package webapp.models.water_rebber;
 
 import lombok.Getter;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 20:13 2018/05/22
- * @Description:
- */
 @Getter
 public class SchemeNodeNameModel {
 

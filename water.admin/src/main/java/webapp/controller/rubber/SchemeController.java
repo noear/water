@@ -3,10 +3,12 @@ package webapp.controller.rubber;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.apache.http.util.TextUtils;
 
 import org.noear.solon.XUtil;
 import org.noear.solon.annotation.XMapping;
@@ -14,22 +16,15 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbRubberApi;
 import webapp.models.water_rebber.*;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:39 2018/05/15
- * @Description:计算方案
- */
 
 @XController
 @XMapping("/rubber/")
@@ -90,16 +85,14 @@ public class SchemeController extends BaseController {
 
         viewModel.put("raas_uri", Config.raas_uri);
         viewModel.put("f",f);
-        if ("sponge".equals(f)) {
-            viewModel.put("backUrl",Config.sponge_url);
-        }
+
 
         return view("rubber/scheme_edit");
     }
 
     //ajax保存计算方案
     @XMapping("scheme/edit/ajax/save")
-    public ViewModel saveScheme(Integer id, String tag, String name, String name_display, String related_model, String related_model_display, String related_block,String debug_args) {
+    public ViewModel saveScheme(Integer id, String tag, String name, String name_display, String related_model, String related_model_display, String related_block, String debug_args) {
         try {
             long schemeId = DbRubberApi.setScheme(id, tag, name, name_display, related_model, related_model_display, related_block,debug_args);
             if (schemeId>0) {
@@ -121,9 +114,7 @@ public class SchemeController extends BaseController {
 
         viewModel.put("raas_uri", Config.raas_uri);
         viewModel.put("f",f);
-        if ("sponge".equals(f)) {
-            viewModel.put("backUrl",Config.sponge_url);
-        }
+
 
         return view("rubber/scheme_event_edit");
     }
@@ -279,9 +270,7 @@ public class SchemeController extends BaseController {
 
         viewModel.put("raas_uri", Config.raas_uri);
         viewModel.put("f",f);
-        if ("sponge".equals(f)) {
-            viewModel.put("backUrl",Config.sponge_url);
-        }
+
 
         return view("rubber/scheme_rule_edit");
     }
@@ -524,75 +513,4 @@ public class SchemeController extends BaseController {
         return DbRubberApi.setSchemeNodeBranch(scheme_id,node_id, name, condition);
     }
 
-    //计算方案导入功能
-    @XMapping("scheme/edit/ajax/import")
-    public ViewModel SchemeAjaxImport(Integer scheme_id) throws SQLException{
-
-        if (scheme_id != null && scheme_id > 0) {
-            DbContext sdb = Config.water_dev_db();
-
-            if (sdb != null) {
-                SchemeModel m = DbRubberApi.getSchemeById(scheme_id);
-                SchemeModel sscheme = sdb.table("rubber_scheme").where("tag=? AND name=?", m.tag, m.name).select("*").getItem(new SchemeModel());
-
-                int sscheme_id = sscheme.scheme_id;
-
-                DbContext tdb = Config.water;
-
-                List<SchemeRuleModel> rules = DbRubberApi.getSchemeRulesSchemeId(scheme_id);
-                List<SchemeNodeModel> nodes = DbRubberApi.getSchemeNodeBySchemeId(scheme_id);
-                SchemeNodeDesignModel design = DbRubberApi.getSchemeNodeDesign(scheme_id);
-
-                if (rules.size() == 0 && nodes.size() == 0 && design.scheme_id == 0) {
-
-                    tdb.table("rubber_scheme")
-                            .where("scheme_id = ?",scheme_id)
-                            .set("event",sscheme.event)
-                            .set("rule_relation",sscheme.rule_relation)
-                            .update();
-
-                    //导入规则
-                    DataList list = sdb.table("rubber_scheme_rule").where("scheme_id=?", sscheme_id).select("*").getDataList();
-                    for (DataItem row : list.getRows()) {
-                        row.remove("rule_id");
-                        row.set("scheme_id",scheme_id);
-                    }
-                    tdb.table("rubber_scheme_rule").insertList(list.getRows());
-                    tdb.table("rubber_scheme")
-                            .where("scheme_id = ?",scheme_id)
-                            .set("rule_count",list.getRowCount())
-                            .update();
-
-                    //导入流程
-                    DataList list1 = sdb.table("rubber_scheme_node").where("scheme_id=?", sscheme_id).select("*").getDataList();
-                    for (DataItem row:list1.getRows()) {
-                        row.remove("node_id");
-                        row.set("scheme_id",scheme_id);
-                    }
-
-                    tdb.table("rubber_scheme_node").insertList(list1.getRows());
-                    tdb.table("rubber_scheme")
-                            .where("scheme_id = ?",scheme_id)
-                            .set("node_count",list1.getRowCount())
-                            .update();
-
-                    //导入流程图
-                    DataItem data = sdb.table("rubber_scheme_node_design").where("scheme_id=?", sscheme_id).select("*").getDataItem();
-                    data.remove("scheme_id");
-                    data.set("scheme_id",scheme_id);
-                    tdb.table("rubber_scheme_node_design").insert(data);
-
-                    viewModel.code(1, "同步成功");
-                } else {
-                    viewModel.code(0, "失败!! 数据已存在");
-                }
-
-            } else {
-                viewModel.code(0, "没有开发环境配置");
-            }
-        } else {
-            viewModel.code(0, "请选择数据模型");
-        }
-        return viewModel;
-    }
 }

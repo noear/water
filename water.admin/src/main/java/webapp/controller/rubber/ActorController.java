@@ -1,28 +1,21 @@
 package webapp.controller.rubber;
 
-
 import com.alibaba.fastjson.JSONObject;
-import org.apache.http.util.TextUtils;
-
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbRubberApi;
 import webapp.models.water_rebber.ActorModel;
 import webapp.models.water_rebber.ModelModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:zxl
- * @Date:Created in 10:40 2018/05/15
- * @Description:参与者
- */
 
 @XController
 @XMapping("/rubber/")
@@ -115,8 +108,7 @@ public class ActorController extends BaseController {
         } else {
             viewModel.code(0, "删除失败!");
         }
+
         return viewModel;
     }
-
-
 }

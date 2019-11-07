@@ -4,10 +4,6 @@ import lombok.Getter;
 import org.noear.weed.*;
 import java.util.*;
 
-/// <summary>
-/// 生成:2018/05/17 02:48:28
-/// 
-/// </summary>
 @Getter
 public class ActorModel implements IBinder
 {

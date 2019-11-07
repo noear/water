@@ -3,12 +3,13 @@ package webapp.dao.db;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.noear.water.WaterClient;
+import org.noear.water.client.WaterClient;
+import org.noear.water.client.model.ConfigM;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
-import org.apache.http.util.TextUtils;
 import org.noear.solon.XUtil;
 import webapp.Config;
 import webapp.models.water_paas.PaasFunModel;
@@ -23,11 +24,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.*;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 11:02 2018/05/15
- * @Description:
- */
+
 public class DbRubberApi {
     private static DbContext db() {
         return Config.water;
@@ -119,7 +116,7 @@ public class DbRubberApi {
 
             if (isOk > 0) {
                 //添加热更新机制 //通过water通知订阅方
-                WaterClient.Runner.updateCache("model:" + tag + "/" + name);
+                WaterClient.Tool.updateCache("model:" + tag + "/" + name);
             }
 
             return isOk;
@@ -270,7 +267,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Runner.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -409,7 +406,7 @@ public class DbRubberApi {
 
         //添加热更新机制 //通过water通知订阅方
         ModelModel m = getModelById(model_id);
-        WaterClient.Runner.updateCache("model:" + m.tag + "/" + m.name);
+        WaterClient.Tool.updateCache("model:" + m.tag + "/" + m.name);
 
 
         return isOk;
@@ -533,7 +530,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Runner.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -1046,7 +1043,7 @@ public class DbRubberApi {
 
         {
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Runner.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return resp;
@@ -1180,7 +1177,7 @@ public class DbRubberApi {
         if (block_id > 0) {
             long isOk = tb.where("block_id = ?", block_id).update();
 
-            WaterClient.Runner.updateCache("block:" + tag + "/" + name);
+            WaterClient.Tool.updateCache("block:" + tag + "/" + name);
 
             return isOk;
         } else {
@@ -1200,9 +1197,9 @@ public class DbRubberApi {
         if (TextUtils.isEmpty(block.related_db) || TextUtils.isEmpty(block.related_tb)) {
             return new DataList();
         } else {
-            WaterClient.ConfigModel cfg = WaterClient.Config.getByTagKey(block.related_db);
+            ConfigM cfg = WaterClient.Config.getByTagKey(block.related_db);
 
-            if (cfg.url.indexOf("mysql:") > 0) {
+            if (cfg.value.indexOf("mysql:") > 0) {
                 //查询引用的tsql-db
                 //
                 return cfg.getDb().table(block.related_tb)
@@ -1258,9 +1255,9 @@ public class DbRubberApi {
         if (TextUtils.isEmpty(block.related_db)) {
             return new DataItem();
         } else {
-            WaterClient.ConfigModel cfg = WaterClient.Config.getByTagKey(block.related_db);
+            ConfigM cfg = WaterClient.Config.getByTagKey(block.related_db);
 
-            if (cfg.url.indexOf("mysql:") > 0) {
+            if (cfg.value.indexOf("mysql:") > 0) {
                 return cfg.getDb()
                         .table(block.related_tb)
                         .where(cols_key + "= ?", item_key)
@@ -1295,9 +1292,9 @@ public class DbRubberApi {
         String cols_key = block.cols_key();
 
         if (TextUtils.isEmpty(block.related_tb) == false) {
-            WaterClient.ConfigModel cfg = WaterClient.Config.getByTagKey(block.related_db);
+            ConfigM cfg = WaterClient.Config.getByTagKey(block.related_db);
 
-            if (cfg.url.indexOf("mysql:") > 0) {
+            if (cfg.value.indexOf("mysql:") > 0) {
                 DbTableQuery tb = cfg.getDb().table(block.related_tb).usingExpr(false);
                 data.forEach((k, v) -> {
                     tb.set(k, v);

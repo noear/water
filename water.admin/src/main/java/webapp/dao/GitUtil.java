@@ -12,8 +12,8 @@ public class GitUtil {
 
         ShellResult ret = ShellUtil.exec(Config.ops_host, "project=" + project + ";", ShellText.GIT_TAG);
 
-        if (ret.isOk()) {
-            return Arrays.asList(ret.getOutput().split("\n"));
+        if (ret.isOk) {
+            return Arrays.asList(ret.output.split("\n"));
         }
         return new ArrayList<>();
     }

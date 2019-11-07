@@ -1,35 +1,28 @@
 package webapp.controller.rubber;
 
 import com.alibaba.fastjson.JSONObject;
-import org.noear.water.WaterClient;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbRubberApi;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water_rebber.ModelFieldModel;
 import webapp.models.water_rebber.ModelModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:38 2018/05/15
- * @Description:数据模型
- */
 
 @XController
 @XMapping("/rubber/")
@@ -83,51 +76,6 @@ public class ModelController extends BaseController {
         return view("rubber/model_inner");
     }
 
-    //导入字段（从开发库）//一般只在线上使用
-    @XMapping("model/ajax/import")
-    public ViewModel modelAjaxImport(Integer model_id) throws SQLException {
-        if (model_id != null && model_id > 0) {
-            DbContext sdb = Config.water_dev_db();
-
-            if (sdb != null) {
-                ModelModel m = DbRubberApi.getModelById(model_id);
-                int smodel_id = sdb.table("rubber_model").where("tag=? AND name=?", m.tag, m.name).select("model_id").getValue(0);
-
-                DbContext tdb = WaterClient.Config.get("water", "water").getDb();
-
-                List<ModelFieldModel> fields = DbRubberApi.getModelFieldListByModelId(model_id);
-                if (fields.size() == 0) {
-                    DataList list = sdb.table("rubber_model_field").where("model_id=?", smodel_id).select("*").getDataList();
-                    for (DataItem row : list.getRows()) {
-                        row.remove("field_id");
-                        row.set("model_id",model_id);
-                    }
-
-                    //导出字段
-                    tdb.table("rubber_model_field").insertList(list.getRows());
-
-                    //更新字段数
-                    tdb.table("rubber_model")
-                            .where("model_id = ?", model_id)
-                            .set("field_count", list.getRowCount())
-                            .update() ;
-
-                    viewModel.code(1, "同步成功");
-                } else {
-                    viewModel.code(0, "失败!! 模型字段已存在");
-                }
-
-            } else {
-                viewModel.code(0, "没有开发环境配置");
-            }
-        } else {
-            viewModel.code(0, "请选择数据模型");
-        }
-
-
-        return viewModel;
-    }
-
 
     //修改数据模型
     @XMapping("model/edit")
@@ -147,9 +95,6 @@ public class ModelController extends BaseController {
         ModelModel model = DbRubberApi.getModelById(model_id);
         viewModel.put("model",model);
         viewModel.put("raas_uri", Config.raas_uri);
-        if ("sponge".equals(f)) {
-            viewModel.put("backUrl",Config.sponge_url);
-        }
         viewModel.put("f", f);
 
         return view("rubber/model_edit");
@@ -220,9 +165,7 @@ public class ModelController extends BaseController {
 
         viewModel.put("raas_uri", Config.raas_uri);
         viewModel.put("f",f);
-        if ("sponge".equals(f)) {
-            viewModel.put("backUrl",Config.sponge_url);
-        }
+
 
         return view("rubber/model_field_edit");
     }

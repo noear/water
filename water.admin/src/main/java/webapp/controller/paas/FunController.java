@@ -1,28 +1,23 @@
 package webapp.controller.paas;
 
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
-import webapp.viewModels.ViewModel;
 import webapp.dao.db.DbPaaSApi;
 import webapp.models.water_paas.PaasFunModel;
 
 import java.sql.SQLException;
 import java.util.List;
-
-/**
- * @Author:Yunlong.Feng
- * @Description:接口列表
- */
 
 @XController
 @XMapping("/paas/")
@@ -92,44 +87,13 @@ public class FunController extends BaseController {
 
     //ajax编辑保存功能
     @XMapping("fun/edit/ajax/save")
-    public ViewModel funAddSave(Integer fun_id, String code, String tag, String fun_name, String name_display ,String note, Integer is_enabled, String args) throws SQLException {
+    public ViewModel funAddSave(Integer fun_id, String code, String tag, String fun_name, String name_display , String note, Integer is_enabled, String args) throws SQLException {
         boolean result = DbPaaSApi.editFun(fun_id, code, tag, fun_name,name_display, note, is_enabled, args);
         if (result) {
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败!");
         }
-
-        return viewModel;
-    }
-
-    @XMapping("fun/ajax/import")
-    public ViewModel api_import(String tag) throws SQLException{
-        if(TextUtils.isEmpty(tag) == false) {
-            DbContext sdb = Config.water_dev_db();
-
-            if (sdb != null) {
-                DbContext tdb = Config.water;
-
-                DataList list = sdb.table("paas_fun").where("tag=?", tag).select("*").getDataList();
-
-                for (DataItem row : list.getRows()) {
-                    //只导入未存在的接口
-                    if (tdb.table("paas_fun").where("tag=? AND fun_name=?", tag, row.get("fun_name")).exists() == false) {
-                        row.remove("fun_id");
-                        tdb.table("paas_fun")
-                                .insert(row);
-                    }
-                }
-
-                viewModel.code(1, "同步成功");
-            } else {
-                viewModel.code(0, "没有开发环境配置");
-            }
-        }else{
-            viewModel.code(0, "请选择分类标签");
-        }
-
 
         return viewModel;
     }

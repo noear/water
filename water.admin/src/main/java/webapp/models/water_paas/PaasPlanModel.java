@@ -4,10 +4,6 @@ import lombok.Getter;
 import org.noear.weed.*;
 import java.util.*;
 
-/// <summary>
-/// 生成:2017/12/21 02:58:35
-/// 
-/// </summary>
 @Getter
 public class PaasPlanModel implements IBinder
 {

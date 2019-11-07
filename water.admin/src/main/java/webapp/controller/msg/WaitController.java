@@ -4,7 +4,7 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.water.admin.tools.controller.BaseController;
-import webapp.dao.DisttimeUtil;
+import org.noear.water.tools.DisttimeUtil;
 import webapp.dao.db.DbWaterMsgApi;
 import webapp.models.water_msg.MessageModel;
 

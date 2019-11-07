@@ -37,7 +37,7 @@ public class ScriptDeployNode extends DeployNode {
         int start = len > 2000 ? (len - 2000) : 0;
         note += ret.output.substring(start, len);
 
-        status = ret.isOk() ? 1 : 2;
+        status = ret.isOk ? 1 : 2;
 
         return status;
     }

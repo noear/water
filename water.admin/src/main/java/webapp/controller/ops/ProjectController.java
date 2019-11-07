@@ -14,7 +14,7 @@ import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_wind.*;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 
 import java.sql.SQLException;
 import java.util.List;

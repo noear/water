@@ -13,7 +13,7 @@ import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
 import org.noear.water.tools.TextUtils;
 import webapp.Config;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 
 import java.io.IOException;
 import java.util.List;

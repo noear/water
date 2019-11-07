@@ -5,10 +5,6 @@ import org.noear.water.tools.TextUtils;
 import org.noear.weed.*;
 import java.util.*;
 
-/// <summary>
-/// 生成:2017/12/21 04:30:34
-/// 
-/// </summary>
 @Getter
 public class SubscriberModel implements IBinder
 {

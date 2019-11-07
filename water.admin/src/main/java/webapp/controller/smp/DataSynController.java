@@ -1,28 +1,21 @@
 package webapp.controller.smp;
 
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
-import webapp.viewModels.ViewModel;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.SynchronousModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:数据同步
- */
-
 @XController
 @XMapping("/smp/")
-public class DataSynController extends BaseController{
+public class DataSynController extends BaseController {
     //plan视图跳转
     @XMapping("sync")
     public ModelAndView plan(String tag_name) throws SQLException {

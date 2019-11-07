@@ -4,10 +4,10 @@ import org.noear.bcf.BcfInterceptorBase;
 import org.noear.solon.annotation.XInterceptor;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.utils.IPUtil;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.WhitelistModel;
-import webapp.utils.IPUtil;
 
 
 @XInterceptor(before = true)

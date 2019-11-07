@@ -1,19 +1,15 @@
 package webapp.dao.db;
 
+import org.noear.water.admin.tools.dso.CacheUtil;
 import org.noear.water.tools.TextUtils;
 import org.noear.weed.DbContext;
 import webapp.Config;
-import webapp.dao.CacheUtil;
 import webapp.models.water_log.LogModel;
 import webapp.models.water_log.LogSqlModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:
- */
 public class DbWaterLogApi {
     private static DbContext db() {
         return Config.water_log;

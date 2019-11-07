@@ -1,6 +1,7 @@
 package webapp.dao.db;
 
 import org.noear.solon.extend.sessionstate.local.util.EncryptUtil;
+import org.noear.water.admin.tools.dso.CacheUtil;
 import org.noear.water.client.WaterClient;
 import org.noear.water.tools.Datetime;
 import org.noear.water.tools.TextUtils;
@@ -8,9 +9,8 @@ import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import webapp.Config;
-import webapp.dao.CacheUtil;
 import webapp.dao.IDUtil;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.models.water.*;
 import webapp.models.water.AccountModel;
 import webapp.models.water.LoggerModel;

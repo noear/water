@@ -7,7 +7,7 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water.LoggerModel;

@@ -4,10 +4,6 @@ import lombok.Getter;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 
-/// <summary>
-/// 生成:2018/01/12 03:47:17
-/// 
-/// </summary>
 @Getter
 public class PaasApiModel implements IBinder
 {

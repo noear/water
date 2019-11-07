@@ -11,7 +11,7 @@ import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
-import webapp.dao.Session;
+import org.noear.water.admin.tools.dso.Session;
 
 import java.io.IOException;
 import java.sql.SQLException;

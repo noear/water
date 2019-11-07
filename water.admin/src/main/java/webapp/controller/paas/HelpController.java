@@ -3,7 +3,7 @@ package webapp.controller.paas;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
 
 @XController
 @XMapping("/paas/help")

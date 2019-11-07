@@ -1,21 +1,21 @@
 package webapp.controller.paas;
 
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.Datetime;
+import org.noear.water.tools.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
-import webapp.viewModels.ViewModel;
 import webapp.dao.db.DbPaaSApi;
 import webapp.models.water_paas.PaasEtlModel;
-import webapp.utils.Datetime;
 import webapp.utils.TimeUtil;
 
 import java.sql.SQLException;
@@ -23,15 +23,10 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 17:09 2018/04/10
- * @Description:ETL
- */
 
 @XController
 @XMapping("/paas/")
-public class EtlController extends BaseController{
+public class EtlController extends BaseController {
 
     //进入etl视图
     @XMapping("etl")
@@ -105,9 +100,9 @@ public class EtlController extends BaseController{
     //ajax编辑保存功能
     @XMapping("etl/edit/ajax/save")
     public ViewModel etlEditSave(Integer etl_id, String code, String tag, String etl_name,
-                                 Integer is_enabled,Integer e_enabled,Integer t_enabled,Integer l_enabled,Integer is_update,
-                                 String alarm_mobile,String cursor,Integer cursor_type,Integer e_max_instance,
-                                 Integer t_max_instance,Integer l_max_instance) throws SQLException {
+                                 Integer is_enabled, Integer e_enabled, Integer t_enabled, Integer l_enabled, Integer is_update,
+                                 String alarm_mobile, String cursor, Integer cursor_type, Integer e_max_instance,
+                                 Integer t_max_instance, Integer l_max_instance) throws SQLException {
         try {
             if(cursor_type == null){
                 cursor_type = 0;
@@ -133,37 +128,6 @@ public class EtlController extends BaseController{
         } catch (ParseException e) {
             viewModel.code(0, "时间坐标转换失败!");
         }
-        return viewModel;
-    }
-
-    @XMapping("etl/ajax/import")
-    public ViewModel api_import(String tag) throws SQLException{
-        if(TextUtils.isEmpty(tag) == false) {
-            DbContext sdb = Config.water_dev_db();
-
-            if (sdb != null) {
-                DbContext tdb = Config.water;
-
-                DataList list = sdb.table("paas_etl").where("tag=?", tag).select("*").getDataList();
-
-                for (DataItem row : list.getRows()) {
-                    //只导入未存在的接口
-                    if (tdb.table("paas_etl").where("tag=? AND etl_name=?", tag, row.get("etl_name")).exists() == false) {
-                        row.remove("etl_id");
-                        tdb.table("paas_etl")
-                                .insert(row);
-                    }
-                }
-
-                viewModel.code(1, "同步成功");
-            } else {
-                viewModel.code(0, "没有开发环境配置");
-            }
-        }else{
-            viewModel.code(0, "请选择分类标签");
-        }
-
-
         return viewModel;
     }
 

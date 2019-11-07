@@ -1,13 +1,10 @@
 package webapp.controller.paas;
 
-
-
-import org.noear.water.utils.TextUtil;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
-import webapp.dao.db.DbPaaSApi;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbPaaSQueryApi;
 import webapp.models.water.CodeQueryModel;
 
@@ -23,7 +20,7 @@ public class QueryController extends BaseController {
     @XMapping("query")
     public ModelAndView plan(Integer code_type,String code) throws SQLException {
         List<CodeQueryModel> list = new ArrayList<>();
-        if (code_type != null && TextUtil.isEmpty(code) == false) {
+        if (code_type != null && TextUtils.isEmpty(code) == false) {
             list = DbPaaSQueryApi.codeQuery(code_type, code);
         }
         viewModel.put("list",list);

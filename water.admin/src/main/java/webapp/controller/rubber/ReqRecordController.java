@@ -2,12 +2,11 @@ package webapp.controller.rubber;
 
 import com.alibaba.fastjson.JSONObject;
 
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.water.admin.tools.controller.BaseController;
 import webapp.Config;
-import webapp.controller.BaseController;
 import webapp.dao.db.DbRubberApi;
 import webapp.models.water_rebber.CountModel;
 import webapp.models.water_rebber.LogRequestModel;
@@ -15,11 +14,6 @@ import webapp.models.water_rebber.LogRequestModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:40 2018/05/15
- * @Description:请求记录
- */
 
 @XController
 @XMapping("/rubber/")

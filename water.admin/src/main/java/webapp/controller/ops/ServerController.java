@@ -4,6 +4,7 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.dso.Session;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.*;
@@ -135,10 +136,10 @@ public class ServerController extends BaseController {
         ConfigModel cfg = DbWindApi.getServerIaasAccount(server.iaas_key);
 
         if (cfg != null) {
-            DescribeInstancesResponse.Instance instance = AliyunCmsUtil.getInstanceInfo(cfg, server.iaas_key);
-            int size = AliyunCmsUtil.getEcsDiskInfo(cfg, server.iaas_key).getSize();
-            viewModel.set("instance", instance);
-            viewModel.set("size", size);
+//            DescribeInstancesResponse.Instance instance = AliyunCmsUtil.getInstanceInfo(cfg, server.iaas_key);
+//            int size = AliyunCmsUtil.getEcsDiskInfo(cfg, server.iaas_key).getSize();
+//            viewModel.set("instance", instance);
+//            viewModel.set("size", size);
         }
         List<WindOperateModel> operateList = DbWindApi.getOperateByServerId(server_id);
         viewModel.put("operateList", operateList);
@@ -173,10 +174,10 @@ public class ServerController extends BaseController {
         ConfigModel cfg = DbWindApi.getServerIaasAccount(server.iaas_key);
 
         if (cfg != null) {
-            DescribeInstancesResponse.Instance instance = AliyunCmsUtil.getInstanceInfo(cfg, server.iaas_key);
-            int size = AliyunCmsUtil.getEcsDiskInfo(cfg, server.iaas_key).getSize();
-            viewModel.set("instance", instance);
-            viewModel.set("size", size);
+//            DescribeInstancesResponse.Instance instance = AliyunCmsUtil.getInstanceInfo(cfg, server.iaas_key);
+//            int size = AliyunCmsUtil.getEcsDiskInfo(cfg, server.iaas_key).getSize();
+//            viewModel.set("instance", instance);
+//            viewModel.set("size", size);
         }
         viewModel.put("server_id", server_id);
         viewModel.put("accounts", accounts);

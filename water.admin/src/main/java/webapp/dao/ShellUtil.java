@@ -3,7 +3,7 @@ package webapp.dao;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import org.apache.http.util.TextUtils;
+import org.noear.water.tools.TextUtils;
 import webapp.Config;
 import webapp.dao.db.DbWindApi;
 
@@ -48,8 +48,8 @@ public class ShellUtil {
         sb.append(targets.toString()).append("\n\n");
         for (String target: targets) {
             ShellResult result = exec(target, DEFAULT_USER, e.toString(), cmd);
-            sb.append(target).append("\n").append(result.getOutput());
-            if (!result.isOk()) {
+            sb.append(target).append("\n").append(result.output);
+            if (!result.isOk) {
                 isOk = false;
                 break;
             }
@@ -94,7 +94,7 @@ public class ShellUtil {
             int end = mix.indexOf(")");
             String fun = mix.substring(2, start);
 
-            String funBody = DbWindApi.getScriptByName(fun).getCode();
+            String funBody = DbWindApi.getScriptByName(fun).code;
 
             String params = mix.substring(start + 1, end);
             String localParams = Arrays.stream(params.split(","))
