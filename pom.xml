@@ -19,7 +19,6 @@
     </properties>
 
     <modules>
-        <module>water-parent</module>
 
         <module>water</module>
         <module>water.admin</module>
