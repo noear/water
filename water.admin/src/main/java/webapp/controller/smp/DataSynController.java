@@ -7,7 +7,7 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
-import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterSyncApi;
 import webapp.models.water.SynchronousModel;
 
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ public class DataSynController extends BaseController {
     //plan视图跳转
     @XMapping("sync")
     public ModelAndView plan(String tag_name) throws SQLException {
-        List<SynchronousModel> tags = DbWaterApi.getSynchronousTags();
+        List<SynchronousModel> tags = DbWaterSyncApi.getSyncTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
@@ -50,7 +50,7 @@ public class DataSynController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<SynchronousModel> list = DbWaterApi.getSynchronousList(tag_name,sync_name, _state);
+        List<SynchronousModel> list = DbWaterSyncApi.getSyncList(tag_name,sync_name, _state);
         viewModel.put("synchronous",list);
         viewModel.put("tag_name",tag_name);
         return view("smp/sync_inner");
@@ -69,7 +69,7 @@ public class DataSynController extends BaseController {
     //跳转数据同步编辑页面
     @XMapping("sync/edit")
     public ModelAndView edit(Integer sync_id) throws SQLException{
-        SynchronousModel syn = DbWaterApi.getSynById(sync_id);
+        SynchronousModel syn = DbWaterSyncApi.getSyncById(sync_id);
         viewModel.put("syn",syn);
         return view("smp/sync_edit");
     }
@@ -78,7 +78,7 @@ public class DataSynController extends BaseController {
     @XMapping("sync/edit/ajax/save")
     public ViewModel saveEdit(Integer syn_id, Integer type, String name, String tag, Integer interval, String target, String target_pk, String source,
                               String source_model, String alarm_mobile, Integer is_enabled) throws SQLException{
-        boolean result = DbWaterApi.updateSyn(syn_id,type, name, tag, interval, target, target_pk, source, source_model, alarm_mobile, is_enabled);
+        boolean result = DbWaterSyncApi.updSync(syn_id,type, name, tag, interval, target, target_pk, source, source_model, alarm_mobile, is_enabled);
         if (result){
             viewModel.code(1,"保存成功!");
         } else {

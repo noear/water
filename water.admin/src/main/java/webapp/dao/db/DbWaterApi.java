@@ -16,7 +16,6 @@ import webapp.models.water.AccountModel;
 import webapp.models.water.LoggerModel;
 import webapp.models.water.MonitorModel;
 import webapp.models.water.ServiceModel;
-import webapp.models.water.SynchronousModel;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -28,7 +27,7 @@ public class DbWaterApi {
     }
 
     //登陆
-    public static AccountModel Login(String access_id, String access_key) throws Exception {
+    public static AccountModel getAccount(String access_id, String access_key) throws Exception {
         return db().table("water_base_account")
                 .where("id = ?", access_id)
                 .and("access_key = ?", access_key)
@@ -42,6 +41,7 @@ public class DbWaterApi {
                 .select("*")
                 .getItem(AccountModel.class);
     }
+
 
 
     //获取service表中的数据。
@@ -258,64 +258,7 @@ public class DbWaterApi {
         }
     }
 
-    //根据名称和状态列出同步列表。
-    public static List<SynchronousModel> getSynchronousList(String tag_name, String name, int _state) throws SQLException {
-        return db()
-                .table("water_base_synchronous")
-                .where("is_enabled = ?", _state)
-                .and("tag = ?", tag_name)
-                .expre(tb -> {
-                    if (!TextUtils.isEmpty(name))
-                        tb.and("name like ?", name + "%");
-                })
-                .select("*")
-                .getList(new SynchronousModel());
-    }
 
-    public static boolean addsyn(Integer type, String name, Integer interval, String target, String target_pk, String source,
-                                 String source_model, String alarm_mobile, Integer is_enabled) throws SQLException {
-        return db().table("water_base_synchronous")
-                .set("key", UUID.randomUUID().toString().replaceAll("-", ""))
-                .set("name", name)
-                .set("type", type)
-                .set("interval", interval)
-                .set("target", target)
-                .set("target_pk", target_pk)
-                .set("source", source)
-                .set("source_model", source_model)
-                .set("alarm_mobile", alarm_mobile)
-                .set("is_enabled", is_enabled)
-                .insert() > 0;
-    }
-
-    //数据同步  根据id获得对象
-    public static SynchronousModel getSynById(int sync_id) throws SQLException {
-        return db().table("water_base_synchronous")
-                .where("id = ?", sync_id)
-                .limit(1)
-                .select("*")
-                .getItem(new SynchronousModel());
-    }
-
-    public static boolean updateSyn(Integer sync_id, Integer type, String name, String tag, Integer interval, String target, String target_pk, String source,
-                                    String source_model, String alarm_mobile, Integer is_enabled) throws SQLException {
-        DbTableQuery db = db().table("water_base_synchronous")
-                .set("name", name)
-                .set("tag", tag)
-                .set("type", type)
-                .set("interval", interval)
-                .set("target", target)
-                .set("target_pk", target_pk)
-                .set("source", source)
-                .set("source_model", source_model)
-                .set("alarm_mobile", alarm_mobile)
-                .set("is_enabled", is_enabled);
-        if (sync_id > 0) {
-            return db.where("id = ?", sync_id).update() > 0;
-        } else {
-            return db.insert() > 0;
-        }
-    }
 
     //编辑更新config。
     public static boolean editcfg(Integer row_id, String tag, String key, Integer type, String url, String user, String password, String explain) throws SQLException {
@@ -582,14 +525,6 @@ public class DbWaterApi {
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(new MonitorModel());
-    }
-
-    //获取synchronous表的tag分组信息。
-    public static List<SynchronousModel> getSynchronousTags() throws SQLException {
-        return db().table("water_base_synchronous")
-                .groupBy("tag")
-                .select("tag,count(*) counts")
-                .getList(new SynchronousModel());
     }
 
     //获取logger表tag
