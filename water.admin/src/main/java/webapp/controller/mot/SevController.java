@@ -7,7 +7,7 @@ import org.noear.solon.core.ModelAndView;
 import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.admin.tools.dso.Session;
-import webapp.dao.db.DbWaterServiceApi;
+import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ServiceModel;
 
 import java.sql.SQLException;
@@ -33,7 +33,7 @@ public class SevController extends BaseController {
         boolean is_web = "web".equals(_type);
         if (_state == null)
             _state = 1;
-        List<ServiceModel> services = DbWaterServiceApi.getServices(name , is_web ,_state);
+        List<ServiceModel> services = DbWaterApi.getServices(name , is_web ,_state);
 
         viewModel.put("is_web", is_web);
         viewModel.put("services", services);
@@ -55,7 +55,7 @@ public class SevController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<ServiceModel> services = DbWaterServiceApi.getServices(name,"web".equals(_type),_state);
+        List<ServiceModel> services = DbWaterApi.getServices(name,"web".equals(_type),_state);
         viewModel.put("services", services);
         return view("mot/service_table");
     }
@@ -68,7 +68,7 @@ public class SevController extends BaseController {
             return viewModel.code(0,"没有权限！");
         }
 
-        boolean result = DbWaterServiceApi.delServiceById(service_id);
+        boolean result = DbWaterApi.delServiceById(service_id);
         if (result){
             viewModel.code(1,"删除成功！");
         }else{
@@ -86,7 +86,7 @@ public class SevController extends BaseController {
             return viewModel.code(0,"没有权限！");
         }
 
-        boolean result = DbWaterServiceApi.disService(service_id,is_enabled);
+        boolean result = DbWaterApi.disService(service_id,is_enabled);
         if (result){
             viewModel.code(1,"操作成功！");
         }else{
@@ -100,7 +100,7 @@ public class SevController extends BaseController {
     @XMapping("/service/edit")
     public ModelAndView service_edit(Integer service_id) throws SQLException {
         if(service_id!=null) {
-            ServiceModel m = DbWaterServiceApi.getServiceById(service_id);
+            ServiceModel m = DbWaterApi.getServiceById(service_id);
             viewModel.put("data", ONode.load(m).toJson());
         }else{
             viewModel.put("data", ONode.load(new ServiceModel()).toJson());
@@ -115,7 +115,7 @@ public class SevController extends BaseController {
         int is_admin = Session.current().getIsAdmin();
 
         if(is_admin==1) {
-            boolean result = DbWaterServiceApi.udpService(service_id,name,address,note,check_type,check_url);
+            boolean result = DbWaterApi.udpService(service_id,name,address,note,check_type,check_url);
             if (result) {
                 viewModel.code(1,"保存成功！");
             } else {
