@@ -43,7 +43,8 @@ public class Config {
 
     //是否使用标答检查器？
     public static boolean is_use_tag_checker() {
-        return "1".equals(getValConfig("is_use_tag_checker"));
+        return false;
+        //return "1".equals(getValConfig("is_use_tag_checker"));
     }
 
 

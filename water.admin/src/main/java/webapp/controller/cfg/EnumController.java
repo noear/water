@@ -23,7 +23,7 @@ public class EnumController extends BaseController {
     //枚举
     @XMapping("")
     public ModelAndView enum_(String tag) throws Exception {
-        List<TagCountsModel> tags = DbWaterApi.getLoggerTags();
+        List<TagCountsModel> tags = DbWaterApi.getEnumTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
