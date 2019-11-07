@@ -43,7 +43,7 @@
 </script>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <form>
             <#if is_admin == 1>
                 <button onclick="add();" type="button">新增</button>
@@ -52,7 +52,7 @@
                 <@stateselector items="启用,未启用"/>
             </div>
         </form>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

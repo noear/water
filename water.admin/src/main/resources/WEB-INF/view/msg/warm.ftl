@@ -72,9 +72,9 @@
 <body>
     <main>
             <toolbar>
-                <cell>
+                <left>
                     <button type='button' onclick="fresh()">刷新</button>
-                </cell>
+                </left>
             </toolbar>
             <datagrid>
                 <table>

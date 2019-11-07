@@ -15,8 +15,8 @@
 <main>
 
         <toolbar>
-            <form>
-                <cell>
+
+                <left><form>
                     <select id="code_type" name="code_type">
                         <option value="0">接口代码</option>
                         <option value="1">任务代码</option>
@@ -24,9 +24,9 @@
                         <option value="3">函数代码</option>
                         <option value="4">模版代码</option>
                     </select>：<input type="text" placeholder="代码片断" id="code" name="code"/>
-                    <button type="submit">查询</button>
-                </cell>
-            </form>
+                    <button type="submit">查询</button></form>
+                </left>
+
         </toolbar>
             <datagrid>
                 <table>

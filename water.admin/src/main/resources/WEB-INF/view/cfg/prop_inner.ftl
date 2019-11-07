@@ -35,7 +35,7 @@
 </script>
 <body>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     key：<input type="text"  name="key" placeholder="key" id="key"/>
                     <input type="hidden"  name="tag" id="tag" value="${tag}"/>
@@ -45,7 +45,7 @@
                         <button type='button' class="minor" onclick="impCfg('${tag}')" >导入</button>
                     </#if>
                 </form>
-            </cell>
+            </left>
         </toolbar>
         <datagrid>
             <table>

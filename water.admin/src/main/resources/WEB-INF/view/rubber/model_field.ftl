@@ -18,13 +18,13 @@
     <h2>${model.name_display!}/字段列表（<a onclick="history.back(-1)" class="t2">返回</a>）</h2>
     <hr />
     <toolbar>
-        <cell>
+        <left>
                     <#if is_operator == 1>
                         <button onclick="addField()" type="button"  class="edit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;
                     </#if>
 
-        </cell>
-        <cell>
+        </left>
+        <right>
             <form action="${raas_uri!}/debug" target="_blank" method="get">
                 <input type="hidden" name="model" value="${model.tag!}/${model.name!}">
                 <input type="text" name="args" value="${model.debug_args!}" placeholder="{user_id:1}">
@@ -36,7 +36,7 @@
                 <button type="submit">预览模型</button>
             </form>
 
-        </cell>
+        </right>
     </toolbar>
 
 

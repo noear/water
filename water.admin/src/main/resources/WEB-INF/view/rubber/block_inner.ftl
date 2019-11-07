@@ -14,11 +14,11 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <#if is_operator == 1>
                 <button onclick="addBlock()" type="button"  class="edit">新增</button>
             </#if>
-        </cell>
+        </left>
     </toolbar>
     <datagrid>
         <table>

@@ -12,7 +12,7 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <div>实例：${model.instanceName} = ${model.instanceId}（<a onclick="history.back(-1);" class="t2">返回</a>）</div>
 
             <table>
@@ -25,12 +25,12 @@
                     <td>${model.regionId}</td>
                 </tr>
             </table>
-        </cell>
+        </left>
     </toolbar>
 
     <toolbar class="style2">
-        <cell><@stateselector items="并发连接数,新键连接数,QPS,流量" clientID="type" onSelect="type_select"/></cell>
-        <cell><@stateselector items="1小时,6小时,1天,3天,7天,14天" clientID="time" onSelect="time_select"/></cell>
+        <left><@stateselector items="并发连接数,新键连接数,QPS,流量" clientID="type" onSelect="type_select"/></left>
+        <right><@stateselector items="1小时,6小时,1天,3天,7天,14天" clientID="time" onSelect="time_select"/></right>
     </toolbar>
 
 

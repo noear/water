@@ -16,7 +16,7 @@
 </head>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <form method="post">
             人员：<input type="text"  name="name" placeholder="代号或显示名" id="name" value="${name!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
@@ -24,7 +24,7 @@
                 <button onclick="addModel()" type="button"  class="edit">新建</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </#if>
         </form>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

@@ -10,7 +10,7 @@
 </head>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <form>
             方案：<input type="text"  name="name" placeholder="代号或显示名" id="name" value="${name!}"/>
             <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
@@ -19,7 +19,7 @@
                 <button id="btn_add" type="button" class="edit">新建</button>
             </#if>
         </form>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

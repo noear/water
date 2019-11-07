@@ -43,12 +43,12 @@
 
 <#if is_admin == 1>
 <toolbar>
-    <cell>
+    <left>
         <form>
                 <button type='button' class="edit" onclick="location.href='/cfg/gateway/edit/${sev_key!}';" >修改</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type='button' class="edit" onclick="location.href='/cfg/gateway/add';" >新增</button>
         </form>
-    </cell>
+    </left>
 </toolbar>
 </#if>
 

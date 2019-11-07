@@ -74,7 +74,7 @@
 </style>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <div>实例：${instance.instanceName} = ${instance.instanceId}（<a onclick="history.back(-1)" class="t2">返回</a>）</div>
         <table>
             <tr>
@@ -88,10 +88,10 @@
                 <td>${instance.zoneId}</td>
             </tr>
         </table>
-    </cell>
+    </left>
 </toolbar>
 <toolbar>
-    <cell>
+    <left>
         <a>可操作命令</a>
         <button class="edit" onclick="location.href='/ops/server/extra/operate?server_id='+${server.server_id}">编辑</button>
         <ul class="button_list">
@@ -101,7 +101,7 @@
                 </li>
             </#list>
         </ul>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

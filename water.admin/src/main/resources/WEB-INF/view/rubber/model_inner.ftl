@@ -17,7 +17,7 @@
 <body>
 <main>
 <toolbar>
-    <cell>
+    <left>
         <form method="post">
             模型：<input type="text"  name="name" placeholder="代号或显示名" id="name" value="${name!}"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
@@ -25,7 +25,7 @@
                 <button onclick="addModel()" type="button"  class="edit">新增</button>&nbsp;&nbsp;&nbsp;&nbsp;
             </#if>
         </form>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

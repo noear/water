@@ -72,10 +72,10 @@
 <body>
 <detail>
     <toolbar>
-        <cell>
+        <left>
               <div>项目：${task.project_name} = ${project.note} /${task.version}（<a onclick="history.back(-1)" class="t2">返回</a>）</div>
               <n>说明：</n><a>${task.note}</a>
-        </cell>
+        </left>
     </toolbar>
     <br>
         <flex>

@@ -23,7 +23,7 @@
 
 <main>
     <toolbar>
-        <cell>
+        <left>
             <form accept-charset="UTF-8">
                 <select id="project" name="project" onchange="queryTag();">
                         <#if project??>
@@ -60,7 +60,7 @@
                 log_id：<input type="text"  name="log_id" placeholder="log_id" id="log_id" style="width: 100px;"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
             </form>
-        </cell>
+        </left>
     </toolbar>
 
     <div id="content">

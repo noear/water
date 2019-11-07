@@ -12,7 +12,7 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <div>实例：${instance.instanceName} = ${instance.instanceId}（<a onclick="history.back(-1);" class="t2">返回</a>）</div>
 
             <table>
@@ -26,7 +26,7 @@
                     <td>${instance.zoneId}</td>
                 </tr>
             </table>
-        </cell>
+        </left>
     </toolbar>
 
     <toolbar class="style2">

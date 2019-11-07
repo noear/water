@@ -16,7 +16,7 @@
 </head>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <form>
             模板：<input type="text"  name="tml_name" placeholder="名称" id="tml_name" value="${tml_name!}"/>
             <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
@@ -25,10 +25,10 @@
                 <button onclick="addPlan()" type="button" class="edit">新增</button>
             </#if>
         </form>
-    </cell>
-    <cell>
+    </left>
+    <right>
         <@stateselector items="启用,未启用"/>
-    </cell>
+    </right>
 </toolbar>
 <datagrid>
     <table>

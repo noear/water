@@ -35,7 +35,7 @@
 <body>
 <main>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     账户：<input type="text"  name="name" placeholder="账户名" id="name"/>&nbsp;&nbsp;
                     <button type="submit">查询</button>&nbsp;&nbsp;
@@ -43,7 +43,7 @@
                         <button type="button" class="edit" onclick="add();" >新增</button>
                     </#if>
                 </form>
-            </cell>
+            </left>
         </toolbar>
         <datagrid>
             <table>

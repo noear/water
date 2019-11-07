@@ -35,7 +35,7 @@
 <body>
 <main>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     IP：<input type="text"  name="ip" placeholder="IP" id="ip"/>&nbsp;&nbsp;
                     <button type="submit">查询</button>&nbsp;&nbsp;
@@ -43,7 +43,7 @@
                         <button type="button" class="edit" onclick="add();">新增</button>
                     </#if>
                 </form>
-            </cell>
+            </left>
         </toolbar>
         <datagrid>
             <table>

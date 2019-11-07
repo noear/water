@@ -45,7 +45,7 @@
 </head>
 <body>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     任务：<input type="text"  name="plan_name" placeholder="任务名" id="plan_name" value="${plan_name!}"/>
                           <input type="hidden"  name="tag" id="tag" value="${tag}"/>
@@ -55,10 +55,10 @@
                     <button onclick="impPaas('${tag}')" type="button" class="minor">导入</button>
                     </#if>
                 </form>
-            </cell>
-            <cell>
+            </left>
+            <right>
                 <@stateselector items="启用,未启用"/>
-            </cell>
+            </right>
         </toolbar>
             <datagrid>
                 <table>

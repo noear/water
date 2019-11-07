@@ -23,15 +23,15 @@
 <body>
 <main>
     <toolbar>
-        <cell><h2>计算方案编辑（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2></cell>
-        <cell>
+        <left><h2>计算方案编辑（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2></left>
+        <right>
                 <#if (scheme.scheme_id > 0)>
                     <#if (is_admin == 1) && (scheme.scheme_id > 0)>
                     <button type="button" onclick="del()" class="minor">删除</button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="button" onclick="imp()" class="minor">导入</button>
                     </#if>
                 </#if>
-        </cell>
+        </right>
     </toolbar>
 <detail>
     <form>

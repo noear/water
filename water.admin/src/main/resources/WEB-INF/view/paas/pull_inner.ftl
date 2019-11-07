@@ -32,7 +32,7 @@
 </head>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <form>
             拉取：<input type="text"  name="pull_name" placeholder="名称" value="${tml_name!}"/>
             <input type="hidden"  name="tag" value="${tag!}"/>
@@ -41,10 +41,10 @@
                 <button onclick="addPull()" type="button" class="edit">新增</button>
             </#if>
         </form>
-    </cell>
-    <cell>
+    </left>
+    <right>
         <@stateselector items="启用,未启用"/>
-    </cell>
+    </right>
 </toolbar>
 <datagrid>
     <table>

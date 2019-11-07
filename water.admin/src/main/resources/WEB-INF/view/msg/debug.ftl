@@ -84,12 +84,12 @@
 <body>
     <main>
             <toolbar>
-                <cell>
+                <left>
                     <form>
                         ID/key：<input type="text" name="key" value="${key!}" style="width: 275px;"/>&nbsp;&nbsp;&nbsp;
                         <button type="submit">查询</button>
                     </form>
-                </cell>
+                </left>
             </toolbar>
             <detail>
                 <form>

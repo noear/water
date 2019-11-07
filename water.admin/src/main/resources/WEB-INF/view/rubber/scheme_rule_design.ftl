@@ -23,7 +23,7 @@
     </h2>
     <hr/>
     <toolbar>
-        <cell>
+        <left>
             <input type="hidden" name="tag" id="tag" value="${tag!}"/>
             <input type="hidden" id="input_scheme_id" value="${scheme_id}"/>
             <input type="hidden" id="input_name_display" value="${name_display!}"/>
@@ -40,8 +40,8 @@
                 <#if is_operator == 1>
                     <button id="btn_add" type="button" class="edit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;
                 </#if>
-        </cell>
-        <cell>
+        </left>
+        <right>
                 <#if related_db?has_content>
                     <form action="${raas_uri}/debug" target="_blank" method="get">
                         <input type="hidden" name="scheme" value="${scheme.tag!}/${scheme.name!}">
@@ -70,7 +70,7 @@
                         <button type="submit">预览规则</button>
                     </form>
                 </#if>
-        </cell>
+        </right>
     </toolbar>
 
         <datagrid>

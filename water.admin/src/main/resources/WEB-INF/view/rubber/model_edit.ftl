@@ -194,13 +194,13 @@
 </head>
 <body>
 <toolbar>
-    <cell><h2>编辑数据模型（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2></cell>
-    <cell>
+    <left><h2>编辑数据模型（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2></left>
+    <right>
                 <#if (is_admin == 1) && (model.model_id > 0) >
                     <button type="button" onclick="del()" class="minor">删除</button>&nbsp;&nbsp;&nbsp;&nbsp;
                     <button onclick="impField()" type="button"  class="minor">导入</button>
                 </#if>
-    </cell>
+    </right>
 </toolbar>
 
 <detail>

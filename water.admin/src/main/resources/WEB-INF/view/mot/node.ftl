@@ -11,13 +11,13 @@
 <body>
 <main>
 <toolbar>
-    <cell>
+    <left>
         <form>
             服务：<input type="text"  name="name" placeholder="名称" id="name"/>&nbsp;&nbsp;
             <input type="text" name="serviceName" id="serviceName" value="${serviceName}" style="display: none"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
         </form>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

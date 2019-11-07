@@ -16,7 +16,7 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <form>
                 主题：<input type="text"  name="topic_name" placeholder="主题名称" id="topic_name"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>&nbsp;&nbsp;
@@ -24,7 +24,7 @@
                         <button type="button" onclick="add();" class="edit">新增</button>
                     </#if>
             </form>
-        </cell>
+        </left>
     </toolbar>
     <datagrid>
         <table>

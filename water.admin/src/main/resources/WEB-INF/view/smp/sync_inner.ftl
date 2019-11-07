@@ -16,7 +16,7 @@
 <body>
 
 <toolbar>
-    <cell>
+    <left>
         <form>
             名称：<input type="text"  name="sync_name" placeholder="名称" id="sync_name"/>&nbsp;&nbsp;
             <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
@@ -25,10 +25,10 @@
                         <button onclick="add();" type="button" class="edit">新增</button>
                     </#if>
         </form>
-    </cell>
-    <cell>
+    </left>
+    <right>
                 <@stateselector items="启用,未启用"/>
-    </cell>
+    </right>
 </toolbar>
 <datagrid>
     <table>

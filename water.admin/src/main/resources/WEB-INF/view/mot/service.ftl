@@ -87,17 +87,17 @@
     </block>
         <form>
             <toolbar>
-                <cell>
+                <left>
                     服务：<input type="text"  name="name" placeholder="名称" id="name" value="${name!}"/>&nbsp;&nbsp;
                     <button type="submit">查询</button>&nbsp;&nbsp;
                     <button onclick="autofresh();"  type="button" style="width: 100px;" id="fresh">开启自动刷新</button>
                     <#if is_operator == 1>
                     <span class="w50"></span><button type="button" class="edit" onclick="location.href='service/edit'">添加</button>
                     </#if>
-                </cell>
-                <cell>
+                </left>
+                <right>
                     <@stateselector items="启用,未启用"/>
-                </cell>
+                </right>
             </toolbar>
         </form>
         <datagrid>

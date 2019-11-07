@@ -12,7 +12,7 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <div>实例：${name!} = ${model.id}（<a onclick="history.back(-1);" class="t2">返回</a>）</div>
 
             <#if type=='2'>
@@ -47,7 +47,7 @@
             </#if>
 
 
-        </cell>
+        </left>
     </toolbar>
 
     <toolbar class="style2">

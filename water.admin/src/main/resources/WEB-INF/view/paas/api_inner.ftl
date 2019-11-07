@@ -37,7 +37,7 @@
 </head>
 <body>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     接口：<input type="text"  name="api_name" placeholder="接口名" id="api_name" value="${api_name!}"/>
                           <input type="hidden"  name="tag" id="tag" value="${tag}"/>
@@ -47,10 +47,10 @@
                     <button onclick="impPaas('${tag}')" class="minor" type="button">导入</button>
                     </#if>
                 </form>
-            </cell>
-            <cell>
+            </left>
+            <right>
                 <@stateselector items="启用,未启用"/>
-            </cell>
+            </right>
         </toolbar>
             <datagrid>
                 <table>

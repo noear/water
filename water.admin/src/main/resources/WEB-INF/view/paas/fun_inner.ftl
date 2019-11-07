@@ -29,7 +29,7 @@
 </head>
 <body>
         <toolbar>
-            <cell>
+            <left>
                 <form>
                     函数：<input type="text"  name="fun_name" placeholder="函数名" id="fun_name" value="${fun_name!}"/>
                           <input type="hidden"  name="tag" id="tag" value="${tag!}"/>
@@ -39,10 +39,10 @@
                     <button onclick="impPaas('${tag!}')" type="button" class="minor">导入</button>
                     </#if>
                 </form>
-            </cell>
-            <cell>
+            </left>
+            <right>
                 <@stateselector items="启用,未启用"/>
-            </cell>
+            </right>
         </toolbar>
             <datagrid>
                 <table>

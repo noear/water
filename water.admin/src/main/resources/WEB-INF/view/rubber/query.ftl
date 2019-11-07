@@ -15,17 +15,17 @@
 <main>
 
         <toolbar>
-            <form>
-                <cell>
+
+                <left><form>
                     <select id="code_type" name="code_type">
                         <option value="0">模型构造代码</option>
                         <option value="1">字段动态代码</option>
                         <option value="2">计算事件代码</option>
                         <option value="3">数据扫描代码</option>
                     </select>：<input type="text" placeholder="代码片断" id="code" name="code"/>
-                    <button type="submit">查询</button>
-                </cell>
-            </form>
+                    <button type="submit">查询</button></form>
+                </left>
+
         </toolbar>
             <datagrid>
                 <table>

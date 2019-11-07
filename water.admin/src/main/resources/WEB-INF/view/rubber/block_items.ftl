@@ -27,7 +27,7 @@
         <hr/>
     </detail>
         <toolbar>
-            <cell>
+            <left>
                 <select id="fname">
                     <#list cols as k,v>
                         <#if v?contains('*') >
@@ -35,8 +35,8 @@
                         </#if>
                     </#list>
                 </select>：<input id="fval" type="text" />&nbsp;&nbsp;<button onclick="query()" type="button">查询</button>
-            </cell>
-            <cell>
+            </left>
+            <right>
                 <#if (is_operator == 1) && (block.is_editable>0)>
                     <button onclick="addItem()" type="button" class="edit">新增</button>
                 </#if>
@@ -47,7 +47,7 @@
 
                     <button type="submit">调试</button>
                 </form>
-            </cell>
+            </right>
         </toolbar>
         <datagrid>
             <table>

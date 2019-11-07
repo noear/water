@@ -35,9 +35,9 @@
 <body>
 <main>
         <toolbar>
-            <cell>
+            <left>
                 <button type='button' onclick="rollback()">返回</button>
-            </cell>
+            </left>
         </toolbar>
         <textarea id="code">${code!}</textarea>
 </main>

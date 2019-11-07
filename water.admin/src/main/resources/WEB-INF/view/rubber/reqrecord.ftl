@@ -24,20 +24,20 @@
 <body>
 <main>
     <toolbar>
-        <cell>
+        <left>
             <form method="post">
                 请求：<input type="text" name="key" placeholder="请求ID或参数" size="40" id="key" value="${key!}"/>
                 <button type="submit">查询</button>&nbsp;&nbsp;
 
             </form>
-        </cell>
-        <cell>
+        </left>
+        <right>
             <button onclick="exec_scheme()" style="width: auto;padding: 0 10px;" type="button" >请求计算</button>
             &nbsp;&nbsp;
             <button onclick="exec_query()" style="width: auto;padding: 0 10px;" type="button" >请求查询</button>
             &nbsp;&nbsp;
             <button onclick="exec_model()" style="width: auto;padding: 0 10px;" type="button" >请求模型</button>
-        </cell>
+        </right>
     </toolbar>
     <datagrid>
         <table>

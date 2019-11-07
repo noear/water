@@ -48,7 +48,7 @@
 </style>
 <body>
 <toolbar>
-    <cell>
+    <left>
         <div>实例：${instance.instanceName!} = ${instance.instanceId!}（<a onclick="history.back(-1)" class="t2">返回</a>）</div>
         <table>
             <tr>
@@ -62,12 +62,12 @@
                 <td>${instance.zoneId!}</td>
             </tr>
         </table>
-    </cell>
+    </left>
 </toolbar>
 <toolbar>
-    <cell>
+    <left>
         <button type="button" onclick="editOperate(0)">新增操作</button>
-    </cell>
+    </left>
 </toolbar>
 <datagrid>
     <table>

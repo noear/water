@@ -29,15 +29,15 @@
         </#list>
     </datalist>
         <toolbar>
-            <cell>
+            <left>
                 账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
                 log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
                 path：<input type="text"  id="path" placeholder="/"  id="path" style="width: 100px;"/>&nbsp;&nbsp;
                 <button type="button" onclick="do_query()">查询</button>
-            </cell>
-            <cell>
+            </left>
+            <right>
                 <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
-            </cell>
+            </right>
         </toolbar>
     <datagrid>
         <table>
