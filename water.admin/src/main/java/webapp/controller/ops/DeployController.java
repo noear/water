@@ -13,7 +13,7 @@ import webapp.dao.ops.ArgModel;
 import webapp.dao.ops.DeployNode;
 import webapp.dao.ops.DeployTask;
 import webapp.dao.ops.DeployUtil;
-import webapp.dao.db.DbDeployApi;
+import webapp.dao.db.DbWindDeployApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_wind.WindDeployFlowModel;
 import webapp.models.water_wind.WindDeployModel;
@@ -115,7 +115,7 @@ public class DeployController extends BaseController {
             try {
                 DeployTask.bind(node)
                           .env(args)
-                          .logger(d -> DbDeployApi.addDeployFlow(task_id, d))
+                          .logger(d -> DbWindDeployApi.addDeployFlow(task_id, d))
                           .start();
             } catch (Exception e) {
                 System.out.println(e);
@@ -128,8 +128,8 @@ public class DeployController extends BaseController {
 
     @XMapping("deploy/ajax/getLog")
     public ViewModel getLog(Long task_id, Long flow_id) throws SQLException {
-        WindDeployFlowModel flow = DbDeployApi.getCurrentFlow(task_id);
-        List<WindDeployFlowModel> list = DbDeployApi.getDeployFlowByCurrentId(task_id, flow_id);
+        WindDeployFlowModel flow = DbWindDeployApi.getCurrentFlow(task_id);
+        List<WindDeployFlowModel> list = DbWindDeployApi.getDeployFlowByCurrentId(task_id, flow_id);
         ONode logs = new ONode().asArray();
         list.forEach(log -> {
             ONode data = new ONode();

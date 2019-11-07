@@ -14,7 +14,7 @@ import java.util.List;
  * @author dhb
  * @date 2018/12/19
  */
-public class DbDeployApi {
+public class DbWindDeployApi {
 
     private static DbContext db() {
         return Config.water;

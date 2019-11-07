@@ -2,7 +2,7 @@ package webapp.dao.ops;
 
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
-import webapp.dao.db.DbDeployApi;
+import webapp.dao.db.DbWindDeployApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_wind.WindDeployFlowModel;
 import webapp.models.water_wind.WindDeployTaskModel;
@@ -21,7 +21,7 @@ public class DeployUtil {
 
     public static DeployNode get(int nodeId) throws SQLException {
 
-        DataList dl = DbDeployApi.getDeployNode(nodeId);
+        DataList dl = DbWindDeployApi.getDeployNode(nodeId);
         DataItem di = dl.getRow(0);
 
         int nodeType = di.getInt("node_type");
@@ -30,7 +30,7 @@ public class DeployUtil {
         //对线节点特殊处理一下
         if(nodeType==DeployNode.LINE_NODE){
             int next_node_id = di.getInt("next_node_id");
-            DataList node = DbDeployApi.getDeployNode(next_node_id);
+            DataList node = DbWindDeployApi.getDeployNode(next_node_id);
             DataItem _node = node.getRow(0);
             nodeType = _node.getInt("node_type");
             desc = _node.getString("note");
@@ -68,10 +68,10 @@ public class DeployUtil {
 
         Map<String, Integer> map = new HashMap<>(16);
 
-        WindDeployFlowModel flow = DbDeployApi.getCurrentFlow(taskId);
+        WindDeployFlowModel flow = DbWindDeployApi.getCurrentFlow(taskId);
         if (flow.flow_id == 0) {
             WindDeployTaskModel task = DbWindApi.getDeployTaskById(taskId);
-            DataItem di = DbDeployApi.getStartNode(task.deploy_id);
+            DataItem di = DbWindDeployApi.getStartNode(task.deploy_id);
             DeployNode node = get(di.getInt("node_id"));
             map.put(node.note, node.nodeId);
         } else {
@@ -83,7 +83,7 @@ public class DeployUtil {
                 DeployNode next = node.next();
                 map.put(next.note, next.nodeId);
             } else if (flow.status == 3) {
-                DataList dl = DbDeployApi.getDeployNode(flow.node_id);
+                DataList dl = DbWindDeployApi.getDeployNode(flow.node_id);
                 dl.forEach(d -> map.put(d.getString("note"), d.getInt("next_node_id")));
             }
         }
