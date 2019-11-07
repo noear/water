@@ -3,19 +3,19 @@ package webapp.controller.cfg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.LoggerModel;
 import webapp.models.water.WhitelistModel;
-import webapp.viewModels.ViewModel;
 
 import java.util.List;
 
 @XController
 @XMapping("/cfg/")
-public class WhitelistController extends BaseController{
+public class WhitelistController extends BaseController {
 
     //IP白名单列表
     @XMapping("whitelist")

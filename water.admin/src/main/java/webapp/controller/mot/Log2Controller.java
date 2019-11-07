@@ -1,12 +1,10 @@
 package webapp.controller.mot;
 
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.LoggerModel;
@@ -14,14 +12,9 @@ import webapp.models.water.LoggerModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:服务管理
- */
-
 @XController
 @XMapping("/mot/")
-public class Log2Controller extends BaseController{
+public class Log2Controller extends BaseController {
 
     //日志统计
     @XMapping("log")

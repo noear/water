@@ -1,24 +1,17 @@
 package webapp.controller.msg;
 
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterMsgApi;
 import webapp.models.water_msg.SubscriberModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * @Author:Fei.chu
- * @Description:消息相关
- */
 
 @XController
 public class SubsController extends BaseController {

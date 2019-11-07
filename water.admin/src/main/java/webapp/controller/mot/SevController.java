@@ -4,8 +4,8 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
-import webapp.viewModels.ViewModel;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ServiceModel;
@@ -13,14 +13,9 @@ import webapp.models.water.ServiceModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:服务管理
- */
-
 @XController
 @XMapping("/mot/")
-public class SevController extends BaseController{
+public class SevController extends BaseController {
 
     //服务状态
     @XMapping("/service")

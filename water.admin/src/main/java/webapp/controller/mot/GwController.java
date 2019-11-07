@@ -1,12 +1,11 @@
 package webapp.controller.mot;
 
-import org.apache.commons.lang3.StringUtils;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import org.noear.water.utils.ExceptionUtil;
-import org.noear.water.utils.TextUtil;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.tools.StringUtils;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.vo.GatewayVoModel;
@@ -14,7 +13,6 @@ import webapp.models.water.ConfigModel;
 import webapp.models.water.ServiceConsumerModel;
 import webapp.models.water.ServiceModel;
 import webapp.models.water.ServiceSpeedModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class GwController extends BaseController {
     public ModelAndView gw_inner(String sev_key) throws SQLException {
 
         ConfigModel cfg = DbWaterApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
-        if(TextUtil.isEmpty(cfg.user)==false){ //通过 cfg.user, 实现别名与实名的情况
+        if(TextUtils.isEmpty(cfg.user)==false){ //通过 cfg.user, 实现别名与实名的情况
             sev_key = cfg.user;
         }
 
@@ -76,7 +74,7 @@ public class GwController extends BaseController {
 
         for(ServiceConsumerModel m : csms){
             for (ServiceSpeedModel spd : csmPds) {
-                if (StringUtils.equals(m.consumer+"@"+m.consumer_address, spd.name)) {
+                if (TextUtils.equals(m.consumer+"@"+m.consumer_address, spd.name)) {
                     m.traffic_num = spd.total_num;
                     m.traffic_per = (spd.total_num/pdsTotal)*100;
                     break;

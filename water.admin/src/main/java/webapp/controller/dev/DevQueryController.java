@@ -1,5 +1,6 @@
 package webapp.controller.dev;
 
+import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.client.WaterClient;
 import org.noear.water.tools.TextUtils;
 import org.noear.water.tools.ThrowableUtils;
@@ -11,7 +12,6 @@ import org.noear.weed.DbContext;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
 
 import java.sql.SQLException;
 import java.util.List;

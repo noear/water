@@ -3,19 +3,19 @@ package webapp.controller.cfg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.AccountModel;
 import webapp.utils.CodeUtil;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @XController
 @XMapping("/cfg/")
-public class AccountController extends BaseController{
+public class AccountController extends BaseController {
 
 
     //账号列表

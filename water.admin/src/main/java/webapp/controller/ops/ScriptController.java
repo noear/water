@@ -2,32 +2,26 @@ package webapp.controller.ops;
 
 import com.alibaba.fastjson.JSON;
 import org.noear.snack.ONode;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.Session;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water_wind.WindFormalParamModel;
 import webapp.models.water_wind.WindScriptModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Yunlong Feng
- * @Description:脚本配置
- * @Date:9:57 2018/12/26
- */
-
 @XController
 @XMapping("/ops/")
-public class ScriptController extends BaseController{
+public class ScriptController extends BaseController {
 
     @XMapping("script")
     public ModelAndView script(String tag_name) throws SQLException {
@@ -108,7 +102,7 @@ public class ScriptController extends BaseController{
 
 
     @XMapping("script/edit/ajax/save")
-    public ViewModel scriptEditSave(Long script_id, String tag, String name,Integer type,String args_json,Integer env,Integer is_enabled,String code) throws Exception {
+    public ViewModel scriptEditSave(Long script_id, String tag, String name, Integer type, String args_json, Integer env, Integer is_enabled, String code) throws Exception {
         boolean is_admin = Session.current().getIsAdmin()>0;
 
         if (is_admin == false) {

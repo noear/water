@@ -1,32 +1,26 @@
 package webapp.controller.msg;
 
 import org.noear.snack.ONode;
-import org.noear.water.WaterClient;
 
-
-import org.noear.water.utils.EncryptUtil;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
-import webapp.viewModels.ViewModel;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.client.WaterClient;
+import org.noear.water.tools.Base64Utils;
+import org.noear.water.tools.EncryptUtils;
+import org.noear.water.tools.HttpUtils;
 import webapp.dao.IDUtil;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterMsgApi;
 import webapp.models.water_msg.MessageModel;
 import webapp.models.water_msg.SubscriberModel;
 import webapp.models.water_msg.TopicModel;
-import webapp.utils.Base64Util;
-import webapp.utils.HttpUtil;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * @Author:Fei.chu
- * @Description:消息相关
- */
 
 @XController
 public class MsgController extends BaseController {
@@ -49,7 +43,7 @@ public class MsgController extends BaseController {
 
     //提交消息调试
     @XMapping("/msg/debug/ajax/submitDebug")
-    public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
+    public ViewModel submitDebug(Long id, String msg_key, String topic_name, Integer dist_count, String content, String url) throws Exception{
         MessageModel msg = DbWaterMsgApi.getMessageById(id);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
         StringBuilder sb = new StringBuilder(200);
@@ -58,16 +52,16 @@ public class MsgController extends BaseController {
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
         sb.append(sub.access_key);
-        String sgin = EncryptUtil.md5(sb.toString());
+        String sgin = EncryptUtils.md5(sb.toString());
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("id",id);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id",String.valueOf(id));
         map.put("key",msg.msg_key);
         map.put("topic",msg.topic_name);
-        map.put("times",msg.dist_count);
-        map.put("message", Base64Util.encode(msg.content));
+        map.put("times",String.valueOf(msg.dist_count));
+        map.put("message", Base64Utils.encode(msg.content));
         map.put("sgin",sgin);
-        String result = HttpUtil.PostRequest(url, map);
+        String result = HttpUtils.http(url).data(map).post();
 
         return viewModel.code(1,result);
     }
@@ -82,14 +76,7 @@ public class MsgController extends BaseController {
     public ViewModel sendMessage(String topic, String message) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            String msg_key = IDUtil.buildGuid();
-            ONode data = WaterClient.Message.sendMessage(msg_key, topic, message);
-
-            if (data.get("code").getInt() == 1) {
-                viewModel.code(1,"消息派发成功！");
-            } else {
-                viewModel.code(0,"消息发送失败:" + data.toJson());
-            }
+            WaterClient.Message.messageSend(topic, message);
         } else {
             viewModel.code(0,"没有权限！");
         }
@@ -126,8 +113,8 @@ public class MsgController extends BaseController {
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
         sb.append(access_key);
-        String sign = EncryptUtil.md5(sb.toString());
-        String message = Base64Util.encode(content);
+        String sign = EncryptUtils.md5(sb.toString());
+        String message = Base64Utils.encode(content);
         HashMap<String, String> resp = new HashMap<>();
         resp.put("sign",sign);
         resp.put("message",message);

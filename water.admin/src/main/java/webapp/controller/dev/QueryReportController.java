@@ -1,6 +1,8 @@
 package webapp.controller.dev;
 
 import com.alibaba.fastjson.JSONObject;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.client.WaterClient;
 import org.noear.water.tools.TextUtils;
 import org.noear.water.tools.ThrowableUtils;
@@ -11,12 +13,10 @@ import org.noear.weed.DbProcedure;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
 import webapp.dao.JtFunRunner;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ReportModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public class QueryReportController extends BaseController {
     }
 
     @XMapping("edit/ajax/save")
-    public ViewModel saveEdit(Integer row_id,String tag,String name,String code,String note,String args) throws SQLException{
+    public ViewModel saveEdit(Integer row_id, String tag, String name, String code, String note, String args) throws SQLException{
         boolean isOk = DbWaterApi.setReport(row_id, tag, name, code,note,args);
         if (isOk){
             viewModel.put("code",1);

@@ -7,8 +7,8 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.Config;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import webapp.dao.ArgModel;
 import webapp.dao.DeployNode;
 import webapp.dao.DeployTask;
@@ -19,21 +19,13 @@ import webapp.models.water_wind.WindDeployFlowModel;
 import webapp.models.water_wind.WindDeployModel;
 import webapp.models.water_wind.WindDeployTaskModel;
 import webapp.models.water_wind.WindProjectModel;
-import webapp.utils.StringUtil;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
-/**
- * @Author:Yunlong Feng
- * @Description: 服务部署
- * @Date:9:55 2018/12/26
- */
+
 @XController
 @XMapping("/ops/")
 public class DeployController extends BaseController {
@@ -64,7 +56,7 @@ public class DeployController extends BaseController {
     }
 
     @XMapping("deploy/ajax/save")
-    public ViewModel saveTask(Integer project_id, String product_manager, String version, String note,Integer deploy_id) throws Exception {
+    public ViewModel saveTask(Integer project_id, String product_manager, String version, String note, Integer deploy_id) throws Exception {
         WindProjectModel project = DbWindApi.getProjectByID(project_id);
         boolean result = DbWindApi.setDeployTask(deploy_id, project_id,
                                                  project.name, project.developer,

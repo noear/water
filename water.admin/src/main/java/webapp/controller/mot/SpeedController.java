@@ -1,29 +1,24 @@
 package webapp.controller.mot;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfServiceChecker;
 import webapp.dao.db.DbWindApi;
-import webapp.viewModels.ViewModel;
 import webapp.models.water.ServiceSpeedModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:服务管理
- */
-
 @XController
 @XMapping("/mot/")
-public class SpeedController extends BaseController{
+public class SpeedController extends BaseController {
 
 
     //性能监控
@@ -68,7 +63,7 @@ public class SpeedController extends BaseController{
         return view("mot/speed_charts");
     }
     @XMapping("speed/charts/ajax/reqtate")
-    public ViewModel speedCharts_reqtate(String tag,String name,String service, Integer type) throws SQLException{
+    public ViewModel speedCharts_reqtate(String tag, String name, String service, Integer type) throws SQLException{
         String valField = "total_num";
         if(type == null){type=0;}
         switch (type){

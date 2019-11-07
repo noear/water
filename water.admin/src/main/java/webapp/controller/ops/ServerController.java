@@ -1,31 +1,22 @@
 package webapp.controller.ops;
 
-import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse;
-import com.aliyuncs.exceptions.ClientException;
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.*;
 import webapp.dao.db.DbWaterApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water.*;
 import webapp.models.water_wind.*;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-/**
- * @Author:Fei.chu
- * @Description:
- */
 
 @XController
 @XMapping("/ops/")
@@ -172,7 +163,7 @@ public class ServerController extends BaseController {
      * @Date:13:44 2018/12/11
      */
     @XMapping("server/extra/operate")
-    public ModelAndView operate(Integer server_id) throws SQLException, ClientException {
+    public ModelAndView operate(Integer server_id) throws Exception {
         WindServerModel server = DbWindApi.getServerByID(server_id);
         List<WindOperateModel> operateList = DbWindApi.getOperateByServerId(server_id);
         List<WindScriptModel> scriptTags = DbWindApi.getScriptTags();

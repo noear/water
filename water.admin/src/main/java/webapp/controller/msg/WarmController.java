@@ -1,27 +1,20 @@
 package webapp.controller.msg;
 
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.DisttimeUtil;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterMsgApi;
 import webapp.models.water_msg.DistributionModel;
 import webapp.models.water_msg.MessageModel;
 import webapp.models.water_msg.SubscriberModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
-
-/**
- * @Author:Fei.chu
- * @Description:消息相关
- */
 
 @XController
 public class WarmController extends BaseController {

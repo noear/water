@@ -3,11 +3,11 @@ package webapp.controller.cfg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
-import webapp.controller.BaseController;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.VersionModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 

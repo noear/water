@@ -1,12 +1,12 @@
 package webapp.controller.cfg;
 
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
-import webapp.viewModels.ViewModel;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.*;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @XController
 @XMapping("/cfg/")
-public class PropController extends BaseController{
+public class PropController extends BaseController {
     @XMapping("prop")
     public ModelAndView index(String tag_name) throws SQLException {
         List<ConfigModel> resp = DbWaterApi.getTagGroup();
@@ -54,7 +54,7 @@ public class PropController extends BaseController{
 
     //编辑、保存功能。
     @XMapping("prop/edit/ajax/save")
-    public ViewModel saveEdit(Integer row_id,String tag,String key,Integer type,String url,String user,String password,String explain) throws SQLException{
+    public ViewModel saveEdit(Integer row_id, String tag, String key, Integer type, String url, String user, String password, String explain) throws SQLException{
         int is_admin = Session.current().getIsAdmin();
         if(is_admin==1) {
             url = url.trim();

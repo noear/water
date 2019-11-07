@@ -3,14 +3,14 @@ package webapp.controller.cfg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
-import webapp.controller.BaseController;
 import webapp.dao.BcfTagChecker;
 import webapp.dao.Session;
 import webapp.dao.db.DbWaterApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water.LoggerModel;
-import webapp.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @XController
 @XMapping("/cfg/")
-public class LoggerController extends BaseController{
+public class LoggerController extends BaseController {
 
     @XMapping("logger")
     public ModelAndView logger(String tag_name) throws Exception {
@@ -87,7 +87,7 @@ public class LoggerController extends BaseController{
     }
     //日志配置ajax 保存功能。
     @XMapping("logger/edit/ajax/save")
-    public  ViewModel saveLoggerEdit(Integer logger_id,String tag,String logger,String source,String note,int keep_days) throws SQLException {
+    public ViewModel saveLoggerEdit(Integer logger_id, String tag, String logger, String source, String note, int keep_days) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if(is_admin==1) {
             boolean result = DbWaterApi.updateLogger(logger_id,tag,logger,source,note,keep_days);

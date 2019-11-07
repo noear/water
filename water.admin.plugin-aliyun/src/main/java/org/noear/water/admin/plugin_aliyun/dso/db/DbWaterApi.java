@@ -14,7 +14,7 @@ public class DbWaterApi {
     }
 
     public static List<ConfigModel> getConfigByType(String tag,int type) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("type = ?", type)
                 .expre((tb)->{
                     if(TextUtils.isEmpty(tag) == false){
@@ -38,7 +38,7 @@ public class DbWaterApi {
     }
 
     public static ConfigModel getConfigByTagName(String tag, String name) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("tag = ?", tag)
                 .and("`key` = ?", name)
                 .limit(1)
@@ -47,7 +47,7 @@ public class DbWaterApi {
     }
 
     public static List<ConfigModel> getConfigByTag(String tag, String key) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("tag = ?", tag)
                 .expre(tb -> {
                     if (!TextUtils.isEmpty(key)) {

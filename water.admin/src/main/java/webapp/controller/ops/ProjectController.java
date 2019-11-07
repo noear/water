@@ -2,29 +2,23 @@ package webapp.controller.ops;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfUserModel;
-import org.apache.http.util.TextUtils;
 
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.admin.tools.viewModels.ViewModel;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_wind.*;
-import webapp.viewModels.ViewModel;
 import webapp.dao.Session;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-/**
- * @Author:Fei.chu
- * @Description:项目配置
- */
 
 @XController
 @XMapping("/ops/")
@@ -138,12 +132,12 @@ public class ProjectController extends BaseController {
      * @Date:9:56 2018/12/26
      */
     @XMapping("/project/edit/ajax/save")
-    public ViewModel saveEdit(Integer project_id, String tag, String name, String git_url,String note,
-                              String production_host,String prepare_host,String test_host,
-                              String production_port,String prepare_port,String test_port,
-                              String [] productionList,String [] prepareList,String [] testList,
-                              String [] productionValue,String [] prepareValue,String [] testValue,
-                              Integer type,String developer) throws SQLException {
+    public ViewModel saveEdit(Integer project_id, String tag, String name, String git_url, String note,
+                              String production_host, String prepare_host, String test_host,
+                              String production_port, String prepare_port, String test_port,
+                              String [] productionList, String [] prepareList, String [] testList,
+                              String [] productionValue, String [] prepareValue, String [] testValue,
+                              Integer type, String developer) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin()>0;
         if (is_admin == false) {
             return viewModel.code(0, "没有权限！");

@@ -1,12 +1,10 @@
 package webapp.controller.mot;
 
-import org.apache.http.util.TextUtils;
-
-
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
-import webapp.controller.BaseController;
+import org.noear.water.admin.tools.controller.BaseController;
+import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterMsgApi;
 import webapp.models.water_msg.MessageModel;
 

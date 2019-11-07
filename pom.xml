@@ -19,8 +19,6 @@
     </properties>
 
     <modules>
-
-        <module>water</module>
         <module>water.admin</module>
         <module>water.admin.tools</module>
         <module>water.admin.plugin-aliyun</module>
