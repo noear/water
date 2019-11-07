@@ -9,6 +9,7 @@ import org.noear.water.tools.TextUtils;
 import webapp.dao.BcfTagChecker;
 import org.noear.water.admin.tools.dso.Session;
 import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterMotApi;
 import webapp.models.water.ConfigModel;
 import webapp.models.water.MonitorModel;
 
@@ -24,7 +25,7 @@ public class MonitorController extends BaseController {
     //monitor视图跳转。
     @XMapping("monitor")
     public ModelAndView MonitorIndex(String tag_name) throws SQLException {
-        List<MonitorModel> tags = DbWaterApi.getMonitorTags();
+        List<MonitorModel> tags = DbWaterMotApi.getMonitorTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
@@ -55,7 +56,7 @@ public class MonitorController extends BaseController {
         }
         if(_state==null)
             _state = 1;
-        List<MonitorModel> list = DbWaterApi.getMonitorList(tag_name,monitor_name, _state);
+        List<MonitorModel> list = DbWaterMotApi.getMonitorList(tag_name,monitor_name, _state);
         viewModel.put("monitors",list);
         viewModel.put("tag_name",tag_name);
         return view("smp/monitor_inner");
@@ -63,7 +64,7 @@ public class MonitorController extends BaseController {
 
     @XMapping("monitor/edit")
     public ModelAndView editMonitor(Integer monitor_id) throws SQLException {
-        MonitorModel monitor = DbWaterApi.getMonitorById(monitor_id);
+        MonitorModel monitor = DbWaterMotApi.getMonitorById(monitor_id);
 
         List<ConfigModel> configs= DbWaterApi.getDbConfigs();
         List<String> option_sources = new ArrayList<>();
@@ -97,7 +98,7 @@ public class MonitorController extends BaseController {
 
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            boolean result = DbWaterApi.editMonitor(monitor_id, tag, name, type, source, source_model, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
+            boolean result = DbWaterMotApi.setMonitor(monitor_id, tag, name, type, source, source_model, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
             if (result) {
                 viewModel.code(1, "保存成功!");
             } else {
