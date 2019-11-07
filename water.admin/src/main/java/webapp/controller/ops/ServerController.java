@@ -8,6 +8,7 @@ import org.noear.water.admin.tools.dso.Session;
 import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterServiceApi;
 import webapp.dao.db.DbWindApi;
 import webapp.dao.ops.ShellResult;
 import webapp.dao.ops.ShellText;
@@ -149,7 +150,7 @@ public class ServerController extends BaseController {
         viewModel.put("server", server);
 
         if (!TextUtils.isEmpty(server.address_local)) {
-            List<ServiceModel> services = DbWaterApi.getServices("ip:" + server.address_local,false, 1);
+            List<ServiceModel> services = DbWaterServiceApi.getServices("ip:" + server.address_local,false, 1);
 
             List<String> names = services.stream().map(m->m.name).collect(Collectors.toList());
             Map<String, String> map = DbWindApi.getServiceDomains(names);
@@ -284,7 +285,7 @@ public class ServerController extends BaseController {
             return viewModel.code(0,"没有权限！");
         }
 
-        ServiceModel service = DbWaterApi.getServiceById(service_id);
+        ServiceModel service = DbWaterServiceApi.getServiceById(service_id);
         StringBuilder sb = new StringBuilder();
         sb.append("port=").append(service.port).append(";")
           .append("project=").append(service.name).append(";")

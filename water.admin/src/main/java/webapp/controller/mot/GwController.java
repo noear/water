@@ -7,6 +7,7 @@ import org.noear.water.admin.tools.controller.BaseController;
 import org.noear.water.tools.StringUtils;
 import org.noear.water.tools.TextUtils;
 import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterServiceApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_dev.GatewayVoModel;
 import webapp.models.water.ConfigModel;
@@ -47,11 +48,11 @@ public class GwController extends BaseController {
 
         double pdsTotal = 0.01;
 
-        List<ServiceModel> sevs = DbWaterApi.getServicesByName(sev_key);
+        List<ServiceModel> sevs = DbWaterServiceApi.getServicesByName(sev_key);
 
         List<ServiceSpeedModel> sevPds = DbWindApi.getServiceSpeedByService(SEV_CONFIG_TAG);
 
-        List<ServiceConsumerModel> csms = DbWaterApi.getServiceConsumers(sev_key);
+        List<ServiceConsumerModel> csms = DbWaterServiceApi.getServiceConsumers(sev_key);
 
         List<ServiceSpeedModel> csmPds = DbWindApi.getServiceSpeedByService("_from",sev_key);
 

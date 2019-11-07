@@ -8,6 +8,7 @@ import org.noear.water.admin.tools.viewModels.ViewModel;
 import org.noear.water.tools.TextUtils;
 import org.noear.water.tools.ThrowableUtils;
 import webapp.dao.db.DbWaterApi;
+import webapp.dao.db.DbWaterServiceApi;
 import webapp.dao.db.DbWindApi;
 import webapp.models.water_dev.GatewayVoModel;
 import webapp.models.water.ConfigModel;
@@ -48,11 +49,11 @@ public class GatewayController extends BaseController {
 
         double pdsTotal = 0.01;
 
-        List<ServiceModel> sevs = DbWaterApi.getServicesByName(sev_key);
+        List<ServiceModel> sevs = DbWaterServiceApi.getServicesByName(sev_key);
 
         List<ServiceSpeedModel> sevPds = DbWindApi.getServiceSpeedByService(SEV_CONFIG_TAG);
 
-        List<ServiceConsumerModel> csms = DbWaterApi.getServiceConsumers(sev_key);
+        List<ServiceConsumerModel> csms = DbWaterServiceApi.getServiceConsumers(sev_key);
 
         List<ServiceSpeedModel> csmPds = DbWindApi.getServiceSpeedByService("_from",sev_key);
 
@@ -139,7 +140,7 @@ public class GatewayController extends BaseController {
 
             viewModel.code(1, "成功");
 
-            DbWaterApi.disableService(service_id, is_enabled);
+            DbWaterServiceApi.disService(service_id, is_enabled);
 
         } catch (Exception e) {
             viewModel.code(0, ThrowableUtils.getString(e));
