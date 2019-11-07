@@ -245,6 +245,19 @@ public class DbWaterApi {
                    .getList(EnumModel.class);
     }
 
+    public static List<EnumModel> getEnumListByType(String tag,String type) throws Exception {
+        return db().table("water_base_enum")
+                .whereEq("tag", tag)
+                .expre(tb -> {
+                    if (TextUtils.isEmpty(type) == false) {
+                        tb.andEq("type", type);
+                    }
+                })
+                .orderBy("`type`, `value`")
+                .select("*")
+                .getList(EnumModel.class);
+    }
+
     public static List<EnumModel> getEnumListOfCache(String type) throws Exception {
         return db().table("water_base_enum")
                 .whereEq("type", type)

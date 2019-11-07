@@ -43,8 +43,8 @@ public class EnumController extends BaseController {
 
     //枚举列表
     @XMapping("inner")
-    public ModelAndView enumInner(String type) throws Exception {
-        List<EnumModel> list = DbWaterApi.getEnumListByType(type);
+    public ModelAndView enumInner(String tag,String type) throws Exception {
+        List<EnumModel> list = DbWaterApi.getEnumListByType(tag, type);
         viewModel.put("list", list);
         return view("/cfg/enum_inner");
     }
