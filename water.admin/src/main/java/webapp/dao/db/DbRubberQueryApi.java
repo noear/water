@@ -1,6 +1,5 @@
 package webapp.dao.db;
 
-
 import org.noear.weed.DbContext;
 import webapp.Config;
 import webapp.models.water.*;

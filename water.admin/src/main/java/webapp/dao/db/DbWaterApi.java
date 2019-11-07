@@ -2,6 +2,7 @@ package webapp.dao.db;
 
 import org.noear.solon.extend.sessionstate.local.util.EncryptUtil;
 import org.noear.water.admin.tools.dso.CacheUtil;
+import org.noear.water.admin.tools.dso.Session;
 import org.noear.water.client.WaterClient;
 import org.noear.water.tools.Datetime;
 import org.noear.water.tools.TextUtils;
@@ -10,7 +11,6 @@ import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import webapp.Config;
 import webapp.dao.IDUtil;
-import org.noear.water.admin.tools.dso.Session;
 import webapp.models.water.*;
 import webapp.models.water.AccountModel;
 import webapp.models.water.LoggerModel;
@@ -29,35 +29,25 @@ public class DbWaterApi {
 
     //登陆
     public static AccountModel Login(String access_id, String access_key) throws Exception {
-        return db().table("account")
-                .where("access_id = ?", access_id)
+        return db().table("water_base_account")
+                .where("id = ?", access_id)
                 .and("access_key = ?", access_key)
                 .select("*")
                 .getItem(AccountModel.class);
     }
 
     public static AccountModel getAccountById(int account_id) throws Exception {
-        return db().table("account")
-                .where("account_id = ?", account_id)
+        return db().table("water_base_account")
+                .where("id = ?", account_id)
                 .select("*")
                 .getItem(AccountModel.class);
     }
 
-    //是否是管理员账号
-//    public static boolean isAdmin(int account_id) throws SQLException {
-//        AccountModel account = getAccountById(account_id);
-//
-//        if (account.is_admin == 0) {
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
 
     //获取service表中的数据。
     public static List<ServiceModel> getServices(String name, boolean is_web, int is_enabled) throws SQLException {
         return db()
-                .table("service")
+                .table("water_base_service")
                 .where("is_enabled = ?", is_enabled)
                 .expre(tb -> {
                     if(is_web){
@@ -81,15 +71,15 @@ public class DbWaterApi {
 
     public static ServiceModel getServiceById(int service_id) throws SQLException{
         return db()
-                .table("service")
-                .where("service_id = ?", service_id)
+                .table("water_base_service")
+                .where("id = ?", service_id)
                 .select("*")
                 .getItem(new ServiceModel());
     }
 
     public static List<ServiceModel> getServicesByName(String name) throws SQLException {
 
-        return db().table("service")
+        return db().table("water_base_service")
                 .where("name = ?", name)
                 .select("*")
                 .getList(new ServiceModel());
@@ -106,7 +96,7 @@ public class DbWaterApi {
         }
 
         DbTableQuery query = db()
-                .table("service")
+                .table("water_base_service")
                 .set("name", name)
                 .set("address", address)
                 .set("note",note)
@@ -119,7 +109,7 @@ public class DbWaterApi {
             query.set("check_last_time",new Date())
                  .set("key", key).insert();
         } else {
-            query.where("service_id = ?", service_id).update();
+            query.where("id = ?", service_id).update();
         }
 
         return true;
@@ -127,7 +117,7 @@ public class DbWaterApi {
 
 
     public static List<LoggerModel> getLoggers(String tag) throws Exception {
-        return db().table("logger")
+        return db().table("water_base_logger")
                 .where("is_enabled=1")
                 .expre(tb -> {
                     if (!TextUtils.isEmpty(tag)) {
@@ -141,7 +131,7 @@ public class DbWaterApi {
 
     //
     public static LoggerModel getLog(String logger) throws Exception {
-        return db().table("logger")
+        return db().table("water_base_logger")
                 .where("logger = ?", logger)
                 .limit(1)
                 .select("*")
@@ -149,30 +139,18 @@ public class DbWaterApi {
     }
 
     public static List<LoggerModel> getLoggerTag() throws Exception{
-        return db().table("logger")
+        return db().table("water_base_logger")
                 .groupBy("tag")
                 .select("tag")
                 .getList(LoggerModel.class);
     }
 
-    //根据名称和状态列出同步列表。
-    public static List<SynchronousModel> getSynchronousList(String tag_name, String name, int _state) throws SQLException {
-        return db()
-                .table("synchronous")
-                .where("is_enabled = ?", _state)
-                .and("tag = ?", tag_name)
-                .expre(tb -> {
-                    if (!TextUtils.isEmpty(name))
-                        tb.and("name like ?", name + "%");
-                })
-                .select("*")
-                .getList(new SynchronousModel());
-    }
+
 
     //获取monitor表中的数据。
     public static List<MonitorModel> getMonitorList(String tag_name, String monitor_name, Integer _state) throws SQLException {
         return db()
-                .table("monitor")
+                .table("water_base_monitor")
                 .where("is_enabled = ?", _state)
                 .and("tag = ?", tag_name)
                 .expre(tb -> {
@@ -186,8 +164,8 @@ public class DbWaterApi {
     //根据id查找对应monitor，用于编辑功能。
     public static MonitorModel getMonitorById(Integer monitor_id) throws SQLException {
         return db()
-                .table("monitor")
-                .where("monitor_id = ?", monitor_id)
+                .table("water_base_monitor")
+                .where("id = ?", monitor_id)
                 .select("*")
                 .getItem(new MonitorModel());
     }
@@ -197,8 +175,8 @@ public class DbWaterApi {
 
         ServiceModel m = getServiceById(service_id);
 
-        boolean isOk = db().table("service")
-                .where("service_id=?", service_id)
+        boolean isOk = db().table("water_base_service")
+                .where("id=?", service_id)
                 .delete() > 0;
 
         //通知负载更新
@@ -211,8 +189,8 @@ public class DbWaterApi {
     public static boolean disableService(Integer service_id, Integer is_enabled) throws SQLException {
         ServiceModel m = getServiceById(service_id);
 
-        boolean isOk = db().table("service")
-                .where("service_id = ?", service_id)
+        boolean isOk = db().table("water_base_service")
+                .where("id = ?", service_id)
                 .set("is_enabled", is_enabled)
                 .update() > 0;
 
@@ -231,71 +209,35 @@ public class DbWaterApi {
         WaterClient.Tool.updateCache("upstream:"+sev);
     }
 
-    //重置服务
-    public static int resetSev() throws SQLException {
-        return db().table("service")
-                .where("state = ?", 1)
-                .set("state", 0)
-                .update();
-    }
-
-    //重置计划
-    public static int resetPln() throws SQLException {
-        return db().table("$.paas_plan")
-                .set("state", 9)
-                .set("last_exec_note", "OK")
-                .where("state=?", 2)
-                .update();
-    }
-
-
-//    private static List<String> _whitelist = null;
-
     //加载IP白名单到静态缓存里
     public static void reloadWhitelist() throws Exception {
-        CacheUtil.data.clear("whitelist");//waterapi那儿，过一分钟就会自动刷新
+        CacheUtil.data.clear("whitelist_all");//waterapi那儿，过一分钟就会自动刷新
     }
-
-
 
 
     //获取账号的手机号（用于报警）
     public static List<String> getAccountMobiles() throws SQLException {
-        return Config.water.table("account").where("LENGTH(alarm_mobile) > 0")
+        return Config.water.table("water_base_account").where("LENGTH(alarm_mobile) > 0")
                 .select("alarm_mobile")
                 .getArray("alarm_mobile");
     }
 
     public static WhitelistModel getIPWhite(String ip) throws SQLException {
-        return db().table("whitelist")
+        return db().table("water_base_whitelist")
                 .where("ip = ?", ip)
                 .select("*").caching(CacheUtil.data)
-                .cacheTag("whitelist")
+                .cacheTag("whitelist_all")
                 .getItem(new WhitelistModel());
     }
 
-    public static boolean addsyn(Integer type, String name, Integer interval, String target, String target_pk, String source,
-                                 String source_model, String alarm_mobile, Integer is_enabled) throws SQLException {
-        return db().table("synchronous")
-                .set("key", UUID.randomUUID().toString().replaceAll("-", ""))
-                .set("name", name)
-                .set("type", type)
-                .set("interval", interval)
-                .set("target", target)
-                .set("target_pk", target_pk)
-                .set("source", source)
-                .set("source_model", source_model)
-                .set("alarm_mobile", alarm_mobile)
-                .set("is_enabled", is_enabled)
-                .insert() > 0;
-    }
+
 
 
     //编辑更新监视任务。
     public static boolean editMonitor(Integer monitor_id, String tag, String name, Integer type, String source, String source_model, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign,String alarm_exp, Integer is_enabled) throws SQLException {
         String guid = UUID.randomUUID().toString().replaceAll("-", "");
 
-        DbTableQuery db = db().table("monitor")
+        DbTableQuery db = db().table("water_base_monitor")
                 .set("key", guid)
                 .set("name", name)
                 .set("tag", tag)
@@ -310,16 +252,46 @@ public class DbWaterApi {
                 .set("is_enabled", is_enabled);
 
         if (monitor_id > 0) {
-            return db.where("monitor_id = ?", monitor_id).update() > 0;
+            return db.where("id = ?", monitor_id).update() > 0;
         } else {
             return db.insert() > 0;
         }
     }
 
+    //根据名称和状态列出同步列表。
+    public static List<SynchronousModel> getSynchronousList(String tag_name, String name, int _state) throws SQLException {
+        return db()
+                .table("water_base_synchronous")
+                .where("is_enabled = ?", _state)
+                .and("tag = ?", tag_name)
+                .expre(tb -> {
+                    if (!TextUtils.isEmpty(name))
+                        tb.and("name like ?", name + "%");
+                })
+                .select("*")
+                .getList(new SynchronousModel());
+    }
+
+    public static boolean addsyn(Integer type, String name, Integer interval, String target, String target_pk, String source,
+                                 String source_model, String alarm_mobile, Integer is_enabled) throws SQLException {
+        return db().table("water_base_synchronous")
+                .set("key", UUID.randomUUID().toString().replaceAll("-", ""))
+                .set("name", name)
+                .set("type", type)
+                .set("interval", interval)
+                .set("target", target)
+                .set("target_pk", target_pk)
+                .set("source", source)
+                .set("source_model", source_model)
+                .set("alarm_mobile", alarm_mobile)
+                .set("is_enabled", is_enabled)
+                .insert() > 0;
+    }
+
     //数据同步  根据id获得对象
     public static SynchronousModel getSynById(int sync_id) throws SQLException {
-        return db().table("synchronous")
-                .where("sync_id = ?", sync_id)
+        return db().table("water_base_synchronous")
+                .where("id = ?", sync_id)
                 .limit(1)
                 .select("*")
                 .getItem(new SynchronousModel());
@@ -327,7 +299,7 @@ public class DbWaterApi {
 
     public static boolean updateSyn(Integer sync_id, Integer type, String name, String tag, Integer interval, String target, String target_pk, String source,
                                     String source_model, String alarm_mobile, Integer is_enabled) throws SQLException {
-        DbTableQuery db = db().table("synchronous")
+        DbTableQuery db = db().table("water_base_synchronous")
                 .set("name", name)
                 .set("tag", tag)
                 .set("type", type)
@@ -339,7 +311,7 @@ public class DbWaterApi {
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_enabled", is_enabled);
         if (sync_id > 0) {
-            return db.where("sync_id = ?", sync_id).update() > 0;
+            return db.where("id = ?", sync_id).update() > 0;
         } else {
             return db.insert() > 0;
         }
@@ -347,7 +319,7 @@ public class DbWaterApi {
 
     //编辑更新config。
     public static boolean editcfg(Integer row_id, String tag, String key, Integer type, String url, String user, String password, String explain) throws SQLException {
-        DbTableQuery db = db().table("config")
+        DbTableQuery db = db().table("water_base_config")
                 .set("row_id", row_id)
                 .set("tag", tag.trim())
                 .set("key", key.trim())
@@ -357,7 +329,7 @@ public class DbWaterApi {
                 .set("password", password.trim())
                 .set("explain", explain.trim());
         if (row_id > 0) {
-            boolean isOk = db.where("row_id = ?", row_id).update() > 0;
+            boolean isOk = db.where("id = ?", row_id).update() > 0;
 
             WaterClient.Tool.updateConfig(tag,key);
 
@@ -368,7 +340,7 @@ public class DbWaterApi {
     }
 
     public static void addGateway(String tag, String key, String url, String explain) throws SQLException {
-        db().table("config")
+        db().table("water_base_config")
                 .set("tag", tag.trim())
                 .set("key", key.trim())
                 .set("user", key.trim())
@@ -378,7 +350,7 @@ public class DbWaterApi {
     }
 
     public static void modGateway(String tag, String ori_key, String key, String url, String explain) throws SQLException {
-        db().table("config")
+        db().table("water_base_config")
                 .set("key", key.trim())
                 .set("user", key.trim())
                 .set("url", url.trim())
@@ -390,7 +362,7 @@ public class DbWaterApi {
 
     //获取标签数组。
     public static List<ConfigModel> getTagGroup() throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(new ConfigModel());
@@ -398,7 +370,7 @@ public class DbWaterApi {
 
     // 获取有特定类型配置的TAG
     public static List<ConfigModel> getTagGroupWithType(int type) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("type = ?", type)
                 .groupBy("tag")
                 .select("tag, COUNT(*) AS counts")
@@ -407,8 +379,8 @@ public class DbWaterApi {
 
     //编辑功能，根据row_id获取config信息。
     public static ConfigModel getConfigByRowId(Integer row_id) throws SQLException {
-        return db().table("config")
-                .where("row_id = ?", row_id)
+        return db().table("water_base_config")
+                .where("id = ?", row_id)
                 .select("*")
                 .getItem(new ConfigModel());
     }
@@ -426,7 +398,7 @@ public class DbWaterApi {
     }
 
     public static ConfigModel getConfigByTagName(String tag, String name) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("tag = ?", tag)
                 .and("`key` = ?", name)
                 .limit(1)
@@ -435,7 +407,7 @@ public class DbWaterApi {
     }
 
     public static List<ConfigModel> getConfigByTag(String tag,String key) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("tag = ?", tag)
                 .expre(tb -> {
                     if (!TextUtils.isEmpty(key)) {
@@ -447,14 +419,14 @@ public class DbWaterApi {
     }
 
     public static List<ConfigModel> getGateways() throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("tag = ?", "_service").and("LENGTH(IFNULL(`user`,''))>1")
                 .select("*")
                 .getList(new ConfigModel());
     }
 
     public static List<ConfigModel> getConfigByType(String tag,int type) throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("type = ?", type)
                 .expre((tb)->{
                   if(TextUtils.isEmpty(tag) == false){
@@ -467,7 +439,7 @@ public class DbWaterApi {
 
     //获取白名单表tag
     public static List<LoggerModel> getWhiteListTags() throws Exception {
-        return db().table("whitelist")
+        return db().table("water_base_whitelist")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(LoggerModel.class);
@@ -475,7 +447,7 @@ public class DbWaterApi {
 
     //获取ip白名单列表
     public static List<WhitelistModel> getWhiteList(String ip) throws SQLException {
-        return db().table("whitelist")
+        return db().table("water_base_whitelist")
                 .where("1 = 1")
                 .expre(tb -> {
                     if (TextUtils.isEmpty(ip) == false) {
@@ -488,7 +460,7 @@ public class DbWaterApi {
 
     //新增ip白名单
     public static boolean addWhiteList(String tag, String ip, String note) throws SQLException {
-        return db().table("whitelist")
+        return db().table("water_base_whitelist")
                 .set("tag", tag)
                 .set("ip", ip)
                 .set("note", note)
@@ -497,13 +469,13 @@ public class DbWaterApi {
 
     //新增ip白名单
     public static boolean deleteWhiteList(int row_id) throws SQLException {
-        return db().table("whitelist")
-                .where("row_id = ?", row_id)
+        return db().table("water_base_whitelist")
+                .where("id = ?", row_id)
                 .delete() > 0;
     }
 
     public static List<AccountModel> getAccountListByName(String name) throws Exception {
-        return db().table("account")
+        return db().table("water_base_account")
                 .where("1 = 1")
                 .expre(tb -> {
                     if (TextUtils.isEmpty(name) == false) {
@@ -515,7 +487,7 @@ public class DbWaterApi {
     }
 
     public static boolean addAccount(String name, String alarm_mobile, String note, String access_id, String access_key) throws SQLException {
-        return db().table("account")
+        return db().table("water_base_account")
                 .set("name", name)
                 .set("alarm_mobile", alarm_mobile)
                 .set("access_id", access_id)
@@ -525,21 +497,21 @@ public class DbWaterApi {
     }
 
     public static boolean updateAccount(Integer account_id, String name, String alarm_mobile, String note, String access_id, String access_key) throws SQLException {
-        DbTableQuery db = db().table("account")
+        DbTableQuery db = db().table("water_base_account")
                 .set("name", name)
                 .set("alarm_mobile", alarm_mobile)
                 .set("access_id", access_id)
                 .set("access_key", access_key)
                 .set("note", note);
         if (account_id > 0) {
-            return db.where("account_id = ?", account_id).update() > 0;
+            return db.where("id = ?", account_id).update() > 0;
         } else {
             return db.insert() > 0;
         }
     }
 
     public static List<EnumModel> getEnumListByGroup(String group) throws Exception {
-        return db().table("enum")
+        return db().table("water_base_enum")
                    .where("1 = 1")
                    .expre(tb -> {
                        if (TextUtils.isEmpty(group) == false) {
@@ -552,7 +524,7 @@ public class DbWaterApi {
     }
 
     public static List<EnumModel> getEnumListOfCache(String group) throws Exception {
-        return db().table("enum")
+        return db().table("water_base_enum")
                 .where("`group` = ?", group)
                 .orderBy("`group`, `value`")
                 .select("*")
@@ -566,20 +538,20 @@ public class DbWaterApi {
             return false;
         }
 
-        DbTableQuery db = db().table("enum")
+        DbTableQuery db = db().table("water_base_enum")
                               .set("name", name)
                               .set("group", group)
                               .set("value", value);
         if (enum_id > 0) {
-            return db.where("enum_id = ?", enum_id).update() > 0;
+            return db.where("id = ?", enum_id).update() > 0;
         } else {
             return db.insert() > 0;
         }
     }
 
     public static EnumModel getEnumById(int enum_id) throws Exception {
-        return db().table("enum")
-                   .where("enum_id = ?", enum_id)
+        return db().table("water_base_enum")
+                   .where("id = ?", enum_id)
                    .select("*")
                    .getItem(EnumModel.class);
     }
@@ -588,7 +560,7 @@ public class DbWaterApi {
 
     //获取type=10的配置（结构化数据库）
     public static List<ConfigModel> getDbConfigs() throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("type = 10")
                 .orderBy("`tag`,`key`")
                 .select("*")
@@ -597,7 +569,7 @@ public class DbWaterApi {
 
     //获取type=10,11,12的配置（结构化数据库 + 非结构化数据库）
     public static List<ConfigModel> getDbConfigsEx() throws SQLException {
-        return db().table("config")
+        return db().table("water_base_config")
                 .where("type >=10 AND type<20")
                 .select("*")
                 .getList(new ConfigModel());
@@ -606,7 +578,7 @@ public class DbWaterApi {
 
     //获取monitor表的tag分组信息。
     public static List<MonitorModel> getMonitorTags() throws SQLException {
-        return db().table("monitor")
+        return db().table("water_base_monitor")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(new MonitorModel());
@@ -614,7 +586,7 @@ public class DbWaterApi {
 
     //获取synchronous表的tag分组信息。
     public static List<SynchronousModel> getSynchronousTags() throws SQLException {
-        return db().table("synchronous")
+        return db().table("water_base_synchronous")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(new SynchronousModel());
@@ -622,7 +594,7 @@ public class DbWaterApi {
 
     //获取logger表tag
     public static List<LoggerModel> getLoggerTags() throws Exception {
-        return db().table("logger")
+        return db().table("water_base_logger")
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(LoggerModel.class);
@@ -630,7 +602,7 @@ public class DbWaterApi {
 
     //根据tag获取列表。
     public static List<LoggerModel> getLoggersByTag(String tag_name,int is_enabled, String sort) throws Exception {
-        return db().table("logger")
+        return db().table("water_base_logger")
                 .where("tag = ?", tag_name)
                 .and("is_enabled = ?",is_enabled)
                 .expre((tb)->{
@@ -647,8 +619,8 @@ public class DbWaterApi {
 
     //根据id获取logger。
     public static LoggerModel getLoggerById(Integer logger_id) throws Exception {
-        return db().table("logger")
-                .where("logger_id=?", logger_id)
+        return db().table("water_base_logger")
+                .where("id=?", logger_id)
                 .limit(1)
                 .select("*")
                 .getItem(LoggerModel.class);
@@ -656,14 +628,14 @@ public class DbWaterApi {
 
     //保存logger。
     public static boolean updateLogger(Integer logger_id, String tag, String logger, String source, String note,int keep_days) throws SQLException {
-        DbTableQuery db = db().table("logger")
+        DbTableQuery db = db().table("water_base_logger")
                 .set("tag", tag)
                 .set("logger", logger)
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("note", note);
         if (logger_id > 0) {
-            return db.where("logger_id = ?", logger_id).update() > 0;
+            return db.where("id = ?", logger_id).update() > 0;
         } else {
             db.set("is_enabled",1);
             return db.insert() > 0;
@@ -672,8 +644,8 @@ public class DbWaterApi {
 
     //删除logger
     public static boolean isEnableLogger(int logger_id,int is_enabled) throws SQLException{
-        return db().table("logger")
-                .where("logger_id = ?",logger_id)
+        return db().table("water_base_logger")
+                .where("id = ?",logger_id)
                 .set("is_enabled",is_enabled)
                 .update() > 0;
     }
@@ -706,7 +678,7 @@ public class DbWaterApi {
                 return;
             }
 
-            db().table("versions")
+            db().table("water_base_versions")
                     .set("table", table)
                     .set("key_name", keyName)
                     .set("key_value", keyValue)
@@ -731,11 +703,11 @@ public class DbWaterApi {
         }
 
 
-        return db().table("versions")
+        return db().table("water_base_versions")
                 .where("`table` = ?",table)
                 .and("`key_name`=?",keyName)
                 .and("`key_value`=?",keyValue)
-                .orderBy("commit_id DESC")
+                .orderBy("id DESC")
                 .limit(10)
                 .select("*")
                 .getList(new VersionModel());
@@ -743,8 +715,8 @@ public class DbWaterApi {
 
     public static VersionModel getVersionByCommit(int commit_id) throws SQLException{
 
-        return db().table("versions")
-                .where("`commit_id` = ?",commit_id)
+        return db().table("water_base_versions")
+                .where("`id` = ?",commit_id)
                 .limit(1)
                 .select("*")
                 .caching(CacheUtil.data)
@@ -754,7 +726,7 @@ public class DbWaterApi {
     /** 最后一个历史版本的MD5 */
     public static String getLastVersionMd5(String table,String keyName,String keyValue) throws SQLException{
 
-        return db().table("versions")
+        return db().table("water_base_versions")
                 .where("`table` = ?",table)
                 .and("`key_name`=?",keyName)
                 .and("`key_value`=?",keyValue)
@@ -766,7 +738,7 @@ public class DbWaterApi {
 
     public static List<ServiceConsumerModel> getServiceConsumers(String service) throws SQLException {
 
-        return db().table("service_consumer")
+        return db().table("water_base_service_consumer")
                 .where("service = ?", service)
                 .orderBy("consumer asc")
                 .select("*")
@@ -775,28 +747,28 @@ public class DbWaterApi {
     }
 
     public static List<ReportModel> getReportTags() throws SQLException{
-        return db().table("report")
+        return db().table("water_base_reportor")
                 .groupBy("tag")
                 .select("tag")
                 .getList(new ReportModel());
     }
 
     public static List<ReportModel> getReportByTag(String tag) throws SQLException{
-        return db().table("report")
+        return db().table("water_base_reportor")
                 .where("tag = ?",tag)
                 .select("*")
                 .getList(new ReportModel());
     }
 
     public static ReportModel getReportById(int row_id) throws SQLException{
-        return db().table("report")
-                .where("row_id = ?",row_id)
+        return db().table("water_base_reportor")
+                .where("id = ?",row_id)
                 .select("*")
                 .getItem(new ReportModel());
     }
 
     public static boolean setReport(int row_id,String tag,String name,String code,String note,String args) throws SQLException{
-        DbTableQuery dq = db().table("report")
+        DbTableQuery dq = db().table("water_base_reportor")
                 .set("tag", tag)
                 .set("name", name)
                 .set("note", note)
@@ -804,7 +776,7 @@ public class DbWaterApi {
                 .set("code", code);
         if (row_id>0){
             //update
-            return dq.where("row_id = ?",row_id)
+            return dq.where("id = ?",row_id)
                     .update()>0;
         } else {
             //add

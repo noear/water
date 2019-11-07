@@ -10,10 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Yunlong.Feng
- * @Description:
- */
 public class DbPaaSQueryApi {
     private static DbContext db() {
         return Config.water;

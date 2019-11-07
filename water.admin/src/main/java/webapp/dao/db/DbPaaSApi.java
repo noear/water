@@ -12,10 +12,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
-/**
- * @Author:Yunlong.Feng
- * @Description:
- */
+
 public class DbPaaSApi {
     private static DbContext db() {
         return Config.water;
@@ -24,7 +21,7 @@ public class DbPaaSApi {
     //======================
     //公共函数
     public static List<PaasFunModel> getFunsByTag(String tag) throws SQLException {
-        IQuery query = db().table("$.paas_fun")
+        IQuery query = db().table("paas_fun")
                 .where("tag=? AND is_enabled=1", tag)
                 .select("*");
 
@@ -33,7 +30,7 @@ public class DbPaaSApi {
     }
 
     public static PaasFunModel getFun(String tag, String fun_name) throws SQLException {
-        IQuery query = db().table("$.paas_fun")
+        IQuery query = db().table("paas_fun")
                 .where("tag=? AND fun_name=?", tag, fun_name)
                 .select("*");
 
@@ -239,7 +236,7 @@ public class DbPaaSApi {
     }
 
     public static boolean resetPlanState(int plan_id) throws SQLException {
-        return db().table("$.paas_plan")
+        return db().table("paas_plan")
                 .set("state", 9)
                 .set("last_exec_note", "RE")
                 .where("plan_id=? AND state<>9", plan_id)
