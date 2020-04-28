@@ -1,0 +1,9 @@
+solon.extend: "watersev_ext"
+
+server.port: 9372
+
+water:
+  host: "http://water2"
+  service:
+    name: "watersev"
+    secretKey: "0kqvJpJ3dsSGCPoH"

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.noear</groupId>
+    <artifactId>water-parent</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>Java project for water</description>
+    <url>https://github.com/noear/water</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>noear</name>
+            <email>noear@live.cn</email>
+            <organization>noear.org</organization>
+            <organizationUrl>http://www.noear.org</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:noear/water.git</connection>
+        <developerConnection>scm:git:git@github.com:noear/water.git</developerConnection>
+        <url>https://github.com/noear/water</url>
+    </scm>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <solon.ver>1.0.5.5</solon.ver>
+        <water.ver>2.0.1-SNAPSHOT</water.ver>
+        <weed3.ver>3.2.7.2</weed3.ver>
+        <snack3.ver>3.1.6.3</snack3.ver>
+
+        <bcf.ver>2.0.1</bcf.ver>
+
+
+        <solonjt.ver>1.0.4.2</solonjt.ver>
+    </properties>
+
+
+    <!-- 以1.8 build -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>water.utils</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>water.protocol</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>water.client</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>water.client-solon-plugin</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.boot.jlhttp</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.boot.jetty</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.extend.properties.yaml</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.extend.staticfiles</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.extend.schedule</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solonclient</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon-mvc</artifactId>
+                <version>${solon.ver}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.extend.sessionstate.redis</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon-api</artifactId>
+                <version>${solon.ver}</version>
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>snack3</artifactId>
+                <version>${snack3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>weed3.cache.memcached</artifactId>
+                <version>${weed3.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>bcfclient</artifactId>
+                <version>${bcf.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>bcfclient-solon-plugin</artifactId>
+                <version>${bcf.ver}</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>3.11.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.spy</groupId>
+                <artifactId>spymemcached</artifactId>
+                <version>2.12.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.42</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.14.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.10</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.3</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <additionalparam>-Xdoclint:none</additionalparam>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <finalName>${project.artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>../water.utils</module>
+        <module>../water.protocol</module>
+        <module>../water.client</module>
+        <module>../water.client-solon-plugin</module>
+    </modules>
+</project>

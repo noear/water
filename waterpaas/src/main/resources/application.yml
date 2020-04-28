@@ -1,0 +1,10 @@
+solon.extend: "waterpaas_ext"
+
+server.port: 9374
+server.request.maxRequestSize: "2mb"
+
+water:
+  host: "http://water2"
+  service:
+    name: "waterpaas"
+    secretKey: "0zJt0J88TkIvqYgC"

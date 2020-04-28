@@ -1,0 +1,12 @@
+server.port: 8081
+server.session.timeout: 7200
+
+bcf.root: "water_demo"
+
+water:
+  host: "http://water2"
+  service:
+    name: "waterdemo"
+    alarm: "1811114444"
+    config: "@water/*"
+    secretKey: "DnsRFlP679Vjxziw"
