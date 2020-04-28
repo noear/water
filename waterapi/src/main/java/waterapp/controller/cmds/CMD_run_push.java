@@ -1,7 +1,8 @@
 package waterapp.controller.cmds;
 
 import org.noear.snack.ONode;
-import waterapp.dso.HeiheiApi;
+import org.noear.water.protocol.ProtocolHub;
+import waterapp.Config;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.utils.TextUtils;
 
@@ -31,22 +32,22 @@ public class CMD_run_push extends CMDBase {
 
         List<String> list = new ArrayList<String>();
         for (String str : target.split(",")) {
-            if(str.equals("@alarm")){
+            if (str.equals("@alarm")) {
                 List<String> mobiles = DbWaterCfgApi.getAlarmMobiles();
 
                 list.addAll(mobiles);
-            }else {
+            } else {
                 list.add(str);
             }
         }
 
-        String rest = HeiheiApi.push(list, msg);
+        String rest = ProtocolHub.heihei.push(Config.water_service_name, list, msg);
 
         data.set("code", 1);
         data.set("msg", "success");
-        if(TextUtils.isEmpty(rest) == false){
+        if (TextUtils.isEmpty(rest) == false) {
             data.set("data", ONode.load(rest));
-        }else{
+        } else {
             data.set("data", "null");
         }
 

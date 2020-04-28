@@ -2,6 +2,7 @@ package waterapp;
 
 import org.noear.solon.XApp;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.DefaultHeihei;
 import waterapp.wrap.LogStorerDb;
 import waterapp.wrap.MessageQueueRedis;
 
@@ -14,6 +15,7 @@ public class WaterapiApp {
 
 			 ProtocolHub.logStorer = LogStorerDb.singleton();
 			 ProtocolHub.messageQueue = MessageQueueRedis.singleton();
+			 ProtocolHub.heihei = DefaultHeihei.singleton();
 		 });
 	}
 }

@@ -3,6 +3,7 @@ package org.noear.water.log;
 
 public interface Logger {
     String getName();
+    void setName(String name);
 
     void trace(Object content);
     void trace(String summary, Object content);

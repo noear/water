@@ -1,6 +1,7 @@
 package waterapp.dso;
 
 import org.noear.water.WaterClient;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.db.DbWaterCfgApi;
@@ -40,7 +41,7 @@ public class AlarmUtil {
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.alarm_mobile);
-            WaterClient.Heihei.push("msg",alias, sb.toString());
+            ProtocolHub.heihei.push("msg",alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -73,7 +74,7 @@ public class AlarmUtil {
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.alarm_mobile);
-            WaterClient.Heihei.push("sev", alias, sb.toString());
+            ProtocolHub.heihei.push("sev", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -94,7 +95,7 @@ public class AlarmUtil {
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.alarm_mobile);
-            WaterClient.Heihei.push("syn",alias, sb.toString());
+            ProtocolHub.heihei.push("syn",alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -111,7 +112,7 @@ public class AlarmUtil {
             buildSign(sb, "");
 
             List<String> alias = buildAlias(alarm_mobile);
-            WaterClient.Heihei.push("alert", alias, sb.toString());
+            ProtocolHub.heihei.push("alert", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -129,7 +130,7 @@ public class AlarmUtil {
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.alarm_mobile);
-            WaterClient.Heihei.push("pln",alias, sb.toString());
+            ProtocolHub.heihei.push("pln",alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -165,7 +166,7 @@ public class AlarmUtil {
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.alarm_mobile);
-            WaterClient.Heihei.push("mot",alias, sb.toString());
+            ProtocolHub.heihei.push("mot",alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();

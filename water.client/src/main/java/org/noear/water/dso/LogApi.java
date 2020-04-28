@@ -3,6 +3,7 @@ package org.noear.water.dso;
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
+import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 
 import java.util.HashMap;
@@ -75,6 +76,14 @@ public class LogApi {
      * @param async   是否异步提交
      */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
+        if(TextUtils.isEmpty(logger)){
+            return;
+        }
+
+        if(logger.indexOf(".") > 0){
+            return;
+        }
+
         Map<String, String> params = new HashMap<>();
         params.put("logger", logger);
         params.put("level", String.valueOf(level.code));

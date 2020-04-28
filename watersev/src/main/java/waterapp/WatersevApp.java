@@ -2,18 +2,13 @@ package waterapp;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
-import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.solonjt.dso.*;
+import org.noear.water.protocol.DefaultHeihei;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.utils.TextUtils;
 import solonjt.JtRun;
-import waterapp.controller.MsgController;
-import waterapp.controller.PlnController;
 import waterapp.dso.JobRunnerEx;
 import waterapp.wrap.MessageQueueRedis;
-
-import java.util.Collections;
 
 /**
  * 可以按三个服务进行部署：
@@ -41,6 +36,7 @@ public class WatersevApp {
             Config.tryInit();
 
             ProtocolHub.messageQueue = MessageQueueRedis.singleton();
+            ProtocolHub.heihei = DefaultHeihei.singleton();
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);

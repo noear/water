@@ -8,4 +8,6 @@ public final class ProtocolHub {
     public static ILogStorer logStorer;
 
     public static IMessageQueue messageQueue;
+
+    public static IHeihei heihei;
 }

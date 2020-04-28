@@ -14,9 +14,11 @@ public class WaterLogger implements Logger {
     private String _name;
     private String _tag;
 
+    public WaterLogger(){
+
+    }
     public WaterLogger(String name) {
         _name = name;
-        AssertUtils.notEmpty(name, "name");
     }
 
     public WaterLogger(String name, String tag) {
@@ -29,8 +31,13 @@ public class WaterLogger implements Logger {
         _tag = clz.getSimpleName();
     }
 
+    @Override
     public String getName() {
         return _name;
+    }
+    @Override
+    public void setName(String name){
+        _name = name;
     }
 
     @Override
