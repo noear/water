@@ -11,12 +11,15 @@ public class LoggerFactory {
         }
 
         try {
-            Logger tmp = (Logger) Class.forName("org.noear.water.log.WaterLogger").newInstance();
+            Logger tmp = (Logger)Thread.currentThread().getContextClassLoader().loadClass("org.noear.water.log.WaterLogger").newInstance();
+
             tmp.setName(name);
 
             return _lib.putIfAbsent(name,tmp);
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            //ex.printStackTrace();
+            System.err.println("ClassNotFoundException: org.noear.water.log.WaterLogger");
+            return _lib.putIfAbsent(name, new LoggerDefault());
         }
     }
 }
