@@ -4,22 +4,31 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LoggerFactory {
-    private static Map<String,Logger> _lib = new ConcurrentHashMap<>();
+    private static Class<?> _clz;
+    private static Map<String, Logger> _lib = new ConcurrentHashMap<>();
+
     public static Logger get(String name) {
-        if(_lib.containsKey(_lib)){
+        if (_lib.containsKey(_lib)) {
             return _lib.get(name);
         }
 
         try {
-            Logger tmp = (Logger)Thread.currentThread().getContextClassLoader().loadClass("org.noear.water.log.WaterLogger").newInstance();
+            if (_clz == null) {
+                _clz = Thread.currentThread().getContextClassLoader().loadClass("org.noear.water.log.WaterLogger");
+            }
 
-            tmp.setName(name);
+            if (_clz != null) {
+                Logger tmp = (Logger) _clz.newInstance();
+                tmp.setName(name);
 
-            return _lib.putIfAbsent(name,tmp);
+                return _lib.putIfAbsent(name, tmp);
+            }
         } catch (Exception ex) {
             //ex.printStackTrace();
             System.err.println("ClassNotFoundException: org.noear.water.log.WaterLogger");
-            return _lib.putIfAbsent(name, new LoggerDefault());
+
         }
+
+        return _lib.putIfAbsent(name, new LoggerDefault());
     }
 }
