@@ -68,7 +68,7 @@ public class DbWaterOpsApi {
     }
 
     public static List<ConfigModel> getIAASAccionts() throws SQLException {
-        return DbWaterCfgApi.getConfigsByType(null, 1001);//1001=阿里云账号
+        return DbWaterCfgApi.getConfigsByType(null, 1003);//1003=阿里云IAAS账号
     }
 
     public static List<TagCountsModel> getServerBlsAccounts() throws SQLException {

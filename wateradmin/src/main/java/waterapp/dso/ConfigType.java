@@ -14,6 +14,7 @@ public class ConfigType {
     public static final int memcached = 20;
 
     public static final int aliyun_ram = 1001;
+    public static final int iaas_ram = 1003;
 
     private static Map<Integer,String> _types = new HashMap<>();
     public static void loadTypes(boolean reset){
