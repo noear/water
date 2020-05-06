@@ -167,7 +167,7 @@
                     <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                     <td>路径</td>
                     <td width="100" class="left">开始（间隔）</td>
-                    <td width="140" class="left">最后执行（时长）</td>
+                    <td width="160" class="left">最后执行（时长）</td>
                     <td width="50">状态</td>
                     <td width="50">次数</td>
                     <td width="120"></td>

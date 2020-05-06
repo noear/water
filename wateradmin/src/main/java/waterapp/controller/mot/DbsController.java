@@ -125,6 +125,10 @@ public class DbsController extends BaseController {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 
         for (ConfigModel cfg : cfgList) {
+            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
+                continue;
+            }
+
             List<DbsTrackModel> list = AliyunDbsUtil.pullRedisTrack(cfg);
 
             DbWaterOpsApi.setServerDbsTracks(list);
@@ -138,6 +142,10 @@ public class DbsController extends BaseController {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 
         for (ConfigModel cfg : cfgList) {
+            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
+                continue;
+            }
+
             List<DbsTrackModel> list = AliyunDbsUtil.pullMemcacheTrack(cfg);
 
             DbWaterOpsApi.setServerDbsTracks(list);

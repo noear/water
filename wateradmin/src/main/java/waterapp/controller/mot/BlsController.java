@@ -62,7 +62,7 @@ public class BlsController extends BaseController {
             viewModel.set("instance", blsViewModel);
             viewModel.set("model", blsViewModel);
 
-            DbWaterOpsApi.setServerAttr(instanceId,blsViewModel.loadBalancerSpec);
+            DbWaterOpsApi.setServerAttr(instanceId, blsViewModel.loadBalancerSpec);
         }
 
         return view("mot/bls_inner");
@@ -128,6 +128,10 @@ public class BlsController extends BaseController {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 
         for (ConfigModel cfg : cfgList) {
+            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
+                continue;
+            }
+
             List<BlsTrackModel> list = AliyunBlsUtil.pullBlsTrack(cfg);
 
             DbWaterOpsApi.setServerBlsTracks(list);
