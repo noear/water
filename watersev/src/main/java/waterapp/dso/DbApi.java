@@ -20,6 +20,13 @@ public class DbApi {
                 .getItem(AFileModel.class);
     }
 
+    public static AFileModel fileGet(int file_id) throws Exception {
+        return db().table("paas_file")
+                .whereEq("file_id", file_id)
+                .select("*")
+                .getItem(AFileModel.class);
+    }
+
     public static List<AFileModel> fileGetPaths(String tag, String label, boolean isCache) throws Exception {
         if (TextUtils.isEmpty(tag) && TextUtils.isEmpty(label)) {
             return new ArrayList<>();
