@@ -51,19 +51,5 @@ public class WaterraasApp {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        //添加性能记录
-        app.before("**", XMethod.HTTP,-1,(c)->c.attr("_timecount", new Timecount().start()));
-        app.after("**", XMethod.HTTP,(c)->{
-            Timecount timecount = c.attr("_timecount", null);
-
-            if (timecount == null) {
-                return;
-            }
-
-            String node = XWaterAdapter.global().localHost();
-
-            WaterClient.Track.track("water-raas", "raas", c.path(), timecount.stop().milliseconds(), node);
-        });
     }
 }

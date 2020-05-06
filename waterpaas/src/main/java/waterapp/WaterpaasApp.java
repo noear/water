@@ -36,11 +36,13 @@ public class WaterpaasApp {
 
 
         //添加性能记录
-        app.before("**",XMethod.HTTP,-1,(c)->c.attr("_timecount", new Timecount().start()));
+        app.before("**",XMethod.HTTP,-1,(c)->{
+            c.attrSet("_timecount", new Timecount().start());
+        });
         app.after("**", XMethod.HTTP,(c)->{
             Timecount timecount = c.attr("_timecount", null);
 
-            if (timecount == null) {
+            if (timecount == null || c.status() == 404) {
                 return;
             }
 
