@@ -9,7 +9,7 @@
 #### 配置
 * pom.xml / mevan 配置
 ```xml
-<!-- 暂时没有 springboot start 版本 -->
+<!-- 暂时没有 springboot starter 版本 -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client-solon-plugin</artifactId>
