@@ -53,8 +53,11 @@ public class DemoApp{
 class demo{
     WaterLogger log = new WaterLogger("water_log_admin");
     
-    @Water("water/water") 
+    @Water("water/water")  //配置服务的功能
     DbContext waterDb;
+
+    @Water(xclient = RockRpc.class)  //RPC服务发现的功能
+    RockRpc rock;
    
     @XMapping("/")
     public void test(){
@@ -72,7 +75,6 @@ class demo{
         WaterProxy.paas("water/test",null);
 
         //Rpc发现服务：调用Rpc接口
-        RockRpc rock = XWaterUpstream.xclient(RockRpc.class);
         AppModel app = rock.getAppById(12);
     }
 }
