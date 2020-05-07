@@ -7,6 +7,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.water.WaterProxy;
 import org.noear.water.annotation.Water;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.RedisX;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 
@@ -20,6 +21,9 @@ public class DemoController {
 
     @Water("water/water_cache")
     ICacheServiceEx cache;
+
+    @Water("water/water_redis::1")
+    RedisX redisX;
 
     @Water("water/is_debug")
     Integer is_debug;
@@ -36,8 +40,12 @@ public class DemoController {
     @XMapping("/")
     public String test() throws Exception {
         //db access
-        Map map = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();
-        log.info("cfg db", map);
+        Map dbmap = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();
+        log.info("cfg db", dbmap);
+
+        //redis access
+        Map rdmap = redisX.open1(ru-> ru.key("ID").hashGetAll());
+        log.info("cfg redis", rdmap);
 
         //rpc 调用
         AppModel app = rockRpc.getAppByID(4);
