@@ -33,7 +33,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
         }
 
         //配置注入
-        String[] tmp = anno.value().split("/");
+        String[] tmp = anno.value().split("::");
 
         String tagKey = tmp[0];
         String arg = null;

@@ -7,6 +7,6 @@ water:
   host: "http://water2"
   service:
     name: "waterdemo"
-    alarm: "1811114444"
-    config: "@water/*"
+#    alarm: "1811114444"
+#    config: "@water/*"
     secretKey: "DnsRFlP679Vjxziw"

@@ -102,6 +102,11 @@ public class WaterProxy {
             paas_uri = WaterClient.Config.get("water", "paas_uri").value;
         }
 
-        return HttpUtils.http(paas_uri + path).data(args).post();
+        if(args == null){
+            return HttpUtils.http(paas_uri + path).get();
+        }else{
+            return HttpUtils.http(paas_uri + path).data(args).post();
+        }
+
     }
 }
