@@ -48,7 +48,7 @@ public class DemoApp{
           String node = XWaterAdapter.global().localHost();
           long times = timecount.stop().milliseconds();
   
-          WaterClient.Track.track("water-admin", "path", c.path(), times, node);
+          WaterClient.Track.track("water-demo", "path", c.path(), times, node);
       });
   }
 }
@@ -136,7 +136,7 @@ public class msg_updatecache implements XMessageHandler {
 <img src="https://gitee.com/noear/water/raw/master/preview/f1.png" height="200"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f2.png" height="200"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f5.png" height="200"/>
-<img src="https://gitee.com/noear/water/raw/master/preview/f6.png" height="200"/>
+<img src="https://gitee.com/noear/water/raw/master/preview/fx.png" height="200"/>
 
 * 开发者小工具
 <img src="https://gitee.com/noear/water/raw/master/preview/h1.png" height="200"/>
