@@ -30,13 +30,12 @@
         <thead>
         <tr>
             <td width="40">ID</td>
-            <td width="130px" class="left">名称</td>
+            <td class="left">名称</td>
             <td width="80px">类型</td>
             <td width="90px">间隔时间</td>
             <td class="left">目标数据</td>
-            <td class="left">来源数据</td>
             <td width="60px">是否<br/>启用</td>
-            <td width="100px">最后同步时间</td>
+            <td width="120px">最后同步时间</td>
                     <#if is_admin = 1>
                         <td width="50px">操作</td>
                     </#if>
@@ -46,19 +45,18 @@
                 <#list synchronous as m>
                 <tr>
                     <td>${m.sync_id}</td>
-                    <td style="text-align: left;">${m.name!}</td>
+                    <td class="left">${m.name!}</td>
                     <td>
                         <#if m.type = 0>增量同步</#if>
                         <#if m.type = 1>更新同步</#if>
                     </td>
                     <td>${m.interval}s</td>
                     <td class="left break">${m.target!}</td>
-                    <td class="left break">${m.source!}</td>
                     <td>
                         <#if m.is_enabled = 1>启用</#if>
                         <#if m.is_enabled = 0>禁用</#if>
                     </td>
-                    <td>${(m.last_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}</td>
+                    <td>${(m.last_fulltime?string('MM-dd HH:mm:ss'))!}</td>
                     <#if is_admin = 1>
                         <td class="op"><a href="/tool/sync/edit?sync_id=${m.sync_id}" class="t2">编辑</a></td>
                     </#if>
