@@ -46,12 +46,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solonclient</artifactId>
-            <version>1.0.5.5</version>
-        </dependency>
-
-        <dependency>
             <groupId>lib.sponge</groupId>
             <artifactId>rockrpcclient</artifactId>
             <version>2.0.1-SNAPSHOT</version>

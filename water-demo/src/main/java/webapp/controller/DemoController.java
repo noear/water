@@ -32,18 +32,21 @@ public class DemoController {
     WaterLogger log;
 
 
-    //::发现服务
+    //::发现服务，集成负载平衡 和 容断
     @Water
     RockRpc rockRpc;
 
     @XMapping("/")
     public String test() throws Exception{
+        //db access
         Map map = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();
         log.info("cfg db",map);
 
+        //rpc 调用
         AppModel app = rockRpc.getAppByID(4);
         log.info("rpc",app);
 
+        //paas 调用
         String text = WaterProxy.paas("/_demo/ali_oss_cfg_water ",null);
         log.info("paas",text);
 
