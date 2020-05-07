@@ -20,7 +20,7 @@ import java.util.List;
 @XMapping("/mot/")
 public class BehaviorController extends BaseController {
 
-    private final static String tableName = "water_mot_log_bcf";
+    private final static String tableName = "water_exam_log_bcf";
 
     //消息异常记录
     @XMapping("behavior")

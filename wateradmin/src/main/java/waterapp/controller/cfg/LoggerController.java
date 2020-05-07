@@ -116,7 +116,9 @@ public class LoggerController extends BaseController{
 
     //日志启用/禁用
     @XMapping("logger/isEnable")
-    public void loggerDelete(Integer logger_id,Integer is_enabled) throws SQLException {
+    public ViewModel loggerDelete(Integer logger_id,Integer is_enabled) throws SQLException {
         DbWaterCfgApi.setLoggerEnabled(logger_id,is_enabled);
+
+        return viewModel.code(1, "保存成功！");
     }
 }
