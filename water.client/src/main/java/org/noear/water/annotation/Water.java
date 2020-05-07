@@ -6,5 +6,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Water {
-    String value();
+    String value() default "";
+    Class<?> xclient() default Object.class;
 }
