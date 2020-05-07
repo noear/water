@@ -7,5 +7,4 @@ import java.lang.annotation.*;
 @Documented
 public @interface Water {
     String value() default "";
-    Class<?> xclient() default Object.class;
 }
