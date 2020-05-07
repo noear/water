@@ -62,8 +62,8 @@ class demo{
     @XMapping("/")
     public void test(){
         //日志服务：写个日志
-        log.info("你好，日志服务");
-        log.error("demo","test","你好，日志服务");
+        log.info("你好，日志服务"); //(content)
+        log.error("demo","test","你好，日志服务"); //(tag,summary,content)
         
         //配置服务：使用配置的数据库上下文进行查询
         var map = waterDb.table("bcf_user").limit(1).select("*").getMap();
