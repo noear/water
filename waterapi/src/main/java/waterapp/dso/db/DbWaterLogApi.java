@@ -73,12 +73,12 @@ public final class DbWaterLogApi {
 
 
         if (TextUtils.isEmpty(path)) {
-            do_addTrack("sql_log_speed", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack("water_mot_log_sql", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
         } else {
-            do_addTrack("sql_log_behavior", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack("water_mot_log_bcf", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
 
             if (interval >= 2000) {
-                do_addTrack("sql_log_speed", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+                do_addTrack("water_mot_log_sql", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
             }
         }
     }

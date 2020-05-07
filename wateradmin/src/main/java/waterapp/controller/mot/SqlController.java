@@ -21,7 +21,7 @@ import java.util.List;
 @XMapping("/mot/")
 public class SqlController extends BaseController {
 
-    private final static String tableName = "sql_log_speed";
+    private final static String tableName = "water_mot_log_sql";
 
     //消息异常记录
     @XMapping("sql")
