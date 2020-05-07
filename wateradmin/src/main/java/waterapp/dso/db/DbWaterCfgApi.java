@@ -415,7 +415,7 @@ public class DbWaterCfgApi {
 
     //获取logger表tag
     public static List<TagCountsModel> getLoggerTags() throws Exception {
-        return db().table("water_cfg_logger")
+        return db().table("water_cfg_logger").whereEq("is_enabled",1)
                 .groupBy("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
