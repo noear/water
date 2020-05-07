@@ -21,9 +21,6 @@ public class DemoController {
     @Water("water/water_cache")
     ICacheServiceEx cache;
 
-    @Water("water/paas_uri")
-    String paas_uri;
-
     @Water("water/is_debug")
     Integer is_debug;
 
@@ -37,19 +34,19 @@ public class DemoController {
     RockRpc rockRpc;
 
     @XMapping("/")
-    public String test() throws Exception{
+    public String test() throws Exception {
         //db access
         Map map = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();
-        log.info("cfg db",map);
+        log.info("cfg db", map);
 
         //rpc 调用
         AppModel app = rockRpc.getAppByID(4);
-        log.info("rpc",app);
+        log.info("rpc", app);
 
         //paas 调用
-        String text = WaterProxy.paas("/_demo/ali_oss_cfg_water ",null);
-        log.info("paas",text);
+        String text = WaterProxy.paas("/_demo/ali_oss_cfg_water ", null);
+        log.info("paas", text);
 
-        return "OK";
+        return "OK - " + is_debug;
     }
 }
