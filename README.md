@@ -2,7 +2,7 @@
 
 ` QQ交流群：22200020 `
 
-# Water for java （水润万物...）
+# Water for java （水孕育万物...）
 
 # 使用
 
