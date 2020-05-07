@@ -6,6 +6,8 @@
 
 # 使用
 
+> 暂时只看看，相关材料未准备好...
+
 #### 配置
 * pom.xml / mevan 配置
 ```xml
@@ -19,10 +21,10 @@
 * application.yml / 配置
 ```yaml
 water:
-  host: "http://water2" 
+  host: "http://water2"           #water服务地址；建议用域名
   service:
-    name: "wateradmin"
-    secretKey: "b5fZK49x71Rnn5Cl"
+    name: "wateradmin"            #当前服务名称
+    secretKey: "b5fZK49x71Rnn5Cl" #当前服务密钥，用于消息签名
 ```
 
 #### 代码
