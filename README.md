@@ -133,6 +133,7 @@ public class msg_updatecache implements XMessageHandler {
 <img src="https://gitee.com/noear/water/raw/master/preview/f1.png" height="200"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f2.png" height="200"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f5.png" height="200"/>
+<img src="https://gitee.com/noear/water/raw/master/preview/f6.png" height="200"/>
 
 * 开发者小工具
 <img src="https://gitee.com/noear/water/raw/master/preview/h1.png" height="200"/>
