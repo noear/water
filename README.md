@@ -51,12 +51,13 @@ public class DemoApp{
 
 @XController
 class demo{
-    WaterLogger log = new WaterLogger("water_log_admin");
+    @Water("water_log_admin") //日志服务的功能
+    WaterLogger log;
     
     @Water("water/water")  //配置服务的功能
     DbContext waterDb;
 
-    @Water(xclient = RockRpc.class)  //RPC服务发现的功能
+    @Water          //RPC服务发现的功能
     RockRpc rock;
    
     @XMapping("/")
