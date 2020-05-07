@@ -66,18 +66,21 @@ class demo{
         //日志服务：写个日志
         log.info("你好，日志服务"); //(content)
         log.error("demo","test","你好，日志服务"); //(tag,summary,content)
+        WaterClient.Log.append("water_log_admin",Level.info,"你好,世界!");//非注解模式
         
         //配置服务：使用配置的数据库上下文进行查询
         var map = waterDb.table("bcf_user").limit(1).select("*").getMap();
+        WaterClient.Config.get("water/water").table("bcf_user").select("*").getMap();//非注解模式
 
         //消息服务：发送消息
-        WaterClient.Messsage.sendMessage("test.order.start","{\"order_id\":1}");
+        WaterClient.Messsage.sendMessage("test.order.start","{\"order_id\":1}"); //非注解模式
     
         //PaaS服务：调用PaaS接口
         WaterProxy.paas("water/test",null);
 
         //Rpc发现服务：调用Rpc接口
         AppModel app = rock.getAppById(12);
+        XWaterUpstream.xclient(RockRpc.class).getAppById(12); //非注解模式
     }
 }
 
