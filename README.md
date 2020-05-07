@@ -70,6 +70,10 @@ class demo{
     
         //PaaS服务：调用PaaS接口
         WaterProxy.paas("water/test",null);
+
+        //Rpc发现服务：调用Rpc接口
+        RockRpc rock = XWaterUpstream.xclient(RockRpc.class);
+        AppModel app = rock.getAppById(12);
     }
 }
 
