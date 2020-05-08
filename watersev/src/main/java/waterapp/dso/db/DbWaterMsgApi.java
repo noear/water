@@ -1,7 +1,7 @@
 package waterapp.dso.db;
 
-import org.noear.water.WaterLock;
 import org.noear.water.utils.DisttimeUtil;
+import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
 import waterapp.Config;
 import waterapp.dso.LogUtil;
@@ -178,7 +178,7 @@ public class DbWaterMsgApi {
         String lock_key = "distribution_" + msgID + "_" + subs.subscriber_id;
 
         //尝试2秒的锁
-        if (WaterLock.tryLock("watersev", lock_key, 2)) {
+        if (LockUtils.tryLock("watersev", lock_key, 2)) {
 
             boolean isExists = db().table("water_msg_distribution")
                     .where("msg_id=?", msgID).and("subscriber_id=?", subs.subscriber_id)
