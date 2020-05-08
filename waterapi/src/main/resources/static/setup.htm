@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="frm20">
+<head>
+    <title>安装</title>
+    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/layer/2.3/layer.js"></script>
+    <style>
+        * { margin: 0px; padding: 0px; font-size: 14px;}
+        html { background-color: #fff; overflow: hidden; -webkit-overflow-scrolling:touch;}
+        html.frm{overflow:auto;}
+        html.frm10{overflow:auto;}
+        html.frm10 body{margin: 10px;}
+        html.frm20{overflow:auto;}
+        html.frm20 body{margin: 20px;}
+
+        h2,h2 *{font-size: 16px;}
+
+        hr{margin-bottom: 10px; margin-top:10px; height:0px;border:none;border-top:1px solid #ccc;}
+
+        input,select,button{vertical-align:middle;}
+
+        input:focus { outline:none;}
+        note,n{display: inline; color:#999;}
+        note-l,n-l{display: block;color:#999;}
+
+        input[type="text"],input[type="date"],input[type='datetime-local'],input[type='datetime'],input[type="password"]{ border: 1px solid #C9C9C9; padding-left: 2px; height: 26px;  line-height: 20px; }
+        input[type="text"]:disabled{color:#888;background-color:#f9f9fa}
+        textarea{ border: 1px solid #C9C9C9; width: 394px; padding: 2px; }
+        textarea:disabled{color:#888;background-color:#f9f9fa}
+
+
+        a.btn{display: inline-block; text-decoration:none; vertical-align: middle;text-align: center; line-height: 24px; height: 24px!important; cursor:default;}
+
+        button,a.btn { background-color: #fff; border: 1px solid #189aca; color: #189aca; min-width: 40px; padding: 0 10px; height: 26px; font-size: 11px;}
+        button:hover,a.btn:hover { background-color: #189aca;color:#fff; }
+        button:disabled { background-color: #f1f1f1; border: 1px solid #C9C9C9; color: #C9C9C9;}
+        button.edit,a.edit { background-color: #fff; color: #fd6721; border: 1px solid #fd6721; min-width: 40px; padding: 0 10px; height: 26px; font-size: 11px; }
+        button.edit:hover,a.edit:hover { background-color: #fd7f38; color: #fff;}
+        button.edit:disabled { background-color: #aaa; color: #aaa; border: 1px solid #aaa;}
+        button.minor,a.minor { background-color: #fff; color: #666; border: 1px solid #aaa; min-width: 40px; padding: 0 10px; height: 26px; font-size: 11px; }
+        button.minor:hover,a.minor:hover { background-color: #aaa; color: #fff;}
+
+
+        detail {display: block; background: #fff; padding: 10px;}
+        detail table{ width: auto;  }
+        detail table th{width: 100px;  text-align: left;}
+        detail table td{padding: 8px; text-align: left; }
+        detail table td img{width: 100px;}
+        detail table td > div{line-height: 34px;}
+        /*detail h2{font-size: 18px; line-height: 20px;}*/
+
+        detail button,.form button { background-color: #fd6721; color: #fff; border: none; min-width: 120px; height:30px; font-size: 12px; }
+        detail button:hover,.form button:hover { background-color: #fd7f38; }
+        detail button:disabled,.form button:disabled { background-color: #aaa; }
+        detail button.minor,.form button.minor { background-color: #f7f7f7; color: #333; border: 1px solid #ddd; min-width: 120px;  height:30px; font-size: 12px; }
+        detail button.minor:hover,.form button.minor:hover { background-color: #fefefe; color: #333;}
+        detail button.minor:disabled,.form button.minor:disabled { background-color: #aaa; color: #333;}
+
+        detail form select{width: 304px;}
+        detail form input[type="text"]{width: 300px;}
+        detail form input[type="datetime-local"]{width: 300px}
+        detail form input[type="date"]{width: 300px}
+        detail form .txt{width: 300px}
+        detail form .longtxt{width: 601px!important;}
+        detail form textarea{width: 600px; height: 100px;}
+
+        detail section{margin: 20px;}
+
+        .grid {width: 100%; max-width: 1000px;}
+        .grid td input[type=text]{width: 100%;}
+    </style>
+    <script>
+        function setup() {
+
+        }
+    </script>
+</head>
+<body>
+<h2>初始化配置</h2>
+<hr/>
+<detail>
+    <section>
+        <h2>SQL Database：</h2>
+        <hr/>
+        <table class="grid">
+            <tr>
+                <td width="140"></td>
+                <td>server</td>
+                <td width="100">schema</td>
+                <td width="100">username</td>
+                <td width="200">password</td>
+            </tr>
+            <tr>
+                <td>water</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>water_log</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>water_msg</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>NoSQL Database：</h2>
+        <hr/>
+        <table class="grid">
+            <tr>
+                <td width="140"></td>
+                <td>server</td>
+                <td width="100">user</td>
+                <td width="100">password</td>
+            </tr>
+            <tr>
+                <td>water_memcached</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                <td>water_redis</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>Other：</h2>
+        <hr/>
+        <table class="grid">
+            <tr>
+                <td width="140"></td>
+                <td>host</td>
+                <td>enabled</td>
+            </tr>
+            <tr>
+                <td>paas</td>
+                <td><input type="text"></td>
+                <td>
+                    <label><input type="checkbox" value="1"> Enabled</label>
+                </td>
+            </tr>
+            <tr>
+                <td>raas</td>
+                <td><input type="text"></td>
+                <td>
+                    <label><input type="checkbox" value="1"> Enabled</label>
+                </td>
+            </tr>
+        </table>
+    </section>
+</detail>
+</body>
+</html>

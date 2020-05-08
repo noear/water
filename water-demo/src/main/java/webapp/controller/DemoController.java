@@ -25,7 +25,7 @@ public class DemoController {
     @Water("water/water_redis::1")
     RedisX redisX;
 
-    @Water("water/is_debug")
+    @Water("water/is_use_tag_checker")
     Integer is_debug;
 
     //::日志服务

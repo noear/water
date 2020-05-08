@@ -15,7 +15,8 @@ public class WaterapiApp {
 	public static void main(String[] args) {
 		XMap argx = XMap.from(args);
 
-		if (argx.containsKey("init")) {
+		if (argx.containsKey("setup")) {
+			System.out.println("setup mode ...");
 			XStaticFiles.instance().put(".sql", "text/sql");
 
 			XApp.start(WaterapiApp.class, argx, app -> {
