@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 基于Http api 的OSS工具类
+ * */
 public class OSSUtils {
     private String bucket;
     private String endpoint;

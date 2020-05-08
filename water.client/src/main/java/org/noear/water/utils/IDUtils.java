@@ -4,6 +4,9 @@ import org.noear.water.WaterConfig;
 
 import java.util.UUID;
 
+/**
+ * 分布式ID工具
+ * */
 public class IDUtils {
     private static RedisX _redis_idx = WaterConfig.redis_cfg().getRd(1);
 

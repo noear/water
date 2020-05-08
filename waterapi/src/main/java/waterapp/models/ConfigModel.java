@@ -130,32 +130,35 @@ public class ConfigModel implements IBinder {
         String url = prop.getProperty("url");
 
         if (pool) {
+            prop.put("jdbcUrl", url);
+
             HikariDataSource source = new HikariDataSource();
+            source.setDataSourceProperties(prop);
 
             String schema = prop.getProperty("schema");
-            String username = prop.getProperty("username");
-            String password = prop.getProperty("password");
-            String driverClassName = prop.getProperty("driverClassName");
-
-            if (TextUtils.isEmpty(url) == false) {
-                source.setJdbcUrl(url);
-            }
-
-            if (TextUtils.isEmpty(username) == false) {
-                source.setUsername(username);
-            }
-
-            if (TextUtils.isEmpty(password) == false) {
-                source.setPassword(password);
-            }
-
-            if (TextUtils.isEmpty(schema) == false) {
-                source.setSchema(schema);
-            }
-
-            if (TextUtils.isEmpty(driverClassName) == false) {
-                source.setDriverClassName(driverClassName);
-            }
+//            String username = prop.getProperty("username");
+//            String password = prop.getProperty("password");
+//            String driverClassName = prop.getProperty("driverClassName");
+//
+//            if (TextUtils.isEmpty(url) == false) {
+//                source.setJdbcUrl(url);
+//            }
+//
+//            if (TextUtils.isEmpty(username) == false) {
+//                source.setUsername(username);
+//            }
+//
+//            if (TextUtils.isEmpty(password) == false) {
+//                source.setPassword(password);
+//            }
+//
+//            if (TextUtils.isEmpty(schema) == false) {
+//                source.setSchema(schema);
+//            }
+//
+//            if (TextUtils.isEmpty(driverClassName) == false) {
+//                source.setDriverClassName(driverClassName);
+//            }
 
             db.dataSourceSet(source);
             db.schemaSet(schema);
