@@ -1,14 +1,15 @@
-package org.noear.water.protocol;
+package org.noear.water.protocol.solution;
 
 import org.noear.snack.ONode;
 import org.noear.water.log.Logger;
 import org.noear.water.log.LoggerFactory;
+import org.noear.water.protocol.IHeihei;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.HttpUtils;
 
 import java.util.*;
 
-public class DefaultHeihei implements IHeihei {
+public class HeiheiDefault implements IHeihei {
 
     private static final Logger log_heihei = LoggerFactory.get("water_log_heihei");
 
@@ -16,9 +17,9 @@ public class DefaultHeihei implements IHeihei {
     private static final String masterSecret = "4a8cd168ca71dabcca306cac";
     private static final String appKey = "af9a9da3c73d23aa30ea4af1";
 
-    private static DefaultHeihei _singleton = new DefaultHeihei();
+    private static HeiheiDefault _singleton = new HeiheiDefault();
 
-    public static DefaultHeihei singleton() {
+    public static HeiheiDefault singleton() {
         return _singleton;
     }
 

@@ -22,9 +22,8 @@ public class LogStorerDb implements ILogStorer {
         return _singleton;
     }
 
-
-
-    private DbContext db() {
+    
+    private DbContext dbDef() {
         return Config.water_log;
     }
 
@@ -40,7 +39,7 @@ public class LogStorerDb implements ILogStorer {
 
                 if (db == null) {
                     LoggerModel cfg = DbWaterCfgApi.getLogger(logger);
-                    db = DbWaterCfgApi.getDbContext(cfg.source, db());
+                    db = DbWaterCfgApi.getDbContext(cfg.source, dbDef());
                     _dbMap.put(logger, db);
                 }
             }

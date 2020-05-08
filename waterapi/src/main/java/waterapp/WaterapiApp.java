@@ -1,12 +1,10 @@
 package waterapp;
 
 import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XMap;
 import org.noear.solon.extend.staticfiles.XStaticFiles;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.DefaultHeihei;
+import org.noear.water.protocol.solution.HeiheiDefault;
 import waterapp.wrap.LogStorerDb;
 import waterapp.wrap.MessageQueueRedis;
 
@@ -16,6 +14,8 @@ public class WaterapiApp {
 		XMap argx = XMap.from(args);
 
 		if (argx.containsKey("setup")) {
+			//启动安装界面
+			//
 			System.out.println("setup mode ...");
 			XStaticFiles.instance().put(".sql", "text/sql");
 
@@ -23,7 +23,7 @@ public class WaterapiApp {
 
 			});
 		} else {
-			//关掉静态文件支持
+			//关掉静态文件支持//启动运行界面
 			//
 			System.setProperty("org.noear.solon.extend.staticfiles.enabled","0");
 
@@ -32,7 +32,7 @@ public class WaterapiApp {
 
 				ProtocolHub.logStorer = LogStorerDb.singleton();
 				ProtocolHub.messageQueue = MessageQueueRedis.singleton();
-				ProtocolHub.heihei = DefaultHeihei.singleton();
+				ProtocolHub.heihei = HeiheiDefault.singleton();
 			});
 		}
 

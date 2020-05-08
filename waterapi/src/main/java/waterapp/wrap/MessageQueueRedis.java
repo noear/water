@@ -1,6 +1,6 @@
 package waterapp.wrap;
 
-import org.noear.water.protocol.DefaultMessageKeyBuilder;
+import org.noear.water.protocol.solution.MessageKeyBuilderDefault;
 import org.noear.water.protocol.IMessageKeyBuilder;
 import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.utils.RedisX;
@@ -22,7 +22,7 @@ public class MessageQueueRedis implements IMessageQueue {
 
     RedisX _redisX = null;
     String _queue_name;
-    IMessageKeyBuilder keyBuilder = new DefaultMessageKeyBuilder();
+    IMessageKeyBuilder keyBuilder = new MessageKeyBuilderDefault();
 
     private MessageQueueRedis(String name, RedisX redisX) {
         _queue_name = name;

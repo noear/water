@@ -26,7 +26,7 @@ public class LogQuerierDb implements ILogQuerier {
     }
 
 
-    private DbContext db() {
+    private DbContext dbDef() {
         return Config.water_log;
     }
 
@@ -42,7 +42,7 @@ public class LogQuerierDb implements ILogQuerier {
 
                 if (db == null) {
                     LoggerModel cfg = DbWaterCfgApi.getLogger(logger);
-                    db = DbWaterCfgApi.getDbContext(cfg.source, db());
+                    db = DbWaterCfgApi.getDbContext(cfg.source, dbDef());
                     _dbMap.put(logger, db);
                 }
             }
