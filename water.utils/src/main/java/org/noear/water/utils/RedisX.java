@@ -23,7 +23,7 @@ import java.util.*;
                 user,
                 password,
                 Integer.parseInt(db),
-                (maxTotaol == null ? 200 : Integer.parseInt(maxTotaol))
+                (TextUtils.isEmpty(maxTotaol) ? 200 : Integer.parseInt(maxTotaol))
         );
     }
 
@@ -37,7 +37,7 @@ import java.util.*;
                 user,
                 password,
                 db,
-                (maxTotaol == null ? 200 : Integer.parseInt(maxTotaol))
+                (TextUtils.isEmpty(maxTotaol)  ? 200 : Integer.parseInt(maxTotaol))
         );
     }
 

@@ -33,6 +33,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public XWaterAdapter() {
         super(XApp.cfg().argx(), XApp.global().port());
         _global = this;
+
+        XUtil.loadClass("com.mysql.jdbc.Driver");
+        XUtil.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     @Override
