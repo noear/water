@@ -8,6 +8,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.water.utils.IOUtils;
 import waterapp.controller.BaseController;
 import waterapp.dso.ConfigType;
 import waterapp.dso.EsUtil;
@@ -80,7 +81,7 @@ public class QueryEsController extends BaseController {
         String method = ss2[0].trim().toUpperCase();
         String path = ss2[1].trim();
 
-        if ((method.equals("GET") || path.endsWith("_search")) == false) {
+        if ((method.equals("GET") && path.endsWith("_search")) == false) {
             return node.val("只支持查询操作").toJson();
         }
 
