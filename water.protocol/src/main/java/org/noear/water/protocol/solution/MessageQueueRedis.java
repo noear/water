@@ -1,30 +1,17 @@
-package waterapp.wrap;
+package org.noear.water.protocol.solution;
 
-import org.noear.water.protocol.solution.MessageKeyBuilderDefault;
 import org.noear.water.protocol.IMessageKeyBuilder;
 import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.utils.RedisX;
-import waterapp.Config;
 
 import java.util.Collection;
 
 public class MessageQueueRedis implements IMessageQueue {
-    private static IMessageQueue _singleton = null;
-    public static IMessageQueue singleton() {
-        if (_singleton == null) {
-            _singleton = new MessageQueueRedis(Config.water_msg_queue, Config.rd_msg);
-        }
-
-        return _singleton;
-    }
-
-
-
     RedisX _redisX = null;
     String _queue_name;
     IMessageKeyBuilder keyBuilder = new MessageKeyBuilderDefault();
 
-    private MessageQueueRedis(String name, RedisX redisX) {
+    public MessageQueueRedis(String name, RedisX redisX) {
         _queue_name = name;
         _redisX = redisX;
     }

@@ -1,56 +1,21 @@
-package waterapp.wrap;
+package org.noear.water.protocol.solution;
 
 import org.noear.water.protocol.ILogQuerier;
 import org.noear.water.protocol.model.LogModel;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.ext.Fun0;
+import org.noear.water.utils.ext.Fun1Ex;
 import org.noear.weed.DbContext;
-import waterapp.Config;
-import waterapp.dso.db.DbWaterCfgApi;
-import waterapp.models.water_cfg.LoggerModel;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LogQuerierDb implements ILogQuerier {
-    private static ILogQuerier _singleton = null;
 
-    public static ILogQuerier singleton() {
-        if (_singleton == null) {
-            _singleton = new LogQuerierDb();
-        }
-
-        return _singleton;
+    private Fun1Ex<String,DbContext> _source;
+    public LogQuerierDb(Fun1Ex<String,DbContext> source){
+        _source = source;
     }
-
-
-    private DbContext dbDef() {
-        return Config.water_log;
-    }
-
-    private static String _lock = "";
-    private Map<String, DbContext> _dbMap = new HashMap<>();
-
-    private DbContext loggerSource(String logger) throws SQLException {
-        DbContext db = _dbMap.get(logger);
-
-        if (db == null) {
-            synchronized (_lock) {
-                db = _dbMap.get(logger);
-
-                if (db == null) {
-                    LoggerModel cfg = DbWaterCfgApi.getLogger(logger);
-                    db = DbWaterCfgApi.getDbContext(cfg.source, dbDef());
-                    _dbMap.put(logger, db);
-                }
-            }
-        }
-
-        return db;
-    }
-
 
     @Override
     public List<LogModel> list(String logger, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
@@ -70,7 +35,7 @@ public class LogQuerierDb implements ILogQuerier {
             level = 0;
         }
 
-        DbContext db = loggerSource(logger);
+        DbContext db = _source.run(logger);
 
         return db.table(logger)
                 .where("1 = 1")

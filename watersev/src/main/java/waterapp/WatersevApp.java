@@ -6,9 +6,9 @@ import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.solonjt.dso.*;
 import org.noear.water.protocol.solution.HeiheiDefault;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.MessageQueueRedis;
 import solonjt.JtRun;
 import waterapp.dso.JobRunnerEx;
-import waterapp.wrap.MessageQueueRedis;
 
 /**
  * 可以按三个服务进行部署：
@@ -35,7 +35,7 @@ public class WatersevApp {
 
             Config.tryInit();
 
-            ProtocolHub.messageQueue = MessageQueueRedis.singleton();
+            ProtocolHub.messageQueue = new MessageQueueRedis(Config.water_msg_queue, Config.rd_msg);
             ProtocolHub.heihei = HeiheiDefault.singleton();
 
             x.sharedAdd("cache", Config.cache_data);

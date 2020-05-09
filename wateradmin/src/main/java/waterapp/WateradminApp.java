@@ -1,9 +1,9 @@
 package waterapp;
 
 import org.noear.solon.XApp;
-import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
-import waterapp.wrap.LogQuerierDb;
+import org.noear.water.protocol.solution.LogQuerierDb;
+import waterapp.dso.LogSourceWrap;
 
 public class WateradminApp {
     public static void main(String[] args) {
@@ -16,7 +16,7 @@ public class WateradminApp {
 
             //设置接口
             //
-            ProtocolHub.logQuerier = LogQuerierDb.singleton();
+            ProtocolHub.logQuerier = new LogQuerierDb(new LogSourceWrap());
         });
     }
 }
