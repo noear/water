@@ -1,7 +1,6 @@
 package org.noear.water.model;
 
 import org.noear.snack.ONode;
-import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Properties;

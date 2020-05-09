@@ -36,6 +36,11 @@
             <artifactId>weed3.cache.memcached</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>redis.clients</groupId>
