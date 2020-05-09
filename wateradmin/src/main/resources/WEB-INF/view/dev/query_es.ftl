@@ -82,7 +82,7 @@
 
 <main>
     <left>
-        <pre id="code" jt-ini >#estuary/elasticsearch
+        <pre id="code" jt-ini >#tag/key
 GET _search
 {
   "query": {
