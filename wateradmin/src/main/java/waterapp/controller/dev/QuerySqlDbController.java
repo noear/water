@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 //非单例
 @XController
 @XMapping("/dev/query_db")
-public class QueryDbController extends BaseController {
+public class QuerySqlDbController extends BaseController {
    @XMapping("")
    public ModelAndView query() throws SQLException {
        List<ConfigModel> cfgs = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.db);
@@ -32,8 +32,7 @@ public class QueryDbController extends BaseController {
        return view("dev/query_db");
    }
 
-   static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+)");
-
+   static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+,)?(\\d+)");
 
    @XMapping(value = "ajax/do")
    public String query_do(String code) {
@@ -78,7 +77,7 @@ public class QueryDbController extends BaseController {
                Matcher m  = limit_exp.matcher(code2);
 
                if(m.find()){
-                   if (Integer.parseInt(m.group(1)) > 100) {
+                   if (Integer.parseInt(m.group(2)) > 100) {
                        return "最多不可超过100条";
                    }
                }else{
@@ -107,6 +106,10 @@ public class QueryDbController extends BaseController {
    private String exec_sql(String code, boolean is_ddl) throws SQLException{
        String db = code.split("::")[0];
        String sql = code.split("::")[1];
+
+       if(db.indexOf("water/")>=0){
+           return "只支持业务库查询";
+       }
 
        DbContext dbContext =   DbWaterCfgApi.getConfigByTagName(db).getDb(true);
 
