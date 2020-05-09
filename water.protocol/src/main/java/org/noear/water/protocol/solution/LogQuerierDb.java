@@ -3,7 +3,6 @@ package org.noear.water.protocol.solution;
 import org.noear.water.protocol.ILogQuerier;
 import org.noear.water.protocol.model.LogModel;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ext.Fun0;
 import org.noear.water.utils.ext.Fun1Ex;
 import org.noear.weed.DbContext;
 
