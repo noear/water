@@ -13,6 +13,11 @@ public class WaterConfig {
     static {
         String host = System.getProperty("water.host");
         if (TextUtils.isEmpty(host) == false) {
+
+            if (host.indexOf("://") < 0) {
+                host = "http://" + host;
+            }
+
             if (host.endsWith("/")) {
                 _water_api_url = host;
             } else {
@@ -20,7 +25,7 @@ public class WaterConfig {
             }
         }
 
-        if(TextUtils.isEmpty(_water_api_url)){
+        if (TextUtils.isEmpty(_water_api_url)) {
             throw new RuntimeException("System.getProperty(\"water.host\") is null, please configure!");
         }
     }
