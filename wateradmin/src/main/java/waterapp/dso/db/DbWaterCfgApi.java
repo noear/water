@@ -164,7 +164,7 @@ public class DbWaterCfgApi {
                 .whereIn("tag", Arrays.asList("operator", "server"))
                 .andEq("type", "ip")
                 .andEq("value", val)
-                .caching(CacheUtil.data)
+                .caching(CacheUtil.data).usingCache(60)
                 .cacheTag("whitelist")
                 .exists();
     }
