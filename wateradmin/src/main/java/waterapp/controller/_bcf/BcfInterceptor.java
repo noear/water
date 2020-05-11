@@ -10,7 +10,6 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import waterapp.dso.Session;
 import waterapp.dso.db.DbWaterCfgApi;
-import waterapp.models.water_cfg.WhitelistModel;
 import waterapp.utils.IPUtil;
 
 
