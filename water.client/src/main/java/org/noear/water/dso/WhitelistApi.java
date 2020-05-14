@@ -28,6 +28,10 @@ public class WhitelistApi {
         }
     }
 
+    public boolean exists(String tags, String type, String value){
+        return checkDo(tags,type,value);
+    }
+
     public boolean existsOfIp(String tags,  String value){
         return checkDo(tags,"ip",value);
     }
