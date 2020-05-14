@@ -7,6 +7,7 @@ import org.noear.solon.core.XMap;
 import org.noear.solon.core.XRender;
 import org.noear.solonclient.HttpUpstream;
 import org.noear.solonclient.XProxy;
+import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,14 +53,32 @@ public class XWaterGateway implements XHandler, XRender {
             return;
         }
 
-        String[] paths = path.substring(1).split("/");
-        //不够两段的肯定不是正常地址
-        if(paths.length<2){
-            ctx.status(404);
-            return;
+        String fun = null;
+
+        //尝试去header 取 alias
+        String alias = ctx.header("_service");
+        if(TextUtils.isEmpty(alias)){
+            //尝试去param 取 alias
+            alias = ctx.param("_service");
         }
 
-        String alias = paths[0];
+        if(TextUtils.isEmpty(alias)) {
+            //尝试去path 取 alias
+            String[] paths = path.substring(1).split("/");
+            //不够两段的肯定不是正常地址
+            if (paths.length < 2) {
+                ctx.status(404);
+                return;
+            }
+
+            alias = paths[0];
+            //找到 fun 部分
+            int idx = path.indexOf("/", 2) + 1;
+            fun = path.substring(idx);
+        }else{
+            fun = path;
+        }
+
         HttpUpstream upstream = router.get(alias); //第1段为sev
 
         //如果没有预配的负载不干活
@@ -67,10 +86,6 @@ public class XWaterGateway implements XHandler, XRender {
             ctx.status(404);
             return;
         }
-
-        //找到 fun 部分
-        int idx = path.indexOf("/", 2) + 1;
-        String fun = path.substring(idx);
 
         String rst = new XProxy(null)
                 .url(upstream.getTarget(alias), fun)
