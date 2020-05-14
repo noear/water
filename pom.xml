@@ -27,11 +27,11 @@
         <module>waterpaas</module>
         <module>waterraas</module>
 
-        <module>demo/demo-api1</module>
-        <module>demo/demo-api2</module>
-        <module>demo/demo-bcf-admin</module>
-        <module>demo/demo-rpc-gateway</module>
-        <module>demo/demo-rpc-service</module>
-        <module>demo/demo-rpc-service-impl</module>
+        <module>demo/water-demo-api1</module>
+        <module>demo/water-demo-api2</module>
+        <module>demo/water-demo-bcf-admin</module>
+        <module>demo/water-demo-rpc-gateway</module>
+        <module>demo/water-demo-rpc-service</module>
+        <module>demo/water-demo-rpc-service-impl</module>
     </modules>
 </project>

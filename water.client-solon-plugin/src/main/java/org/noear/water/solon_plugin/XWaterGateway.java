@@ -18,7 +18,7 @@ public class XWaterGateway implements XHandler, XRender {
     Map<String,HttpUpstream> router = new HashMap<>();
 
     public XWaterGateway() {
-        XMap map = XApp.cfg().getXmap("water.remoting");
+        XMap map = XApp.cfg().getXmap("water.gateway");
 
         if (XApp.cfg().isDebugMode()) {
             map.forEach((alias, service) -> {
