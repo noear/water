@@ -20,7 +20,6 @@
 
     <modules>
         <module>water-parent</module>
-        <module>water-demo</module>
 
         <module>wateradmin</module>
         <module>waterapi</module>

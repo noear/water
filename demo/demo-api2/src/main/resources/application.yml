@@ -1,0 +1,9 @@
+server.port: 8012
+
+water:
+  host: "http://water2"
+  service:
+    name: "water-demo-api2"
+    secretKey: "Ue3ikxE4t17mW2Cg"
+  remoting-debug:
+    demo-rpc-service: "http://localhost:8020/bcf/user"

@@ -1,0 +1,7 @@
+server.port: 8020
+
+water:
+  host: "http://water2"
+  service:
+    name: "demo-rpc-service"
+    secretKey: "b5fZK49x71Rnn5Cl"

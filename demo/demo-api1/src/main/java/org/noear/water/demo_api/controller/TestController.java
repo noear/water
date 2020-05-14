@@ -1,11 +1,11 @@
-package webapp.controller;
+package org.noear.water.demo_api.controller;
 
-import lib.sponge.rock.models.AppModel;
-import lib.sponge.rock.protocol.RockRpc;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.water.WaterProxy;
 import org.noear.water.annotation.Water;
+import org.noear.water.demo_rpc_client.BcfUserRpcService;
+import org.noear.water.demo_rpc_client.UserModel;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.RedisX;
 import org.noear.weed.DbContext;
@@ -14,7 +14,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import java.util.Map;
 
 @XController
-public class DemoController {
+public class TestController {
     //::配置服务
     @Water("water/water")
     DbContext waterDb;
@@ -34,10 +34,11 @@ public class DemoController {
 
 
     //::发现服务，集成负载平衡 和 容断
-    @Water
-    RockRpc rockRpc;
 
-    @XMapping("/")
+    @Water //要启动：water-demo-rpc-service-impl 项目
+    BcfUserRpcService userRpcService;
+
+    @XMapping("/test/")
     public String test() throws Exception {
         //db access
         Map dbmap = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();
@@ -48,7 +49,7 @@ public class DemoController {
         log.info("cfg redis", rdmap);
 
         //rpc 调用
-        AppModel app = rockRpc.getAppByID(4);
+        UserModel app = userRpcService.getUser(12);
         log.info("rpc", app);
 
         //paas 调用
