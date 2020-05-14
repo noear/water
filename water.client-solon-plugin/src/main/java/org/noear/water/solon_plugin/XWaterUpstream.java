@@ -1,6 +1,7 @@
 package org.noear.water.solon_plugin;
 
 
+import org.noear.solonclient.HttpUpstream;
 import org.noear.water.WaterClient;
 import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
@@ -172,6 +173,10 @@ public class XWaterUpstream {
 
         XWaterUpstream upstream = XWaterUpstream.get(c_sev);
 
+        return xclient(clz, (s) -> upstream.get());
+    }
+
+    public static <T> T xclient(Class<?> clz, HttpUpstream upstream) {
         if (_consumer == null) {
             _consumer = "";
         }
@@ -182,7 +187,7 @@ public class XWaterUpstream {
 
         return new XProxy()
                 .headerAdd("_from", _consumer + "@" + _consumer_address)
-                .upstream((s) -> upstream.get())
+                .upstream(upstream)
                 .create(clz);
     }
 }
