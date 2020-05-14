@@ -1,0 +1,13 @@
+server.port: 8030
+
+water:
+  host: "http://water2"
+  service:
+    name: "demo-rpc-service"
+    secretKey: "b5fZK49x71Rnn5Cl"
+
+  gateway:
+    demo-rpc-service: "demo-rpc-service"
+
+  remoting-debug:
+    demo-rpc-service: "http://localhost:8020"
