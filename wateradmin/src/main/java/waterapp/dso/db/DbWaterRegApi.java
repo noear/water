@@ -54,7 +54,7 @@ public class DbWaterRegApi {
             return;
         }
 
-        WaterClient.Tool.updateCache("upstream:"+sev);
+        WaterClient.Notice.updateCache("upstream:"+sev);
     }
 
     //重置服务

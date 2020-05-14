@@ -116,7 +116,7 @@ public class DbRubberApi {
 
             if (isOk > 0) {
                 //添加热更新机制 //通过water通知订阅方
-                WaterClient.Tool.updateCache("model:" + tag + "/" + name);
+                WaterClient.Notice.updateCache("model:" + tag + "/" + name);
             }
 
             return isOk;
@@ -366,7 +366,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -505,7 +505,7 @@ public class DbRubberApi {
 
         //添加热更新机制 //通过water通知订阅方
         ModelModel m = getModelById(model_id);
-        WaterClient.Tool.updateCache("model:" + m.tag + "/" + m.name);
+        WaterClient.Notice.updateCache("model:" + m.tag + "/" + m.name);
 
 
         return isOk;
@@ -629,7 +629,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -1147,7 +1147,7 @@ public class DbRubberApi {
 
         {
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Tool.updateCache("scheme:" + m.tag + "/" + m.name);
+            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return resp;
@@ -1293,7 +1293,7 @@ public class DbRubberApi {
         if (block_id > 0) {
             long isOk = tb.where("block_id = ?", block_id).update();
 
-            WaterClient.Tool.updateCache("block:" + tag + "/" + name);
+            WaterClient.Notice.updateCache("block:" + tag + "/" + name);
 
             return isOk;
         } else {
@@ -1329,7 +1329,7 @@ public class DbRubberApi {
                 .set("last_updatetime", vm.last_updatetime)
                 .insertBy("tag,name");
 
-        WaterClient.Tool.updateCache("block:" + vm.tag + "/" + vm.name);
+        WaterClient.Notice.updateCache("block:" + vm.tag + "/" + vm.name);
     }
 
     //获取数据块item集合

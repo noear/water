@@ -269,7 +269,7 @@ public class DbWaterCfgApi {
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;
 
-            WaterClient.Tool.updateConfig(tag,key);
+            WaterClient.Notice.updateConfig(tag,key);
 
             return isOk;
         } else {

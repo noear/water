@@ -35,14 +35,14 @@ public final class WaterClient {
      * */
     public final static TrackApi Track = new TrackApi();
 
-    /**
-     * 工具接口
-     * */
-    public final static ToolApi Tool = new ToolApi();
 
     /**
-     * 嘿嘿接口
+     * 通知接口
      * */
-    public final static HeiheiApi Heihei = new HeiheiApi();
+    public final static NoticeApi Notice = new NoticeApi();
 
+    /**
+     * 白名单接口
+     * */
+    public final static WhitelistApi Tool = new WhitelistApi();
 }

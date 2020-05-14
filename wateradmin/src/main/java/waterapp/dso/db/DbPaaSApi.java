@@ -111,7 +111,7 @@ public class DbPaaSApi {
             db().table("paas_file").whereEq("file_id", file_id).update(data);
 
             //更知:缓存更新
-            WaterClient.Tool.updateCache("paas:" + file_id);
+            WaterClient.Notice.updateCache("paas:" + file_id);
         } else {
             file_id = db().table("paas_file").insert(data);
         }
@@ -126,7 +126,7 @@ public class DbPaaSApi {
                     .update();
 
             //更知:缓存更新
-            WaterClient.Tool.updateCache("paas:" + file_id);
+            WaterClient.Notice.updateCache("paas:" + file_id);
 
             /** 记录历史版本 */
             DbWaterVerApi.logVersion("paas_file", "file_id", file_id);
@@ -209,7 +209,7 @@ public class DbPaaSApi {
 
         //更知:缓存更新
         for (Object file_id : list) {
-            WaterClient.Tool.updateCache("paas:" + file_id);
+            WaterClient.Notice.updateCache("paas:" + file_id);
         }
     }
 }

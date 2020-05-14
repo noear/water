@@ -26,7 +26,7 @@ public class HeiheiController extends BaseController{
     @XMapping("heihei/ajax/submit")
     public ViewModel submit(String msg, String target) throws Exception {
 
-        String response = WaterClient.Heihei.notice(target, msg);
+        String response = WaterClient.Notice.heihei(target, msg);
         ONode obj = ONode.load(response);
 
         return viewModel.code(obj.get("code").getInt(), obj.get("msg").getString());

@@ -7,29 +7,25 @@ import org.noear.water.utils.IDUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ToolApi {
-
+public class NoticeApi {
     /**
-     * 检测，是否为白名单
+     * 嘿嘿通知（经Water服务端处理后再推送）
      *
-     * @param tags   分组(多个以,隔开)
-     * @param type  类型(ip,mobile,host)
-     * @param value 值
+     * @param target    手机号（多个以,隔开；@alarm 表过报警名单），例：18121212,@alarm
      */
-    public boolean isWhitelist(String tags, String type, String value) {
+    public String heihei(String target, String msg) {
         Map<String, String> params = new HashMap<>();
-        params.put("tags", tags);
-        params.put("type", type);
-        params.put("value", value);
+        params.put("target", target);
+        params.put("msg", msg);
+
 
         try {
-            return "OK".equals(CallUtil.post("run/whitelist/check/", params));
+            return CallUtil.post("run/push/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
     }
-
 
     /**
      * 通知缓存更新

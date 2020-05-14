@@ -169,6 +169,6 @@ public final class SevController implements IJob {
         }
 
         //通知网关，更新负载
-        WaterClient.Tool.updateCache("upstream:"+sev.name);
+        WaterClient.Notice.updateCache("upstream:"+sev.name);
     }
 }
