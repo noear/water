@@ -23,7 +23,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
             if (fwT.getType().isInterface()) {
-                fwT.setValue(XWaterProxy.xclient(fwT.getType()));
+                fwT.setValue(XWaterUpstream.xclient(fwT.getType()));
             }
             return;
         }
