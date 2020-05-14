@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream {
+public class XWaterUpstream implements HttpUpstream{
     private final String TAG_SERVER = "{server}";
 
     private String _service;
@@ -173,7 +173,29 @@ public class XWaterUpstream {
 
         XWaterUpstream upstream = XWaterUpstream.get(c_sev);
 
-        return xclient(clz, (s) -> upstream.get());
+        return xclient(clz, upstream);
+    }
+
+    public static <T> T xclientDebug(Class<?> clz) {
+        XClient c_meta = clz.getAnnotation(XClient.class);
+
+        if (c_meta == null) {
+            throw new RuntimeException("No xclient annotation");
+        }
+
+        String c_sev = c_meta.value();
+        if (TextUtils.isEmpty(c_sev)) {
+            throw new RuntimeException("XClient no name");
+        }
+
+        //支持 rockrpc:/rpc 模式
+        if (c_sev.indexOf(":") > 0) {
+            c_sev = c_sev.split(":")[0];
+        }
+
+        String url = System.getProperty("water.remoting-debug." + c_sev);
+
+        return xclient(clz, (s) -> url);
     }
 
     public static <T> T xclient(Class<?> clz, HttpUpstream upstream) {
@@ -189,5 +211,10 @@ public class XWaterUpstream {
                 .headerAdd("_from", _consumer + "@" + _consumer_address)
                 .upstream(upstream)
                 .create(clz);
+    }
+
+    @Override
+    public String getTarget(String name) {
+        return get();
     }
 }

@@ -1,9 +1,11 @@
 package org.noear.water.solon_plugin;
 
+import org.noear.solon.XApp;
 import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.FieldWrapTmp;
 import org.noear.solon.core.utils.TypeUtil;
 import org.noear.solonclient.XProxy;
+import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterProxy;
 import org.noear.water.annotation.Water;
@@ -24,15 +26,14 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
     public void handler(FieldWrapTmp fwT, Water anno) {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())){
-            fwT.setValue(XWaterUpstream.xclient(fwT.getType()));
-            return;
-        }
-
-        if(anno.value().indexOf("://")  > 0) {
             if (fwT.getType().isInterface()) {
-                fwT.setValue(XWaterUpstream.xclient(fwT.getType(), (s) -> anno.value()));
-                return;
+                if (XApp.cfg().isDebugMode()) {
+                    fwT.setValue(XWaterUpstream.xclientDebug(fwT.getType()));
+                } else {
+                    fwT.setValue(XWaterUpstream.xclient(fwT.getType()));
+                }
             }
+            return;
         }
 
         //日志注入

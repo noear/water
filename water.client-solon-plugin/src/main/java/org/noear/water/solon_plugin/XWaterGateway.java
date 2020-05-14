@@ -1,8 +1,11 @@
 package org.noear.water.solon_plugin;
 
+import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import org.noear.solon.core.XMap;
 import org.noear.solon.core.XRender;
+import org.noear.solonclient.HttpUpstream;
 import org.noear.solonclient.XProxy;
 
 import java.util.HashMap;
@@ -12,13 +15,28 @@ import java.util.Map;
 * Water Gateway
 * */
 public class XWaterGateway implements XHandler, XRender {
-    Map<String,XWaterUpstream> router = new HashMap<>();
+    Map<String,HttpUpstream> router = new HashMap<>();
+
+    public XWaterGateway() {
+        XMap map = XApp.cfg().getXmap("water.remoting");
+
+        if (XApp.cfg().isDebugMode()) {
+            map.forEach((alias, service) -> {
+                String url = System.getProperty("water.remoting-debug." + service);
+                add(alias, (s) -> url);
+            });
+        } else {
+            map.forEach((alias, service) -> {
+                add(alias, service);
+            });
+        }
+    }
 
     protected void add(String alias,String service){
         router.put(alias,  XWaterUpstream.get(service));
     }
 
-    protected void add(String alias, XWaterUpstream upstream){
+    protected void add(String alias, HttpUpstream upstream){
         router.put(alias, upstream);
     }
 
@@ -39,7 +57,8 @@ public class XWaterGateway implements XHandler, XRender {
             return;
         }
 
-        XWaterUpstream upstream = router.get(paths[0]); //第1段为sev
+        String alias = paths[0];
+        HttpUpstream upstream = router.get(alias); //第1段为sev
 
         //如果没有预配的负载不干活
         if (upstream == null) {
@@ -51,8 +70,8 @@ public class XWaterGateway implements XHandler, XRender {
         int idx = path.indexOf("/", 2) + 1;
         String fun = path.substring(idx);
 
-        String rst = new XProxy()
-                .url(upstream.get(), fun)
+        String rst = new XProxy(null)
+                .url(upstream.getTarget(alias), fun)
                 .call(ctx.headerMap(), ctx.paramMap())
                 .getString();
 
