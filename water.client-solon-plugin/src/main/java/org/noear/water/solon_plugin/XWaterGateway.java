@@ -20,16 +20,18 @@ public class XWaterGateway implements XHandler, XRender {
     public XWaterGateway() {
         XMap map = XApp.cfg().getXmap("water.gateway");
 
-        if (XApp.cfg().isDebugMode()) {
-            map.forEach((alias, service) -> {
+        map.forEach((alias, service) -> {
+            if (XApp.cfg().isDebugMode()) {
+                //增加debug模式支持
                 String url = System.getProperty("water.remoting-debug." + service);
-                add(alias, (s) -> url);
-            });
-        } else {
-            map.forEach((alias, service) -> {
-                add(alias, service);
-            });
-        }
+                if(url != null){
+                    add(alias, (s) -> url);
+                    return;
+                }
+            }
+
+            add(alias, service);
+        });
     }
 
     protected void add(String alias,String service){

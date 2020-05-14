@@ -3,8 +3,6 @@ package org.noear.water.solon_plugin;
 
 import org.noear.solonclient.HttpUpstream;
 import org.noear.water.WaterClient;
-import org.noear.solonclient.XProxy;
-import org.noear.solonclient.annotation.XClient;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.TextUtils;
@@ -154,63 +152,9 @@ public class XWaterUpstream implements HttpUpstream{
         }
     }
 
+    @Deprecated
     public static <T> T xclient(Class<?> clz) {
-        XClient c_meta = clz.getAnnotation(XClient.class);
-
-        if (c_meta == null) {
-            throw new RuntimeException("No xclient annotation");
-        }
-
-        String c_sev = c_meta.value();
-        if (TextUtils.isEmpty(c_sev)) {
-            throw new RuntimeException("XClient no name");
-        }
-
-        //支持 rockrpc:/rpc 模式
-        if (c_sev.indexOf(":") > 0) {
-            c_sev = c_sev.split(":")[0];
-        }
-
-        XWaterUpstream upstream = XWaterUpstream.get(c_sev);
-
-        return xclient(clz, upstream);
-    }
-
-    public static <T> T xclientDebug(Class<?> clz) {
-        XClient c_meta = clz.getAnnotation(XClient.class);
-
-        if (c_meta == null) {
-            throw new RuntimeException("No xclient annotation");
-        }
-
-        String c_sev = c_meta.value();
-        if (TextUtils.isEmpty(c_sev)) {
-            throw new RuntimeException("XClient no name");
-        }
-
-        //支持 rockrpc:/rpc 模式
-        if (c_sev.indexOf(":") > 0) {
-            c_sev = c_sev.split(":")[0];
-        }
-
-        String url = System.getProperty("water.remoting-debug." + c_sev);
-
-        return xclient(clz, (s) -> url);
-    }
-
-    public static <T> T xclient(Class<?> clz, HttpUpstream upstream) {
-        if (_consumer == null) {
-            _consumer = "";
-        }
-
-        if (_consumer_address == null) {
-            _consumer_address = "";
-        }
-
-        return new XProxy()
-                .headerAdd("_from", _consumer + "@" + _consumer_address)
-                .upstream(upstream)
-                .create(clz);
+        return XWaterProxy.xclient(clz);
     }
 
     @Override
