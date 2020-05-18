@@ -8,7 +8,7 @@
     <artifactId>water2_java</artifactId>
     <version>project</version>
     <packaging>pom</packaging>
-    
+
     <name>root</name>
     <description>Java project for water2</description>
 
