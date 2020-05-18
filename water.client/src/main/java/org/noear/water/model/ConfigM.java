@@ -66,9 +66,9 @@ public final class ConfigM {
     /**
      * 转为Properties
      */
-    private Properties _prop;
+    private PropertiesM _prop;
 
-    public Properties getProp() {
+    public PropertiesM getProp() {
         if (_prop == null) {
             _prop = getProp(value);
         }
@@ -76,8 +76,8 @@ public final class ConfigM {
         return _prop;
     }
 
-    public static Properties getProp(String text){
-        Properties properties = new Properties();
+    public static PropertiesM getProp(String text){
+        PropertiesM properties = new PropertiesM();
         RunUtils.runActEx(() -> properties.load(new StringReader(text)));
         return properties;
     }
