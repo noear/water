@@ -69,8 +69,13 @@ public class XPluginImp implements XPlugin {
                 if (XMessageHandler.class.isAssignableFrom(clz)) {
                     String topic = anno.value();
 
-                    XWaterAdapter.global().router().put(topic, wrap.raw());
-                    XWaterAdapter.global().messageSubscribeTopic(topic);
+                    if (TextUtils.isEmpty(topic) == false) {
+                        XWaterAdapter.global().router().put(topic, wrap.raw());
+
+                        if (topic.startsWith("water.") == false) {
+                            XWaterAdapter.global().messageSubscribeTopic(topic);
+                        }
+                    }
                 }
             }
         });
