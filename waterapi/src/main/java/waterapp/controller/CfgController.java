@@ -83,6 +83,9 @@ public class CfgController implements XHandler {
         String key = ctx.param("key");
         String value = ctx.param("value");
 
+        //
+        // 此处非线程安全
+        //
         ConfigModel cfg = DbWaterCfgApi.getConfig(tag, key);
         if (key.equals(cfg.key)) {
             if (cfg.is_editable) {

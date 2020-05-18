@@ -85,6 +85,14 @@ public class ConfigApi {
 
 
     /**
+     * 设置配置，根据tag/key
+     */
+    public void setByTagKey(String tagKey,String value) throws IOException{
+        String[] ss = tagKey.split("/");
+        set(ss[0], ss[1], value);
+    }
+
+    /**
      * 设置配置
      */
     public void set(String tag, String key, String value) throws IOException {
