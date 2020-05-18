@@ -5,6 +5,7 @@ import org.noear.solon.core.Aop;
 import org.noear.solon.core.XPlugin;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
+import org.noear.water.annotation.WaterMessage;
 import org.noear.water.utils.TextUtils;
 
 public class XPluginImp implements XPlugin {
@@ -12,14 +13,14 @@ public class XPluginImp implements XPlugin {
     public void start(XApp app) {
 
         //尝试注册
-        if(app.port() > 0) {
+        if (app.port() > 0) {
             if (WaterProps.service_name() != null) {
                 app.plug(new XWaterAdapterImp());
             }
         }
 
         //尝试加载配置
-        if(TextUtils.isEmpty(WaterProps.service_config()) == false) {
+        if (TextUtils.isEmpty(WaterProps.service_config()) == false) {
             String[] ss = WaterProps.service_config().split(",");
             for (String s : ss) {
                 String tagKey = s.trim();
@@ -58,6 +59,19 @@ public class XPluginImp implements XPlugin {
                 });
 
                 XWaterAdapter.global().messageSubscribeHandler();
+            }
+        });
+
+
+        //添加WaterMessage注解支持
+        Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
+            if (XWaterAdapter.global() != null) {
+                if (XMessageHandler.class.isAssignableFrom(clz)) {
+                    String topic = anno.value();
+
+                    XWaterAdapter.global().router().put(topic, wrap.raw());
+                    XWaterAdapter.global().messageSubscribeTopic(topic);
+                }
             }
         });
 

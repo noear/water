@@ -128,6 +128,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         String[] topics = new String[_list.size()];
         _list.toArray(topics);
 
+        messageSubscribeTopic(topics);
+    }
+
+    public void messageSubscribeTopic(String... topics) {
         try {
             messageSubscribeTopic(msg_receiver_url(), 0, topics);
         } catch (Exception ex) {
