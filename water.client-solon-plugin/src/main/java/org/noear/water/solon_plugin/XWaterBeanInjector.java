@@ -59,7 +59,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
         //RedisX
         if(RedisX.class.isAssignableFrom(fwT.getType())){
             if(TextUtils.isEmpty(arg)){
-                fwT.setValue(cfg.getRd(0));
+                fwT.setValue(cfg.getRd());
             }else{
                 fwT.setValue(cfg.getRd(Integer.parseInt(arg)));
             }

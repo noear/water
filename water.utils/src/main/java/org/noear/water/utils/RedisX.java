@@ -19,6 +19,10 @@ import java.util.*;
         String db = prop.getProperty("db");
         String maxTotaol = prop.getProperty("maxTotaol");
 
+        if(TextUtils.isEmpty(db)){
+            throw new RuntimeException("RedisX:Properties lacks the db parameter!");
+        }
+
         doinit(server,
                 user,
                 password,

@@ -95,10 +95,30 @@ public final class ConfigM {
         return _node;
     }
 
+    public <T> T getObject(Class<T> clz){
+        if(TextUtils.isEmpty(value)){
+            return  null;
+        }
+
+        if(value.trim().startsWith("{")){
+            return getNode().toObject(clz);
+        }
+
+        return getProp().toObject(clz);
+    }
+
 
     /**
      * 获取 rd:RedisX
      */
+    public RedisX getRd(){
+        if(TextUtils.isEmpty(value)){
+            return null;
+        }
+
+        return new RedisX(getProp());
+    }
+    
     public RedisX getRd(int db) {
         if(TextUtils.isEmpty(value)){
             return null;
