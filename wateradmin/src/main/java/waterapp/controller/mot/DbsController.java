@@ -24,10 +24,10 @@ import java.util.List;
 
 
 @XController
-@XMapping("/mot/")
+@XMapping("/mot/dbs")
 public class DbsController extends BaseController {
 
-    @XMapping("dbs")
+    @XMapping
     public ModelAndView dbs(String tag_name, String name, String sort) throws Exception {
         List<TagCountsModel> tags = DbWaterOpsApi.getServerDbsAccounts();
 
@@ -46,7 +46,7 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("dbs/inner")
+    @XMapping("inner")
     public ModelAndView dbs_sinner(String instanceId, String type, String name) throws SQLException, ClientException {
         DbsViewModel instance = null;
 
@@ -83,7 +83,7 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("dbs/charts/ajax/reqtate")
+    @XMapping("charts/ajax/reqtate")
     public List<AliyunEchartModel> dbs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId, Integer type) throws Exception {
         if (dataType == null) {
             dataType = 0;
@@ -106,7 +106,7 @@ public class DbsController extends BaseController {
         return res;
     }
 
-    @XMapping("dbs/track/ajax/pull")
+    @XMapping("track/ajax/pull")
     public ViewModel dbs_track_ajax_pull() throws Exception {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 
@@ -120,7 +120,7 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("dbs/redis/track/ajax/pull")
+    @XMapping("redis/track/ajax/pull")
     public ViewModel dbs_redis_track_ajax_pull() throws Exception {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 
@@ -137,7 +137,7 @@ public class DbsController extends BaseController {
         return viewModel.code(1, "OK");
     }
 
-    @XMapping("dbs/mencache/track/ajax/pull")
+    @XMapping("mencache/track/ajax/pull")
     public ViewModel dbs_mencache_track_ajax_pull() throws Exception {
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
 

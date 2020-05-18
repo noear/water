@@ -27,10 +27,10 @@ import java.util.Map;
 
 
 @XController
-@XMapping("/mot/")
+@XMapping("/mot/bls")
 public class BlsController extends BaseController {
 
-    @XMapping("bls")
+    @XMapping
     public ModelAndView bls(String tag_name, String name, String sort) throws Exception {
         List<TagCountsModel> tags = DbWaterOpsApi.getServerBlsAccounts();
 
@@ -52,7 +52,7 @@ public class BlsController extends BaseController {
         return view("mot/bls");
     }
 
-    @XMapping("bls/inner")
+    @XMapping("inner")
     public ModelAndView bls_sinner(String instanceId, String name) throws SQLException, ClientException {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
@@ -69,7 +69,7 @@ public class BlsController extends BaseController {
     }
 
 
-    @XMapping("bls/charts/ajax/reqtate")
+    @XMapping("charts/ajax/reqtate")
     public List<AliyunElineModel> bls_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
         if (dataType == null) {
             dataType = 0;
@@ -122,7 +122,7 @@ public class BlsController extends BaseController {
         return rearr;
     }
 
-    @XMapping("bls/track/ajax/pull")
+    @XMapping("track/ajax/pull")
     public ViewModel bls_track_ajax_pull() throws Exception {
 
         List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
