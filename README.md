@@ -19,7 +19,7 @@
 | | |
 | org.noear:waterapi | 构建：Water 服务端 |
 | org.noear:wateradmin | 构建：Water 管理后台 |
-| org.noear:watersev | 构建：Water 后台任务（消息派发；定时任务；服务检测...可分指令部署） |
+| org.noear:watersev | 构建：Water 后台任务（消息派发；定时任务；服务检测；数据同步...可分指令部署） |
 | org.noear:waterpaas | 构建：Water PaaS 服务，提供轻量级接口服务 |
 | org.noear:waterraas | 构建：Water RaaS 服务，提供轻量级规则计算服务 |
 
