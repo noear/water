@@ -6,4 +6,5 @@ import lombok.Getter;
 public class TagCountsModel {
     public String tag;
     public long counts;
+    public String note;
 }

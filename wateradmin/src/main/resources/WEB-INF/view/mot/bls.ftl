@@ -19,7 +19,7 @@
         <right>
             <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">
                 <#list tags as m>
-                    <option value="${m.tag}">${m.tag} (${m.counts})</option>
+                    <option value="${m.tag}">${m.note} (${m.counts})</option>
                 </#list>
             </select>
         </right>

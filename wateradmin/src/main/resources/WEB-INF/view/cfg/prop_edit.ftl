@@ -162,7 +162,9 @@
             "memcached":"server=\nuser=\npassword=",
             "redis":"server=\nuser=\npassword=",
             "elasticsearch":"url=\nusername=\npassword=",
-            "aliyun_ram":"regionId=\naccessKeyId=\naccessSecret=",
+            "aliyun_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
+            "iaas_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
+            "ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
         };
     </script>
 </head>

@@ -72,30 +72,36 @@ public class DbWaterOpsApi {
     }
 
     public static List<TagCountsModel> getServerBlsAccounts() throws SQLException {
-        return db().table("water_ops_server")
-                   .where("iaas_type=1 AND is_enabled=1")
-                   .groupBy("iaas_account")
-                   .select("replace(iaas_account,'wind/','') tag, COUNT(iaas_account) counts")
-                   .caching(CacheUtil.data)
-                   .getList(TagCountsModel.class);
+        return getServerAccounts("iaas_type=1");
     }
 
     public static List<TagCountsModel> getServerDbsAccounts() throws SQLException {
-        return db().table("water_ops_server")
-                   .where("iaas_type>=2 AND is_enabled=1")
-                   .groupBy("iaas_account")
-                   .select("replace(iaas_account,'wind/','') tag, COUNT(iaas_account) counts")
-                   .caching(CacheUtil.data)
-                   .getList(TagCountsModel.class);
+        return getServerAccounts("iaas_type>=2");
     }
 
     public static List<TagCountsModel> getServerEcsAccounts() throws SQLException {
-        return db().table("water_ops_server")
-                   .where("iaas_type=0 AND is_enabled=1")
-                   .groupBy("iaas_account")
-                   .select("replace(iaas_account,'wind/','') tag, COUNT(iaas_account) counts")
-                   .caching(CacheUtil.data)
-                   .getList(TagCountsModel.class);
+        return getServerAccounts("iaas_type=0");
+    }
+
+    private static List<TagCountsModel> getServerAccounts(String where) throws SQLException {
+        List<TagCountsModel> list = db().table("water_ops_server")
+                .where(where).and("is_enabled=1").andNeq("iaas_account", "")
+                .groupBy("iaas_account")
+                .select("iaas_account tag, COUNT(iaas_account) counts")
+                .caching(CacheUtil.data)
+                .getList(TagCountsModel.class);
+
+        for (TagCountsModel m : list) {
+
+            int idx = m.tag.indexOf("/");
+            if (idx > 0) {
+                m.note = m.tag.substring(idx + 1);
+            } else {
+                m.note = m.tag;
+            }
+        }
+
+        return list;
     }
 
     public static ServerModel getServerByID(int server_id) throws SQLException {
@@ -174,11 +180,11 @@ public class DbWaterOpsApi {
 //                .getList(new ServerModel());
 //    }
 
-    public static List<ServerTrackEcsModel> getServerEcsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackEcsModel> getServerEcsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
                    .leftJoin("water_ops_server_track_ecs t").on("s.iaas_type=0 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                    .where("s.iaas_type=0 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?", "wind/" + tag_name)
+                   .and("s.iaas_account = ?", tagAndName)
                    .build((tb) -> {
                        if (TextUtils.isEmpty(name) == false) {
                            tb.and("s.name like ?", "%" + name + "%");
@@ -239,11 +245,11 @@ public class DbWaterOpsApi {
         }
     }
 
-    public static List<ServerTrackBlsModel> getServerBlsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackBlsModel> getServerBlsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
                    .leftJoin("water_ops_server_track_bls t").on("s.iaas_type=1 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                    .where("s.iaas_type=1 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?", "wind/" + tag_name)
+                   .and("s.iaas_account = ?", tagAndName)
                    .build((tb) -> {
 
                        if (TextUtils.isEmpty(name) == false) {
@@ -260,11 +266,11 @@ public class DbWaterOpsApi {
                    .getList(new ServerTrackBlsModel());
     }
 
-    public static List<ServerTrackDbsModel> getServerDbsTracks(String tag_name, String name, String sort) throws Exception {
+    public static List<ServerTrackDbsModel> getServerDbsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
                    .leftJoin("water_ops_server_track_dbs t").on("s.iaas_type>=2 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
                    .where("s.iaas_type>=2 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?", "wind/" + tag_name)
+                   .and("s.iaas_account = ?",  tagAndName)
                    .build((tb) -> {
                        if (TextUtils.isEmpty(name) == false) {
                            tb.and("s.name like ?", "%" + name + "%");
