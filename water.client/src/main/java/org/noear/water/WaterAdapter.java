@@ -36,6 +36,7 @@ public abstract class WaterAdapter {
 
     //由子类附值
     protected String service_check_path = null;
+    protected String service_stop_path = null;
     protected String msg_receiver_path = null;
     protected int service_port = 0;
 

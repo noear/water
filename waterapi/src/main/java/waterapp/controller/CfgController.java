@@ -5,7 +5,10 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
+import waterapp.Config;
+import waterapp.dso.LockUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.ConfigModel;
 import waterapp.utils.IPUtil;
@@ -82,6 +85,14 @@ public class CfgController implements XHandler {
         String tag = ctx.param("tag");
         String key = ctx.param("key");
         String value = ctx.param("value");
+
+        if(LockUtils.tryLock(Config.water_service_name, tag+"/"+key)){
+            ONode n = new ONode();
+            n.set("code", 0);
+            n.set("msg", "Too many requests");
+            ctx.outputAsJson(n.toJson());
+            return;
+        }
 
         //
         // 此处非线程安全

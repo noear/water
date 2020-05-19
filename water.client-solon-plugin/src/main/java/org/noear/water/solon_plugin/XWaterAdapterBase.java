@@ -1,6 +1,7 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
+import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solon.XUtil;
 import org.noear.solon.core.XContext;
@@ -21,22 +22,26 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     XMap service_args;
     private String _localHost;
     private String _note = "";
+
     public XWaterAdapterBase(XMap args, int port) {
         service_args = args;
         service_port = port;
         service_check_path = "/run/check/";
+        service_stop_path = "/run/stop/";
         msg_receiver_path = "/msg/receive";
 
         onInit();
     }
 
-    protected void onInit(){
+    protected void onInit() {
         registerService();
         messageSubscribe();
     }
 
-    /** 当前服务的本地地址(host:port) */
-    public String localHost(){
+    /**
+     * 当前服务的本地地址(host:port)
+     */
+    public String localHost() {
         return _localHost;
     }
 
@@ -51,7 +56,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         XWaterUpstream._consumer = service_name();
         XWaterUpstream._consumer_address = _localHost;
 
-        if (service_args == null || service_args.size()==0) {
+        if (service_args == null || service_args.size() == 0) {
             _note = "";
         } else {
             ONode tmp = ONode.load(service_args);
@@ -69,7 +74,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         }
     }
 
-    /** 设置状态 */
+    /**
+     * 设置状态
+     */
     public void stateSet(boolean enabled) {
         if (TextUtils.isEmpty(_localHost) == false) {
             WaterClient.Registry.set(this.service_name(), _localHost, _note, enabled);
@@ -80,14 +87,14 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     public void cacheUpdateHandler(String tag) {
         super.cacheUpdateHandler(tag);
         String[] ss = tag.split(":");
-        if("upstream".equals(ss[0])){
+        if ("upstream".equals(ss[0])) {
             XWaterUpstream tmp = XWaterUpstream.getOnly(ss[1]);
-            if(tmp!=null){
+            if (tmp != null) {
                 try {
                     tmp.reload();
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();//最后日志记录到服务端
-                    logger.error(ss[1], "reload","", ex);
+                    logger.error(ss[1], "reload", "", ex);
                 }
             }
         }
@@ -98,11 +105,11 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         String ups = cxt.param("upstream");
         String enabled = cxt.param("enabled");
 
-        if(TextUtils.isEmpty(ups) == false){
+        if (TextUtils.isEmpty(ups) == false) {
             //用于检查负责的情况
-            ONode odata  = new ONode().asObject();
+            ONode odata = new ONode().asObject();
 
-            if("*".equals(ups)){
+            if ("*".equals(ups)) {
                 XWaterUpstream._map.forEach((k, v) -> {
                     ONode n = odata.get(k);
 
@@ -112,9 +119,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                         nl.add(s);
                     });
                 });
-            }else{
+            } else {
                 XWaterUpstream v = XWaterUpstream.getOnly(ups);
-                if(v!=null) {
+                if (v != null) {
                     ONode n = odata.get(ups);
 
                     n.set("service", ups);
@@ -126,8 +133,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
             }
 
             return odata.toJson();
-        }else {
-            if (TextUtils.isEmpty(enabled) ==false) {
+        } else {
+            if (TextUtils.isEmpty(enabled) == false) {
                 //手动控制服务是否关掉或开启
                 if ("1".equals(enabled)) {
                     stateSet(true);
@@ -152,14 +159,24 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         String text = "";
         try {
             if (service_check_path.equals(path)) {
+                //run/check/
                 text = serviceCheck(context);
-            }
-
-            if (msg_receiver_path.equals(path)) {
+            } else if (service_stop_path.equals(path)) {
+                //run/stop/
+                String ip = IPUtils.getIP(context);
+                if (WaterClient.Whitelist.existsOfIp("admin", ip)) {
+                    XApp.stop();
+                    text = "OK";
+                } else {
+                    text = (ip + ",not is whitelist!");
+                }
+            } else if (msg_receiver_path.equals(path)) {
+                //msg/receive
                 text = messageReceive(context);
             }
         } catch (Exception ex) {
-            text = XUtil.getFullStackTrace(ex);ex.printStackTrace();
+            text = XUtil.getFullStackTrace(ex);
+            ex.printStackTrace();
         }
 
         context.output(text);
