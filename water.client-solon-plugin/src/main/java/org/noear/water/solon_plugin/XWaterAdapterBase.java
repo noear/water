@@ -103,7 +103,6 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     //2.1.提供服务供查入口 //必须重写
     public String serviceCheck(XContext cxt) throws Exception {
         String ups = cxt.param("upstream");
-        String enabled = cxt.param("enabled");
 
         if (TextUtils.isEmpty(ups) == false) {
             //用于检查负责的情况
@@ -133,18 +132,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
             }
 
             return odata.toJson();
-        } else {
-            if (TextUtils.isEmpty(enabled) == false) {
-                //手动控制服务是否关掉或开启
-                if ("1".equals(enabled)) {
-                    stateSet(true);
-                } else if ("0".equals(enabled)) {
-                    stateSet(false);
-                }
-            }
-
-            return "{\"code\":1}";
         }
+
+        return "{\"code\":1}";
     }
 
     //::可以重写，且需要RequestMapping
@@ -165,6 +155,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 //run/stop/
                 String ip = IPUtils.getIP(context);
                 if (WaterClient.Whitelist.existsOfIp("admin", ip)) {
+                    stateSet(false);
                     XApp.stop();
                     text = "OK";
                 } else {
