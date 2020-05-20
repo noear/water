@@ -41,6 +41,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     @Override
     public void start(XApp app) {
         app.all(service_check_path, this::handle);
+        app.all(service_stop_path, this::handle);
         app.all(msg_receiver_path,  this::handle);
     }
 
