@@ -2,18 +2,6 @@ package waterapp.utils;
 
 import java.util.UUID;
 
-/**
- * <ul>
- * <li>
- * class comment
- * </li>
- * </ul>
- *
- * @author Lu.Bing
- * on 17-7-18
- * at 下午5:56
- * in webadmin.utils, admin-rock
- */
 public class CodeUtil {
     /**
      * <ul>

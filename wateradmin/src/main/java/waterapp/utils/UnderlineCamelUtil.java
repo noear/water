@@ -3,11 +3,6 @@ package waterapp.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * 2019.01.22
- *
- * @author cjl
- */
 public class UnderlineCamelUtil {
     /**
      * 下划线转驼峰法

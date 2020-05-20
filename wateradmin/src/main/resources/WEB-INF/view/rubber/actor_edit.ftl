@@ -8,7 +8,6 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
-    <script src="${js}/formhelper.js"></script>
 
 </head>
 <body>
