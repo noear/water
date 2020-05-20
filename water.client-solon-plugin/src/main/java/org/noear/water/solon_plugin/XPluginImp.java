@@ -83,9 +83,4 @@ public class XPluginImp implements XPlugin {
         //添加Water注解支持
         Aop.factory().beanInjectorAdd(Water.class, new XWaterBeanInjector());
     }
-
-    @Override
-    public void stop() throws Throwable {
-        XWaterAdapter.global().stateSet(false);
-    }
 }
