@@ -1,7 +1,7 @@
 package org.noear.water.protocol;
 
 /**
- * 监控查询器s
+ * 监控查询器
  * */
 public interface IMonitorQuerier {
     void blsPull(String region, String instanceId);
