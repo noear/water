@@ -3,7 +3,7 @@ package waterapp.dso.db;
 import org.noear.weed.DbContext;
 import waterapp.utils.TextUtils;
 import waterapp.Config;
-import waterapp.dso.IDUtil;
+import waterapp.dso.IDUtils;
 import waterapp.models.LoggerModel;
 import waterapp.utils.Datetime;
 import waterapp.utils.EncryptUtil;
@@ -90,7 +90,7 @@ public final class DbWaterLogApi {
 
 
         db.table(logger).usingExpr(true)
-                .set("log_id", IDUtil.buildLogID())
+                .set("log_id", IDUtils.buildLogID())
                 .set("`service`", service)
                 .set("`schema`", schema)
                 .set("`method`", method)

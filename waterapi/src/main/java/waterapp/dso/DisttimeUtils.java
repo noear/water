@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by noear on 2017/7/18.
  */
-public class DisttimeUtil {
+public class DisttimeUtils {
     //单位：0.1秒
     public static int nextTime(Date date) {
         return (int) (getTimespan(date) / 10);

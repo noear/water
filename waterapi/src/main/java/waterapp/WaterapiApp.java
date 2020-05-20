@@ -7,7 +7,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiDefault;
 import org.noear.water.protocol.solution.LogStorerDb;
 import org.noear.water.protocol.solution.MessageQueueRedis;
-import waterapp.dso.IDUtil;
+import waterapp.dso.IDUtils;
 import waterapp.dso.LogSourceWrap;
 
 public class WaterapiApp {
@@ -32,7 +32,7 @@ public class WaterapiApp {
 			XApp.start(WaterapiApp.class, argx, app -> {
 				Config.tryInit(app.port(), app.prop().getProp("water.dataSource"));
 
-				ProtocolHub.logStorer = new LogStorerDb(new LogSourceWrap(), () -> IDUtil.buildLogID());
+				ProtocolHub.logStorer = new LogStorerDb(new LogSourceWrap(), () -> IDUtils.buildLogID());
 				ProtocolHub.messageQueue = new MessageQueueRedis(Config.water_msg_queue, Config.rd_msg);
 				ProtocolHub.heihei = HeiheiDefault.singleton();
 			});

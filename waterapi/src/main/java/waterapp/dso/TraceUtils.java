@@ -5,7 +5,7 @@ import org.noear.water.utils.RedisX;
 import waterapp.Config;
 import waterapp.utils.Datetime;
 
-public class TrackUtil {
+public class TraceUtils {
 
     //记录性能（service/tag/name，三级）
     public static void track(String service, String tag, String name, long timespan) {

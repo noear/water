@@ -6,7 +6,7 @@ import org.noear.weed.DbContext;
 
 import java.util.Properties;
 
-public class DbUtil {
+public class DbUtils {
     public static DbContext getDb(Properties prop) {
         if (prop.size() < 4) {
             throw new RuntimeException("Data source configuration error!");

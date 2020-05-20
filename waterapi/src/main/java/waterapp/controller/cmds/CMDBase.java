@@ -4,8 +4,8 @@ import org.noear.snack.ONode;
 import waterapp.utils.TextUtils;
 import org.noear.solon.core.XContext;
 import waterapp.Config;
-import waterapp.dso.LogUtil;
-import waterapp.dso.TrackUtil;
+import waterapp.dso.LogUtils;
+import waterapp.dso.TraceUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.utils.IPUtil;
 import waterapp.utils.Timecount;
@@ -68,7 +68,7 @@ public abstract class CMDBase {
         try {
             if (do1_check_ip()) {
                 if(isLogging()) {
-                    LogUtil.info("", context);
+                    LogUtils.info("", context);
                 }
 
                 do2_exec();
@@ -76,7 +76,7 @@ public abstract class CMDBase {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            LogUtil.error(context, ex);
+            LogUtils.error(context, ex);
 
             data.set("code", "0");
             data.set("msg", ex.getMessage());
@@ -85,7 +85,7 @@ public abstract class CMDBase {
         long timespan = timecount.stop().milliseconds();
 
         if(isTrack()) {
-            TrackUtil.track(Config.water_service_name, "cmd", this.getClass().getSimpleName(), timespan);
+            TraceUtils.track(Config.water_service_name, "cmd", this.getClass().getSimpleName(), timespan);
         }
 
         if (isOutput()) {
@@ -121,7 +121,7 @@ public abstract class CMDBase {
             context.output(data.toJson());
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.error(context, ex);
+            LogUtils.error(context, ex);
         }
     }
 

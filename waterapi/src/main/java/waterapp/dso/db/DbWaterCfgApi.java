@@ -2,12 +2,11 @@ package waterapp.dso.db;
 
 import org.noear.weed.DbContext;
 import waterapp.Config;
-import waterapp.dso.CacheUtil;
+import waterapp.dso.CacheUtils;
 import waterapp.models.ConfigModel;
 import waterapp.models.LoggerModel;
 import waterapp.utils.TextUtils;
 
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,7 +51,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .where("tag=? AND `key`=?", tag, key)
                 .select("*")
-                .caching(CacheUtil.data)
+                .caching(CacheUtils.data)
                 .getItem(new ConfigModel());
     }
 
@@ -91,7 +90,7 @@ public class DbWaterCfgApi {
                 .andEq("tag","_alarm")
                 .andNeq("value","")
                 .select("value ")
-                .caching(CacheUtil.data)
+                .caching(CacheUtils.data)
                 .getArray(0);
     }
 
@@ -112,7 +111,7 @@ public class DbWaterCfgApi {
                 .whereEq("type","ip")
                 .andEq("tag","server")
                 .select("value")
-                .caching(CacheUtil.data).usingCache(60)
+                .caching(CacheUtils.data).usingCache(60)
                 .getArray("value");
     }
 
@@ -135,7 +134,7 @@ public class DbWaterCfgApi {
 
                     }
                 })
-                .caching(CacheUtil.data).usingCache(60)
+                .caching(CacheUtils.data).usingCache(60)
                 .exists();
 
     }
@@ -145,7 +144,7 @@ public class DbWaterCfgApi {
 
         return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
                 .select("*")
-                .caching(CacheUtil.data)
+                .caching(CacheUtils.data)
                 .getItem(new LoggerModel());
 
     }

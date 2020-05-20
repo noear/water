@@ -7,7 +7,7 @@ import waterapp.utils.Datetime;
 import java.util.Random;
 import java.util.UUID;
 
-public class IDUtil {
+public class IDUtils {
     public static String buildGuid(){
         return UUID.randomUUID().toString();
     }
@@ -56,7 +56,7 @@ public class IDUtil {
             } catch (Exception ex) {
                 ex.printStackTrace();
 
-                LogUtil.error("IDUtil",null,"getIDOfDate", ex);
+                LogUtils.error("IDUtil",null,"getIDOfDate", ex);
 
                 return getByTime();
             }
@@ -76,7 +76,7 @@ public class IDUtil {
             } catch (Exception ex) {
                 ex.printStackTrace();
 
-                LogUtil.error("IDUtil",null,"getIDOfHour", ex);
+                LogUtils.error("IDUtil",null,"getIDOfHour", ex);
 
                 return getByTime();
             }

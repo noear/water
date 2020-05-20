@@ -1,6 +1,6 @@
 package waterapp.controller.cmds;
 
-import waterapp.dso.DisttimeUtil;
+import waterapp.dso.DisttimeUtils;
 import waterapp.dso.db.DbWaterMsgApi;
 
 import java.util.Date;
@@ -28,7 +28,7 @@ public class CMD_msg_send extends CMDBase {
             return;
         }
 
-        Date time2 = DisttimeUtil.getDate(time, "yyyy-MM-dd HH:mm:ss");
+        Date time2 = DisttimeUtils.getDate(time, "yyyy-MM-dd HH:mm:ss");
 
         if (DbWaterMsgApi.addMessage(key, topic, message, time2) > 0) {
             data.set("code", 1);

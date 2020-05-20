@@ -1,7 +1,7 @@
 package waterapp.controller.cmds;
 
 import waterapp.utils.TextUtils;
-import waterapp.dso.TrackUtil;
+import waterapp.dso.TraceUtils;
 
 /**
  * Created by noear on 2017/7/19.
@@ -28,14 +28,14 @@ public class CMD_sev_track_api extends CMDBase {
         String name = get("name");
         long timespan = getlong("timespan"); //豪秒
 
-        TrackUtil.track(service, tag, name, timespan);
+        TraceUtils.track(service, tag, name, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
-            TrackUtil.track("_service", service, _node, timespan);
+            TraceUtils.track("_service", service, _node, timespan);
         }
 
         if (TextUtils.isEmpty(_from) == false) {
-            TrackUtil.track("_from", service, _from, timespan);
+            TraceUtils.track("_from", service, _from, timespan);
         }
 
         data.set("code", 1);

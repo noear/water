@@ -4,9 +4,9 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.weed.*;
 import waterapp.utils.TextUtils;
 import waterapp.Config;
-import waterapp.dso.CacheUtil;
-import waterapp.dso.DisttimeUtil;
-import waterapp.dso.IDUtil;
+import waterapp.dso.CacheUtils;
+import waterapp.dso.DisttimeUtils;
+import waterapp.dso.IDUtils;
 import waterapp.models.MessageModel;
 import waterapp.models.SubscriberModel;
 import waterapp.models.TopicModel;
@@ -28,7 +28,7 @@ public final class DbWaterMsgApi {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_name=?", topic)
                 .select("*")
-                .caching(CacheUtil.data)
+                .caching(CacheUtils.data)
                 .getItem(new TopicModel());
 
         if (m.topic_id == 0) {
@@ -156,7 +156,7 @@ public final class DbWaterMsgApi {
             }
         }
 
-        long msg_id = IDUtil.buildMsgID();
+        long msg_id = IDUtils.buildMsgID();
 
         db().table("water_msg_message").usingExpr(true)
                 .set("msg_id", msg_id)
@@ -167,7 +167,7 @@ public final class DbWaterMsgApi {
                 .set("log_date", "$DATE(NOW())")
                 .set("log_fulltime", "$NOW()").build((tb) -> {
                     if (time != null) {
-                        tb.set("dist_nexttime", DisttimeUtil.nextTime(time));
+                        tb.set("dist_nexttime", DisttimeUtils.nextTime(time));
                     }
                 }).insert();
 
@@ -206,7 +206,7 @@ public final class DbWaterMsgApi {
             return Config.water_msg.table("water_msg_message")
                     .where("msg_key=?", msg_key)
                     .select("*")
-                    .caching(CacheUtil.data).usingCache(60)
+                    .caching(CacheUtils.data).usingCache(60)
                     .getItem(new MessageModel());
         }
     }
@@ -224,7 +224,7 @@ public final class DbWaterMsgApi {
                 .whereEq("topic_id", topicID).andEq("subscriber_key", subscriber_key)
                 .limit(1)
                 .select("*")
-                .caching(CacheUtil.data).usingCache(60)
+                .caching(CacheUtils.data).usingCache(60)
                 .getItem(new SubscriberModel());
     }
 }

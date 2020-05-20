@@ -4,7 +4,7 @@ import org.noear.solon.XUtil;
 import org.noear.water.utils.RedisX;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
-import waterapp.dso.DbUtil;
+import waterapp.dso.DbUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.dso.db.DbWaterRegApi;
 import waterapp.models.ConfigModel;
@@ -53,7 +53,7 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            water = DbUtil.getDb(prop);
+            water = DbUtils.getDb(prop);
             water_msg = cfg("water_msg").getDb(true);
             water_log = cfg("water_log").getDb(true);
 

@@ -3,8 +3,8 @@ package waterapp.dso.db;
 import org.noear.weed.DbContext;
 import org.noear.solon.core.XContext;
 import waterapp.Config;
-import waterapp.dso.LogUtil;
-import waterapp.dso.MsgUtil;
+import waterapp.dso.LogUtils;
+import waterapp.dso.MsgUtils;
 import waterapp.models.ServiceModel;
 import waterapp.utils.EncryptUtil;
 import waterapp.utils.IPUtil;
@@ -66,7 +66,7 @@ public final class DbWaterRegApi {
 
             //新增节点时，添加负载通知
             if(service.contains(":")==false && check_type==0){
-                MsgUtil.updateCache("upstream:"+service);
+                MsgUtils.updateCache("upstream:"+service);
             }
         }
     }
@@ -81,7 +81,7 @@ public final class DbWaterRegApi {
 
         //通知负载更新
         if(service.contains(":")==false){
-            MsgUtil.updateCache("upstream:"+service);
+            MsgUtils.updateCache("upstream:"+service);
         }
 
         return isOk;
@@ -100,7 +100,7 @@ public final class DbWaterRegApi {
                     .upsertBy("service,consumer_address");
         }catch (Exception ex){
             ex.printStackTrace();
-            LogUtil.error(XContext.current(),ex);
+            LogUtils.error(XContext.current(),ex);
         }
     }
 }

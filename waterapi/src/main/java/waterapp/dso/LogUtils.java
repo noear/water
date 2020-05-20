@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by noear on 2017/7/27.
  */
-public class LogUtil {
+public class LogUtils {
     private static final String logger_api = "water_log_api";
 
 
