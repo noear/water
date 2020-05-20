@@ -20,11 +20,6 @@ import waterapp.models.water.SynchronousModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:数据同步
- */
-
 @XController
 @XMapping("/tool/sync")
 public class DataSynController extends BaseController{

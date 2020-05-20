@@ -9,11 +9,6 @@ import org.noear.water.WaterClient;
 import waterapp.controller.BaseController;
 import waterapp.viewModels.ViewModel;
 
-/**
- * @Author:Fei.chu
- * @Description:嘿嘿
- */
-
 @XController
 @XMapping("/tool/")
 public class HeiheiController extends BaseController{

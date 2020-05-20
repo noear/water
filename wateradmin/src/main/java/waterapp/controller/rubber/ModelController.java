@@ -30,12 +30,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:38 2018/05/15
- * @Description:数据模型
- */
-
 @XController
 @XMapping("/rubber/")
 public class ModelController extends BaseController {

@@ -30,12 +30,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 15:59 2018/06/12
- * @Description:数据block
- */
-
 @XController
 @XMapping("/rubber/")
 public class BlockController extends BaseController {

@@ -17,11 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @Author:Fei.chu
- * @Description:消息相关
- */
-
 @XController
 public class SubsController extends BaseController {
     //订阅列表

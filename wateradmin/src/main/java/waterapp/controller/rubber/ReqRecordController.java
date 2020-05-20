@@ -15,11 +15,6 @@ import waterapp.models.water_rebber.LogRequestModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:40 2018/05/15
- * @Description:请求记录
- */
 
 @XController
 @XMapping("/rubber/")

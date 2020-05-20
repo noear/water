@@ -30,12 +30,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 10:39 2018/05/15
- * @Description:计算方案
- */
-
 @XController
 @XMapping("/rubber/")
 public class SchemeController extends BaseController {

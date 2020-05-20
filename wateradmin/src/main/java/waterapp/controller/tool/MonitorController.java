@@ -20,11 +20,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:监视状态
- */
-
 @XController
 @XMapping("/tool/")
 public class MonitorController extends BaseController{

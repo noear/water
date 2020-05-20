@@ -18,11 +18,6 @@ import waterapp.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:zxl
- * @Date:Created in 10:40 2018/05/15
- * @Description:参与者
- */
 
 @XController
 @XMapping("/rubber/")

@@ -30,11 +30,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @Author:Fei.chu
- * @Date:Created in 15:04 2019/05/21
- * @Description:
- */
 //非单例
 @XController
 @XMapping("/tool/report")

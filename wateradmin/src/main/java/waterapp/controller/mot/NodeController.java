@@ -10,11 +10,6 @@ import waterapp.models.water_reg.ServiceSpeedModel;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * @Author:Fei.chu
- * @Description:服务管理
- */
-
 @XController
 @XMapping("/mot/")
 public class NodeController extends BaseController{
