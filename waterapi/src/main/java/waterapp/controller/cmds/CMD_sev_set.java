@@ -1,5 +1,8 @@
 package waterapp.controller.cmds;
 
+import org.noear.solon.core.XContext;
+import org.noear.water.protocol.ProtocolHub;
+import waterapp.dso.LogUtil;
 import waterapp.dso.db.DbWaterRegApi;
 
 /**
@@ -28,6 +31,9 @@ public class CMD_sev_set extends CMDBase {
         }
 
         DbWaterRegApi.disableService(service, address, note, enabled>0);
+
+        LogUtil.info(XContext.current().path(),context);
+
         data.set("code", 1);
         data.set("msg", "success");
     }

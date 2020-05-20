@@ -5,7 +5,6 @@ import org.noear.solon.core.XContext;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
 import waterapp.Config;
-import waterapp.dso.db.DbWaterLogApi;
 import waterapp.utils.IPUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +18,7 @@ public class LogUtil {
     private static final String logger_api = "water_log_api";
 
 
-    public static void write(String label,XContext context) {
+    public static void info(String label, XContext context) {
         try {
             String tag = context.path();
 
@@ -45,11 +44,11 @@ public class LogUtil {
         }
     }
 
-    public static void write(String tag, String label, String content) {
-        doWrite(tag, null, label, content);
+    public static void info(String tag, String label, String content) {
+        info(tag, null, label, content);
     }
 
-    public static void doWrite(String tag, String tag1, String label, String content) {
+    public static void info(String tag, String tag1, String label, String content) {
         try {
             ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, tag1, label, content, Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, tag1, "", label, content);

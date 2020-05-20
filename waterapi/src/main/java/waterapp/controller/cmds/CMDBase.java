@@ -68,7 +68,7 @@ public abstract class CMDBase {
         try {
             if (do1_check_ip()) {
                 if(isLogging()) {
-                    LogUtil.write("", context);
+                    LogUtil.info("", context);
                 }
 
                 do2_exec();
