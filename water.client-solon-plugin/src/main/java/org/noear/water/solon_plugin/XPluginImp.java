@@ -80,7 +80,6 @@ public class XPluginImp implements XPlugin {
                     XWaterAdapter.global().router().putAll(_router);
                     XWaterAdapter.global().messageSubscribeHandler();
                     _router.clear();
-                    _router = null;
                 }
             }
         });
