@@ -42,7 +42,7 @@ public final class MsgController implements IJob {
 
     @Override
     public int getInterval() {
-        return 200;
+        return 100;
     }
 
     @Override
