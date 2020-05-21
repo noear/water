@@ -5,7 +5,6 @@ import org.noear.weed.*;
 import waterapp.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.CacheUtils;
-import waterapp.dso.DisttimeUtils;
 import waterapp.dso.IDUtils;
 import waterapp.models.MessageModel;
 import waterapp.models.SubscriberModel;
@@ -142,7 +141,7 @@ public final class DbWaterMsgApi {
     }
 
     //添加消息
-    public static long addMessage(String key, String topic, String content, Date time) throws SQLException {
+    public static long addMessage(String key, String topic, String content, Date plan_time) throws SQLException {
         TopicModel m = getTopicID(topic);
 
         //支持最多消息量的限制
@@ -164,14 +163,15 @@ public final class DbWaterMsgApi {
                 .set("topic_id", m.topic_id)
                 .set("topic_name", topic)
                 .set("content", content)
+                .set("plan_time", plan_time)
                 .set("log_date", "$DATE(NOW())")
                 .set("log_fulltime", "$NOW()").build((tb) -> {
-                    if (time != null) {
-                        tb.set("dist_nexttime", DisttimeUtils.nextTime(time));
+                    if (plan_time != null) {
+                        tb.set("dist_nexttime", plan_time.getTime());
                     }
                 }).insert();
 
-        if (time == null) {
+        if (plan_time == null) {
             addMessageToQueue(msg_id);
         }
 
