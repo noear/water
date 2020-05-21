@@ -1,8 +1,8 @@
 package waterapp.controller._msg;
 
-import org.noear.solon.annotation.XBean;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.water.annotation.WaterMessage;
 import org.noear.water.model.MessageM;
 import org.noear.water.solon_plugin.XMessageHandler;
 import org.noear.water.utils.StringUtils;
@@ -11,7 +11,7 @@ import waterapp.dso.AFileUtil;
 import waterapp.dso.DbApi;
 import waterapp.dso.RouteHelper;
 
-@XBean("msg:water.cache.update")
+@WaterMessage("water.cache.update")
 public class msg_updatecache implements XMessageHandler {
     @Override
     public boolean handler(MessageM msg) throws Exception {

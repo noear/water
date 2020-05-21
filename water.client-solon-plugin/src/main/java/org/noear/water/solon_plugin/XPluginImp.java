@@ -8,7 +8,11 @@ import org.noear.water.annotation.Water;
 import org.noear.water.annotation.WaterMessage;
 import org.noear.water.utils.TextUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class XPluginImp implements XPlugin {
+    Map<String,XMessageHandler> _router  =new HashMap<>();
     @Override
     public void start(XApp app) {
 
@@ -47,40 +51,38 @@ public class XPluginImp implements XPlugin {
             }
         }
 
+        //添加Water注入支持
+        Aop.factory().beanInjectorAdd(Water.class, new XWaterBeanInjector());
+
+        //添加WaterMessage注解支持
+        Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
+            if (XMessageHandler.class.isAssignableFrom(clz)) {
+                String topic = anno.value();
+
+                if (TextUtils.isEmpty(topic) == false) {
+                    _router.put(topic,wrap.raw());
+                }
+            }
+        });
+
         //尝试加载消息订阅
         Aop.beanOnloaded(() -> {
             if (XWaterAdapter.global() != null) {
                 Aop.beanForeach((k, v) -> {
                     if (k.startsWith("msg:") && XMessageHandler.class.isAssignableFrom(v.clz())) {
-                        String msg = k.split(":")[1];
+                        String topic = k.split(":")[1];
 
-                        XWaterAdapter.global().router().put(msg, v.raw());
+                        _router.put(topic, v.raw());
                     }
                 });
 
-                XWaterAdapter.global().messageSubscribeHandler();
-            }
-        });
-
-
-        //添加WaterMessage注解支持
-        Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
-            if (XWaterAdapter.global() != null) {
-                if (XMessageHandler.class.isAssignableFrom(clz)) {
-                    String topic = anno.value();
-
-                    if (TextUtils.isEmpty(topic) == false) {
-                        XWaterAdapter.global().router().put(topic, wrap.raw());
-
-                        if (topic.startsWith("water.") == false) {
-                            XWaterAdapter.global().messageSubscribeTopic(topic);
-                        }
-                    }
+                if(_router.size() > 0) {
+                    XWaterAdapter.global().router().putAll(_router);
+                    XWaterAdapter.global().messageSubscribeHandler();
+                    _router.clear();
+                    _router = null;
                 }
             }
         });
-
-        //添加Water注解支持
-        Aop.factory().beanInjectorAdd(Water.class, new XWaterBeanInjector());
     }
 }

@@ -3,15 +3,15 @@ package waterapp.controller._msg;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XBean;
 import org.noear.water.WaterClient;
+import org.noear.water.annotation.WaterMessage;
 import org.noear.water.model.MessageM;
 import org.noear.water.solon_plugin.XMessageHandler;
 import waterapp.Config;
 import waterapp.dao.LogUtil;
 import waterapp.dao.SchemeUtil;
 
-@XBean("msg:rubber.task")
+@WaterMessage("rubber.task")
 public class msg_rubber_task implements XMessageHandler {
 
     @Override
