@@ -116,7 +116,7 @@
                 <td width="70px">消息ID</td>
                 <td class="left">消息主题</td>
                 <td class="left">内容</td>
-                <td class="left" width="60px">下次<br/>时间</td>
+                <td width="60px">下次<br/>时间</td>
                 <td class="left" width="40px">已派<br/>次数</td>
                 <td class="left" width="120px">发起时间</td>
                 <#if is_admin == 1>
