@@ -32,7 +32,7 @@ public class MessageApi {
      * @param topics 主题..
      * */
     public  ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url,String access_key, String alarm_mobile, int receive_way,String... topics) throws Exception {
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
         params.put("topic", String.join(",", topics));
@@ -42,6 +42,8 @@ public class MessageApi {
         params.put("receive_way", receive_way + "");
 
         String txt = CallUtil.post("msg/subscribe/", params);
+
+        System.out.println("MessageApi::msg/subscribe/:" + txt);
 
         return ONode.loadStr(txt);
     }
@@ -58,6 +60,8 @@ public class MessageApi {
         params.put("topic", String.join(",",topics));
 
         String txt = CallUtil.post("msg/unsubscribe/", params);
+
+        System.out.println("MessageApi::msg/unsubscribe/:" + txt);
 
         return ONode.loadStr(txt);
     }
@@ -98,6 +102,8 @@ public class MessageApi {
 
         String txt = CallUtil.post("msg/send/", params);
 
+        System.out.println("MessageApi::msg/send/:" + txt);
+
         ONode data = ONode.loadStr(txt);
         if(data.get("code").getInt()==1){
             return data;
@@ -137,6 +143,8 @@ public class MessageApi {
 
         String txt = CallUtil.post("msg/send/", params);
 
+        System.out.println("MessageApi::msg/send/:" + txt);
+
         ONode data = ONode.loadStr(txt);
         if(data.get("code").getInt()==1){
             return data;
@@ -165,6 +173,8 @@ public class MessageApi {
 
         String txt = CallUtil.post("msg/cancel/", params);
 
+        System.out.println("MessageApi::msg/cancel/:" + txt);
+
         return ONode.loadStr(txt);
     }
 
@@ -188,6 +198,8 @@ public class MessageApi {
 
 
         String txt = CallUtil.post("msg/succeed/", params);
+
+        System.out.println("MessageApi::msg/succeed/:" + txt);
 
         return ONode.loadStr(txt);
     }

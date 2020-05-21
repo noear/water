@@ -20,7 +20,11 @@ public class NoticeApi {
 
 
         try {
-            return CallUtil.post("run/push/", params);
+            String txt = CallUtil.post("run/push/", params);
+
+            System.out.println("NoticeApi::run/push/:" + txt);
+
+            return txt;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

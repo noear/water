@@ -32,7 +32,7 @@ public final class DbWaterMsgApi {
                 .getItem(new TopicModel());
 
         if (m.topic_id == 0) {
-            m.topic_id = (int) (db().table("topic")
+            m.topic_id = (int) (db().table("water_msg_topic")
                     .set("topic_name", topic)
                     .insert());
         }
