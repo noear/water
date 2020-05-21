@@ -42,7 +42,15 @@ public class MessageModel implements IBinder {
     }
 
     public String nexttime(long c) {
-        Timespan ts = new Timespan(dist_nexttime, c);
+        if (dist_nexttime > c) {
+            return nexttimeDo(dist_nexttime, c);
+        } else {
+            return "-" + nexttimeDo(c, dist_nexttime);
+        }
+    }
+
+    private String nexttimeDo(long time1, long time2) {
+        Timespan ts = new Timespan(time1, time2);
 
         if (ts.minutes() < 1) {
             return ts.seconds() + "s";
