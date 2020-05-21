@@ -28,4 +28,16 @@ public class DisttimeUtils {
 
         return System.currentTimeMillis() + (second * 1000);
     }
+
+    public static Date parse(String dateStr){
+        if(TextUtils.isEmpty(dateStr)){
+            return null;
+        }
+
+        try{
+            return Datetime.parse(dateStr,"yyyy-MM-dd HH:mm:ss").getFulltime();
+        }catch (Exception ex){
+            return null;
+        }
+    }
 }

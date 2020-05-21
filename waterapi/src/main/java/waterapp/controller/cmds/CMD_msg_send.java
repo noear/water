@@ -1,5 +1,6 @@
 package waterapp.controller.cmds;
 
+import org.noear.water.utils.DisttimeUtils;
 import waterapp.dso.db.DbWaterMsgApi;
 import waterapp.utils.Datetime;
 
@@ -28,7 +29,7 @@ public class CMD_msg_send extends CMDBase {
             return;
         }
 
-        Date plan_time2 = Datetime.parse(plan_time, "yyyy-MM-dd HH:mm:ss").getFullTime();
+        Date plan_time2 = DisttimeUtils.parse(plan_time);
 
         if (DbWaterMsgApi.addMessage(key, topic, message, plan_time2) > 0) {
             data.set("code", 1);
