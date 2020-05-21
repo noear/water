@@ -2,7 +2,7 @@ package org.noear.water.utils;
 
 import java.util.Date;
 
-public class DisttimeUtil {
+public class DisttimeUtils {
     public static long currTime(){
         return System.currentTimeMillis();
     }

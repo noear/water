@@ -131,14 +131,7 @@
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}</td>
                     <td class="left break">${msg.content}</td>
-                    <td>
-                        <#if (msg.dist_nexttime>0)>
-                            ${(msg.dist_nexttime - currTime)/1000}
-                        </#if>
-                        <#if (msg.dist_nexttime<=0)>
-                            ${msg.dist_nexttime/1000}
-                        </#if>
-                    </td>
+                    <td>${msg.nexttime(currTime)}</td>
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
                     <#if is_admin == 1>

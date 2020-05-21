@@ -1,6 +1,7 @@
 package waterapp.dso.db;
 
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.DisttimeUtils;
 import org.noear.weed.*;
 import waterapp.utils.TextUtils;
 import waterapp.Config;
@@ -167,7 +168,7 @@ public final class DbWaterMsgApi {
                 .set("log_date", "$DATE(NOW())")
                 .set("log_fulltime", "$NOW()").build((tb) -> {
                     if (plan_time != null) {
-                        tb.set("dist_nexttime", plan_time.getTime());
+                        tb.set("dist_nexttime", DisttimeUtils.nextTime(plan_time));
                     }
                 }).insert();
 

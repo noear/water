@@ -1,6 +1,6 @@
 package waterapp.dso.db;
 
-import org.noear.water.utils.DisttimeUtil;
+import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
 import waterapp.Config;
@@ -71,7 +71,7 @@ public class DbWaterMsgApi {
                     .set("state", state)
                     .build(tb -> {
                         if (state == 0) {
-                            long ntime = DisttimeUtil.nextTime(1);
+                            long ntime = DisttimeUtils.nextTime(1);
                             tb.set("dist_nexttime", ntime);
                             //可以检查处理中时间是否过长了？可手动恢复状态
                         }
@@ -98,7 +98,7 @@ public class DbWaterMsgApi {
         try {
             msg.dist_count += 1;
 
-            long ntime = DisttimeUtil.nextTime(msg.dist_count);
+            long ntime = DisttimeUtils.nextTime(msg.dist_count);
 
             db().table("water_msg_message").usingExpr(true)
                     .set("state", state)

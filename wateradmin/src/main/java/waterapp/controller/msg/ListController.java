@@ -4,7 +4,7 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.solon.core.XContext;
-import org.noear.water.utils.DisttimeUtil;
+import org.noear.water.utils.DisttimeUtils;
 import waterapp.controller.BaseController;
 import waterapp.dso.Session;
 import waterapp.dso.db.DbWaterMsgApi;
@@ -32,7 +32,7 @@ public class ListController extends BaseController {
         viewModel.put("key",key);
         viewModel.put("_m",_m);
         viewModel.put("list",list);
-        viewModel.put("currTime", DisttimeUtil.currTime());
+        viewModel.put("currTime", DisttimeUtils.currTime());
         return view("msg/list");
     }
 

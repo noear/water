@@ -73,7 +73,7 @@ public final class MsgController implements IJob {
                 continue;
             }
 
-            long ntime = DisttimeUtil.currTime();
+            long ntime = DisttimeUtils.currTime();
             if (msg.dist_nexttime > ntime) { //如果时间还没到
                 continue;
             }
@@ -295,7 +295,7 @@ public final class MsgController implements IJob {
                 });
 
                 //推后一小时，可手工再恢复
-                long ntime = DisttimeUtil.nextTime(Datetime.Now().addHour(1).getFulltime());
+                long ntime = DisttimeUtils.nextTime(Datetime.Now().addHour(1).getFulltime());
                 DbWaterMsgApi.setMessageState(msg.msg_id, 1, ntime);
             }
 
