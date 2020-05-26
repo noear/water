@@ -26,6 +26,10 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
+        if(data.containsKey("tag") == false){
+            data.put("tag", "_raas");
+        }
+
         if (data.containsKey("tag2") == false && file != null) {
             data.put("tag2", file.path);
         }
@@ -35,7 +39,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append("water_log_paas", Level.ERROR, "_file", file.tag, file.path, "", "", msg);
+        WaterClient.Log.append("water_log_paas", Level.ERROR, "_raas", file.tag, file.path, "", "", msg);
     }
 
     @Override
