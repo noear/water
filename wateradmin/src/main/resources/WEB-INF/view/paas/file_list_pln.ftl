@@ -206,7 +206,7 @@
                         <td class="op">
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
-                            <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=5&tagx=pln@${m1.file_id}" target="_parent" class="t2">日志</a>
+                            <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=5&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
                             |
                             <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" target="_blank">调试</a>
 

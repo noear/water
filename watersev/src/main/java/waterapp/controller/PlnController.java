@@ -58,7 +58,7 @@ public class PlnController implements IJob {
                 ex2.printStackTrace();
             }
 
-            LogUtil.error(this, task.file_id + "", "", ex);
+            LogUtil.planError(this, task,  ex);
 
             AlarmUtil.tryAlarm(task);
         }
@@ -158,6 +158,6 @@ public class PlnController implements IJob {
         task.plan_count = task.plan_count + 1;
         DbWaterPaasApi.setPlanState(task, 9, "OK");
 
-        LogUtil.writeForPlan(this, task);
+        LogUtil.planInfo(this, task);
     }
 }

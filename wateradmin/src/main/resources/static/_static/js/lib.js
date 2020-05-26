@@ -20,7 +20,7 @@ function UrlQueryBy(key, val, delName, openUrl) {
 
     var hash = location.hash;
 
-    var url = location.href.replace(hash, '').replace(/[#@]+/, '');
+    var url = location.href.replace(hash, '').replace(/[#]+/, '');
 
     if (delName && delName.length > 0) {
         url = url.replace(eval("/\\?" + delName + "=[^&]*&?/"), '?');
@@ -66,7 +66,7 @@ function UrlQueryByDic(dic, openUrl) {
 
     var hash = location.hash;
 
-    var url = location.href.replace(hash, '').replace(/[#@]+/, '');
+    var url = location.href.replace(hash, '').replace(/[#]+/, '');
 
     for (var key in dic) {
         val = dic[key];

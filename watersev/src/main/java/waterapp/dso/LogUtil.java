@@ -2,6 +2,8 @@ package waterapp.dso;
 
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.water.WaterClient;
+import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -59,12 +61,25 @@ public class LogUtil {
     //
     //
 
-    public static void writeForPlan(IJob tag, AFileModel plan) {
-
+    public static void planInfo(IJob tag, AFileModel plan) {
         String content = plan.path + "(" + plan.plan_count + "/" + plan.plan_max + ")执行成功";
 
-        write(tag.getName(), plan.file_id + "", "", content);
+        WaterClient.Log.append("water_log_paas", Level.INFO, "_file", plan.tag, plan.path, "", "", content);
+        //write(tag.getName(), plan.file_id + "", "", content);
     }
+
+    public static void planError(IJob tag, AFileModel plan, Throwable content) {
+
+        //log_sev.error(tag.getName(), tag1, summary, content);
+
+        WaterClient.Log.append("water_log_paas", Level.ERROR, "_file", plan.tag, plan.path, "", "", content);
+
+        System.out.print(tag + "::\r\n");
+        System.out.print(ThrowableUtils.getString(content));
+        System.out.print("\r\n");
+    }
+
+
 
     public static void write(IJob tag, String tag1, String summary, String content) {
         write(tag.getName(), tag1, summary, content);
