@@ -23,7 +23,11 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     }
 
     @Override
-    public void log(Map<String, Object> data) {
+    public void log(AFileModel file, Map<String, Object> data) {
+        if (data.containsKey("tag2") == false) {
+            data.put("tag2", file.path);
+        }
+
         WaterClient.Log.append("water_log_paas", Level.DEBUG, data);
     }
 
