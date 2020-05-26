@@ -25,12 +25,12 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void log(Map<String, Object> data) {
-        WaterClient.Log.append("water_log_sev", Level.DEBUG, data);
+        WaterClient.Log.append("water_log_paas", Level.DEBUG, data);
     }
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append("water_log_sev", Level.ERROR, "_file", file.tag, file.path, "", "", msg);
+        WaterClient.Log.append("water_log_paas", Level.ERROR, "_file", file.tag, file.path, "", "", msg);
     }
 
     @Override
