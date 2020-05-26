@@ -63,7 +63,7 @@ public final class MsgController implements IJob {
             String msg_id_str = _queue.pop();
 
             if (TextUtils.isEmpty(msg_id_str)) {//如果没有了
-                break;
+                continue;
             }
 
             long msgID = Long.parseLong(msg_id_str);
