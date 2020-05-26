@@ -24,7 +24,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
-        if (data.containsKey("tag2") == false) {
+        if (data.containsKey("tag2") == false && file != null) {
             data.put("tag2", file.path);
         }
 
