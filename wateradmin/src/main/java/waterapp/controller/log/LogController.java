@@ -1,5 +1,6 @@
 package waterapp.controller.log;
 
+import org.noear.solon.core.XContext;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
@@ -8,6 +9,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import waterapp.controller.BaseController;
 import waterapp.dso.BcfTagChecker;
+import waterapp.dso.Session;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.TagCountsModel;
 import waterapp.models.water_cfg.LoggerModel;
@@ -20,34 +22,44 @@ import java.util.List;
 public class LogController extends BaseController {
 
     @XMapping("query")
-    public ModelAndView index(String tag_name) throws Exception {
+    public ModelAndView index(String tag_name, XContext ctx) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
-        } else {
+        if (TextUtils.isEmpty(tag_name)) {
+            tag_name = ctx.cookie("wateradmin_log__tag");
+        }
+
+        if (TextUtils.isEmpty(tag_name)) {
             if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
-            } else {
-                viewModel.put("tag_name", null);
+                tag_name = tags.get(0).tag;
             }
         }
+
+        viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
         return view("log/query");
     }
 
     @XMapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
+
+        if(TextUtils.isEmpty(logger)) {
+            logger = ctx.cookie("wateradmin_log__tag_" + tag_name);
+        }
 
         if(TextUtils.isEmpty(logger)){
             if(loggers.size() > 0){
                 logger = loggers.get(0).logger;
             }
         }
+
+        //增加session 记忆
+        ctx.cookieSet("wateradmin_log__tag", tag_name); //给上面用
+        ctx.cookieSet("wateradmin_log__tag_" + tag_name, logger);
 
 
         List list = new ArrayList<>();
