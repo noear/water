@@ -4,10 +4,14 @@ package waterapp.controller;
 import org.noear.solon.annotation.XSingleton;
 import org.noear.solon.core.ModelAndView;
 import org.noear.solon.core.XContext;
+import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.Session;
+import waterapp.models.TagCountsModel;
 import waterapp.utils.IPUtil;
 import waterapp.viewModels.ViewModel;
+
+import java.util.List;
 
 
 /**
@@ -29,6 +33,7 @@ public abstract class BaseController {
     public String getIP(XContext request) {
         return IPUtil.getIP(request);
     }
+
 
     /*视图数据模型*/
     protected ViewModel viewModel = new ViewModel();

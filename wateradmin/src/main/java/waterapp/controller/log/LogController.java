@@ -10,6 +10,7 @@ import org.noear.solon.core.ModelAndView;
 import waterapp.controller.BaseController;
 import waterapp.dso.BcfTagChecker;
 import waterapp.dso.Session;
+import waterapp.dso.TagUtil;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.TagCountsModel;
 import waterapp.models.water_cfg.LoggerModel;
@@ -27,15 +28,7 @@ public class LogController extends BaseController {
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name)) {
-            tag_name = ctx.cookie("wateradmin_log__tag");
-        }
-
-        if (TextUtils.isEmpty(tag_name)) {
-            if (tags.isEmpty() == false) {
-                tag_name = tags.get(0).tag;
-            }
-        }
+        tag_name = TagUtil.build(tag_name, tags);
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
@@ -58,7 +51,7 @@ public class LogController extends BaseController {
         }
 
         //增加session 记忆
-        ctx.cookieSet("wateradmin_log__tag", tag_name); //给上面用
+        TagUtil.cookieSet(tag_name);
         ctx.cookieSet("wateradmin_log__tag_" + tag_name, logger);
 
 

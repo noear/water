@@ -7,6 +7,7 @@ import org.noear.solon.core.ModelAndView;
 import waterapp.controller.BaseController;
 import waterapp.dso.BcfTagChecker;
 import waterapp.dso.Session;
+import waterapp.dso.TagUtil;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.TagCountsModel;
 import waterapp.models.water_cfg.ConfigModel;
@@ -27,15 +28,9 @@ public class LoggerController extends BaseController{
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
-        } else {
-            if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
-            } else {
-                viewModel.put("tag_name",null);
-            }
-        }
+        tag_name = TagUtil.build(tag_name,tags);
+
+        viewModel.put("tag_name",tag_name);
         viewModel.put("tags",tags);
         return view("cfg/logger");
     }

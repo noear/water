@@ -13,6 +13,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import waterapp.controller.BaseController;
 import waterapp.dso.BcfTagChecker;
+import waterapp.dso.TagUtil;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.TagCountsModel;
 import waterapp.models.water_cfg.ConfigModel;
@@ -31,18 +32,30 @@ public class PropController extends BaseController{
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
-        } else {
-            if (tags.isEmpty() == false) {
-                viewModel.put("tag_name",tags.get(0).tag);
-            } else {
-                viewModel.put("tag_name",null);
-            }
-        }
+        tag_name = TagUtil.build(tag_name,tags);
+
+        viewModel.put("tag_name",tag_name);
         viewModel.put("tags",tags);
         return view("cfg/prop");
     }
+
+    @XMapping("inner")
+    public ModelAndView innerDo(XContext ctx, String tag_name,String key) throws SQLException {
+        int state = ctx.paramAsInt("state",1);
+
+        TagUtil.cookieSet(tag_name);
+
+        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name,key, state);
+
+        viewModel.put("list",list);
+        viewModel.put("tag_name",tag_name);
+        viewModel.put("state",state);
+        viewModel.put("key",key);
+
+        return view("cfg/prop_inner");
+    }
+
+
     //跳转编辑页面。
     @XMapping("edit")
     public ModelAndView editConfig(String tag_name, Integer row_id) throws SQLException {
@@ -92,19 +105,7 @@ public class PropController extends BaseController{
         return viewModel.code(1, "操作成功");
     }
 
-    @XMapping("inner")
-    public ModelAndView innerDo(XContext ctx, String tag_name,String key) throws SQLException {
-        int state = ctx.paramAsInt("state",1);
 
-        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name,key, state);
-
-        viewModel.put("list",list);
-        viewModel.put("tag_name",tag_name);
-        viewModel.put("state",state);
-        viewModel.put("key",key);
-
-        return view("cfg/prop_inner");
-    }
 
 
 

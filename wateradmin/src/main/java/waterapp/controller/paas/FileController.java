@@ -12,6 +12,7 @@ import org.noear.weed.DataItem;
 import waterapp.controller.BaseController;
 import waterapp.dso.BcfTagChecker;
 import waterapp.dso.Session;
+import waterapp.dso.TagUtil;
 import waterapp.dso.db.DbPaaSApi;
 import waterapp.models.TagCountsModel;
 import waterapp.models.water_paas.PaasFileModel;
@@ -45,16 +46,9 @@ public class FileController extends BaseController {
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name", tag_name);
-        } else {
-            if (tags.isEmpty() == false) {
-                viewModel.put("tag_name", tags.get(0).tag);
-            } else {
-                viewModel.put("tag_name", "");
-            }
-        }
+        tag_name = TagUtil.build(tag_name, tags);
 
+        viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
         return view("paas/file");
     }
@@ -79,6 +73,9 @@ public class FileController extends BaseController {
         String key = ctx.param("key", "");
         int act = ctx.paramAsInt("act",11);
         int state = ctx.paramAsInt("state",0);
+
+
+        TagUtil.cookieSet(tag_name);
 
         key = Base64Utils.decode(key);
 
