@@ -64,7 +64,7 @@ public class LogUtil {
     public static void planInfo(IJob tag, AFileModel plan) {
         String content = plan.path + "(" + plan.plan_count + "/" + plan.plan_max + ")执行成功";
 
-        WaterClient.Log.append("water_log_paas", Level.INFO, "_file", plan.tag, plan.path, "", "", content);
+        WaterClient.Log.append("water_log_paas", Level.INFO, "_plan", plan.tag, plan.path, "", "", content);
         //write(tag.getName(), plan.file_id + "", "", content);
     }
 
@@ -72,7 +72,7 @@ public class LogUtil {
 
         //log_sev.error(tag.getName(), tag1, summary, content);
 
-        WaterClient.Log.append("water_log_paas", Level.ERROR, "_file", plan.tag, plan.path, "", "", content);
+        WaterClient.Log.append("water_log_paas", Level.ERROR, "_plan", plan.tag, plan.path, "", "", content);
 
         System.out.print(tag + "::\r\n");
         System.out.print(ThrowableUtils.getString(content));
