@@ -21,6 +21,11 @@ public class WhitelistApi {
     public static final String tag_server = "server";
 
     /**
+     * 客户端组+服务端组
+     * */
+    public static final String tag_clientAndServer = "client,server";
+
+    /**
      * 检测，是否为白名单
      *
      * @param tags   分组(多个以,隔开)
@@ -49,10 +54,20 @@ public class WhitelistApi {
         return checkDo(tags,"ip",value);
     }
 
+    public boolean existsOfClientIp(String value){
+        return checkDo(tag_client,"ip",value);
+    }
+    public boolean existsOfServerIp(String value){
+        return checkDo(tag_server,"ip",value);
+    }
+    public boolean existsOfMasterIp(String value){
+        return checkDo(tag_master,"ip",value);
+    }
+
+
     public boolean existsOfDomain(String tags, String value){
         return checkDo(tags,"domain",value);
     }
-
     public boolean existsOfMobile(String tags, String value){
         return checkDo(tags,"domain",value);
     }

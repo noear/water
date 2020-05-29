@@ -11,7 +11,7 @@ public class IpHandler implements XHandler {
     public void handle(XContext ctx) throws Exception {
         String ip = IPUtils.getIP(ctx);
 
-        if (WaterClient.Whitelist.existsOfIp("server",  ip) == false) {
+        if (WaterClient.Whitelist.existsOfServerIp(ip) == false) {
             String out = ip + " is not whitelist!";
 
             ctx.attrSet("output", out);

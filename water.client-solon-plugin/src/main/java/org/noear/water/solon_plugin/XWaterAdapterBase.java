@@ -155,7 +155,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
             } else if (service_stop_path.equals(path)) {
                 //run/stop/
                 String ip = IPUtils.getIP(context);
-                if (WaterClient.Whitelist.existsOfIp(WhitelistApi.tag_master, ip)) {
+                if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
                     stateSet(false);
                     XApp.stop();
                     text = "OK";
