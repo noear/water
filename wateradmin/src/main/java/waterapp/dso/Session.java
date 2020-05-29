@@ -2,8 +2,8 @@ package waterapp.dso;
 
 
 import org.noear.bcf.BcfClient;
+import org.noear.bcf.XSessionBcf;
 import org.noear.bcf.models.BcfUserModel;
-import org.noear.bcf.solon_plugin.XSessionBcf;
 import waterapp.Config;
 
 public final class Session extends XSessionBcf {

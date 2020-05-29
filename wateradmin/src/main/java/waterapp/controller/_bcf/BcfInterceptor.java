@@ -2,8 +2,8 @@ package waterapp.controller._bcf;
 
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfInterceptorBase;
+import org.noear.bcf.XSessionBcf;
 import org.noear.bcf.models.BcfUserModel;
-import org.noear.bcf.solon_plugin.XSessionBcf;
 import org.noear.solon.XApp;
 import org.noear.solon.annotation.XInterceptor;
 import org.noear.solon.annotation.XMapping;
@@ -31,8 +31,7 @@ public class BcfInterceptor extends BcfInterceptorBase {
 //            //开发模式下，自动登录
 //            //
 //            if (XApp.cfg().isDebugMode()) {
-//                BcfUserModel user = BcfClient.login("xieyuejia", "rd81310.");
-//                Session.current().loadModel(user);
+//                Session.current().loadModel("xieyuejia", "rd81310.");
 //            }
 //        }
 
