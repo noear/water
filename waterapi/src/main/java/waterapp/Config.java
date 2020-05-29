@@ -1,6 +1,7 @@
 package waterapp;
 
 import org.noear.solon.XUtil;
+import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
@@ -8,7 +9,6 @@ import waterapp.dso.DbUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.dso.db.DbWaterRegApi;
 import waterapp.models.ConfigModel;
-import waterapp.utils.ServerUtil;
 
 import java.util.Properties;
 
@@ -72,7 +72,7 @@ public class Config {
             water_msg_queue = cfg("water_msg_queue").getString();
 
             try {
-                localHost = ServerUtil.getFullAddress(service_port);
+                localHost = LocalUtils.getLocalAddr(service_port);
                 DbWaterRegApi.addService(water_service_name,
                         localHost,
                         "/run/check/",

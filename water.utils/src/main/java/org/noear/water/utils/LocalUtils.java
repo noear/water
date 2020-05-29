@@ -5,6 +5,10 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 
 public class LocalUtils {
+    public static String getLocalAddr(int port){
+        return getLocalIp() + ":" + port;
+    }
+
     public static String getLocalIp(){
 
         NetworkInterface neti = null;
