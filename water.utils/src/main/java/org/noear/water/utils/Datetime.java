@@ -41,7 +41,6 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return _datetime;
     }
 
-
     //当前时间
     ////@XNote("当前时间")
     public static Datetime Now(){
@@ -84,7 +83,7 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return doAdd(Calendar.SECOND, second);
     }
 
-    //@XNote("设置豪数")
+    //@XNote("设置豪秒数")
     public Datetime addMillisecond(int millisecond) {
         return doAdd(Calendar.MILLISECOND, millisecond);
     }
@@ -131,7 +130,7 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return doSet(Calendar.SECOND, second);
     }
 
-    //@XNote("设置豪数")
+    //@XNote("设置豪秒数")
     public Datetime setMillisecond(int millisecond) {
         return doSet(Calendar.MILLISECOND, millisecond);
     }
