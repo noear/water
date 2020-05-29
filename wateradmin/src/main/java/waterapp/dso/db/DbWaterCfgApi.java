@@ -2,6 +2,7 @@ package waterapp.dso.db;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
+import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -161,7 +162,7 @@ public class DbWaterCfgApi {
 
     public static boolean isWhitelist(String val) throws SQLException {
         return db().table("water_cfg_whitelist")
-                .whereIn("tag", Arrays.asList("operator", "server"))
+                .whereIn("tag", Arrays.asList(WhitelistApi.tag_client, WhitelistApi.tag_server))
                 .andEq("type", "ip")
                 .andEq("value", val)
                 .caching(CacheUtil.data).usingCache(60)

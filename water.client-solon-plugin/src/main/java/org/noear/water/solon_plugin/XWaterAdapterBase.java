@@ -7,6 +7,7 @@ import org.noear.solon.XUtil;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterAdapter;
 import org.noear.water.WaterClient;
+import org.noear.water.dso.WhitelistApi;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
@@ -154,7 +155,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
             } else if (service_stop_path.equals(path)) {
                 //run/stop/
                 String ip = IPUtils.getIP(context);
-                if (WaterClient.Whitelist.existsOfIp("master", ip)) {
+                if (WaterClient.Whitelist.existsOfIp(WhitelistApi.tag_master, ip)) {
                     stateSet(false);
                     XApp.stop();
                     text = "OK";
