@@ -42,7 +42,7 @@ public final class MsgController implements IJob {
 
     @Override
     public int getInterval() {
-        return 10;
+        return 10; //让CPU稍微休息下
     }
 
     @Override
