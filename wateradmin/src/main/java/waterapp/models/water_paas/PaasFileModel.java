@@ -43,4 +43,16 @@ public class PaasFileModel {
             return "api";
         }
     }
+
+    public boolean staticize(){
+        return is_staticize;
+    }
+
+    public boolean editable(){
+        return is_editable;
+    }
+
+    public boolean disabled(){
+        return is_disabled;
+    }
 }

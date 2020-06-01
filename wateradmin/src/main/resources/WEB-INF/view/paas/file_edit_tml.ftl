@@ -99,8 +99,8 @@
                 <td></td>
                 <td>
                     <checkbox>
-                        <label class="mar10-r"><input type="checkbox" id="is_disabled"  /><a>禁止使用</a></label>
-                        <label class="mar10-r"><input type="checkbox" id="is_staticize" /><a>静态文件</a></label>
+                        <label class="mar10-r"><input type="checkbox" id="is_disabled" ${m1.disabled?string("checked","")} /><a>禁止使用</a></label>
+                        <label class="mar10-r"><input type="checkbox" id="is_staticize" ${m1.staticize?string("checked","")} /><a>静态文件</a></label>
                     </checkbox>
                 </td>
             </tr>
