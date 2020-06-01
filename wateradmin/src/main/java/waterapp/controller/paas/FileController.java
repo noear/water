@@ -175,6 +175,7 @@ public class FileController extends BaseController {
         data.set("edit_mode", ctx.param("edit_mode"));
         data.set("note", ctx.param("note"));
         data.set("is_disabled", ctx.paramAsInt("is_disabled"));
+        data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
         int file_id = ctx.paramAsInt("id", 0);
         DbPaaSApi.setFile(file_id, data, type);
