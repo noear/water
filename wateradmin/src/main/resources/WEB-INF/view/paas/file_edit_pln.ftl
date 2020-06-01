@@ -98,7 +98,7 @@
                 <td></td>
                 <td>
                     <checkbox>
-                        <label class="mar10-r"><input type="checkbox" id="is_disabled" ${m.is_disabled?string('checked','')} /><a>禁止使用</a></label>
+                        <label class="mar10-r"><input type="checkbox" id="is_disabled" ${m1.is_disabled?string('checked','')} /><a>禁止使用</a></label>
                     </checkbox>
                 </td>
             </tr>
