@@ -3,16 +3,27 @@ package org.noear.water.dso;
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 日志服务接口
  * */
 public class LogApi {
+    private  Map<String,WaterLogger> loggerMap = new ConcurrentHashMap<>();
+    public  WaterLogger logger(String logger) {
+        WaterLogger l = loggerMap.get(logger);
+        if (l == null) {
+            l = loggerMap.putIfAbsent(logger, new WaterLogger(logger));
+        }
+
+        return l;
+    }
 
     /**
      * 添加日志
