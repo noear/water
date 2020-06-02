@@ -40,7 +40,7 @@
 
         <solon.ver>1.0.5.11</solon.ver>
         <water.ver>2.0.1-b5</water.ver>
-        <weed3.ver>3.2.7.3</weed3.ver>
+        <weed3.ver>3.2.7.4</weed3.ver>
         <snack3.ver>3.1.6.5</snack3.ver>
 
         <bcf.ver>2.0.1</bcf.ver>
@@ -197,6 +197,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
+<!--                <version>8.0.20</version>-->
                 <version>5.1.49</version>
             </dependency>
 
