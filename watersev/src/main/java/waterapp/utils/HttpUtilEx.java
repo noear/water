@@ -1,5 +1,6 @@
 package waterapp.utils;
 
+import waterapp.Config;
 import waterapp.utils.ext.Act3;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class HttpUtilEx {
      * hint:如果出错，提示信息?
      */
     public static void getStatusByAsync(String url, Act3<Boolean, Integer, String> callback)  {
-        new Thread(() -> {
+        CallUtil.asynCall(()->{
             long time_start = System.currentTimeMillis();
 
             do_getHttpStatus(url, (isOk, code, hint) -> {
@@ -28,7 +29,7 @@ public class HttpUtilEx {
 
                 callback.run(isOk, code, hint);
             });
-        }).start();
+        });
     }
 
     private static void do_getHttpStatus(String url, Act3<Boolean, Integer, String> callback) {

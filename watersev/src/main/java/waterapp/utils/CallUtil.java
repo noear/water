@@ -1,9 +1,9 @@
 package waterapp.utils;
 
+import waterapp.Config;
+
 public class CallUtil {
     public static void asynCall(Runnable call){
-        new Thread(()->{
-            call.run();
-        }).start();
+        Config.pools.execute(call);
     }
 }

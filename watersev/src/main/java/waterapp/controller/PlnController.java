@@ -7,9 +7,11 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
 import solonjt.JtRun;
+import waterapp.Config;
 import waterapp.dso.*;
 import waterapp.dso.db.DbWaterPaasApi;
 import waterapp.models.water_paas.PaasFileModel;
+import waterapp.utils.CallUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -40,9 +42,9 @@ public class PlnController implements IJob {
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
         for (PaasFileModel task : list) {
-            new Thread(() -> {
+            CallUtil.asynCall(() -> {
                 doExec(task);
-            }).start();
+            });
         }
     }
 

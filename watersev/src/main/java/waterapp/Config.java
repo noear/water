@@ -8,6 +8,9 @@ import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Config {
     public static final String water_service_name = "watersev";
     public static final String water_config_tag = "water";
@@ -30,6 +33,8 @@ public class Config {
         return  cfg("alarm_sign").value;
     }
 
+
+    public static ExecutorService pools = Executors.newCachedThreadPool();
 
     public static void tryInit() {
 
