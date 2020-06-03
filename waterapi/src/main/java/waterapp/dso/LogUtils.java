@@ -18,7 +18,7 @@ public class LogUtils {
     private static final String logger_api = "water_log_api";
 
 
-    public static void info(String label, XContext context) {
+    public static void info(String summary, XContext context) {
         try {
             String tag = context.path();
 
@@ -37,20 +37,20 @@ public class LogUtils {
                 });
             }
 
-            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, ip, label, args.toJson(), Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, ip, summary, args.toJson(), Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
         }
     }
 
-    public static void info(String tag, String label, String content) {
-        info(tag, null, label, content);
+    public static void info(String tag, String summary, String content) {
+        info(tag, null, summary, content);
     }
 
-    public static void info(String tag, String tag1, String label, String content) {
+    public static void info(String tag, String tag1, String summary, String content) {
         try {
-            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, tag1, label, content, Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, tag1, summary, content, Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, tag1, "", label, content);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -61,12 +61,12 @@ public class LogUtils {
         System.out.print("\r\n");
     }
 
-    public static void debug(String tag, String label , String txt) {
+    public static void debug(String tag, String summary , String txt) {
         StringBuilder sb = new StringBuilder();
         sb.append(txt);
 
         try {
-            ProtocolHub.logStorer.append(logger_api, Level.DEBUG, tag,  label, sb.toString(), Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.DEBUG, tag,  summary, sb.toString(), Config.localHost);
             //DbWaterLogApi.addLog(logger_debug, tag, "", "", label, sb.toString());
         }catch (Exception ex){
             ex.printStackTrace();
@@ -98,11 +98,11 @@ public class LogUtils {
         }
     }
 
-    public static void error(String tag, String tag1, String label, Exception ex) {
+    public static void error(String tag, String tag1, String summary, Exception ex) {
         try {
             String content = getFullStackTrace(ex);
 
-            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag,  tag1, label, content, Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag,  tag1, summary, content, Config.localHost);
             //DbWaterLogApi.addLog(logger_error, tag, tag1, "", label, content);
         } catch (Exception ee) {
             ee.printStackTrace();

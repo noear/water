@@ -10,7 +10,7 @@ import waterapp.dso.db.DbWaterRegApi;
 public class CMD_sev_set extends CMDBase {
     @Override
     protected boolean isLogging() {
-        return false;
+        return true;
     }
 
     @Override
@@ -31,7 +31,6 @@ public class CMD_sev_set extends CMDBase {
 
         DbWaterRegApi.disableService(service, address, note, enabled>0);
 
-        LogUtils.info(XContext.current().path(),context);
 
         data.set("code", 1);
         data.set("msg", "success");
