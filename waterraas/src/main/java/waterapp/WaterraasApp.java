@@ -25,7 +25,7 @@ public class WaterraasApp {
     public static void main(String[] args) {
         JtRun.init();
 
-        XApp app = XApp.start(WaterraasApp.class, args, (x) -> {
+        XApp.start(WaterraasApp.class, args, (x) -> {
             Config.tryInit();
 
             x.sharedAdd("cache",Config.cache_data);
@@ -33,18 +33,19 @@ public class WaterraasApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.all("/debug", new DebugController());
+            x.all("/release", new ReleaseController());
+            x.get("/preview(.js)?", new PreviewController());
+
+            x.all("/s/*/*", new SchemeController());
+            x.all("/m/*/*", new ModelController());
+            x.all("/q/*/*", new QueryController());
+            x.all("/d/*/*", new BlockController());
+
+            JtRun.xfunInit();
         });
 
-        app.all("/debug", new DebugController());
-        app.all("/release", new ReleaseController());
-        app.get("/preview(.js)?", new PreviewController());
-
-        app.all("/s/*/*", new SchemeController());
-        app.all("/m/*/*", new ModelController());
-        app.all("/q/*/*", new QueryController());
-        app.all("/d/*/*", new BlockController());
-
-        JtRun.xfunInit();
 
         try {
             Rubber.tryInit(CacheUtil.data);

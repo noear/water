@@ -24,15 +24,17 @@ public class WaterpaasApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.before("**", XMethod.GET, FrmInterceptor.g());
+            x.before("**", XMethod.POST, FrmInterceptor.g());
+
+            //文件代理
+            x.all("**", AppHandler.g());
+
+            JtRun.xfunInit();
         });
 
-        app.before("**", XMethod.GET, FrmInterceptor.g());
-        app.before("**", XMethod.POST, FrmInterceptor.g());
 
-        //文件代理
-        app.all("**", AppHandler.g());
-
-        JtRun.xfunInit();
 
 
         //添加性能记录

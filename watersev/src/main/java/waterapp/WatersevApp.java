@@ -43,8 +43,9 @@ public class WatersevApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            JtRun.xfunInit();
         });
 
-        JtRun.xfunInit();
     }
 }
