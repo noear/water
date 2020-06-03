@@ -12,8 +12,11 @@ import org.noear.water.utils.EncryptUtils;
 import waterapp.dso.DbApi;
 
 import java.util.Collections;
+import java.util.concurrent.CompletableFuture;
 
 public class JtRun {
+    private static CompletableFuture<Integer> initFuture = new CompletableFuture<>();
+
     private static JtExecutorAdapter jtAdapter;
     public static void init() {
         if (jtAdapter == null) {
@@ -45,6 +48,8 @@ public class JtRun {
     }
 
     public static void exec(AFileModel file) throws Exception {
+        initFuture.get();
+
         XContext ctx = XContextEmpty.create();
 
         XContextUtil.currentSet(ctx);
@@ -66,5 +71,7 @@ public class JtRun {
         });
 
         CallUtil.callLabel(null, "hook.start", false, Collections.EMPTY_MAP);
+
+        initFuture.complete(1);
     }
 }
