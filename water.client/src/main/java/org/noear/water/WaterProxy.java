@@ -15,15 +15,9 @@ import java.util.Map;
 public class WaterProxy {
     private static String paas_uri;
     private static String raas_uri;
-    private static Map<String, ConfigM> _sevs = Collections.synchronizedMap(new HashMap());
 
-    private static void tryInit(String service) {
-        synchronized(_sevs) {
-            if (!_sevs.containsKey(service)) {
-                ConfigM cfg = WaterClient.Config.get("_service", service);
-                _sevs.put(service, cfg);
-            }
-        }
+    private static ConfigM get0(String service) {
+        return WaterClient.Config.get("_service", service);
     }
 
     private static String callDo(String url, String fun, Map<String, Object> args) throws Exception {
@@ -48,8 +42,7 @@ public class WaterProxy {
         if (service.indexOf("://") > 0) {
             return callDo(service, fun, args);
         } else {
-            tryInit(service);
-            ConfigM cfg = _sevs.get(service);
+            ConfigM cfg = get0(service);
             return callDo(cfg.value, fun, args);
         }
     }

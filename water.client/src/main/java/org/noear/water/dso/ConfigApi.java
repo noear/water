@@ -17,17 +17,33 @@ public class ConfigApi {
 
     private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
 
-    private void tryInit(String tag) {
+    /**
+     * 重新加载一个tag的配置
+     */
+    public void reload(String tag) {
+        synchronized (_cfgs){
+            if (_cfgs.containsKey(tag) == false) {
+                return;
+            }
+
+            load0(tag);
+        }
+    }
+
+    /**
+     * 加载一个tag的配置
+     * */
+    public void load(String tag) {
         synchronized (_cfgs) {
             if (_cfgs.containsKey(tag)) {
                 return;
             }
 
-            load(tag);
+            load0(tag);
         }
     }
 
-    private void load(String tag) {
+    private void load0(String tag) {
         ConfigSetM cfgSet = new ConfigSetM(tag);
 
         try {
@@ -46,22 +62,13 @@ public class ConfigApi {
         _cfgs.put(tag, cfgSet);
     }
 
-    /**
-     * 重新加载一个tag的配置
-     */
-    public void reload(String tag) {
-        if (_cfgs.containsKey(tag) == false) {
-            return;
-        }
 
-        load(tag);
-    }
 
     /**
      * 获取系统配置
      */
     public Properties getProperties(String tag) {
-        tryInit(tag);
+        load(tag);
         return _cfgs.get(tag).getPropSet();
     }
 
@@ -78,7 +85,7 @@ public class ConfigApi {
      * 获取配置（不会返回null）
      */
     public ConfigM get(String tag, String key) {
-        tryInit(tag);
+        load(tag);
 
         return _cfgs.get(tag).get(key);
     }
