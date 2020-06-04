@@ -1,6 +1,6 @@
 package waterapp.controller.cmds;
 
-import waterapp.utils.TextUtils;
+import org.noear.water.utils.TextUtils;
 import waterapp.dso.TraceUtils;
 
 /**

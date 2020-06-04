@@ -1,11 +1,11 @@
 package waterapp.dso.db;
 
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapp.Config;
 import waterapp.dso.CacheUtils;
 import waterapp.models.ConfigModel;
 import waterapp.models.LoggerModel;
-import waterapp.utils.TextUtils;
 
 import java.sql.SQLException;
 import java.util.Arrays;

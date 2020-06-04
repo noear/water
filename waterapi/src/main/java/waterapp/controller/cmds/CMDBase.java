@@ -1,14 +1,11 @@
 package waterapp.controller.cmds;
 
 import org.noear.snack.ONode;
-import waterapp.utils.TextUtils;
 import org.noear.solon.core.XContext;
-import waterapp.Config;
+import org.noear.water.utils.TextUtils;
 import waterapp.dso.LogUtils;
-import waterapp.dso.TraceUtils;
 import waterapp.dso.db.DbWaterCfgApi;
-import waterapp.utils.IPUtil;
-import waterapp.utils.Timecount;
+import waterapp.utils.IPUtils;
 
 import java.sql.SQLException;
 
@@ -88,7 +85,7 @@ public abstract class CMDBase {
     protected abstract void cmd_exec() throws Exception;
 
     private final boolean do1_check_ip() throws SQLException{
-        String ip = IPUtil.getIP(context);
+        String ip = IPUtils.getIP(context);
 
         data.set("_ip",ip);
 

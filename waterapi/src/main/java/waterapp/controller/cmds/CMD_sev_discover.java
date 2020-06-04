@@ -1,11 +1,11 @@
 package waterapp.controller.cmds;
 
 import org.noear.snack.ONode;
+import org.noear.water.utils.TextUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.dso.db.DbWaterRegApi;
 import waterapp.models.ConfigModel;
 import waterapp.models.ServiceModel;
-import waterapp.utils.TextUtils;
 
 import java.util.List;
 

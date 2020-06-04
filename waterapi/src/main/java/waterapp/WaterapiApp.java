@@ -8,10 +8,11 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiDefault;
 import org.noear.water.protocol.solution.LogStorerDb;
 import org.noear.water.protocol.solution.MessageQueueRedis;
+import org.noear.water.utils.Timecount;
+import org.noear.water.utils.Timespan;
 import waterapp.dso.IDUtils;
 import waterapp.dso.LogSourceWrap;
 import waterapp.dso.TraceUtils;
-import waterapp.utils.Timespan;
 
 import java.util.Date;
 
@@ -44,13 +45,14 @@ public class WaterapiApp {
 		}
 
 		XApp.global().before("**", XMethod.HTTP, c -> {
-			c.attrSet("timespan", new Timespan(new Date()));
+			c.attrSet("timecount", new Timecount().start());
 		});
 
 		XApp.global().after("**", XMethod.HTTP, c -> {
-			Timespan timespan = c.attr("timespan", null);
+			Timecount timecount = c.attr("timecount", null);
 
-			if (timespan != null) {
+			if (timecount != null) {
+				Timespan timespan = timecount.stop();
 				TraceUtils.track(Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
 			}
 		});

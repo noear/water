@@ -5,13 +5,12 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.LockUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.ConfigModel;
-import waterapp.utils.IPUtil;
+import waterapp.utils.IPUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +22,7 @@ public class CfgController implements XHandler {
     @Override
     public void handle(XContext ctx) throws Throwable {
         //检查IP安全
-        String ip = IPUtil.getIP(ctx);
+        String ip = IPUtils.getIP(ctx);
 
         if (DbWaterCfgApi.isWhitelist(ip) == false) {
             ONode data = new ONode();

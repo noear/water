@@ -5,7 +5,7 @@ import org.noear.solon.core.XContext;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
 import waterapp.Config;
-import waterapp.utils.IPUtil;
+import waterapp.utils.IPUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -26,7 +26,7 @@ public class LogUtils {
                 return;
             }
 
-            String ip = IPUtil.getIP(context);
+            String ip = IPUtils.getIP(context);
 
             Map<String, String> pnames = context.paramMap();
 

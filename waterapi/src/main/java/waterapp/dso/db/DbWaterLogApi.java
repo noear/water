@@ -1,12 +1,12 @@
 package waterapp.dso.db;
 
+import org.noear.water.utils.Datetime;
+import org.noear.water.utils.EncryptUtils;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import waterapp.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.IDUtils;
 import waterapp.models.LoggerModel;
-import waterapp.utils.Datetime;
-import waterapp.utils.EncryptUtil;
 
 import java.sql.SQLException;
 
@@ -69,7 +69,7 @@ public final class DbWaterLogApi {
             operator_ip = "";
         }
 
-        String cmd_sql_md5 = EncryptUtil.md5(cmd_sql);
+        String cmd_sql_md5 = EncryptUtils.md5(cmd_sql);
 
 
         if (TextUtils.isEmpty(path)) {

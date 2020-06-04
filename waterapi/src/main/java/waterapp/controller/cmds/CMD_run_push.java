@@ -2,9 +2,9 @@ package waterapp.controller.cmds;
 
 import org.noear.snack.ONode;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.db.DbWaterCfgApi;
-import waterapp.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;

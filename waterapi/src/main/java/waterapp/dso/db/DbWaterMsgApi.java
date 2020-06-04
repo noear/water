@@ -2,8 +2,8 @@ package waterapp.dso.db;
 
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.DisttimeUtils;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.*;
-import waterapp.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.CacheUtils;
 import waterapp.dso.IDUtils;

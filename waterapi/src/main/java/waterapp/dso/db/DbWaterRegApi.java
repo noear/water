@@ -1,13 +1,13 @@
 package waterapp.dso.db;
 
+import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.DbContext;
 import org.noear.solon.core.XContext;
 import waterapp.Config;
 import waterapp.dso.LogUtils;
 import waterapp.dso.MsgUtils;
 import waterapp.models.ServiceModel;
-import waterapp.utils.EncryptUtil;
-import waterapp.utils.IPUtil;
+import waterapp.utils.IPUtils;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -36,7 +36,7 @@ public final class DbWaterRegApi {
             note = "";
         }
 
-        String key = EncryptUtil.md5(service + "#" + address + "#" + note);
+        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
 
         boolean isOk = db().table("water_reg_service").usingExpr(true)
                 .set("note", note)
@@ -72,7 +72,7 @@ public final class DbWaterRegApi {
     }
 
     public static boolean disableService(String service, String address,String note, boolean is_enabled) throws SQLException {
-        String key = EncryptUtil.md5(service + "#" + address + "#" + note);
+        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
@@ -95,7 +95,7 @@ public final class DbWaterRegApi {
                     .set("service", service)
                     .set("consumer", consumer)
                     .set("consumer_address", consumer_address)
-                    .set("consumer_ip", IPUtil.getIP(XContext.current()))
+                    .set("consumer_ip", IPUtils.getIP(XContext.current()))
                     .set("chk_fulltime", "$NOW()")
                     .upsertBy("service,consumer_address");
         }catch (Exception ex){
