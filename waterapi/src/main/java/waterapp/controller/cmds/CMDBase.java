@@ -85,7 +85,7 @@ public abstract class CMDBase {
         long timespan = timecount.stop().milliseconds();
 
         if(isTrack()) {
-            TraceUtils.track(Config.water_service_name, "cmd", this.getClass().getSimpleName(), timespan);
+            TraceUtils.track(Config.water_service_name, "cmd", context.path(), timespan);
         }
 
         if (isOutput()) {

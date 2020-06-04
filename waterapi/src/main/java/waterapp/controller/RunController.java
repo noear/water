@@ -71,7 +71,7 @@ public class RunController implements XHandler {
                 }
 
                 long timespan = timecount.stop().milliseconds();
-                TraceUtils.track(Config.water_service_name, "cmd", this.getClass().getSimpleName(), timespan);
+                TraceUtils.track(Config.water_service_name, "cmd", path, timespan);
                 break;
             }
 
