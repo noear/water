@@ -5,8 +5,11 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import waterapp.Config;
 import waterapp.controller.cmds.*;
+import waterapp.dso.TraceUtils;
 import waterapp.dso.db.DbWaterCfgApi;
+import waterapp.utils.Timecount;
 
 import java.util.Map;
 
@@ -55,6 +58,8 @@ public class RunController implements XHandler {
             }
 
             case "/run/whitelist/check/": {
+                Timecount timecount = new Timecount().start();
+
                 String tags = c.param("tags","");
                 String type = c.param("type","");
                 String value = c.param("value","");
@@ -64,6 +69,9 @@ public class RunController implements XHandler {
                 }else{
                     c.output(  value + ",not is whitelist!");
                 }
+
+                long timespan = timecount.stop().milliseconds();
+                TraceUtils.track(Config.water_service_name, "cmd", this.getClass().getSimpleName(), timespan);
                 break;
             }
 
