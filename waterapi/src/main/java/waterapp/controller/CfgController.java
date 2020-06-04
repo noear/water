@@ -10,7 +10,7 @@ import waterapp.Config;
 import waterapp.dso.LockUtils;
 import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.models.ConfigModel;
-import waterapp.utils.IPUtils;
+import waterapp.dso.IPUtils;
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package waterapp.utils;
+package waterapp.dso;
 
 import org.noear.solon.core.XContext;
 import org.noear.water.utils.TextUtils;

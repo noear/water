@@ -7,7 +7,7 @@ import waterapp.Config;
 import waterapp.dso.LogUtils;
 import waterapp.dso.MsgUtils;
 import waterapp.models.ServiceModel;
-import waterapp.utils.IPUtils;
+import waterapp.dso.IPUtils;
 
 import java.sql.SQLException;
 import java.util.List;

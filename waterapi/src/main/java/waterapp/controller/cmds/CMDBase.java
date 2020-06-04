@@ -5,7 +5,7 @@ import org.noear.solon.core.XContext;
 import org.noear.water.utils.TextUtils;
 import waterapp.dso.LogUtils;
 import waterapp.dso.db.DbWaterCfgApi;
-import waterapp.utils.IPUtils;
+import waterapp.dso.IPUtils;
 
 import java.sql.SQLException;
 
