@@ -63,8 +63,6 @@ public abstract class CMDBase {
         this.context = context;
         this.data = new ONode();
 
-        Timecount timecount = new Timecount().start();
-
         try {
             if (do1_check_ip()) {
                 if(isLogging()) {
@@ -80,12 +78,6 @@ public abstract class CMDBase {
 
             data.set("code", "0");
             data.set("msg", ex.getMessage());
-        }
-
-        long timespan = timecount.stop().milliseconds();
-
-        if(isTrack()) {
-            TraceUtils.track(Config.water_service_name, "cmd", context.path(), timespan);
         }
 
         if (isOutput()) {

@@ -2,6 +2,7 @@ package waterapp;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
+import org.noear.solon.core.XMethod;
 import org.noear.solon.extend.staticfiles.XStaticFiles;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiDefault;
@@ -9,6 +10,10 @@ import org.noear.water.protocol.solution.LogStorerDb;
 import org.noear.water.protocol.solution.MessageQueueRedis;
 import waterapp.dso.IDUtils;
 import waterapp.dso.LogSourceWrap;
+import waterapp.dso.TraceUtils;
+import waterapp.utils.Timespan;
+
+import java.util.Date;
 
 public class WaterapiApp {
 
@@ -37,5 +42,17 @@ public class WaterapiApp {
 				ProtocolHub.heihei = HeiheiDefault.singleton();
 			});
 		}
+
+		XApp.global().before("**", XMethod.HTTP, c -> {
+			c.attrSet("timespan", new Timespan(new Date()));
+		});
+
+		XApp.global().after("**", XMethod.HTTP, c -> {
+			Timespan timespan = c.attr("timespan", null);
+
+			if (timespan != null) {
+				TraceUtils.track(Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
+			}
+		});
 	}
 }

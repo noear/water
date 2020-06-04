@@ -58,8 +58,6 @@ public class RunController implements XHandler {
             }
 
             case "/run/whitelist/check/": {
-                Timecount timecount = new Timecount().start();
-
                 String tags = c.param("tags","");
                 String type = c.param("type","");
                 String value = c.param("value","");
@@ -69,9 +67,6 @@ public class RunController implements XHandler {
                 }else{
                     c.output(  value + ",not is whitelist!");
                 }
-
-                long timespan = timecount.stop().milliseconds();
-                TraceUtils.track(Config.water_service_name, "cmd", path, timespan);
                 break;
             }
 
