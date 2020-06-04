@@ -39,7 +39,7 @@ public class MessageModel implements IBinder {
 
     public String nexttime(long c) {
         if(dist_nexttime == 0){
-            return "-0x";
+            return "*";
         }
 
         if (dist_nexttime > c) {
