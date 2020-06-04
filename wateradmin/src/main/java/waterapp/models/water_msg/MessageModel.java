@@ -60,6 +60,12 @@ public class MessageModel implements IBinder {
             return ts.minutes() + "m";
         }
 
-        return ts.hours() + "h";
+        long hours = ts.hours();
+
+        if (hours < 99) {
+            return hours + "h";
+        }
+
+        return (hours / 24) + "d";
     }
 }
