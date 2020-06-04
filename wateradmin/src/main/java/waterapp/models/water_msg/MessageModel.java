@@ -38,6 +38,10 @@ public class MessageModel implements IBinder {
     }
 
     public String nexttime(long c) {
+        if(dist_nexttime == 0){
+            return "0";
+        }
+
         if (dist_nexttime > c) {
             return nexttimeDo(dist_nexttime, c);
         } else {
