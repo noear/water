@@ -57,6 +57,9 @@ public class WhitelistApi {
     public boolean existsOfClientIp(String value){
         return checkDo(tag_client,"ip",value);
     }
+    public boolean existsOfClientAndServerIp(String value){
+        return checkDo(tag_clientAndServer,"ip",value);
+    }
     public boolean existsOfServerIp(String value){
         return checkDo(tag_server,"ip",value);
     }
