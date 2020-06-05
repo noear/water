@@ -16,11 +16,11 @@ public class OSSUtils {
     private String accessKeyId;
     private String accessSecretKey;
 
-    private static Map<String, OSSUtils> cacheMap = new ConcurrentHashMap<>();
-    public static OSSUtils get(ConfigM cfg){
-        OSSUtils tmp = cacheMap.get(cfg.value);
+    private static Map<String, org.noear.water.dso.OSSUtils> cacheMap = new ConcurrentHashMap<>();
+    public static org.noear.water.dso.OSSUtils get(ConfigM cfg){
+        org.noear.water.dso.OSSUtils tmp = cacheMap.get(cfg.value);
         if(tmp == null){
-            tmp = new OSSUtils(cfg.getProp());
+            tmp = new org.noear.water.dso.OSSUtils(cfg.getProp());
             cacheMap.putIfAbsent(cfg.value,tmp);
         }
         return tmp;
