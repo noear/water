@@ -174,8 +174,8 @@
                 </td>
             </tr>
             <tr>
-                <th>监视标签说明</th>
-                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /></td>
+                <th>重复标识</th>
+                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /><n>（重复的标识不报警）</n></td>
             </tr>
 
             <tr>
