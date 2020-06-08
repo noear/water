@@ -94,7 +94,6 @@ public class LoginController extends BaseController {
     public void getValidationImg(XContext ctx) throws IOException {
         // 生成验证码存入session
         String validation = RandomUtils.code(4);
-
         Session.current().setValidation(validation);
 
         // 获取图片
