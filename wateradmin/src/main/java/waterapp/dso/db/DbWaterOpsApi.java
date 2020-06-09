@@ -82,7 +82,7 @@ public class DbWaterOpsApi {
     }
 
     public static List<TagCountsModel> getServerDbsAccounts() throws SQLException {
-        return getServerAccounts("iaas_type>=2");
+        return getServerAccounts("iaas_type IN (2,3,4,5,7,8)");
     }
 
     public static List<TagCountsModel> getServerEcsAccounts() throws SQLException {

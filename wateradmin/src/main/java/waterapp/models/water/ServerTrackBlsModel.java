@@ -3,6 +3,7 @@ package waterapp.models.water;
 import lombok.Getter;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
+import waterapp.dso.IaasTypeUtils;
 
 import java.util.Date;
 
@@ -52,14 +53,7 @@ public class ServerTrackBlsModel implements IBinder
 	}
 
     public String iaas_type_str(){
-        switch (iaas_type){
-            case 1:return "LBS";
-            case 2:return "RDS";
-            case 3:return "Redis";
-            case 4:return "Memcached";
-            case 5:return "DRDS";
-            default:return "ECS";
-        }
+        return IaasTypeUtils.iaas_type_str(iaas_type);
     }
 
 }

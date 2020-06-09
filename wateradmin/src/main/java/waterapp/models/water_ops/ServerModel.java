@@ -2,6 +2,7 @@ package waterapp.models.water_ops;
 
 import lombok.Getter;
 import org.noear.weed.*;
+import waterapp.dso.IaasTypeUtils;
 
 /// <summary>
 /// 生成:2017/12/28 11:55:12
@@ -60,15 +61,6 @@ public class ServerModel implements IBinder
     }
 
     public String iaas_type_str(){
-	    switch (iaas_type){
-            case 1:return "LBS";
-            case 2:return "RDS";
-            case 3:return "Redis";
-            case 4:return "Memcached";
-            case 5:return "DRDS";
-            case 6:return "ECI";
-            case 7:return "NAS";
-            default:return "ECS";
-        }
+	    return IaasTypeUtils.iaas_type_str(iaas_type);
     }
 }

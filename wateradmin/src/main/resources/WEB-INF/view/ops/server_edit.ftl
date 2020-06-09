@@ -32,7 +32,7 @@
                         top.layer.msg('操作成功')
                         setTimeout(function(){
                             parent.location.href="/ops/server?tag_name="+vm.tag;
-                        },1000);
+                        },800);
                     }else{
                         top.layer.msg(data.msg);
                     }
@@ -41,19 +41,20 @@
         };
 
         function delDo() {
-            var server_id = '${server.server_id}';
+            var vm = formToMap('form');
+            vm.server_id = '${server.server_id}';
 
             if(confirm("确定要删除吗？")) {
                 $.ajax({
                     type: "POST",
                     url: "/ops/server/delete",
-                    data: vm,
+                    data: {server_id: vm.server_id},
                     success: function (data) {
                         if (data.code == 1) {
                             top.layer.msg('操作成功')
                             setTimeout(function () {
                                 parent.location.href = "/ops/server?tag_name=" + vm.tag;
-                            }, 1000);
+                            }, 800);
                         } else {
                             top.layer.msg(data.msg);
                         }
