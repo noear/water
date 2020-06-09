@@ -27,9 +27,9 @@ public class LogUtil {
         else
             log_msg.info( msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
 
-        System.out.print(msg.topic_name + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(msg.topic_name + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void writeForMsgByError(MessageModel msg, DistributionModel dist, String content) {
@@ -44,17 +44,17 @@ public class LogUtil {
         else
             log_msg.error(msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
 
-        System.out.print(msg.topic_name + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(msg.topic_name + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void writeForMsgByError(MessageModel msg, Exception ex) {
         log_msg.error(msg.topic_name, msg.msg_id + "", "", ex);
 
-        System.out.print(msg.topic_name + "::\r\n");
-        System.out.print(ThrowableUtils.getString(ex));
-        System.out.print("\r\n");
+//        System.out.print(msg.topic_name + "::\r\n");
+//        System.out.print(ThrowableUtils.getString(ex));
+//        System.out.print("\r\n");
     }
 
     //==========================================================
@@ -74,9 +74,9 @@ public class LogUtil {
 
         WaterClient.Log.append("water_log_paas", Level.ERROR, "_plan", plan.tag, plan.path, "", "", content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(ThrowableUtils.getString(content));
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(ThrowableUtils.getString(content));
+//        System.out.print("\r\n");
     }
 
 
@@ -92,58 +92,58 @@ public class LogUtil {
     public static void write(String tag, String tag1, String summary, String content) {
         log_sev.info(tag, tag1, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void error(IJob tag, String tag1, String summary, Throwable content) {
 
         log_sev.error(tag.getName(), tag1, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(ThrowableUtils.getString(content));
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(ThrowableUtils.getString(content));
+//        System.out.print("\r\n");
     }
 
     public static void error(String tag, String tag1, String summary, Throwable content) {
         log_sev.error(tag, tag1, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(ThrowableUtils.getString(content));
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(ThrowableUtils.getString(content));
+//        System.out.print("\r\n");
     }
 
     public static void error(String tag, String tag1, String summary, String content) {
         log_sev.error(tag, tag1, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void error(String tag, String tag1, String tag2, String summary, String content) {
         log_sev.error(tag, tag1, tag2, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void debug(IJob tag, String summary, String content) {
 
         log_sev.debug(tag.getName(), summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 
     public static void debug(String tag, String summary, String content) {
         log_sev.debug(tag, summary, content);
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
+//        System.out.print(tag + "::\r\n");
+//        System.out.print(content);
+//        System.out.print("\r\n");
     }
 }

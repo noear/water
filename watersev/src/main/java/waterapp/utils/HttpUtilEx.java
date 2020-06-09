@@ -25,7 +25,7 @@ public class HttpUtilEx {
 
             do_getHttpStatus(url, (isOk, code, hint) -> {
                 long times = System.currentTimeMillis() - time_start;
-                System.out.println(url + "::" + times + "ms");
+//                System.out.println(url + "::" + times + "ms");
 
                 callback.run(isOk, code, hint);
             });

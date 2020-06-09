@@ -21,11 +21,11 @@ public class JobRunnerEx extends JobRunner {
             }
         }
 
-        if(is_ok){
-            System.out.println("#Task(" + task.getName() + ") allow=true");
-        }else{
-            System.err.println("#Task(" + task.getName() + ") allow=false");
-        }
+//        if(is_ok){
+//            System.out.println("#Task(" + task.getName() + ") allow=true");
+//        }else{
+//            System.err.println("#Task(" + task.getName() + ") allow=false");
+//        }
 
         return is_ok;
     }

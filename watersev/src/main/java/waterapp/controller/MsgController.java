@@ -18,8 +18,6 @@ import waterapp.utils.ext.Act3;
 import java.sql.SQLException;
 import java.util.*;
 
-import static java.lang.System.out;
-
 /**
  * 消息派发
  * */
@@ -161,7 +159,7 @@ public final class MsgController implements IJob {
                 DbWaterMsgApi.setMessageState(dist.msg_id, 2);
 
                 if (tag.msg.dist_count >= 4) {
-                    out.print("发送短信报警---\r\n");
+//                    System.out.print("发送短信报警---\r\n");
                     AlarmUtil.tryAlarm(tag.msg, true, dist);
                 }
 
@@ -169,14 +167,14 @@ public final class MsgController implements IJob {
                 if(tag.msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
                     DbWaterMsgApi.setMessageRepet(tag.msg, 3);
 
-                    out.print("发送短信报警---\r\n");
+//                    System.out.print("发送短信报警---\r\n");
                     AlarmUtil.tryAlarm(tag.msg, false, dist);
                 }
                 else {
                     DbWaterMsgApi.setMessageRepet(tag.msg, 0);
 
                     if (tag.msg.dist_count >= 4) {
-                        out.print("发送短信报警---\r\n");
+//                        System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag.msg, false, dist);
                     }
                 }
