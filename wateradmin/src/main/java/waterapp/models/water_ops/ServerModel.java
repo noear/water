@@ -66,6 +66,8 @@ public class ServerModel implements IBinder
             case 3:return "Redis";
             case 4:return "Memcached";
             case 5:return "DRDS";
+            case 6:return "ECI";
+            case 7:return "NAS";
             default:return "ECS";
         }
     }
