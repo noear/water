@@ -56,6 +56,12 @@ public class DbWaterOpsApi {
                    .update() > 0;
     }
 
+    public static boolean deleteServer(int server_id) throws SQLException {
+        return db().table("water_ops_server")
+                .where("server_id = ?", server_id)
+                .delete() > 0;
+    }
+
     public static boolean addServer(String tag, String name, String ip, String hosts, String note, int is_enabled, int env_type) throws SQLException {
         return db().table("water_ops_server")
                    .set("tag", tag)

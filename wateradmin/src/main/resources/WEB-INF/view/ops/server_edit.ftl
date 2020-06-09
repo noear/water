@@ -40,6 +40,28 @@
             });
         };
 
+        function delDo() {
+            var server_id = '${server.server_id}';
+
+            if(confirm("确定要删除吗？")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/ops/server/delete",
+                    data: vm,
+                    success: function (data) {
+                        if (data.code == 1) {
+                            top.layer.msg('操作成功')
+                            setTimeout(function () {
+                                parent.location.href = "/ops/server?tag_name=" + vm.tag;
+                            }, 1000);
+                        } else {
+                            top.layer.msg(data.msg);
+                        }
+                    }
+                });
+            }
+        };
+
         $(function(){
             <#if is_admin = 1>
             ctl_s_save_bind(document,saveEdit);
@@ -56,6 +78,7 @@
         <#if is_admin = 1>
             <n>ctrl + s 可快捷保存</n>
             <button type="button" onclick="saveEdit()">保存</button>
+            <button type="button" class="minor" onclick="delDo()">删除</button>
         </#if>
     </right>
 </toolbar>

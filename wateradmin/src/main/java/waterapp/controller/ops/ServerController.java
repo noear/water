@@ -73,6 +73,24 @@ public class ServerController extends BaseController {
         return viewModel;
     }
 
+    //删除 服务
+    @XMapping("server/delete")
+    public ViewModel delete(Integer server_id) throws SQLException {
+        boolean is_admin = Session.current().getIsAdmin() > 0;
+        if (is_admin == false) {
+            return viewModel.code(0, "没有权限！");
+        }
+
+        boolean result = DbWaterOpsApi.deleteServer(server_id);
+        if (result) {
+            viewModel.code(1, "操作成功！");
+        } else {
+            viewModel.code(0, "操作失败！");
+        }
+
+        return viewModel;
+    }
+
 
     //跳转服务编辑页面
     @XMapping("server/edit")
