@@ -5,6 +5,7 @@ import org.noear.weed.cache.LocalCache;
 
 public class CacheUtil {
 
-   public static ICacheServiceEx data = new LocalCache();
+   public static ICacheServiceEx local = new LocalCache();
+   public static ICacheServiceEx data = local;
 
 }

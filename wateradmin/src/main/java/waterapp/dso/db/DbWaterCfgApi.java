@@ -348,11 +348,16 @@ public class DbWaterCfgApi {
     }
 
     public static ConfigModel getConfigByTagName(String tag, String name) throws SQLException {
+        return getConfigByTagName(tag,name,false);
+    }
+
+    public static ConfigModel getConfigByTagName(String tag, String name, boolean cache) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
                 .andEq("key", name)
                 .limit(1)
                 .select("*")
+                .caching(CacheUtil.data).usingCache(cache)
                 .getItem(ConfigModel.class);
     }
 
