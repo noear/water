@@ -39,9 +39,6 @@ public class Config {
     static {
         WeedConfig.isDebug = false;
         WeedConfig.isUsingValueExpression = false;
-
-        XUtil.loadClass("com.mysql.jdbc.Driver");
-        XUtil.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     public static void tryInit() {
