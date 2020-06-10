@@ -33,8 +33,9 @@
 
             ajaxPost({url:"./code/ajax/save", data:{'fc64':fc64, 'id':${id}, 'path':'${m1.path!}'}});
         }
-
+        <#if is_admin = 1>
         ctl_s_save_bind(document, file_save);
+        </#if>
     </script>
 </head>
 <body>
@@ -43,7 +44,10 @@
 
     <flex style="margin-top: 18px;">
         <left class="col-6">
-            <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em><a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" target="_blank">run</a>
+            <#if is_admin = 1>
+            <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em>
+            </#if>
+            <a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" target="_blank">run</a>
         </left>
         <right class="col-6">
             <@versions table="paas_file" keyName="file_id" keyValue="${m1.file_id}">

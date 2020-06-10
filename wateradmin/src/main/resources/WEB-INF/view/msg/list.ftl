@@ -87,7 +87,7 @@
         <flex>
             <left class="col-4">
                 <button type='button' onclick="fresh()">刷新</button>
-                <#if _m!=2>
+                <#if _m!=2 && is_admin == 1>
                     <button type='button' class="edit mar10-l" onclick="distribute()" >立即派发</button>
                     <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
                     <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
