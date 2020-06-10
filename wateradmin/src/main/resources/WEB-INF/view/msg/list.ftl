@@ -119,9 +119,7 @@
                 <td width="60px">下次<br/>时间</td>
                 <td class="left" width="40px">已派<br/>次数</td>
                 <td class="left" width="120px">发起时间</td>
-                <#if is_admin == 1>
-                    <td width="50px">操作</td>
-                </#if>
+                <td width="50px">操作</td>
             </tr>
             </thead>
             <tbody id="tbody">
@@ -134,11 +132,9 @@
                     <td>${msg.nexttime(currTime)}</td>
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
-                    <#if is_admin == 1>
-                        <td class="op">
-                            <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=5&tagx=@${msg.msg_id}" class="t2">日志</a>
-                        </td>
-                    </#if>
+                    <td class="op">
+                        <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=5&tagx=@${msg.msg_id}" class="t2">日志</a>
+                    </td>
                 </tr>
             </#list>
             </tbody>
