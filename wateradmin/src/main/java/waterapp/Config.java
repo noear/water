@@ -42,7 +42,6 @@ public class Config {
     }
 
     public static void tryInit() {
-
         WaterClient.Config.getProperties("water_session").forEach((k, v) -> {
             if (XApp.cfg().isDebugMode()) {
                 String key = k.toString();
