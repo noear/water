@@ -22,7 +22,7 @@ public class BcfServiceChecker {
             List<BcfResourceModel> list = BcfClient.getUserResourcesByPack(Session.current().getPUID(), "service");
 
             list.forEach((r) -> {
-                tmpCache.put(r.cn_name, r.cn_name);
+                tmpCache.put(r.en_name, r.en_name);
             });
         }
 

@@ -22,7 +22,7 @@ public class BcfTagChecker {
             List<BcfResourceModel> list = BcfClient.getUserResourcesByPack(Session.current().getPUID(), "tag");
 
             list.forEach((r) -> {
-                tmpCache.put(r.cn_name, r.cn_name);
+                tmpCache.put(r.en_name, r.en_name);
             });
         }
 
