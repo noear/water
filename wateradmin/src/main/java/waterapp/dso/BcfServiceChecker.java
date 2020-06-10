@@ -15,7 +15,7 @@ import java.util.Map;
 public class BcfServiceChecker {
     private Map<String,String> tmpCache = null;
 
-    private void tryLoadAgroupByUser() throws SQLException {
+    private void tryLoadServiceByUser() throws SQLException {
         if(tmpCache == null){
             tmpCache = new HashMap<>();
 
@@ -37,7 +37,7 @@ public class BcfServiceChecker {
             return true;
         }
 
-        tryLoadAgroupByUser();
+        tryLoadServiceByUser();
 
         return tmpCache.containsKey(tag);
     }
