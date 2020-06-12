@@ -30,9 +30,9 @@ public class AppHandler implements XHandler {
     @Override
     public void handle(XContext ctx) throws Exception {
         String path = ctx.path();
-        boolean debug = ctx.paramAsInt("_debug",0)==1;
+        boolean debug = ctx.paramAsInt("_debug", 0) == 1;
 
-        if(debug){
+        if (debug) {
             String name = path.replace("/", "__");
             AFileUtil.remove(path);
             ExecutorFactory.del(name);
@@ -40,7 +40,7 @@ public class AppHandler implements XHandler {
             RouteHelper.reset();
         }
 
-        do_handle(path,ctx, debug);
+        do_handle(path, ctx, debug);
     }
 
     private void do_handle(String path,XContext ctx, boolean debug) throws Exception {
