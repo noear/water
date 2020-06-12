@@ -1,6 +1,5 @@
 package org.noear.water.model;
 
-
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.water.utils.RedisX;
@@ -12,9 +11,7 @@ import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.memcached.MemCache;
 
 import java.io.StringReader;
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class ConfigM {
     public final String key;
