@@ -37,18 +37,18 @@ public final class DbWaterPaasApi {
                 qr.set("plan_last_timespan", plan.plan_last_timespan);
             }
 
-            //对以天为进阶的任务，做同时间处理
-            if (plan._is_day_task) {
-                String s_d = new Datetime(plan.plan_last_time).toString("yyyy-MM-dd");
-                String s_t = new Datetime(plan.plan_begin_time).toString("HH:mm:ss");
-
-                try {
-                    Datetime temp = Datetime.parse(s_d + " " + s_t, "yyyy-MM-dd HH:mm:ss");
-                    plan.plan_last_time = temp.getFulltime();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
+            //对以天为进阶的任务，做同时间处理 //已在前面进行处理,不再需要后续处理
+//            if (plan._is_day_task) {
+//                String s_d = new Datetime(plan.plan_last_time).toString("yyyy-MM-dd");
+//                String s_t = new Datetime(plan.plan_begin_time).toString("HH:mm:ss");
+//
+//                try {
+//                    Datetime temp = Datetime.parse(s_d + " " + s_t, "yyyy-MM-dd HH:mm:ss");
+//                    plan.plan_last_time = temp.getFulltime();
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
         }
 
 
