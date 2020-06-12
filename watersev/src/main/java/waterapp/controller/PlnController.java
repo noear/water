@@ -97,23 +97,32 @@ public class PlnController implements IJob {
         //1.5.检查执行时间是否到了
         {
             Datetime last_time = new Datetime(temp);
+            Datetime begin_time = new Datetime(task.plan_begin_time);
 
             String s1 = task.plan_interval.substring(0, task.plan_interval.length() - 1);
             String s2 = task.plan_interval.substring(task.plan_interval.length() - 1);
 
             switch (s2) {
-                case "m":
+                case "m": //分
                     last_time.addMinute(Integer.parseInt(s1));
                     break;
-                case "h":
+                case "h": //时
                     last_time.addHour(Integer.parseInt(s1));
                     break;
-                case "d":
+                case "d": //日
                     task._is_day_task = true;
+                    last_time.setHour(begin_time.getHours());
+                    last_time.setMinute(begin_time.getMinutes());
+                    last_time.setSecond(begin_time.getSeconds());
+
                     last_time.addDay(Integer.parseInt(s1));
                     break;
-                case "M":
+                case "M": //月
                     task._is_day_task = true;
+                    last_time.setHour(begin_time.getHours());
+                    last_time.setMinute(begin_time.getMinutes());
+                    last_time.setSecond(begin_time.getSeconds());
+
                     last_time.addMonth(Integer.parseInt(s1));
                     break;
                 default:
@@ -142,8 +151,6 @@ public class PlnController implements IJob {
     }
 
     private void do_runTask(PaasFileModel task) throws Exception {
-
-
         //开始执行::
         task.plan_last_time = new Date();
         DbWaterPaasApi.setPlanState(task, 2, "processing");
