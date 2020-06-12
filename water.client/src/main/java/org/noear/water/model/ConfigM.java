@@ -11,7 +11,9 @@ import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.memcached.MemCache;
 
 import java.io.StringReader;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class ConfigM {
     public final String key;
@@ -156,6 +158,7 @@ public final class ConfigM {
     /**
      * 获取 db:DbContext
      */
+    private static Map<String,DbContext> _dbMap = new ConcurrentHashMap<>();
     public DbContext getDb() {
         return getDb(false);
     }
@@ -165,7 +168,15 @@ public final class ConfigM {
             return null;
         }
 
-        return getDbDo(pool);
+        DbContext db = _dbMap.get(value);
+        if (db == null) {
+            db = getDbDo(pool);
+            DbContext l = _dbMap.putIfAbsent(value, db);
+            if (l != null) {
+                db = l;
+            }
+        }
+        return db;
     }
 
     private DbContext getDbDo(boolean pool) {
