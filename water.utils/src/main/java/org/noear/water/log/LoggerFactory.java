@@ -6,10 +6,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LoggerFactory {
     private static Class<?> _clz;
     private static Map<String, Logger> _lib = new ConcurrentHashMap<>();
+    private static LoggerDefault loggerDefault = new LoggerDefault();
 
     public static Logger get(String name) {
-        if (_lib.containsKey(_lib)) {
-            return _lib.get(name);
+
+        Logger logger = _lib.get(name);
+        if (logger != null) {
+            return logger;
         }
 
         try {
@@ -18,17 +21,26 @@ public class LoggerFactory {
             }
 
             if (_clz != null) {
-                Logger tmp = (Logger) _clz.newInstance();
-                tmp.setName(name);
+                logger = (Logger) _clz.newInstance();
+                logger.setName(name);
 
-                return _lib.putIfAbsent(name, tmp);
+                Logger l = _lib.putIfAbsent(name, logger);
+                if (l != null) {
+                    logger = l;
+                }
+
             }
         } catch (Exception ex) {
-            //ex.printStackTrace();
             System.err.println("ClassNotFoundException: org.noear.water.log.WaterLogger");
 
         }
 
-        return _lib.putIfAbsent(name, new LoggerDefault());
+        //如果前面没加成功，就加这个
+        if (logger == null) {
+            logger = loggerDefault;
+            _lib.putIfAbsent(name, logger);
+        }
+
+        return logger;
     }
 }

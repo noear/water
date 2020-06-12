@@ -17,11 +17,14 @@ public class OSSUtils {
     private String accessSecretKey;
 
     private static Map<String, OSSUtils> cacheMap = new ConcurrentHashMap<>();
-    public static OSSUtils get(ConfigM cfg){
+    public static OSSUtils get(ConfigM cfg) {
         OSSUtils tmp = cacheMap.get(cfg.value);
-        if(tmp == null){
+        if (tmp == null) {
             tmp = new OSSUtils(cfg.getProp());
-            cacheMap.putIfAbsent(cfg.value,tmp);
+            OSSUtils l = cacheMap.putIfAbsent(cfg.value, tmp);
+            if (l != null) {
+                tmp = l;
+            }
         }
         return tmp;
     }

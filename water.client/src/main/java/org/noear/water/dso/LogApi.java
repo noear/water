@@ -17,12 +17,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LogApi {
     private  Map<String,WaterLogger> loggerMap = new ConcurrentHashMap<>();
     public  WaterLogger logger(String logger) {
-        WaterLogger l = loggerMap.get(logger);
-        if (l == null) {
-            l = loggerMap.putIfAbsent(logger, new WaterLogger(logger));
+        WaterLogger tmp = loggerMap.get(logger);
+        if (tmp == null) {
+            tmp = new WaterLogger(logger);
+            WaterLogger l = loggerMap.putIfAbsent(logger, tmp);
+            if (l != null) {
+                tmp = l;
+            }
         }
 
-        return l;
+        return tmp;
     }
 
     /**

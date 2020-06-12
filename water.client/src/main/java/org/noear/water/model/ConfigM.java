@@ -159,22 +159,16 @@ public final class ConfigM {
     /**
      * 获取 db:DbContext
      */
-    private Map<String,DbContext> _dbMap = new ConcurrentHashMap<>();
     public DbContext getDb() {
         return getDb(false);
     }
 
     public DbContext getDb(boolean pool) {
-        if(TextUtils.isEmpty(value)){
+        if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        DbContext db = _dbMap.get(value);
-        if(db == null){
-            db = getDbDo(pool);
-            _dbMap.putIfAbsent(value,db);
-        }
-        return db;
+        return getDbDo(pool);
     }
 
     private DbContext getDbDo(boolean pool) {

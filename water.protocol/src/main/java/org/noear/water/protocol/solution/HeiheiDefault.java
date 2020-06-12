@@ -6,11 +6,13 @@ import org.noear.water.log.LoggerFactory;
 import org.noear.water.protocol.IHeihei;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.HttpUtils;
+import org.noear.water.utils.TextUtils;
 
 import java.util.*;
 
 public class HeiheiDefault implements IHeihei {
     private static HeiheiDefault _singleton = new HeiheiDefault();
+
     public static HeiheiDefault singleton() {
         return _singleton;
     }
@@ -20,10 +22,22 @@ public class HeiheiDefault implements IHeihei {
     protected String masterSecret = "4a8cd168ca71dabcca306cac";
     protected String appKey = "af9a9da3c73d23aa30ea4af1";
 
-    protected Logger log_heihei = LoggerFactory.get("water_log_heihei");
+    protected final Logger log_heihei;
+
+    public HeiheiDefault(){
+        log_heihei = LoggerFactory.get("water_log_heihei");
+    }
 
 
     public String push(String tag, Collection<String> alias, String text) {
+        if (TextUtils.isEmpty(text)) {
+            return null;
+        }
+
+        if (alias == null || alias.size() == 0) {
+            return null;
+        }
+
         ONode data = new ONode().build((d) -> {
             d.get("platform").val("all");
 
@@ -56,14 +70,13 @@ public class HeiheiDefault implements IHeihei {
         headers.put("Authorization", "Basic " + author);
 
         try {
-            return
-            HttpUtils.http(apiUrl)
+            return HttpUtils.http(apiUrl)
                     .headers(headers)
                     .bodyTxt(message, "application/json")
                     .post();
         } catch (Exception ex) {
             ex.printStackTrace();
-            log_heihei.error("HeiheiApi", "", ex);
+            log_heihei.error(tag, "", ex);
         }
 
         if (text.startsWith("报警") == false && text.startsWith("恢复") == false) {
