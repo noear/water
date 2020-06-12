@@ -104,9 +104,14 @@ public class PlnController implements IJob {
 
             switch (s2) {
                 case "m": //分
+                    last_time.setSecond(begin_time.getSeconds());
+
                     last_time.addMinute(Integer.parseInt(s1));
                     break;
                 case "h": //时
+                    last_time.setMinute(begin_time.getMinutes());
+                    last_time.setSecond(begin_time.getSeconds());
+
                     last_time.addHour(Integer.parseInt(s1));
                     break;
                 case "d": //日
