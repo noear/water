@@ -10,18 +10,17 @@ import org.noear.water.utils.HttpUtils;
 import java.util.*;
 
 public class HeiheiDefault implements IHeihei {
-
-    private static final Logger log_heihei = LoggerFactory.get("water_log_heihei");
-
-    private static final String apiUrl = "https://api.jpush.cn/v3/push";
-    private static final String masterSecret = "4a8cd168ca71dabcca306cac";
-    private static final String appKey = "af9a9da3c73d23aa30ea4af1";
-
     private static HeiheiDefault _singleton = new HeiheiDefault();
-
     public static HeiheiDefault singleton() {
         return _singleton;
     }
+
+
+    protected String apiUrl = "https://api.jpush.cn/v3/push";
+    protected String masterSecret = "4a8cd168ca71dabcca306cac";
+    protected String appKey = "af9a9da3c73d23aa30ea4af1";
+
+    protected Logger log_heihei = LoggerFactory.get("water_log_heihei");
 
 
     public String push(String tag, Collection<String> alias, String text) {
