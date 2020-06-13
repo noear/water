@@ -151,6 +151,7 @@ public abstract class WaterAdapter {
         try {
             String[] tag_keys = msg.message.split(";");
 
+            //更新缓存
             if (WaterConfig.msg_ucache_topic.equals(msg.topic)) {
                 //清理内置缓存
                 if(cache_service() != null ){
@@ -165,6 +166,7 @@ public abstract class WaterAdapter {
                 }
             }
 
+            //更新配置
             if (WaterConfig.msg_uconfig_topic.equals(msg.topic)) {
                 for (String tagKey : tag_keys) {//xxx::bbb
                     String[] ss = tagKey.split("::");
