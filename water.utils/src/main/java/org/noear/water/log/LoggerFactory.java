@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LoggerFactory {
     private static Class<?> _clz;
     private static Map<String, Logger> _lib = new ConcurrentHashMap<>();
-    private static LoggerDefault loggerDefault = new LoggerDefault();
+    private static Logger loggerDefault = new LoggerDefault();
 
     public static Logger get(String name) {
 
@@ -28,11 +28,11 @@ public class LoggerFactory {
                 if (l != null) {
                     logger = l;
                 }
-
+            }else{
+                System.err.println("ClassNotFoundException: org.noear.water.log.WaterLogger");
             }
         } catch (Exception ex) {
             System.err.println("ClassNotFoundException: org.noear.water.log.WaterLogger");
-
         }
 
         //如果前面没加成功，就加这个
