@@ -73,7 +73,7 @@ public class HeiheiDefault implements IHeihei {
             log_heihei.error(tag, "", ex);
         }
 
-        if (text.startsWith("报警") == false && text.startsWith("恢复") == false) {
+        if (text.startsWith("报警：服务=") == false) {
             log_heihei.info(tag, "", text);
         }
 
