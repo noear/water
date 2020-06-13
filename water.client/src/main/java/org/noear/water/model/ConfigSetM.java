@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.function.BiConsumer;
 
 public class ConfigSetM {
     private String _tag = null;
@@ -16,6 +17,10 @@ public class ConfigSetM {
 
     public ConfigM get(String key) {
         return _map.getOrDefault(key, _empty);
+    }
+
+    public void forEach(BiConsumer<String,ConfigM> action){
+        _map.forEach(action);
     }
 
     public void load(ONode node) {
