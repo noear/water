@@ -15,10 +15,16 @@ public class ConfigSetM {
         _tag = tag;
     }
 
+    /**
+     * 获取配置项
+     * */
     public ConfigM get(String key) {
         return _map.getOrDefault(key, _empty);
     }
 
+    /**
+     * 遍历配置项
+     * */
     public void forEach(BiConsumer<String,ConfigM> action){
         _map.forEach(action);
     }
