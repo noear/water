@@ -11,21 +11,15 @@ import org.noear.water.utils.TextUtils;
 import java.util.*;
 
 public class HeiheiDefault implements IHeihei {
-    private static HeiheiDefault _singleton = new HeiheiDefault();
-
-    public static HeiheiDefault singleton() {
-        return _singleton;
-    }
-
-
     protected String apiUrl = "https://api.jpush.cn/v3/push";
     protected String masterSecret = "4a8cd168ca71dabcca306cac";
     protected String appKey = "af9a9da3c73d23aa30ea4af1";
 
     protected final Logger log_heihei;
 
-    public HeiheiDefault(){
-        log_heihei = LoggerFactory.get("water_log_heihei");
+    public HeiheiDefault(Logger logger){
+        log_heihei = logger;
+        log_heihei.setName("water_log_heihei");
     }
 
 

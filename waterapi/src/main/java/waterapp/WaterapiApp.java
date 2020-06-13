@@ -13,8 +13,7 @@ import org.noear.water.utils.Timespan;
 import waterapp.dso.IDUtils;
 import waterapp.dso.LogSourceWrap;
 import waterapp.dso.TraceUtils;
-
-import java.util.Date;
+import waterapp.dso.WaterLoggerLocal;
 
 public class WaterapiApp {
 
@@ -40,7 +39,7 @@ public class WaterapiApp {
 
 				ProtocolHub.logStorer = new LogStorerDb(new LogSourceWrap(), () -> IDUtils.buildLogID());
 				ProtocolHub.messageQueue = new MessageQueueRedis(Config.water_msg_queue, Config.rd_msg);
-				ProtocolHub.heihei = HeiheiDefault.singleton();
+				ProtocolHub.heihei = new HeiheiDefault(new WaterLoggerLocal());
 			});
 		}
 

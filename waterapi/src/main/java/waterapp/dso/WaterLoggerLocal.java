@@ -1,33 +1,36 @@
-package org.noear.water.log;
+package waterapp.dso;
 
-import org.noear.water.WaterClient;
+import org.noear.water.log.Level;
+import org.noear.water.log.Logger;
+import org.noear.water.protocol.ProtocolHub;
+import waterapp.Config;
 
-public class WaterLogger implements Logger {
+public class WaterLoggerLocal implements Logger {
     public static Logger get(String name) {
-        return new WaterLogger(name);
+        return new WaterLoggerLocal(name);
     }
 
     public static Logger get(String name, Class<?> clz) {
-        return new WaterLogger(name, clz.getName());
+        return new WaterLoggerLocal(name, clz.getName());
     }
 
     private String _name;
     private String _tag;
 
-    public WaterLogger() {
+    public WaterLoggerLocal() {
 
     }
 
-    public WaterLogger(String name) {
+    public WaterLoggerLocal(String name) {
         _name = name;
     }
 
-    public WaterLogger(String name, String tag) {
+    public WaterLoggerLocal(String name, String tag) {
         this(name);
         _tag = tag;
     }
 
-    public WaterLogger(String name, Class<?> clz) {
+    public WaterLoggerLocal(String name, Class<?> clz) {
         this(name);
         _tag = clz.getSimpleName();
     }
@@ -193,6 +196,6 @@ public class WaterLogger implements Logger {
     }
 
     private void appendDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content);
+        ProtocolHub.logStorer.append(_name, level, tag, tag1, tag2, tag3, summary, content, Config.localHost);
     }
 }
