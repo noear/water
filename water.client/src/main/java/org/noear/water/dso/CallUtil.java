@@ -1,5 +1,6 @@
 package org.noear.water.dso;
 
+import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.utils.HttpUtils;
 
@@ -12,18 +13,18 @@ class CallUtil {
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {
-        return http(path).data(data).post();
+        return http(path).data(data).header("_from", WaterClient.localHost).post();
     }
 
     public static void postAsync(String path, Map<String, String> data)  {
         try {
-            http(path).data(data).postAsync(null);
+            http(path).data(data).header("_from", WaterClient.localHost).postAsync(null);
         }catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
     public static String get(String path) throws IOException {
-        return http(path).get();
+        return http(path).header("_from", WaterClient.localHost).get();
     }
 }

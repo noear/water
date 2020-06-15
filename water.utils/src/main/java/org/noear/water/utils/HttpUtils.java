@@ -85,14 +85,14 @@ public class HttpUtils {
 
     //@XNote("设置请求头")
     public HttpUtils header(String name, String value) {
-        if (name != null) {
+        if (name != null && value != null) {
             _builder.header(name, value);
         }
         return this;
     }
 
     public HttpUtils headerAdd(String name, String value) {
-        if (name != null) {
+        if (name != null && value != null) {
             _builder.addHeader(name, value);
         }
         return this;
