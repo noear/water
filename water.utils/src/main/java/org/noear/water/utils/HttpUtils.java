@@ -85,16 +85,20 @@ public class HttpUtils {
 
     //@XNote("设置请求头")
     public HttpUtils header(String name, String value) {
-        if (name != null && value != null) {
-            _builder.header(name, value);
+        if (name == null || value == null) {
+            return this;
         }
+
+        _builder.header(name, value);
         return this;
     }
 
     public HttpUtils headerAdd(String name, String value) {
-        if (name != null && value != null) {
-            _builder.addHeader(name, value);
+        if (name == null || value == null) {
+            return this;
         }
+
+        _builder.addHeader(name, value);
         return this;
     }
 
@@ -115,6 +119,10 @@ public class HttpUtils {
 
     //@XNote("设置表单数据")
     public HttpUtils data(String key, String value) {
+        if(key == null || value == null){
+            return this;
+        }
+
         tryInitForm();
         _form.add(new KeyValue(key, value));
         return this;
@@ -123,6 +131,10 @@ public class HttpUtils {
 
     //@XNote("设置表单文件")
     public HttpUtils data(String key, String filename, InputStream inputStream, String contentType) {
+        if(key == null || inputStream == null){
+            return this;
+        }
+
         multipart(true);
         tryInitPartBuilder(MultipartBody.FORM);
 
@@ -140,6 +152,10 @@ public class HttpUtils {
 
     //@XNote("设置BODY txt及内容类型")
     public HttpUtils bodyTxt(String txt, String contentType) {
+        if (txt == null) {
+            return this;
+        }
+
         if (contentType == null) {
             _body = FormBody.create(null, txt);
         } else {
@@ -156,6 +172,10 @@ public class HttpUtils {
 
     //@XNote("设置BODY raw及内容类型")
     public HttpUtils bodyRaw(InputStream raw, String contentType) {
+        if(raw == null){
+            return this;
+        }
+
         _body = new StreamBody(contentType, raw);
 
         return this;
