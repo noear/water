@@ -31,7 +31,7 @@ public class PlnController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 60;
+        return 1000 * 10;
     }
 
 
