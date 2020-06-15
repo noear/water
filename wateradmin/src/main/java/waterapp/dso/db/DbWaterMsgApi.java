@@ -180,7 +180,11 @@ public class DbWaterMsgApi {
                 .where("1 = 1")
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
-                        tb.and("topic_name like ?", "%" + topic_name + "%");
+                        if(StringUtils.isNumeric(topic_name)){
+                            tb.andEq("topic_id",Integer.parseInt(topic_name));
+                        }else{
+                            tb.andLk("topic_name", "%" + topic_name + "%");
+                        }
                     }
                 }).orderBy("topic_name ASC")
                 .select("*")
