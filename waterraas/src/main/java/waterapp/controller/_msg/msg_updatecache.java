@@ -2,6 +2,7 @@ package waterapp.controller._msg;
 
 import org.noear.rubber.Rubber;
 import org.noear.solon.annotation.XBean;
+import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.water.annotation.WaterMessage;
@@ -15,6 +16,8 @@ import waterapp.dao.DbApi;
 
 @WaterMessage("water.cache.update")
 public class msg_updatecache implements XMessageHandler {
+    static final String label_hook_start = "hook.start";
+
     @Override
     public boolean handler(MessageM msg) throws Exception {
         if (msg.message.indexOf(":") > 0) {
@@ -30,6 +33,11 @@ public class msg_updatecache implements XMessageHandler {
                         AFileUtil.remove(file.path);
                         ExecutorFactory.del(name);
 
+                        //处理hook.start
+                        //
+                        if (label_hook_start.equals(file.label)) {
+                            ExecutorFactory.execOnly(file, XContext.current());
+                        }
                     }
                 }
             }
