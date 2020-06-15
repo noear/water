@@ -7,7 +7,6 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
 import solonjt.JtRun;
-import waterapp.Config;
 import waterapp.dso.*;
 import waterapp.dso.db.DbWaterPaasApi;
 import waterapp.models.water_paas.PaasFileModel;
@@ -16,6 +15,13 @@ import waterapp.utils.CallUtil;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 成功:9
+ * 出错:8
+ * 处理中:2
+ * 待处理:0
+ *
+ * */
 @XBean
 public class PlnController implements IJob {
     @Override
