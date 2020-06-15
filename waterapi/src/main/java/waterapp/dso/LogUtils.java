@@ -17,6 +17,16 @@ import java.util.Map;
 public class LogUtils {
     private static final String logger_api = "water_log_api";
 
+    private static String _from(XContext ctx){
+        String _from = ctx.header("_from");
+        if (TextUtils.isEmpty(_from)) {
+            _from = IPUtils.getIP(ctx);
+        } else {
+            _from = _from.split("@")[0];
+        }
+
+        return _from;
+    }
 
     public static void info(String summary, XContext ctx) {
         try {
@@ -26,12 +36,7 @@ public class LogUtils {
                 return;
             }
 
-            String _from = ctx.header("_from");
-            if (TextUtils.isEmpty(_from)) {
-                _from = IPUtils.getIP(ctx);
-            } else {
-                _from = _from.replace("@", "_");
-            }
+            String _from = _from(ctx);
 
 
             Map<String, String> pnames = ctx.paramMap();
@@ -52,12 +57,7 @@ public class LogUtils {
 
     public static void error(XContext ctx, Exception ex) {
         try {
-            String _from = ctx.header("_from");
-            if (TextUtils.isEmpty(_from)) {
-                _from = IPUtils.getIP(ctx);
-            } else {
-                _from = _from.replace("@", "_");
-            }
+            String _from = _from(ctx);
 
             Map<String, String> pnames = ctx.paramMap();
             String tag = ctx.path();
@@ -80,12 +80,7 @@ public class LogUtils {
 
     public static void error(String tag, String tag1, String summary, Exception ex) {
         try {
-            String _from = XContext.current().header("_from");
-            if (TextUtils.isEmpty(_from)) {
-                _from = IPUtils.getIP(XContext.current());
-            } else {
-                _from = _from.replace("@", "_");
-            }
+            String _from = _from(XContext.current());
 
             String content = getFullStackTrace(ex);
 
