@@ -34,6 +34,7 @@ public class DbRubberApi {
     public static List<TagCountsModel> getModelTags() throws SQLException {
         return db().table("rubber_model")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -42,6 +43,7 @@ public class DbRubberApi {
     public static List<TagCountsModel> getActorTags() throws SQLException {
         return db().table("rubber_actor")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -60,6 +62,7 @@ public class DbRubberApi {
     public static List<ModelModel> getRequestTags() throws SQLException {
         return Config.water_log.table("rubber_log_request")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(new ModelModel());
     }
@@ -259,6 +262,7 @@ public class DbRubberApi {
     public static List<TagCountsModel> getSchemeTags() throws SQLException {
         return db().table("rubber_scheme")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -1263,6 +1267,7 @@ public class DbRubberApi {
     public static List<TagCountsModel> getBlockTags() throws SQLException {
         return db().table("rubber_block")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }

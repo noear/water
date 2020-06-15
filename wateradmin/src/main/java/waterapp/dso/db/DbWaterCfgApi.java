@@ -51,6 +51,7 @@ public class DbWaterCfgApi {
     public static List<TagCountsModel> getWhitelistTags() throws Exception {
         return db().table("water_cfg_whitelist")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -293,6 +294,7 @@ public class DbWaterCfgApi {
     public static List<TagCountsModel> getConfigTags() throws SQLException {
         return db().table("water_cfg_properties")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -302,6 +304,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .where("type = ?", type)
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag, COUNT(*) AS counts")
                 .getList(TagCountsModel.class);
     }
@@ -423,6 +426,7 @@ public class DbWaterCfgApi {
     public static List<TagCountsModel> getLoggerTags() throws Exception {
         return db().table("water_cfg_logger").whereEq("is_enabled",1)
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }

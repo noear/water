@@ -83,6 +83,7 @@ public class DbWaterApi {
     public static List<TagCountsModel> monitorGetTags() throws SQLException {
         return db().table("water_tool_monitor")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -169,6 +170,7 @@ public class DbWaterApi {
     public static List<TagCountsModel> syncGetTags() throws SQLException {
         return db().table("water_tool_synchronous")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
@@ -178,6 +180,7 @@ public class DbWaterApi {
     public static List<TagCountsModel> reportGetTags() throws SQLException{
         return db().table("water_tool_report")
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }

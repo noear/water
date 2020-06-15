@@ -24,6 +24,7 @@ public class DbPaaSApi {
     public static List<TagCountsModel> getFileTags(PaasFileType type) throws SQLException {
         return db().table("paas_file").where("file_type=?", type.code)
                 .groupBy("tag")
+                .orderByAsc("tag")
                 .select("tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }

@@ -44,6 +44,7 @@ public class DbWaterOpsApi {
     public static List<ServerModel> getServerTags() throws SQLException {
         return db().table("water_ops_server")
                    .groupBy("tag")
+                   .orderByAsc("tag")
                    .select("tag,count(*) counts")
                    .getList(new ServerModel());
     }
