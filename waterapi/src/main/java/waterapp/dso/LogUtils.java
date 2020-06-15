@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 
 import java.io.ByteArrayOutputStream;
@@ -17,17 +18,23 @@ public class LogUtils {
     private static final String logger_api = "water_log_api";
 
 
-    public static void info(String summary, XContext context) {
+    public static void info(String summary, XContext ctx) {
         try {
-            String tag = context.path();
+            String tag = ctx.path();
 
             if (tag == null) {
                 return;
             }
 
-            String ip = IPUtils.getIP(context);
+            String _from = ctx.header("_from");
+            if (TextUtils.isEmpty(_from)) {
+                _from = IPUtils.getIP(ctx);
+            } else {
+                _from = _from.replace("@", "_");
+            }
 
-            Map<String, String> pnames = context.paramMap();
+
+            Map<String, String> pnames = ctx.paramMap();
 
             ONode args = new ONode();
             if (pnames != null) {
@@ -36,61 +43,35 @@ public class LogUtils {
                 });
             }
 
-            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, ip, summary, args.toJson(), Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
         }
     }
 
-    public static void info(String tag, String summary, String content) {
-        info(tag, null, summary, content);
-    }
-
-    public static void info(String tag, String tag1, String summary, String content) {
+    public static void error(XContext ctx, Exception ex) {
         try {
-            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, tag1, summary, content, Config.localHost);
-            //DbWaterLogApi.addLog(logger_api, tag, tag1, "", label, content);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+            String _from = ctx.header("_from");
+            if (TextUtils.isEmpty(_from)) {
+                _from = IPUtils.getIP(ctx);
+            } else {
+                _from = _from.replace("@", "_");
+            }
 
-        System.out.print(tag + "::\r\n");
-        System.out.print(content);
-        System.out.print("\r\n");
-    }
-
-    public static void debug(String tag, String summary , String txt) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(txt);
-
-        try {
-            ProtocolHub.logStorer.append(logger_api, Level.DEBUG, tag,  summary, sb.toString(), Config.localHost);
-            //DbWaterLogApi.addLog(logger_debug, tag, "", "", label, sb.toString());
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        System.out.print(tag + "::\r\n");
-        System.out.print(sb.toString());
-        System.out.print("\r\n");
-    }
-
-    public static void error(XContext context, Exception ex) {
-        try {
-            Map<String,String> pnames = context.paramMap();
-            String tag = context.path();
+            Map<String, String> pnames = ctx.paramMap();
+            String tag = ctx.path();
 
             String content = getFullStackTrace(ex);
             ONode label = new ONode();
 
-            if(pnames!=null){
-                pnames.forEach((k,v)->{
+            if (pnames != null) {
+                pnames.forEach((k, v) -> {
                     label.set(k, v);
                 });
             }
 
-            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag,  label.toJson(), content, Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag, null, null, _from, label.toJson(), content, Config.localHost);
             //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -99,9 +80,16 @@ public class LogUtils {
 
     public static void error(String tag, String tag1, String summary, Exception ex) {
         try {
+            String _from = XContext.current().header("_from");
+            if (TextUtils.isEmpty(_from)) {
+                _from = IPUtils.getIP(XContext.current());
+            } else {
+                _from = _from.replace("@", "_");
+            }
+
             String content = getFullStackTrace(ex);
 
-            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag,  tag1, summary, content, Config.localHost);
+            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag, tag1, null, _from, summary, content, Config.localHost);
             //DbWaterLogApi.addLog(logger_error, tag, tag1, "", label, content);
         } catch (Exception ee) {
             ee.printStackTrace();
