@@ -26,15 +26,6 @@ public class BcfInterceptor extends BcfInterceptorBase {
             return;
         }
 
-        if (getPUID() == 0) {
-            //
-            //开发模式下，自动登录
-            //
-            if (XApp.cfg().isDebugMode()) {
-                Session.current().loadModel("xieyuejia", "xyj1234");
-            }
-        }
-
         if (getPUID() > 0) {
             ctx.attrSet("user_puid", "" + XSessionBcf.global().getPUID());
             ctx.attrSet("user_name", XSessionBcf.global().getUserName());
