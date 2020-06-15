@@ -32,7 +32,7 @@ public class WaterProxy {
         }
 
         return HttpUtils.http(fun_url)
-                .data(form).header("_from",WaterClient.localHost).post();
+                .data(form).header("_from",WaterClient.serviceAddr()).post();
     }
 
     /**
@@ -84,7 +84,7 @@ public class WaterProxy {
         }
 
         return HttpUtils.http(raas_uri + path)
-                .data(args).header("_from",WaterClient.localHost).post();
+                .data(args).header("_from",WaterClient.serviceAddr()).post();
     }
 
 
@@ -97,9 +97,9 @@ public class WaterProxy {
         }
 
         if(args == null){
-            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.localHost).get();
+            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.serviceAddr()).get();
         }else{
-            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.localHost).data(args).post();
+            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.serviceAddr()).data(args).post();
         }
 
     }

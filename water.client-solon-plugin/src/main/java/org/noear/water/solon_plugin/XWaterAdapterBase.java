@@ -52,6 +52,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
 
         //为client配置local host
         WaterClient.localHost = _localHost;
+        WaterClient.localService = service_name();
 
         //为water负载添加配置
         XWaterUpstream._consumer = service_name();

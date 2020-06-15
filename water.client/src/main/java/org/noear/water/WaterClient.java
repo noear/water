@@ -9,6 +9,19 @@ public final class WaterClient {
 
     //不能删
     public static String localHost = null;
+    public static String localService = null;
+    private static String _serviceAddr;
+    public static String serviceAddr() {
+        if (localService == null || localService == null) {
+            return null;
+        }
+
+        if (_serviceAddr == null) {
+            _serviceAddr = localService + "@" + localHost;
+        }
+
+        return _serviceAddr;
+    }
 
     /**
      * 配置服务接口
