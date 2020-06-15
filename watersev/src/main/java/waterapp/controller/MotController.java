@@ -30,7 +30,7 @@ public final class MotController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 60 * 1;
+        return 1000 * 60;
     }
 
     @Override
