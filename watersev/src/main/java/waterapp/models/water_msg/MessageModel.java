@@ -8,7 +8,7 @@ import waterapp.dso.db.DbWaterMsgApi;
  * Created by noear on 2017/7/18.
  */
 public class MessageModel implements IBinder {
-    public long msg_id;
+    public Long msg_id;
     public String msg_key;
     public int topic_id;
     public String topic_name;
