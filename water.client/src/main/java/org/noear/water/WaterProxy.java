@@ -1,5 +1,6 @@
 package org.noear.water;
 
+import org.noear.water.dso.Constants;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.HttpUtils;
 import org.noear.weed.cache.CacheUsing;
@@ -32,7 +33,7 @@ public class WaterProxy {
         }
 
         return HttpUtils.http(fun_url)
-                .data(form).header("_from",WaterClient.serviceAddr()).post();
+                .data(form).header(Constants.http_header_from,WaterClient.serviceAddr()).post();
     }
 
     /**
@@ -84,7 +85,7 @@ public class WaterProxy {
         }
 
         return HttpUtils.http(raas_uri + path)
-                .data(args).header("_from",WaterClient.serviceAddr()).post();
+                .data(args).header(Constants.http_header_from,WaterClient.serviceAddr()).post();
     }
 
 
@@ -97,9 +98,9 @@ public class WaterProxy {
         }
 
         if(args == null){
-            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.serviceAddr()).get();
+            return HttpUtils.http(paas_uri + path).header(Constants.http_header_from,WaterClient.serviceAddr()).get();
         }else{
-            return HttpUtils.http(paas_uri + path).header("_from",WaterClient.serviceAddr()).data(args).post();
+            return HttpUtils.http(paas_uri + path).header(Constants.http_header_from,WaterClient.serviceAddr()).data(args).post();
         }
 
     }

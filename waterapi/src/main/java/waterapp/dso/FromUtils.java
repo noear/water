@@ -1,4 +1,4 @@
-package org.noear.water.solon_plugin;
+package waterapp.dso;
 
 import org.noear.solon.core.XContext;
 import org.noear.water.dso.Constants;
