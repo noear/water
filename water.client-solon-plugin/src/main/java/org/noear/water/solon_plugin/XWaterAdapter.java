@@ -156,7 +156,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
         //删掉cache
         for(ICacheServiceEx cache : WeedConfig.libOfCache.values()){
-            cache.remove(tag);
+            cache.clear(tag);
         }
     }
 }
