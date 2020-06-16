@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.TextUtils;
 import waterapp.Config;
 
 import java.io.ByteArrayOutputStream;
@@ -35,6 +36,10 @@ public class LogUtils {
                 pnames.forEach((k, v) -> {
                     args.set(k, v);
                 });
+            }
+
+            if(TextUtils.isEmpty(summary)){
+                summary = FromUtils.getFrom(ctx);
             }
 
             ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
