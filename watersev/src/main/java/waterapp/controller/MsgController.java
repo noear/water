@@ -147,6 +147,9 @@ public final class MsgController implements IJob {
 
     private  Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
         synchronized (tag.msg.msg_id) {
+            //
+            //锁一下，确保计数的线程安全
+            //
             tag.count += 1;
             if (isOk) {
                 if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 2)) {
