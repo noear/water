@@ -146,38 +146,39 @@ public final class MsgController implements IJob {
     }
 
     private  Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
-        tag.count.incrementAndGet();
-        if (isOk) {
-            if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 2)) {
-                tag.value.incrementAndGet();
-            }
-        } else {
-            DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 1);
-        }
-
-        //4.返回派发结果
-        if (tag.count.get() == tag.total) {
-            if (tag.value.get() == tag.total) {
-                DbWaterMsgApi.setMessageState(dist.msg_id, 2);
-
-                if (tag.msg.dist_count >= 4) {
-//                    System.out.print("发送短信报警---\r\n");
-                    AlarmUtil.tryAlarm(tag.msg, true, dist);
+        synchronized (tag.msg.msg_key.intern()) {
+            tag.count += 1;
+            if (isOk) {
+                if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 2)) {
+                    tag.value += 1;
                 }
-
             } else {
-                if(tag.msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                    DbWaterMsgApi.setMessageRepet(tag.msg, 3);
+                DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 1);
+            }
 
-//                    System.out.print("发送短信报警---\r\n");
-                    AlarmUtil.tryAlarm(tag.msg, false, dist);
-                }
-                else {
-                    DbWaterMsgApi.setMessageRepet(tag.msg, 0);
+            //4.返回派发结果
+            if (tag.count == tag.total) {
+                if (tag.value == tag.total) {
+                    DbWaterMsgApi.setMessageState(dist.msg_id, 2);
 
                     if (tag.msg.dist_count >= 4) {
-//                        System.out.print("发送短信报警---\r\n");
+//                    System.out.print("发送短信报警---\r\n");
+                        AlarmUtil.tryAlarm(tag.msg, true, dist);
+                    }
+
+                } else {
+                    if (tag.msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
+                        DbWaterMsgApi.setMessageRepet(tag.msg, 3);
+
+//                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag.msg, false, dist);
+                    } else {
+                        DbWaterMsgApi.setMessageRepet(tag.msg, 0);
+
+                        if (tag.msg.dist_count >= 4) {
+//                        System.out.print("发送短信报警---\r\n");
+                            AlarmUtil.tryAlarm(tag.msg, false, dist);
+                        }
                     }
                 }
             }

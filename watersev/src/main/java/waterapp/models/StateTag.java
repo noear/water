@@ -11,6 +11,6 @@ public final class StateTag {
     public MessageModel msg;
 
     public int total = 0;//总数
-    public AtomicInteger count = new AtomicInteger(0);//计数
-    public AtomicInteger value = new AtomicInteger(0);//有效计数
+    public int count = 0;//计数
+    public int value = 0;//有效计数
 }
