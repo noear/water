@@ -20,6 +20,8 @@ import java.util.*;
 
 /**
  * 消息派发
+ *
+ * 状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
  * */
 @XBean
 public final class MsgController implements IJob {
@@ -144,18 +146,18 @@ public final class MsgController implements IJob {
     }
 
     private  Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
-        tag.count += 1;
+        tag.count.incrementAndGet();
         if (isOk) {
             if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 2)) {
-                tag.value += 1;
+                tag.value.incrementAndGet();
             }
         } else {
             DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 1);
         }
 
         //4.返回派发结果
-        if (tag.count == tag.total) {
-            if (tag.value == tag.total) {
+        if (tag.count.get() == tag.total) {
+            if (tag.value.get() == tag.total) {
                 DbWaterMsgApi.setMessageState(dist.msg_id, 2);
 
                 if (tag.msg.dist_count >= 4) {
