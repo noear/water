@@ -24,12 +24,6 @@ public abstract class WaterAdapter {
     /** 是否为稳定服务 :: 可以重写 */
     public boolean is_unstable(){ return false;}
 
-
-    //可以重写
-    public ICacheServiceEx cache_service() {
-        return null;
-    }
-
     public String localHost(){
         return null;
     }
@@ -153,16 +147,11 @@ public abstract class WaterAdapter {
 
             //更新缓存
             if (WaterConfig.msg_ucache_topic.equals(msg.topic)) {
-                //清理内置缓存
-                if(cache_service() != null ){
-                    for (String tag : tag_keys) { //xxx.xxx_xxx
-                        cache_service().clear(tag);
-                    }
-                }
-
                 //调用缓存处理
                 for (String tag : tag_keys) { //xxx.xxx_xxx
-                    cacheUpdateHandler(tag);
+                    if (TextUtils.isEmpty(tag) == false) {
+                        cacheUpdateHandler(tag);
+                    }
                 }
             }
 
@@ -170,8 +159,11 @@ public abstract class WaterAdapter {
             if (WaterConfig.msg_uconfig_topic.equals(msg.topic)) {
                 for (String tagKey : tag_keys) {//xxx::bbb
                     String[] ss = tagKey.split("::");
-                    WaterClient.Config.reload(ss[0]);
-                    configUpdateHandler(ss[0], ss[1]);
+
+                    if (ss.length > 1) {
+                        WaterClient.Config.reload(ss[0]);
+                        configUpdateHandler(ss[0], ss[1]);
+                    }
                 }
             }
 

@@ -3,6 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
@@ -161,6 +162,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     @Override
     public void cacheUpdateHandler(String tag) {
+        if(TextUtils.isEmpty(tag)){
+            return;
+        }
+
         super.cacheUpdateHandler(tag);
 
         if (tag.indexOf(".") > 0) {
