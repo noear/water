@@ -19,16 +19,22 @@ import java.util.Map;
 //
 public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin {
     protected static XWaterAdapter _global;
-    public static XWaterAdapter global(){
+
+    public static XWaterAdapter global() {
         return _global;
     }
 
 
-    private Map<String,XMessageHandler> _router;
-    public Map<String,XMessageHandler> router(){return _router; }
+    private Map<String, XMessageHandler> _router;
+
+    public Map<String, XMessageHandler> router() {
+        return _router;
+    }
 
 
-    public String msg_receiver_url(){return null;}
+    public String msg_receiver_url() {
+        return null;
+    }
 
     public XWaterAdapter() {
         super(XApp.cfg().argx(), XApp.global().port());
@@ -42,7 +48,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public void start(XApp app) {
         app.all(service_check_path, this::handle);
         app.all(service_stop_path, this::handle);
-        app.all(msg_receiver_path,  this::handle);
+        app.all(msg_receiver_path, this::handle);
     }
 
     @Override
@@ -60,10 +66,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     //用于作行为记录
     public int user_puid() {
-        if(XContext.current() != null) {
+        if (XContext.current() != null) {
             String tmp = XContext.current().attr("user_puid", "0");
             return Integer.parseInt(tmp);
-        }else{
+        } else {
             return 0;
         }
     }
@@ -84,7 +90,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
             WeedConfig.onExecuteAft(cmd -> {
                 WaterClient.Track.track(service_name(), cmd, 1000);
             });
-        }else {
+        } else {
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
                 System.out.println(cmd.text);
@@ -93,7 +99,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
                     return;
                 }
 
-                if(user_name() == null){
+                if (user_name() == null) {
                     return;
                 }
 
@@ -110,7 +116,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     //支持手动加入监听(保持旧的兼容)
-    public void messageListening(Map<String, XMessageHandler> map){};
+    public void messageListening(Map<String, XMessageHandler> map) {
+    }
+
+    ;
 
     @Override
     public void messageSubscribeHandler() {
@@ -143,9 +152,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     @Override
     public boolean messageReceiveHandler(MessageM msg) throws Exception {
         XMessageHandler handler = _router.get(msg.topic);
-        if(handler == null){
+        if (handler == null) {
             return true;
-        }else{
+        } else {
             return handler.handler(msg);
         }
     }
@@ -154,9 +163,20 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public void cacheUpdateHandler(String tag) {
         super.cacheUpdateHandler(tag);
 
-        //删掉cache
-        for(ICacheServiceEx cache : WeedConfig.libOfCache.values()){
-            cache.clear(tag);
+        if (tag.indexOf(".") > 0) {
+            String[] ss = tag.split("\\.");
+            if(ss.length ==2) {
+                ICacheServiceEx cache = WeedConfig.libOfCache.get(ss[0]);
+
+                if (cache != null) {
+                    cache.clear(ss[1]);
+                }
+            }
+        } else {
+            //删掉cache
+            for (ICacheServiceEx cache : WeedConfig.libOfCache.values()) {
+                cache.clear(tag);
+            }
         }
     }
 }
