@@ -18,9 +18,11 @@ public class msg_updatecache implements XMessageHandler {
 
     @Override
     public boolean handler(MessageM msg) throws Exception {
-        for(String tag : msg.message.split(";")){
-            if(TextUtils.isEmpty(tag) == false){
-                handlerDo(tag);
+        if (TextUtils.isEmpty(msg.message) == false) {
+            for (String tag : msg.message.split(";")) {
+                if (TextUtils.isEmpty(tag) == false) {
+                    handlerDo(tag);
+                }
             }
         }
 
