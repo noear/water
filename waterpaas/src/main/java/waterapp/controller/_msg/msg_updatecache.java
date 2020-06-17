@@ -18,8 +18,18 @@ public class msg_updatecache implements XMessageHandler {
 
     @Override
     public boolean handler(MessageM msg) throws Exception {
-        if (msg.message.indexOf(":") > 0) {
-            String[] ss = msg.message.split(":");
+        for(String pk : msg.message.split(";")){
+            if(TextUtils.isEmpty(pk) == false){
+                handlerDo(pk);
+            }
+        }
+
+        return true;
+    }
+
+    private void handlerDo(String pk) throws Exception{
+        if (pk.indexOf(":") > 0) {
+            String[] ss = pk.split(":");
             if ("paas".equals(ss[0])) {
                 String file_id = ss[1];
 
@@ -42,7 +52,5 @@ public class msg_updatecache implements XMessageHandler {
                 }
             }
         }
-
-        return true;
     }
 }

@@ -38,10 +38,6 @@ public class Config {
 
     public static void tryInit() {
 
-        XUtil.loadClass("com.mysql.jdbc.Driver");
-        XUtil.loadClass("com.mysql.cj.jdbc.Driver");
-
-        //WeedConfig.isUsingValueExpression = false;
     }
 
 
