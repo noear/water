@@ -56,7 +56,7 @@ public abstract class WaterAdapter {
         if(TextUtils.isEmpty(msg_receiver_path) == false) {
             //2.订阅内部消息
             try {
-                messageSubscribeTopicLocal(0, WaterConfig.msg_ucache_topic, WaterConfig.msg_uconfig_topic);
+                messageSubscribeTopicLocal(0, WaterConstants.msg_ucache_topic, WaterConstants.msg_uconfig_topic);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -137,8 +137,8 @@ public abstract class WaterAdapter {
 
     //2.2.1.内部消息处理
     protected boolean messageReceiveForInner(MessageM msg) {
-        if (WaterConfig.msg_ucache_topic.equals(msg.topic) == false &&
-                WaterConfig.msg_uconfig_topic.equals(msg.topic) == false) {
+        if (WaterConstants.msg_ucache_topic.equals(msg.topic) == false &&
+                WaterConstants.msg_uconfig_topic.equals(msg.topic) == false) {
             return false;
         }
 
@@ -146,7 +146,7 @@ public abstract class WaterAdapter {
             String[] tag_keys = msg.message.split(";");
 
             //更新缓存
-            if (WaterConfig.msg_ucache_topic.equals(msg.topic)) {
+            if (WaterConstants.msg_ucache_topic.equals(msg.topic)) {
                 //调用缓存处理
                 for (String tag : tag_keys) { //xxx.xxx_xxx
                     if (TextUtils.isEmpty(tag) == false) {
@@ -156,7 +156,7 @@ public abstract class WaterAdapter {
             }
 
             //更新配置
-            if (WaterConfig.msg_uconfig_topic.equals(msg.topic)) {
+            if (WaterConstants.msg_uconfig_topic.equals(msg.topic)) {
                 for (String tagKey : tag_keys) {//xxx::bbb
                     String[] ss = tagKey.split("::");
 

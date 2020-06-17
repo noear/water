@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
+import org.noear.water.WaterConstants;
 import org.noear.water.utils.IDUtils;
 
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class NoticeApi {
         }
 
         try {
-            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConfig.msg_ucache_topic, sb.toString());
+            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConstants.msg_ucache_topic, sb.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -52,7 +53,7 @@ public class NoticeApi {
      */
     public void updateConfig(String tag, String name) {
         try {
-            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConfig.msg_uconfig_topic, tag + "::" + name);
+            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConstants.msg_uconfig_topic, tag + "::" + name);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

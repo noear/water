@@ -4,8 +4,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
 
 public class WaterConfig {
-    public static final String msg_ucache_topic = "water.cache.update";
-    public static final String msg_uconfig_topic = "water.config.update";
+
 
     private static String _water_api_url = null;
     public static String water_api_url(){ return _water_api_url; }
