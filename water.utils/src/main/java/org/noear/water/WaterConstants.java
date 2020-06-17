@@ -11,6 +11,7 @@ public class WaterConstants {
     public static final String path_msg_receiver = "/msg/receive";
 
     public static final String water_log_upstream = "water_log_upstream";
+    public static final String water_log_api = "water_log_api";
 
     public static final String clz_BcfClient = "org.noear.bcf.BcfClient";
 }

@@ -2,6 +2,7 @@ package waterapp.dso;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
+import org.noear.water.WaterConstants;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
@@ -15,7 +16,7 @@ import java.util.Map;
  * Created by noear on 2017/7/27.
  */
 public class LogUtils {
-    private static final String logger_api = "water_log_api";
+    private static final String logger_api = WaterConstants.water_log_api;
 
 
     public static void info(String summary, XContext ctx) {
