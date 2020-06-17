@@ -162,10 +162,6 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     @Override
     public void cacheUpdateHandler(String tag) {
-        if(TextUtils.isEmpty(tag)){
-            return;
-        }
-
         super.cacheUpdateHandler(tag);
 
         if (tag.indexOf(".") > 0) {
