@@ -1,5 +1,5 @@
-package org.noear.water.dso;
+package org.noear.water;
 
-public class Constants {
+public class WaterConstants {
     public static final String http_header_from = "Water-From";
 }

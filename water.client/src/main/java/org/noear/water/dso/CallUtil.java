@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
+import org.noear.water.WaterConstants;
 import org.noear.water.utils.HttpUtils;
 
 import java.io.IOException;
@@ -13,18 +14,18 @@ class CallUtil {
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {
-        return http(path).data(data).header(Constants.http_header_from, WaterClient.serviceAddr()).post();
+        return http(path).data(data).header(WaterConstants.http_header_from, WaterClient.serviceAddr()).post();
     }
 
     public static void postAsync(String path, Map<String, String> data)  {
         try {
-            http(path).data(data).header(Constants.http_header_from, WaterClient.serviceAddr()).postAsync(null);
+            http(path).data(data).header(WaterConstants.http_header_from, WaterClient.serviceAddr()).postAsync(null);
         }catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
     public static String get(String path) throws IOException {
-        return http(path).header(Constants.http_header_from, WaterClient.serviceAddr()).get();
+        return http(path).header(WaterConstants.http_header_from, WaterClient.serviceAddr()).get();
     }
 }

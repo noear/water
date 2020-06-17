@@ -1,7 +1,7 @@
 package waterapp.dso;
 
 import org.noear.solon.core.XContext;
-import org.noear.water.dso.Constants;
+import org.noear.water.WaterConstants;
 import org.noear.water.utils.TextUtils;
 
 public class FromUtils {
@@ -9,7 +9,7 @@ public class FromUtils {
      * from = service@address:port
      */
     public static String getFrom(XContext ctx) {
-        String _from = ctx.header(Constants.http_header_from);
+        String _from = ctx.header(WaterConstants.http_header_from);
         if (TextUtils.isEmpty(_from)) {
             _from = IPUtils.getIP(ctx);
         }
@@ -18,7 +18,7 @@ public class FromUtils {
     }
 
     public static String getFromName(XContext ctx) {
-        String _from = ctx.header(Constants.http_header_from);
+        String _from = ctx.header(WaterConstants.http_header_from);
         if (TextUtils.isEmpty(_from)) {
             _from = IPUtils.getIP(ctx);
         } else {
