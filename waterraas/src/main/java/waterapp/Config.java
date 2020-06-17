@@ -16,7 +16,7 @@ public class Config {
     public static String rubber_uri = cfg("raas_uri").value;
 
     public static final ICacheServiceEx cache_file = new LocalCache().nameSet("cache_file");
-    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
+    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data").nameSet("cache_data");
 
     public static DbContext water = cfg("water").getDb(true);
 

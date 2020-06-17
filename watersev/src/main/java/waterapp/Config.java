@@ -15,7 +15,7 @@ public class Config {
     public static final String water_service_name = "watersev";
     public static final String water_config_tag = "water";
 
-    public static final ICacheServiceEx cache_file = new LocalCache().nameSet("cache_file");
+    public static final ICacheServiceEx cache_file = new LocalCache();
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
 
     public static DbContext water = cfg("water").getDb(true);
