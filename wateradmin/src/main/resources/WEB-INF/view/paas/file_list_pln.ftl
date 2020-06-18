@@ -192,14 +192,18 @@
                         </td>
 
                         <td style='${(m1.plan_state=8)?string("color:red","")}'>
-                            <#if m1.plan_state=9>
-                                成功
-                            <#elseif m1.plan_state=8>
-                                出错
-                            <#elseif m1.plan_state=2>
-                                处理中
+                            <#if m1.plan_last_time??>
+                                <#if m1.plan_state=9>
+                                    成功
+                                <#elseif m1.plan_state=8>
+                                    出错
+                                <#elseif m1.plan_state=2>
+                                    处理中
+                                <#else>
+                                    待处理
+                                </#if>
                             <#else>
-                                待处理
+                                -
                             </#if>
                         </td>
                         <td class="right">${m1.plan_count?default(0)%1000}/${m1.plan_max!}</td>
