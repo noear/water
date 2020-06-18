@@ -182,12 +182,22 @@
                                 <n class="mar10">::${m1.note!}</n>
                             </#if>
                         </td>
-                        <td  class="left">${(m1.plan_begin_time?string('MM.dd'))!}(${m1.plan_interval!})</td>
                         <td  class="left">
-                            <#if m1.plan_last_timespan?default(0) gt 1000 >
-                                ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan/1000}s)
+                            <#if m1.plan_begin_time??>
+                            ${(m1.plan_begin_time?string('MM.dd'))!}(${m1.plan_interval!})
                             <#else>
-                                ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan!0}ms)
+                                -
+                            </#if>
+                        </td>
+                        <td  class="left">
+                            <#if m1.plan_begin_time??>
+                                <#if m1.plan_last_timespan?default(0) gt 1000 >
+                                    ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan/1000}s)
+                                <#else>
+                                    ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan!0}ms)
+                                </#if>
+                            <#else>
+                                -
                             </#if>
                         </td>
 
@@ -206,7 +216,13 @@
                                 -
                             </#if>
                         </td>
-                        <td class="right">${m1.plan_count?default(0)%1000}/${m1.plan_max!}</td>
+                        <td class="right">
+                            <#if m1.plan_begin_time??>
+                            ${m1.plan_count?default(0)%1000}/${m1.plan_max!}
+                            <#else>
+                                -
+                            </#if>
+                        </td>
                         <td class="op">
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
