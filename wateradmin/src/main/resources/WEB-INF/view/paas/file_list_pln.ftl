@@ -192,7 +192,7 @@
                         </td>
 
                         <td style='${(m1.plan_state=8)?string("color:red","")}'>
-                            <#if m1.plan_last_time??>
+                            <#if m1.plan_begin_time??>
                                 <#if m1.plan_state=9>
                                     成功
                                 <#elseif m1.plan_state=8>
