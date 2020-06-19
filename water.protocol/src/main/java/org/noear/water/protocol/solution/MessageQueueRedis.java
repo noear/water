@@ -43,7 +43,7 @@ public class MessageQueueRedis implements IMessageQueue {
     }
 
     @Override
-    public String pop() {
+    public String poll() {
         return _redisX.open1((rs) -> rs.key(_queue_name).listPop());
     }
 
@@ -55,18 +55,18 @@ public class MessageQueueRedis implements IMessageQueue {
         _redisX.open0((rs) -> rs.key(msg_key_h).delete());
     }
 
-    @Override
-    public long count() {
-        return _redisX.open1(rs -> rs.key(_queue_name).listLen());
-    }
+//    @Override
+//    public long count() {
+//        return _redisX.open1(rs -> rs.key(_queue_name).listLen());
+//    }
 
-    @Override
-    public boolean exists(String msg) {
-        return _redisX.open1((rs) -> {
-            String msg_key = keyBuilder.build(msg);
-            String msg_key_h = _queue_name + "_" + msg_key;
-
-            return rs.key(msg_key_h).exists();
-        });
-    }
+//    @Override
+//    public boolean exists(String msg) {
+//        return _redisX.open1((rs) -> {
+//            String msg_key = keyBuilder.build(msg);
+//            String msg_key_h = _queue_name + "_" + msg_key;
+//
+//            return rs.key(msg_key_h).exists();
+//        });
+//    }
 }
