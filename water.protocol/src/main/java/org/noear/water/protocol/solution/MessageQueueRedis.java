@@ -55,10 +55,10 @@ public class MessageQueueRedis implements IMessageQueue {
         _redisX.open0((rs) -> rs.key(msg_key_h).delete());
     }
 
-    @Override
-    public long count() {
-        return _redisX.open1(rs -> rs.key(_queue_name).listLen());
-    }
+//    @Override
+//    public long count() {
+//        return _redisX.open1(rs -> rs.key(_queue_name).listLen());
+//    }
 
 //    @Override
 //    public boolean exists(String msg) {

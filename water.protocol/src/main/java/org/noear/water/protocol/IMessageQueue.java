@@ -28,5 +28,5 @@ public interface IMessageQueue {
     /**
      * 数量
      * */
-    long count();
+//    long count();
 }
