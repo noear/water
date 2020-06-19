@@ -3,7 +3,7 @@ package org.noear.water.protocol;
 import java.util.Collection;
 
 /**
- * 消息队列接口
+ * 消息队列接口（发到队列里的消息，是原消息ID）
  * */
 public interface IMessageQueue {
     /**
