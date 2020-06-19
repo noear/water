@@ -13,5 +13,5 @@ public interface IMessageQueue {
 
     void remove(String msg);
     long count();
-    boolean exists(String str);
+    boolean exists(String msg);
 }
