@@ -35,10 +35,10 @@ public class MsgZanController implements IJob {
             _queue = ProtocolHub.messageQueue;
         }
 
-        //保持队里只有200数量
-        if (_queue.count() > 200) {
-            return;
-        }
+//        保持队里只有200数量 //不再考虑数量
+//        if (_queue.count() > 200) {
+//            return;
+//        }
 
         long ntime = System.currentTimeMillis();
         List<Long> msgList = DbWaterMsgApi.getMessageList(200, ntime);
