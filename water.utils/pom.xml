@@ -42,6 +42,7 @@
             <scope>provided</scope>
         </dependency>
 
+
         <dependency>
             <groupId>net.spy</groupId>
             <artifactId>spymemcached</artifactId>
