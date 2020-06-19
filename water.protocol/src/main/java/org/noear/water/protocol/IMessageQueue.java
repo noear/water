@@ -6,11 +6,27 @@ import java.util.Collection;
  * 消息队列接口
  * */
 public interface IMessageQueue {
+    /**
+     * 添加一个消息
+     * */
     void push(String msg);
+    /**
+     * 添加一批消息
+     * */
     void pushAll(Collection<String> msgAry);
 
-    String pull();
+    /**
+     * 返问并移除队列头部的消息
+     * */
+    String poll();
 
+    /**
+     * 移除消息
+     * */
     void remove(String msg);
+
+    /**
+     * 数量
+     * */
     long count();
 }

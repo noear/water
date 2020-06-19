@@ -43,7 +43,7 @@ public class MessageQueueRedis implements IMessageQueue {
     }
 
     @Override
-    public String pull() {
+    public String poll() {
         return _redisX.open1((rs) -> rs.key(_queue_name).listPop());
     }
 

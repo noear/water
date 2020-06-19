@@ -60,7 +60,7 @@ public final class MsgController implements IJob {
         }
 
         while (true) {
-            String msg_id_str = _queue.pull();
+            String msg_id_str = _queue.poll();
 
             if (TextUtils.isEmpty(msg_id_str)) {//如果没有了
                 break;
