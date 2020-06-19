@@ -30,22 +30,12 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
     }
 
     @Override
-    public String pop() {
+    public String poll() {
         return null;
     }
 
     @Override
     public void remove(String msg) {
 
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public boolean exists(String str) {
-        return false;
     }
 }
