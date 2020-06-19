@@ -9,9 +9,8 @@ public interface IMessageQueue {
     void push(String msg);
     void pushAll(Collection<String> msgAry);
 
-    String pop();
+    String pull();
 
     void remove(String msg);
     long count();
-    boolean exists(String msg);
 }
