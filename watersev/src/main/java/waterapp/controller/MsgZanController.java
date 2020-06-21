@@ -2,13 +2,11 @@ package waterapp.controller;
 
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.extend.schedule.IJob;
-import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.Datetime;
 import waterapp.dso.db.DbWaterMsgApi;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 消息入站（队列）
@@ -21,7 +19,6 @@ public class MsgZanController implements IJob {
     }
 
     int _interval = 500;
-    IMessageQueue _queue;
 
     @Override
     public int getInterval() {
@@ -30,11 +27,6 @@ public class MsgZanController implements IJob {
 
     @Override
     public void exec() throws Exception {
-
-        if (_queue == null) {
-            _queue = ProtocolHub.messageQueue;
-        }
-
 //        保持队里只有200数量 //不再考虑数量
 //        if (_queue.count() > 200) {
 //            return;
@@ -46,8 +38,12 @@ public class MsgZanController implements IJob {
         if (msgList.size() > 0) {
             _interval = 500;
 
-            List<String> msgList2 = msgList.stream().map(m -> m + "").collect(Collectors.toList());
-            _queue.pushAll(msgList2);
+            for (Long msg_id : msgList) {
+                String msg_id_str = msg_id + "";
+                if (ProtocolHub.messageLock.lock(msg_id_str)) {
+                    ProtocolHub.messageQueue.push(msg_id_str);
+                }
+            }
         } else {
             int hour = Datetime.Now().getHours();
             if (hour > 1 && hour < 6) {

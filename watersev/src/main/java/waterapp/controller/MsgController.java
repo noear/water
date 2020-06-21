@@ -3,7 +3,6 @@ package waterapp.controller;
 import org.noear.solon.XApp;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.extend.schedule.IJob;
-import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.*;
 import waterapp.dso.AlarmUtil;
@@ -50,17 +49,12 @@ public final class MsgController implements IJob {
         return _threads;
     }
 
-    IMessageQueue _queue;
-
     @Override
     public void exec() throws Exception {
 
-        if (_queue == null) {
-            _queue = ProtocolHub.messageQueue;
-        }
 
         while (true) {
-            String msg_id_str = _queue.poll();
+            String msg_id_str = ProtocolHub.messageQueue.poll();
 
             if (TextUtils.isEmpty(msg_id_str)) {//如果没有了
                 break;
@@ -81,7 +75,7 @@ public final class MsgController implements IJob {
             //置为处理中
             DbWaterMsgApi.setMessageState(msgID, 1);
             //并将消息锁里取消掉
-            _queue.remove(msg_id_str);
+            ProtocolHub.messageLock.unlock(msg_id_str);
 
             try {
                 distribute(msg);

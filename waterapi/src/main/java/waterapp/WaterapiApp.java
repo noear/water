@@ -7,6 +7,7 @@ import org.noear.solon.extend.staticfiles.XStaticFiles;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiDefault;
 import org.noear.water.protocol.solution.LogStorerDb;
+import org.noear.water.protocol.solution.MessageLockRedis;
 import org.noear.water.protocol.solution.MessageQueueRedis;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
@@ -38,6 +39,7 @@ public class WaterapiApp {
 				Config.tryInit(app.port(), app.prop().getProp("water.dataSource"));
 
 				ProtocolHub.logStorer = new LogStorerDb(new LogSourceWrap(), () -> IDUtils.buildLogID());
+				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 				ProtocolHub.messageQueue = new MessageQueueRedis(Config.water_msg_queue, Config.rd_msg);
 				ProtocolHub.heihei = new HeiheiDefault(new WaterLoggerLocal());
 			});

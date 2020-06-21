@@ -9,24 +9,17 @@ public interface IMessageQueue {
     /**
      * 添加一个消息
      * */
-    void push(String msg);
-    /**
-     * 添加一批消息
-     * */
-    void pushAll(Collection<String> msgAry);
+    void push(String msg) throws Exception;
+
 
     /**
      * 返问并移除队列头部的消息
      * */
-    String poll();
+    String poll() throws Exception;
 
-    /**
-     * 移除消息
-     * */
-    void remove(String msg);
 
     /**
      * 数量
      * */
-//    long count();
+    long count();
 }
