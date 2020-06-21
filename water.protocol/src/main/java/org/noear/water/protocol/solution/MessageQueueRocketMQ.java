@@ -10,16 +10,10 @@ public class MessageQueueRocketMQ implements IMessageQueue {
     String _queue_name;
 
     ConnectionFactory factory;
-    IMessageKeyBuilder keyBuilder = new MessageKeyBuilderDefault();
 
 
     @Override
     public void push(String msg) {
-
-    }
-
-    @Override
-    public void pushAll(Collection<String> msgAry) {
 
     }
 
@@ -29,7 +23,8 @@ public class MessageQueueRocketMQ implements IMessageQueue {
     }
 
     @Override
-    public void remove(String msg) {
-
+    public long count() {
+        return 0;
     }
+
 }
