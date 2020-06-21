@@ -26,36 +26,38 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
     final IMessageKeyBuilder keyBuilder;
     final AMQP.BasicProperties basicProperties;
     final String exchangeName = "rabbitmq.wj";
+    final String routingKey = "add";
+    final String queueKey = "rabbitmq.wj.add";
 
-    public MessageQueueRabbitMQ(){
+    public MessageQueueRabbitMQ() {
         keyBuilder = new MessageKeyBuilderDefault();
         basicProperties = new AMQP.BasicProperties().builder().deliveryMode(2).contentType("UTF-8").build();
     }
 
     @Override
-    public void push(String msg) throws Exception{
+    public void push(String msg) throws Exception {
         Channel channel = ChannelUtils.getChannelInstance("队列消息生产者");
 
         // 声明交换机 (交换机名, 交换机类型, 是否持久化, 是否自动删除, 是否是内部交换机, 交换机属性);
         channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT, true, false, false, new HashMap<>());
 
         // 设置消息属性 发布消息 (交换机名, Routing key, 可靠消息相关属性 后续会介绍, 消息属性, 消息体);
-        channel.basicPublish(exchangeName, "add", false, basicProperties, msg.getBytes());
+        channel.basicPublish(exchangeName, routingKey, false, basicProperties, msg.getBytes());
 
     }
 
     @Override
-    public String poll() throws Exception{
+    public String poll() throws Exception {
         Channel channel = ChannelUtils.getChannelInstance("队列消息消费者");
 
         // 声明队列 (队列名, 是否持久化, 是否排他, 是否自动删除, 队列属性);
-        AMQP.Queue.DeclareOk declareOk = channel.queueDeclare("rabbitmq.wj.add", true, false, false, new HashMap<>());
+        AMQP.Queue.DeclareOk declareOk = channel.queueDeclare(queueKey, true, false, false, new HashMap<>());
 
         // 声明交换机 (交换机名, 交换机类型, 是否持久化, 是否自动删除, 是否是内部交换机, 交换机属性);
-        channel.exchangeDeclare("rabbitmq.wj", BuiltinExchangeType.DIRECT, true, false, false, new HashMap<>());
+        channel.exchangeDeclare(exchangeName, BuiltinExchangeType.DIRECT, true, false, false, new HashMap<>());
 
         // 将队列Binding到交换机上 (队列名, 交换机名, Routing key, 绑定属性);
-        channel.queueBind(declareOk.getQueue(), "rabbitmq.wj", "add", new HashMap<>());
+        channel.queueBind(declareOk.getQueue(), exchangeName, routingKey, new HashMap<>());
 
 
         GetResponse rep = channel.basicGet(declareOk.getQueue(), true);
