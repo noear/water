@@ -142,7 +142,7 @@ public final class DbWaterMsgApi {
     }
 
     //添加消息
-    public static long addMessage(String key, String topic, String content, Date plan_time) throws SQLException {
+    public static long addMessage(String key, String topic, String content, Date plan_time) throws Exception {
         TopicModel m = getTopicID(topic);
 
         //支持最多消息量的限制
@@ -179,25 +179,16 @@ public final class DbWaterMsgApi {
         return msg_id;
     }
 
-    public static void addMessageToQueue(long msg_id) {
+    public static void addMessageToQueue(long msg_id) throws Exception {
         if (Config.rd_msg == null) {
             return;
         }
 
-        ProtocolHub.messageQueue.push(msg_id + "");
+        String msg_id_str = msg_id + "";
 
-//        try {
-//            String msg_key = msg_id + "";
-//            String msg_key_h = Config.water_msg_queue + "_" + msg_key;
-//
-//            Config.rd_msg.open0((rs) -> {
-//                if (rs.key(msg_key_h).expire(30).lock()) {
-//                    rs.key(Config.water_msg_queue).listAdd(msg_key);
-//                }
-//            });
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+        if (ProtocolHub.messageLock.lock(msg_id_str)) {
+            ProtocolHub.messageQueue.push(msg_id_str);
+        }
     }
 
     public static MessageModel getMessage(String msg_key) throws SQLException {
