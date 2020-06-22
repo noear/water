@@ -18,7 +18,8 @@ public class Config {
     public static final ICacheServiceEx cache_file = new LocalCache().nameSet("cache_file");
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data").nameSet("cache_data");
 
-    public static DbContext water = cfg("water").getDb(true);
+    public static final DbContext water = cfg("water").getDb(true);
+    public static final DbContext water_paas = cfg("water_paas").getDb(true);
 
     //向Water注册当前服务
     public static void tryInit(){

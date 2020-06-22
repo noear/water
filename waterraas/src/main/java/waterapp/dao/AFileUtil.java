@@ -32,7 +32,7 @@ public class AFileUtil {
         if(_files.containsKey(path2)==false){
             synchronized (_lock){
                 if(_files.containsKey(path2)==false){
-                    AFileModel tml =  DbApi.fileGet(path2);
+                    AFileModel tml =  DbPaaSApi.fileGet(path2);
                     _files.put(path2,tml);
                 }
             }

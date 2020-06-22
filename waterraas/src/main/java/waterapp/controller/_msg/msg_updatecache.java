@@ -1,7 +1,5 @@
 package waterapp.controller._msg;
 
-import org.noear.rubber.Rubber;
-import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
@@ -11,8 +9,7 @@ import org.noear.water.solon_plugin.XMessageHandler;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
 import waterapp.dao.AFileUtil;
-import waterapp.dao.CacheUtil;
-import waterapp.dao.DbApi;
+import waterapp.dao.DbPaaSApi;
 
 @WaterMessage("water.cache.update")
 public class msg_updatecache implements XMessageHandler {
@@ -36,7 +33,7 @@ public class msg_updatecache implements XMessageHandler {
                 String file_id = ss[1];
 
                 if (StringUtils.isNumeric(file_id)) {
-                    AFileModel file = DbApi.fileGet(Integer.parseInt(file_id));
+                    AFileModel file = DbPaaSApi.fileGet(Integer.parseInt(file_id));
 
                     if (TextUtils.isEmpty(file.path) == false) {
                         String name = file.path.replace("/", "__");

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class DbPaaSApi {
     private static DbContext db() {
-        return Config.water;
+        return Config.water_paas;
     }
 
     //获取logger表tag

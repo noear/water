@@ -10,7 +10,7 @@ import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
 import waterapp.Config;
-import waterapp.dso.DbApi;
+import waterapp.dso.DbPaaSApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -63,12 +63,12 @@ public class JtRun {
             String tag = (String) map.get("tag");
             String label = (String) map.get("label");
             Boolean useCache = (Boolean) map.get("useCache");
-            return DbApi.fileGetPaths(tag, label, useCache);
+            return DbPaaSApi.fileGetPaths(tag, label, useCache);
         });
 
         JtFun.g.set("afile_get", (map) -> {
             String path = (String) map.get("path");
-            return DbApi.fileGet(path);
+            return DbPaaSApi.fileGet(path);
         });
 
         CallUtil.callLabel(null, Config.faas_hook_start, false, Collections.EMPTY_MAP);

@@ -18,8 +18,9 @@ public class Config {
     public static final ICacheServiceEx cache_file = new LocalCache();
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
 
-    public static DbContext water = cfg("water").getDb(true);
-    public static DbContext water_msg = cfg("water_msg").getDb(true);
+    public static final DbContext water = cfg("water").getDb(true);
+    public static final DbContext water_msg = cfg("water_msg").getDb(true);
+    public static final DbContext water_paas = cfg("water_paas").getDb(true);
 
     public static RedisX rd_ids   = cfg("water_redis").getRd(1);
     public static RedisX rd_count   = cfg("water_redis").getRd(6);

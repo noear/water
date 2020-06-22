@@ -8,9 +8,9 @@ import waterapp.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbApi {
+public class DbPaaSApi {
     private static DbContext db() {
-        return Config.water;
+        return Config.water_paas;
     }
 
     public static AFileModel fileGet(String path) throws Exception {
