@@ -73,6 +73,13 @@ public class JtRun {
 
         CallUtil.callLabel(null, "hook.start", false, Collections.EMPTY_MAP);
 
+        //再等0.5秒
+        try {
+            Thread.sleep(500);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
         initFuture.complete(1);
     }
 }
