@@ -14,7 +14,7 @@ import java.sql.SQLException;
 @XBean(remoting = true)
 public class BcfUserRpcServiceImp implements BcfUserRpcService {
 
-    @Water("water/water_bcf")
+    @Water("water/water")
     DbContext bcfDb;
 
     @Override
