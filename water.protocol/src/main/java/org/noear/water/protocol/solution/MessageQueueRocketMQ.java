@@ -16,15 +16,18 @@ import java.util.List;
  * https://www.cnblogs.com/enenen/p/12773099.html
  *
  * https://www.cnblogs.com/markLogZhu/p/12545597.html
+ *
+ * https://segmentfault.com/a/1190000021240352?utm_source=tag-newest
+ *
  * */
 public class MessageQueueRocketMQ implements IMessageQueue {
     String _queue_name;
-    final String rabbit_exchangeName = "water.message";
+    final String group_name = "water.message";
     final String server = "127.0.0.1:9876";
 
     @Override
     public void push(String msg) {
-        DefaultMQProducer producer = new DefaultMQProducer();
+        DefaultMQProducer producer = new DefaultMQProducer(group_name);
         producer.setNamesrvAddr(server);
         //发送超时时间，默认3000 单位ms
         producer.setSendMsgTimeout(5000);
@@ -53,7 +56,7 @@ public class MessageQueueRocketMQ implements IMessageQueue {
 
     @Override
     public String poll() {
-        DefaultLitePullConsumer consumer = new DefaultLitePullConsumer();
+        DefaultLitePullConsumer consumer = new DefaultLitePullConsumer(group_name);
 
         consumer.setNamesrvAddr(server);
         //要消费的topic，可使用tag进行简单过滤
