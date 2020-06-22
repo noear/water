@@ -9,7 +9,7 @@ import org.noear.water.solon_plugin.XMessageHandler;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
 import waterapp.dso.AFileUtil;
-import waterapp.dso.DbApi;
+import waterapp.dso.DbPaaSApi;
 
 @WaterMessage("water.cache.update")
 public class msg_updatecache implements XMessageHandler {
@@ -33,7 +33,7 @@ public class msg_updatecache implements XMessageHandler {
                 String file_id = ss[1];
 
                 if (StringUtils.isNumeric(file_id)) {
-                    AFileModel file = DbApi.fileGet(Integer.parseInt(file_id));
+                    AFileModel file = DbPaaSApi.fileGet(Integer.parseInt(file_id));
 
                     if (TextUtils.isEmpty(file.path) == false) {
                         String name = file.path.replace("/", "__");

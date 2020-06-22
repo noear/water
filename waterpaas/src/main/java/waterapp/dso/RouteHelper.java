@@ -41,7 +41,7 @@ public class RouteHelper {
 
         List<String> all_paths = null;
         try {
-            all_paths = DbApi.fileGetPathAll();
+            all_paths = DbPaaSApi.fileGetPathAll();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -12,7 +12,7 @@ import java.util.Map;
 @XController
 public class UserController {
 
-    @Water("water/water_bcf")
+    @Water("water/water")
     DbContext bcfDb;
 
     @XMapping(method = XMethod.GET)

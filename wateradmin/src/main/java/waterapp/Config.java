@@ -16,6 +16,7 @@ public class Config {
     public static DbContext water = cfg("water").getDb(true);
     public static DbContext water_log = cfg("water_log").getDb(true);
     public static DbContext water_msg = cfg("water_msg").getDb(true);
+    public static DbContext water_paas = cfg("water_paas").getDb(true);
 
     //paas 根地址
     public static String paas_uri(){

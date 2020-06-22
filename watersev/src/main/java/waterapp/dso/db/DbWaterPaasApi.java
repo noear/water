@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class DbWaterPaasApi {
     private static DbContext db() {
-        return Config.water; //此处要进行适配修改
+        return Config.water_paas; //此处要进行适配修改
     }
 
     //===============

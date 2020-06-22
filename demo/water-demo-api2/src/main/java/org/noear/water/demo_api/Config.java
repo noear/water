@@ -7,10 +7,10 @@ import org.noear.weed.DbContext;
 
 @XConfiguration
 public class Config {
-    @Water("water/water_bcf")
+    @Water("water/water")
     DbContext bcfDb;
 
-    @XBean("water_bcf")
+    @XBean("water")
     public DbContext water_bcf(){
         return bcfDb;
     }

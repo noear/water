@@ -10,7 +10,7 @@ import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.TextUtils;
 import waterapp.Config;
 import waterapp.dso.AFileUtil;
-import waterapp.dso.DbApi;
+import waterapp.dso.DbPaaSApi;
 
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +108,7 @@ public class FrmInterceptor implements XHandler {
         try {
             _cacheMap.clear();
 
-            List<AFileModel> list = DbApi.pathFilters();
+            List<AFileModel> list = DbPaaSApi.pathFilters();
             for (AFileModel c : list) {
                 if(TextUtils.isEmpty(c.note)){
                     continue;
