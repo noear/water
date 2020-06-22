@@ -42,6 +42,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>net.spy</groupId>

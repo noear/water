@@ -23,7 +23,7 @@ import java.util.*;
             throw new RuntimeException("RedisX:Properties lacks the db parameter!");
         }
 
-        doinit(server,
+        initDo(server,
                 user,
                 password,
                 Integer.parseInt(db),
@@ -37,7 +37,7 @@ import java.util.*;
         String password = prop.getProperty("password");
         String maxTotaol = prop.getProperty("maxTotaol");
 
-        doinit(server,
+        initDo(server,
                 user,
                 password,
                 db,
@@ -50,7 +50,7 @@ import java.util.*;
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");
 
-        doinit(server,
+        initDo(server,
                 user,
                 password,
                 db,
@@ -58,10 +58,10 @@ import java.util.*;
     }
 
     public RedisX(String server, String user, String password, int db, int maxTotaol) {
-        doinit(server, user, password, db, maxTotaol);
+        initDo(server, user, password, db, maxTotaol);
     }
 
-    private void doinit(String server, String user, String password, int db, int maxTotaol) {
+    private void initDo(String server, String user, String password, int db, int maxTotaol) {
         JedisPoolConfig config = new JedisPoolConfig();
 
         if (maxTotaol < 10) {
