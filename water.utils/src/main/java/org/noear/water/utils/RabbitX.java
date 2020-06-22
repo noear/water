@@ -20,11 +20,16 @@ public class RabbitX {
         String server = prop.getProperty("server");
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");
+        String virtualHost = prop.getProperty("virtualHost");
 
-        initDo(server, user, password);
+        if (TextUtils.isEmpty(virtualHost)) {
+            virtualHost = "/";
+        }
+
+        initDo(server, user, password, virtualHost);
     }
 
-    private void initDo(String server, String user, String password) {
+    private void initDo(String server, String user, String password, String virtualHost) {
         if (server.contains(":") == false) {
             throw new RuntimeException("RabbitX:Properties error the server parameter!");
         }
@@ -33,20 +38,12 @@ public class RabbitX {
         this.user = user;
         this.password = password;
 
-
-    }
-
-    private void connectionFactoryInit() {
-        if (connectionFactory == null) {
-            return;
-        }
-
         connectionFactory = new ConnectionFactory();
 
         // 配置连接信息
         connectionFactory.setHost(host);
         connectionFactory.setPort(port);
-        connectionFactory.setVirtualHost("/");
+        connectionFactory.setVirtualHost(virtualHost);
         connectionFactory.setUsername(user);
         connectionFactory.setPassword(password);
 
@@ -57,8 +54,6 @@ public class RabbitX {
     }
 
     public void open0(Act1Ex<Channel> action) {
-        connectionFactoryInit();
-
         try {
             try (Connection connection = connectionFactory.newConnection()) {
                 try (Channel channel = connection.createChannel()) {
@@ -71,8 +66,6 @@ public class RabbitX {
     }
 
     public <T> T open1(Fun1Ex<Channel, T> action) {
-        connectionFactoryInit();
-
         try {
             try (Connection connection = connectionFactory.newConnection()) {
                 try (Channel channel = connection.createChannel()) {
