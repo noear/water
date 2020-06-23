@@ -86,9 +86,8 @@
     <toolbar>
         <flex>
             <left class="col-4">
-                <button type='button' onclick="fresh()">刷新</button>
                 <#if _m!=2 && is_admin == 1>
-                    <button type='button' class="edit mar10-l" onclick="distribute()" >立即派发</button>
+                    <button type='button' class="edit" onclick="distribute()" >立即派发</button>
                     <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
                     <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
                 </#if>
@@ -96,6 +95,7 @@
             <middle class="col-4 center">
                 <input type="text" id="key" value="${key!}" placeholder="ID or Topic" class="w200"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
+                <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>
             <right class="col-4">
                 <selector>
