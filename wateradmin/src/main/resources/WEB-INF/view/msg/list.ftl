@@ -8,6 +8,18 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
+    <style>
+        /* tooltip */
+        #tooltip{
+            position:absolute;
+            border:1px solid #aaa;
+            background:#eee;
+            padding:1px;
+            color:#333;
+            display:none;
+            font-size: small;
+        }
+    </style>
     <script>
         function fresh() {
             location.reload();
@@ -79,6 +91,29 @@
                 $('[name=sel_id]').prop('checked',ckd);
             });
         });
+
+        $(function(){
+            var x = 10;
+            var y = 20;
+            $("tr[title]").mouseover(function(e){
+                this.myTitle = this.title.replace('；',"<br/>")
+                this.title = "";
+                var tooltip = "<div id='tooltip'>"+ this.myTitle +"<\/div>"; //创建 div 元素 文字提示
+                $("body").append(tooltip);    //把它追加到文档中
+                $("#tooltip").css({
+                                    "top": (e.pageY+y) + "px",
+                                    "left": (e.pageX+x)  + "px"
+                                }).show();      //设置x坐标和y坐标，并且显示
+            }).mouseout(function(){
+                this.title = this.myTitle;
+                $("#tooltip").remove();   //移除
+            }).mousemove(function(e){
+                $("#tooltip").css({
+                        "top": (e.pageY+y) + "px",
+                        "left": (e.pageX+x)  + "px"
+                    });
+            });
+        });
     </script>
 </head>
 <body>
@@ -125,7 +160,7 @@
             </thead>
             <tbody id="tbody">
             <#list list as msg>
-                <tr title="状态码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
+                <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}</td>
