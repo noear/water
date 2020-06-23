@@ -91,7 +91,7 @@ public class MessageQueueRocketMQ implements IMessageQueue {
         initConsumer();
 
         try {
-            Message msgX = new Message(_queue_name, msg.getBytes());
+            Message msgX = new Message(_queue_name, msg, msg.getBytes());
             SendResult send = producer.send(msgX);
 
             if (send.getSendStatus().equals(SendStatus.SEND_OK)) {
