@@ -15,23 +15,23 @@ public class MessageApi {
 
     /**
      * 订阅
-     * */
-    public  ONode subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, String... topics) throws Exception {
+     */
+    public ONode subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, String... topics) throws Exception {
         return subscribeTopic(subscriber_key, "", receiver_url, access_key, alarm_mobile, receive_way, topics);
     }
 
     /**
      * 订阅
      *
-     * @param subscriber_key 订阅者标识
+     * @param subscriber_key  订阅者标识
      * @param subscriber_note 订阅者简介
-     * @param receiver_url 接收地址
-     * @param receive_way 接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
-     * @param access_key 接收访问密钥
-     * @param alarm_mobile 报警手机号
-     * @param topics 主题..
-     * */
-    public  ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url,String access_key, String alarm_mobile, int receive_way,String... topics) throws Exception {
+     * @param receiver_url    接收地址
+     * @param receive_way     接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
+     * @param access_key      接收访问密钥
+     * @param alarm_mobile    报警手机号
+     * @param topics          主题..
+     */
+    public ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
@@ -52,12 +52,12 @@ public class MessageApi {
      * 取消麻阅
      *
      * @param subscriber_key 订阅者标识
-     * @param topics 主题..
-     * */
-    public  ONode unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
-        Map<String,String> params = new HashMap<>();
+     * @param topics         主题..
+     */
+    public ONode unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
+        Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
-        params.put("topic", String.join(",",topics));
+        params.put("topic", String.join(",", topics));
 
         String txt = CallUtil.post("msg/unsubscribe/", params);
 
@@ -68,29 +68,45 @@ public class MessageApi {
 
     /**
      * 发送消息
-     * */
-    public  ONode sendMessage(String topic, String message) throws Exception {
-        return sendMessage(IDUtils.guid(), topic, message, null);
+     */
+    public ONode sendMessage(String topic, String message) throws Exception {
+        return sendMessage(null, null, topic, message, null);
     }
 
     /**
      * 发送消息
-     * */
-    public  ONode sendMessage(String msg_key, String topic, String message) throws Exception {
-        return sendMessage(msg_key, topic, message, null);
+     */
+    public ONode sendMessage(String tags, String topic, String message) throws Exception {
+        return sendMessage(null, tags, topic, message, null);
+    }
+
+    /**
+     * 发送消息
+     */
+    public ONode sendMessage(String msg_key, String tags, String topic, String message) throws Exception {
+        return sendMessage(msg_key, tags, topic, message, null);
     }
 
     /**
      * 发送消息
      *
-     * @param msg_key 消息标识（用于建立本地关键）
-     * @param topic 主题
-     * @param message 消息内容
+     * @param msg_key  消息标识（用于建立本地关键）
+     * @param topic    主题
+     * @param message  消息内容
      * @param planTime 计划通知时间
-     * */
-    public  ONode sendMessage(String msg_key, String topic, String message, Date planTime) throws Exception {
-        Map<String,String> params = new HashMap<>();
+     */
+    public ONode sendMessage(String msg_key, String tags, String topic, String message, Date planTime) throws Exception {
+        if (TextUtils.isEmpty(msg_key)) {
+            msg_key = IDUtils.guid();
+        }
+
+        if (tags == null) {
+            tags = "";
+        }
+
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
+        params.put("tags", tags);
         params.put("topic", topic);
         params.put("message", message);
 
@@ -105,31 +121,31 @@ public class MessageApi {
         System.out.println("MessageApi::msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
-        if(data.get("code").getInt()==1){
+        if (data.get("code").getInt() == 1) {
             return data;
-        }else {
+        } else {
             throw new Exception("消息发送失败:" + data.toJson());
         }
     }
 
     /**
      * 发送消息回调
-     * */
-    public ONode sendMessageCall(String message, String receiver_url, String receiver_cehck) throws Exception{
-        return sendMessageCall(IDUtils.guid(),message,null,receiver_url,receiver_cehck);
+     */
+    public ONode sendMessageCall(String message, String receiver_url, String receiver_cehck) throws Exception {
+        return sendMessageCall(IDUtils.guid(), message, null, receiver_url, receiver_cehck);
     }
 
     /**
      * 发送消息回调
      *
-     * @param msg_key 消息标识
-     * @param message 消息
-     * @param receiver_url 接收地址
+     * @param msg_key        消息标识
+     * @param message        消息
+     * @param receiver_url   接收地址
      * @param receiver_cehck 接收检测
-     * @param planTime 计划发送时间
-     * */
-    public  ONode sendMessageCall(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception {
-        Map<String,String> params = new HashMap<>();
+     * @param planTime       计划发送时间
+     */
+    public ONode sendMessageCall(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception {
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
         params.put("message", message);
         params.put("receiver_url", receiver_url);
@@ -146,28 +162,28 @@ public class MessageApi {
         System.out.println("MessageApi::msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
-        if(data.get("code").getInt()==1){
+        if (data.get("code").getInt() == 1) {
             return data;
-        }else {
+        } else {
             throw new Exception("消息发送失败:" + data.toJson());
         }
     }
 
     /**
      * 取消消息
-     * */
-    public  ONode cancelMessage(String msg_key) throws Exception {
+     */
+    public ONode cancelMessage(String msg_key) throws Exception {
         return cancelMessage(msg_key, null);
     }
 
     /**
      * 取消XXX订阅者的消息
-     * */
-    public  ONode cancelMessage(String msg_key,String subscriber_key) throws Exception {
-        Map<String,String> params = new HashMap<>();
+     */
+    public ONode cancelMessage(String msg_key, String subscriber_key) throws Exception {
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
-        if(TextUtils.isEmpty(subscriber_key) == false) {
+        if (TextUtils.isEmpty(subscriber_key) == false) {
             params.put("subscriber_key", subscriber_key);
         }
 
@@ -180,19 +196,19 @@ public class MessageApi {
 
     /**
      * 完成消息（设为成功）
-     * */
-    public  ONode succeedMessage(String msg_key) throws Exception {
+     */
+    public ONode succeedMessage(String msg_key) throws Exception {
         return succeedMessage(msg_key, null);
     }
 
     /**
      * 完成XXX订阅者的消息
-     * */
-    public  ONode succeedMessage(String msg_key,String subscriber_key) throws Exception {
-        Map<String,String> params = new HashMap<>();
+     */
+    public ONode succeedMessage(String msg_key, String subscriber_key) throws Exception {
+        Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
-        if(TextUtils.isEmpty(subscriber_key) == false) {
+        if (TextUtils.isEmpty(subscriber_key) == false) {
             params.put("subscriber_key", subscriber_key);
         }
 
@@ -206,10 +222,10 @@ public class MessageApi {
 
     /**
      * 检测消息签名
-     * */
-    public  boolean checkMessage(MessageM msg, String access_key){
+     */
+    public boolean checkMessage(MessageM msg, String access_key) {
 
-        if(msg.id<1){
+        if (msg.id < 1) {
             return false;
         }
 
