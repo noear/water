@@ -141,6 +141,9 @@ public final class DbWaterMsgApi {
                 .update();
     }
 
+    public static long addMessage(String topic, String content) throws Exception {
+        return addMessage(null,null,topic,content,null);
+    }
     //添加消息
     public static long addMessage(String key, String tags, String topic, String content, Date plan_time) throws Exception {
         TopicModel m = getTopicID(topic);

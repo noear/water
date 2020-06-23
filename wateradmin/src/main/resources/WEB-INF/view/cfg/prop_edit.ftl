@@ -165,7 +165,7 @@
             "aliyun_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
             "iaas_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
             "ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
-            "water.queue":"queue.name=\nqueue.type=\nserver=\nuser=\npassword=\ndb= #for redis\nvirtualHost= #for rocketmq",
+            "water.queue":"queue.name=\nqueue.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
         };
     </script>
 </head>
