@@ -65,8 +65,10 @@ public final class DbWaterRegApi {
                     .insert();
 
             //新增节点时，添加负载通知
-            if(service.contains(":")==false && check_type==0){
-                MsgUtils.updateCache("upstream:"+service);
+            if (service.contains(":") == false && check_type == 0) {
+                if (DbWaterCfgApi.hasGateway(service)) {
+                    MsgUtils.updateCache("upstream:" + service);
+                }
             }
         }
     }
@@ -76,12 +78,14 @@ public final class DbWaterRegApi {
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
-                .set("is_enabled", (is_enabled?1:0))
+                .set("is_enabled", (is_enabled ? 1 : 0))
                 .update() > 0;
 
         //通知负载更新
-        if(service.contains(":")==false){
-            MsgUtils.updateCache("upstream:"+service);
+        if (service.contains(":") == false) {
+            if (DbWaterCfgApi.hasGateway(service)) {
+                MsgUtils.updateCache("upstream:" + service);
+            }
         }
 
         return isOk;

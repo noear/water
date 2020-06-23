@@ -93,7 +93,7 @@ class demo{
         WaterClient.Config.get("water/water").table("bcf_user").select("*").getMap();//非注解模式
 
         //消息服务：发送消息
-        WaterClient.Messsage.sendMessage("test.order.start","{\"order_id\":1}"); //非注解模式
+        WaterClient.Messsage.sendMessage("test.order.start", "{\"order_id\":1}"); //非注解模式
     
         //PaaS服务：调用PaaS接口
         WaterProxy.paas("water/test",null);
