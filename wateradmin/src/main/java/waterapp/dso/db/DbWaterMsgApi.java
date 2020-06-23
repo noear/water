@@ -38,26 +38,26 @@ public class DbWaterMsgApi {
         }
     }
 
-    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException{
+    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException {
         DbTableQuery qr = db().table("water_msg_message");
 
-        if(_m==0){
-            qr.whereEq("state",0).and("dist_count>3");
-        }else if(_m == 1){
+        if (_m == 0) {
+            qr.whereEq("state", 0).and("dist_count>3");
+        } else if (_m == 1) {
             qr.where("state=0");
-        }else if(_m == 2){
+        } else if (_m == 2) {
             qr.where("state=1");
-        }else if(_m == 3){
+        } else if (_m == 3) {
             qr.where("state>1");
-        }else{
+        } else {
             qr.where("state<0");
         }
 
-        if(key != null) {
+        if (key != null) {
             key = key.trim();
 
-            if (key.startsWith("*")) {
-                qr.andLk("content", "%" + key.substring(1) + "%");
+            if (key.startsWith("@")) {
+                qr.andEq("tags", key.substring(1));
             } else {
                 if (StringUtils.isNumeric(key)) {
                     qr.andEq("msg_id", Integer.parseInt(key));
@@ -79,7 +79,7 @@ public class DbWaterMsgApi {
     //派发功能
     public static boolean msgDistribute(List<Object> ids) throws SQLException {
         return db().table("water_msg_message")
-                .whereIn("msg_id", ids).andNeq("state",2)
+                .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
                 .set("dist_nexttime", 0)
                 .update() > 0;
@@ -174,9 +174,9 @@ public class DbWaterMsgApi {
                 .where("1 = 1")
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
-                        if(StringUtils.isNumeric(topic_name)){
-                            tb.andEq("topic_id",Integer.parseInt(topic_name));
-                        }else{
+                        if (StringUtils.isNumeric(topic_name)) {
+                            tb.andEq("topic_id", Integer.parseInt(topic_name));
+                        } else {
                             tb.andLk("topic_name", "%" + topic_name + "%");
                         }
                     }
@@ -228,7 +228,7 @@ public class DbWaterMsgApi {
     //订阅列表 启用/禁用
     public static boolean enabledSubs(List<Object> ids, int is_enabled) throws SQLException {
         return db().table("water_msg_subscriber")
-                .whereIn("subscriber_id",ids)
+                .whereIn("subscriber_id", ids)
                 .set("is_enabled", is_enabled)
                 .update() > 0;
     }
