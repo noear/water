@@ -86,7 +86,7 @@
     <toolbar>
         <flex>
             <left class="col-4">
-                <#if _m!=2 && is_admin == 1>
+                <#if _m!=3 && is_admin == 1>
                     <button type='button' class="edit" onclick="distribute()" >立即派发</button>
                     <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
                     <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
@@ -125,7 +125,7 @@
             </thead>
             <tbody id="tbody">
             <#list list as msg>
-                <tr title="变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
+                <tr title="状态码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}</td>
