@@ -53,7 +53,7 @@ public class NoticeApi {
      */
     public void updateConfig(String tag, String name) {
         try {
-            WaterClient.Message.sendMessage(WaterConstants.msg_uconfig_topic, tag + "::" + name);
+            WaterClient.Message.sendMessageAndTags(WaterConstants.msg_uconfig_topic, tag + "::" + name, tag);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
