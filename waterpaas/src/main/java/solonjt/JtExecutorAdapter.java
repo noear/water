@@ -8,6 +8,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
+import org.noear.water.utils.TextUtils;
 import waterapp.dso.AFileUtil;
 
 import java.util.Map;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     private String _defaultExecutor = "freemarker";
+    private String water_log_paas = "water_log_paas";
+    private String water_paas = "water_paas";
 
     public JtExecutorAdapter() {
     }
@@ -32,12 +35,12 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
             data.put("tag2", file.path);
         }
 
-        WaterClient.Log.append("water_log_paas", Level.DEBUG, data);
+        WaterClient.Log.append(water_log_paas, Level.DEBUG, data);
     }
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append("water_log_paas", Level.ERROR, "_paas", file.tag, file.path, "", "", msg);
+        WaterClient.Log.append(water_log_paas, Level.ERROR, "_paas", file.tag, file.path, "", "", msg);
     }
 
     @Override
@@ -66,11 +69,17 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public String cfgGet(String name, String def) throws Exception {
-        if(name == null || name.indexOf("/")<0){
+        if(TextUtils.isEmpty(name)){
             return def;
         }
 
-        ConfigM tmp = WaterClient.Config.getByTagKey(name);
+        ConfigM tmp = null;
+        if(name.indexOf("/") < 0){
+            tmp = WaterClient.Config.get(water_paas,name);
+        }else {
+            tmp = WaterClient.Config.getByTagKey(name);
+        }
+
 
         if(tmp == null){
             return def;
@@ -85,13 +94,16 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public boolean cfgSet(String name, String value) throws Exception {
-        if (name == null || name.indexOf("/") < 0) {
+        if(TextUtils.isEmpty(name)){
             return false;
         }
+        if(name.indexOf("/") < 0){
+            WaterClient.Config.set(water_paas, name, value);
+        }else {
+            String[] ss = name.split("/");
 
-        String[] ss = name.split("/");
-
-        WaterClient.Config.set(ss[0], ss[1], value);
+            WaterClient.Config.set(ss[0], ss[1], value);
+        }
         return true;
     }
 }
