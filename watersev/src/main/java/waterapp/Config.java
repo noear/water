@@ -8,6 +8,7 @@ import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,7 +28,7 @@ public class Config {
     public static RedisX rd_msg   = cfg("water_redis").getRd(3);
     public static RedisX rd_count   = cfg("water_redis").getRd(6);
 
-    public static String water_msg_queue = cfg("water_msg_queue").value;
+    public static Properties water_msg_queue = cfg("water_msg_queue").getProp();
 
     //目前的运行环境（生产环境，预生产环境，测试环境）
     public static String alarm_sign(){

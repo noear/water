@@ -29,7 +29,7 @@ public class Config {
 
     public static String water_cache_header;
 
-    public static String water_msg_queue;
+    public static Properties water_msg_queue;
 
     public static String localHost;
 
@@ -69,7 +69,7 @@ public class Config {
             water_cache_header = cfg("water_cache_header")
                                  .getString( "WATER2_CACHE") + "_API2";
 
-            water_msg_queue = cfg("water_msg_queue").getString();
+            water_msg_queue = cfg("water_msg_queue").getProp();
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);

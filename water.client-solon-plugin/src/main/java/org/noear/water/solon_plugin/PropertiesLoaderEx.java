@@ -9,12 +9,13 @@ import java.util.Properties;
 public class PropertiesLoaderEx extends PropertiesLoader {
     @Override
     public PropertiesM load(String text) throws Exception {
-        Properties prop = XUtil.getProperties(text);
+        PropertiesM prop = new PropertiesM();
+        Properties tmp = XUtil.getProperties(text);
 
-        if (prop == null) {
-            return new PropertiesM();
-        } else {
-            return new PropertiesM(prop);
+        if (tmp != null) {
+            prop.putAll(tmp);
         }
+
+        return prop;
     }
 }
