@@ -76,7 +76,7 @@ public class DbWaterMsgApi {
             }
         }
 
-        return qr.orderBy("msg_id DESC").limit(50).select("*").getList(MessageModel.class);
+        return qr.orderBy("msg_id DESC").limit(50).select("*").getList(new MessageModel());
     }
 
     public static List<MessageModel> getMessageByWaitList() throws SQLException {
