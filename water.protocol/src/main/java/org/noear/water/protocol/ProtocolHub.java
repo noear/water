@@ -1,6 +1,5 @@
 package org.noear.water.protocol;
 
-import org.noear.water.protocol.solution.MessageKeyBuilderDefault;
 import org.noear.water.protocol.solution.MessageQueueRabbitMQ;
 import org.noear.water.protocol.solution.MessageQueueRedis;
 import org.noear.water.protocol.solution.MessageQueueRocketMQ;
