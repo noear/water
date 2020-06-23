@@ -34,10 +34,10 @@ public class NoticeApi {
     /**
      * 通知缓存更新
      */
-    public void updateCache(String... tags) {
+    public void updateCache(String... cacheTags) {
         //tags以;隔开
         StringBuilder sb = new StringBuilder();
-        for (String tag : tags) {
+        for (String tag : cacheTags) {
             sb.append(tag).append(";");
         }
 
