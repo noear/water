@@ -22,8 +22,8 @@ public final class ProtocolHub {
     public static IHeihei heihei;
 
     public static IMessageQueue createMessageQueue(Properties prop){
-        String type = prop.getProperty("queue.type","").toLowerCase();
         String name = prop.getProperty("queue.name","").toLowerCase();
+        String type = prop.getProperty("queue.type","").toLowerCase();
 
         if(TextUtils.isEmpty(type) || TextUtils.isEmpty(type)){
             throw new RuntimeException("ProtocolHub::There was an error in the input configuration");
