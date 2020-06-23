@@ -3,11 +3,11 @@ package org.noear.water.protocol;
 /**
  * 消息队列接口（发到队列里的消息，是原消息ID）
  * */
-public interface IMessageQueue {
+public interface IMessageQueue extends AutoCloseable {
     /**
      * 添加一个消息
      * */
-    void push(String msg) ;
+    boolean push(String msg) ;
 
 
     /**

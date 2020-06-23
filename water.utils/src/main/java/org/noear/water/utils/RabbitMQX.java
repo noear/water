@@ -8,7 +8,7 @@ import org.noear.water.utils.ext.Fun1Ex;
 
 import java.util.Properties;
 
-public class RabbitX {
+public class RabbitMQX {
     String host;
     int port;
     String user;
@@ -16,7 +16,7 @@ public class RabbitX {
 
     ConnectionFactory connectionFactory;
 
-    public RabbitX(Properties prop) {
+    public RabbitMQX(Properties prop) {
         String server = prop.getProperty("server");
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");

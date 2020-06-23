@@ -2,7 +2,7 @@ package org.noear.water.protocol.solution;
 
 import com.rabbitmq.client.*;
 import org.noear.water.protocol.IMessageQueue;
-import org.noear.water.utils.RabbitX;
+import org.noear.water.utils.RabbitMQX;
 
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
  * */
 public class MessageQueueRabbitMQ implements IMessageQueue {
 
-    final RabbitX _rabbitX;
+    final RabbitMQX _rabbitX;
 
     /**
      * 交换器名称
@@ -48,7 +48,7 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
     final AMQP.BasicProperties rabbit_msgProps;
 
 
-    public MessageQueueRabbitMQ(String name, RabbitX rabbitX) {
+    public MessageQueueRabbitMQ(String name, RabbitMQX rabbitX) {
         _rabbitX = rabbitX;
 
         rabbit_routingKey = name;
@@ -77,11 +77,12 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
     }
 
     @Override
-    public void push(String msg) {
+    public boolean push(String msg) {
         _rabbitX.open0(channel -> {
             // 设置消息属性 发布消息 (exchange:交换机名, Routing key, props:消息属性, body:消息体);
             channel.basicPublish(rabbit_exchangeName, rabbit_routingKey, false, rabbit_msgProps, msg.getBytes());
         });
+        return true;
     }
 
     @Override
@@ -101,5 +102,10 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
     @Override
     public long count() {
         return _rabbitX.open1(channel -> channel.messageCount(rabbit_queueName));
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
