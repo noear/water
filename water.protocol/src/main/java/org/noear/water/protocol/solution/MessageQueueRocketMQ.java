@@ -24,7 +24,7 @@ import java.util.Properties;
  * */
 public class MessageQueueRocketMQ implements IMessageQueue {
     String _queue_name;
-    final String group_name = "water.message";
+    final String group_name = "water_message";
     final String server;
 
     DefaultMQProducer producer;
@@ -74,12 +74,13 @@ public class MessageQueueRocketMQ implements IMessageQueue {
             //一次最大消费的条数
             consumer.setPullBatchSize(1);
             //无消息时，最大阻塞时间。默认5000 单位ms
-            consumer.setPollTimeoutMillis(5000);
+            consumer.setPollTimeoutMillis(3000);
             try {
                 //要消费的topic，可使用tag进行简单过滤
                 consumer.subscribe(_queue_name, "*");
                 consumer.start();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 throw new RuntimeException(ex);
             }
         }
@@ -89,10 +90,10 @@ public class MessageQueueRocketMQ implements IMessageQueue {
     @Override
     public boolean push(String msg) {
         initProducer();
-        initConsumer();
 
         try {
-            Message msgX = new Message(_queue_name, msg, msg.getBytes());
+            Message msgX = new Message(_queue_name, msg.getBytes());
+            msgX.setKeys(msg);
             SendResult send = producer.send(msgX);
 
             if (send.getSendStatus().equals(SendStatus.SEND_OK)) {
@@ -109,17 +110,21 @@ public class MessageQueueRocketMQ implements IMessageQueue {
 
     @Override
     public String poll() {
+        initConsumer();
+
         try {
             //拉取消息，无消息时会阻塞
             List<MessageExt> msgs = consumer.poll();
+
+            if (msgs.size() == 0) {
+                return null;
+            }
+
             //同步消费位置。不执行该方法，应用重启会存在重复消费。
             consumer.commitSync();
 
-            if (msgs.size() > 0) {
-                return new String(msgs.get(0).getBody());
-            } else {
-                return null;
-            }
+            //返回消息
+            return new String(msgs.get(0).getBody());
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -128,17 +133,21 @@ public class MessageQueueRocketMQ implements IMessageQueue {
 
     @Override
     public void pollGet(Act1<String> callback) {
+        initConsumer();
+
         try {
             while (true) {
                 //拉取消息，无消息时会阻塞
                 List<MessageExt> msgs = consumer.poll();
-                //同步消费位置。不执行该方法，应用重启会存在重复消费。
-                consumer.commitSync();
 
-                if (msgs.size() > 0) {
+                if (msgs.size() == 0) {
                    break;
                 }
 
+                //同步消费位置。不执行该方法，应用重启会存在重复消费。
+                consumer.commitSync();
+
+                //返回消息
                 callback.run(new String(msgs.get(0).getBody()));
             }
 
