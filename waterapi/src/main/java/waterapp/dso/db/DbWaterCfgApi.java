@@ -152,8 +152,8 @@ public class DbWaterCfgApi {
     public static boolean hasGateway(String name) {
         try {
             return db().table("water_cfg_properties")
-                    .set("tag", "_gateway")
-                    .set("key", name)
+                    .whereEq("tag", "_gateway")
+                    .andEq("key", name)
                     .exists();
         }catch (Exception ex){
             return false;
