@@ -8,6 +8,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
 import waterapp.dso.AlarmUtil;
 import waterapp.dso.LogUtil;
+import waterapp.dso.db.DbWaterCfgApi;
 import waterapp.dso.db.DbWaterRegApi;
 import waterapp.models.water_reg.ServiceModel;
 import waterapp.utils.HttpUtilEx;
@@ -20,7 +21,7 @@ import java.util.List;
 @XBean
 public final class SevController implements IJob {
 
-    public SevController(){
+    public SevController() {
         DbWaterRegApi.initServiceState();
     }
 
@@ -66,7 +67,7 @@ public final class SevController implements IJob {
         if (sev.check_type > 0) {
             //主到签到模式
             check_type1(sev);
-        }else{
+        } else {
             //被动检测模式
             check_type0(sev);
         }
@@ -99,7 +100,7 @@ public final class SevController implements IJob {
     }
 
     //被动检测模式
-    private void check_type0(ServiceModel sev){
+    private void check_type0(ServiceModel sev) {
         if (TextUtils.isEmpty(sev.check_url)) {
             return;
         }
@@ -138,18 +139,18 @@ public final class SevController implements IJob {
                     }
                 } else {
                     //出错
-                    if(sev.is_unstable && sev.check_error_num>=2 && !isOk){
+                    if (sev.is_unstable && sev.check_error_num >= 2 && !isOk) {
                         //
                         // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
                         //
                         DbWaterRegApi.delService(sev.service_id);
-                    }else{
+                    } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.error(getName(), sev.service_id+"", sev.name + "@" + sev.address, hint);
+                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             AlarmUtil.tryAlarm(sev, false, code);
-                            if(sev.check_error_num == 2) {
+                            if (sev.check_error_num == 2) {
                                 gatewayNotice(sev);
                             }
                         }
@@ -158,17 +159,21 @@ public final class SevController implements IJob {
             });
         } catch (Throwable ex) { //出错
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
-            LogUtil.error(this,sev.service_id+"", sev.name + "@" + sev.address, ex);
+            LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
         }
     }
 
     //通知负载更新
-    private void gatewayNotice(ServiceModel sev){
-        if(sev.name.contains(":")){
+    private void gatewayNotice(ServiceModel sev) {
+        if (sev.name.contains(":")) {
+            return;
+        }
+
+        if (DbWaterCfgApi.hasGateway(sev.name) == false) {
             return;
         }
 
         //通知网关，更新负载
-        WaterClient.Notice.updateCache("upstream:"+sev.name);
+        WaterClient.Notice.updateCache("upstream:" + sev.name);
     }
 }

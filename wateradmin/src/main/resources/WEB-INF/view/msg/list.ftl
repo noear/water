@@ -128,7 +128,7 @@
                 </#if>
             </left>
             <middle class="col-4 center">
-                <input type="text" id="key" value="${key!}" placeholder="ID or Topic or Tags" class="w200"/>&nbsp;&nbsp;
+                <input type="text" id="key" value="${key!}" placeholder="ID or Topic or @Tags" class="w200"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>
@@ -150,7 +150,7 @@
             <tr>
                 <td width="20"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="70px">消息ID</td>
-                <td class="left">消息主题</td>
+                <td class="left">消息主题 - 标签</td>
                 <td class="left">内容</td>
                 <td width="60px">下次<br/>时间</td>
                 <td class="left" width="40px">已派<br/>次数</td>
@@ -163,7 +163,11 @@
                 <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
-                    <td class="left">${msg.topic_name}</td>
+                    <td class="left">${msg.topic_name}
+                    <#if msg.tags?? && msg.tags?length gt 0>
+                        - @${msg.tags!}
+                    </#if>
+                    </td>
                     <td class="left break">${msg.content}</td>
                     <td>${msg.nexttime(currTime)}</td>
                     <td>${msg.dist_count}</td>

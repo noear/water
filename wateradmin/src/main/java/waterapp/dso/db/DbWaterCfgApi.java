@@ -192,6 +192,8 @@ public class DbWaterCfgApi {
                       .set("service",key.trim())
                       .set("policy", policy);
 
+        //由 tag 决定，是否为gateway
+
         db().table("water_cfg_properties")
                 .set("key", key.trim())
                 .set("value", n.toJson())
@@ -203,7 +205,7 @@ public class DbWaterCfgApi {
 
     public static List<ConfigModel> getGateways() throws SQLException {
         return db().table("water_cfg_properties")
-                .whereEq("type", ConfigType.gateway)
+                .whereEq("type", ConfigType.water_gateway)
                 .select("tag,key,row_id,type")
                 .getList(ConfigModel.class);
     }
