@@ -171,7 +171,16 @@ public class DbWaterCfgApi {
                 .exists();
     }
 
-
+    public static boolean hasGateway(String name) {
+        try {
+            return db().table("water_cfg_properties")
+                    .set("tag", "_gateway")
+                    .set("key", name)
+                    .exists();
+        }catch (Exception ex){
+            return false;
+        }
+    }
 
     public static void addGateway(String tag, String key, String url, String policy) throws SQLException {
         ONode n = new ONode()

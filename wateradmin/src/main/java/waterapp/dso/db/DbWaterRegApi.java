@@ -54,6 +54,10 @@ public class DbWaterRegApi {
             return;
         }
 
+        if (DbWaterCfgApi.hasGateway(sev) == false) {
+            return;
+        }
+
         WaterClient.Notice.updateCache("upstream:"+sev);
     }
 
