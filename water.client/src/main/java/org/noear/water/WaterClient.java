@@ -11,7 +11,7 @@ public final class WaterClient {
     public static String localHost = null;
     public static String localService = null;
     private static String _serviceAddr;
-    public static String serviceAddr() {
+    public static String localServiceAddr() {
         if (localService == null || localService == null) {
             return null;
         }

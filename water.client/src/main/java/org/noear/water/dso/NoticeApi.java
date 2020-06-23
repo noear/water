@@ -42,7 +42,7 @@ public class NoticeApi {
         }
 
         try {
-            WaterClient.Message.sendMessage(WaterConstants.msg_ucache_topic, sb.toString());
+            WaterClient.Message.sendMessageAndTags(WaterConstants.msg_ucache_topic, sb.toString(), WaterClient.localService);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

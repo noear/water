@@ -123,8 +123,8 @@ public class LogApi {
             params.put("summary", summary);
         }
 
-        if (WaterClient.serviceAddr() != null) {
-            params.put("from", WaterClient.serviceAddr());
+        if (WaterClient.localServiceAddr() != null) {
+            params.put("from", WaterClient.localServiceAddr());
         }
 
         if (content != null) {
