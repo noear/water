@@ -100,9 +100,10 @@
             <right class="col-4">
                 <selector>
                     <a class="${(_m =0)?string('sel','')}" href="?_m=0">异常的</a>
-                    <a class="${(_m =1)?string('sel','')}" href="?_m=1">处理中</a>
-                    <a class="${(_m =2)?string('sel','')}" href="?_m=2">已成功</a>
-                    <a class="${(_m =3)?string('sel','')}" href="?_m=3">其它的</a>
+                    <a class="${(_m =1)?string('sel','')}" href="?_m=1">等待中</a>
+                    <a class="${(_m =2)?string('sel','')}" href="?_m=2">处理中</a>
+                    <a class="${(_m =3)?string('sel','')}" href="?_m=3">已成功</a>
+                    <a class="${(_m =4)?string('sel','')}" href="?_m=4">其它的</a>
                 </selector>
             </right>
         </flex>

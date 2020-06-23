@@ -53,10 +53,12 @@ public class DbWaterMsgApi {
         DbTableQuery qr = db().table("water_msg_message");
 
         if(_m==0){
-            qr.whereEq("state",0).and("dist_count>4");
+            qr.whereEq("state",0).and("dist_count>3");
         }else if(_m == 1){
-            qr.where("(state<=1 AND state>=0)");
+            qr.where("state=0");
         }else if(_m == 2){
+            qr.where("state=1");
+        }else if(_m == 3){
             qr.where("state>1");
         }else{
             qr.where("state<0");
