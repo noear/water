@@ -23,9 +23,9 @@ public class Config {
     public static final DbContext water_paas = cfg("water_paas").getDb(true);
 
     public static RedisX rd_ids   = cfg("water_redis").getRd(1);
-    public static RedisX rd_count   = cfg("water_redis").getRd(6);
     public static RedisX rd_lock   = cfg("water_redis").getRd(2);
     public static RedisX rd_msg   = cfg("water_redis").getRd(3);
+    public static RedisX rd_count   = cfg("water_redis").getRd(6);
 
     public static String water_msg_queue = cfg("water_msg_queue").value;
 
