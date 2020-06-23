@@ -1,7 +1,6 @@
 package solonjt;
 
 
-import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AFileModel;
@@ -21,8 +20,10 @@ import java.util.Map;
 public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     private String _defaultExecutor = "freemarker";
-    private String water_log_paas = "water_log_paas";
-    private String water_paas = "water_paas";
+    private String _defLogTag = "_raas";
+
+    private final String water_log_paas = "water_log_paas"; //logger name
+    private final String water_paas = "water_paas"; //config tag name
 
     public JtExecutorAdapter() {
     }
@@ -30,7 +31,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
         if(data.containsKey("tag") == false){
-            data.put("tag", "_raas");
+            data.put("tag", _defLogTag);
         }
 
         if (data.containsKey("tag2") == false && file != null) {
@@ -42,7 +43,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append(water_log_paas, Level.ERROR, "_raas", file.tag, file.path, "", "", msg);
+        WaterClient.Log.append(water_log_paas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
     }
 
     @Override
