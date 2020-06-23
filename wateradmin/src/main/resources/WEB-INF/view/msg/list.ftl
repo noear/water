@@ -8,6 +8,18 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
+    <style>
+        /* tooltip */
+        #tooltip{
+            position:absolute;
+            border:1px solid #aaa;
+            background:#eee;
+            padding:1px;
+            color:#333;
+            display:none;
+            font-size: small;
+        }
+    </style>
     <script>
         function fresh() {
             location.reload();
@@ -79,6 +91,29 @@
                 $('[name=sel_id]').prop('checked',ckd);
             });
         });
+
+        $(function(){
+            var x = 10;
+            var y = 20;
+            $("tr[title]").mouseover(function(e){
+                this.myTitle = this.title.replace('；',"<br/>")
+                this.title = "";
+                var tooltip = "<div id='tooltip'>"+ this.myTitle +"<\/div>"; //创建 div 元素 文字提示
+                $("body").append(tooltip);    //把它追加到文档中
+                $("#tooltip").css({
+                                    "top": (e.pageY+y) + "px",
+                                    "left": (e.pageX+x)  + "px"
+                                }).show();      //设置x坐标和y坐标，并且显示
+            }).mouseout(function(){
+                this.title = this.myTitle;
+                $("#tooltip").remove();   //移除
+            }).mousemove(function(e){
+                $("#tooltip").css({
+                        "top": (e.pageY+y) + "px",
+                        "left": (e.pageX+x)  + "px"
+                    });
+            });
+        });
     </script>
 </head>
 <body>
@@ -86,9 +121,8 @@
     <toolbar>
         <flex>
             <left class="col-4">
-                <button type='button' onclick="fresh()">刷新</button>
-                <#if _m!=2 && is_admin == 1>
-                    <button type='button' class="edit mar10-l" onclick="distribute()" >立即派发</button>
+                <#if _m!=3 && is_admin == 1>
+                    <button type='button' class="edit" onclick="distribute()" >立即派发</button>
                     <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
                     <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
                 </#if>
@@ -96,13 +130,15 @@
             <middle class="col-4 center">
                 <input type="text" id="key" value="${key!}" placeholder="ID or Topic" class="w200"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
+                <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>
             <right class="col-4">
                 <selector>
                     <a class="${(_m =0)?string('sel','')}" href="?_m=0">异常的</a>
-                    <a class="${(_m =1)?string('sel','')}" href="?_m=1">处理中</a>
-                    <a class="${(_m =2)?string('sel','')}" href="?_m=2">已成功</a>
-                    <a class="${(_m =3)?string('sel','')}" href="?_m=3">其它的</a>
+                    <a class="${(_m =1)?string('sel','')}" href="?_m=1">等待中</a>
+                    <a class="${(_m =2)?string('sel','')}" href="?_m=2">处理中</a>
+                    <a class="${(_m =3)?string('sel','')}" href="?_m=3">已成功</a>
+                    <a class="${(_m =4)?string('sel','')}" href="?_m=4">其它的</a>
                 </selector>
             </right>
         </flex>
@@ -124,7 +160,7 @@
             </thead>
             <tbody id="tbody">
             <#list list as msg>
-                <tr title="变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
+                <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}</td>

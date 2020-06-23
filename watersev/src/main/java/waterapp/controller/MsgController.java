@@ -5,6 +5,7 @@ import org.noear.solon.annotation.XBean;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.*;
+import waterapp.Config;
 import waterapp.dso.AlarmUtil;
 import waterapp.dso.LogUtil;
 import waterapp.dso.db.DbWaterMsgApi;
@@ -52,7 +53,6 @@ public final class MsgController implements IJob {
     @Override
     public void exec() throws Exception {
 
-
         while (true) {
             String msg_id_str = ProtocolHub.messageQueue.poll();
 
@@ -60,39 +60,50 @@ public final class MsgController implements IJob {
                 break;
             }
 
-            long msgID = Long.parseLong(msg_id_str);
-
-            MessageModel msg = DbWaterMsgApi.getMessage(msgID);
-            if (msg == null) { //如果找不到消息
-                continue;
-            }
-
-            long ntime = DisttimeUtils.currTime();
-            if (msg.dist_nexttime > ntime) { //如果时间还没到
-                continue;
-            }
-
-            //置为处理中
-            DbWaterMsgApi.setMessageState(msgID, 1);
-            //并将消息锁里取消掉
-            ProtocolHub.messageLock.unlock(msg_id_str);
-
-            try {
-                distribute(msg);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-
-                DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
-
-                LogUtil.writeForMsgByError(msg, ex);
-            }
+            //改用线程池处理
+            Config.pools.execute(()->{
+                try {
+                    distribute(msg_id_str);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            });
         }
     }
 
     //===============
 
+    private void distribute(String msg_id_str) throws Exception{
+        long msgID = Long.parseLong(msg_id_str);
 
-    private void distribute(MessageModel msg) throws SQLException {
+        MessageModel msg = DbWaterMsgApi.getMessage(msgID);
+        if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
+            return;
+        }
+
+        long ntime = DisttimeUtils.currTime();
+        if (msg.dist_nexttime > ntime) { //如果时间还没到
+            return;
+        }
+
+        try {
+            //置为处理中
+            DbWaterMsgApi.setMessageState(msgID, 1);
+            //并将消息锁里取消掉
+            ProtocolHub.messageLock.unlock(msg_id_str);
+
+            distribute0(msg);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+
+            DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
+
+            LogUtil.writeForMsgByError(msg, ex);
+        }
+    }
+
+
+    private void distribute0(MessageModel msg) throws SQLException {
         //1.取出订阅者
         Map<Integer,SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
 

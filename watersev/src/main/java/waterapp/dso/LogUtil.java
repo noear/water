@@ -49,7 +49,7 @@ public class LogUtil {
 //        System.out.print("\r\n");
     }
 
-    public static void writeForMsgByError(MessageModel msg, Exception ex) {
+    public static void writeForMsgByError(MessageModel msg, Throwable ex) {
         log_msg.error(msg.topic_name, msg.msg_id + "", "", ex);
 
 //        System.out.print(msg.topic_name + "::\r\n");
