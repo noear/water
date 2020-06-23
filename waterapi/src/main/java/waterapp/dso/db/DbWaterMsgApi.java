@@ -142,8 +142,12 @@ public final class DbWaterMsgApi {
     }
 
     //添加消息
-    public static long addMessage(String key, String topic, String content, Date plan_time) throws Exception {
+    public static long addMessage(String key, String tags, String topic, String content, Date plan_time) throws Exception {
         TopicModel m = getTopicID(topic);
+
+        if(TextUtils.isEmpty(key)){
+            key = IDUtils.buildGuid();
+        }
 
         //支持最多消息量的限制
         if (m.max_msg_num > 0) {
@@ -161,6 +165,7 @@ public final class DbWaterMsgApi {
         db().table("water_msg_message").usingExpr(true)
                 .set("msg_id", msg_id)
                 .set("msg_key", key)
+                .setDf("tags", tags, "")
                 .set("topic_id", m.topic_id)
                 .set("topic_name", topic)
                 .set("content", content)

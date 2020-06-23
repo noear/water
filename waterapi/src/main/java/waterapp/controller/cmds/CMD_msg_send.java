@@ -20,6 +20,8 @@ public class CMD_msg_send extends CMDBase {
             return;
         }
 
+        String tags = get("tags"); //查询标签
+
         //如果不需要修改，检查是否已存在
         //
         if (DbWaterMsgApi.hasMessage(key)) {
@@ -30,7 +32,7 @@ public class CMD_msg_send extends CMDBase {
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
 
-        if (DbWaterMsgApi.addMessage(key, topic, message, plan_time2) > 0) {
+        if (DbWaterMsgApi.addMessage(key, tags, topic, message, plan_time2) > 0) {
             data.set("code", 1);
             data.set("msg", "success");
             return;
