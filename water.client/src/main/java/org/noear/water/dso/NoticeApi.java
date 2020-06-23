@@ -42,7 +42,7 @@ public class NoticeApi {
         }
 
         try {
-            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConstants.msg_ucache_topic, sb.toString());
+            WaterClient.Message.sendMessage(WaterConstants.msg_ucache_topic, sb.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class NoticeApi {
      */
     public void updateConfig(String tag, String name) {
         try {
-            WaterClient.Message.sendMessage(IDUtils.guid(), WaterConstants.msg_uconfig_topic, tag + "::" + name);
+            WaterClient.Message.sendMessage(WaterConstants.msg_uconfig_topic, tag + "::" + name);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

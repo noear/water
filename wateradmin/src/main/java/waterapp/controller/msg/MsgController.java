@@ -76,7 +76,7 @@ public class MsgController extends BaseController {
     public ViewModel sendMessage(String topic, String message,String tags) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            ONode data = WaterClient.Message.sendMessage(tags, topic, message);
+            ONode data = WaterClient.Message.sendMessageAndTags(topic, message, tags);
 
             if (data.get("code").getInt() == 1) {
                 viewModel.code(1,"消息派发成功！");
