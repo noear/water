@@ -8,6 +8,14 @@ import java.util.Properties;
 
 public class PropertiesM  extends Properties {
 
+    public PropertiesM(){
+        super();
+    }
+
+    public PropertiesM(Properties props){
+        super(props);
+    }
+
     public Map<String, Object> toMap() {
         Map<String, Object> tmp = new HashMap<>();
         this.forEach((k, v) -> {

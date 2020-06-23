@@ -3,6 +3,7 @@ package org.noear.water;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
 
+
 public class WaterConfig {
     private static String _water_api_url = null;
     public static String water_api_url(){ return _water_api_url; }
