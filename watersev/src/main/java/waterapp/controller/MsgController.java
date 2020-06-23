@@ -53,27 +53,26 @@ public final class MsgController implements IJob {
     @Override
     public void exec() throws Exception {
 
-        while (true) {
-            String msg_id_str = ProtocolHub.messageQueue.poll();
-
-            if (TextUtils.isEmpty(msg_id_str)) {//如果没有了
-                break;
+        ProtocolHub.messageQueue.pollGet(msg_id_str -> {
+            if (TextUtils.isEmpty(msg_id_str)) {
+                //说明没有了
+                return;
             }
 
             //改用线程池处理
-            Config.pools.execute(()->{
-                try {
-                    distribute(msg_id_str);
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
-            });
+            Config.pools.execute(() -> distribute(msg_id_str));
+        });
+    }
+
+    private void distribute(String msg_id_str) {
+        try {
+            distributeDo(msg_id_str);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
         }
     }
 
-    //===============
-
-    private void distribute(String msg_id_str) throws Exception{
+    private void distributeDo(String msg_id_str) throws Exception{
         long msgID = Long.parseLong(msg_id_str);
 
         MessageModel msg = DbWaterMsgApi.getMessage(msgID);
@@ -92,7 +91,7 @@ public final class MsgController implements IJob {
             //并将消息锁里取消掉
             ProtocolHub.messageLock.unlock(msg_id_str);
 
-            distribute0(msg);
+            distributeDo0(msg);
         } catch (Throwable ex) {
             ex.printStackTrace();
 
@@ -103,7 +102,7 @@ public final class MsgController implements IJob {
     }
 
 
-    private void distribute0(MessageModel msg) throws SQLException {
+    private void distributeDo0(MessageModel msg) throws SQLException {
         //1.取出订阅者
         Map<Integer,SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
 
