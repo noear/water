@@ -1,7 +1,5 @@
 package org.noear.water.protocol;
 
-import org.noear.water.protocol.solution.PropertiesLoaderDefault;
-
 import java.util.Properties;
 
 /**
