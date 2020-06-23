@@ -2,6 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.utils.RedisX;
+import org.noear.water.utils.ext.Act1;
 
 /**
  * 基于 Redis 适配队列
@@ -25,6 +26,21 @@ public class MessageQueueRedis implements IMessageQueue {
     @Override
     public String poll() {
         return _redisX.open1((rs) -> rs.key(_queue_name).listPop());
+    }
+
+    @Override
+    public void pollGet(Act1<String> callback) {
+        _redisX.open0((rs) -> {
+            while (true) {
+                String msg = rs.key(_queue_name).listPop();
+
+                if (msg == null) {
+                    break;
+                }
+
+                callback.run(msg);
+            }
+        });
     }
 
 

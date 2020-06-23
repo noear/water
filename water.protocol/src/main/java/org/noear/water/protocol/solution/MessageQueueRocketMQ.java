@@ -7,6 +7,7 @@ import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.noear.water.protocol.IMessageQueue;
+import org.noear.water.utils.ext.Act1;
 
 import java.util.List;
 import java.util.Properties;
@@ -125,6 +126,26 @@ public class MessageQueueRocketMQ implements IMessageQueue {
         }
     }
 
+    @Override
+    public void pollGet(Act1<String> callback) {
+        try {
+            while (true) {
+                //拉取消息，无消息时会阻塞
+                List<MessageExt> msgs = consumer.poll();
+                //同步消费位置。不执行该方法，应用重启会存在重复消费。
+                consumer.commitSync();
+
+                if (msgs.size() > 0) {
+                   break;
+                }
+
+                callback.run(new String(msgs.get(0).getBody()));
+            }
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     @Override
     public long count() {

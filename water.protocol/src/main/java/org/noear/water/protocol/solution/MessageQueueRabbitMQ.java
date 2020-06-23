@@ -3,6 +3,8 @@ package org.noear.water.protocol.solution;
 import com.rabbitmq.client.*;
 import org.noear.water.protocol.IMessageQueue;
 import org.noear.water.utils.RabbitMQX;
+import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.ext.Act1;
 
 import java.util.HashMap;
 
@@ -98,6 +100,20 @@ public class MessageQueueRabbitMQ implements IMessageQueue {
         });
     }
 
+    @Override
+    public void pollGet(Act1<String> callback) {
+        _rabbitX.open0(channel -> {
+            while (true) {
+                GetResponse rep = channel.basicGet(rabbit_queueName, true);
+
+                if (rep == null) {
+                    break;
+                }
+
+                callback.run(new String(rep.getBody()));
+            }
+        });
+    }
 
     @Override
     public long count() {
