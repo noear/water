@@ -1,7 +1,6 @@
 package waterapp.dso.db;
 
 import org.noear.water.utils.Datetime;
-import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.StringUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -20,16 +19,6 @@ import java.util.List;
 public class DbWaterMsgApi {
     private static DbContext db() {
         return Config.water_msg;
-    }
-
-    //将状态为1的消息重置为0 //只处理已超时的状态1消息
-    public static int resetMsg() throws SQLException {
-        long ntime = DisttimeUtils.nextTime(Datetime.Now().addSecond(-10).getFulltime()); //已过期10秒
-
-        return db().table("water_msg_message")
-                .set("state", 0)
-                .where("state=1 AND dist_nexttime<?", ntime) //只处理已超时的状态1消息
-                .update();
     }
 
     //获取消息列表

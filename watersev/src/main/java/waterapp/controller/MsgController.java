@@ -77,7 +77,7 @@ public final class MsgController implements IJob {
         long msgID = Long.parseLong(msg_id_str);
 
         MessageModel msg = DbWaterMsgApi.getMessage(msgID);
-        if (msg == null) { //如果找不到消息
+        if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
             return;
         }
 
