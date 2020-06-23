@@ -44,8 +44,12 @@ public class RabbitMQX {
         connectionFactory.setHost(host);
         connectionFactory.setPort(port);
         connectionFactory.setVirtualHost(virtualHost);
-        connectionFactory.setUsername(user);
-        connectionFactory.setPassword(password);
+        if(TextUtils.isEmpty(user) == false) {
+            connectionFactory.setUsername(user);
+        }
+        if(TextUtils.isEmpty(password) == false) {
+            connectionFactory.setPassword(password);
+        }
 
         // 网络异常自动连接恢复
         connectionFactory.setAutomaticRecoveryEnabled(true);
