@@ -19,6 +19,10 @@ import java.util.Map;
 public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     private String _defaultExecutor = "freemarker";
+    private String _defLogTag = "_plan";
+
+    private final String water_log_paas = "water_log_paas"; //logger name
+    private final String water_paas = "water_paas"; //config tag name
 
     public JtExecutorAdapter() {
     }
@@ -26,19 +30,19 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
         if(data.containsKey("tag") == false){
-            data.put("tag", "_plan");
+            data.put("tag", _defLogTag);
         }
 
         if (data.containsKey("tag2") == false && file != null) {
             data.put("tag2", file.path);
         }
 
-        WaterClient.Log.append("water_log_paas", Level.DEBUG, data);
+        WaterClient.Log.append(water_log_paas, Level.DEBUG, data);
     }
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append("water_log_paas", Level.ERROR, "_plan", file.tag, file.path, "", "", msg);
+        WaterClient.Log.append(water_log_paas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
         ConfigM tmp = null;
         if(name.indexOf("/") < 0){
-            tmp = WaterClient.Config.get("water_paas",name);
+            tmp = WaterClient.Config.get(water_paas,name);
         }else {
             tmp = WaterClient.Config.getByTagKey(name);
         }
@@ -96,7 +100,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
             return false;
         }
         if(name.indexOf("/") < 0){
-            WaterClient.Config.set("water_paas", name, value);
+            WaterClient.Config.set(water_paas, name, value);
         }else {
             String[] ss = name.split("/");
 

@@ -17,6 +17,7 @@ public class MessageModel implements IBinder {
     public long dist_nexttime;
     public int log_date;
     public Date log_fulltime;
+    public Date last_fulltime;
 
     public void bind(GetHandlerEx s) {
         //1.source:数据源
@@ -31,6 +32,11 @@ public class MessageModel implements IBinder {
         dist_nexttime = s.get("dist_nexttime").value(0l);
         log_date = s.get("log_date").value(0);
         log_fulltime = s.get("log_fulltime").value(null);
+        last_fulltime = s.get("last_fulltime").value(null);
+
+        if(last_fulltime == null){
+            last_fulltime = log_fulltime;
+        }
     }
 
     public IBinder clone() {

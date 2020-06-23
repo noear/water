@@ -124,7 +124,7 @@
             </thead>
             <tbody id="tbody">
             <#list list as msg>
-                <tr>
+                <tr title="变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}</td>
