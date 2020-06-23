@@ -62,15 +62,18 @@ public class DbWaterMsgApi {
             qr.where("state<0");
         }
 
-        if(key != null){
+        if(key != null) {
             key = key.trim();
 
-            if(StringUtils.isNumeric(key)){
-                qr.andEq("msg_id",Integer.parseInt(key));
-            }else{
-                qr.andEq("topic_name", key);
+            if (key.startsWith("*")) {
+                qr.andLk("content", "%" + key.substring(1) + "%");
+            } else {
+                if (StringUtils.isNumeric(key)) {
+                    qr.andEq("msg_id", Integer.parseInt(key));
+                } else {
+                    qr.andEq("topic_name", key);
+                }
             }
-
         }
 
         return qr.orderBy("msg_id DESC").limit(50).select("*").getList(MessageModel.class);
