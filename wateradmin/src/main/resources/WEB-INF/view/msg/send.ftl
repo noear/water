@@ -15,6 +15,7 @@
                 btn: ['确定','取消'] //按钮
             }, function(){
                 var topic = $('#topic').val();
+                var tags = $('#tags').val();
                 var message = $('#message').val();
 
                 if (!topic || topic == "") {
@@ -30,7 +31,7 @@
                 $.ajax({
                     type:"POST",
                     url:"/msg/send/ajax/dosend",
-                    data:{"topic":topic,"message":message},
+                    data:{"topic":topic,"message":message,"tags":tags},
                     success:function(data){
                         top.layer.msg(data.msg);
                     }
@@ -53,6 +54,10 @@
             <tr>
                 <th>主题</th>
                 <td><input type="text" id="topic" value=""/></td>
+            </tr>
+            <tr>
+                <th>标签</th>
+                <td><input type="text" id="tags" value=""/></td>
             </tr>
             <tr>
                 <th>消息内容</th>

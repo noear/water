@@ -9,6 +9,7 @@ import java.util.*;
 public class MessageModel implements IBinder {
     public long msg_id;
     public String msg_key;
+    public String tags;
     public int topic_id;
     public String topic_name;
     public String content;
@@ -24,6 +25,7 @@ public class MessageModel implements IBinder {
         //
         msg_id = s.get("msg_id").value(0L);
         msg_key = s.get("msg_key").value(null);
+        tags = s.get("tags").value(null);
         topic_id = s.get("topic_id").value(0);
         topic_name = s.get("topic_name").value(null);
         content = s.get("content").value(null);

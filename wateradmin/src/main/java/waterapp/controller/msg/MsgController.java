@@ -73,11 +73,10 @@ public class MsgController extends BaseController {
     }
 
     @XMapping("/msg/send/ajax/dosend")
-    public ViewModel sendMessage(String topic, String message) throws Exception {
+    public ViewModel sendMessage(String topic, String message,String tags) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            String msg_key = IDUtil.buildGuid();
-            ONode data = WaterClient.Message.sendMessage(msg_key, topic, message);
+            ONode data = WaterClient.Message.sendMessage(tags, topic, message);
 
             if (data.get("code").getInt() == 1) {
                 viewModel.code(1,"消息派发成功！");
