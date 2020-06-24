@@ -2,8 +2,7 @@ package org.noear.water.model;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
-import org.noear.water.utils.ONodeUtils;
-import org.noear.water.utils.PropertiesLoader;
+import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -69,18 +68,10 @@ public final class ConfigM {
 
     public PropertiesM getProp() {
         if (_prop == null) {
-            _prop = getProp(value);
+            _prop = ConfigUtils.global.getProp(value);
         }
 
         return _prop;
-    }
-
-    public static PropertiesM getProp(String text){
-        try {
-            return PropertiesLoader.global.load(text);
-        }catch (Exception ex){
-            throw new RuntimeException(ex);
-        }
     }
 
     /**
@@ -90,7 +81,7 @@ public final class ConfigM {
 
     public ONode getNode() {
         if (_node == null) {
-            _node = ONodeUtils.load(value);
+            _node = ConfigUtils.global.getNode(value);
         }
 
         return _node;
