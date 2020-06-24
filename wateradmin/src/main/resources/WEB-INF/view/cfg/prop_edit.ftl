@@ -27,26 +27,24 @@
         var row_id = '${cfg.row_id!}';
 
         function save() {
-            var tag = $('#tag').val();
-            var key = $('#key').val();
-            var value = $('#value').val();
-            var type = $('#type').val();
+            var vm = formToMap('form');
 
-
-            if (!tag) {
+            if (!vm.tag) {
                 top.layer.msg("tag不能为空！");
                 return;
             }
 
-            if (!key) {
+            if (!vm.key) {
                 top.layer.msg("key不能为空！");
                 return;
             }
 
+            vm.row_id= row_id;
+
             $.ajax({
                 type:"POST",
                 url:"/cfg/prop/edit/ajax/save",
-                data:{"row_id":row_id,"name":name,"tag":tag,"key":key,"type":type,"value":value},
+                data:vm,
                 success:function (data) {
                     if(data.code==1) {
                         top.layer.msg('操作成功')
