@@ -1,5 +1,6 @@
 package waterapp.dso.db;
 
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapp.Config;

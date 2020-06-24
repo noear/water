@@ -40,7 +40,7 @@ public class WaterapiApp {
 
 				ProtocolHub.logStorer = new LogStorerDb(new LogSourceWrap(), () -> IDUtils.buildLogID());
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
-				ProtocolHub.messageQueue = ProtocolHub.createMessageQueue(Config.water_msg_queue);
+				ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 				ProtocolHub.heihei = new HeiheiDefault(new WaterLoggerLocal());
 			});
 		}

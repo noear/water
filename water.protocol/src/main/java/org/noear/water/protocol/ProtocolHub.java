@@ -1,5 +1,9 @@
 package org.noear.water.protocol;
 
+import org.noear.water.model.ConfigM;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -14,7 +18,18 @@ public final class ProtocolHub {
 
     public static IHeihei heihei;
 
-    public static IMessageQueue createMessageQueue(Properties prop){
-        return ProtocolUtil.createMessageQueue(prop);
+    private static Map<String, IMessageQueue> messageQueueMap = new HashMap<>();
+
+    public static IMessageQueue getMessageQueue(ConfigM cfg) {
+        synchronized (messageQueueMap) {
+            IMessageQueue tmp = messageQueueMap.get(cfg.value);
+            if (tmp == null) {
+                tmp = ProtocolUtil.createMessageQueue(cfg.getProp());
+                messageQueueMap.put(cfg.value, tmp);
+            }
+
+            return tmp;
+        }
+
     }
 }

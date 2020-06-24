@@ -3,8 +3,8 @@ package waterapp.models;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.solon.XUtil;
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
-import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.GetHandlerEx;
@@ -13,7 +13,6 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.memcached.MemCache;
 
-import java.io.StringReader;
 import java.util.Date;
 import java.util.Properties;
 
@@ -37,6 +36,9 @@ public class ConfigModel implements IBinder {
         return new ConfigModel();
     }
 
+    public ConfigM toConfigM(){
+        return new ConfigM(key,value,0);
+    }
 
     public String getString() {
         return value;
@@ -80,6 +82,7 @@ public class ConfigModel implements IBinder {
 
         return _prop;
     }
+
 
     /**
      * 转为ONode

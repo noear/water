@@ -1,6 +1,7 @@
 package waterapp;
 
 import org.noear.solon.XUtil;
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.weed.DbContext;
@@ -29,7 +30,7 @@ public class Config {
 
     public static String water_cache_header;
 
-    public static Properties water_msg_queue;
+    public static ConfigM water_msg_queue;
 
     public static String localHost;
 
@@ -69,7 +70,7 @@ public class Config {
             water_cache_header = cfg("water_cache_header")
                                  .getString( "WATER2_CACHE") + "_API2";
 
-            water_msg_queue = cfg("water_msg_queue2").getProp();
+            water_msg_queue = cfg("water_msg_queue2").toConfigM();
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);

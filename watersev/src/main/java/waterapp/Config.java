@@ -28,7 +28,7 @@ public class Config {
     public static RedisX rd_msg   = cfg("water_redis").getRd(3);
     public static RedisX rd_count   = cfg("water_redis").getRd(6);
 
-    public static Properties water_msg_queue = cfg("water_msg_queue2").getProp();
+    public static ConfigM water_msg_queue = cfg("water_msg_queue2");
 
     //目前的运行环境（生产环境，预生产环境，测试环境）
     public static String alarm_sign(){
