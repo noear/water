@@ -254,7 +254,8 @@ public class DbWaterCfgApi {
                 .set("type", wm.type)
                 .set("key", wm.key)
                 .set("value", wm.value)
-                .insertBy("tag,key,value");
+                .set("edit_mode", wm.edit_mode)
+                .insertBy("tag,key");
     }
 
     public static List<ConfigModel> getConfigByIds(String ids) throws SQLException {
