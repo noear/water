@@ -3,6 +3,7 @@ package waterapp.models.water_cfg;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import org.noear.snack.ONode;
+import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.TextUtils;
@@ -31,13 +32,21 @@ public class ConfigModel
     }
 
 
-
     public String getString() {
         return value;
     }
 
     public String getString(String def) {
         return value == null ? def : value;
+    }
+
+    public String value_html(){
+	    if(value == null){
+	        return "";
+        }else{
+	        return value.replace("\n","<br/>")
+                    .replace(" ","&nbsp;");
+        }
     }
 
     /**
@@ -69,8 +78,7 @@ public class ConfigModel
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = new Properties();
-            RunUtils.runActEx(() -> _prop.load(new StringReader(value)));
+            _prop = ConfigUtils.global.getProp(value);
         }
 
         return _prop;
@@ -83,7 +91,7 @@ public class ConfigModel
 
     public ONode getNode() {
         if (_node == null) {
-            _node = ONode.load(value);
+            _node = ConfigUtils.global.getNode(value);
         }
 
         return _node;

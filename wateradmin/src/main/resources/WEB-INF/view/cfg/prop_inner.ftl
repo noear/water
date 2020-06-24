@@ -147,11 +147,7 @@
                 <td><checkbox><label><input type="checkbox" name="sel_id" value="${cfg.row_id}" /><a></a></label></checkbox></td>
                 <td class="left">${cfg.key!}</td>
                 <td class="left">${cfg.type_str()}</td>
-                <td class="left break">
-                    <#if cfg.value?? >
-                        ${cfg.value?replace("\n","<br/>")}
-                    </#if>
-                </td>
+                <td class="left break">${cfg.value_html()!}</td>
                 <#if is_admin == 1>
                     <td class="op"><a href="/cfg/prop/edit?row_id=${cfg.row_id}" class="t2">编辑</a></td>
                 </#if>
