@@ -20,6 +20,7 @@ public class ConfigModel implements IBinder {
     public String tag;
     public String key;
     public String value;
+    public String edit_mode;
     public Date update_fulltime;
     public boolean is_editable;
 
@@ -28,6 +29,7 @@ public class ConfigModel implements IBinder {
         tag = s.get("tag").value("");
         key = s.get("key").value("");
         value = s.get("value").value("");
+        edit_mode = s.get("edit_mode").value("");
         is_editable = s.get("is_editable").value(false);
     }
 
