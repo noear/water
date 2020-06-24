@@ -27,7 +27,7 @@ public class MsgZanController implements IJob {
 
     @Override
     public void exec() throws Exception {
-//        保持队里只有1000数量 //不再考虑数量
+        //保持队里只有1000数量
         if (ProtocolHub.messageQueue.count() > 1000) {
             return;
         }
