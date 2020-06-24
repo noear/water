@@ -77,12 +77,12 @@ public class PropController extends BaseController{
 
     //编辑、保存功能。
     @XMapping("edit/ajax/save")
-    public ViewModel save(Integer row_id,String tag,String key,Integer type,String value) throws SQLException {
+    public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setConfig(row_id, tag, key, type, value);
+        boolean result = DbWaterCfgApi.setConfig(row_id, tag, key, type, value, edit_mode);
 
         if (result) {
             viewModel.code(1, "保存成功");

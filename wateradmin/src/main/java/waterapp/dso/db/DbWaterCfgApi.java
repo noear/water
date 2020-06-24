@@ -271,12 +271,13 @@ public class DbWaterCfgApi {
 
 
     //编辑更新config。
-    public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value) throws SQLException {
+    public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
         DbTableQuery db = db().table("water_cfg_properties")
                 .set("row_id", row_id)
                 .set("tag", tag.trim())
                 .set("key", key.trim())
                 .set("type", type)
+                .set("edit_mode", edit_mode)
                 .set("value", value.trim());
 
         if (row_id > 0) {

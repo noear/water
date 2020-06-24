@@ -17,6 +17,10 @@
 
         a.clone{display: inline-block; color: #666; width: 26px; height: 26px; line-height: 26px; text-align: center; }
         a.clone:hover{color: #000;}
+
+        boxlist label a{ background:#fff; border-color:#fff;}
+        boxlist label a:hover{ border-color:#C9C9C9 #C9C9C9 #fff #C9C9C9;}
+        boxlist input:checked + a{background:#C9C9C9; border-color:#C9C9C9}
     </style>
 
     <script>
@@ -82,27 +86,44 @@
             });
         }
 
-        function build_editor(elm,mod){
-            var ext_tools = ace.require("ace/ext/language_tools");
 
-            ext_tools.addCompleter({
-                getCompletions: function(editor, session, pos, prefix, callback) {
-                    callback(null,
-                        [
-                            {name: "schema",value: "schema", meta: "",type: "local",score: 1000},
-                            {name: "url",value: "url", meta: "",type: "local",score: 1000},
-                            {name: "username",value: "username", meta: "",type: "local",score: 1000},
-                            {name: "password",value: "password", meta: "",type: "local",score: 1000},
-                            {name: "server",value: "server", meta: "",type: "local",score: 1000},
-                            {name: "user",value: "user", meta: "",type: "local",score: 1000},
-                            {name: "name",value: "name", meta: "",type: "local",score: 1000},
-                            {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
-                            {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000}
-                        ]);
-                }
-            });
 
-            var editor = ace.edit(elm);
+        function loadTypeTml(){
+            let jt = $('#type').find("option:selected").text();
+            let tml = window.tmls[jt];
+            if(tml){
+                window.editor.setValue(tml);
+                window.editor.moveCursorTo(0, 0);
+            }
+        }
+
+        var ext_tools = ace.require("ace/ext/language_tools");
+
+        ext_tools.addCompleter({
+            getCompletions: function(editor, session, pos, prefix, callback) {
+                callback(null,
+                    [
+                        {name: "schema",value: "schema", meta: "",type: "local",score: 1000},
+                        {name: "url",value: "url", meta: "",type: "local",score: 1000},
+                        {name: "username",value: "username", meta: "",type: "local",score: 1000},
+                        {name: "password",value: "password", meta: "",type: "local",score: 1000},
+                        {name: "server",value: "server", meta: "",type: "local",score: 1000},
+                        {name: "user",value: "user", meta: "",type: "local",score: 1000},
+                        {name: "name",value: "name", meta: "",type: "local",score: 1000},
+                        {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
+                        {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000}
+                    ]);
+            }
+        });
+
+
+        function build_editor(mod){
+            if(window.editor){
+                window.editor.getSession().setMode("ace/mode/"+mod);
+                return
+            }
+
+            var editor = ace.edit(document.getElementById('value_edit'));
 
             editor.setTheme("ace/theme/chrome");
             editor.getSession().setMode("ace/mode/"+mod);
@@ -125,23 +146,26 @@
             window.editor = editor;
         }
 
-        function loadTypeTml(){
-            let jt = $('#type').find("option:selected").text();
-            let tml = window.tmls[jt];
-            if(tml){
-                window.editor.setValue(tml);
-                window.editor.moveCursorTo(0, 0);
-            }
+        function editor_shift(mod){
+            localStorage.setItem("water_prop_edit_mode", mod);
+
+            build_editor(mod);
         }
 
         $(function(){
-            $('pre[jt-ini]').each(function(){
-                build_editor(this,'ini');
-            });
+            //编辑模式支持
+            var _edit_mode="${cfg.edit_mode!}";
+            if(!_edit_mode){
+                _edit_mode =localStorage.getItem("water_prop_edit_mode");
+            }
 
-            $('pre[jt-yaml]').each(function(){
-                build_editor(this,'yaml');
-            });
+            if(!_edit_mode){
+                _edit_mode = 'text';
+            }
+
+            $("input[name='edit_mode'][value='"+_edit_mode+"']").prop("checked",true);
+            build_editor(_edit_mode);
+
 
             $('a.clone').click(function () {
                 loadTypeTml();
@@ -207,8 +231,18 @@
             <tr>
                 <th>value</th>
                 <td>
-                    <textarea id="value" class="hidden">${cfg.value!}</textarea>
-                    <pre style="height:300px;width:calc(100vw - 260px);"  jt-ini id="value_edit">${cfg.value!}</pre>
+                    <div style="line-height: 1em;">
+                        <boxlist>
+                            <label><input type="radio" name="edit_mode" onclick="editor_shift('text')" value="text" /><a>text</a></label>
+                            <label><input type="radio" name="edit_mode" onclick="editor_shift('properties')" value="properties" /><a>properties</a></label>
+                            <label><input type="radio" name="edit_mode" onclick="editor_shift('yaml')" value="yaml" /><a>yaml</a></label>
+                            <label><input type="radio" name="edit_mode" onclick="editor_shift('json')" value="json" /><a>json</a></label>
+                        </boxlist>
+                    </div>
+                    <div>
+                        <textarea id="value" class="hidden">${cfg.value!}</textarea>
+                        <pre style="height:300px;width:calc(100vw - 260px);"  id="value_edit">${cfg.value!}</pre>
+                    </div>
                 </td>
             </tr>
 

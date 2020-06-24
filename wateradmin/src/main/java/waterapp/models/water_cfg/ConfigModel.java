@@ -23,6 +23,7 @@ public class ConfigModel
     public String key;
     public int type;
     public String value;
+    public String edit_mode;
     public transient int is_enabled;
 
 	public String type_str(){
