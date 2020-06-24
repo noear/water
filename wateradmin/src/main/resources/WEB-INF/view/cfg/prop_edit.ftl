@@ -18,7 +18,7 @@
         a.clone{display: inline-block; color: #666; width: 26px; height: 26px; line-height: 26px; text-align: center; }
         a.clone:hover{color: #000;}
 
-        boxlist label a{ background:#fff; border-color:#fff;}
+        boxlist label a{ background:#fff; border-color:#f1f1f1 #f1f1f1 #fff #f1f1f1;}
         boxlist label a:hover{ border-color:#C9C9C9 #C9C9C9 #fff #C9C9C9;}
         boxlist input:checked + a{background:#C9C9C9; border-color:#C9C9C9}
     </style>

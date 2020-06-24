@@ -1,6 +1,5 @@
 package waterapp;
 
-import org.noear.solon.XUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
