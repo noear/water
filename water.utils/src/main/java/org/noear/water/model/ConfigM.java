@@ -2,6 +2,7 @@ package org.noear.water.model;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
+import org.noear.water.utils.ONodeUtils;
 import org.noear.water.utils.PropertiesLoader;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -89,7 +90,7 @@ public final class ConfigM {
 
     public ONode getNode() {
         if (_node == null) {
-            _node = ONode.load(value);
+            _node = ONodeUtils.load(value);
         }
 
         return _node;

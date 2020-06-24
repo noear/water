@@ -49,7 +49,7 @@
                     if(data.code==1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
-                            parent.location.href="/cfg/prop?tag_name="+tag;
+                            parent.location.href="/cfg/prop?tag_name="+vm.tag;
                         },800);
                     }else{
                         top.layer.msg(data.msg);
