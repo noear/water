@@ -1,7 +1,8 @@
 package waterapp.controller.cmds;
 
 import org.noear.water.utils.TextUtils;
-import waterapp.dso.TraceUtils;
+import org.noear.water.utils.TraceUtils;
+import waterapp.Config;
 
 /**
  * Created by noear on 2017/7/19.
@@ -28,15 +29,7 @@ public class CMD_sev_track_api extends CMDBase {
         String name = get("name");
         long timespan = getlong("timespan"); //豪秒
 
-        TraceUtils.track(service, tag, name, timespan);
-
-        if (TextUtils.isEmpty(_node) == false) {
-            TraceUtils.track("_service", service, _node, timespan);
-        }
-
-        if (TextUtils.isEmpty(_from) == false) {
-            TraceUtils.track("_from", service, _from, timespan);
-        }
+        TraceUtils.track(Config.rd_track, service, tag, name, timespan, _node, _from);
 
         data.set("code", 1);
         data.set("msg", "success");

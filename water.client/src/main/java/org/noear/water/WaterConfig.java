@@ -3,6 +3,9 @@ package org.noear.water;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class WaterConfig {
     private static String _water_api_url = null;
@@ -28,6 +31,7 @@ public class WaterConfig {
         }
     }
 
+    public static final ExecutorService pools = Executors.newCachedThreadPool();
 
     private static final String lock = "";
     private static ConfigM _redis_cfg;

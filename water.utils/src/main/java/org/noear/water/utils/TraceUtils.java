@@ -1,23 +1,31 @@
-package waterapp.dso;
-
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.RedisHashWarp;
-import org.noear.water.utils.RedisX;
-import waterapp.Config;
+package org.noear.water.utils;
 
 public class TraceUtils {
 
+    //记录性能（service/tag/name，三级 ,from _from,at _node）
+    public static void track(RedisX redisX, String service, String tag, String name, long timespan, String _node, String _from) {
+        TraceUtils.track(redisX, service, tag, name, timespan);
+
+        if (TextUtils.isEmpty(_node) == false) {
+            TraceUtils.track(redisX, "_service", service, _node, timespan);
+        }
+
+        if (TextUtils.isEmpty(_from) == false) {
+            TraceUtils.track(redisX, "_from", service, _from, timespan);
+        }
+    }
+
     //记录性能（service/tag/name，三级）
-    public static void track(String service, String tag, String name, long timespan) {
+    public static void track(RedisX redisX, String service, String tag, String name, long timespan) {
         try {
-            do_track(service, tag, name, timespan);
-        }catch (Exception ex){
+            do_track(redisX, service, tag, name, timespan);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     //记录性能
-    private static void do_track(String service, String tag, String name, long timespan) {
+    private static void do_track(RedisX redisX, String service, String tag, String name, long timespan) {
         Datetime now = Datetime.Now();
 
         //1.提前构建各种key（为了性能采用 StringBuilder）
@@ -41,9 +49,9 @@ public class TraceUtils {
         String log_time = now.toString("yyyy-MM-dd HH:mm:ss");
 
         //2.记录性能值
-        Config.rd_track.open0((ru) -> {
+        redisX.open0((ru) -> {
 
-            long average = do_track_key_minute(ru,key_minute_bef, key_minute, timespan); //生成基于分的平均响应
+            long average = do_track_key_minute(ru, key_minute_bef, key_minute, timespan); //生成基于分的平均响应
 
             //记录当时数据
             do_track_key_hour(ru, key_hour, timespan);
@@ -61,8 +69,8 @@ public class TraceUtils {
     private static long do_track_key_minute(RedisX.RedisUsing ru, String rdkey_bef, String rdkey, long timespan) {
         RedisHashWarp hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
 
-        long total_time0 =  hash.getLong("total_time");
-        long total_num0  =  hash.getLong("total_num");
+        long total_time0 = hash.getLong("total_time");
+        long total_num0 = hash.getLong("total_num");
 
         ru.key(rdkey).expire(60 * 3); //10分钟
 
@@ -70,7 +78,7 @@ public class TraceUtils {
         long total_num = ru.hashIncr("total_num", 1);
 
         //由上一分钟与当前的进行平均 //更好的反应当前的平均性能
-        long average = (total_time + total_time0 ) / (total_num + total_num0); // *** 这个是不安全，不精准的
+        long average = (total_time + total_time0) / (total_num + total_num0); // *** 这个是不安全，不精准的
 
         return average;
     }
@@ -105,7 +113,7 @@ public class TraceUtils {
             ru.hashSet("slowest", timespan); // *** 这个是不安全，不精准的
         }
 
-        if (timespan < fastest || fastest==0) { //更小，就是更快
+        if (timespan < fastest || fastest == 0) { //更小，就是更快
             ru.hashSet("fastest", timespan); // *** 这个是不安全，不精准的
         }
     }
@@ -138,7 +146,7 @@ public class TraceUtils {
             ru.hashSet("slowest", timespan); // *** 这个是不安全，不精准的
         }
 
-        if (timespan < fastest || fastest==0) { //更小，就是更快
+        if (timespan < fastest || fastest == 0) { //更小，就是更快
             ru.hashSet("fastest", timespan); // *** 这个是不安全，不精准的
         }
     }

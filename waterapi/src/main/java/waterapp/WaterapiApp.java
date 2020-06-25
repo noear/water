@@ -8,12 +8,11 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiDefault;
 import org.noear.water.protocol.solution.LogStorerDb;
 import org.noear.water.protocol.solution.MessageLockRedis;
-import org.noear.water.protocol.solution.MessageQueueRedis;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
+import org.noear.water.utils.TraceUtils;
 import waterapp.dso.IDUtils;
 import waterapp.dso.LogSourceWrap;
-import waterapp.dso.TraceUtils;
 import waterapp.dso.WaterLoggerLocal;
 
 public class WaterapiApp {
@@ -54,7 +53,7 @@ public class WaterapiApp {
 
 			if (timecount != null) {
 				Timespan timespan = timecount.stop();
-				TraceUtils.track(Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
+				TraceUtils.track(Config.rd_track, Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
 			}
 		});
 	}

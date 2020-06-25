@@ -1,7 +1,10 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterConfig;
+import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.TraceUtils;
 import org.noear.weed.Command;
 
 import java.util.HashMap;
@@ -11,6 +14,9 @@ import java.util.Map;
  * 跟踪服务接口
  * */
 public class TrackApi {
+    //db:5
+    public static RedisX rd_track = WaterConfig.redis_cfg().getRd(5);
+
     /**
      * 跟踪请求性能
      */
@@ -36,6 +42,15 @@ public class TrackApi {
      * @param _from    来自哪里
      */
     public void track(String service, String tag, String name, long timespan, String _node, String _from) {
+        //
+        // 改为直发Redis，节省代理
+        //
+        WaterConfig.pools.execute(() -> {
+            TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
+        });
+    }
+
+    private void trackBak1(String service, String tag, String name, long timespan, String _node, String _from) {
         Map<String, String> params = new HashMap<>();
         if (_node != null) {
             params.put("_node", _node);

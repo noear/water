@@ -16,6 +16,11 @@ public class IDUtils {
         return getID("log_id");
     }
 
+
+    public static long buildLogID(String logger) {
+        return getID(logger + "_log_id");
+    }
+
     public static long buildMsgID(){
         return getID("msg_id");
     }
