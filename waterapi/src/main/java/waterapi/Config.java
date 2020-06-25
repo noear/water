@@ -5,6 +5,7 @@ import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -59,11 +60,16 @@ public class Config {
             water_log = cfg(WW.water_log).getDb(true);
 
             ConfigModel cm = cfg(WW.water_redis);
+            ConfigModel cm2 = cfg(WW.water_redis_track);
 
             rd_ids   = cm.getRd(1);
             rd_lock  = cm.getRd(2);
             rd_msg   = cm.getRd(3);
-            rd_track = cm.getRd(5);
+            if(cm2 == null || TextUtils.isEmpty(cm2.value)) {
+                rd_track = cm.getRd(5);
+            }else{
+                rd_track = cm2.getRd(5);
+            }
 
             is_debug = "1".equals(cfg("is_debug").getString());
 
