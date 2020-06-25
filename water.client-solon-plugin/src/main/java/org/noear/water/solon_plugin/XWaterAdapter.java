@@ -2,9 +2,8 @@ package org.noear.water.solon_plugin;
 
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
-import org.noear.water.WaterConstants;
+import org.noear.water.WCX;
 import org.noear.water.model.MessageM;
-import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
@@ -85,7 +84,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     protected void initWeed() {
-        Class<?> clz = XUtil.loadClass(WaterConstants.clz_BcfClient);
+        Class<?> clz = XUtil.loadClass(WCX.clz_BcfClient);
 
         if (clz == null) {
             //api项目

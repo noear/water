@@ -80,7 +80,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WateradminApp</mainClass>
+                            <mainClass>watersev.WateradminApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

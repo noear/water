@@ -193,7 +193,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WateradminApp</mainClass>
+                            <mainClass>wateradmin.WateradminApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

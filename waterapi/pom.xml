@@ -112,7 +112,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WaterapiApp</mainClass>
+                            <mainClass>waterapi.WaterapiApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

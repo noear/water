@@ -125,7 +125,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WaterraasApp</mainClass>
+                            <mainClass>waterraas.WaterraasApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

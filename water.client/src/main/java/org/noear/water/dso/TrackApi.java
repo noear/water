@@ -15,7 +15,7 @@ import java.util.Map;
  * */
 public class TrackApi {
     //db:5
-    public static RedisX rd_track = WaterConfig.redis_cfg().getRd(5);
+    public static RedisX rd_track = WaterConfig.redis_track_cfg().getRd(5);
 
     /**
      * 跟踪请求性能

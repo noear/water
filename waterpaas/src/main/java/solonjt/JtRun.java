@@ -9,8 +9,8 @@ import org.noear.solonjt.dso.JtFun;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
-import waterapp.Config;
-import waterapp.dso.DbPaaSApi;
+import waterpaas.Config;
+import waterpaas.dso.DbPaaSApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;

@@ -1,6 +1,5 @@
 package solonjt;
 
-import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AFileModel;
@@ -9,7 +8,7 @@ import org.noear.water.log.Level;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
-import waterapp.dso.AFileUtil;
+import waterpaas.dso.AFileUtil;
 
 import java.util.Map;
 

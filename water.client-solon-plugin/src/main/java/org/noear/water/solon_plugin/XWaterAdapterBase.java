@@ -7,8 +7,7 @@ import org.noear.solon.XUtil;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterAdapter;
 import org.noear.water.WaterClient;
-import org.noear.water.WaterConstants;
-import org.noear.water.dso.WhitelistApi;
+import org.noear.water.WCX;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
@@ -19,7 +18,7 @@ import java.io.IOException;
 // Water for service project adapter
 //
 abstract class XWaterAdapterBase extends WaterAdapter {
-    static Logger logger = new WaterLogger(WaterConstants.water_log_upstream, XWaterAdapterBase.class);
+    static Logger logger = new WaterLogger(WCX.water_log_upstream, XWaterAdapterBase.class);
 
     XMap service_args;
     private String _localHost;
@@ -28,9 +27,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     public XWaterAdapterBase(XMap args, int port) {
         service_args = args;
         service_port = port;
-        service_check_path = WaterConstants.path_service_check;
-        service_stop_path = WaterConstants.path_service_stop;
-        msg_receiver_path = WaterConstants.path_msg_receiver;
+        service_check_path = WCX.path_service_check;
+        service_stop_path = WCX.path_service_stop;
+        msg_receiver_path = WCX.path_msg_receiver;
 
         onInit();
     }

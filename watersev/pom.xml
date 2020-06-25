@@ -136,7 +136,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WatersevApp</mainClass>
+                            <mainClass>watersev.WatersevApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

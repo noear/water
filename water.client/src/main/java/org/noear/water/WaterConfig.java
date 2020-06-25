@@ -9,10 +9,13 @@ import java.util.concurrent.Executors;
 
 public class WaterConfig {
     private static String _water_api_url = null;
-    public static String water_api_url(){ return _water_api_url; }
+
+    public static String water_api_url() {
+        return _water_api_url;
+    }
 
     static {
-        String host = System.getProperty("water.host");
+        String host = System.getProperty(WCX.water_host);
         if (TextUtils.isEmpty(host) == false) {
 
             if (host.indexOf("://") < 0) {
@@ -35,13 +38,14 @@ public class WaterConfig {
 
     private static final String lock = "";
     private static ConfigM _redis_cfg;
+    private static ConfigM _redis_track_cfg;
     private static ConfigM _cache_cfg;
 
     public static ConfigM redis_cfg() {
         if (_redis_cfg == null) {
             synchronized (lock) {
                 if (_redis_cfg == null) {
-                    _redis_cfg = WaterClient.Config.get("water", "water_redis");
+                    _redis_cfg = cfg(WCX.water_redis);
                 }
             }
         }
@@ -49,11 +53,27 @@ public class WaterConfig {
         return _redis_cfg;
     }
 
+    public static ConfigM redis_track_cfg() {
+        if (_redis_track_cfg == null) {
+            synchronized (lock) {
+                if (_redis_track_cfg == null) {
+                    _redis_track_cfg = cfg(WCX.water_redis_track);
+                }
+
+                if (_redis_track_cfg == null || TextUtils.isEmpty(_redis_track_cfg.value)) {
+                    _redis_track_cfg = cfg(WCX.water_redis);
+                }
+            }
+        }
+
+        return _redis_track_cfg;
+    }
+
     public static ConfigM cache_cfg() {
         if (_cache_cfg == null) {
             synchronized (lock) {
                 if (_cache_cfg == null) {
-                    _cache_cfg = WaterClient.Config.get("water", "water_cache");
+                    _cache_cfg = cfg(WCX.water_cache);
                 }
             }
         }
@@ -62,8 +82,13 @@ public class WaterConfig {
     }
 
 
-    public static void reload(){
-        _redis_cfg = WaterClient.Config.get("water", "water_redis");
-        _cache_cfg = WaterClient.Config.get("water", "water_cache");
+    public static void reload() {
+        _redis_cfg = cfg(WCX.water_redis);
+        _cache_cfg = cfg(WCX.water_cache);
+    }
+
+
+    private static ConfigM cfg(String key) {
+        return WaterClient.Config.get(WCX.water, key);
     }
 }

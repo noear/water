@@ -133,7 +133,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterapp.WaterpaasApp</mainClass>
+                            <mainClass>waterpaas.WaterpaasApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
