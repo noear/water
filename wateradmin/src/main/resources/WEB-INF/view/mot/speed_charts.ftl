@@ -16,7 +16,7 @@
 </head>
 <body>
 <block>
-    ${tag}/${name}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
+    ${tag}::${name}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
 </block>
 <block>
     <toolbar>
