@@ -83,11 +83,11 @@ public class ConfigUtils {
                         for (String s1 : sss) {
                             il = s1.indexOf("[");
                             if (il < 0) {
-                                tmp = tmp.get(s1);
+                                tmp = tmp.getOrNew(s1);
                             } else {
                                 ir = s1.indexOf("]");
-                                tmp = tmp.get(s1.substring(0,il));
-                                tmp = tmp.addNew(Integer.parseInt(s1.substring(il + 1, ir)));
+                                tmp = tmp.getOrNew(s1.substring(0,il));
+                                tmp = tmp.getOrNew(Integer.parseInt(s1.substring(il + 1, ir)));
                             }
                         }
                         tmp.val(v);
