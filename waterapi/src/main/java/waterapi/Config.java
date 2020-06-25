@@ -1,7 +1,7 @@
 package waterapi;
 
 import org.noear.solon.XUtil;
-import org.noear.water.WCX;
+import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
@@ -55,10 +55,10 @@ public class Config {
             _inited = true;
 
             water = DbUtils.getDb(prop);
-            water_msg = cfg(WCX.water_msg).getDb(true);
-            water_log = cfg(WCX.water_log).getDb(true);
+            water_msg = cfg(WW.water_msg).getDb(true);
+            water_log = cfg(WW.water_log).getDb(true);
 
-            ConfigModel cm = cfg(WCX.water_redis);
+            ConfigModel cm = cfg(WW.water_redis);
 
             rd_ids   = cm.getRd(1);
             rd_lock  = cm.getRd(2);
@@ -76,7 +76,7 @@ public class Config {
                 localHost = LocalUtils.getLocalAddr(service_port);
                 DbWaterRegApi.addService(water_service_name,
                         localHost,
-                        WCX.path_service_check,
+                        WW.path_service_check,
                         0);
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -90,7 +90,7 @@ public class Config {
 
     public static ConfigModel cfg(String key) {
         try {
-            return DbWaterCfgApi.getConfigNoCache(WCX.water, key);
+            return DbWaterCfgApi.getConfigNoCache(WW.water, key);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

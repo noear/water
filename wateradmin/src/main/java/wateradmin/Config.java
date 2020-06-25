@@ -2,7 +2,7 @@ package wateradmin;
 
 import org.noear.solon.XApp;
 import org.noear.water.WaterClient;
-import org.noear.water.WCX;
+import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
@@ -12,10 +12,10 @@ public class Config {
 
     public static String water_service_name = "wateradmin";
 
-    public static DbContext water = cfg(WCX.water).getDb(true);
-    public static DbContext water_log = cfg(WCX.water_log).getDb(true);
-    public static DbContext water_msg = cfg(WCX.water_msg).getDb(true);
-    public static DbContext water_paas = cfg(WCX.water_paas).getDb(true);
+    public static DbContext water = cfg(WW.water).getDb(true);
+    public static DbContext water_log = cfg(WW.water_log).getDb(true);
+    public static DbContext water_msg = cfg(WW.water_msg).getDb(true);
+    public static DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
     //paas 根地址
     public static String paas_uri(){
@@ -42,7 +42,7 @@ public class Config {
     }
 
     public static void tryInit() {
-        WaterClient.Config.getProperties(WCX.water_session).forEach((k, v) -> {
+        WaterClient.Config.getProperties(WW.water_session).forEach((k, v) -> {
             if (XApp.cfg().isDebugMode()) {
                 String key = k.toString();
                 if (key.indexOf(".session.") < 0) {
@@ -59,7 +59,7 @@ public class Config {
 
     public static ConfigM cfg(String key) {
         if (key.indexOf("/") < 0) {
-            return WaterClient.Config.get(WCX.water, key);
+            return WaterClient.Config.get(WW.water, key);
         } else {
             return WaterClient.Config.getByTagKey(key);
         }

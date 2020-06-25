@@ -54,7 +54,7 @@ public abstract class WaterAdapter {
         if(TextUtils.isEmpty(msg_receiver_path) == false) {
             //2.订阅内部消息
             try {
-                messageSubscribeTopicLocal(0, WCX.msg_ucache_topic, WCX.msg_uconfig_topic);
+                messageSubscribeTopicLocal(0, WW.msg_ucache_topic, WW.msg_uconfig_topic);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -135,8 +135,8 @@ public abstract class WaterAdapter {
 
     //2.2.1.内部消息处理
     protected boolean messageReceiveForInner(MessageM msg) {
-        if (WCX.msg_ucache_topic.equals(msg.topic) == false &&
-                WCX.msg_uconfig_topic.equals(msg.topic) == false) {
+        if (WW.msg_ucache_topic.equals(msg.topic) == false &&
+                WW.msg_uconfig_topic.equals(msg.topic) == false) {
             return false;
         }
 
@@ -144,7 +144,7 @@ public abstract class WaterAdapter {
             String[] tag_keys = msg.message.split(";");
 
             //更新缓存
-            if (WCX.msg_ucache_topic.equals(msg.topic)) {
+            if (WW.msg_ucache_topic.equals(msg.topic)) {
                 //调用缓存处理
                 for (String tag : tag_keys) { //xxx.xxx_xxx
                     if (TextUtils.isEmpty(tag) == false) {
@@ -154,7 +154,7 @@ public abstract class WaterAdapter {
             }
 
             //更新配置
-            if (WCX.msg_uconfig_topic.equals(msg.topic)) {
+            if (WW.msg_uconfig_topic.equals(msg.topic)) {
                 for (String tagKey : tag_keys) {//xxx::bbb
                     String[] ss = tagKey.split("::");
 

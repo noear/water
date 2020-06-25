@@ -1,6 +1,6 @@
 package org.noear.water;
 
-public class WCX {
+public class WW {
     public static final String http_header_from = "Water-From";
 
     public static final String msg_ucache_topic = "water.cache.update";

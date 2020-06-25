@@ -1,6 +1,6 @@
 package watersev;
 
-import org.noear.water.WCX;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
@@ -17,14 +17,14 @@ public class Config {
     public static final ICacheServiceEx cache_file = new LocalCache();
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
 
-    public static final DbContext water = cfg(WCX.water).getDb(true);
-    public static final DbContext water_msg = cfg(WCX.water_msg).getDb(true);
-    public static final DbContext water_paas = cfg(WCX.water_paas).getDb(true);
+    public static final DbContext water = cfg(WW.water).getDb(true);
+    public static final DbContext water_msg = cfg(WW.water_msg).getDb(true);
+    public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
-    public static RedisX rd_ids = cfg(WCX.water_redis).getRd(1);
-    public static RedisX rd_lock = cfg(WCX.water_redis).getRd(2);
-    public static RedisX rd_msg = cfg(WCX.water_redis).getRd(3);
-    public static RedisX rd_count = cfg(WCX.water_redis).getRd(6);
+    public static RedisX rd_ids = cfg(WW.water_redis).getRd(1);
+    public static RedisX rd_lock = cfg(WW.water_redis).getRd(2);
+    public static RedisX rd_msg = cfg(WW.water_redis).getRd(3);
+    public static RedisX rd_count = cfg(WW.water_redis).getRd(6);
 
     public static ConfigM water_msg_queue = cfg("water_msg_queue2");
 
@@ -42,6 +42,6 @@ public class Config {
 
 
     public static ConfigM cfg(String key) {
-        return WaterClient.Config.get(WCX.water, key);
+        return WaterClient.Config.get(WW.water, key);
     }
 }

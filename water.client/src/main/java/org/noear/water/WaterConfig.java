@@ -15,7 +15,7 @@ public class WaterConfig {
     }
 
     static {
-        String host = System.getProperty(WCX.water_host);
+        String host = System.getProperty(WW.water_host);
         if (TextUtils.isEmpty(host) == false) {
 
             if (host.indexOf("://") < 0) {
@@ -45,7 +45,7 @@ public class WaterConfig {
         if (_redis_cfg == null) {
             synchronized (lock) {
                 if (_redis_cfg == null) {
-                    _redis_cfg = cfg(WCX.water_redis);
+                    _redis_cfg = cfg(WW.water_redis);
                 }
             }
         }
@@ -57,11 +57,11 @@ public class WaterConfig {
         if (_redis_track_cfg == null) {
             synchronized (lock) {
                 if (_redis_track_cfg == null) {
-                    _redis_track_cfg = cfg(WCX.water_redis_track);
+                    _redis_track_cfg = cfg(WW.water_redis_track);
                 }
 
                 if (_redis_track_cfg == null || TextUtils.isEmpty(_redis_track_cfg.value)) {
-                    _redis_track_cfg = cfg(WCX.water_redis);
+                    _redis_track_cfg = cfg(WW.water_redis);
                 }
             }
         }
@@ -73,7 +73,7 @@ public class WaterConfig {
         if (_cache_cfg == null) {
             synchronized (lock) {
                 if (_cache_cfg == null) {
-                    _cache_cfg = cfg(WCX.water_cache);
+                    _cache_cfg = cfg(WW.water_cache);
                 }
             }
         }
@@ -83,12 +83,12 @@ public class WaterConfig {
 
 
     public static void reload() {
-        _redis_cfg = cfg(WCX.water_redis);
-        _cache_cfg = cfg(WCX.water_cache);
+        _redis_cfg = cfg(WW.water_redis);
+        _cache_cfg = cfg(WW.water_cache);
     }
 
 
     private static ConfigM cfg(String key) {
-        return WaterClient.Config.get(WCX.water, key);
+        return WaterClient.Config.get(WW.water, key);
     }
 }

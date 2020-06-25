@@ -6,7 +6,7 @@ import org.noear.solonclient.HttpUpstream;
 import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
-import org.noear.water.WCX;
+import org.noear.water.WW;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.TextUtils;
@@ -209,7 +209,7 @@ public class XWaterUpstream implements HttpUpstream{
         }
 
         return new XProxy()
-                .headerAdd(WCX.http_header_from, XWaterUpstream._consumer + "@" + XWaterUpstream._consumer_address)
+                .headerAdd(WW.http_header_from, XWaterUpstream._consumer + "@" + XWaterUpstream._consumer_address)
                 .upstream(upstream)
                 .create(clz);
     }
