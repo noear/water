@@ -11,13 +11,6 @@ import java.util.regex.Pattern;
 
 public class IDUtil {
 
-    private static ReentrantLock lock = new ReentrantLock();
-    private static RedisX _redis = null;
-
-    public static long buildWindDeployNodeID() throws Exception {
-        return getID("wind_deploy_node");
-    }
-
     public static String buildGuid() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }

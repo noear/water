@@ -1,11 +1,11 @@
 package waterapi.dso.db;
 
+import org.noear.water.protocol.model.LoggerModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.dso.IDUtils;
-import waterapi.models.LoggerModel;
 import waterapi.Config;
 
 import java.sql.SQLException;

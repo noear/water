@@ -4,14 +4,16 @@ import org.noear.water.model.ConfigM;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * 协议中心
  * */
 public final class ProtocolHub {
-    public static ILogQuerier logQuerier;
+    public static IConfig config; //必填
+
+    public static ILogSourceFactory logSourceFactory;
     public static ILogStorer logStorer;
+    public static ILogQuerier logQuerier;
 
     public static IMessageLock messageLock;
     public static IMessageQueue messageQueue;

@@ -1,9 +1,10 @@
 package wateradmin.models.water_cfg;
 
 import lombok.Getter;
+import org.noear.water.protocol.model.LoggerModel;
 
 @Getter
-public class LoggerModel
+public class LoggerModelEx extends LoggerModel
 {
     public int logger_id;
     public String tag;

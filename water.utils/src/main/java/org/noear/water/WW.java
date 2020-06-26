@@ -28,5 +28,7 @@ public class WW {
 
     public static final String water_session = "water_session";
 
+    public static final String type_logger = "logger.type";
+    public static final String type_queue = "queue.type";
 
 }

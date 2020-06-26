@@ -10,7 +10,7 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_cfg.LoggerModel;
+import wateradmin.models.water_cfg.LoggerModelEx;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class Log2Controller extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, sort);
+        List<LoggerModelEx> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, sort);
         viewModel.put("loggers",list);
         viewModel.put("_state",_state);
         return view("mot/log_inner");

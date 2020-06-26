@@ -43,7 +43,7 @@ public class LogUtils {
                 summary = FromUtils.getFrom(ctx);
             }
 
-            ProtocolHub.logStorer.append(logger_api, Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
+            ProtocolHub.logStorer.write(logger_api, Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -66,7 +66,7 @@ public class LogUtils {
                 });
             }
 
-            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag, null, null, _from, label.toJson(), content, Config.localHost);
+            ProtocolHub.logStorer.write(logger_api, Level.ERROR, tag, null, null, _from, label.toJson(), content, Config.localHost);
             //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -79,7 +79,7 @@ public class LogUtils {
 
             String content = getFullStackTrace(ex);
 
-            ProtocolHub.logStorer.append(logger_api, Level.ERROR, tag, tag1, null, _from, summary, content, Config.localHost);
+            ProtocolHub.logStorer.write(logger_api, Level.ERROR, tag, tag1, null, _from, summary, content, Config.localHost);
             //DbWaterLogApi.addLog(logger_error, tag, tag1, "", label, content);
         } catch (Exception ee) {
             ee.printStackTrace();

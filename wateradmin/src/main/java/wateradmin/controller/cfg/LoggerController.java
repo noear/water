@@ -10,7 +10,7 @@ import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.dso.TagUtil;
 import wateradmin.models.water_cfg.ConfigModel;
-import wateradmin.models.water_cfg.LoggerModel;
+import wateradmin.models.water_cfg.LoggerModelEx;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -47,7 +47,7 @@ public class LoggerController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, null);
+        List<LoggerModelEx> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, null);
         viewModel.put("loggers",list);
         viewModel.put("_state",_state);
         viewModel.put("tag_name",tag_name);
@@ -60,7 +60,7 @@ public class LoggerController extends BaseController {
             logger_id = 0;
         }
 
-        LoggerModel logger = DbWaterCfgApi.getLogger(logger_id);
+        LoggerModelEx logger = DbWaterCfgApi.getLogger(logger_id);
         List<ConfigModel> configs = DbWaterCfgApi.getDbConfigs();
         List<String> option_sources = new ArrayList<>();
         for (ConfigModel config : configs) {

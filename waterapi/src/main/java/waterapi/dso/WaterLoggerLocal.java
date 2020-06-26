@@ -72,7 +72,7 @@ public class WaterLoggerLocal implements Logger {
 
     @Override
     public void trace(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
+        writeDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class WaterLoggerLocal implements Logger {
 
     @Override
     public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
+        writeDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class WaterLoggerLocal implements Logger {
 
     @Override
     public void info(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
+        writeDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class WaterLoggerLocal implements Logger {
 
     @Override
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
+        writeDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
     }
 
     @Override
@@ -192,10 +192,10 @@ public class WaterLoggerLocal implements Logger {
 
     @Override
     public void error(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.ERROR, tag, tag1, tag2, tag3, summary, content);
+        writeDo(Level.ERROR, tag, tag1, tag2, tag3, summary, content);
     }
 
-    private void appendDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        ProtocolHub.logStorer.append(_name, level, tag, tag1, tag2, tag3, summary, content, Config.localHost);
+    private void writeDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        ProtocolHub.logStorer.write(_name, level, tag, tag1, tag2, tag3, summary, content, Config.localHost);
     }
 }

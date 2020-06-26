@@ -34,7 +34,7 @@ public class CMD_log_add extends CMDBase {
 
         String from = get("from");
 
-        ProtocolHub.logStorer.append(logger, Level.of(level), tag, tag1, tag2, tag3, summary, content, from);
+        ProtocolHub.logStorer.write(logger, Level.of(level), tag, tag1, tag2, tag3, summary, content, from);
         data.set("code", 1);
         data.set("msg", "success");
     }

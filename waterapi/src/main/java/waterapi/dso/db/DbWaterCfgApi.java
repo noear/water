@@ -1,8 +1,9 @@
 package waterapi.dso.db;
 
+import org.noear.water.model.ConfigM;
+import org.noear.water.protocol.model.LoggerModel;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import waterapi.models.LoggerModel;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
 import waterapi.models.ConfigModel;
@@ -47,12 +48,20 @@ public class DbWaterCfgApi {
                 .getList(new ConfigModel());
     }
 
-    public static ConfigModel getConfig(String tag, String key) throws SQLException {
-        return db().table("water_cfg_properties")
-                .where("tag=? AND `key`=?", tag, key)
-                .select("*")
-                .caching(CacheUtils.data)
-                .getItem(new ConfigModel());
+    public static ConfigM getConfigM(String tag, String key) {
+        return getConfig(tag,key).toConfigM();
+    }
+
+    public static ConfigModel getConfig(String tag, String key) {
+        try {
+            return db().table("water_cfg_properties")
+                    .where("tag=? AND `key`=?", tag, key)
+                    .select("*")
+                    .caching(CacheUtils.data)
+                    .getItem(new ConfigModel());
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     public static void setConfig(String tag, String key, String value) throws SQLException {
@@ -140,13 +149,15 @@ public class DbWaterCfgApi {
     }
 
 
-    public static LoggerModel getLogger(String logger) throws SQLException {
-
-        return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
-                .select("*")
-                .caching(CacheUtils.data)
-                .getItem(new LoggerModel());
-
+    public static LoggerModel getLogger(String logger) {
+        try {
+            return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
+                    .select("*")
+                    .caching(CacheUtils.data)
+                    .getItem(LoggerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 
     public static boolean hasGateway(String name) {
