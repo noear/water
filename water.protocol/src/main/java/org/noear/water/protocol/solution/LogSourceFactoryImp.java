@@ -22,14 +22,6 @@ public class LogSourceFactoryImp implements ILogSourceFactory {
         _loggerGetter = loggerGetter;
     }
 
-    private ILogSource build(ConfigM cfg) {
-        if (cfg == null || TextUtils.isEmpty(cfg.value)) {
-            return null;
-        }
-
-        //String type = cfg.getProp().getProperty(WW.type_logger);
-        return new LogSourceDb(cfg.getDb(true));
-    }
 
     @Override
     public ILogSource getSource(String logger) {
@@ -44,7 +36,7 @@ public class LogSourceFactoryImp implements ILogSourceFactory {
 
                     if (model != null && TextUtils.isEmpty(model.source) == false) {
                         ConfigM cfg = ProtocolHub.config.getByTagKey(model.source);
-                        log = build(cfg);
+                        log = ProtocolUtil.createLogSource(cfg);
                     }
                 }
 
