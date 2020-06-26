@@ -10,7 +10,9 @@ import org.noear.water.utils.TextUtils;
 import java.util.Properties;
 
 public class ProtocolUtil {
-    public static IMessageQueue createMessageQueue(Properties prop){
+    public static IMessageQueue createMessageQueue(ConfigM cfg){
+        Properties prop = cfg.getProp();
+
         String name = prop.getProperty("queue.name","").toLowerCase();
         String type = prop.getProperty("queue.type","").toLowerCase();
 

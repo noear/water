@@ -27,7 +27,7 @@ public final class ProtocolHub {
         synchronized (messageQueueMap) {
             IMessageQueue tmp = messageQueueMap.get(cfg.value);
             if (tmp == null) {
-                tmp = ProtocolUtil.createMessageQueue(cfg.getProp());
+                tmp = ProtocolUtil.createMessageQueue(cfg);
                 messageQueueMap.put(cfg.value, tmp);
             }
 
