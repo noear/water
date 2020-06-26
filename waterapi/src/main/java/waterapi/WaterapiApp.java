@@ -40,6 +40,7 @@ public class WaterapiApp {
 				Config.tryInit(app.port(), app.prop().getProp("water.dataSource"));
 
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
+
 				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
 				ProtocolHub.logStorer = new LogStorerImp(IDUtils::buildLogID);
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);

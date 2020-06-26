@@ -20,6 +20,7 @@ public class WateradminApp {
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;
+
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
             ProtocolHub.logQuerier = new LogQuerierImp();
         });

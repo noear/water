@@ -38,6 +38,7 @@ public class WatersevApp {
             Config.tryInit();
 
             ProtocolHub.config = WaterClient.Config::get;
+
             ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
             ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
             ProtocolHub.heihei = new HeiheiDefault(new WaterLogger());
