@@ -42,7 +42,7 @@ public class WaterapiApp {
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
 
 				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
-				ProtocolHub.logStorer = new LogStorerImp(IDUtils::buildMsgID);
+				ProtocolHub.logStorer = new LogStorerImp(IDUtils::buildLogID);
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 				ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 				ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());

@@ -2,6 +2,7 @@ package watersev;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
+import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.solonjt.dso.*;
 import org.noear.water.WaterClient;
@@ -28,7 +29,7 @@ public class WatersevApp {
         boolean has_server_port = xMap.containsKey("server.port");
 
 
-        JobRunner.global = new JobRunnerEx(xMap.get("sss"));
+        JobRunner.global = null;
         JtRun.init();
 
         XApp.start(WatersevApp.class, xMap, (x) -> {
@@ -51,5 +52,8 @@ public class WatersevApp {
         });
 
         JtRun.xfunInit();
+
+        JobRunner.global = new JobRunnerEx(xMap.get("sss"));
+        JobFactory.run(JobRunner.global);
     }
 }
