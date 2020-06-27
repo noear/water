@@ -17,8 +17,8 @@ public class MessageQueueRedis implements MessageQueue {
     }
 
     @Override
-    public boolean push(String msg) {
-        _redisX.open0((rs) -> rs.key(_queue_name).listAdd(msg));
+    public boolean push(String msg_id) {
+        _redisX.open0((rs) -> rs.key(_queue_name).listAdd(msg_id));
         return true;
     }
 

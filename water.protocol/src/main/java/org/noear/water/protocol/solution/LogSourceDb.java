@@ -50,10 +50,10 @@ public class LogSourceDb implements LogSource {
     }
 
     @Override
-    public void write(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
+    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
         try {
             _db.table(logger).usingExpr(true)
-                    .set("log_id", IDUtils.buildLogID())
+                    .set("log_id", log_id)
                     .set("level", level.code)
                     .setDf("tag", tag, "")
                     .setDf("tag1", tag1, "")

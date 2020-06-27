@@ -9,7 +9,7 @@ public interface MessageQueue extends AutoCloseable {
     /**
      * 添加一个消息
      * */
-    boolean push(String msg) ;
+    boolean push(String msg_id) ;
 
 
     /**

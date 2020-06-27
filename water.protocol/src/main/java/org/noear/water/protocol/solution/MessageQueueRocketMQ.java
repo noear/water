@@ -88,12 +88,12 @@ public class MessageQueueRocketMQ implements MessageQueue {
     }
 
     @Override
-    public boolean push(String msg) {
+    public boolean push(String msg_id) {
         initProducer();
 
         try {
-            Message msgX = new Message(_queue_name, msg.getBytes());
-            msgX.setKeys(msg);
+            Message msgX = new Message(_queue_name, msg_id.getBytes());
+            msgX.setKeys(msg_id);
             SendResult send = producer.send(msgX);
 
             if (send.getSendStatus().equals(SendStatus.SEND_OK)) {

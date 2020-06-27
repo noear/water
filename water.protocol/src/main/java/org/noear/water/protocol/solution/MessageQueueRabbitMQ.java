@@ -78,10 +78,10 @@ public class MessageQueueRabbitMQ implements MessageQueue {
     }
 
     @Override
-    public boolean push(String msg) {
+    public boolean push(String msg_id) {
         _rabbitX.open0(channel -> {
             // 设置消息属性 发布消息 (exchange:交换机名, Routing key, props:消息属性, body:消息体);
-            channel.basicPublish(rabbit_exchangeName, rabbit_routingKey, false, rabbit_msgProps, msg.getBytes());
+            channel.basicPublish(rabbit_exchangeName, rabbit_routingKey, false, rabbit_msgProps, msg_id.getBytes());
         });
         return true;
     }

@@ -5,15 +5,13 @@ import org.noear.water.protocol.LogStorer;
 import org.noear.water.protocol.ProtocolHub;
 
 public class LogStorerImp implements LogStorer {
-
-
     public LogStorerImp() {
     }
 
 
     @Override
-    public void write(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
+    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
         ProtocolHub.logSourceFactory.getSource(logger)
-                .write(logger, level, tag, tag1, tag2, tag3, summary, content, from);
+                .write(log_id, logger, level, tag, tag1, tag2, tag3, summary, content, from);
     }
 }
