@@ -3,6 +3,7 @@ package wateradmin;
 import org.noear.solon.XApp;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.LogSourceDef;
@@ -21,6 +22,7 @@ public class WateradminApp {
             ProtocolHub.config = WaterClient.Config::get;
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
+            ProtocolHub.logQuerier = new LogQuerierImp();
         });
     }
 }

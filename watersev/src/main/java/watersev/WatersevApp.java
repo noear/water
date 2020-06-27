@@ -6,7 +6,7 @@ import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.solonjt.dso.*;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
-import org.noear.water.protocol.solution.HeiheiDefault;
+import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import solonjt.JtRun;
@@ -41,7 +41,7 @@ public class WatersevApp {
 
             ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
             ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
-            ProtocolHub.heihei = new HeiheiDefault(new WaterLogger());
+            ProtocolHub.heihei = new HeiheiImp(new WaterLogger());
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);

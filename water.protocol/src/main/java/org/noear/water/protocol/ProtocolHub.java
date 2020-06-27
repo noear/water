@@ -17,8 +17,8 @@ public final class ProtocolHub {
     public static Config config;
 
     public static LogSourceFactory logSourceFactory;
-    public static final LogStorer logStorer = new LogStorerImp();
-    public static final LogQuerier logQuerier = new LogQuerierImp();
+    public static LogQuerier logQuerier;
+    public static LogStorer logStorer;
 
     public static MessageLock messageLock;
     public static MessageQueue messageQueue;

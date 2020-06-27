@@ -5,7 +5,7 @@ import org.noear.solon.core.XMap;
 import org.noear.solon.core.XMethod;
 import org.noear.solon.extend.staticfiles.XStaticFiles;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.solution.HeiheiDefault;
+import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
@@ -42,9 +42,10 @@ public class WaterapiApp {
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
 
 				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
+				ProtocolHub.logStorer = new LogStorerImp(IDUtils::buildMsgID);
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 				ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
-				ProtocolHub.heihei = new HeiheiDefault(new WaterLoggerLocal());
+				ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 			});
 		}
 
