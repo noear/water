@@ -10,8 +10,14 @@ public class LogStorerImp implements LogStorer {
 
 
     @Override
-    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
+    public void write(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
         ProtocolHub.logSourceFactory.getSource(logger)
-                .write(log_id, logger, level, tag, tag1, tag2, tag3, summary, content, from);
+                .write(buildId(), logger, level, tag, tag1, tag2, tag3, summary, content, from);
     }
+
+    @Override
+    public long buildId() {
+        return 0;
+    }
+
 }
