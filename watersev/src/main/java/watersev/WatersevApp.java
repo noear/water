@@ -22,7 +22,7 @@ import watersev.dso.JobRunnerEx;
  *
  * */
 public class WatersevApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         XMap xMap = XMap.from(args);
 
         //是否有端口
@@ -52,6 +52,8 @@ public class WatersevApp {
         });
 
         JtRun.xfunInit();
+
+        Thread.sleep(500);
 
         JobRunner.global = new JobRunnerEx(xMap.get("sss"));
         JobFactory.run(JobRunner.global);

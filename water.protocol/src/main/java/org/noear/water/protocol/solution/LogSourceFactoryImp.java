@@ -50,4 +50,9 @@ public class LogSourceFactoryImp implements LogSourceFactory {
 
         return log;
     }
+
+    @Override
+    public LoggerModel getLogger(String logger) {
+        return _loggerGetter.run(logger);
+    }
 }
