@@ -29,7 +29,7 @@ public class WatersevApp {
         boolean has_server_port = xMap.containsKey("server.port");
 
 
-        JobRunner.global = null;
+        JobRunner.global = new JobRunnerEx(xMap.get("sss"));
         JtRun.init();
 
         XApp.start(WatersevApp.class, xMap, (x) -> {
@@ -52,10 +52,5 @@ public class WatersevApp {
         });
 
         JtRun.xfunInit();
-
-        Thread.sleep(500);
-
-        JobRunner.global = new JobRunnerEx(xMap.get("sss"));
-        JobFactory.run(JobRunner.global);
     }
 }
