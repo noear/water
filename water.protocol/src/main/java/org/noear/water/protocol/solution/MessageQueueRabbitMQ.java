@@ -1,9 +1,8 @@
 package org.noear.water.protocol.solution;
 
 import com.rabbitmq.client.*;
-import org.noear.water.protocol.IMessageQueue;
+import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.RabbitMQX;
-import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Act1;
 
 import java.util.HashMap;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 /**
  * 基于 RabbitMQ 适配队列
  * */
-public class MessageQueueRabbitMQ implements IMessageQueue {
+public class MessageQueueRabbitMQ implements MessageQueue {
 
     final RabbitMQX _rabbitX;
 

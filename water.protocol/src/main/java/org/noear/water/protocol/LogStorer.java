@@ -2,9 +2,7 @@ package org.noear.water.protocol;
 
 import org.noear.water.log.Level;
 
-public interface ILogStorer {
-    long buildId();
-
+public interface LogStorer {
     default void write(String logger, Level level, Object content, String from) {
         write(logger, level, null, null, content, from);
     }

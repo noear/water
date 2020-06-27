@@ -2,15 +2,14 @@ package org.noear.water.protocol.solution;
 
 import org.noear.snack.ONode;
 import org.noear.water.log.Logger;
-import org.noear.water.log.LoggerFactory;
-import org.noear.water.protocol.IHeihei;
+import org.noear.water.protocol.Heihei;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.*;
 
-public class HeiheiDefault implements IHeihei {
+public class HeiheiDefault implements Heihei {
     protected String apiUrl = "https://api.jpush.cn/v3/push";
     protected String masterSecret = "4a8cd168ca71dabcca306cac";
     protected String appKey = "af9a9da3c73d23aa30ea4af1";

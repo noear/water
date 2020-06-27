@@ -1,9 +1,9 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.protocol.IMessageLock;
+import org.noear.water.protocol.MessageLock;
 import org.noear.water.utils.RedisX;
 
-public class MessageLockRedis implements IMessageLock {
+public class MessageLockRedis implements MessageLock {
     RedisX _redisX = null;
     int _seconds = 30;
     String _lockKey = "water_message_lock_";

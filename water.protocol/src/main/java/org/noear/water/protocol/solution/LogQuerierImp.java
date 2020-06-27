@@ -1,12 +1,12 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.protocol.ILogQuerier;
+import org.noear.water.protocol.LogQuerier;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.LogModel;
 
 import java.util.List;
 
-public class LogQuerierImp implements ILogQuerier {
+public class LogQuerierImp implements LogQuerier {
     public LogQuerierImp() {
 
     }

@@ -1,8 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.water.log.Level;
-import org.noear.water.protocol.ILogSource;
-import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.LogModel;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -10,7 +9,7 @@ import org.noear.weed.DbContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogSourceDb implements ILogSource {
+public class LogSourceDb implements LogSource {
     DbContext _db;
 
     public LogSourceDb(DbContext db) {
@@ -52,15 +51,9 @@ public class LogSourceDb implements ILogSource {
 
     @Override
     public void write(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
-        long log_id = ProtocolHub.logStorer.buildId();
-
-        if (log_id < 1) {
-            throw new RuntimeException("LogSourceDb::Please adapt the ID builder");
-        }
-
         try {
             _db.table(logger).usingExpr(true)
-                    .set("log_id", log_id)
+                    .set("log_id", IDUtils.buildLogID())
                     .set("level", level.code)
                     .setDf("tag", tag, "")
                     .setDf("tag1", tag1, "")

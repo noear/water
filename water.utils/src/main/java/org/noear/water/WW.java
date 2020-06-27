@@ -1,6 +1,11 @@
 package org.noear.water;
 
 public class WW {
+    public static final String WATER_ID = "WATER_ID";
+    public static final String WATER_ID_HOUR = "WATER_ID_HOUR";
+    public static final String WATER_ID_DATE = "WATER_ID_DATE";
+
+
     public static final String http_header_from = "Water-From";
 
     public static final String msg_ucache_topic = "water.cache.update";

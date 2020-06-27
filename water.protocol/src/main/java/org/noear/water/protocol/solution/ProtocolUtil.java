@@ -1,8 +1,8 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.water.model.ConfigM;
-import org.noear.water.protocol.ILogSource;
-import org.noear.water.protocol.IMessageQueue;
+import org.noear.water.protocol.LogSource;
+import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.RabbitMQX;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -10,7 +10,7 @@ import org.noear.water.utils.TextUtils;
 import java.util.Properties;
 
 public class ProtocolUtil {
-    public static IMessageQueue createMessageQueue(ConfigM cfg){
+    public static MessageQueue createMessageQueue(ConfigM cfg){
         Properties prop = cfg.getProp();
 
         String name = prop.getProperty("queue.name","").toLowerCase();
@@ -44,7 +44,7 @@ public class ProtocolUtil {
         throw new RuntimeException("ProtocolHub::There was an error in the input configuration");
     }
 
-    public static ILogSource createLogSource(ConfigM cfg){
+    public static LogSource createLogSource(ConfigM cfg){
         if (cfg == null || TextUtils.isEmpty(cfg.value)) {
             return null;
         }

@@ -9,23 +9,23 @@ import org.noear.water.utils.ext.Fun1;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogSourceFactoryImp implements ILogSourceFactory {
+public class LogSourceFactoryImp implements LogSourceFactory {
     private static String _lock = "";
 
-    private ILogSource _def;
+    private LogSource _def;
     private Fun1<String, LoggerModel> _loggerGetter;
 
-    private Map<String, ILogSource> _logMap = new HashMap<>();
+    private Map<String, LogSource> _logMap = new HashMap<>();
 
-    public LogSourceFactoryImp(ILogSource def, Fun1<String, LoggerModel> loggerGetter) {
+    public LogSourceFactoryImp(LogSource def, Fun1<String, LoggerModel> loggerGetter) {
         _def = def;
         _loggerGetter = loggerGetter;
     }
 
 
     @Override
-    public ILogSource getSource(String logger) {
-        ILogSource log = _logMap.get(logger);
+    public LogSource getSource(String logger) {
+        LogSource log = _logMap.get(logger);
 
         if (log == null) {
             synchronized (_lock) {

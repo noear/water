@@ -1,13 +1,13 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.protocol.IMessageQueue;
+import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.ext.Act1;
 
 /**
  * 基于 Redis 适配队列
  * */
-public class MessageQueueRedis implements IMessageQueue {
+public class MessageQueueRedis implements MessageQueue {
     RedisX _redisX = null;
     String _queue_name;
 

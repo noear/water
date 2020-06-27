@@ -5,7 +5,7 @@ import org.noear.water.utils.ext.Act1;
 /**
  * 消息队列接口（发到队列里的消息，是原消息ID）
  * */
-public interface IMessageQueue extends AutoCloseable {
+public interface MessageQueue extends AutoCloseable {
     /**
      * 添加一个消息
      * */

@@ -6,7 +6,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
-import org.noear.water.protocol.IMessageQueue;
+import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.ext.Act1;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Properties;
  * https://segmentfault.com/a/1190000021240352?utm_source=tag-newest
  *
  * */
-public class MessageQueueRocketMQ implements IMessageQueue {
+public class MessageQueueRocketMQ implements MessageQueue {
     String _queue_name;
     final String group_name = "water_message";
     final String server;

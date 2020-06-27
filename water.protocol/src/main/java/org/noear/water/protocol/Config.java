@@ -2,7 +2,7 @@ package org.noear.water.protocol;
 
 import org.noear.water.model.ConfigM;
 
-public interface IConfig {
+public interface Config {
     default ConfigM getByTagKey(String tagKey) {
         String[] ss = tagKey.split("/");
         return get(ss[0], ss[1]);
