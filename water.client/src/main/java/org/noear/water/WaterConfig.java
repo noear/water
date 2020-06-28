@@ -2,6 +2,8 @@ package org.noear.water;
 
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,6 +37,7 @@ public class WaterConfig {
     }
 
     public static final ExecutorService pools = Executors.newCachedThreadPool();
+    public static final ICacheServiceEx cacheLocal = new LocalCache();
 
     private static final String lock = "";
     private static ConfigM _redis_cfg;

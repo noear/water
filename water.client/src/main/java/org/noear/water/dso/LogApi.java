@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
@@ -91,6 +92,17 @@ public class LogApi {
      * @param async   是否异步提交
      */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
+        if(async){
+            WaterConfig.pools.execute(() -> {
+                appendDo(logger,level,tag,tag1,tag2,tag3,summary,content,async);
+            });
+        }else{
+            appendDo(logger,level,tag,tag1,tag2,tag3,summary,content,async);
+        }
+
+    }
+
+    private void appendDo(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         if(TextUtils.isEmpty(logger)){
             return;
         }
@@ -143,11 +155,11 @@ public class LogApi {
         }
 
         try {
-            if (async) {
-                CallUtil.postAsync("log/add/", params);
-            } else {
+//            if (async) {
+//                CallUtil.postAsync("log/add/", params);
+//            } else {
                 CallUtil.post("log/add/", params);
-            }
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

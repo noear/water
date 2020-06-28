@@ -1,5 +1,8 @@
 package org.noear.water.dso;
 
+import org.noear.water.WaterConfig;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,15 +35,24 @@ public class WhitelistApi {
      * @param type  类型(ip,mobile,host)
      * @param value 值
      */
-    private boolean checkDo(String tags, String type, String value) {
+    private String checkDo0(String tags, String type, String value) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("tags", tags);
         params.put("type", type);
         params.put("value", value);
 
+        return CallUtil.post("run/whitelist/check/", params);
+    }
+
+    private boolean checkDo(String tags, String type, String value) {
+        //
+        //增加本地缓存
+        //
+        String cache_key = new StringBuilder(100).append(tags).append("_").append(type).append("_").append(value).toString();
         try {
-            return "OK".equals(CallUtil.post("run/whitelist/check/", params));
-        } catch (Exception ex) {
+            String val = WaterConfig.cacheLocal.getBy(10, cache_key, (us) -> checkDo0(tags, type, value));
+            return "OK".equals(val);
+        }catch (Exception ex){
             ex.printStackTrace();
             return false;
         }
