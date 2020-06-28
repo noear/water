@@ -20,7 +20,7 @@ public class ConfigUtils {
                 global = (ConfigUtils) tmp;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println("Not found: org.noear.water.solon_plugin.ConfigUtilsEx");
         }
     }
 
