@@ -13,6 +13,10 @@ public class JobRunnerEx extends JobRunner {
 
     @Override
     public boolean allow(JobEntity task) {
+        if("chk".equals(task.getName())){
+            return true;
+        }
+
         boolean is_ok = (TextUtils.isEmpty(sss) || sss.indexOf(task.getName()) >= 0);
 
         if(is_ok == false) {
@@ -20,12 +24,6 @@ public class JobRunnerEx extends JobRunner {
                 is_ok = ("zan,sub,sev,syn,mot".indexOf(task.getName()) >= 0);
             }
         }
-
-//        if(is_ok){
-//            System.out.println("#Task(" + task.getName() + ") allow=true");
-//        }else{
-//            System.err.println("#Task(" + task.getName() + ") allow=false");
-//        }
 
         return is_ok;
     }

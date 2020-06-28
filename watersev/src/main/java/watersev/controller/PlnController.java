@@ -47,6 +47,8 @@ public class PlnController implements IJob {
 
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
+        System.out.println("查到任务数：" + list.size());
+
         for (PaasFileModel task : list) {
             CallUtil.asynCall(() -> {
                 doExec(task);

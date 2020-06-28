@@ -6,6 +6,7 @@ import watersev.Config;
 import watersev.models.water_paas.PaasFileModel;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public final class DbWaterPaasApi {
@@ -17,19 +18,17 @@ public final class DbWaterPaasApi {
     //计划任务
     //
     public static List<PaasFileModel> getPlanList() throws SQLException {
-        return
-                Config.water.table("paas_file")
-                        .whereEq("file_type",1).and("is_disabled=0")
+        return db().table("paas_file")
+                        .whereEq("file_type", 1).and("is_disabled=0")
                         .select("*")
                         .getList(new PaasFileModel());
     }
 
     public static void setPlanState(PaasFileModel plan, int state, String note) throws SQLException {
 
-        DbTableQuery qr = Config.water.table("paas_file");
+        DbTableQuery qr = db().table("paas_file");
 
         if (state == 9) {
-            //确定执行时间
             if (plan.plan_last_time != null) {
                 plan.plan_last_timespan = System.currentTimeMillis() - plan.plan_last_time.getTime();
 
@@ -59,7 +58,7 @@ public final class DbWaterPaasApi {
     }
 
     public static void resetPlanState() throws SQLException {
-        Config.water.table("paas_file")
+        db().table("paas_file")
                 .set("plan_state", 9)
                 .where("plan_state=?", 2)
                 .update();
