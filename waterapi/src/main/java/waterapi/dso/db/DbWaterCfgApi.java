@@ -153,7 +153,7 @@ public class DbWaterCfgApi {
         try {
             return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
                     .select("*")
-                    .caching(CacheUtils.data)
+                    .caching(CacheUtils.data).usingCache(60)
                     .getItem(LoggerModel.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
