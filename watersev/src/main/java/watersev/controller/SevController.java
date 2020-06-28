@@ -100,9 +100,9 @@ public final class SevController implements IJob {
                 DbWaterRegApi.udpService1(sev.service_id, sev, 1);
 
                 if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
-                    //报警，10秒一次
+                    //报警，30秒一次
                     //
-                    if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 10)) {
+                    if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 30)) {
                         AlarmUtil.tryAlarm(sev, false, 0);
                     }
                 }
