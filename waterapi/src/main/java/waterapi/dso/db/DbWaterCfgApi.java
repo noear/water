@@ -1,12 +1,12 @@
 package waterapi.dso.db;
 
 import org.noear.water.model.ConfigM;
-import org.noear.water.protocol.model.LoggerModel;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
 import waterapi.models.ConfigModel;
+import waterapi.models.LoggerModelEx;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -149,12 +149,12 @@ public class DbWaterCfgApi {
     }
 
 
-    public static LoggerModel getLogger(String logger) {
+    public static LoggerModelEx getLogger(String logger) {
         try {
             return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
                     .select("*")
                     .caching(CacheUtils.data).usingCache(60)
-                    .getItem(LoggerModel.class);
+                    .getItem(LoggerModelEx.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }

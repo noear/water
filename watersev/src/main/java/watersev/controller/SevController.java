@@ -4,8 +4,10 @@ import org.noear.solon.annotation.XBean;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
+import watersev.Config;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterCfgApi;
@@ -81,6 +83,7 @@ public final class SevController implements IJob {
             //对签到型的服务进行检查 (10s内，是否有签到过)
             //
             DbWaterRegApi.udpService1(sev.service_id, sev, 0);
+
             if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                 AlarmUtil.tryAlarm(sev, true, 0);
             }
@@ -91,9 +94,17 @@ public final class SevController implements IJob {
                 //
                 DbWaterRegApi.delService(sev.service_id);
             } else {
+                //
+                // 如果稳定服务，则提示出错
+                //
                 DbWaterRegApi.udpService1(sev.service_id, sev, 1);
+
                 if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
-                    AlarmUtil.tryAlarm(sev, false, 0);
+                    //报警，10秒一次
+                    //
+                    if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 10)) {
+                        AlarmUtil.tryAlarm(sev, false, 0);
+                    }
                 }
             }
         }

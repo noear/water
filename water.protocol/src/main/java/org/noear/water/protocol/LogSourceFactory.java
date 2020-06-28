@@ -1,8 +1,8 @@
 package org.noear.water.protocol;
 
-import org.noear.water.protocol.model.LoggerModel;
+import org.noear.water.protocol.model.LoggerMeta;
 
 public interface LogSourceFactory {
     LogSource getSource(String logger);
-    LoggerModel getLogger(String logger);
+    LoggerMeta getLogger(String logger);
 }

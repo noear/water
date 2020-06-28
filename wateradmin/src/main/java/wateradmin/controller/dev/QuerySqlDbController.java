@@ -107,7 +107,7 @@ public class QuerySqlDbController extends BaseController {
        String db = code.split("::")[0];
        String sql = code.split("::")[1];
 
-       if(db.indexOf("water/")>=0){
+       if(db.indexOf("water/water")>=0 && sql.toLowerCase().indexOf("water_cfg_properties") > 0){
            return "只支持业务库查询";
        }
 

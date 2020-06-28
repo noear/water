@@ -2,7 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.*;
-import org.noear.water.protocol.model.LoggerModel;
+import org.noear.water.protocol.model.LoggerMeta;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
@@ -13,11 +13,11 @@ public class LogSourceFactoryImp implements LogSourceFactory {
     private static String _lock = "";
 
     private LogSource _def;
-    private Fun1<String, LoggerModel> _loggerGetter;
+    private Fun1<String, LoggerMeta> _loggerGetter;
 
     private Map<String, LogSource> _logMap = new HashMap<>();
 
-    public LogSourceFactoryImp(LogSource def, Fun1<String, LoggerModel> loggerGetter) {
+    public LogSourceFactoryImp(LogSource def, Fun1<String, LoggerMeta> loggerGetter) {
         _def = def;
         _loggerGetter = loggerGetter;
     }
@@ -32,10 +32,10 @@ public class LogSourceFactoryImp implements LogSourceFactory {
                 log = _logMap.get(logger);
 
                 if (log == null) {
-                    LoggerModel model = _loggerGetter.run(logger);
+                    LoggerMeta model = _loggerGetter.run(logger);
 
-                    if (model != null && TextUtils.isEmpty(model.source) == false) {
-                        ConfigM cfg = ProtocolHub.config.getByTagKey(model.source);
+                    if (model != null && TextUtils.isEmpty(model.getSource()) == false) {
+                        ConfigM cfg = ProtocolHub.config.getByTagKey(model.getSource());
                         log = ProtocolUtil.createLogSource(cfg);
                     }
                 }
@@ -52,7 +52,7 @@ public class LogSourceFactoryImp implements LogSourceFactory {
     }
 
     @Override
-    public LoggerModel getLogger(String logger) {
+    public LoggerMeta getLogger(String logger) {
         return _loggerGetter.run(logger);
     }
 }

@@ -3,7 +3,7 @@ package org.noear.water.protocol.solution;
 import org.noear.water.protocol.LogQuerier;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.LogModel;
-import org.noear.water.protocol.model.LoggerModel;
+import org.noear.water.protocol.model.LoggerMeta;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class LogQuerierImp implements LogQuerier {
 
     @Override
     public void clear(String logger) {
-        LoggerModel mod = ProtocolHub.logSourceFactory.getLogger(logger);
+        LoggerMeta mod = ProtocolHub.logSourceFactory.getLogger(logger);
 
         ProtocolHub.logSourceFactory.getSource(logger)
-                .clear(logger, mod.keep_days);
+                .clear(logger, mod.getKeepDays());
     }
 }
