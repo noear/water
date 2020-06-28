@@ -11,7 +11,7 @@ import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ConfigType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
-import wateradmin.models.water_cfg.LoggerModelEx;
+import wateradmin.models.water_cfg.LoggerModel;
 import wateradmin.models.water_cfg.WhitelistModel;
 
 import java.sql.SQLException;
@@ -25,7 +25,7 @@ public class DbWaterCfgApi {
         return Config.water;
     }
 
-    public static List<LoggerModelEx> getLoggerByTag(String tag) throws Exception {
+    public static List<LoggerModel> getLoggerByTag(String tag) throws Exception {
         return db().table("water_cfg_logger")
                 .where("is_enabled=1")
                 .build(tb -> {
@@ -35,17 +35,17 @@ public class DbWaterCfgApi {
                 })
                 .orderBy("logger asc")
                 .select("*")
-                .getList(LoggerModelEx.class);
+                .getList(LoggerModel.class);
     }
 
     //
-    public static LoggerModelEx getLogger(String logger) {
+    public static LoggerModel getLogger(String logger) {
         try {
             return db().table("water_cfg_logger")
                     .where("logger = ?", logger)
                     .limit(1)
                     .select("*")
-                    .getItem(LoggerModelEx.class);
+                    .getItem(LoggerModel.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
@@ -449,7 +449,7 @@ public class DbWaterCfgApi {
     }
 
     //根据tag获取列表。
-    public static List<LoggerModelEx> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+    public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
         return db().table("water_cfg_logger")
                 .where("tag = ?", tag_name)
                 .and("is_enabled = ?",is_enabled)
@@ -461,17 +461,17 @@ public class DbWaterCfgApi {
                     }
                 })
                 .select("*")
-                .getList(LoggerModelEx.class);
+                .getList(LoggerModel.class);
 
     }
 
     //根据id获取logger。
-    public static LoggerModelEx getLogger(Integer logger_id) throws Exception {
+    public static LoggerModel getLogger(Integer logger_id) throws Exception {
         return db().table("water_cfg_logger")
                 .where("logger_id=?", logger_id)
                 .limit(1)
                 .select("*")
-                .getItem(LoggerModelEx.class);
+                .getItem(LoggerModel.class);
     }
 
     //设置logger。

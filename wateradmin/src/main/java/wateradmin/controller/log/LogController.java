@@ -12,7 +12,7 @@ import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_cfg.LoggerModelEx;
+import wateradmin.models.water_cfg.LoggerModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class LogController extends BaseController {
     @XMapping("query/inner")
     public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
 
-        List<LoggerModelEx> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
+        List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
         if(TextUtils.isEmpty(logger)) {
             logger = ctx.cookie("wateradmin_log__tag_" + tag_name);
@@ -78,7 +78,7 @@ public class LogController extends BaseController {
         }
 
         if (!TextUtils.isEmpty(logger)) {
-            LoggerModelEx log = DbWaterCfgApi.getLogger(logger);
+            LoggerModel log = DbWaterCfgApi.getLogger(logger);
 
             try {
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tag, tag1, tag2, tag3, log_date, log_id);

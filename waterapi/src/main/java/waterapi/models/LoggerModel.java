@@ -2,7 +2,7 @@ package waterapi.models;
 
 import org.noear.water.protocol.model.LoggerMeta;
 
-public class LoggerModelEx implements LoggerMeta {
+public class LoggerModel implements LoggerMeta {
     public String tag;
     public String logger;
     public String source;

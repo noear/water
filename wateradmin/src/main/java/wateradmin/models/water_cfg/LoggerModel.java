@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.noear.water.protocol.model.LoggerMeta;
 
 @Getter
-public class LoggerModelEx implements LoggerMeta
+public class LoggerModel implements LoggerMeta
 {
     public int logger_id;
     public String tag;

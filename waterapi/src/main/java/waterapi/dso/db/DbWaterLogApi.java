@@ -6,7 +6,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.dso.IDUtils;
 import waterapi.Config;
-import waterapi.models.LoggerModelEx;
+import waterapi.models.LoggerModel;
 
 import java.sql.SQLException;
 
@@ -20,7 +20,7 @@ public final class DbWaterLogApi {
 
 
     public static DbContext loggerSource(String logger) throws SQLException {
-        LoggerModelEx cfg = DbWaterCfgApi.getLogger(logger);
+        LoggerModel cfg = DbWaterCfgApi.getLogger(logger);
 
         return DbWaterCfgApi.getDbContext(cfg.source, Config.water_log);
     }
