@@ -117,7 +117,7 @@
             </tr>
             <tr>
                 <th>保留天数</th>
-                <td><input type="text" id="keep_days" value="${log.keep_days!}"/></td>
+                <td><input type="text" id="keep_days" value="${log.keep_days!30}"/></td>
             </tr>
             <tr>
                 <th>数据源</th>
