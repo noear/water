@@ -3,12 +3,10 @@ package org.noear.water.dso;
 import org.noear.snack.ONode;
 import org.noear.water.model.ConfigM;
 import org.noear.water.model.ConfigSetM;
+import org.noear.water.utils.ext.Act1;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 配置服务接口
@@ -16,6 +14,7 @@ import java.util.Properties;
 public class ConfigApi {
 
     private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
+    private Map<String, Set<Act1<ConfigSetM>>> _event = new HashMap<>();
 
     /**
      * 重新加载一个tag的配置
@@ -60,6 +59,13 @@ public class ConfigApi {
         }
 
         _cfgs.put(tag, cfgSet);
+
+        Set<Act1<ConfigSetM>> tmp = _event.get(tag);
+        if (tmp != null) {
+            for (Act1<ConfigSetM> r : tmp) {
+                r.run(cfgSet);
+            }
+        }
     }
 
 
@@ -88,6 +94,16 @@ public class ConfigApi {
         load(tag);
 
         return _cfgs.get(tag).get(key);
+    }
+
+    public void subscribe(String tag, Act1<ConfigSetM> callback){
+        Set<Act1<ConfigSetM>> tmp = _event.get(tag);
+        if(tmp == null){
+            tmp = new HashSet<>();
+            _event.put(tag, tmp);
+        }
+
+        tmp.add(callback);
     }
 
 

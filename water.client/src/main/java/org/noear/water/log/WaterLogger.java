@@ -2,7 +2,6 @@ package org.noear.water.log;
 
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
-import org.slf4j.impl.WaterLoggerFactory;
 
 public class WaterLogger implements Logger {
     public static WaterLogger get(String name) {
@@ -12,6 +11,12 @@ public class WaterLogger implements Logger {
     public static WaterLogger get(String name, Class<?> clz) {
         return new WaterLogger(name, clz);
     }
+
+    private static volatile Level level = Level.TRACE;
+    public static void setLevel(Level level){
+        WaterLogger.level = level;
+    }
+
 
     private String _name;
     private String _tag;
@@ -47,7 +52,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isTraceEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.TRACE.code;
+        return level.code <= Level.TRACE.code;
     }
 
 
@@ -89,7 +94,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isDebugEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.DEBUG.code;
+        return level.code <= Level.DEBUG.code;
     }
 
     @Override
@@ -130,7 +135,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isInfoEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.INFO.code;
+        return level.code <= Level.INFO.code;
     }
 
     @Override
@@ -171,7 +176,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isWarnEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.WARN.code;
+        return level.code <= Level.WARN.code;
     }
 
     @Override
@@ -212,7 +217,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isErrorEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.ERROR.code;
+        return level.code <= Level.ERROR.code;
     }
 
     @Override
