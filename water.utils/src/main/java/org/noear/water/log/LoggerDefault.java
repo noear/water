@@ -1,6 +1,7 @@
 package org.noear.water.log;
 
 public class LoggerDefault implements Logger{
+
     @Override
     public String getName() {
         return null;
@@ -9,11 +10,6 @@ public class LoggerDefault implements Logger{
     @Override
     public void setName(String name) {
 
-    }
-
-    @Override
-    public boolean isTraceEnabled() {
-        return false;
     }
 
     @Override
@@ -47,11 +43,6 @@ public class LoggerDefault implements Logger{
     }
 
     @Override
-    public boolean isDebugEnabled() {
-        return false;
-    }
-
-    @Override
     public void debug(Object content) {
 
     }
@@ -79,11 +70,6 @@ public class LoggerDefault implements Logger{
     @Override
     public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
 
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return false;
     }
 
     @Override
@@ -117,11 +103,6 @@ public class LoggerDefault implements Logger{
     }
 
     @Override
-    public boolean isWarnEnabled() {
-        return false;
-    }
-
-    @Override
     public void warn(Object content) {
 
     }
@@ -149,11 +130,6 @@ public class LoggerDefault implements Logger{
     @Override
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
 
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return false;
     }
 
     @Override
