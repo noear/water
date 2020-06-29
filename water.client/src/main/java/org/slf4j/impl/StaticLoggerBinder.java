@@ -22,7 +22,7 @@ public enum  StaticLoggerBinder implements LoggerFactoryBinder {
      * StaticLoggerBinder 单例, slf4j-api 将调用该方法进行实现绑定
      *
      * @return StaticLoggerBinder实例
-     * @see LoggerFactory#bind()
+     * @see LoggerFactory #bind()
      */
     public static StaticLoggerBinder getSingleton() {
         return INSTANCE;
