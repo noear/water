@@ -131,7 +131,11 @@ public class MonitorUtils {
     public static void sync() {
         if (_redisX != null) {
             _redisX.open0((ru) -> {
-                sync0(ru);
+                try {
+                    sync0(ru);
+                } catch (Throwable ex) {
+                    ex.printStackTrace();
+                }
             });
         }
 
