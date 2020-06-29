@@ -32,12 +32,16 @@ enum WaterLoggerFactory {
         }
     }
 
+    public Disruptor<WaterLogEvent> getDisruptor(){
+        return disruptor;
+    }
+
     public WaterLogger getLogger(String name) {
-        return new WaterLogger(disruptor, name);
+        return new WaterLogger( name);
     }
 
     public WaterLogger getLogger(String name, Class<?> clz) {
-        return new WaterLogger(disruptor, name, clz);
+        return new WaterLogger(name, clz);
     }
 
     public void setLevel(Level level) {

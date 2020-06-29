@@ -22,7 +22,7 @@ public class LogApi {
     public Logger logger(String logger) {
         Logger tmp = loggerMap.get(logger);
         if (tmp == null) {
-            tmp =  WaterLogger.get(logger);
+            tmp = WaterLogger.get(logger);
             Logger l = loggerMap.putIfAbsent(logger, tmp);
             if (l != null) {
                 tmp = l;
@@ -96,15 +96,15 @@ public class LogApi {
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         if (async) {
             WaterConfig.pools.execute(() -> {
-                appendReal(logger, level, tag, tag1, tag2, tag3, summary, content, async);
+                appendReal(logger, level, tag, tag1, tag2, tag3, summary, content);
             });
         } else {
-            appendReal(logger, level, tag, tag1, tag2, tag3, summary, content, async);
+            appendReal(logger, level, tag, tag1, tag2, tag3, summary, content);
         }
 
     }
 
-    public void appendReal(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
+    public void appendReal(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }

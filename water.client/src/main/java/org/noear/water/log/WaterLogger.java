@@ -5,15 +5,11 @@ import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 
 public class WaterLogger implements Logger {
-    public static Logger get() {
-        return WaterLoggerFactory.INSTANCE.getLogger("");
-    }
-
-    public static Logger get(String name) {
+    public static WaterLogger get(String name) {
         return WaterLoggerFactory.INSTANCE.getLogger(name);
     }
 
-    public static Logger get(String name, Class<?> clz) {
+    public static WaterLogger get(String name, Class<?> clz) {
         return WaterLoggerFactory.INSTANCE.getLogger(name, clz);
     }
 
@@ -21,22 +17,22 @@ public class WaterLogger implements Logger {
     private String _tag;
     private Disruptor<WaterLogEvent> _disruptor;
 
-    protected WaterLogger(Disruptor<WaterLogEvent> disruptor) {
-        _disruptor = disruptor;
+    public WaterLogger() {
+        _disruptor = WaterLoggerFactory.INSTANCE.getDisruptor();
     }
 
-    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name) {
-        _disruptor = disruptor;
+    public WaterLogger( String name) {
+        _disruptor = WaterLoggerFactory.INSTANCE.getDisruptor();
         _name = name;
     }
 
-    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name, String tag) {
-        this(disruptor, name);
+    public WaterLogger(String name, String tag) {
+        this(name);
         _tag = tag;
     }
 
-    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name, Class<?> clz) {
-        this(disruptor, name);
+    public WaterLogger(String name, Class<?> clz) {
+        this(name);
         _tag = clz.getSimpleName();
     }
 
@@ -263,6 +259,19 @@ public class WaterLogger implements Logger {
             return;
         }
 
-        WaterClient.Log.appendReal(_name, level, tag, tag1, tag2, tag3, summary, content, false);
+        long sequence = _disruptor.getRingBuffer().next();
+        try {
+            WaterLogEvent event = _disruptor.getRingBuffer().get(sequence);
+            event.logger = _name;
+            event.level = level;
+            event.tag = tag;
+            event.tag1 = tag1;
+            event.tag2 = tag2;
+            event.tag3 = tag3;
+            event.summary = summary;
+            event.content = content;
+        } finally {
+            _disruptor.getRingBuffer().publish(sequence);
+        }
     }
 }

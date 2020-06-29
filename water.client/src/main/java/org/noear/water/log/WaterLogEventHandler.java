@@ -8,7 +8,7 @@ public class WaterLogEventHandler  implements EventHandler<WaterLogEvent> {
 
     @Override
     public void onEvent(WaterLogEvent event, long sequence, boolean endOfBatch) throws Exception {
-        WaterClient.Log.append(
+        WaterClient.Log.appendReal(
                 event.logger,
                 event.level,
                 event.tag,
@@ -16,6 +16,6 @@ public class WaterLogEventHandler  implements EventHandler<WaterLogEvent> {
                 event.tag2,
                 event.tag3,
                 event.summary,
-                event.toString());
+                event.content);
     }
 }
