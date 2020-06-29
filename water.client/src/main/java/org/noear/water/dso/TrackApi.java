@@ -9,8 +9,6 @@ import org.noear.weed.Command;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 跟踪服务接口
@@ -49,11 +47,12 @@ public class TrackApi {
         //
         WaterConfig.pools.submit(() -> {
             TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
+            //trackDo(service, tag, name, timespan, _node, _from);
         });
     }
 
 
-    private void trackBak1(String service, String tag, String name, long timespan, String _node, String _from) {
+    private void trackDo(String service, String tag, String name, long timespan, String _node, String _from) {
         Map<String, String> params = new HashMap<>();
         if (_node != null) {
             params.put("_node", _node);
@@ -68,33 +67,45 @@ public class TrackApi {
         params.put("name", name);
         params.put("timespan", timespan + "");
 
-        CallUtil.postAsync("sev/track/api/", params);
+        try {
+            CallUtil.post("sev/track/api/", params);
+        } catch (Exception ex) {
+
+        }
+        //CallUtil.postAsync("sev/track/api/", params);
     }
 
     /**
      * 跟踪SQL命令性能
-     * */
+     */
     public void track(String service, Command cmd, long thresholdValue) {
         long timespan = cmd.timespan();
 
         if (timespan > thresholdValue) {
-            do_track(service, cmd, null, null, null, null, null);
+            track0(service, cmd, null, null, null, null, null);
         }
     }
 
     /**
      * 跟踪SQL命令性能
-     * */
+     */
     public void track(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
 
-        do_track(service, cmd, ua, path, operator, operator_ip, null);
+        track0(service, cmd, ua, path, operator, operator_ip, null);
     }
 
     /**
      * 跟踪SQL命令性能
-     * */
-    private void do_track(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
+     */
+    private void track0(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
         long interval = cmd.timespan();
+        WaterConfig.pools.submit(() -> {
+            track0Do(service, cmd, interval, ua, path, operator, operator_ip, note);
+        });
+    }
+
+    private void track0Do(String service, Command cmd, long interval, String ua, String path, String operator, String operator_ip, String note) {
+
 
         Map<String, Object> map = cmd.paramMap();
 
@@ -127,6 +138,12 @@ public class TrackApi {
             params.put("note", note);
         }
 
-        CallUtil.postAsync("sev/track/sql/", params);
+        try {
+            CallUtil.post("sev/track/sql/", params);
+        } catch (Exception ex) {
+
+        }
+
+//        CallUtil.postAsync("sev/track/sql/", params);
     }
 }
