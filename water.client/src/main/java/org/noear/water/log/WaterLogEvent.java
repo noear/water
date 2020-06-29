@@ -1,6 +1,6 @@
 package org.noear.water.log;
 
-public class WaterLogEvent {
+class WaterLogEvent {
     public String logger;
     public Level level;
     public String tag;

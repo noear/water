@@ -4,7 +4,7 @@ package org.noear.water.log;
 import com.lmax.disruptor.EventHandler;
 import org.noear.water.WaterClient;
 
-public class WaterLogEventHandler  implements EventHandler<WaterLogEvent> {
+class WaterLogEventHandler  implements EventHandler<WaterLogEvent> {
 
     @Override
     public void onEvent(WaterLogEvent event, long sequence, boolean endOfBatch) throws Exception {

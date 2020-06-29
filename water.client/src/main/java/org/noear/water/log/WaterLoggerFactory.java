@@ -5,7 +5,7 @@ import com.lmax.disruptor.dsl.Disruptor;
 /**
  * Logger的单例工厂，读取日志系统配置，并对日志落盘行为进行统一管理
  */
-enum WaterLoggerFactory {
+public enum WaterLoggerFactory {
     /**
      * 工厂单例
      */

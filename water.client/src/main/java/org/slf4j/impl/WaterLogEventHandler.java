@@ -3,6 +3,7 @@ package org.slf4j.impl;
 
 import com.lmax.disruptor.EventHandler;
 import org.noear.water.WaterClient;
+import org.noear.water.utils.TextUtils;
 
 public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
 
@@ -18,8 +19,12 @@ public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
 //                Thread.currentThread().getName(),
 //                event);
 
+        if(TextUtils.isEmpty(event.getName())){
+            return;
+        }
+
         if (event.getName().indexOf(".") < 0) {
-            WaterClient.Log.append(
+            WaterClient.Log.appendReal(
                     event.getName(),
                     event.getLevel(),
                     null,
@@ -27,9 +32,7 @@ public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
                     null,
                     null,
                     null,
-                    event.toString(),
-                    false);
+                    event.toString());
         }
-
     }
 }
