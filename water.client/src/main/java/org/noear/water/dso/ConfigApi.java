@@ -96,6 +96,9 @@ public class ConfigApi {
         return _cfgs.get(tag).get(key);
     }
 
+    /**
+     * 订阅配置集
+     * */
     public void subscribe(String tag, Act1<ConfigSetM> callback){
         Set<Act1<ConfigSetM>> tmp = _event.get(tag);
         if(tmp == null){
