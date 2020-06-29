@@ -1,5 +1,6 @@
 package org.noear.water.utils;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -86,8 +87,6 @@ public class MonitorUtils {
 
         //average, slowest, fastest, total_num, total_time
 
-        String log_time = now.toString("yyyy-MM-dd HH:mm:ss");
-
         //记录当时数据
         do_track_key(mSet, key_group, key_hour, timespan, MonitorCounter.type_hour, key_minute, key_minute_bef);
 
@@ -129,6 +128,10 @@ public class MonitorUtils {
     }
 
     public static void sync() {
+        if(_mainSet.size() == 0){
+            return;
+        }
+
         if (_redisX != null) {
             _redisX.open0((ru) -> {
                 try {
@@ -138,6 +141,8 @@ public class MonitorUtils {
                 }
             });
         }
+
+        System.out.println(_mainSet.size() + "+" + new Date().toString());
 
         synchronized (lock) {
             _mainSet.clear();

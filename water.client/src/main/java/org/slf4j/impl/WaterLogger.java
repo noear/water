@@ -1,9 +1,7 @@
 package org.slf4j.impl;
 
 import com.lmax.disruptor.dsl.Disruptor;
-import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
-import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
@@ -11,9 +9,10 @@ import org.slf4j.helpers.MessageFormatter;
 
 public class WaterLogger implements Logger {
     private String name;
-
-    public WaterLogger(String name) {
+    private Disruptor<WaterLogEvent> disruptor;
+    public WaterLogger(String name, Disruptor<WaterLogEvent> disruptor){
         this.name = name;
+        this.disruptor = disruptor;
     }
 
     @Override
@@ -28,35 +27,35 @@ public class WaterLogger implements Logger {
 
     @Override
     public void trace(String s) {
-        if (isTraceEnabled()) {
+        if(isTraceEnabled()){
             asyncLog(Level.TRACE, s);
         }
     }
 
     @Override
     public void trace(String s, Object o) {
-        if (isTraceEnabled()) {
+        if(isTraceEnabled()){
             asyncLog(Level.TRACE, s, o);
         }
     }
 
     @Override
     public void trace(String s, Object o, Object o1) {
-        if (isTraceEnabled()) {
-            asyncLog(Level.TRACE, s, o, o1);
+        if(isTraceEnabled()){
+            asyncLog(Level.TRACE, s, o,o1);
         }
     }
 
     @Override
     public void trace(String s, Object... objects) {
-        if (isTraceEnabled()) {
+        if(isTraceEnabled()){
             asyncLog(Level.TRACE, s, objects);
         }
     }
 
     @Override
     public void trace(String s, Throwable throwable) {
-        if (isTraceEnabled()) {
+        if(isTraceEnabled()){
             asyncLog(Level.TRACE, s, throwable);
         }
     }
@@ -73,22 +72,22 @@ public class WaterLogger implements Logger {
 
     @Override
     public void trace(Marker marker, String s, Object o) {
-        trace(s, o);
+        trace(s,o);
     }
 
     @Override
     public void trace(Marker marker, String s, Object o, Object o1) {
-        trace(s, o, o1);
+        trace(s,o,o1);
     }
 
     @Override
     public void trace(Marker marker, String s, Object... objects) {
-        trace(s, objects);
+        trace(s,objects);
     }
 
     @Override
     public void trace(Marker marker, String s, Throwable throwable) {
-        trace(s, throwable);
+        trace(s,throwable);
     }
 
     @Override
@@ -98,36 +97,36 @@ public class WaterLogger implements Logger {
 
     @Override
     public void debug(String s) {
-        if (isDebugEnabled()) {
-            asyncLog(Level.DEBUG, s);
+        if(isDebugEnabled()){
+            asyncLog(Level.DEBUG,s);
         }
     }
 
     @Override
     public void debug(String s, Object o) {
-        if (isDebugEnabled()) {
-            asyncLog(Level.DEBUG, s, o);
+        if(isDebugEnabled()){
+            asyncLog(Level.DEBUG,s,o);
         }
     }
 
     @Override
     public void debug(String s, Object o, Object o1) {
-        if (isDebugEnabled()) {
-            asyncLog(Level.DEBUG, s, o, o1);
+        if(isDebugEnabled()){
+            asyncLog(Level.DEBUG,s,o,o1);
         }
     }
 
     @Override
     public void debug(String s, Object... objects) {
-        if (isDebugEnabled()) {
-            asyncLog(Level.DEBUG, s, objects);
+        if(isDebugEnabled()){
+            asyncLog(Level.DEBUG,s,objects);
         }
     }
 
     @Override
     public void debug(String s, Throwable throwable) {
-        if (isDebugEnabled()) {
-            asyncLog(Level.DEBUG, s, throwable);
+        if(isDebugEnabled()){
+            asyncLog(Level.DEBUG,s,throwable);
         }
     }
 
@@ -138,27 +137,27 @@ public class WaterLogger implements Logger {
 
     @Override
     public void debug(Marker marker, String s) {
-        debug(s, s);
+        debug(s,s);
     }
 
     @Override
     public void debug(Marker marker, String s, Object o) {
-        debug(s, o);
+        debug(s,o);
     }
 
     @Override
     public void debug(Marker marker, String s, Object o, Object o1) {
-        debug(s, o, o1);
+        debug(s,o,o1);
     }
 
     @Override
     public void debug(Marker marker, String s, Object... objects) {
-        debug(s, objects);
+        debug(s,objects);
     }
 
     @Override
     public void debug(Marker marker, String s, Throwable throwable) {
-        debug(s, throwable);
+        debug(s,throwable);
     }
 
     @Override
@@ -183,7 +182,7 @@ public class WaterLogger implements Logger {
     @Override
     public void info(String s, Object o, Object o1) {
         if (isInfoEnabled()) {
-            asyncLog(Level.INFO, s, o, o1);
+            asyncLog(Level.INFO, s, o,o1);
         }
     }
 
@@ -213,22 +212,22 @@ public class WaterLogger implements Logger {
 
     @Override
     public void info(Marker marker, String s, Object o) {
-        info(s, o);
+        info(s,o);
     }
 
     @Override
     public void info(Marker marker, String s, Object o, Object o1) {
-        info(s, o, o1);
+        info(s,o,o1);
     }
 
     @Override
     public void info(Marker marker, String s, Object... objects) {
-        info(s, objects);
+        info(s,objects);
     }
 
     @Override
     public void info(Marker marker, String s, Throwable throwable) {
-        info(s, throwable);
+        info(s,throwable);
     }
 
     @Override
@@ -283,22 +282,22 @@ public class WaterLogger implements Logger {
 
     @Override
     public void warn(Marker marker, String s, Object o) {
-        warn(s, o);
+        warn(s,o);
     }
 
     @Override
     public void warn(Marker marker, String s, Object o, Object o1) {
-        warn(s, o, o1);
+        warn(s,o,o1);
     }
 
     @Override
     public void warn(Marker marker, String s, Object... objects) {
-        warn(s, objects);
+        warn(s,objects);
     }
 
     @Override
     public void warn(Marker marker, String s, Throwable throwable) {
-        warn(s, throwable);
+        warn(s,throwable);
     }
 
     @Override
@@ -353,12 +352,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void error(Marker marker, String s, Object o) {
-        error(s, o);
+        error(s,o);
     }
 
     @Override
     public void error(Marker marker, String s, Object o, Object o1) {
-        error(s, o, o1);
+        error(s,o,o1);
     }
 
     @Override
@@ -368,7 +367,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public void error(Marker marker, String s, Throwable throwable) {
-        error(s, throwable);
+        error(s,throwable);
     }
 
     private void asyncLog(Level level, String format, Object arg) {
@@ -405,14 +404,14 @@ public class WaterLogger implements Logger {
     }
 
     private void asyncLog(Level level, String msg) {
-        System.out.printf("[%s] %s%n", level, msg);
-
-        if (TextUtils.isEmpty(name)) {
-            return;
-        }
-
-        if (name.indexOf(".") < 0) {
-            WaterClient.Log.append(name, level, null, msg);
+        long sequence = disruptor.getRingBuffer().next();
+        try {
+            WaterLogEvent event = disruptor.getRingBuffer().get(sequence);
+            event.setName(name);
+            event.setLevel(level);
+            event.setMsgSupplier(() -> String.format("%s\t%s", name, msg));
+        } finally {
+            disruptor.getRingBuffer().publish(sequence);
         }
     }
 }
