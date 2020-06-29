@@ -97,7 +97,7 @@ public class LogApi {
      */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         if (async) {
-            pools.submit(() -> {
+            WaterConfig.pools.submit(() -> {
                 appendReal(logger, level, tag, tag1, tag2, tag3, summary, content);
             });
         } else {
@@ -105,8 +105,6 @@ public class LogApi {
         }
 
     }
-
-    static ExecutorService pools = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     private void appendReal(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {

@@ -1,28 +1,26 @@
 package org.noear.water.log;
 
-import com.lmax.disruptor.dsl.Disruptor;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.impl.WaterLoggerFactory;
 
 public class WaterLogger implements Logger {
     public static WaterLogger get(String name) {
-        return WaterLoggerFactory.INSTANCE.getLogger(name);
+        return new WaterLogger(name);
     }
 
     public static WaterLogger get(String name, Class<?> clz) {
-        return WaterLoggerFactory.INSTANCE.getLogger(name, clz);
+        return new WaterLogger(name, clz);
     }
 
     private String _name;
     private String _tag;
-    private Disruptor<WaterLogEvent> _disruptor;
 
     public WaterLogger() {
-        _disruptor = WaterLoggerFactory.INSTANCE.getDisruptor();
+
     }
 
-    public WaterLogger( String name) {
-        _disruptor = WaterLoggerFactory.INSTANCE.getDisruptor();
+    public WaterLogger(String name) {
         _name = name;
     }
 
@@ -35,7 +33,6 @@ public class WaterLogger implements Logger {
         this(name);
         _tag = clz.getSimpleName();
     }
-
 
 
     @Override
@@ -85,7 +82,7 @@ public class WaterLogger implements Logger {
     }
 
     private void traceDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(isTraceEnabled()) {
+        if (isTraceEnabled()) {
             appendDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
         }
     }
@@ -126,7 +123,7 @@ public class WaterLogger implements Logger {
     }
 
     private void debugDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(isDebugEnabled()) {
+        if (isDebugEnabled()) {
             appendDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
         }
     }
@@ -167,7 +164,7 @@ public class WaterLogger implements Logger {
     }
 
     private void infoDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(isInfoEnabled()) {
+        if (isInfoEnabled()) {
             appendDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
         }
     }
@@ -208,7 +205,7 @@ public class WaterLogger implements Logger {
     }
 
     private void warnDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(isWarnEnabled()) {
+        if (isWarnEnabled()) {
             appendDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
         }
     }
@@ -249,29 +246,16 @@ public class WaterLogger implements Logger {
     }
 
     private void errorDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(isErrorEnabled()) {
+        if (isErrorEnabled()) {
             appendDo(Level.ERROR, tag, tag1, tag2, tag3, summary, content);
         }
     }
 
     private void appendDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if(TextUtils.isEmpty(_name)){
+        if (TextUtils.isEmpty(_name)) {
             return;
         }
 
-        long sequence = _disruptor.getRingBuffer().next();
-        try {
-            WaterLogEvent event = _disruptor.getRingBuffer().get(sequence);
-            event.logger = _name;
-            event.level = level;
-            event.tag = tag;
-            event.tag1 = tag1;
-            event.tag2 = tag2;
-            event.tag3 = tag3;
-            event.summary = summary;
-            event.content = content;
-        } finally {
-            _disruptor.getRingBuffer().publish(sequence);
-        }
+        WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
     }
 }

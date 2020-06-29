@@ -36,7 +36,7 @@ public class WaterConfig {
         }
     }
 
-//    public static final ExecutorService pools = Executors.newCachedThreadPool();
+    public static final ExecutorService pools = Executors.newCachedThreadPool();
     public static final ICacheServiceEx cacheLocal = new LocalCache();
 
     private static final String lock = "";

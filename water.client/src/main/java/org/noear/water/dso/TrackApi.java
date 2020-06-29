@@ -47,12 +47,10 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        pools.submit(() -> {
+        WaterConfig.pools.submit(() -> {
             TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
         });
     }
-
-    static ExecutorService pools = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 
     private void trackBak1(String service, String tag, String name, long timespan, String _node, String _from) {
