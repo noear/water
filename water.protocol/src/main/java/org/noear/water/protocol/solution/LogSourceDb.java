@@ -6,8 +6,10 @@ import org.noear.water.protocol.model.LogModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbTableQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LogSourceDb implements LogSource {
@@ -44,16 +46,16 @@ public class LogSourceDb implements LogSource {
                 .andIf(log_date > 0, "log_date = ?", log_date)
                 .andIf(log_id > 0, "log_id <= ?", log_id)
                 .andIf(level > 0, "level=?", level)
-                .orderBy("log_id desc")
+                .orderBy("log_fulltime desc")
                 .limit(size)
                 .select("*")
                 .getList(LogModel.class);
     }
 
     @Override
-    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) {
+    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
         try {
-            _db.table(logger).usingExpr(true)
+            DbTableQuery qr = _db.table(logger).usingExpr(true)
                     .set("log_id", log_id)
                     .set("level", level.code)
                     .setDf("tag", tag, "")
@@ -62,10 +64,18 @@ public class LogSourceDb implements LogSource {
                     .setDf("tag3", tag3, "")
                     .setDf("summary", summary, "")
                     .setDf("content", content, "")
-                    .setDf("from", from, "")
-                    .set("log_date", "$DATE(NOW())")
-                    .set("log_fulltime", "$NOW()")
-                    .insert();
+                    .setDf("from", from, "");
+
+            if (log_fulltime == null) {
+                qr.set("log_date", "$DATE(NOW())")
+                        .set("log_fulltime", "$NOW()")
+                        .insert();
+            }else{
+                qr.set("log_date", new Datetime(log_fulltime).getDate())
+                        .set("log_fulltime", log_fulltime)
+                        .insert();
+            }
+
 
         } catch (Throwable ex) {
             ex.printStackTrace();
