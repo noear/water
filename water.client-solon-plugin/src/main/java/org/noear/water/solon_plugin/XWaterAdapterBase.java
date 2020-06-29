@@ -18,7 +18,7 @@ import java.io.IOException;
 // Water for service project adapter
 //
 abstract class XWaterAdapterBase extends WaterAdapter {
-    static Logger logger = new WaterLogger(WW.water_log_upstream, XWaterAdapterBase.class);
+    static Logger logger = WaterLogger.get(WW.water_log_upstream, XWaterAdapterBase.class);
 
     XMap service_args;
     private String _localHost;

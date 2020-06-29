@@ -4,14 +4,16 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
+import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
+import sun.rmi.runtime.Log;
 import watersev.models.water_msg.DistributionModel;
 import watersev.models.water_msg.MessageModel;
 
 public class LogUtil {
-    private static WaterLogger log_msg = new WaterLogger("water_log_msg");
-    private static WaterLogger log_sev = new WaterLogger("water_log_sev");
+    private static Logger log_msg =  WaterLogger.get("water_log_msg");
+    private static Logger log_sev =  WaterLogger.get("water_log_sev");
 
     public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {

@@ -1,4 +1,4 @@
-package org.slf4j.impl;
+package org.noear.water.log;
 
 import java.util.concurrent.ThreadFactory;
 
@@ -8,9 +8,9 @@ public class WaterLogThreadFactory implements ThreadFactory {
         return new Thread("water-log") {
             @Override
             public void run() {
-                System.out.println("disruptor thread is started, output log water");
+//                System.out.println("disruptor thread is started, output log water");
                 r.run();
-                System.out.println("disruptor thread is terminated");
+//                System.out.println("disruptor thread is terminated");
             }
         };
     }

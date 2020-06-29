@@ -9,7 +9,7 @@ public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
     @Override
     public void onEvent(WaterLogEvent event, long sequence, boolean endOfBatch) throws Exception {
 
-        System.out.printf("%d [%s] %s%n", sequence, event.getLevel(), event);
+        //System.out.printf("%d [%s] %s%n", sequence, event.getLevel(), event);
 
 //        System.out.printf("%d [%s] Thread %d-%s: %s%n",
 //                sequence,

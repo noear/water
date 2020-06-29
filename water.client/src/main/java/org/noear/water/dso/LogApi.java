@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
+import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -16,12 +17,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * 日志服务接口
  * */
 public class LogApi {
-    private  Map<String,WaterLogger> loggerMap = new ConcurrentHashMap<>();
-    public  WaterLogger logger(String logger) {
-        WaterLogger tmp = loggerMap.get(logger);
+    private Map<String, Logger> loggerMap = new ConcurrentHashMap<>();
+
+    public Logger logger(String logger) {
+        Logger tmp = loggerMap.get(logger);
         if (tmp == null) {
-            tmp = new WaterLogger(logger);
-            WaterLogger l = loggerMap.putIfAbsent(logger, tmp);
+            tmp =  WaterLogger.get(logger);
+            Logger l = loggerMap.putIfAbsent(logger, tmp);
             if (l != null) {
                 tmp = l;
             }
@@ -32,7 +34,7 @@ public class LogApi {
 
     /**
      * 添加日志
-     * */
+     */
     public void append(String logger, Level level, Map<String, Object> map) {
         append(logger, level,
                 (String) map.get("tag"),
@@ -45,35 +47,35 @@ public class LogApi {
 
     /**
      * 添加日志
-     * */
-    public void append(String logger, Level level,  String summary, Object content) {
+     */
+    public void append(String logger, Level level, String summary, Object content) {
         append(logger, level, null, null, null, null, summary, content, true);
     }
 
     /**
      * 添加日志
-     * */
-    public void append(String logger, Level level, String tag,  String summary, Object content) {
+     */
+    public void append(String logger, Level level, String tag, String summary, Object content) {
         append(logger, level, tag, null, null, null, summary, content, true);
     }
 
     /**
      * 添加日志
-     * */
+     */
     public void append(String logger, Level level, String tag, String tag1, String summary, Object content) {
         append(logger, level, tag, tag1, null, null, summary, content, true);
     }
 
     /**
      * 添加日志
-     * */
+     */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String summary, Object content) {
         append(logger, level, tag, tag1, tag2, null, summary, content, true);
     }
 
     /**
      * 添加日志
-     * */
+     */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         append(logger, level, tag, tag1, tag2, tag3, summary, content, true);
     }
@@ -92,22 +94,22 @@ public class LogApi {
      * @param async   是否异步提交
      */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
-        if(async){
+        if (async) {
             WaterConfig.pools.execute(() -> {
-                appendDo(logger,level,tag,tag1,tag2,tag3,summary,content,async);
+                appendReal(logger, level, tag, tag1, tag2, tag3, summary, content, async);
             });
-        }else{
-            appendDo(logger,level,tag,tag1,tag2,tag3,summary,content,async);
+        } else {
+            appendReal(logger, level, tag, tag1, tag2, tag3, summary, content, async);
         }
 
     }
 
-    private void appendDo(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
-        if(TextUtils.isEmpty(logger)){
+    public void appendReal(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
+        if (TextUtils.isEmpty(logger)) {
             return;
         }
 
-        if(logger.indexOf(".") > 0){
+        if (logger.indexOf(".") > 0) {
             return;
         }
 
@@ -155,11 +157,7 @@ public class LogApi {
         }
 
         try {
-//            if (async) {
-//                CallUtil.postAsync("log/add/", params);
-//            } else {
-                CallUtil.post("log/add/", params);
-//            }
+            CallUtil.post("log/add/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

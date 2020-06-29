@@ -1,36 +1,46 @@
 package org.noear.water.log;
 
+import com.lmax.disruptor.dsl.Disruptor;
 import org.noear.water.WaterClient;
+import org.noear.water.utils.TextUtils;
 
 public class WaterLogger implements Logger {
+    public static Logger get() {
+        return WaterLoggerFactory.INSTANCE.getLogger("");
+    }
+
     public static Logger get(String name) {
-        return new WaterLogger(name);
+        return WaterLoggerFactory.INSTANCE.getLogger(name);
     }
 
     public static Logger get(String name, Class<?> clz) {
-        return new WaterLogger(name, clz.getName());
+        return WaterLoggerFactory.INSTANCE.getLogger(name, clz);
     }
 
     private String _name;
     private String _tag;
+    private Disruptor<WaterLogEvent> _disruptor;
 
-    public WaterLogger() {
-
+    protected WaterLogger(Disruptor<WaterLogEvent> disruptor) {
+        _disruptor = disruptor;
     }
 
-    public WaterLogger(String name) {
+    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name) {
+        _disruptor = disruptor;
         _name = name;
     }
 
-    public WaterLogger(String name, String tag) {
-        this(name);
+    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name, String tag) {
+        this(disruptor, name);
         _tag = tag;
     }
 
-    public WaterLogger(String name, Class<?> clz) {
-        this(name);
+    protected WaterLogger(Disruptor<WaterLogEvent> disruptor, String name, Class<?> clz) {
+        this(disruptor, name);
         _tag = clz.getSimpleName();
     }
+
+
 
     @Override
     public String getName() {
@@ -41,6 +51,12 @@ public class WaterLogger implements Logger {
     public void setName(String name) {
         _name = name;
     }
+
+    @Override
+    public boolean isTraceEnabled() {
+        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.TRACE.code;
+    }
+
 
     @Override
     public void trace(Object content) {
@@ -69,7 +85,18 @@ public class WaterLogger implements Logger {
 
     @Override
     public void trace(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
+        traceDo(tag, tag1, tag2, tag3, summary, content);
+    }
+
+    private void traceDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        if(isTraceEnabled()) {
+            appendDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
+        }
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.DEBUG.code;
     }
 
     @Override
@@ -99,7 +126,18 @@ public class WaterLogger implements Logger {
 
     @Override
     public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
+        debugDo(tag, tag1, tag2, tag3, summary, content);
+    }
+
+    private void debugDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        if(isDebugEnabled()) {
+            appendDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
+        }
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.INFO.code;
     }
 
     @Override
@@ -129,7 +167,18 @@ public class WaterLogger implements Logger {
 
     @Override
     public void info(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
+        infoDo(tag, tag1, tag2, tag3, summary, content);
+    }
+
+    private void infoDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        if(isInfoEnabled()) {
+            appendDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
+        }
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.WARN.code;
     }
 
     @Override
@@ -159,7 +208,18 @@ public class WaterLogger implements Logger {
 
     @Override
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
+        warnDo(tag, tag1, tag2, tag3, summary, content);
+    }
+
+    private void warnDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        if(isWarnEnabled()) {
+            appendDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
+        }
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.ERROR.code;
     }
 
     @Override
@@ -189,10 +249,20 @@ public class WaterLogger implements Logger {
 
     @Override
     public void error(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        appendDo(Level.ERROR, tag, tag1, tag2, tag3, summary, content);
+        errorDo(tag, tag1, tag2, tag3, summary, content);
+    }
+
+    private void errorDo(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        if(isErrorEnabled()) {
+            appendDo(Level.ERROR, tag, tag1, tag2, tag3, summary, content);
+        }
     }
 
     private void appendDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content);
+        if(TextUtils.isEmpty(_name)){
+            return;
+        }
+
+        WaterClient.Log.appendReal(_name, level, tag, tag1, tag2, tag3, summary, content, false);
     }
 }

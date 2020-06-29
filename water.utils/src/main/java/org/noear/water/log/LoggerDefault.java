@@ -12,6 +12,11 @@ public class LoggerDefault implements Logger{
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return false;
+    }
+
+    @Override
     public void trace(Object content) {
 
     }
@@ -39,6 +44,11 @@ public class LoggerDefault implements Logger{
     @Override
     public void trace(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
 
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return false;
     }
 
     @Override
@@ -72,6 +82,11 @@ public class LoggerDefault implements Logger{
     }
 
     @Override
+    public boolean isInfoEnabled() {
+        return false;
+    }
+
+    @Override
     public void info(Object content) {
 
     }
@@ -102,6 +117,11 @@ public class LoggerDefault implements Logger{
     }
 
     @Override
+    public boolean isWarnEnabled() {
+        return false;
+    }
+
+    @Override
     public void warn(Object content) {
 
     }
@@ -129,6 +149,11 @@ public class LoggerDefault implements Logger{
     @Override
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
 
+    }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return false;
     }
 
     @Override

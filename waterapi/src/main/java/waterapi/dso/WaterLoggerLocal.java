@@ -75,6 +75,7 @@ public class WaterLoggerLocal implements Logger {
         writeDo(Level.TRACE, tag, tag1, tag2, tag3, summary, content);
     }
 
+
     @Override
     public void debug(Object content) {
         debug(_tag, null, null, null, null, content);
@@ -104,6 +105,7 @@ public class WaterLoggerLocal implements Logger {
     public void debug(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         writeDo(Level.DEBUG, tag, tag1, tag2, tag3, summary, content);
     }
+
 
     @Override
     public void info(Object content) {
@@ -135,6 +137,7 @@ public class WaterLoggerLocal implements Logger {
         writeDo(Level.INFO, tag, tag1, tag2, tag3, summary, content);
     }
 
+
     @Override
     public void warn(Object content) {
         warn(_tag, null, null, null, null, content);
@@ -164,6 +167,8 @@ public class WaterLoggerLocal implements Logger {
     public void warn(String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         writeDo(Level.WARN, tag, tag1, tag2, tag3, summary, content);
     }
+
+
 
     @Override
     public void error(Object content) {

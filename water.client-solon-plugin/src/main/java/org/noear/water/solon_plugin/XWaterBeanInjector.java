@@ -29,8 +29,8 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
         }
 
         //日志注入
-        if(fwT.getType() == WaterLogger.class){
-            fwT.setValue(new WaterLogger(anno.value()));
+        if(fwT.getType() == WaterLogger.class) {
+            fwT.setValue(WaterLogger.get(anno.value()));
             return;
         }
 
