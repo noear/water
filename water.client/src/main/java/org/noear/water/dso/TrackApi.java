@@ -9,6 +9,8 @@ import org.noear.weed.Command;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 跟踪服务接口
@@ -45,10 +47,13 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        WaterConfig.pools.execute(() -> {
+        pools.submit(() -> {
             TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
         });
     }
+
+    static ExecutorService pools = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
 
     private void trackBak1(String service, String tag, String name, long timespan, String _node, String _from) {
         Map<String, String> params = new HashMap<>();

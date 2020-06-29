@@ -24,7 +24,7 @@ public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
         }
 
         if (event.getName().indexOf(".") < 0) {
-            WaterClient.Log.appendReal(
+            WaterClient.Log.append(
                     event.getName(),
                     event.getLevel(),
                     null,
@@ -32,7 +32,7 @@ public class WaterLogEventHandler implements EventHandler<WaterLogEvent> {
                     null,
                     null,
                     null,
-                    event.toString());
+                    event.toString(),false);
         }
     }
 }
