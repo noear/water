@@ -128,23 +128,21 @@ public class MonitorUtils {
     }
 
     public static void sync() {
-        if(_mainSet.size() == 0){
+        if (_mainSet.size() == 0) {
             return;
         }
 
-        if (_redisX != null) {
-            _redisX.open0((ru) -> {
-                try {
-                    sync0(ru);
-                } catch (Throwable ex) {
-                    ex.printStackTrace();
-                }
-            });
-        }
-
-        System.out.println(_mainSet.size() + "+" + new Date().toString());
-
         synchronized (lock) {
+            if (_redisX != null) {
+                _redisX.open0((ru) -> {
+                    try {
+                        sync0(ru);
+                    } catch (Throwable ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            }
+
             _mainSet.clear();
             _serviceSet.clear();
             _fromSet.clear();

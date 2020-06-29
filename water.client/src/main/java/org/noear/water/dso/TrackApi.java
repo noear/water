@@ -2,10 +2,9 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterConfig;
-import org.noear.water.utils.MonitorUtils;
+import org.noear.water.monitor.MonitorUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.TraceUtils;
 import org.noear.weed.Command;
 
 import java.util.HashMap;
