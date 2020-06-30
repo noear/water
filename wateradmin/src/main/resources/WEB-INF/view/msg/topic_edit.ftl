@@ -41,7 +41,7 @@
                             location.href = "/msg/topic";
                         },800);
                     } else {
-                        top.layer.msg = data.msg;
+                        top.layer.msg(data.msg);
                     }
                 }
             });
@@ -63,7 +63,7 @@
                             location.href = "/msg/topic";
                         },800);
                     } else {
-                        top.layer.msg = data.msg;
+                        top.layer.msg(data.msg);
                     }
                 }
             });
