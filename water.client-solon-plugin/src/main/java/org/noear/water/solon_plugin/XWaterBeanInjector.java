@@ -10,7 +10,10 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
+import org.noear.weed.cache.SecondCache;
 
 import java.util.Properties;
 
@@ -52,7 +55,12 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
 
         //DbContext
         if(DbContext.class.isAssignableFrom(fwT.getType())){
-            fwT.setValue(cfg.getDb());
+            DbContext db = WeedConfig.libOfDb.get(cfg.value);
+            if(db == null){
+                db = cfg.getDb(true);
+                WeedConfig.libOfDb.put(cfg.value,db);
+            }
+            fwT.setValue(db);
             return;
         }
 
@@ -68,10 +76,20 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
 
         //ICacheServiceEx
         if(ICacheServiceEx.class.isAssignableFrom(fwT.getType())) {
-            String keyHeader = WaterProps.service_name();
-            int defSeconds = 300;
+            ICacheServiceEx cache = WeedConfig.libOfCache.get(cfg.value);
 
-            fwT.setValue(cfg.getCh(keyHeader, defSeconds));
+            if (cache == null) {
+                String keyHeader = WaterProps.service_name();
+                int defSeconds = 300;
+
+                ICacheServiceEx cache1 = new LocalCache(defSeconds);
+                ICacheServiceEx cache2 = cfg.getCh(keyHeader, defSeconds);
+                cache = new SecondCache(cache1, cache2);
+
+                WeedConfig.libOfCache.put(cfg.value, cache);
+            }
+
+            fwT.setValue(cache);
             return;
         }
 
