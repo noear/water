@@ -14,6 +14,20 @@ if (typeof String.prototype.endsWith != 'function') {
     };
 }
 
+/* load data version */
+function versions_onselect(e,fun) {
+    var commit_id = $(e).val();
+
+    if(fun) {
+        $.getJSON('/cfg/version/ajax/data', {commit_id: commit_id}, function (rst) {
+            if (rst.code == 1) {
+                var vv = JSON.parse(rst.data);
+                fun(vv);
+            }
+        });
+    }
+};
+
 
 function openUrl(url){
     window.open(url);
