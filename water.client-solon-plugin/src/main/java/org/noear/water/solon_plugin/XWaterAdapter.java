@@ -26,9 +26,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
 
-    private Map<String, XMessageSubscriber> _router;
+    private Map<String, XMessageHandler> _router;
 
-    public Map<String, XMessageSubscriber> router() {
+    public Map<String, XMessageHandler> router() {
         return _router;
     }
 
@@ -117,7 +117,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     //支持手动加入监听(保持旧的兼容)
-    public void messageListening(Map<String, XMessageSubscriber> map) {
+    public void messageListening(Map<String, XMessageHandler> map) {
     }
 
     ;
@@ -152,7 +152,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     @Override
     public boolean messageReceiveHandler(MessageM msg) throws Exception {
-        XMessageSubscriber handler = _router.get(msg.topic);
+        XMessageHandler handler = _router.get(msg.topic);
         if (handler == null) {
             return true;
         } else {

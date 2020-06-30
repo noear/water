@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class XPluginImp implements XPlugin {
-    Map<String, XMessageSubscriber> _router  =new HashMap<>();
+    Map<String, XMessageHandler> _router  =new HashMap<>();
     @Override
     public void start(XApp app) {
 
@@ -57,7 +57,7 @@ public class XPluginImp implements XPlugin {
 
         //添加WaterMessage注解支持
         Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
-            if (XMessageSubscriber.class.isAssignableFrom(clz)) {
+            if (XMessageHandler.class.isAssignableFrom(clz)) {
                 String topic = anno.value();
 
                 if (TextUtils.isEmpty(topic) == false) {
@@ -68,7 +68,7 @@ public class XPluginImp implements XPlugin {
 
         //添加WaterConfig注解支持
         Aop.factory().beanCreatorAdd(WaterConfig.class, (clz, wrap, anno) -> {
-            if (XConfigSubscriber.class.isAssignableFrom(clz)) {
+            if (XConfigHandler.class.isAssignableFrom(clz)) {
                 String tag = anno.value();
 
                 if (TextUtils.isEmpty(tag) == false) {
@@ -81,7 +81,7 @@ public class XPluginImp implements XPlugin {
         Aop.beanOnloaded(() -> {
             if (XWaterAdapter.global() != null) {
                 Aop.beanForeach((k, v) -> {
-                    if (k.startsWith("msg:") && XMessageSubscriber.class.isAssignableFrom(v.clz())) {
+                    if (k.startsWith("msg:") && XMessageHandler.class.isAssignableFrom(v.clz())) {
                         String topic = k.split(":")[1];
 
                         _router.put(topic, v.raw());
