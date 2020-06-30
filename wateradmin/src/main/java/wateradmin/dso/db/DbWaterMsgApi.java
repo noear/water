@@ -218,6 +218,19 @@ public class DbWaterMsgApi {
         }
     }
 
+    public static boolean deleteTopic(int topic_id) throws SQLException {
+        //还有统计数据，则不能删除
+        if (db().table("water_msg_message_ex_stat").whereEq("topic_id", topic_id).exists()) {
+            return false;
+        }
+
+        db().table("water_msg_topic")
+                .whereEq("topic_id", topic_id)
+                .delete();
+
+        return true;
+    }
+
     //订阅列表删除功能。
     public static boolean deleteSubs(List<Object> ids) throws SQLException {
         return db().table("water_msg_subscriber")

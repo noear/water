@@ -3,6 +3,7 @@ package wateradmin.controller.msg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.solon.core.XMethod;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterMsgApi;
@@ -47,6 +48,25 @@ public class TopicController extends BaseController {
                 viewModel.code(1, "保存成功！");
             } else {
                 viewModel.code(0, "保存失败！");
+            }
+        } else {
+            viewModel.code(0, "没有权限！");
+        }
+
+        return viewModel;
+    }
+
+    //删除主题
+    @XMapping(value = "/msg/topic/edit/ajax/del", method = XMethod.POST)
+    public ViewModel topicEditDel(Integer topic_id) throws SQLException {
+        int is_admin = Session.current().getIsAdmin();
+        if (is_admin == 1) {
+            boolean result = DbWaterMsgApi.deleteTopic(topic_id);
+
+            if (result) {
+                viewModel.code(1, "删除成功");
+            } else {
+                viewModel.code(0, "还有使用记录，拒绝删除");
             }
         } else {
             viewModel.code(0, "没有权限！");

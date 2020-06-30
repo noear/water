@@ -35,7 +35,6 @@
                 <td width="120">最大<br/>消息数量</td>
                 <td width="120">最大<br/>派发次数</td>
                 <td width="120">最大<br/>同时派发数</td>
-                <td width="120">最大<br/>同时派发数</td>
                 <td width="100">报警模式</td>
                 <#if is_admin == 1>
                     <td width="50">操作</td>

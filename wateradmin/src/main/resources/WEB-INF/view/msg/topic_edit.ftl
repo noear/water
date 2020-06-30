@@ -6,10 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
-    <script src="${js}/lib.js"></script>
+    <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
     <script>
-        function saveAdd() {
+        function saveEdit() {
             var topic_name = $('#topic_name').val();
             var topic_id = ${topic.topic_id};
             var max_msg_num = $('#max_msg_num').val();
@@ -36,23 +36,61 @@
                 data:{"topic_name":topic_name,"topic_id":topic_id,"max_msg_num":max_msg_num,"max_distribution_num":max_distribution_num,"max_concurrency_num":max_concurrency_num,"alarm_model":alarm_model},
                 success:function (data) {
                     if (data.code == 1) {
-                        top.layer.msg(data.msg);
+                        top.layer.msg('操作成功');
                         setTimeout(function(){
                             location.href = "/msg/topic";
-                        },1000);
+                        },800);
                     } else {
                         top.layer.msg = data.msg;
                     }
                 }
             });
-        };
+        }
+
+        function del(topic_id){
+            if(confirm('确定删除吗？') == false){
+                return;
+            }
+
+            $.ajax({
+                type:"POST",
+                url:"/msg/topic/edit/ajax/del",
+                data:{"topic_id":topic_id},
+                success:function (data) {
+                    if (data.code == 1) {
+                        top.layer.msg('操作成功');
+                        setTimeout(function(){
+                            location.href = "/msg/topic";
+                        },800);
+                    } else {
+                        top.layer.msg = data.msg;
+                    }
+                }
+            });
+        }
+
+        $(function(){
+            <#if is_admin = 1>
+            ctl_s_save_bind(document,saveEdit);
+            </#if>
+        });
     </script>
 </head>
 <body>
 <main>
-    <blockquote>
-        <h2 class="ln30">主题编辑</h2>
-    </blockquote>
+    <toolbar class="blockquote">
+        <left>
+            <h2 class="ln30"><a href="/msg/topic" class="noline">主题列表</a></h2> / 编辑
+        </left>
+        <right class="form">
+            <#if is_admin = 1>
+                <button type="button" onclick="saveEdit()"><u>S</u> 保存</button>
+                <#if topic.topic_id gt 0>
+                    <button type="button" onclick="del(${topic.topic_id})" class="minor">删除</button>
+                </#if>
+            </#if>
+        </right>
+    </toolbar>
     <detail>
         <form>
             <table>
@@ -86,10 +124,6 @@
                             </#if>
                         </select>
                     </td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td><button type='button' onclick="saveAdd()">保存</button></td>
                 </tr>
             </table>
         </form>
