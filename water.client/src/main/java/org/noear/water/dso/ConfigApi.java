@@ -107,6 +107,11 @@ public class ConfigApi {
         }
 
         tmp.add(callback);
+
+        //如果已存在，及时通知
+        if(_cfgs.containsKey(tag)){
+            callback.run(_cfgs.get(tag));
+        }
     }
 
 
