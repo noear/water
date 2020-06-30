@@ -5,6 +5,7 @@ import org.noear.solon.core.Aop;
 import org.noear.solon.core.XPlugin;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
+import org.noear.water.annotation.WaterConfig;
 import org.noear.water.annotation.WaterMessage;
 import org.noear.water.utils.TextUtils;
 
@@ -61,6 +62,17 @@ public class XPluginImp implements XPlugin {
 
                 if (TextUtils.isEmpty(topic) == false) {
                     _router.put(topic,wrap.raw());
+                }
+            }
+        });
+
+        //添加WaterConfig注解支持
+        Aop.factory().beanCreatorAdd(WaterConfig.class, (clz, wrap, anno) -> {
+            if (XConfigHandler.class.isAssignableFrom(clz)) {
+                String tag = anno.value();
+
+                if (TextUtils.isEmpty(tag) == false) {
+                    WaterClient.Config.subscribe(tag,wrap.get());
                 }
             }
         });
