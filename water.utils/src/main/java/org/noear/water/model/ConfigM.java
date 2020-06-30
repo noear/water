@@ -50,6 +50,10 @@ public final class ConfigM {
         }
     }
 
+    public int getInt(){
+        return getInt(0);
+    }
+
     /**
      * 转为Long
      */
@@ -59,6 +63,10 @@ public final class ConfigM {
         } else {
             return Long.parseLong(value);
         }
+    }
+
+    public long getLong() {
+        return getLong(0l);
     }
 
     /**
