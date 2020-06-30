@@ -11,7 +11,7 @@ import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
-import org.noear.water.utils.TraceUtils;
+import org.noear.water.montior.TraceUtils;
 import waterapi.dso.IDUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
