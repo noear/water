@@ -1,15 +1,23 @@
 package org.noear.water;
 
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
+import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class WaterConfig {
+    public static Map<String, DbContext> libOfDb = new ConcurrentHashMap();
+    public static Map<String, RedisX> libOfRd = new ConcurrentHashMap();
+    public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
+
     private static String _water_api_url = null;
 
     public static String water_api_url() {

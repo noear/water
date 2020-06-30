@@ -4,6 +4,7 @@ import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.FieldWrapTmp;
 import org.noear.solon.core.utils.TypeUtil;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterConfig;
 import org.noear.water.annotation.Water;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.model.ConfigM;
@@ -55,10 +56,10 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
 
         //DbContext
         if(DbContext.class.isAssignableFrom(fwT.getType())){
-            DbContext db = WeedConfig.libOfDb.get(cfg.value);
+            DbContext db = WaterConfig.libOfDb.get(cfg.value);
             if(db == null){
                 db = cfg.getDb(true);
-                WeedConfig.libOfDb.put(cfg.value,db);
+                WaterConfig.libOfDb.put(cfg.value,db);
             }
             fwT.setValue(db);
             return;
@@ -66,17 +67,26 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
 
         //RedisX
         if(RedisX.class.isAssignableFrom(fwT.getType())){
-            if(TextUtils.isEmpty(arg)){
-                fwT.setValue(cfg.getRd());
-            }else{
-                fwT.setValue(cfg.getRd(Integer.parseInt(arg)));
+            String key = cfg.value +"_"+arg;
+
+            RedisX rdx = WaterConfig.libOfRd.get(key);
+            if(rdx == null){
+                if(TextUtils.isEmpty(arg)){
+                    rdx = cfg.getRd();
+                }else{
+                    rdx = cfg.getRd(Integer.parseInt(arg));
+                }
+
+                WaterConfig.libOfRd.put(key,rdx);
             }
+
+            fwT.setValue(rdx);
             return;
         }
 
         //ICacheServiceEx
         if(ICacheServiceEx.class.isAssignableFrom(fwT.getType())) {
-            ICacheServiceEx cache = WeedConfig.libOfCache.get(cfg.value);
+            ICacheServiceEx cache = WaterConfig.libOfCache.get(cfg.value);
 
             if (cache == null) {
                 String keyHeader = WaterProps.service_name();
@@ -86,7 +96,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
                 ICacheServiceEx cache2 = cfg.getCh(keyHeader, defSeconds);
                 cache = new SecondCache(cache1, cache2);
 
-                WeedConfig.libOfCache.put(cfg.value, cache);
+                WaterConfig.libOfCache.put(cfg.value, cache);
             }
 
             fwT.setValue(cache);
