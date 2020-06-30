@@ -1,14 +1,9 @@
 package org.slf4j.impl;
 
-import com.lmax.disruptor.YieldingWaitStrategy;
-import com.lmax.disruptor.dsl.Disruptor;
-import com.lmax.disruptor.dsl.ProducerType;
 import org.noear.water.log.Level;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Logger的单例工厂，读取日志系统配置，并对日志落盘行为进行统一管理
