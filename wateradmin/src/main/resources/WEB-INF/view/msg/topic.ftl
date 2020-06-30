@@ -30,8 +30,8 @@
             <thead>
             <tr>
                 <td width="70">主题ID</td>
-                <td class="left">主题名称</td>
-                <td width="120">近日<br/>消息数量</td>
+                <td class="left" sort="">主题名称</td>
+                <td width="120" sort="stat_msg_day_num">近日<br/>消息数量</td>
                 <td width="120">最大<br/>消息数量</td>
                 <td width="120">最大<br/>派发次数</td>
                 <td width="120">最大<br/>同时派发数</td>

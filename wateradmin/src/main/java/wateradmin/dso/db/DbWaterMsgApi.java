@@ -169,7 +169,7 @@ public class DbWaterMsgApi {
                 .getList(new SubscriberModel());
     }
 
-    public static List<TopicModel> getTopicList(String topic_name) throws SQLException {
+    public static List<TopicModel> getTopicList(String topic_name, String sort) throws SQLException {
         return db().table("water_msg_topic")
                 .where("1 = 1")
                 .build(tb -> {
@@ -180,8 +180,16 @@ public class DbWaterMsgApi {
                             tb.andLk("topic_name", "%" + topic_name + "%");
                         }
                     }
-                }).orderBy("topic_name ASC")
-                .select("*")
+
+
+
+                    if(TextUtils.isEmpty(sort)){
+                        tb.orderBy("topic_name ASC");
+                    }else{
+                        tb.orderBy("stat_msg_day_num DESC");
+                    }
+
+                }).select("*")
                 .getList(new TopicModel());
     }
 

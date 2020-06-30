@@ -17,8 +17,8 @@ import java.util.List;
 public class TopicController extends BaseController {
     //主题列表
     @XMapping("/msg/topic")
-    public ModelAndView topic(String topic_name) throws SQLException {
-        List<TopicModel> list = DbWaterMsgApi.getTopicList(topic_name);
+    public ModelAndView topic(String topic_name, String sort) throws SQLException {
+        List<TopicModel> list = DbWaterMsgApi.getTopicList(topic_name, sort);
         viewModel.put("list",list);
         return view("msg/topic");
     }
