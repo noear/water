@@ -44,14 +44,6 @@
 <!--            <scope>provided</scope>-->
         </dependency>
 
-        <!-- 并发框架 -->
-        <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.4.2</version>
-<!--            <scope>provided</scope>-->
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -21,30 +21,17 @@ public enum WaterLoggerFactory implements ILoggerFactory {
 
 
     /**
-     * 异步落盘线程的执行队列，使用了无锁内存队列进行日志事件的管理
-     */
-    private final Disruptor<WaterLogEvent> disruptor;
-
-    /**
      * 日志等级
      */
     private volatile Level level = Level.INFO;
 
     WaterLoggerFactory(){
-        try {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
 
-            disruptor = new Disruptor<>(WaterLogEvent::new, 1024, executor, ProducerType.SINGLE, new YieldingWaitStrategy());
-            disruptor.handleEventsWith(new WaterLogEventHandler());
-            disruptor.start();
-        }catch (Exception ex){
-            throw new RuntimeException(ex);
-        }
     }
 
     @Override
     public Logger getLogger(String name) {
-        return new WaterLogger(name, disruptor);
+        return new WaterLogger(name);
     }
 
     public void setLevel(Level level) {

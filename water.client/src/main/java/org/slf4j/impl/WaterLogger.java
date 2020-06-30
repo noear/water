@@ -1,6 +1,6 @@
 package org.slf4j.impl;
 
-import com.lmax.disruptor.dsl.Disruptor;
+import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -9,10 +9,8 @@ import org.slf4j.helpers.MessageFormatter;
 
 public class WaterLogger implements Logger {
     private String name;
-    private Disruptor<WaterLogEvent> disruptor;
-    public WaterLogger(String name, Disruptor<WaterLogEvent> disruptor){
+    public WaterLogger(String name){
         this.name = name;
-        this.disruptor = disruptor;
     }
 
     @Override
@@ -404,14 +402,6 @@ public class WaterLogger implements Logger {
     }
 
     private void asyncLog(Level level, String msg) {
-        long sequence = disruptor.getRingBuffer().next();
-        try {
-            WaterLogEvent event = disruptor.getRingBuffer().get(sequence);
-            event.setName(name);
-            event.setLevel(level);
-            event.setMsgSupplier(() -> String.format("%s\t%s", name, msg));
-        } finally {
-            disruptor.getRingBuffer().publish(sequence);
-        }
+        WaterClient.Log.append(name,level,null,msg);
     }
 }
