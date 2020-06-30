@@ -15,6 +15,7 @@ public class TopicModel implements IBinder
     public int max_msg_num;
     public int max_distribution_num;
     public int max_concurrency_num;
+    public int stat_msg_day_num;
     public int alarm_model;
 
 	public void bind(GetHandlerEx s)
@@ -26,6 +27,7 @@ public class TopicModel implements IBinder
         max_msg_num = s.get("max_msg_num").value(0);
         max_distribution_num = s.get("max_distribution_num").value(0);
         max_concurrency_num = s.get("max_concurrency_num").value(0);
+        stat_msg_day_num = s.get("stat_msg_day_num").value(0);
         alarm_model = s.get("alarm_model").value(0);
 	}
 	
