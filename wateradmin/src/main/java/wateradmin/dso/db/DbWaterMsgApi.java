@@ -57,7 +57,7 @@ public class DbWaterMsgApi {
             key = key.trim();
 
             if (key.startsWith("@")) {
-                qr.andLk("tags", key.substring(1) + "%");
+                qr.andLk("tags", key.substring(1).trim() + "%");
             } else {
                 if (StringUtils.isNumeric(key)) {
                     qr.andEq("msg_id", Integer.parseInt(key));
