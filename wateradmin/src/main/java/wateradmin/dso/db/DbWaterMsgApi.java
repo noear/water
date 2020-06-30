@@ -186,7 +186,7 @@ public class DbWaterMsgApi {
                     if(TextUtils.isEmpty(sort)){
                         tb.orderBy("topic_name ASC");
                     }else{
-                        tb.orderBy("stat_msg_day_num DESC");
+                        tb.orderBy("stat_msg_day_num DESC,topic_name ASC");
                     }
 
                 }).select("*")
