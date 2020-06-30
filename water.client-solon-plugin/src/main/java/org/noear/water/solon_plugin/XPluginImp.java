@@ -96,4 +96,11 @@ public class XPluginImp implements XPlugin {
             }
         });
     }
+
+    @Override
+    public void stop() throws Throwable {
+        org.noear.water.WaterConfig.libOfDb.clear();
+        org.noear.water.WaterConfig.libOfRd.clear();
+        org.noear.water.WaterConfig.libOfCache.clear();
+    }
 }
