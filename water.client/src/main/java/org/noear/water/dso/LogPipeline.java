@@ -29,7 +29,7 @@ public class LogPipeline implements TaskUtils.ITask {
         TaskUtils.run(this);
     }
 
-    Queue<LogEvent> queueLocal = new LinkedBlockingQueue<>(1024);
+    Queue<LogEvent> queueLocal = new LinkedBlockingQueue<>();
 
     public void add(LogEvent event) {
         queueLocal.add(event);

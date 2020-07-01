@@ -287,7 +287,11 @@ public class WaterLogger implements Logger {
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();
 
-        LogPipeline.singleton().add(log);
+        try {
+            LogPipeline.singleton().add(log);
+        }catch (Exception ex){
+            //不打印
+        }
         //WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
     }
 }
