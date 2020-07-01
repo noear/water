@@ -14,6 +14,7 @@ import watersev.models.water_msg.MessageModel;
 public class LogUtil {
     private static Logger log_msg =  WaterLogger.get("water_log_msg");
     private static Logger log_sev =  WaterLogger.get("water_log_sev");
+    private static Logger log_paas =  WaterLogger.get("water_log_paas");
 
     public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {
@@ -65,7 +66,7 @@ public class LogUtil {
     public static void planInfo(IJob tag, AFileModel plan) {
         String content = plan.path + "(" + plan.plan_count + "/" + plan.plan_max + ")执行成功";
 
-        WaterClient.Log.append("water_log_paas", Level.INFO, "_plan", plan.tag, plan.path, "", "", content);
+        log_paas.info( "_plan", plan.tag, plan.path, "", "", content);
         //write(tag.getName(), plan.file_id + "", "", content);
     }
 
@@ -73,7 +74,7 @@ public class LogUtil {
 
         //log_sev.error(tag.getName(), tag1, summary, content);
 
-        WaterClient.Log.append("water_log_paas", Level.ERROR, "_plan", plan.tag, plan.path, "", "", content);
+        log_paas.error("_plan", plan.tag, plan.path, "", "", content);
 
 //        System.out.print(tag + "::\r\n");
 //        System.out.print(ThrowableUtils.getString(content));

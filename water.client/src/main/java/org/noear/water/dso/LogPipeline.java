@@ -46,12 +46,11 @@ public class LogPipeline implements TaskUtils.ITask {
         List<LogEvent> list = new ArrayList<>(100);
 
         while (true) {
-            list.clear();
-
             collectDo(list);
 
             if (list.size() > 0) {
-                WaterClient.Log.appendAll(new ArrayList<>(list), true);
+                WaterClient.Log.appendAll(list, true);
+                list = new ArrayList<>(100);
             } else {
                 break;
             }

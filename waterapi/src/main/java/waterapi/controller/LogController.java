@@ -5,6 +5,7 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import waterapi.controller.cmds.CMD_log_add;
+import waterapi.controller.cmds.CMD_log_add2;
 
 /**
  * Created by noear on 2017/7/18.
@@ -19,7 +20,7 @@ public class LogController implements XHandler {
         if ("/log/add/".equals(path)) {
             new CMD_log_add().exec(c);
         } else if ("/log/add2/".equals(path)) {
-            new CMD_log_add().exec(c);
+            new CMD_log_add2().exec(c);
         }
     }
 }
