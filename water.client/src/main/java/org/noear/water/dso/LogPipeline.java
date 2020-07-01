@@ -21,13 +21,13 @@ public class LogPipeline implements TaskUtils.ITask {
         return singleton;
     }
 
-    //
-    //
-    //
-
     private LogPipeline() {
         TaskUtils.run(this);
     }
+
+    //
+    //
+    //
 
     Queue<LogEvent> queueLocal = new LinkedBlockingQueue<>();
 

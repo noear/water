@@ -2,7 +2,6 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterConfig;
-import org.noear.water.montior.MonitorUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.Command;
@@ -18,7 +17,7 @@ public class TrackApi {
     public static RedisX rd_track;
     static {
         rd_track = WaterConfig.redis_track_cfg().getRd(5);
-        MonitorUtils.bind(rd_track);
+        TrackPipeline.singleton().bind(rd_track);
     }
 
     /**
@@ -49,7 +48,7 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        MonitorUtils.track(service, tag, name, timespan, _node, _from);
+        TrackPipeline.singleton().track(service, tag, name, timespan, _node, _from);
 //        WaterConfig.pools.submit(() -> {
 //            TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
 //            //trackDo(service, tag, name, timespan, _node, _from);

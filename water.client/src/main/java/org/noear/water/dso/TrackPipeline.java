@@ -1,36 +1,50 @@
-package org.noear.water.montior;
+package org.noear.water.dso;
 
-import org.noear.water.utils.*;
+import org.noear.water.track.TrackEvent;
+import org.noear.water.track.TrackUtils;
+import org.noear.water.utils.Datetime;
+import org.noear.water.utils.RedisX;
+import org.noear.water.utils.TaskUtils;
+import org.noear.water.utils.TextUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-public class MonitorUtils {
-    private static final String lock = "";
-    private static Map<String, MonitorCounter> _mainSet = new LinkedHashMap<>();
-    private static Map<String, MonitorCounter> _serviceSet = new LinkedHashMap<>();
-    private static Map<String, MonitorCounter> _fromSet = new LinkedHashMap<>();
+public class TrackPipeline implements TaskUtils.ITask {
+    private static TrackPipeline singleton = new TrackPipeline();
 
-    private static RedisX _redisX;
-    public static void bind(RedisX redisX){
+    public static TrackPipeline singleton() {
+        return singleton;
+    }
+
+    private TrackPipeline() {
+        TaskUtils.run(this);
+    }
+
+    //
+    //
+    //
+
+    private final String lock = "";
+    private Map<String, TrackEvent> _mainSet = new LinkedHashMap<>();
+    private Map<String, TrackEvent> _serviceSet = new LinkedHashMap<>();
+    private Map<String, TrackEvent> _fromSet = new LinkedHashMap<>();
+
+    private RedisX _redisX;
+
+    public void bind(RedisX redisX) {
         _redisX = redisX;
     }
 
-    static {
-        long mills = TimeUnit.SECONDS.toMillis(5);
-        TaskUtils.run(mills,MonitorUtils::sync);
-    }
+    private TrackEvent getOrNew(Map<String, TrackEvent> mSet, String group, String rdkey) {
 
-    private static MonitorCounter getOrNew(Map<String, MonitorCounter> mSet, String group, String rdkey) {
-
-        MonitorCounter tmp = mSet.get(rdkey);
+        TrackEvent tmp = mSet.get(rdkey);
 
         if (tmp == null) {
             synchronized (lock) {
                 tmp = mSet.get(rdkey);
                 if (tmp == null) {
-                    tmp = new MonitorCounter(group);
+                    tmp = new TrackEvent(group);
                     mSet.put(rdkey, tmp);
                 }
             }
@@ -40,7 +54,7 @@ public class MonitorUtils {
     }
 
     //记录性能（service/tag/name，三级 ,from _from,at _node）
-    public static void track(String service, String tag, String name, long timespan, String _node, String _from) {
+    public void track(String service, String tag, String name, long timespan, String _node, String _from) {
         track0(_mainSet, service, tag, name, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
@@ -53,12 +67,12 @@ public class MonitorUtils {
     }
 
     //记录性能（service/tag/name，三级）
-    public static void track(String service, String tag, String name, long timespan) {
+    public void track(String service, String tag, String name, long timespan) {
 
         track0(_mainSet, service, tag, name, timespan);
     }
 
-    private static void track0(Map<String, MonitorCounter> mSet, String service, String tag, String name, long timespan) {
+    private void track0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
         try {
             do_track(mSet, service, tag, name, timespan);
         } catch (Exception ex) {
@@ -67,7 +81,7 @@ public class MonitorUtils {
     }
 
     //记录性能
-    private static void do_track(Map<String, MonitorCounter> mSet, String service, String tag, String name, long timespan) {
+    private void do_track(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
         Datetime now = Datetime.Now();
 
         //1.提前构建各种key（为了性能采用 StringBuilder）
@@ -89,14 +103,14 @@ public class MonitorUtils {
         //average, slowest, fastest, total_num, total_time
 
         //记录当时数据
-        do_track_key(mSet, key_group, key_hour, timespan, MonitorCounter.type_hour, key_minute, key_minute_bef);
+        do_track_key(mSet, key_group, key_hour, timespan, TrackEvent.type_hour, key_minute, key_minute_bef);
 
         //记录当日数据
-        do_track_key(mSet, key_group, key_date, timespan, MonitorCounter.type_date, key_minute, key_minute_bef);
+        do_track_key(mSet, key_group, key_date, timespan, TrackEvent.type_date, key_minute, key_minute_bef);
     }
 
-    private static void do_track_key(Map<String, MonitorCounter> mSet, String group, String rdkey, long timespan, String type, String key_minute,String key_minute_bef) {
-        MonitorCounter ru = getOrNew(mSet, group, rdkey);
+    private void do_track_key(Map<String, TrackEvent> mSet, String group, String rdkey, long timespan, String type, String key_minute, String key_minute_bef) {
+        TrackEvent ru = getOrNew(mSet, group, rdkey);
         ru.type = type;
         ru.key_minute = key_minute;
         ru.key_minute_bef = key_minute_bef;
@@ -128,7 +142,18 @@ public class MonitorUtils {
         }
     }
 
-    public static void sync() {
+
+    @Override
+    public long getInterval() {
+        return 1000;
+    }
+
+    @Override
+    public void exec() throws Throwable {
+        if (_redisX == null) {
+            return;
+        }
+
         if (_mainSet.size() == 0) {
             return;
         }
@@ -137,7 +162,7 @@ public class MonitorUtils {
             if (_redisX != null) {
                 _redisX.open0((ru) -> {
                     try {
-                        sync0(ru);
+                        exec0(ru);
                     } catch (Throwable ex) {
                         ex.printStackTrace();
                     }
@@ -150,18 +175,17 @@ public class MonitorUtils {
         }
     }
 
-    private static void sync0(RedisX.RedisUsing ru) {
-
-        for (Map.Entry<String, MonitorCounter> kv : _mainSet.entrySet()) {
-            MontiorSynchronizer.track(ru,kv.getKey(),kv.getValue());
+    private void exec0(RedisX.RedisUsing ru) {
+        for (Map.Entry<String, TrackEvent> kv : _mainSet.entrySet()) {
+            TrackUtils.trackAll(ru, kv.getKey(), kv.getValue());
         }
 
-        for (Map.Entry<String, MonitorCounter> kv : _serviceSet.entrySet()) {
-            MontiorSynchronizer.track(ru,kv.getKey(),kv.getValue());
+        for (Map.Entry<String, TrackEvent> kv : _serviceSet.entrySet()) {
+            TrackUtils.trackAll(ru, kv.getKey(), kv.getValue());
         }
 
-        for (Map.Entry<String, MonitorCounter> kv : _fromSet.entrySet()) {
-            MontiorSynchronizer.track(ru,kv.getKey(),kv.getValue());
+        for (Map.Entry<String, TrackEvent> kv : _fromSet.entrySet()) {
+            TrackUtils.trackAll(ru, kv.getKey(), kv.getValue());
         }
     }
 }

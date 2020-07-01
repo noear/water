@@ -11,7 +11,7 @@ import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
-import org.noear.water.montior.TraceUtils;
+import org.noear.water.track.TrackUtils;
 import waterapi.dso.IDUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -58,7 +58,7 @@ public class WaterapiApp {
 
 			if (timecount != null) {
 				Timespan timespan = timecount.stop();
-				TraceUtils.track(Config.rd_track, Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
+				TrackUtils.track(Config.rd_track, Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
 			}
 		});
 	}

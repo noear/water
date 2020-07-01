@@ -1,10 +1,10 @@
-package org.noear.water.montior;
+package org.noear.water.track;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.LongAdder;
 
-public class MonitorCounter {
+public class TrackEvent {
     public static String type_date = "date";
     public static String type_hour = "hour";
 
@@ -15,7 +15,7 @@ public class MonitorCounter {
     public String key_minute;
     public String key_minute_bef;
 
-    public MonitorCounter(String group){
+    public TrackEvent(String group){
         this.group = group;
     }
 

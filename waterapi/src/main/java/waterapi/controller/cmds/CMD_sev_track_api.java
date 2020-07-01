@@ -1,6 +1,6 @@
 package waterapi.controller.cmds;
 
-import org.noear.water.montior.TraceUtils;
+import org.noear.water.track.TrackUtils;
 import waterapi.Config;
 
 /**
@@ -28,7 +28,7 @@ public class CMD_sev_track_api extends CMDBase {
         String name = get("name");
         long timespan = getlong("timespan"); //豪秒
 
-        TraceUtils.track(Config.rd_track, service, tag, name, timespan, _node, _from);
+        TrackUtils.track(Config.rd_track, service, tag, name, timespan, _node, _from);
 
         data.set("code", 1);
         data.set("msg", "success");
