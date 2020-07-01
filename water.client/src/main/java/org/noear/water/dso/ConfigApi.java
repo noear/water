@@ -1,9 +1,9 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.event.WaterConfigHandler;
 import org.noear.water.model.ConfigM;
 import org.noear.water.model.ConfigSetM;
-import org.noear.water.utils.ext.Act1;
 
 import java.io.IOException;
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.*;
 public class ConfigApi {
 
     private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
-    private Map<String, Set<Act1<ConfigSetM>>> _event = new HashMap<>();
+    private Map<String, Set<WaterConfigHandler>> _event = new HashMap<>();
 
     /**
      * 重新加载一个tag的配置
@@ -60,10 +60,10 @@ public class ConfigApi {
 
         _cfgs.put(tag, cfgSet);
 
-        Set<Act1<ConfigSetM>> tmp = _event.get(tag);
+        Set<WaterConfigHandler> tmp = _event.get(tag);
         if (tmp != null) {
-            for (Act1<ConfigSetM> r : tmp) {
-                r.run(cfgSet);
+            for (WaterConfigHandler r : tmp) {
+                r.handler(cfgSet);
             }
         }
     }
@@ -99,8 +99,8 @@ public class ConfigApi {
     /**
      * 订阅配置集
      * */
-    public void subscribe(String tag, Act1<ConfigSetM> callback){
-        Set<Act1<ConfigSetM>> tmp = _event.get(tag);
+    public void subscribe(String tag, WaterConfigHandler callback){
+        Set<WaterConfigHandler> tmp = _event.get(tag);
         if(tmp == null){
             tmp = new HashSet<>();
             _event.put(tag, tmp);
@@ -110,7 +110,7 @@ public class ConfigApi {
 
         //如果已存在，及时通知
         if(_cfgs.containsKey(tag)){
-            callback.run(_cfgs.get(tag));
+            callback.handler(_cfgs.get(tag));
         }
     }
 
