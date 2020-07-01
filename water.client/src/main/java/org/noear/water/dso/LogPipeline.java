@@ -43,14 +43,14 @@ public class LogPipeline implements TaskUtils.ITask {
 
     @Override
     public void exec() throws Exception {
-        List<LogEvent> list = new ArrayList<>(100);
 
         while (true) {
+            List<LogEvent> list = new ArrayList<>(100);
+
             collectDo(list);
 
             if (list.size() > 0) {
                 WaterClient.Log.appendAll(list, true);
-                list = new ArrayList<>(100);
             } else {
                 break;
             }
