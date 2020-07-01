@@ -8,6 +8,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
+import org.noear.weed.cache.SecondCache;
 import org.noear.weed.cache.memcached.MemCache;
 
 import java.util.Map;
@@ -154,6 +155,26 @@ public final class ConfigM {
         }
 
         return getCh(name, 60 * 5);
+    }
+
+    /**
+     * 获取 二级缓存 ICacheServiceEx
+     * */
+    public ICacheServiceEx getCh2(String keyHeader, int defSeconds) {
+        ICacheServiceEx cache1 = new LocalCache(defSeconds);
+        ICacheServiceEx cache2 = getCh(keyHeader, defSeconds);
+
+        return new SecondCache(cache1, cache2);
+    }
+
+    public ICacheServiceEx getCh2() {
+        String name = System.getProperty("water.service.name");
+
+        if (TextUtils.isEmpty(name)) {
+            throw new RuntimeException("System.getProperty(\"water.service.name\") is null, please configure!");
+        }
+
+        return getCh2(name, 60 * 5);
     }
 
     /**
