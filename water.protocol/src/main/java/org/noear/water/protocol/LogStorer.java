@@ -1,8 +1,10 @@
 package org.noear.water.protocol;
 
 import org.noear.water.log.Level;
+import org.noear.water.log.LogEvent;
 
 import java.util.Date;
+import java.util.List;
 
 public interface LogStorer {
     default void write(String logger, Level level, Object content, String from) {
@@ -22,4 +24,6 @@ public interface LogStorer {
     }
 
     void write(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime);
+
+    void writeAll(List<LogEvent> list);
 }

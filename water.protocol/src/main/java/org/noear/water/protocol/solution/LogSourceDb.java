@@ -1,6 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.water.log.Level;
+import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.LogModel;
 import org.noear.water.utils.Datetime;
@@ -77,6 +78,31 @@ public class LogSourceDb implements LogSource {
             }
 
 
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void writeAll(String logger, List<LogEvent> list) {
+        if (list.size() == 0) {
+            return;
+        }
+
+        try {
+            _db.table(logger).insertList(list, (log, item) -> {
+                item.set("log_id", log.log_id)
+                        .set("level", log.level)
+                        .setDf("tag", log.tag, "")
+                        .setDf("tag1", log.tag1, "")
+                        .setDf("tag2", log.tag2, "")
+                        .setDf("tag3", log.tag3, "")
+                        .setDf("summary", log.summary, "")
+                        .setDf("content", log.content, "")
+                        .setDf("from", log.from, "")
+                        .setDf("log_date", log.log_date, "$DATE(NOW())")
+                        .setDf("log_fulltime", log.log_fulltime, "$NOW()");
+            });
         } catch (Throwable ex) {
             ex.printStackTrace();
         }

@@ -18,6 +18,8 @@ public class LogController implements XHandler {
 
         if ("/log/add/".equals(path)) {
             new CMD_log_add().exec(c);
+        } else if ("/log/add2/".equals(path)) {
+            new CMD_log_add().exec(c);
         }
     }
 }
