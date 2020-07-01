@@ -15,15 +15,16 @@ public class WaterLogger implements Logger {
     }
 
     private static volatile Level level = Level.TRACE;
-    public static void setLevel(Level level){
+
+    public static void setLevel(Level level) {
         WaterLogger.level = level;
     }
 
-    public static void setInterval(long interval){
+    public static void setInterval(long interval) {
         LogPipeline.singleton().setInterval(interval);
     }
 
-    public static void setPacketSize(int packetSize){
+    public static void setPacketSize(int packetSize) {
         LogPipeline.singleton().setPacketSize(packetSize);
     }
 
@@ -287,11 +288,8 @@ public class WaterLogger implements Logger {
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();
 
-        try {
-            LogPipeline.singleton().add(log);
-        }catch (Exception ex){
-            //不打印
-        }
+        LogPipeline.singleton().add(log);
+
         //WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
     }
 }

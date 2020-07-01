@@ -32,7 +32,11 @@ public class LogPipeline implements TaskUtils.ITask {
     Queue<LogEvent> queueLocal = new LinkedBlockingQueue<>();
 
     public void add(LogEvent event) {
-        queueLocal.add(event);
+        try {
+            queueLocal.add(event);
+        } catch (Exception ex) {
+            //不打印
+        }
     }
 
 
