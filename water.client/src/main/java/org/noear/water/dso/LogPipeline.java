@@ -36,9 +36,16 @@ public class LogPipeline implements TaskUtils.ITask {
     }
 
 
+    private long interval = 1000;
     @Override
     public long getInterval() {
-        return 1000;
+        return interval;
+    }
+
+    public void setInterval(long interval) {
+        if (interval >= 1000) {
+            this.interval = interval;
+        }
     }
 
     @Override
