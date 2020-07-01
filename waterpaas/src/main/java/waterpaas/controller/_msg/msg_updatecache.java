@@ -4,8 +4,8 @@ import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.water.annotation.WaterMessage;
+import org.noear.water.dso.MessageHandler;
 import org.noear.water.model.MessageM;
-import org.noear.water.solon_plugin.XMessageHandler;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
 import waterpaas.dso.AFileUtil;
@@ -13,7 +13,7 @@ import waterpaas.dso.DbPaaSApi;
 import waterpaas.dso.RouteHelper;
 
 @WaterMessage("water.cache.update")
-public class msg_updatecache implements XMessageHandler {
+public class msg_updatecache implements MessageHandler {
     static final String label_hook_start = "hook.start";
 
     @Override

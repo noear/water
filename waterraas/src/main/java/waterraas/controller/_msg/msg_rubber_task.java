@@ -5,14 +5,14 @@ import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.WaterMessage;
+import org.noear.water.dso.MessageHandler;
 import org.noear.water.model.MessageM;
-import org.noear.water.solon_plugin.XMessageHandler;
 import waterraas.Config;
 import waterraas.dao.LogUtil;
 import waterraas.dao.SchemeUtil;
 
 @WaterMessage("rubber.task")
-public class msg_rubber_task implements XMessageHandler {
+public class msg_rubber_task implements MessageHandler {
 
     @Override
     public boolean handler(MessageM msg) throws Exception {

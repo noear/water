@@ -106,7 +106,7 @@ class demo{
 
 //消息服务：订阅消息并处理
 @WaterMessage("test.order.end")
-public class msg_updatecache implements XMessageHandler {
+public class msg_updatecache implements MessageHandler {
     @Override
     public boolean handler(MessageM msg) throws Exception {
         //处理消息...

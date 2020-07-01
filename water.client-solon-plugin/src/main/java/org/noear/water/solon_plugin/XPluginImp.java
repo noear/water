@@ -83,7 +83,7 @@ public class XPluginImp implements XPlugin {
         Aop.beanOnloaded(() -> {
             if (XWaterAdapter.global() != null) {
                 Aop.beanForeach((k, v) -> {
-                    if (k.startsWith("msg:") && XMessageHandler.class.isAssignableFrom(v.clz())) {
+                    if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
                         String topic = k.split(":")[1];
 
                         _router.put(topic, v.raw());
