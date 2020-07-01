@@ -3,6 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.dso.MessageHandler;
 import org.noear.water.model.MessageM;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
@@ -26,9 +27,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
 
-    private Map<String, XMessageHandler> _router;
+    private Map<String, MessageHandler> _router;
 
-    public Map<String, XMessageHandler> router() {
+    public Map<String, MessageHandler> router() {
         return _router;
     }
 
@@ -117,7 +118,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     //支持手动加入监听(保持旧的兼容)
-    public void messageListening(Map<String, XMessageHandler> map) {
+    public void messageListening(Map<String, MessageHandler> map) {
     }
 
     ;
@@ -152,7 +153,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     @Override
     public boolean messageReceiveHandler(MessageM msg) throws Exception {
-        XMessageHandler handler = _router.get(msg.topic);
+        MessageHandler handler = _router.get(msg.topic);
         if (handler == null) {
             return true;
         } else {

@@ -1,6 +1,5 @@
 package org.noear.water.solon_plugin;
 
-import javafx.event.EventHandler;
 import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XPlugin;
@@ -8,14 +7,15 @@ import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
 import org.noear.water.annotation.WaterConfig;
 import org.noear.water.annotation.WaterMessage;
-import org.noear.water.event.WaterConfigHandler;
+import org.noear.water.dso.ConfigHandler;
+import org.noear.water.dso.MessageHandler;
 import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class XPluginImp implements XPlugin {
-    Map<String, XMessageHandler> _router  =new HashMap<>();
+    Map<String, MessageHandler> _router  =new HashMap<>();
     @Override
     public void start(XApp app) {
 
@@ -59,7 +59,7 @@ public class XPluginImp implements XPlugin {
 
         //添加WaterMessage注解支持
         Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
-            if (XMessageHandler.class.isAssignableFrom(clz)) {
+            if (MessageHandler.class.isAssignableFrom(clz)) {
                 String topic = anno.value();
 
                 if (TextUtils.isEmpty(topic) == false) {
@@ -70,7 +70,7 @@ public class XPluginImp implements XPlugin {
 
         //添加WaterConfig注解支持
         Aop.factory().beanCreatorAdd(WaterConfig.class, (clz, wrap, anno) -> {
-            if (WaterConfigHandler.class.isAssignableFrom(clz)) {
+            if (ConfigHandler.class.isAssignableFrom(clz)) {
                 String tag = anno.value();
 
                 if (TextUtils.isEmpty(tag) == false) {

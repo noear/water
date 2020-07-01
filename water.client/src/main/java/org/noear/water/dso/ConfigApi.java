@@ -1,7 +1,6 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
-import org.noear.water.event.WaterConfigHandler;
 import org.noear.water.model.ConfigM;
 import org.noear.water.model.ConfigSetM;
 
@@ -14,7 +13,7 @@ import java.util.*;
 public class ConfigApi {
 
     private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
-    private Map<String, Set<WaterConfigHandler>> _event = new HashMap<>();
+    private Map<String, Set<ConfigHandler>> _event = new HashMap<>();
 
     /**
      * 重新加载一个tag的配置
@@ -60,9 +59,9 @@ public class ConfigApi {
 
         _cfgs.put(tag, cfgSet);
 
-        Set<WaterConfigHandler> tmp = _event.get(tag);
+        Set<ConfigHandler> tmp = _event.get(tag);
         if (tmp != null) {
-            for (WaterConfigHandler r : tmp) {
+            for (ConfigHandler r : tmp) {
                 r.handler(cfgSet);
             }
         }
@@ -99,8 +98,8 @@ public class ConfigApi {
     /**
      * 订阅配置集
      * */
-    public void subscribe(String tag, WaterConfigHandler callback){
-        Set<WaterConfigHandler> tmp = _event.get(tag);
+    public void subscribe(String tag, ConfigHandler callback){
+        Set<ConfigHandler> tmp = _event.get(tag);
         if(tmp == null){
             tmp = new HashSet<>();
             _event.put(tag, tmp);
