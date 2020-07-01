@@ -19,6 +19,10 @@ public class WaterLogger implements Logger {
         WaterLogger.level = level;
     }
 
+    public static void setInterval(long interval){
+        LogPipeline.singleton().setInterval(interval);
+    }
+
 
     private String _name;
     private String _tag;
