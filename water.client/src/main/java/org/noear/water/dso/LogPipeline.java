@@ -51,7 +51,7 @@ public class LogPipeline implements TaskUtils.ITask {
             collectDo(list);
 
             if (list.size() > 0) {
-                WaterClient.Log.appendAll(list, true);
+                WaterClient.Log.appendAll(new ArrayList<>(list), true);
             } else {
                 break;
             }
