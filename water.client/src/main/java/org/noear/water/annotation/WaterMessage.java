@@ -6,5 +6,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface WaterMessage {
+    /**
+     * message topic
+     * */
     String value();
 }
