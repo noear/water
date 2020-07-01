@@ -7,7 +7,7 @@ import org.noear.water.utils.TaskUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class LogPipeline implements TaskUtils.ITask {
     private static LogPipeline singleton = new LogPipeline();
@@ -24,7 +24,7 @@ public class LogPipeline implements TaskUtils.ITask {
         TaskUtils.run(this);
     }
 
-    Queue<LogEvent> queueLocal = new ArrayBlockingQueue<>(1024);
+    Queue<LogEvent> queueLocal = new LinkedBlockingQueue<>(1024);
 
     public void add(LogEvent event) {
         queueLocal.add(event);
@@ -46,8 +46,8 @@ public class LogPipeline implements TaskUtils.ITask {
             collectDo(list);
 
             if (list.size() > 0) {
-                WaterClient.Log.appendAll(list,true);
-            }else{
+                WaterClient.Log.appendAll(list, true);
+            } else {
                 break;
             }
         }
@@ -56,6 +56,7 @@ public class LogPipeline implements TaskUtils.ITask {
     private void collectDo(List<LogEvent> list) {
         //收集最多100条日志
         //
+        int count = 0;
         while (true) {
             LogEvent log = queueLocal.poll();
 
@@ -63,8 +64,9 @@ public class LogPipeline implements TaskUtils.ITask {
                 break;
             } else {
                 list.add(log);
+                count++;
 
-                if (list.size() == 100) {
+                if (count == 100) {
                     break;
                 }
             }
