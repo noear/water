@@ -54,34 +54,33 @@ public class TrackPipeline implements TaskUtils.ITask {
     }
 
     //记录性能（service/tag/name，三级 ,from _from,at _node）
-    public void track(String service, String tag, String name, long timespan, String _node, String _from) {
-        track0(_mainSet, service, tag, name, timespan);
+    public void append(String service, String tag, String name, long timespan, String _node, String _from) {
+        appendDo(_mainSet, service, tag, name, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
-            track0(_serviceSet, "_service", service, _node, timespan);
+            appendDo(_serviceSet, "_service", service, _node, timespan);
         }
 
         if (TextUtils.isEmpty(_from) == false) {
-            track0(_fromSet, "_from", service, _from, timespan);
+            appendDo(_fromSet, "_from", service, _from, timespan);
         }
     }
 
     //记录性能（service/tag/name，三级）
-    public void track(String service, String tag, String name, long timespan) {
-
-        track0(_mainSet, service, tag, name, timespan);
+    public void append(String service, String tag, String name, long timespan) {
+        appendDo(_mainSet, service, tag, name, timespan);
     }
 
-    private void track0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
+    private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
         try {
-            do_track(mSet, service, tag, name, timespan);
+            appendDo0(mSet, service, tag, name, timespan);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     //记录性能
-    private void do_track(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
+    private void appendDo0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
         Datetime now = Datetime.Now();
 
         //1.提前构建各种key（为了性能采用 StringBuilder）
@@ -142,10 +141,21 @@ public class TrackPipeline implements TaskUtils.ITask {
         }
     }
 
+    private long interval = 1000;
+    private long interval_min = 1000;
 
+    /**
+     * 获取任务间隔时间
+     * */
     @Override
     public long getInterval() {
-        return 1000;
+        return interval;
+    }
+
+    public void setInterval(long interval) {
+        if (interval >= interval_min) {
+            this.interval = interval;
+        }
     }
 
     @Override

@@ -40,21 +40,31 @@ public class LogPipeline implements TaskUtils.ITask {
     }
 
 
+    private long interval = 500;
+    private long interval_min = 500;
+
     private int packetSize = 100; //必须大于100
-    private long interval = 1000;
+    private int packetSize_min = 100; //必须大于100
+
+    /**
+     * 获取任务间隔时间
+     * */
     @Override
     public long getInterval() {
         return interval;
     }
 
     public void setInterval(long interval) {
-        if (interval >= 1000) {
+        if (interval >= interval_min) {
             this.interval = interval;
         }
     }
 
+    /**
+     * 设置管道包大小
+     * */
     public void setPacketSize(int packetSize) {
-        if (packetSize >= 100) {
+        if (packetSize >= packetSize_min) {
             this.packetSize = packetSize;
         }
     }

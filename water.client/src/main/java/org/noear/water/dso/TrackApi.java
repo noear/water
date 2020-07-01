@@ -48,7 +48,7 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        TrackPipeline.singleton().track(service, tag, name, timespan, _node, _from);
+        TrackPipeline.singleton().append(service, tag, name, timespan, _node, _from);
 //        WaterConfig.pools.submit(() -> {
 //            TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
 //            //trackDo(service, tag, name, timespan, _node, _from);
