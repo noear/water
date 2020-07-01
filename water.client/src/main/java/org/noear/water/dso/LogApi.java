@@ -186,6 +186,7 @@ public class LogApi {
             log.content = content_str(log.content);
         }
         String json = ONode.serialize(list);
+        list.clear();
 
         Map<String, String> params = new HashMap<>();
         params.put("list", json);
