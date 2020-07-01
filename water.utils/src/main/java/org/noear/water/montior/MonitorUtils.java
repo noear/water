@@ -1,9 +1,6 @@
 package org.noear.water.montior;
 
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.QuickTimerTask;
-import org.noear.water.utils.RedisX;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,7 +19,7 @@ public class MonitorUtils {
 
     static {
         long mills = TimeUnit.SECONDS.toMillis(5);
-        QuickTimerTask.scheduleAtFixedRate(MonitorUtils::sync, mills, mills);
+        TaskUtils.run(mills,MonitorUtils::sync);
     }
 
     private static MonitorCounter getOrNew(Map<String, MonitorCounter> mSet, String group, String rdkey) {

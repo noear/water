@@ -4,16 +4,16 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
+import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 日志服务接口
@@ -98,15 +98,14 @@ public class LogApi {
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         if (async) {
             WaterConfig.pools.submit(() -> {
-                appendReal(logger, level, tag, tag1, tag2, tag3, summary, content);
+                appendDo(logger, level, tag, tag1, tag2, tag3, summary, content);
             });
         } else {
-            appendReal(logger, level, tag, tag1, tag2, tag3, summary, content);
+            appendDo(logger, level, tag, tag1, tag2, tag3, summary, content);
         }
-
     }
 
-    private void appendReal(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+    private void appendDo(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }
@@ -143,23 +142,56 @@ public class LogApi {
             params.put("from", WaterClient.localServiceAddr());
         }
 
-        if (content != null) {
-            if (content instanceof Throwable) {
-                //处理异常
-                String tmp = ThrowableUtils.getString((Throwable) content);
-                params.put("content", tmp);
-            } else if (content instanceof String) {
-                //处理字符串
-                params.put("content", (String) content);
-            } else {
-                //处理其它对象（进行json）
-                String tmp = ONode.load(content).toJson();
-                params.put("content", tmp);
-            }
+        String content_str = content_str(content);
+        if (content_str != null) {
+            params.put("content", content_str);
         }
 
         try {
             CallUtil.post("log/add/", params);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private String content_str(Object content) {
+        if (content != null) {
+            if (content instanceof String) {
+                //处理字符串
+                return (String) content;
+            } else if (content instanceof Throwable) {
+                //处理异常
+                return ThrowableUtils.getString((Throwable) content);
+            } else {
+                //处理其它对象（进行json）
+                return ONode.load(content).toJson();
+            }
+        }
+
+        return null;
+    }
+
+    public void appendAll(List<LogEvent> list, boolean async) {
+        if (async) {
+            WaterConfig.pools.submit(() -> {
+                appendAllDo(list);
+            });
+        } else {
+            appendAllDo(list);
+        }
+    }
+
+    private void appendAllDo(List<LogEvent> list) {
+        for (LogEvent log : list) {
+            log.content = content_str(log.content);
+        }
+        String json = ONode.serialize(list);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("list", json);
+
+        try {
+            CallUtil.post("log/add2/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

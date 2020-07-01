@@ -1,6 +1,8 @@
 package org.noear.water.log;
 
 import org.noear.water.WaterClient;
+import org.noear.water.dso.LogPipeline;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 
 public class WaterLogger implements Logger {
@@ -261,6 +263,23 @@ public class WaterLogger implements Logger {
             return;
         }
 
-        WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
+        Datetime datetime = Datetime.Now();
+
+        LogEvent log = new LogEvent();
+
+        log.logger = _name;
+        log.level = level.code;
+        log.tag = tag;
+        log.tag1 = tag1;
+        log.tag2 = tag2;
+        log.tag3 = tag3;
+        log.summary = summary;
+        log.content = content;
+        log.from = WaterClient.localServiceAddr();
+        log.log_date = datetime.getDate();
+        log.log_fulltime = datetime.getFulltime();
+
+        LogPipeline.singleton().add(log);
+        //WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
     }
 }
