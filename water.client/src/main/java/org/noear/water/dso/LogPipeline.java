@@ -40,7 +40,7 @@ public class LogPipeline implements TaskUtils.ITask {
     }
 
 
-    private int packetSize = 200; //必须大于100
+    private int packetSize = 100; //必须大于100
     private long interval = 1000;
     @Override
     public long getInterval() {
