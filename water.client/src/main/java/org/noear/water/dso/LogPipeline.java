@@ -36,6 +36,7 @@ public class LogPipeline implements TaskUtils.ITask {
     }
 
 
+    private int packetSize = 100;
     private long interval = 1000;
     @Override
     public long getInterval() {
@@ -48,11 +49,17 @@ public class LogPipeline implements TaskUtils.ITask {
         }
     }
 
+    public void setPacketSize(int packetSize) {
+        if (packetSize >= 100) {
+            this.packetSize = packetSize;
+        }
+    }
+
     @Override
     public void exec() throws Exception {
 
         while (true) {
-            List<LogEvent> list = new ArrayList<>(100);
+            List<LogEvent> list = new ArrayList<>(packetSize);
 
             collectDo(list);
 
@@ -77,7 +84,7 @@ public class LogPipeline implements TaskUtils.ITask {
                 list.add(log);
                 count++;
 
-                if (count == 100) {
+                if (count == packetSize) {
                     break;
                 }
             }

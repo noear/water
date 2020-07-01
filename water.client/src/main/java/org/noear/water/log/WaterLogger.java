@@ -23,6 +23,10 @@ public class WaterLogger implements Logger {
         LogPipeline.singleton().setInterval(interval);
     }
 
+    public static void setPacketSize(int packetSize){
+        LogPipeline.singleton().setPacketSize(packetSize);
+    }
+
 
     private String _name;
     private String _tag;
