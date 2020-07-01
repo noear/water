@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * 写入时，先写到队列
+ * 提交时，每次提交100条；消费完后暂停1秒
+ *
+ * */
 public class LogPipeline implements TaskUtils.ITask {
     private static LogPipeline singleton = new LogPipeline();
 
