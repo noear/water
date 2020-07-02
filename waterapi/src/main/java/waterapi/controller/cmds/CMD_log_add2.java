@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Created by noear on 2017/7/19.
+ *
+ * 使用 post body 提交(content type : application/x-gzip)
  */
 public class CMD_log_add2 extends CMDBase {
 
@@ -21,12 +23,11 @@ public class CMD_log_add2 extends CMDBase {
 
     @Override
     protected void cmd_exec() throws Exception {
-        String list_json = null;
-        if(WW.mime_gzip.equals(context.contentType())){
-            list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
-        }else {
-            list_json = get("list");
+        if(WW.mime_gzip.equals(context.contentType()) == false){
+           return;
         }
+
+        String list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
 
         if (checkParamsIsOk(list_json) == false) {
             return;
