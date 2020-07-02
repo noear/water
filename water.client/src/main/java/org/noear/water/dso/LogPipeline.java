@@ -41,7 +41,7 @@ public class LogPipeline implements TaskUtils.ITask {
 
 
     private long interval = 500;
-    private long interval_min = 500;
+    private long interval_min = 100;
 
     private int packetSize = 100; //必须大于100
     private int packetSize_min = 100; //必须大于100

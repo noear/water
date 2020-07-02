@@ -1,12 +1,14 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 
@@ -187,11 +189,8 @@ public class LogApi {
         }
         String json = ONode.serialize(list);
 
-        Map<String, String> params = new HashMap<>();
-        params.put("list", json);
-
         try {
-            CallUtil.post("log/add2/", params);
+            CallUtil.postBody("log/add2/", GzipUtils.compress(json), WW.mime_gzip);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
