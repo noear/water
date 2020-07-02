@@ -18,30 +18,60 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Water Upstream （不能引用  XWaterAdapter）
+ * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
 public class XWaterUpstream implements HttpUpstream {
     private final String TAG_SERVER = "{server}";
 
+    /**
+     * 服务名
+     * */
     private String _service;
-    private DiscoverM _model;
+    /**
+     * 配置
+     * */
+    private DiscoverM _cfg;
+    /**
+     * 轮询值
+     * */
     private int _upstream_val = 0;
+    /**
+     * 节点数量
+     * */
     private int _count;
+    /**
+     * 节点列表
+     * */
     protected final List<String> _list = new ArrayList<>();
+    /**
+     * 使用url值
+     * */
     private boolean _use_url;
 
+    /**
+     * 消费者
+     * */
     protected static String _consumer;
+    /**
+     * 消费者地址
+     * */
     protected static String _consumer_address;
+
+
+
     protected final static Map<String, XWaterUpstream> _map = new ConcurrentHashMap<>();
 
     private XWaterUpstream(String service) {
         _service = service;
     }
 
+    /**
+     * 获取一个负载器
+     * */
     public static XWaterUpstream get(String service) {
         XWaterUpstream tmp = _map.get(service);
         if (tmp == null) {
-            synchronized (service.intern()) {
+            synchronized (service.intern()) { //::与获取形成互锁
                 tmp = _map.get(service);
                 if (tmp == null) {
                     tmp = new XWaterUpstream(service).reloadDo();
@@ -57,11 +87,13 @@ public class XWaterUpstream implements HttpUpstream {
         return _map.get(service);
     }
 
+
+
     /**
-     * 重新加载网关配置
+     * 重新加载负载配置
      */
     public XWaterUpstream reload() {
-        synchronized (_service.intern()) {
+        synchronized (_service.intern()) { //::与获取形成互锁
             return reloadDo();
         }
     }
@@ -92,10 +124,10 @@ public class XWaterUpstream implements HttpUpstream {
      * 负载策略
      */
     public String policy() {
-        if (_model == null) {
+        if (_cfg == null) {
             return null;
         } else {
-            return _model.policy;
+            return _cfg.policy;
         }
     }
 
@@ -106,32 +138,32 @@ public class XWaterUpstream implements HttpUpstream {
         return Collections.unmodifiableList(_list);
     }
 
-    private void doLoad(DiscoverM model) {
-        if (model == null || TextUtils.isEmpty(model.policy)) {
+    private void doLoad(DiscoverM cfg) {
+        if (cfg == null || TextUtils.isEmpty(cfg.policy)) {
             return;
         }
 
-        _model = model;
+        _cfg = cfg;
 
         //检查model.url 是否可用
-        if (_model.url != null) {
-            if (_model.url.indexOf("://") > 0) {
+        if (_cfg.url != null) {
+            if (_cfg.url.indexOf("://") > 0) {
                 _use_url = true;
             }
         } else {
-            _model.url = "";
+            _cfg.url = "";
         }
 
         //构建可用服务地址 //支持轮询和带权重的轮询
         String sev_url;
         int sev_wgt;
         _list.clear();
-        for (DiscoverTargetM m : _model.list) {
+        for (DiscoverTargetM m : _cfg.list) {
             sev_wgt = m.weight;
             sev_url = m.protocol + "://" + m.address;
 
-            if (_model.url.contains(TAG_SERVER)) {
-                sev_url = _model.url.replace(TAG_SERVER, sev_url);
+            if (_cfg.url.contains(TAG_SERVER)) {
+                sev_url = _cfg.url.replace(TAG_SERVER, sev_url);
             }
 
             while (sev_wgt > 0) {
@@ -144,20 +176,23 @@ public class XWaterUpstream implements HttpUpstream {
         _count = _list.size();
     }
 
+    /**
+     * 获取一个轮询节点
+     * */
     public String get() {
         return getDo();
     }
 
     private String getDo() {
         if (_use_url) {
-            return _model.url;
+            return _cfg.url;
         }
 
         if (_count == 0) {
             return null;
         }
 
-        synchronized (_service.intern()) {
+        synchronized (_service.intern()) { //::与更新形成互锁
             if (_upstream_val == 9999999) {
                 _upstream_val = 0;
             }

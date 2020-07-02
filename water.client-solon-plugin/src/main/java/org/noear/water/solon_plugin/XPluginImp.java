@@ -100,7 +100,10 @@ public class XPluginImp implements XPlugin {
         });
 
         //计划改为upstream模式，可跳过nginx代理
-        org.noear.water.WaterConfig.water_sev_url_getter = XWaterUpstream.get(WW.waterapi)::get;
+        XWaterUpstream wup = XWaterUpstream.get(WW.waterapi);
+        if(TextUtils.isEmpty(wup.get()) == false) {
+            org.noear.water.WaterConfig.water_sev_url_getter = wup::get;
+        }
     }
 
     @Override
