@@ -10,17 +10,17 @@ import java.util.Map;
  * 注册服务（使用 CallCfgUtil）
  * */
 public class RegistryApi {
-    public  void add(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
+    public void add(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
         add(service, address, check_url, 0, alarm_mobile, is_unstable);
     }
 
     //@parme checkType: 0通过check_url检查，1自己定时签到
     //
-    public  void add(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    public void add(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         add(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
     }
 
-    public  void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    public void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -42,7 +42,7 @@ public class RegistryApi {
     /**
      * 设置启用状态
      */
-    public  void set(String service, String address, String note, boolean enabled) {
+    public void set(String service, String address, String note, boolean enabled) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -56,7 +56,7 @@ public class RegistryApi {
         }
     }
 
-    public  DiscoverM discover(String service, String consumer, String consumer_address) {
+    public DiscoverM discover(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("consumer", consumer);
@@ -67,17 +67,23 @@ public class RegistryApi {
             String json = CallCfgUtil.post("sev/discover/", params);
             ONode data = ONode.loadStr(json).get("data");
 
-            DiscoverM model = new DiscoverM();
-            model.url = data.get("url").getString();
-            model.policy = data.get("policy").getString();
-            if (data.contains("list")) {
-                for (ONode n : data.get("list").ary()) {
-                    model.add(n.get("protocol").getString(),
-                            n.get("address").getString(),
-                            n.get("weight").getInt());
+            if (data.isObject()) {
+                DiscoverM cfg = new DiscoverM();
+
+                cfg.url = data.get("url").getString();
+                cfg.policy = data.get("policy").getString();
+
+                if (data.contains("list")) {
+                    for (ONode n : data.get("list").ary()) {
+                        cfg.add(n.get("protocol").getString(),
+                                n.get("address").getString(),
+                                n.get("weight").getInt());
+                    }
                 }
+                return cfg;
+            } else {
+                return null;
             }
-            return model;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

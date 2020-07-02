@@ -34,19 +34,20 @@ public class XWaterUpstream implements HttpUpstream {
     /**
      * 轮询值
      * */
-    private int _upstream_val = 0;
-    /**
-     * 节点数量
-     * */
-    private int _count;
+    private int _polling_val = 0;
     /**
      * 节点列表
      * */
-    protected final List<String> _list = new ArrayList<>();
+    protected final List<String> _nodes = new ArrayList<>();
     /**
-     * 使用url值
+     * 节点数量
      * */
-    private boolean _use_url;
+    private int _nodes_count;
+
+    /**
+     * 使用代理url
+     * */
+    private boolean _use_agent_url;
 
     /**
      * 消费者
@@ -135,7 +136,7 @@ public class XWaterUpstream implements HttpUpstream {
      * 服务节点
      */
     public List<String> nodes() {
-        return Collections.unmodifiableList(_list);
+        return Collections.unmodifiableList(_nodes);
     }
 
     private void doLoad(DiscoverM cfg) {
@@ -148,7 +149,7 @@ public class XWaterUpstream implements HttpUpstream {
         //检查model.url 是否可用
         if (_cfg.url != null) {
             if (_cfg.url.indexOf("://") > 0) {
-                _use_url = true;
+                _use_agent_url = true;
             }
         } else {
             _cfg.url = "";
@@ -157,7 +158,9 @@ public class XWaterUpstream implements HttpUpstream {
         //构建可用服务地址 //支持轮询和带权重的轮询
         String sev_url;
         int sev_wgt;
-        _list.clear();
+
+        _nodes.clear();
+
         for (DiscoverTargetM m : _cfg.list) {
             sev_wgt = m.weight;
             sev_url = m.protocol + "://" + m.address;
@@ -167,13 +170,13 @@ public class XWaterUpstream implements HttpUpstream {
             }
 
             while (sev_wgt > 0) {
-                _list.add(sev_url);
+                _nodes.add(sev_url);
                 sev_wgt--;
             }
         }
 
         //记录可用服务数
-        _count = _list.size();
+        _nodes_count = _nodes.size();
     }
 
     /**
@@ -184,23 +187,26 @@ public class XWaterUpstream implements HttpUpstream {
     }
 
     private String getDo() {
-        if (_use_url) {
+        //1.
+        if (_use_agent_url) {
             return _cfg.url;
         }
 
-        if (_count == 0) {
+        //2.
+        if (_nodes_count == 0) {
             return null;
         }
 
+        //3.
         synchronized (_service.intern()) { //::与更新形成互锁
-            if (_upstream_val == 9999999) {
-                _upstream_val = 0;
+            if (_polling_val == 9999999) {
+                _polling_val = 0;
             }
 
-            _upstream_val++;
-            int idx = _upstream_val % _count;
+            _polling_val++;
+            int idx = _polling_val % _nodes_count;
 
-            return _list.get(idx);
+            return _nodes.get(idx);
         }
     }
 

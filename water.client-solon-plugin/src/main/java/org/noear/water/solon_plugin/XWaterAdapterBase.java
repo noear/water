@@ -116,7 +116,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
 
                     n.set("service", k);
                     ONode nl = n.get("upstream").asArray();
-                    v._list.forEach((s) -> {
+                    v._nodes.forEach((s) -> {
                         nl.add(s);
                     });
                 });
@@ -127,7 +127,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
 
                     n.set("service", ups);
                     ONode nl = n.get("upstream").asArray();
-                    v._list.forEach((s) -> {
+                    v._nodes.forEach((s) -> {
                         nl.add(s);
                     });
                 }
