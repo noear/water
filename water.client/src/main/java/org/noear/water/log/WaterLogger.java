@@ -4,8 +4,9 @@ import org.noear.water.WaterClient;
 import org.noear.water.dso.LogPipeline;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.impl.Slf4jWaterWriter;
 
-public class WaterLogger implements Logger {
+public class WaterLogger implements Logger, Slf4jWaterWriter {
     public static WaterLogger get(String name) {
         return new WaterLogger(name);
     }
@@ -291,5 +292,13 @@ public class WaterLogger implements Logger {
         LogPipeline.singleton().add(log);
 
         //WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
+    }
+
+    /**
+     * for Slf4jWaterWriter
+     */
+    @Override
+    public void write(String name, Level level, String content) {
+        appendDo(level, name, null, null, null, null, content);
     }
 }
