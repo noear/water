@@ -27,7 +27,14 @@ public class WaterConfig {
     }
 
     public static String water_sev_api_url() {
-        return water_sev_url_getter.run();
+        //尝试能过代理获取
+        String url = water_sev_url_getter.run();
+        if (TextUtils.isEmpty(url)) {
+            //如果失败，用默认的config rul
+            return _water_cfg_api_url;
+        } else {
+            return url;
+        }
     }
 
     static {
