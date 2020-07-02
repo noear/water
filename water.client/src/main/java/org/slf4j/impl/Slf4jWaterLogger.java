@@ -1,16 +1,15 @@
 package org.slf4j.impl;
 
-import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 
-public class WaterLogger implements Logger {
+public class Slf4jWaterLogger implements Logger {
     private String name;
 
-    public WaterLogger(String name) {
+    public Slf4jWaterLogger(String name) {
         this.name = name;
     }
 
@@ -21,7 +20,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isTraceEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.TRACE.code;
+        return Slf4jWaterLoggerFactory.INSTANCE.getLevel().code <= Level.TRACE.code;
     }
 
     @Override
@@ -91,7 +90,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isDebugEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.DEBUG.code;
+        return Slf4jWaterLoggerFactory.INSTANCE.getLevel().code <= Level.DEBUG.code;
     }
 
     @Override
@@ -161,7 +160,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isInfoEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.INFO.code;
+        return Slf4jWaterLoggerFactory.INSTANCE.getLevel().code <= Level.INFO.code;
     }
 
     @Override
@@ -231,7 +230,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isWarnEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.WARN.code;
+        return Slf4jWaterLoggerFactory.INSTANCE.getLevel().code <= Level.WARN.code;
     }
 
     @Override
@@ -301,7 +300,7 @@ public class WaterLogger implements Logger {
 
     @Override
     public boolean isErrorEnabled() {
-        return WaterLoggerFactory.INSTANCE.getLevel().code <= Level.ERROR.code;
+        return Slf4jWaterLoggerFactory.INSTANCE.getLevel().code <= Level.ERROR.code;
     }
 
     @Override
@@ -402,7 +401,7 @@ public class WaterLogger implements Logger {
         asyncLog(level, msgBuilder.toString());
     }
 
-    private void asyncLog(Level level, String msg) {
-        WaterClient.Log.append(name, level, null, msg);
+    private void asyncLog(Level level, String content) {
+        Slf4jWaterLoggerFactory.INSTANCE.write(name, level, content);
     }
 }

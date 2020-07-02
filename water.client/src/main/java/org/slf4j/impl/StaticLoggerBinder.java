@@ -16,7 +16,7 @@ public enum  StaticLoggerBinder implements LoggerFactoryBinder {
     /**
      * Logger Factory name
      */
-    private static final String LOGGER_FACTORY_NAME = WaterLogger.class.getName();
+    private static final String LOGGER_FACTORY_NAME = Slf4jWaterLogger.class.getName();
 
     /**
      * StaticLoggerBinder 单例, slf4j-api 将调用该方法进行实现绑定
@@ -30,7 +30,7 @@ public enum  StaticLoggerBinder implements LoggerFactoryBinder {
 
     @Override
     public ILoggerFactory getLoggerFactory() {
-        return WaterLoggerFactory.INSTANCE;
+        return Slf4jWaterLoggerFactory.INSTANCE;
     }
 
     @Override
