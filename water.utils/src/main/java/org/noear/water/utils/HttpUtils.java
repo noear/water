@@ -8,6 +8,8 @@ import okio.Source;
 import org.noear.water.utils.ext.Act3Ex;
 import org.noear.water.utils.ext.Fun0;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
@@ -166,6 +168,16 @@ public class HttpUtils {
     }
 
     //@XNote("设置BODY raw")
+    public HttpUtils bodyRaw(byte[] bytes) {
+        return bodyRaw(bytes, null);
+    }
+
+    //@XNote("设置BODY raw")
+    public HttpUtils bodyRaw(byte[] bytes, String contentType) {
+        return bodyRaw(new ByteArrayInputStream(bytes), contentType);
+    }
+
+    //@XNote("设置BODY raw")
     public HttpUtils bodyRaw(InputStream raw) {
         return bodyRaw(raw, null);
     }
@@ -321,6 +333,10 @@ public class HttpUtils {
     //@XNote("发起POST请求，返回字符串（RESTAPI.create 在服务端新建一项资源）")
     public String post() throws IOException {
         return exec2("POST");
+    }
+
+    public void postAsync() throws IOException {
+        postAsync(null);
     }
 
     public void postAsync(Act3Ex<Boolean, Response, Exception> callback) throws IOException {

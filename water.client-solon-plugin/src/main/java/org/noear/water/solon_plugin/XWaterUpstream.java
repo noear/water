@@ -7,6 +7,7 @@ import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.dso.WaterUpstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -21,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements HttpUpstream {
+public class XWaterUpstream implements WaterUpstream, HttpUpstream {
     private final String TAG_SERVER = "{server}";
 
 
@@ -51,7 +52,7 @@ public class XWaterUpstream implements HttpUpstream {
      * */
     private boolean _use_agent_url;
 
-
+    private String _def_agent_url;
 
 
     protected final static Map<String, XWaterUpstream> _map = new ConcurrentHashMap<>();
@@ -160,26 +161,27 @@ public class XWaterUpstream implements HttpUpstream {
     }
 
     private String getDo() {
-        //1.
+        //1.如果有代理，则使用代理
         if (_use_agent_url) {
             return _cfg.url;
         }
 
-        //2.
+        //2.如果没有代理
         if (_nodes_count == 0) {
-            return null;
+            //2.1.如果没有节点，则使用本地代理
+            return _def_agent_url; //可能是null
+        } else {
+            //2.2.如果有节点；则使用节点
+            if (_polling_val == 9999999) {
+                _polling_val = 0;
+            }
+
+            _polling_val++;
+            int idx = _polling_val % _nodes_count;
+
+
+            return _nodes.get(idx);
         }
-
-        //3.
-        if (_polling_val == 9999999) {
-            _polling_val = 0;
-        }
-
-        _polling_val++;
-        int idx = _polling_val % _nodes_count;
-
-
-        return _nodes.get(idx);
     }
 
     /**
@@ -227,6 +229,12 @@ public class XWaterUpstream implements HttpUpstream {
     // for http client
     //
 
+    @Override
+    public void setAgent(String url){
+        _def_agent_url = url;
+    }
+
+    @Override
     public HttpUtils xcall(String path){
         return HttpUtils.http(get() + path)
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());

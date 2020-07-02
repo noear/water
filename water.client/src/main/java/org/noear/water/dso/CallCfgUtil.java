@@ -11,7 +11,7 @@ import java.util.Map;
 
 class CallCfgUtil {
     public static HttpUtils http(String path){
-        return HttpUtils.http(WaterConfig.water_cfg_api_url() + path);
+        return WaterConfig.water_cfg_upstream().xcall(path);
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {
@@ -19,7 +19,7 @@ class CallCfgUtil {
     }
 
     public static String postBody(String path, byte[] bytes, String contentType) throws IOException {
-        return http(path).bodyRaw(new ByteArrayInputStream(bytes), contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
+        return http(path).bodyRaw(bytes, contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
     }
 
     public static void postAsync(String path, Map<String, String> data)  {
