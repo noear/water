@@ -195,6 +195,7 @@ public class DbWaterCfgApi {
         db().table("water_cfg_properties")
                 .set("tag", tag.trim())
                 .set("key", key.trim())
+                .set("type", ConfigType.water_gateway)
                 .set("value", n.toJson())
                 .insert();
     }
@@ -210,6 +211,7 @@ public class DbWaterCfgApi {
         db().table("water_cfg_properties")
                 .set("key", key.trim())
                 .set("value", n.toJson())
+                .set("type", ConfigType.water_gateway)
                 .whereEq("tag", tag.trim())
                 .andEq("key", ori_key.trim())
                 .update();
