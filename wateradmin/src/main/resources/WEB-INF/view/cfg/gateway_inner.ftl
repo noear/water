@@ -24,15 +24,10 @@
                     is_enabled: is_enabled
                 },
                 success: function (data) {
-                    top.layer.msg(data.msg);
                     if (1 == data.code) {
-                        if (1 == is_enabled) {
-                            $(obj).html('禁用');
-                            $(obj).attr('onclick', "set_enabled(" + service_id + ", 0, this);");
-                        } else {
-                            $(obj).html('启用');
-                            $(obj).attr('onclick', "set_enabled(" + service_id + ", 1, this);");
-                        }
+                        location.reload();
+                    }else{
+                        top.layer.msg(data.msg);
                     }
                 }
             });
