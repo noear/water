@@ -127,7 +127,7 @@
                 <td class="left">${c.traffic_per?string("00.00")}% (${c.traffic_num})</td>
                 <td>${(c.chk_fulltime)?string("MM-dd HH:mm:ss")}</td>
                 <#if is_admin == 1>
-                <td><a>检查</a></td>
+                <td><a class="t2" href="./check?sn=${sev_key}&cn=${(c.consumer)!}&ca=${c.consumer_address!}" target="_blank">检查</a></td>
                 </#if>
             </tr>
         </#list>

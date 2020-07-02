@@ -3,6 +3,7 @@ package wateradmin.controller.cfg;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 import wateradmin.controller.BaseController;
@@ -16,6 +17,7 @@ import wateradmin.models.water_reg.ServiceSpeedModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,11 +97,19 @@ public class GatewayController extends BaseController {
 
     }
 
+    @XMapping("check")
+    public String check(String sn, String ca) throws IOException {
+        if(TextUtils.isNotEmpty(sn) && TextUtils.isNotEmpty(ca)) {
+            String url = "http://" + ca + "/run/check/?upstream=" + sn;
+            return HttpUtils.http(url).get();
+        }else{
+            return "";
+        }
+    }
+
     @XMapping("add")
     public ModelAndView add() {
-
         return view("cfg/gateway_edit");
-
     }
 
     @XMapping("edit/{sev_key}")
