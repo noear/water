@@ -7,12 +7,11 @@ import org.noear.water.utils.HttpUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Map;
 
-class CallUtil {
+class CallSevUtil {
     public static HttpUtils http(String path){
-        return HttpUtils.http(WaterConfig.water_api_url() + path);
+        return HttpUtils.http(WaterConfig.water_sev_api_url() + path);
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {

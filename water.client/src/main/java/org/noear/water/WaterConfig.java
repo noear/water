@@ -3,6 +3,7 @@ package org.noear.water;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.ext.Fun0;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -18,14 +19,19 @@ public class WaterConfig {
     public static Map<String, RedisX> libOfRd = new ConcurrentHashMap();
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
-    private static String _water_api_url = null;
+    private static String _water_cfg_api_url = null;
+    public static Fun0<String> water_sev_url_getter = ()-> _water_cfg_api_url;
+    public static String water_cfg_api_url() {
+        return _water_cfg_api_url;
+    }
 
-    public static String water_api_url() {
-        return _water_api_url;
+    public static String water_sev_api_url() {
+        return water_sev_url_getter.run();
     }
 
     static {
         String host = System.getProperty(WW.water_host);
+
         if (TextUtils.isEmpty(host) == false) {
 
             if (host.indexOf("://") < 0) {
@@ -33,13 +39,13 @@ public class WaterConfig {
             }
 
             if (host.endsWith("/")) {
-                _water_api_url = host;
+                _water_cfg_api_url = host;
             } else {
-                _water_api_url = host + "/";
+                _water_cfg_api_url = host + "/";
             }
         }
 
-        if (TextUtils.isEmpty(_water_api_url)) {
+        if (TextUtils.isEmpty(_water_cfg_api_url)) {
             throw new RuntimeException("System.getProperty(\"water.host\") is null, please configure!");
         }
     }

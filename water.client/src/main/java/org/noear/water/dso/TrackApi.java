@@ -72,7 +72,7 @@ public class TrackApi {
         params.put("timespan", timespan + "");
 
         try {
-            CallUtil.post("sev/track/api/", params);
+            CallSevUtil.post("sev/track/api/", params);
         } catch (Exception ex) {
 
         }
@@ -143,7 +143,7 @@ public class TrackApi {
         }
 
         try {
-            CallUtil.post("sev/track/sql/", params);
+            CallSevUtil.post("sev/track/sql/", params);
         } catch (Exception ex) {
 
         }

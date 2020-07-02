@@ -18,7 +18,7 @@ public class NoticeApi {
         params.put("msg", msg);
 
         try {
-            String txt = CallUtil.post("run/push/", params);
+            String txt = CallSevUtil.post("run/push/", params);
 
             System.out.println("NoticeApi::run/push/:" + txt);
 

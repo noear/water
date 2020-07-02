@@ -41,7 +41,7 @@ public class MessageApi {
         params.put("alarm_mobile", alarm_mobile);
         params.put("receive_way", receive_way + "");
 
-        String txt = CallUtil.post("msg/subscribe/", params);
+        String txt = CallSevUtil.post("msg/subscribe/", params);
 
         System.out.println("MessageApi::msg/subscribe/:" + txt);
 
@@ -59,7 +59,7 @@ public class MessageApi {
         params.put("key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
-        String txt = CallUtil.post("msg/unsubscribe/", params);
+        String txt = CallSevUtil.post("msg/unsubscribe/", params);
 
         System.out.println("MessageApi::msg/unsubscribe/:" + txt);
 
@@ -133,7 +133,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = CallUtil.post("msg/send/", params);
+        String txt = CallSevUtil.post("msg/send/", params);
 
         System.out.println("MessageApi::msg/send/:" + txt);
 
@@ -192,7 +192,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = CallUtil.post("msg/send/", params);
+        String txt = CallSevUtil.post("msg/send/", params);
 
         System.out.println("MessageApi::msg/send/:" + txt);
 
@@ -222,7 +222,7 @@ public class MessageApi {
             params.put("subscriber_key", subscriber_key);
         }
 
-        String txt = CallUtil.post("msg/cancel/", params);
+        String txt = CallSevUtil.post("msg/cancel/", params);
 
         System.out.println("MessageApi::msg/cancel/:" + txt);
 
@@ -248,7 +248,7 @@ public class MessageApi {
         }
 
 
-        String txt = CallUtil.post("msg/succeed/", params);
+        String txt = CallSevUtil.post("msg/succeed/", params);
 
         System.out.println("MessageApi::msg/succeed/:" + txt);
 

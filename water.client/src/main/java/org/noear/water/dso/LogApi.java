@@ -150,7 +150,7 @@ public class LogApi {
         }
 
         try {
-            CallUtil.post("log/add/", params);
+            CallSevUtil.post("log/add/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -190,7 +190,7 @@ public class LogApi {
         String json = ONode.serialize(list);
 
         try {
-            CallUtil.postBody("log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            CallSevUtil.postBody("log/add2/", GzipUtils.compress(json), WW.mime_gzip);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

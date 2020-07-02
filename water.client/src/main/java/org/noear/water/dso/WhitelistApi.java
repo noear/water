@@ -41,7 +41,7 @@ public class WhitelistApi {
         params.put("type", type);
         params.put("value", value);
 
-        return CallUtil.post("run/whitelist/check/", params);
+        return CallSevUtil.post("run/whitelist/check/", params);
     }
 
     private boolean checkDo(String tags, String type, String value) {

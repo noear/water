@@ -33,7 +33,7 @@ public class RegistryApi {
         params.put("check_type", check_type + "");
 
         try {
-            CallUtil.postAsync("sev/reg/", params);
+            CallSevUtil.postAsync("sev/reg/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class RegistryApi {
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
-            CallUtil.postAsync("sev/set/", params);
+            CallSevUtil.postAsync("sev/set/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class RegistryApi {
 
         try {
 
-            String json = CallUtil.post("sev/discover/", params);
+            String json = CallSevUtil.post("sev/discover/", params);
             ONode data = ONode.loadStr(json).get("data");
 
             DiscoverM model = new DiscoverM();
