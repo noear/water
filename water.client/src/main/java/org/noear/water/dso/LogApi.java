@@ -150,7 +150,7 @@ public class LogApi {
         }
 
         try {
-            CallSevUtil.post("log/add/", params);
+            CallSevUtil.post("/log/add/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

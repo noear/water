@@ -45,7 +45,7 @@ public class WaterpaasApp {
                 return;
             }
 
-            String node = XWaterAdapter.global().localHost();
+            String node = WaterClient.localServiceAddr();
 
             WaterClient.Track.track("water-paas", "paas", c.path(), timecount.stop().milliseconds(), node);
         });

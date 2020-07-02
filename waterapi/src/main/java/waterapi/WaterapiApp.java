@@ -62,7 +62,7 @@ public class WaterapiApp {
 
 			if (timecount != null) {
 				String _node = Config.getLocalHost();
-				String _from = FromUtils.getFromName(c);
+				String _from = FromUtils.getFrom(c);
 
 				Timespan timespan = timecount.stop();
 				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), timespan.milliseconds(), _node, _from);

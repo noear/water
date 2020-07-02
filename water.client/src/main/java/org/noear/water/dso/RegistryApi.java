@@ -64,7 +64,7 @@ public class RegistryApi {
 
         try {
 
-            String json = CallCfgUtil.post("sev/discover/", params);
+            String json = CallCfgUtil.post("/sev/discover/", params);
             ONode data = ONode.loadStr(json).get("data");
 
             if (data.isObject()) {

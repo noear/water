@@ -60,7 +60,7 @@ public class SchemeController implements XHandler {
             }
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan,XWaterAdapter.global().localHost());
+            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan, WaterClient.localServiceAddr());
 
         } catch (Exception ex) {
             ONode data = new ONode();

@@ -62,8 +62,8 @@
         <tr>
             <td width="70px">ID</td>
             <td>消费者</td>
-            <td width="180px">消费者参考IP</td>
-            <td width="120px">流量比例</td>
+            <td width="180px" class="left">消费者参考IP</td>
+            <td width="120px" class="left">流量比例</td>
             <td width="120px">最后检查时间</td>
         </tr>
         </thead>

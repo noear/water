@@ -47,9 +47,9 @@ public class WaterConfig {
             }
 
             if (host.endsWith("/")) {
-                _water_cfg_api_url = host;
+                _water_cfg_api_url = host.substring(0, host.length() - 2);
             } else {
-                _water_cfg_api_url = host + "/";
+                _water_cfg_api_url = host;
             }
         }
 

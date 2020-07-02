@@ -45,7 +45,7 @@ public class ConfigApi {
         ConfigSetM cfgSet = new ConfigSetM(tag);
 
         try {
-            String temp = CallSevUtil.get("cfg/get/?v=2&tag=" + tag);
+            String temp = CallSevUtil.get("/cfg/get/?v=2&tag=" + tag);
             cfgSet.load(ONode.loadStr(temp));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -127,7 +127,7 @@ public class ConfigApi {
      */
     public void set(String tag, String key, String value) throws IOException {
 
-        CallCfgUtil.http("cfg/set/")
+        CallCfgUtil.http("/cfg/set/")
                 .data("tag", tag)
                 .data("key", key)
                 .data("value", value)

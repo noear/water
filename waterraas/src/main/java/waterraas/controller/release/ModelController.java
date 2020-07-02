@@ -36,7 +36,7 @@ public class ModelController implements XHandler {
             run(context,model,args_str);
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "model", model, timespan,XWaterAdapter.global().localHost());
+            WaterClient.Track.track(Config.water_service_name, "model", model, timespan, WaterClient.localServiceAddr());
         }catch (Exception ex){
             ONode data = new ONode();
             data.set("code", 0).set("msg", ex.getMessage());
