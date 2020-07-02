@@ -101,4 +101,8 @@ public class Config {
             throw new RuntimeException(ex);
         }
     }
+
+    public static String getLocalHost() {
+        return localHost;
+    }
 }

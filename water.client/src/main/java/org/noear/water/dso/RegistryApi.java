@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 注册服务
+ * 注册服务（使用 CallCfgUtil）
  * */
 public class RegistryApi {
     public  void add(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
@@ -33,7 +33,7 @@ public class RegistryApi {
         params.put("check_type", check_type + "");
 
         try {
-            CallSevUtil.postAsync("sev/reg/", params);
+            CallCfgUtil.postAsync("sev/reg/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class RegistryApi {
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
-            CallSevUtil.postAsync("sev/set/", params);
+            CallCfgUtil.postAsync("sev/set/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class RegistryApi {
 
         try {
 
-            String json = CallSevUtil.post("sev/discover/", params);
+            String json = CallCfgUtil.post("sev/discover/", params);
             ONode data = ONode.loadStr(json).get("data");
 
             DiscoverM model = new DiscoverM();

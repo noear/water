@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * 配置服务接口
+ * 配置服务接口（使用 CallCfgUtil）
  * */
 public class ConfigApi {
 

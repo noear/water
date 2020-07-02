@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements HttpUpstream{
+public class XWaterUpstream implements HttpUpstream {
     private final String TAG_SERVER = "{server}";
 
     private String _service;
@@ -39,14 +39,18 @@ public class XWaterUpstream implements HttpUpstream{
     }
 
     public static XWaterUpstream get(String service) {
-        if (_map.containsKey(service)) {
-            return _map.get(service);
-        } else {
-            XWaterUpstream tmp = new XWaterUpstream(service);
-            tmp.reload();
-            _map.put(service, tmp);
-            return tmp;
+        XWaterUpstream tmp = _map.get(service);
+        if (tmp == null) {
+            synchronized (service.intern()) {
+                tmp = _map.get(service);
+                if (tmp == null) {
+                    tmp = new XWaterUpstream(service).reloadDo();
+                    _map.put(service, tmp);
+                }
+            }
         }
+
+        return tmp;
     }
 
     protected static XWaterUpstream getOnly(String service) {
@@ -56,7 +60,13 @@ public class XWaterUpstream implements HttpUpstream{
     /**
      * 重新加载网关配置
      */
-    public void reload() {
+    public XWaterUpstream reload() {
+        synchronized (_service.intern()) {
+            return reloadDo();
+        }
+    }
+
+    private XWaterUpstream reloadDo() {
         if (_consumer == null) {
             _consumer = "";
         }
@@ -66,10 +76,9 @@ public class XWaterUpstream implements HttpUpstream{
         }
 
         DiscoverM mod = WaterClient.Registry.discover(_service, _consumer, _consumer_address);
+        doLoad(mod);
 
-        synchronized (_service) {
-            doLoad(mod);
-        }
+        return this;
     }
 
     /**
@@ -136,6 +145,10 @@ public class XWaterUpstream implements HttpUpstream{
     }
 
     public String get() {
+        return getDo();
+    }
+
+    private String getDo() {
         if (_use_url) {
             return _model.url;
         }
@@ -144,7 +157,7 @@ public class XWaterUpstream implements HttpUpstream{
             return null;
         }
 
-        synchronized (_service) {
+        synchronized (_service.intern()) {
             if (_upstream_val == 9999999) {
                 _upstream_val = 0;
             }
@@ -184,15 +197,15 @@ public class XWaterUpstream implements HttpUpstream{
         }
 
         HttpUpstream upstream = null;
-        if(XApp.cfg().isDebugMode()){
+        if (XApp.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
-            if(url != null){
-                upstream = (s)->url;
+            if (url != null) {
+                upstream = (s) -> url;
             }
         }
 
-        if(upstream == null) {
+        if (upstream == null) {
             upstream = XWaterUpstream.get(c_sev);
         }
 

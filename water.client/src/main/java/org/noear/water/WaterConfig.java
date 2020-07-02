@@ -21,6 +21,7 @@ public class WaterConfig {
 
     private static String _water_cfg_api_url = null;
     public static Fun0<String> water_sev_url_getter = ()-> _water_cfg_api_url;
+
     public static String water_cfg_api_url() {
         return _water_cfg_api_url;
     }

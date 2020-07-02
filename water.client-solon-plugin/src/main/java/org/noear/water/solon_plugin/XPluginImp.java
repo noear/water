@@ -3,6 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XPlugin;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
 import org.noear.water.annotation.WaterConfig;
@@ -99,7 +100,7 @@ public class XPluginImp implements XPlugin {
         });
 
         //计划改为upstream模式，可跳过nginx代理
-        org.noear.water.WaterConfig.water_sev_url_getter = XWaterUpstream.get("waterapi")::get;
+        org.noear.water.WaterConfig.water_sev_url_getter = XWaterUpstream.get(WW.waterapi)::get;
     }
 
     @Override

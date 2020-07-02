@@ -9,9 +9,11 @@ import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
+import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
 import org.noear.water.track.TrackUtils;
+import waterapi.dso.FromUtils;
 import waterapi.dso.IDUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -46,6 +48,8 @@ public class WaterapiApp {
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 				ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 				ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
+
+				TrackBuffer.singleton().bind(Config.rd_track);
 			});
 		}
 
@@ -57,8 +61,11 @@ public class WaterapiApp {
 			Timecount timecount = c.attr("timecount", null);
 
 			if (timecount != null) {
+				String _node = Config.getLocalHost();
+				String _from = FromUtils.getFromName(c);
+
 				Timespan timespan = timecount.stop();
-				TrackUtils.track(Config.rd_track, Config.water_service_name, "cmd", c.path(), timespan.milliseconds());
+				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), timespan.milliseconds(), _node, _from);
 			}
 		});
 	}

@@ -26,6 +26,9 @@ public class WW {
     public static final String water_log_api = "water_log_api";
 
     public static final String water = "water";
+    public static final String waterapi = "waterapi";
+    public static final String watersev = "watersev";
+
     public static final String water_redis = "water_redis";
     public static final String water_redis_track = "water_redis_track";
     public static final String water_cache = "water_cache";
