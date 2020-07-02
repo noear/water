@@ -1,6 +1,6 @@
 package org.noear.water.utils;
 
-import org.noear.water.utils.ext.Act1Ex;
+import org.noear.water.utils.ext.Act1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,15 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
     private int packetSize = 100; //必须大于100
     private int packetSize_min = 100; //必须大于100
 
-    private Act1Ex<List<Event>> handler;
+    private Act1<List<Event>> handler; //不要用Act1Ex
 
-    public EventPipeline(Act1Ex<List<Event>> handler) {
+    public EventPipeline(Act1<List<Event>> handler) {
         this.handler = handler;
 
         TaskUtils.run(this);
     }
 
-    public EventPipeline(long interval,int packetSize, Act1Ex<List<Event>> handler) {
+    public EventPipeline(long interval,int packetSize, Act1<List<Event>> handler) {
         this.handler = handler;
 
         setInterval(interval);
