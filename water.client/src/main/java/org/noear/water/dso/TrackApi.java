@@ -17,7 +17,7 @@ public class TrackApi {
     public static RedisX rd_track;
     static {
         rd_track = WaterConfig.redis_track_cfg().getRd(5);
-        TrackPipeline.singleton().bind(rd_track);
+        TrackBuffer.singleton().bind(rd_track);
     }
 
     /**
@@ -48,7 +48,7 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        TrackPipeline.singleton().append(service, tag, name, timespan, _node, _from);
+        TrackBuffer.singleton().append(service, tag, name, timespan, _node, _from);
 //        WaterConfig.pools.submit(() -> {
 //            TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
 //            //trackDo(service, tag, name, timespan, _node, _from);

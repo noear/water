@@ -10,14 +10,14 @@ import org.noear.water.utils.TextUtils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TrackPipeline implements TaskUtils.ITask {
-    private static TrackPipeline singleton = new TrackPipeline();
+public class TrackBuffer implements TaskUtils.ITask {
+    private static TrackBuffer singleton = new TrackBuffer();
 
-    public static TrackPipeline singleton() {
+    public static TrackBuffer singleton() {
         return singleton;
     }
 
-    private TrackPipeline() {
+    private TrackBuffer() {
         TaskUtils.run(this);
     }
 
@@ -53,7 +53,9 @@ public class TrackPipeline implements TaskUtils.ITask {
         return tmp;
     }
 
-    //记录性能（service/tag/name，三级 ,from _from,at _node）
+    /**
+     * 添加记录（记录性能（service/tag/name，三级 ,from _from,at _node））
+     * */
     public void append(String service, String tag, String name, long timespan, String _node, String _from) {
         appendDo(_mainSet, service, tag, name, timespan);
 
@@ -66,7 +68,9 @@ public class TrackPipeline implements TaskUtils.ITask {
         }
     }
 
-    //记录性能（service/tag/name，三级）
+    /**
+     * 添加记录（记录性能（service/tag/name，三级））
+     * */
     public void append(String service, String tag, String name, long timespan) {
         appendDo(_mainSet, service, tag, name, timespan);
     }
@@ -160,6 +164,13 @@ public class TrackPipeline implements TaskUtils.ITask {
 
     @Override
     public void exec() throws Throwable {
+        flush();
+    }
+
+    /**
+     * 提交并清空
+     * */
+    public void flush(){
         if (_redisX == null) {
             return;
         }
@@ -172,7 +183,7 @@ public class TrackPipeline implements TaskUtils.ITask {
             if (_redisX != null) {
                 _redisX.open0((ru) -> {
                     try {
-                        exec0(ru);
+                        flush0(ru);
                     } catch (Throwable ex) {
                         ex.printStackTrace();
                     }
@@ -185,7 +196,7 @@ public class TrackPipeline implements TaskUtils.ITask {
         }
     }
 
-    private void exec0(RedisX.RedisUsing ru) {
+    private void flush0(RedisX.RedisUsing ru) {
         for (Map.Entry<String, TrackEvent> kv : _mainSet.entrySet()) {
             TrackUtils.trackAll(ru, kv.getKey(), kv.getValue());
         }
