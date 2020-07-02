@@ -1,6 +1,6 @@
 #### 2.0.3 规划::
 * 重构waterapi，采用solon.uapi开发
-* 基于http api，改写监控数据获取；
+* 基于http api，改写监控数据获取（替代阿里云SDK方式）
 
 #### 2.0.2 规划::
 * 增加PoalDb支持
