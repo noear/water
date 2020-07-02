@@ -230,7 +230,7 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
     //
 
     @Override
-    public void setAgent(String url){
+    public void setAgentDef(String url){
         _def_agent_url = url;
     }
 
