@@ -115,16 +115,17 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
             return;
         }
 
-        _cfg = cfg;
-
         //检查model.url 是否可用
-        if (_cfg.url != null) {
-            if (_cfg.url.indexOf("://") > 0) {
+        if (cfg.url != null) {
+            if (cfg.url.indexOf("://") > 0) {
+                _cfg = cfg;//不能删
                 _use_agent_url = true;
             }
         } else {
-            _cfg.url = "";
+            cfg.url = "";
         }
+
+        _cfg = cfg;
 
         //构建可用服务地址 //支持轮询和带权重的轮询
         String sev_url;
@@ -147,20 +148,23 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
         }
 
         //记录可用服务数
-        _nodes = _nodes2;
-        _nodes_count = _nodes.size();
+        //
+        if(_nodes2.size() < _nodes_count){
+            //旧的多，则先更新数量
+            _nodes_count = _nodes.size();
+            _nodes = _nodes2;
+        }else{
+            //新的多，则先更新节点
+            _nodes = _nodes2;
+            _nodes_count = _nodes.size();
+        }
+
     }
 
     /**
      * 获取一个轮询节点
      * */
     public String get() {
-        synchronized (_service.intern()) { //::与更新形成互锁 //锁总比代理性能好
-            return getDo();
-        }
-    }
-
-    private String getDo() {
         //1.如果有代理，则使用代理
         if (_use_agent_url) {
             return _cfg.url;
