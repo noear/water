@@ -4,13 +4,13 @@ import org.noear.water.track.TrackEvent;
 import org.noear.water.track.TrackUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.RedisX;
-import org.noear.water.utils.TaskFactory;
+import org.noear.water.utils.TaskUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TrackPipeline implements TaskFactory.ITask {
+public class TrackPipeline implements TaskUtils.ITask {
     private static TrackPipeline singleton = new TrackPipeline();
 
     public static TrackPipeline singleton() {
@@ -18,7 +18,7 @@ public class TrackPipeline implements TaskFactory.ITask {
     }
 
     private TrackPipeline() {
-        TaskFactory.run(this);
+        TaskUtils.run(this);
     }
 
     //

@@ -3,7 +3,7 @@ package org.noear.water.utils;
 
 import org.noear.water.utils.ext.Act0Ex;
 
-public class TaskFactory {
+public class TaskUtils {
     public static void run(ITask task) {
         new Thread(() -> {
             doRun(task);
