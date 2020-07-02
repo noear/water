@@ -33,7 +33,7 @@ public class RegistryApi {
         params.put("check_type", check_type + "");
 
         try {
-            CallCfgUtil.postAsync("sev/reg/", params);
+            CallCfgUtil.postAsync("/sev/reg/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class RegistryApi {
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
-            CallCfgUtil.postAsync("sev/set/", params);
+            CallCfgUtil.postAsync("/sev/set/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

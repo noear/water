@@ -38,7 +38,7 @@ public class XWaterUpstream implements HttpUpstream {
     /**
      * 节点列表
      * */
-    protected final List<String> _nodes = new ArrayList<>();
+    protected List<String> _nodes = new ArrayList<>();
     /**
      * 节点数量
      * */
@@ -142,8 +142,8 @@ public class XWaterUpstream implements HttpUpstream {
         String sev_url;
         int sev_wgt;
 
-        _nodes.clear();
 
+        List<String> _nodes2 = new ArrayList<>();
         for (DiscoverTargetM m : _cfg.list) {
             sev_wgt = m.weight;
             sev_url = m.protocol + "://" + m.address;
@@ -153,12 +153,13 @@ public class XWaterUpstream implements HttpUpstream {
             }
 
             while (sev_wgt > 0) {
-                _nodes.add(sev_url);
+                _nodes2.add(sev_url);
                 sev_wgt--;
             }
         }
 
         //记录可用服务数
+        _nodes = _nodes2;
         _nodes_count = _nodes.size();
     }
 

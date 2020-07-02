@@ -77,7 +77,7 @@ public class TrackApi {
         } catch (Exception ex) {
 
         }
-        //CallUtil.postAsync("sev/track/api/", params);
+        //CallUtil.postAsync("/sev/track/api/", params);
     }
 
     /**
@@ -149,6 +149,6 @@ public class TrackApi {
 
         }
 
-//        CallUtil.postAsync("sev/track/sql/", params);
+//        CallUtil.postAsync("/sev/track/sql/", params);
     }
 }
