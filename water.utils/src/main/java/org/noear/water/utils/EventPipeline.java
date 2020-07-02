@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * 提交时，每次提交100条；消费完后暂停1秒
  *
  * */
-public class EventPipeline<Event> implements TaskUtils.ITask {
+public class EventPipeline<Event> implements TaskFactory.ITask {
     private long interval = 500;
     private long interval_min = 100;
 
@@ -24,7 +24,7 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
     public EventPipeline(Act1<List<Event>> handler) {
         this.handler = handler;
 
-        TaskUtils.run(this);
+        TaskFactory.run(this);
     }
 
     public EventPipeline(long interval,int packetSize, Act1<List<Event>> handler) {
@@ -32,7 +32,7 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
 
         setInterval(interval);
         setPacketSize(packetSize);
-        TaskUtils.run(this);
+        TaskFactory.run(this);
     }
 
     //
