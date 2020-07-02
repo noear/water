@@ -295,10 +295,19 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     }
 
     /**
+     * 方便对接别的接口
+     */
+    public void append(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+        appendDo(level, tag, tag1, tag2, tag3, summary, content);
+    }
+
+    /**
      * for Slf4jWaterWriter
      */
     @Override
     public void write(String name, Level level, String content) {
-        appendDo(level, name, null, null, null, null, content);
+        //slf4 的 name ，做为 tag1 用
+        //
+        appendDo(level, "slf4j", name, null, null, null, content);
     }
 }
