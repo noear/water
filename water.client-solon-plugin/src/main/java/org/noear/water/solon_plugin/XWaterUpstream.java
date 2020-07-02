@@ -75,7 +75,7 @@ public class XWaterUpstream implements HttpUpstream {
             synchronized (service.intern()) { //::与获取形成互锁
                 tmp = _map.get(service);
                 if (tmp == null) {
-                    tmp = new XWaterUpstream(service).reloadDo();
+                    tmp = new XWaterUpstream(service).loadDo(false);
                     _map.put(service, tmp);
                 }
             }
@@ -94,12 +94,10 @@ public class XWaterUpstream implements HttpUpstream {
      * 重新加载负载配置
      */
     public XWaterUpstream reload() {
-        synchronized (_service.intern()) { //::与获取形成互锁
-            return reloadDo();
-        }
+        return loadDo(true);
     }
 
-    private XWaterUpstream reloadDo() {
+    private XWaterUpstream loadDo(boolean lock) {
         if (_consumer == null) {
             _consumer = "";
         }
@@ -108,38 +106,23 @@ public class XWaterUpstream implements HttpUpstream {
             _consumer_address = "";
         }
 
-        DiscoverM mod = WaterClient.Registry.discover(_service, _consumer, _consumer_address);
-        doLoad(mod);
+        DiscoverM cfg = WaterClient.Registry.discover(_service, _consumer, _consumer_address);
+
+        if(lock){
+            synchronized (_service.intern()) { //::与获取形成互锁
+                loadDo0(cfg);
+            }
+        }else{
+            loadDo0(cfg);
+        }
 
         return this;
     }
 
-    /**
-     * 服务名
-     */
-    public String name() {
-        return _service;
-    }
-
-    /**
-     * 负载策略
-     */
-    public String policy() {
-        if (_cfg == null) {
-            return null;
-        } else {
-            return _cfg.policy;
-        }
-    }
-
-    /**
-     * 服务节点
-     */
-    public List<String> nodes() {
-        return Collections.unmodifiableList(_nodes);
-    }
-
-    private void doLoad(DiscoverM cfg) {
+    private void loadDo0(DiscoverM cfg) {
+        //
+        //使用前，要锁一下
+        //
         if (cfg == null || TextUtils.isEmpty(cfg.policy)) {
             return;
         }
@@ -183,7 +166,9 @@ public class XWaterUpstream implements HttpUpstream {
      * 获取一个轮询节点
      * */
     public String get() {
-        return getDo();
+        synchronized (_service.intern()) { //::与更新形成互锁 //锁总比代理性能好
+            return getDo();
+        }
     }
 
     private String getDo() {
@@ -198,16 +183,40 @@ public class XWaterUpstream implements HttpUpstream {
         }
 
         //3.
-        synchronized (_service.intern()) { //::与更新形成互锁
-            if (_polling_val == 9999999) {
-                _polling_val = 0;
-            }
-
-            _polling_val++;
-            int idx = _polling_val % _nodes_count;
-
-            return _nodes.get(idx);
+        if (_polling_val == 9999999) {
+            _polling_val = 0;
         }
+
+        _polling_val++;
+        int idx = _polling_val % _nodes_count;
+
+
+        return _nodes.get(idx);
+    }
+
+    /**
+     * 服务名
+     */
+    public String name() {
+        return _service;
+    }
+
+    /**
+     * 负载策略
+     */
+    public String policy() {
+        if (_cfg == null) {
+            return null;
+        } else {
+            return _cfg.policy;
+        }
+    }
+
+    /**
+     * 服务节点
+     */
+    public List<String> nodes() {
+        return Collections.unmodifiableList(_nodes);
     }
 
     @Override
@@ -217,7 +226,7 @@ public class XWaterUpstream implements HttpUpstream {
 
 
     //
-    //
+    // for rpc client
     //
 
     public static <T> T xclient(Class<?> clz) {
