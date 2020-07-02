@@ -30,6 +30,11 @@ public class PlnController implements IJob {
     }
 
     @Override
+    public int getDelay() {
+        return 1000;
+    }
+
+    @Override
     public int getInterval() {
         return 1000 * 10;
     }
