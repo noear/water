@@ -51,12 +51,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         _localHost = getLocalAddress(this.service_port);
 
         //为client配置local host
-        WaterClient.localHost = _localHost;
-        WaterClient.localService = service_name();
-
-        //为water负载添加配置
-        XWaterUpstream._consumer = service_name();
-        XWaterUpstream._consumer_address = _localHost;
+        WaterClient.localHostSet(_localHost);
+        WaterClient.localServiceSet(service_name());
 
         if (service_args == null || service_args.size() == 0) {
             _note = "";
@@ -126,6 +122,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                     ONode n = odata.get(ups);
 
                     n.set("service", ups);
+                    n.set("agent", v.agent());
+                    n.set("policy", v.policy());
                     ONode nl = n.get("upstream").asArray();
                     v._nodes.forEach((s) -> {
                         nl.add(s);

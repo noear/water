@@ -6,7 +6,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WaterClient;
-import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.Config;
@@ -36,7 +35,7 @@ public class ModelController implements XHandler {
             run(context,model,args_str);
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "model", model, timespan, WaterClient.localServiceAddr());
+            WaterClient.Track.track(Config.water_service_name, "model", model, timespan, WaterClient.localServiceHost());
         }catch (Exception ex){
             ONode data = new ONode();
             data.set("code", 0).set("msg", ex.getMessage());

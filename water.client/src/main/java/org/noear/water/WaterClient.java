@@ -7,20 +7,40 @@ import org.noear.water.dso.*;
  * */
 public final class WaterClient {
 
-    //不能删
-    public static String localHost = null;
-    public static String localService = null;
-    private static String _serviceAddr;
-    public static String localServiceAddr() {
-        if (localService == null || localService == null) {
+    private static String _localHost = null;
+    private static String _localService = null;
+    private static String _localServiceHost;
+    /**
+     * 服务地址 (不能删)
+     * */
+    public static String localHost(){
+        return _localHost;
+    }
+    public static void localHostSet(String localHost){
+        _localHost = localHost;
+    }
+    /**
+     * 服务名
+     * */
+    public static String localService(){
+        return _localService;
+    }
+    public static void localServiceSet(String localService){
+        _localService = localService;
+    }
+    /**
+     * 服务名@服务地址
+     * */
+    public static String localServiceHost() {
+        if (_localService == null || _localHost == null) {
             return null;
         }
 
-        if (_serviceAddr == null) {
-            _serviceAddr = localService + "@" + localHost;
+        if (_localServiceHost == null) {
+            _localServiceHost = _localService + "@" + _localHost;
         }
 
-        return _serviceAddr;
+        return _localServiceHost;
     }
 
     /**

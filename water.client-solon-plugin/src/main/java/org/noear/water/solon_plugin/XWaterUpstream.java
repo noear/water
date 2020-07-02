@@ -9,6 +9,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
+import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * */
 public class XWaterUpstream implements HttpUpstream {
     private final String TAG_SERVER = "{server}";
+
 
     /**
      * 服务名
@@ -49,14 +51,6 @@ public class XWaterUpstream implements HttpUpstream {
      * */
     private boolean _use_agent_url;
 
-    /**
-     * 消费者
-     * */
-    protected static String _consumer;
-    /**
-     * 消费者地址
-     * */
-    protected static String _consumer_address;
 
 
 
@@ -98,15 +92,8 @@ public class XWaterUpstream implements HttpUpstream {
     }
 
     private XWaterUpstream loadDo(boolean lock) {
-        if (_consumer == null) {
-            _consumer = "";
-        }
 
-        if (_consumer_address == null) {
-            _consumer_address = "";
-        }
-
-        DiscoverM cfg = WaterClient.Registry.discover(_service, _consumer, _consumer_address);
+        DiscoverM cfg = WaterClient.Registry.discover(_service, WaterClient.localService(), WaterClient.localHost());
 
         if(lock){
             synchronized (_service.intern()) { //::与获取形成互锁
@@ -203,6 +190,17 @@ public class XWaterUpstream implements HttpUpstream {
     }
 
     /**
+     * 代理
+     * */
+    public String agent(){
+        if (_cfg == null) {
+            return null;
+        } else {
+            return _cfg.url;
+        }
+    }
+
+    /**
      * 负载策略
      */
     public String policy() {
@@ -225,6 +223,15 @@ public class XWaterUpstream implements HttpUpstream {
         return get();
     }
 
+    //
+    // for http client
+    //
+
+    public HttpUtils xcall(String path){
+        return HttpUtils.http(get() + path)
+                .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
+
+    }
 
     //
     // for rpc client
@@ -264,16 +271,8 @@ public class XWaterUpstream implements HttpUpstream {
     }
 
     public static <T> T xclient(Class<?> clz, HttpUpstream upstream) {
-        if (XWaterUpstream._consumer == null) {
-            XWaterUpstream._consumer = "";
-        }
-
-        if (XWaterUpstream._consumer_address == null) {
-            XWaterUpstream._consumer_address = "";
-        }
-
         return new XProxy()
-                .headerAdd(WW.http_header_from, XWaterUpstream._consumer + "@" + XWaterUpstream._consumer_address)
+                .headerAdd(WW.http_header_from, WaterClient.localServiceHost())
                 .upstream(upstream)
                 .create(clz);
     }

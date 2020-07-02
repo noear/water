@@ -6,7 +6,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WaterClient;
-import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.Config;
@@ -60,7 +59,7 @@ public class SchemeController implements XHandler {
             }
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan, WaterClient.localServiceAddr());
+            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan, WaterClient.localServiceHost());
 
         } catch (Exception ex) {
             ONode data = new ONode();

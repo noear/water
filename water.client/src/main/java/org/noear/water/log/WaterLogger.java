@@ -285,7 +285,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
         log.tag3 = tag3;
         log.summary = summary;
         log.content = content;
-        log.from = WaterClient.localServiceAddr();
+        log.from = WaterClient.localServiceHost();
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();
 

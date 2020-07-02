@@ -40,7 +40,7 @@ public class NoticeApi {
         }
 
         try {
-            WaterClient.Message.sendMessageAndTags(WW.msg_ucache_topic, sb.toString(), WaterClient.localService);
+            WaterClient.Message.sendMessageAndTags(WW.msg_ucache_topic, sb.toString(), WaterClient.localService());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
