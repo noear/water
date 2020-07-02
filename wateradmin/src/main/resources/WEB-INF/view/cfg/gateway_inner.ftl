@@ -67,13 +67,11 @@
             <td width="80px">平均响应</td>
             <td width="100px">请求次数</td>
 
+            <td width="120px">最后状态</td>
+            <td width="120px">最后检查时间</td>
+
             <#if is_admin == 1>
-                <td width="70px">最后状态</td>
-                <td width="120px">最后检查时间</td>
                 <td width="40px">操作</td>
-            <#else>
-                <td width="120px">最后状态</td>
-                <td width="120px">最后检查时间</td>
             </#if>
         </tr>
         </thead>
@@ -115,6 +113,9 @@
             <td width="180px" class="left">消费者参考IP</td>
             <td width="120px" class="left">流量比例</td>
             <td width="120px">最后检查时间</td>
+            <#if is_admin == 1>
+                <td width="40px">操作</td>
+            </#if>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -125,6 +126,9 @@
                 <td class="left">${(c.consumer_ip)!}</td>
                 <td class="left">${c.traffic_per?string("00.00")}% (${c.traffic_num})</td>
                 <td>${(c.chk_fulltime)?string("MM-dd HH:mm:ss")}</td>
+                <#if is_admin == 1>
+                <td><a>检查</a></td>
+                </#if>
             </tr>
         </#list>
         </tbody>
