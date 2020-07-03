@@ -190,7 +190,7 @@ public class LogApi {
         String json = ONode.serialize(list);
 
         try {
-            CallSevUtil.postBody("log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            CallSevUtil.postBody("/log/add2/", GzipUtils.compress(json), WW.mime_gzip);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

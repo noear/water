@@ -228,7 +228,7 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getGateways() throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.water_gateway)
-                .select("tag,key,row_id,type")
+                .select("tag,key,row_id,type,is_enabled")
                 .getList(ConfigModel.class);
     }
 
