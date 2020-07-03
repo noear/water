@@ -30,6 +30,13 @@ public class CMD_sev_discover extends CMDBase {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigNoCache("_gateway", service);
 
+        if(cfg.is_enabled == false){
+            data.set("code", 0);
+            data.set("msg", "No gateway is available");
+            return;
+        }
+
+
         ONode prop = cfg.getNode();
 
         String url = prop.get("url").getString();
