@@ -151,11 +151,12 @@
             <version>4.5.8</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.jcraft</groupId>-->
-<!--            <artifactId>jsch</artifactId>-->
-<!--            <version>0.1.54</version>-->
-<!--        </dependency>-->
+        <!-- Jenkins Api client -->
+        <dependency>
+            <groupId>com.offbytwo.jenkins</groupId>
+            <artifactId>jenkins-client</artifactId>
+            <version>0.3.8</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
