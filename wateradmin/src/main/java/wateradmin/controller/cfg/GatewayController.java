@@ -31,12 +31,18 @@ public class GatewayController extends BaseController {
     private static final String SEV_SERVER_TAG = "_service";
 
     @XMapping("")
-    public ModelAndView gateway() throws SQLException {
+    public ModelAndView gateway(String tag) throws SQLException {
         List<ConfigModel> sevs = DbWaterCfgApi.getGateways();
+
+        if (TextUtils.isEmpty(tag)) {
+            if (sevs.size() > 0) {
+                tag = sevs.get(0).key;
+            }
+        }
 
         viewModel.set("sevs", sevs);
 
-        viewModel.set("sev_key", sevs.size() > 0 ? sevs.get(0).key : null);
+        viewModel.set("sev_key", tag);
 
         return view("cfg/gateway");
 
