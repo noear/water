@@ -37,7 +37,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            parent.href = "/cfg/gateway?tag=" + $("#key").val();
+                            parent.location.href = "/cfg/gateway?tag=" + $("#key").val();
                             //location.href = "/cfg/gateway/inner?sev_key=" + $("#key").val();
                         }, 800);
                     }else{
