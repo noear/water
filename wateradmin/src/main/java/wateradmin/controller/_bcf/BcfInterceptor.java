@@ -1,7 +1,10 @@
 package wateradmin.controller._bcf;
 
+import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfInterceptorBase;
 import org.noear.bcf.XSessionBcf;
+import org.noear.bcf.models.BcfUserModel;
+import org.noear.solon.XApp;
 import org.noear.solon.annotation.XInterceptor;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
@@ -21,6 +24,11 @@ public class BcfInterceptor extends BcfInterceptorBase {
     public void verifyHandle(XContext ctx) throws Exception {
         if (ctx.path().equals("/login")) {
             return;
+        }
+
+        if(XApp.cfg().isDebugMode() && getPUID() == 0){
+            BcfUserModel um = BcfClient.login(1);
+            Session.current().loadModel(um);
         }
 
         if (getPUID() > 0) {
