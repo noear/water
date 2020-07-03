@@ -26,7 +26,7 @@
             },
             success:function (data) {
                 if(data.code==1) {
-                    top.layer.msg(data.msg);
+                    top.layer.msg('操作成功');
                     setTimeout(function(){
                         parent.location.href="/ops/project";
                     },1000);
