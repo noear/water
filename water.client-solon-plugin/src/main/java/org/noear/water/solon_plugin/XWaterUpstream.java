@@ -1,6 +1,7 @@
 package org.noear.water.solon_plugin;
 
 
+import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 import org.noear.solon.XApp;
 import org.noear.solonclient.HttpUpstream;
 import org.noear.solonclient.XProxy;
@@ -112,6 +113,14 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
         //使用前，要锁一下
         //
         if (cfg == null || TextUtils.isEmpty(cfg.policy)) {
+            if(TextUtils.isNotEmpty(_def_agent_url)){
+                //
+                // 如果有默认的，则清空
+                //
+                _use_agent_url = false;
+                _nodes_count = 0;
+                _nodes.clear();
+            }
             return;
         }
 
