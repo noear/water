@@ -84,6 +84,7 @@ public class GwController extends BaseController {
             }
         }
 
+        viewModel.set("is_enabled", cfg.is_enabled);
         viewModel.set("sev_key", sev_key);
         viewModel.set("cfg", cfg.getNode().toData());
         viewModel.set("gtws", gtws);

@@ -24,6 +24,9 @@
             $("#table").attr('src',"/mot/gw/inner?sev_key=" + tagName);
         };
     </script>
+    <style>
+        .line1{text-decoration:line-through;}
+    </style>
 </head>
 <body>
 <main>
@@ -32,10 +35,10 @@
             <ul>
                 <#list sevs as m>
                     <#if m.key == sev_key>
-                        <li onclick="node_onclick('${m.key}',this)" id="${m.key}" class="sel">${m.key}</li>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.key}',this)" id="${m.key}" class="sel">${m.key}</li>
                     </#if>
                     <#if m.key != sev_key>
-                        <li onclick="node_onclick('${m.key}',this)" id="${m.key}">${m.key}</li>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.key}',this)" id="${m.key}">${m.key}</li>
                     </#if>
                 </#list>
             </ul>

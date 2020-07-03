@@ -89,6 +89,7 @@ public class GatewayController extends BaseController {
             }
         }
 
+        viewModel.set("is_enabled", cfg.is_enabled);
         viewModel.set("sev_key", sev_key);
         viewModel.set("cfg", cfg.getNode().toData());
         viewModel.set("gtws", gtws);
@@ -113,6 +114,7 @@ public class GatewayController extends BaseController {
 
     @XMapping("add")
     public ModelAndView add() {
+        viewModel.set("is_enabled", 1);
         viewModel.set("cfg", new HashMap<>());
 
         return view("cfg/gateway_edit");
@@ -124,6 +126,7 @@ public class GatewayController extends BaseController {
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
 
         viewModel.set("sev_key", sev_key);
+        viewModel.set("is_enabled", cfg.is_enabled);
         viewModel.set("cfg", cfg.getNode().toData());
 
         return view("cfg/gateway_edit");

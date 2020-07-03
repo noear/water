@@ -86,7 +86,7 @@
             <tr>
                 <th>启用</th>
                 <td>
-                    <switcher><label><input type="checkbox" id="is_enabled" value="1" ${((cfg!).is_enabled = 1)?string("checked","")} /><a></a></label></switcher>
+                    <switcher><label><input type="checkbox" id="is_enabled" value="1" ${(is_enabled = 1)?string("checked","")} /><a></a></label></switcher>
 
                 </td>
             </tr>
