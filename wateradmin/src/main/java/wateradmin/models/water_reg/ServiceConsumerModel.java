@@ -42,6 +42,11 @@ public class ServiceConsumerModel implements IBinder {
      */
     public Date log_fulltime;
 
+    /**
+     * 是否启用
+     * */
+    public int is_enabled;
+
     public long traffic_num;
     public double traffic_per;
 
@@ -54,6 +59,7 @@ public class ServiceConsumerModel implements IBinder {
         chk_last_state = s.get("chk_last_state").value(0);
         chk_fulltime = s.get("chk_fulltime").value(null);
         log_fulltime = s.get("log_fulltime").value(null);
+        is_enabled = s.get("is_enabled").value(0);
     }
 
     public IBinder clone() {
