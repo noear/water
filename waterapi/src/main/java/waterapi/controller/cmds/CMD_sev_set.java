@@ -27,6 +27,10 @@ public class CMD_sev_set extends CMDBase {
 
             exec0(service, address, enabled);
         } else {
+            // 为运维带来便利
+            // s=${service}@${ip:port},${enabled}
+            // curl http://water2/sev/set/?s=rockrpc@10.0.0.79:1013,1
+            //
             String[] ss = s.split("@");
             String[] ss2 = ss[1].split(",");
 
