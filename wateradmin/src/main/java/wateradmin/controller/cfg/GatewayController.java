@@ -20,6 +20,7 @@ import wateradmin.viewModels.ViewModel;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @XController
@@ -112,6 +113,8 @@ public class GatewayController extends BaseController {
 
     @XMapping("add")
     public ModelAndView add() {
+        viewModel.set("cfg", new HashMap<>());
+
         return view("cfg/gateway_edit");
     }
 
@@ -128,14 +131,14 @@ public class GatewayController extends BaseController {
     }
 
     @XMapping("ajax/save")
-    public ViewModel save(String ori_key, String sev_key, String url, String policy) {
+    public ViewModel save(String ori_key, String sev_key, String url, String policy, int is_enabled) {
 
         try {
 
             if (TextUtils.isEmpty(ori_key)) {
-                DbWaterCfgApi.addGateway(SEV_CONFIG_TAG, sev_key, url, policy);
+                DbWaterCfgApi.addGateway(SEV_CONFIG_TAG, sev_key, url, policy, is_enabled);
             } else {
-                DbWaterCfgApi.updGateway(SEV_CONFIG_TAG, ori_key, sev_key, url, policy);
+                DbWaterCfgApi.updGateway(SEV_CONFIG_TAG, ori_key, sev_key, url, policy, is_enabled);
             }
 
             viewModel.code(1, "成功");
@@ -149,7 +152,7 @@ public class GatewayController extends BaseController {
     }
 
     @XMapping("ajax/enabled")
-    public ViewModel enabled(int service_id, int is_enabled) {
+    public ViewModel sev_enabled(int service_id, int is_enabled) {
 
         try {
 

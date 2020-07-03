@@ -186,7 +186,7 @@ public class DbWaterCfgApi {
         }
     }
 
-    public static void addGateway(String tag, String key, String url, String policy) throws SQLException {
+    public static void addGateway(String tag, String key, String url, String policy, int is_enabled) throws SQLException {
         ONode n = new ONode()
                 .set("url", url)
                 .set("service",key.trim())
@@ -195,26 +195,33 @@ public class DbWaterCfgApi {
         db().table("water_cfg_properties")
                 .set("tag", tag.trim())
                 .set("key", key.trim())
+                .set("is_enabled", is_enabled)
                 .set("type", ConfigType.water_gateway)
                 .set("value", n.toJson())
                 .insert();
     }
 
-    public static void updGateway(String tag, String ori_key, String key, String url, String policy) throws SQLException {
+    public static void updGateway(String tag, String ori_key, String key, String url, String policy, int is_enabled) throws SQLException {
         ONode n = new ONode()
-                      .set("url", url)
-                      .set("service",key.trim())
-                      .set("policy", policy);
+                .set("url", url)
+                .set("service", key.trim())
+                .set("policy", policy);
 
         //由 tag 决定，是否为gateway
 
         db().table("water_cfg_properties")
                 .set("key", key.trim())
                 .set("value", n.toJson())
+                .set("is_enabled", is_enabled)
                 .set("type", ConfigType.water_gateway)
                 .whereEq("tag", tag.trim())
                 .andEq("key", ori_key.trim())
                 .update();
+
+        WaterClient.Notice.updateCache("upstream:" + ori_key);
+        if (ori_key.equals(key) == false) {
+            WaterClient.Notice.updateCache("upstream:" + key);
+        }
     }
 
 

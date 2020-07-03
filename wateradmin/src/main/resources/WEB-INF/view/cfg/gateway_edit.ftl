@@ -29,7 +29,8 @@
                     ori_key: '${sev_key!}',
                     sev_key: $("#key").val(),
                     url: $("#url").val(),
-                    policy: $("#policy").val()
+                    policy: $("#policy").val(),
+                    is_enabled:($('#is_enabled').prop("checked")?1:0)
                 },
                 success: function (data) {
                     if (1 == data.code) {
@@ -80,6 +81,13 @@
                         <option value="polling" <#if ((cfg!).policy!) == 'polling'>selected</#if>>轮询</option>
                         <option value="weight" <#if ((cfg!).policy!) == 'weight'>selected</#if>>权重轮询</option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <th>启用</th>
+                <td>
+                    <switcher><label><input type="checkbox" id="is_enabled" value="1" ${((cfg!).is_enabled = 1)?string("checked","")} /><a></a></label></switcher>
+
                 </td>
             </tr>
         </table>
