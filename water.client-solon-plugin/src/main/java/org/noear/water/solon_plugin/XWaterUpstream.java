@@ -205,8 +205,8 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
     /**
      * 代理
      * */
-    public String agent(){
-        if (_cfg == null) {
+    public String agent() {
+        if (_cfg == null || _use_agent_url == false) {
             return null;
         } else {
             return _cfg.url;
