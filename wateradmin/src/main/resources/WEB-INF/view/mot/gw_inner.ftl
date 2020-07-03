@@ -71,7 +71,7 @@
         <#list csms!! as c>
             <tr>
                 <td>${(c.row_id)!}</td>
-                <td class="left">${(c.consumer)!}@${c.consumer_address!} - <a class="t2" href="/cfg/gateway/check?sn=${sev_key}&cn=${(c.consumer)!}&ca=${c.consumer_address!}" target="_blank">检查</a></td>
+                <td class="left">${(c.consumer)!}@${c.consumer_address!} - <a class="t2" href="/cfg/gateway/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a></td>
                 <td class="left">${(c.consumer_ip)!}</td>
                 <td class="left">${c.traffic_per?string("00.00")}% (${c.traffic_num})</td>
                 <td>${(c.chk_fulltime)?string("MM-dd HH:mm:ss")}</td>

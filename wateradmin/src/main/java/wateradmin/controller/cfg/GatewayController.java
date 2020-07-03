@@ -98,13 +98,16 @@ public class GatewayController extends BaseController {
     }
 
     @XMapping("check")
-    public String check(String sn, String ca) throws IOException {
-        if(TextUtils.isNotEmpty(sn) && TextUtils.isNotEmpty(ca)) {
-            String url = "http://" + ca + "/run/check/?upstream=" + sn;
-            return HttpUtils.http(url).get();
-        }else{
-            return "";
+    public String check(String s, String upstream) throws IOException {
+        if (TextUtils.isNotEmpty(s) && TextUtils.isNotEmpty(upstream)) {
+            if(s.indexOf("@")>0) {
+                String ca = s.split("@")[1];
+                String url = "http://" + ca + "/run/check/?upstream=" + upstream;
+                return HttpUtils.http(url).get();
+            }
         }
+
+        return "";
     }
 
     @XMapping("add")
