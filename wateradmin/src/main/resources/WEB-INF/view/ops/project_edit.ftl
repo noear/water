@@ -53,7 +53,7 @@
                 }
             });
         }
-        
+
         function del() {
 
         }
@@ -76,40 +76,48 @@
 
 <detail>
     <form>
-    <table>
-        <tr>
-        <tr>
-            <th>标签</th>
-            <td width="300px">
-                <input type="text" id="tag" value="${project.tag!}"/>
-            </td>
-        </tr>
-        <tr>
-            <th>项目名称</th>
-            <td><input type="text" id="name" value="${project.name!}"/></td>
-        </tr>
-        <tr>
-            <th>描述</th>
-            <td><input type="text" id="note" value="${project.name!}"/></td>
-        </tr>
-        <tr>
-            <th>开发人</th>
-            <td>
-                <select id="developer">
-                    <option value="">选择开发人</option>
-                    <#list users! as user>
-                        <option value="${user.cn_name!}">${user.cn_name!}</option>
-                    </#list>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th>源码地址</th>
-            <td colspan="2">
-                <input type="text" id="git_url" value="${project.git_url!}" class="longtxt"/>
-            </td>
-        </tr>
-    </table>
+        <table>
+            <tr>
+            <tr>
+                <th>标签</th>
+                <td width="300px">
+                    <input type="text" id="tag" value="${project.tag!}"/>
+                </td>
+            </tr>
+            <tr>
+                <th>项目名称</th>
+                <td><input type="text" id="name" value="${project.name!}"/></td>
+            </tr>
+            <tr>
+                <th>描述</th>
+                <td><input type="text" id="note" value="${project.name!}"/></td>
+            </tr>
+            <tr>
+                <th>开发人</th>
+                <td>
+                    <select id="developer">
+                        <option value=""></option>
+                        <#list users! as user>
+                            <option value="${user.cn_name!}">${user.cn_name!}</option>
+                        </#list>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Git密钥</th>
+                <td>
+                    <select id="git_token">
+                        <option value=""></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Git地址</th>
+                <td>
+                    <input type="text" id="git_url" value="${project.git_url!}" class="longtxt"/>
+                </td>
+            </tr>
+        </table>
     </form>
 </detail>
 </body>

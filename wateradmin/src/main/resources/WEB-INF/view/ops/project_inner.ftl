@@ -8,7 +8,9 @@
     <script src="${js}/lib.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-
+        .tool{padding: 10px 0;}
+        .tool a{display: inline-block; cursor: default; margin-right: 10px; padding: 0px 5px; border: 1px solid #ddd; border-radius: 4px; background: #f1f1f1;}
+        .tool a:hover{background: #fff;}
     </style>
 </head>
 <script>
@@ -50,14 +52,14 @@
     </right>
 </toolbar>
 
-<datagrid>
+<datagrid class="list">
     <table>
         <thead>
             <tr>
                 <td width="40px" >ID</td>
                 <td width="130px" nowrap>项目名称</td>
                 <td width="40px" nowrap>类型</td>
-                <td>源码地址（git）</td>
+                <td>源码地址（Git）</td>
                 <#if is_admin == 1>
                     <td  width="100px">操作</td>
                 </#if>
@@ -66,15 +68,21 @@
         <tbody id="tbody">
             <#list list as m>
                 <tr>
-                    <td>${m.project_id}</td>
-                    <td style="text-align: left">${m.name!}</td>
-                    <td>
+                    <td valign="top">${m.project_id}</td>
+                    <td valign="top" class="left">${m.name!}</td>
+                    <td valign="top">
                         <#if m.type == 0>服务</#if>
                         <#if m.type == 1>网站</#if>
                     </td>
-                    <td class="left">${m.git_url}</td>
+                    <td class="left">
+                        <div>${m.git_url}</div>
+                        <div class="tool">
+                            <a>测试</a>
+                            <a>发布</a>
+                        </div>
+                    </td>
                     <#if is_admin == 1>
-                        <td width="100px" class="op">
+                        <td valign="top" width="100px" class="op">
                             <a href="/ops/project/edit?project_id=${m.project_id}" class="t2">编辑</a> |
                             <#if m.is_enabled==1>
                                 <a onclick="updateProjectStatus('${m.project_id}',0 , '禁用')" class="t2">禁用</a>
