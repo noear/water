@@ -69,7 +69,7 @@
         </thead>
         <tbody id="tbody">
         <#list csms!! as c>
-            <tr>
+            <tr class="${(c.chk_last_state=1)?string('t4 ',' ')}">
                 <td>${(c.row_id)!}</td>
                 <td class="left">${(c.consumer)!}@${c.consumer_address!} - <a class="t2" href="/cfg/gateway/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a></td>
                 <td class="left">${(c.consumer_ip)!}</td>

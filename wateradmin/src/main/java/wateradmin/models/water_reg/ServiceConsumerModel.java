@@ -30,6 +30,10 @@ public class ServiceConsumerModel implements IBinder {
      */
     public String consumer_ip;
     /**
+     *最后检查状态（0：OK；1：error）
+     * */
+    public int chk_last_state;
+    /**
      *最后检查时间
      */
     public Date chk_fulltime;
@@ -47,6 +51,7 @@ public class ServiceConsumerModel implements IBinder {
         consumer = s.get("consumer").value("");
         consumer_address = s.get("consumer_address").value("");
         consumer_ip = s.get("consumer_ip").value("");
+        chk_last_state = s.get("chk_last_state").value(0);
         chk_fulltime = s.get("chk_fulltime").value(null);
         log_fulltime = s.get("log_fulltime").value(null);
     }
