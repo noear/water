@@ -1,7 +1,5 @@
 package org.noear.water.solon_plugin;
 
-
-import com.sun.xml.internal.ws.policy.EffectiveAlternativeSelector;
 import org.noear.solon.XApp;
 import org.noear.solonclient.HttpUpstream;
 import org.noear.solonclient.XProxy;
