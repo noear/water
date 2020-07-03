@@ -76,8 +76,6 @@
 
 <detail>
     <form>
-    <h2>编辑项目配置（<a href="#" onclick="javascript:history.back(-1);" class="t2 noline">返回</a>）</h2>
-    <hr/>
     <table>
         <tr>
         <tr>

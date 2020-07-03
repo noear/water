@@ -77,10 +77,14 @@ public class ProjectController extends BaseController {
             project_id = 0;
         }
 
+        if(type == null){
+            type = 0;
+        }
+
         long result = DbWaterProjectApi.updateProject(project_id, tag, name,note,git_url, type,developer);
 
 
-        if (result!=0L) {
+        if (result > 0) {
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败！");
