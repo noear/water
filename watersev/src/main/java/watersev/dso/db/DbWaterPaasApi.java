@@ -15,7 +15,7 @@ public final class DbWaterPaasApi {
     }
 
     //===============
-    //计划任务
+    //定时任务
     //
     public static List<PaasFileModel> getPlanList() throws SQLException {
         return db().table("paas_file")

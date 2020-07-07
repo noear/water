@@ -64,7 +64,7 @@
             //接口代码
             location.href = "/rubber/model?tag_name="+tag+"&model_id="+id;
         } else if (code_type == 1) {
-            //计划任务
+            //定时任务
             location.href = "/rubber/model?tag_name="+tag+"&model_id="+pid+"&field_id="+id;
         } else if (code_type == 2) {
             //同步任务

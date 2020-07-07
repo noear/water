@@ -123,7 +123,7 @@ public class AlarmUtil {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("报警：计划任务出错=").append(task.tag).append("::").append(task.path)
+            sb.append("报警：定时任务出错=").append(task.tag).append("::").append(task.path)
                     .append("@").append("pln").append("@").append(task.file_id);
 
             buildSign(sb, task.alarm_sign);
