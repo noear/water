@@ -63,18 +63,23 @@ public class HeiheiImp implements Heihei {
         headers.put("Authorization", "Basic " + author);
 
         try {
-            return HttpUtils.http(apiUrl)
+            String rst = HttpUtils.http(apiUrl)
                     .headers(headers)
                     .bodyTxt(message, "application/json")
                     .post();
+
+
+            log_heihei.info(tag, "", text);
+
+            return rst;
         } catch (Exception ex) {
             ex.printStackTrace();
             log_heihei.error(tag, "", ex);
         }
 
-        if (text.startsWith("报警：服务=") == false) {
-            log_heihei.info(tag, "", text);
-        }
+//        if (text.startsWith("报警：服务=") == false) {
+//            log_heihei.info(tag, "", text);
+//        }
 
         return null;
     }

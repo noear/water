@@ -17,6 +17,7 @@ import wateradmin.utils.UnderlineCamelUtil;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,10 +110,16 @@ public class CodeGenerationController extends BaseController {
             } else if (f.type.startsWith("bigint")) {
                 f.type = "long";
                 f.def = "0l";
-            } else if (f.type.startsWith("double") || f.type.startsWith("decimal")) {
+            } else if (f.type.startsWith("float")) {
+                f.type = "float";
+                f.def = "0F";
+            } else if (f.type.startsWith("double")) {
                 f.type = "double";
                 f.def = "0D";
-            } else if (f.type.startsWith("varchar") || f.type.startsWith("char") || f.type.startsWith("text")) {
+            } else if (f.type.startsWith("decimal")) {
+                f.type = "BigDecimal";
+                f.def = "BigDecimal.ZERO";
+            } else if (f.type.startsWith("varchar") || f.type.startsWith("char") || f.type.startsWith("text") || f.type.startsWith("longtext") || f.type.startsWith("json")) {
                 f.type = "String";
                 f.def = "null";
             } else if (f.type.startsWith("datetime") || f.type.startsWith("date") || f.type.startsWith("time")) {
