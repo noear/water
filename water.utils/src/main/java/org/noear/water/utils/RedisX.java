@@ -343,6 +343,22 @@ import java.util.*;
             return this;
         }
 
+        /**
+         * count > 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。
+         * count < 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值。
+         * count = 0 : 移除表中所有与 VALUE 相等的值。
+         * */
+        public  RedisUsing listDel(String val, int count) {
+            client.lrem(_key, count, val); //左侧压进
+            reset_expire();
+
+            return this;
+        }
+
+        public  RedisUsing listDel(String val) {
+            return listDel(val, 0);
+        }
+
         public  RedisUsing listAddRange(Collection<String>  vals){
             Pipeline pip = client.pipelined();
             for(String  val: vals) {
@@ -357,6 +373,10 @@ import java.util.*;
 
         public String listPop(){
             return client.rpop(_key); //右侧推出
+        }
+
+        public String listPeek(){
+            return listGet(0); //右侧推出
         }
 
         /**
@@ -381,6 +401,13 @@ import java.util.*;
         //Sset::
         public  RedisUsing setAdd(String val){
             client.sadd(_key, val); //左侧压进
+            reset_expire();
+
+            return this;
+        }
+
+        public  RedisUsing setDel(String val){
+            client.srem(_key, val); //左侧压进
             reset_expire();
 
             return this;
@@ -434,6 +461,10 @@ import java.util.*;
             return this;
         }
 
+        public void zsetDel(String... vals){
+            client.zrem(_key,vals);
+        }
+        
         public long zsetLen(){
             return client.zcard(_key);
         }
@@ -442,9 +473,6 @@ import java.util.*;
             return client.zrange(_key,start, end);
         }
 
-        public void zsetDel(String... vals){
-            client.zrem(_key,vals);
-        }
 
         public long zsetIdx(String val){
             return client.zrank(_key,val);
