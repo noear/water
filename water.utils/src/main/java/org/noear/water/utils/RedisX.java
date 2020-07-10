@@ -359,10 +359,16 @@ import java.util.*;
             return client.rpop(_key); //右侧推出
         }
 
+        /**
+         * 先进先出（即从right取）
+         * */
         public String listGet(int index){
             return client.lindex(_key,index);
         }
 
+        /**
+         * 先进先出（即从right取）
+         * */
         public List<String> listGet(int start, int end){
             return client.lrange(_key,start,end);
         }
