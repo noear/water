@@ -3,6 +3,8 @@ package waterapi.dso;
 import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.water.WW;
+import org.noear.water.log.Level;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -40,6 +42,7 @@ public class LogUtils {
             }
 
             logger.info(tag, null, null, _from, summary, args.toJson());
+            //ProtocolHub.logStorer.write("", Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
