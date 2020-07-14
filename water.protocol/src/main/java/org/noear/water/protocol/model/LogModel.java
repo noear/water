@@ -32,7 +32,7 @@ public class LogModel {
         if (content == null) {
             return "";
         } else {
-            if(content.indexOf("Exception:") > 0){
+            if(content.indexOf("Exception:") > 0 || content.indexOf("Error:") > 0){
                 return HtmlEncode.encode(content).replaceAll("\n","<br/>");
             }else {
                 return HtmlEncode.encode(content);
