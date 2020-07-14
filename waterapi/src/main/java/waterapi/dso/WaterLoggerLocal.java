@@ -1,8 +1,10 @@
 package waterapi.dso;
 
 import org.noear.water.log.Level;
+import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
-import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.Datetime;
+import org.noear.water.utils.TextUtils;
 import waterapi.Config;
 
 public class WaterLoggerLocal implements Logger {
@@ -201,6 +203,27 @@ public class WaterLoggerLocal implements Logger {
     }
 
     private void writeDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        ProtocolHub.logStorer.write(_name, level, tag, tag1, tag2, tag3, summary, content, Config.localHost);
+        if (TextUtils.isEmpty(_name)) {
+            return;
+        }
+
+        Datetime datetime = Datetime.Now();
+
+        LogEvent log = new LogEvent();
+
+        log.logger = _name;
+        log.level = level.code;
+        log.tag = tag;
+        log.tag1 = tag1;
+        log.tag2 = tag2;
+        log.tag3 = tag3;
+        log.summary = summary;
+        log.content = content;
+        log.from = Config.localHost;
+        log.log_date = datetime.getDate();
+        log.log_fulltime = datetime.getFulltime();
+
+        LogPipelineLocal.singleton().add(log);
+        //ProtocolHub.logStorer.write(_name, level, tag, tag1, tag2, tag3, summary, content, Config.localHost);
     }
 }

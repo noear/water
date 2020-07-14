@@ -3,10 +3,7 @@ package waterapi.dso;
 import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.water.WW;
-import org.noear.water.log.Level;
-import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
-import waterapi.Config;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -16,8 +13,7 @@ import java.util.Map;
  * Created by noear on 2017/7/27.
  */
 public class LogUtils {
-    private static final String logger_api = WW.water_log_api;
-
+    private static final WaterLoggerLocal logger = new WaterLoggerLocal(WW.water_log_api);
 
     public static void info(String summary, XContext ctx) {
         try {
@@ -39,11 +35,11 @@ public class LogUtils {
                 });
             }
 
-            if(TextUtils.isEmpty(summary)){
+            if (TextUtils.isEmpty(summary)) {
                 summary = FromUtils.getFrom(ctx);
             }
 
-            ProtocolHub.logStorer.write(logger_api, Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
+            logger.info(tag, null, null, _from, summary, args.toJson());
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -66,7 +62,7 @@ public class LogUtils {
                 });
             }
 
-            ProtocolHub.logStorer.write(logger_api, Level.ERROR, tag, null, null, _from, label.toJson(), content, Config.localHost);
+            logger.error(tag, null, null, _from, label.toJson(), content);
             //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -79,7 +75,7 @@ public class LogUtils {
 
             String content = getFullStackTrace(ex);
 
-            ProtocolHub.logStorer.write(logger_api, Level.ERROR, tag, tag1, null, _from, summary, content, Config.localHost);
+            logger.error(tag, tag1, null, _from, summary, content);
             //DbWaterLogApi.addLog(logger_error, tag, tag1, "", label, content);
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -91,5 +87,4 @@ public class LogUtils {
         e.printStackTrace(new PrintStream(baos));
         return baos.toString();
     }
-
 }

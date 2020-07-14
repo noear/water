@@ -68,5 +68,9 @@ public class WaterapiApp {
 				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), timespan.milliseconds(), _node, _from);
 			}
 		});
+
+		XApp.global().onError((ctx, err) -> {
+
+		});
 	}
 }
