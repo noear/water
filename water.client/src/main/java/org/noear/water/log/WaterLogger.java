@@ -1,6 +1,7 @@
 package org.noear.water.log;
 
 import org.noear.water.WaterClient;
+import org.noear.water.WaterConfig;
 import org.noear.water.dso.LogPipeline;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
@@ -33,10 +34,6 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     private String _name;
     private String _tag;
 
-    public WaterLogger() {
-
-    }
-
     public WaterLogger(String name) {
         _name = name;
     }
@@ -44,6 +41,16 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     public WaterLogger(String name, String tag) {
         this(name);
         _tag = tag;
+    }
+
+
+    public WaterLogger() {
+        this(WaterConfig.water_logger_def());
+    }
+
+    public WaterLogger(Class<?> clz) {
+        this(WaterConfig.water_logger_def());
+        _tag = clz.getSimpleName();
     }
 
     public WaterLogger(String name, Class<?> clz) {

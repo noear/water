@@ -1,6 +1,9 @@
 package org.slf4j.impl;
 
+import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
+import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.TextUtils;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
@@ -26,7 +29,9 @@ public enum Slf4jWaterLoggerFactory implements ILoggerFactory {
     private volatile Slf4jWaterWriter writer;
 
     Slf4jWaterLoggerFactory() {
-
+        if (TextUtils.isNotEmpty(WaterConfig.water_logger_def())) {
+            writer = new WaterLogger(WaterConfig.water_logger_def());
+        }
     }
 
     @Override

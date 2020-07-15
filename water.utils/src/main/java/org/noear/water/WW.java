@@ -20,6 +20,7 @@ public class WW {
     public static final String clz_BcfClient = "org.noear.bcf.BcfClient";
 
     public static final String water_host = "water.host";
+    public static final String water_logger = "water.logger";
 
     public static final String water_log = "water_log";
     public static final String water_log_upstream = "water_log_upstream";

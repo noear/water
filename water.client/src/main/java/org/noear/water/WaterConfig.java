@@ -20,6 +20,11 @@ public class WaterConfig {
     public static Map<String, RedisX> libOfRd = new ConcurrentHashMap();
     public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
+    private static String _water_logger_def = null;
+    public static String water_logger_def(){
+        return _water_logger_def;
+    }
+
     private static String _water_api_url = null;
     public static String water_api_url(){
         return _water_api_url;
@@ -39,6 +44,8 @@ public class WaterConfig {
     }
 
     static {
+        _water_logger_def = System.getProperty(WW.water_logger);
+
         String host = System.getProperty(WW.water_host);
 
         if (TextUtils.isEmpty(host) == false) {
