@@ -40,7 +40,7 @@ public class MessageApi {
         params.put("access_key", access_key);
         params.put("alarm_mobile", alarm_mobile);
         params.put("receive_way", receive_way + "");
-        params.put("is_unstable", (is_unstable ? "1" : "0"));
+        params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
         String txt = CallSevUtil.post("/msg/subscribe/", params);
 

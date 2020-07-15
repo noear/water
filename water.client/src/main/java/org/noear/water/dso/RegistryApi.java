@@ -26,7 +26,7 @@ public class RegistryApi {
         params.put("address", address);
         params.put("note", note);
         params.put("alarm_mobile", alarm_mobile);
-        params.put("is_unstable", (is_unstable ? "1" : "0"));
+        params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
 
         params.put("check_url", check_url);
