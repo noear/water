@@ -82,6 +82,7 @@ public abstract class WaterAdapter {
                 service_secretKey(),
                 alarm_mobile(),
                 receive_way,
+                is_unstable(), //内网订阅，可能是不稳定地址
                 topics);
     }
 
@@ -99,6 +100,7 @@ public abstract class WaterAdapter {
                 service_secretKey(),
                 alarm_mobile(),
                 receive_way,
+                false, //服务订阅，为稳定地址
                 topics);
     }
 

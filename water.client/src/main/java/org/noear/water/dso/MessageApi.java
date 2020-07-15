@@ -16,8 +16,8 @@ public class MessageApi {
     /**
      * 订阅
      */
-    public ONode subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, String... topics) throws Exception {
-        return subscribeTopic(subscriber_key, "", receiver_url, access_key, alarm_mobile, receive_way, topics);
+    public ONode subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+        return subscribeTopic(subscriber_key, "", receiver_url, access_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
     /**
@@ -31,7 +31,7 @@ public class MessageApi {
      * @param alarm_mobile    报警手机号
      * @param topics          主题..
      */
-    public ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, String... topics) throws Exception {
+    public ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
@@ -40,6 +40,7 @@ public class MessageApi {
         params.put("access_key", access_key);
         params.put("alarm_mobile", alarm_mobile);
         params.put("receive_way", receive_way + "");
+        params.put("is_unstable", (is_unstable ? "1" : "0"));
 
         String txt = CallSevUtil.post("/msg/subscribe/", params);
 
