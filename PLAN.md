@@ -7,6 +7,7 @@
 * 日志器适配MangoDb和ES
 * 增加默认日志器配置(water.logger)
 * 增加IP漂移兼容处理
+* waterapi内部日志改为管道模式
 
 #### 2.0.2 规划::
 * 增加PoalDb支持
