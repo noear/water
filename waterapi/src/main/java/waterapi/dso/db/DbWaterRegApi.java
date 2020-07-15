@@ -28,10 +28,10 @@ public final class DbWaterRegApi {
     }
 
     //添加服务（key）
-    public static void addService(String service, String address, String check_url, int check_type) throws SQLException{
-        addService(service,address,"","",check_url,check_type);
+    public static void addService(String service, String address, String check_url, int check_type, boolean is_unstable) throws SQLException{
+        addService(service,address,"","",check_url,check_type, is_unstable);
     }
-    public static void addService(String service, String address, String note, String alarm_mobile ,String check_url, int check_type) throws SQLException {
+    public static void addService(String service, String address, String note, String alarm_mobile ,String check_url, int check_type, boolean is_unstable) throws SQLException {
         if(note == null) {
             note = "";
         }
@@ -41,6 +41,7 @@ public final class DbWaterRegApi {
         boolean isOk = db().table("water_reg_service").usingExpr(true)
                 .set("note", note)
                 .set("alarm_mobile", alarm_mobile)
+                .set("is_unstable",(is_unstable?1:0))
                 .set("check_url", check_url)
                 .set("check_type", check_type)
                 .set("check_last_state", 0)
@@ -57,6 +58,7 @@ public final class DbWaterRegApi {
                     .set("address", address)
                     .set("note", note)
                     .set("alarm_mobile", alarm_mobile)
+                    .set("is_unstable",(is_unstable?1:0))
                     .set("check_url", check_url)
                     .set("check_type", check_type)
                     .set("check_last_state", 0)

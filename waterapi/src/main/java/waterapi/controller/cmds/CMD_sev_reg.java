@@ -16,11 +16,10 @@ public class CMD_sev_reg extends CMDBase {
         String service = get("service");
         String address = get("address");
         String note = get("note");
-        String alarm_mobile = get("alarm_mobile");
 
-        if(alarm_mobile == null){
-            alarm_mobile = "";
-        }
+        String alarm_mobile = get("alarm_mobile","");
+        int is_unstable = getInt("is_unstable", 0);
+
 
         String check_url = get("check_url");
         int check_type = getInt("check_type");
@@ -40,7 +39,7 @@ public class CMD_sev_reg extends CMDBase {
         }
 
 
-        DbWaterRegApi.addService(service, address, note, alarm_mobile,check_url, check_type);
+        DbWaterRegApi.addService(service, address, note, alarm_mobile, check_url, check_type, is_unstable > 0);
         data.set("code", 1);
         data.set("msg", "success");
     }

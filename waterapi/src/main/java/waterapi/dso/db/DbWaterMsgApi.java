@@ -61,30 +61,31 @@ public final class DbWaterMsgApi {
     }
 
     //添加订阅者
-    public static long addSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way) throws SQLException {
+    public static long addSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way, boolean is_unstable) throws SQLException {
         TopicModel m = getTopicID(topic);
 
-        return
-                db().table("water_msg_subscriber").usingExpr(true)
-                        .set("alarm_mobile", alarm_mobile)
-                        .set("subscriber_key", key)
-                        .set("subscriber_note", note)
-                        .set("topic_id", m.topic_id)
-                        .set("topic_name", topic)
-                        .set("receive_url", receive_url)
-                        .set("access_key", access_key)
-                        .set("receive_way", receive_way)
-                        .set("log_fulltime", "$NOW()")
-                        .insert();
+        return db().table("water_msg_subscriber").usingExpr(true)
+                .set("alarm_mobile", alarm_mobile)
+                .set("is_unstable", (is_unstable ? 1 : 0))
+                .set("subscriber_key", key)
+                .set("subscriber_note", note)
+                .set("topic_id", m.topic_id)
+                .set("topic_name", topic)
+                .set("receive_url", receive_url)
+                .set("access_key", access_key)
+                .set("receive_way", receive_way)
+                .set("log_fulltime", "$NOW()")
+                .insert();
     }
 
     //更新订阅者信息
-    public static long udpSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way) throws SQLException {
+    public static long udpSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way, boolean is_unstable) throws SQLException {
         TopicModel m = getTopicID(topic);
 
         return
                 db().table("water_msg_subscriber").usingExpr(true)
                         .set("alarm_mobile", alarm_mobile)
+                        .set("is_unstable",(is_unstable?1:0))
                         .set("receive_url", receive_url)
                         .set("access_key", access_key)
                         .set("subscriber_note", note)
