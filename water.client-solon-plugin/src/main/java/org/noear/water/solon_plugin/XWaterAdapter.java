@@ -21,14 +21,12 @@ import java.util.Map;
 //
 public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin {
     protected static XWaterAdapter _global;
-
     public static XWaterAdapter global() {
         return _global;
     }
 
 
     private Map<String, MessageHandler> _router;
-
     public Map<String, MessageHandler> router() {
         return _router;
     }
@@ -36,6 +34,15 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     public String msg_receiver_url() {
         return null;
+    }
+
+
+    /**
+     * 是否为非稳定模式 //用于兼容k8s的ip漂移
+     * */
+    @Override
+    public boolean is_unstable() {
+        return XApp.cfg().isDriftMode();
     }
 
     public XWaterAdapter() {

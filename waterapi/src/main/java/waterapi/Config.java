@@ -1,5 +1,6 @@
 package waterapi;
 
+import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -62,28 +63,32 @@ public class Config {
             ConfigModel cm = cfg(WW.water_redis);
             ConfigModel cm2 = cfg(WW.water_redis_track);
 
-            rd_ids   = cm.getRd(1);
-            rd_lock  = cm.getRd(2);
-            rd_msg   = cm.getRd(3);
-            if(cm2 == null || TextUtils.isEmpty(cm2.value)) {
+            rd_ids = cm.getRd(1);
+            rd_lock = cm.getRd(2);
+            rd_msg = cm.getRd(3);
+            if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
                 rd_track = cm.getRd(5);
-            }else{
+            } else {
                 rd_track = cm2.getRd(5);
             }
 
             is_debug = "1".equals(cfg("is_debug").getString());
 
             water_cache_header = cfg("water_cache_header")
-                                 .getString( "WATER2_CACHE") + "_API2";
+                    .getString("WATER2_CACHE") + "_API2";
 
             water_msg_queue = cfg("water_msg_queue2").toConfigM();
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);
+
+                //本地IP订阅
+                //
                 DbWaterRegApi.addService(water_service_name,
                         localHost,
                         WW.path_service_check,
-                        0);
+                        0,
+                        XApp.cfg().isDriftMode());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
