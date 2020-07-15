@@ -47,6 +47,9 @@ public final class MsgSubController implements IJob {
     }
 
     private void check_type0(SubscriberModel subs) {
+        //
+        //只检查IP的订阅（subs.subscriber_note 必不为空）
+        //
         if (TextUtils.isEmpty(subs.receive_url) || TextUtils.isEmpty(subs.subscriber_note)) {
             return;
         }
@@ -66,22 +69,15 @@ public final class MsgSubController implements IJob {
                         DbWaterMsgApi.setSubscriberState(subs.subscriber_id, code);
                     } else {
                         //出错
-                        if (subs.is_unstable && subs.check_error_num >= 2 && !isOk) {
+                        if (subs.check_error_num > 2 && !isOk) {
                             //
-                            // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
+                            // 如果是IP订阅，且出错2次以上，且是网络错误；删掉
                             //
                             DbWaterMsgApi.delSubscriber(subs.subscriber_id);
                         } else {
                             DbWaterMsgApi.setSubscriberState(subs.subscriber_id, code);
                         }
                     }
-
-//                    ONode n = new ONode();
-//                    n.set("isOk", isOk);
-//                    n.set("code", code);
-//                    n.set("text", hint);
-//
-//                    LogUtil.debug(this, url, n.toJson());
                 });
             } catch (Exception ex) { //出错
                 DbWaterMsgApi.setSubscriberState(subs.subscriber_id, 1);

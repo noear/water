@@ -20,10 +20,10 @@ public class HttpUtilEx {
      */
     public static void getStatusByAsync(String url, Act3<Boolean, Integer, String> callback)  {
         CallUtil.asynCall(()->{
-            long time_start = System.currentTimeMillis();
+//            long time_start = System.currentTimeMillis();
 
             do_getHttpStatus(url, (isOk, code, hint) -> {
-                long times = System.currentTimeMillis() - time_start;
+//                long times = System.currentTimeMillis() - time_start;
 //                System.out.println(url + "::" + times + "ms");
 
                 callback.run(isOk, code, hint);
