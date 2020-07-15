@@ -69,7 +69,7 @@ public final class MsgSubController implements IJob {
                         DbWaterMsgApi.setSubscriberState(subs.subscriber_id, code);
                     } else {
                         //出错
-                        if (subs.is_unstable && subs.check_error_num > 2 && !isOk) {
+                        if (subs.is_unstable && subs.check_error_num >= 2 && !isOk) {
                             //
                             // 如果是IP订阅，且出错2次以上，且是网络错误；删掉
                             //
