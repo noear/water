@@ -276,7 +276,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     }
 
     private void appendDo(Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        if (TextUtils.isEmpty(_name)) {
+        if (TextUtils.isEmpty(getName())) {
             return;
         }
 
@@ -284,7 +284,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
 
         LogEvent log = new LogEvent();
 
-        log.logger = _name;
+        log.logger = getName();
         log.level = level.code;
         log.tag = tag;
         log.tag1 = tag1;

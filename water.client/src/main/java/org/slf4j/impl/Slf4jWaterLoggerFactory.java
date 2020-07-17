@@ -26,12 +26,10 @@ public enum Slf4jWaterLoggerFactory implements ILoggerFactory {
     /**
      * 书写器
      * */
-    private volatile Slf4jWaterWriter writer;
+    private volatile Slf4jWaterWriter writer = new Slf4jWaterWriterImp();
 
     Slf4jWaterLoggerFactory() {
-        if (TextUtils.isNotEmpty(WaterConfig.water_logger_def())) {
-            writer = new WaterLogger(WaterConfig.water_logger_def());
-        }
+
     }
 
     @Override
