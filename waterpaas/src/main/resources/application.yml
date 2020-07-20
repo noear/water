@@ -5,6 +5,7 @@ server.request.maxRequestSize: "2mb"
 
 water:
   host: "http://water2"
+  logger: "water_log_paas"
   service:
     name: "waterpaas"
     secretKey: "0zJt0J88TkIvqYgC"

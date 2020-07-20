@@ -6,19 +6,19 @@ import org.noear.water.utils.ThrowableUtils;
 
 public final class LogUtil {
     public static void logBlockError(String block, String args_str, Exception ex) {
-        WaterClient.Log.append("water_log_raas_error", Level.ERROR,
+        WaterClient.Log.append("water_log_raas", Level.ERROR,
                 "d", block, args_str,
                 ThrowableUtils.getString(ex));
     }
 
     public static void logModelError(String model, String args_str, Exception ex) {
-        WaterClient.Log.append("water_log_raas_error", Level.ERROR,
+        WaterClient.Log.append("water_log_raas", Level.ERROR,
                 "m", model, args_str,
                 ThrowableUtils.getString(ex));
     }
 
     public static void logSchemeError(String scheme, String args_str, Exception ex) {
-        WaterClient.Log.append("water_log_raas_error", Level.ERROR,
+        WaterClient.Log.append("water_log_raas", Level.ERROR,
                 "s", scheme, args_str,
                 ThrowableUtils.getString(ex));
     }
@@ -28,7 +28,7 @@ public final class LogUtil {
             note = "null";
         }
 
-        WaterClient.Log.append("water_log_raas_error", Level.ERROR,
+        WaterClient.Log.append("water_log_raas", Level.ERROR,
                 "s", scheme, "callback", args_str, note);
     }
 }

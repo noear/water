@@ -4,6 +4,7 @@ server.port: 9376
 
 water:
   host: "http://water2"
+  logger: "water_log_raas"
   service:
     name: "waterraas"
     host: "@water/raas_uri"
