@@ -28,18 +28,34 @@ public class GzipUtils {
     }
 
     public static byte[] compress(String str, String encoding) {
+        if(TextUtils.isEmpty(str)){
+            return null;
+        }
+
         return compressDo(str, encoding).toByteArray();
     }
 
     public static byte[] compress(String str)  {
+        if(TextUtils.isEmpty(str)){
+            return null;
+        }
+
         return compress(str, GZIP_ENCODE_UTF_8);
     }
 
     public static String compressToString(String str, String encoding) throws IOException{
+        if(TextUtils.isEmpty(str)){
+            return null;
+        }
+
         return compressDo(str, encoding).toString(encoding);
     }
 
     public static String compressToString(String str) throws IOException {
+        if(TextUtils.isEmpty(str)){
+            return null;
+        }
+
         return compressToString(str, GZIP_ENCODE_UTF_8);
     }
 
@@ -64,14 +80,26 @@ public class GzipUtils {
     }
 
     public static byte[] uncompress(byte[] bytes) {
+        if(bytes == null){
+            return null;
+        }
+
         return uncompressDo(bytes).toByteArray();
     }
 
     public static String uncompressToString(byte[] bytes, String encoding) throws IOException{
+        if(bytes == null){
+            return null;
+        }
+
         return uncompressDo(bytes).toString(encoding);
     }
 
     public static String uncompressToString(byte[] bytes) throws IOException{
+        if(bytes == null){
+            return null;
+        }
+
         return uncompressToString(bytes, GZIP_ENCODE_UTF_8);
     }
 

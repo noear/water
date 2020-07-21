@@ -184,9 +184,14 @@ public class LogApi {
     }
 
     private void appendAllDo(List<LogEvent> list) {
+        if(list == null || list.size()==0){
+            return;
+        }
+
         for (LogEvent log : list) {
             log.content = content_str(log.content);
         }
+
         String json = ONode.serialize(list);
 
         try {
