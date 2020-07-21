@@ -42,6 +42,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     /**
      * 当前服务的本地地址(host:port)
      */
+    @Override
     public String localHost() {
         return _localHost;
     }
