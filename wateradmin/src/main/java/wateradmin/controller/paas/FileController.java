@@ -163,6 +163,8 @@ public class FileController extends BaseController {
     @XMapping("tml/ajax/save")
     public Object tml_ajax_save(XContext ctx) throws SQLException {
         DataItem data = new DataItem();
+
+        data.set("content_type", ctx.param("content_type"));
         data.set("rank", ctx.paramAsInt("rank"));
 
         return ajax_save(ctx, data, PaasFileType.tml);
