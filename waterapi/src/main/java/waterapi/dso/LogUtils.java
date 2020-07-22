@@ -17,6 +17,10 @@ import java.util.Map;
 public class LogUtils {
     private static final WaterLoggerLocal logger = new WaterLoggerLocal(WW.water_log_api);
 
+    public static WaterLoggerLocal getLogger() {
+        return logger;
+    }
+
     public static void info(String summary, XContext ctx) {
         try {
             String tag = ctx.path();
@@ -44,6 +48,28 @@ public class LogUtils {
             logger.info(tag, null, null, _from, summary, args.toJson());
             //ProtocolHub.logStorer.write("", Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
             //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+    }
+
+    public static void warn(XContext ctx, String content) {
+        try {
+            String _from = FromUtils.getFromName(ctx);
+
+            Map<String, String> pnames = ctx.paramMap();
+            String tag = ctx.path();
+
+            ONode label = new ONode();
+
+            if (pnames != null) {
+                pnames.forEach((k, v) -> {
+                    label.set(k, v);
+                });
+            }
+
+            logger.warn(tag, null, null, _from, label.toJson(), content);
+            //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
         }

@@ -6,6 +6,7 @@ import org.noear.water.WW;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.GzipUtils;
+import waterapi.dso.LogUtils;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class CMD_log_add2 extends CMDBase {
         String list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
 
         if (checkParamsIsOk(list_json) == false) {
+            LogUtils.warn(context, "ctx.bodyAsBytes() is null");
             return;
         }
 
