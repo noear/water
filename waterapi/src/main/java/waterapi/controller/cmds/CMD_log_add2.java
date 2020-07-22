@@ -1,7 +1,6 @@
 package waterapi.controller.cmds;
 
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
 import org.noear.water.WW;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.ProtocolHub;
