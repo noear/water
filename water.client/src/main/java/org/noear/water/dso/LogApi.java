@@ -195,8 +195,11 @@ public class LogApi {
         String json = ONode.serialize(list);
 
         try {
-            CallSevUtil.postBody("/log/add2/", json, WW.mime_json);
-            CallSevUtil.postBody("/log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            if (WaterConfig.enableGzipLog) {
+                CallSevUtil.postBody("/log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            } else {
+                CallSevUtil.postBody("/log/add2/", json, WW.mime_json);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
