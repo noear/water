@@ -73,7 +73,8 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
         initWeed();
 
-        WaterConfig.enableGzip = "1".equals(System.getProperty("water.gzip"));
+        //不等于0为true
+        WaterConfig.enableGzip = !("0".equals(System.getProperty("water.gzip")));
     }
 
     //用于作行为记录
