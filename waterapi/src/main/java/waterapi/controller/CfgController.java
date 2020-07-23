@@ -5,11 +5,14 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
+import waterapi.dso.IDUtils;
 import waterapi.dso.IPUtils;
 import waterapi.Config;
 import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.models.ConfigModel;
 
 import java.util.Date;
@@ -85,7 +88,7 @@ public class CfgController implements XHandler {
         String key = ctx.param("key");
         String value = ctx.param("value");
 
-        if(LockUtils.tryLock(Config.water_service_name, tag+"/"+key) == false){
+        if (LockUtils.tryLock(Config.water_service_name, tag + "/" + key) == false) {
             ONode n = new ONode();
             n.set("code", 0);
             n.set("msg", "Too many requests");
@@ -110,5 +113,8 @@ public class CfgController implements XHandler {
         n.set("code", 1);
         n.set("msg", "succeed");
         ctx.outputAsJson(n.toJson());
+
+        //发消息通知
+        DbWaterMsgApi.addMessage(IDUtils.buildGuid(), Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
     }
 }
