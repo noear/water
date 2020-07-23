@@ -74,7 +74,7 @@ public class GzipUtils {
                 out.write(buffer, 0, n);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return out;
     }
@@ -112,14 +112,4 @@ public class GzipUtils {
 
         return uncompressToString(bytes, GZIP_ENCODE_UTF_8);
     }
-
-//    public static void main(String[] args) throws IOException {
-//        String s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-//        System.out.println("字符串长度："+s.length());
-//        System.out.println("压缩后：："+compressToString(s));
-//        System.out.println("压缩后长度：："+compressToString(s).length());
-//        System.out.println("解压后："+uncompress(compress(s)).length);
-//        System.out.println("解压字符串后：："+uncompressToString(compress(s)));
-//        System.out.println("解压字符串后长度：："+uncompressToString(compress(s)).length());
-//    }
 }
