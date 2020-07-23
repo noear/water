@@ -45,8 +45,11 @@ public class LoggerController extends BaseController {
                 _state = 0;
             }
         }
-        if (_state == null)
+
+        if (_state == null) {
             _state = 1;
+        }
+
         List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, null);
         viewModel.put("loggers",list);
         viewModel.put("_state",_state);
@@ -82,12 +85,12 @@ public class LoggerController extends BaseController {
 
     //日志配置ajax 保存功能。
     @XMapping("logger/edit/ajax/save")
-    public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days) throws SQLException {
+    public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days, int is_alarm) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setLogger(logger_id, tag, logger, source, note, keep_days);
+        boolean result = DbWaterCfgApi.setLogger(logger_id, tag, logger, source, note, keep_days, is_alarm);
         if (result) {
             viewModel.code(1, "保存成功！");
         } else {

@@ -16,13 +16,9 @@
         var logger_id = '${log.logger_id}';
 
         function save() {
-            var tag = $('#tag').val();
-            var logger = $('#logger').val();
-            var keep_days = $('#keep_days').val();
-            var source = $('#source').val();
-            var note = $('#note').val();
+            var vm = formToMap("form");
 
-            if (tag == null || tag == "" || tag == undefined) {
+            if (!vm.tag) {
                 top.layer.msg("标签名称不能为空！");
                 return;
             }
@@ -30,17 +26,13 @@
             if(logger_id==null){
                 logger_id=0;
             }
+
+            vm.logger_id = logger_id;
+
             $.ajax({
                 type:"POST",
                 url:"/cfg/logger/edit/ajax/save",
-                data:{
-                    "logger_id":logger_id,
-                    "tag":tag,
-                    "logger":logger,
-                    "keep_days":keep_days,
-                    "source":source,
-                    "note":note
-                },
+                data:vm,
                 success:function (data) {
                     if(data.code==1) {
                         top.layer.msg('操作成功')
@@ -133,6 +125,14 @@
             <tr>
                 <th>备注</th>
                 <td><input type="text" class="longtxt" id="note" value="${log.note!}"/></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <checkbox>
+                        <label class="mar10-r"><input type="checkbox" id="is_alarm"  /><a>及时报警</a></label>
+                    </checkbox>
+                </td>
             </tr>
         </table>
     </form>

@@ -21,6 +21,7 @@ public class LoggerModel implements LoggerMeta
     public String note;
     public long counts;
     public int is_enabled;
+    public int is_alarm;
 
 	public boolean isHighlight() {
         return (row_num_today_error > 0);

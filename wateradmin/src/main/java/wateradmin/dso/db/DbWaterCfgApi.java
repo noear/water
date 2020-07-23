@@ -484,12 +484,13 @@ public class DbWaterCfgApi {
     }
 
     //设置logger。
-    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days) throws SQLException {
+    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
         DbTableQuery db = db().table("water_cfg_logger")
                 .set("tag", tag)
                 .set("logger", logger)
                 .set("keep_days", keep_days)
                 .set("source", source)
+                .set("is_alarm",is_alarm)
                 .set("note", note);
         if (logger_id > 0) {
             return db.where("logger_id = ?", logger_id).update() > 0;
