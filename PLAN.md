@@ -2,12 +2,14 @@
 * 重构waterapi，采用solon.uapi开发
 * 基于http api，改写监控数据获取（替代阿里云SDK方式）
 * 开发项目部署功能
+* 日志器适配MangoDb和ES
 
 #### 2.0.3 规划::
-* 日志器适配MangoDb和ES
 * 增加默认日志器配置(water.logger)
 * 增加IP漂移兼容处理
 * waterapi内部日志改为管道模式
+* 日志器增加报警配置，不再需要数据监视
+* 完善 WaterClient.Config.set(k,v) 机制
 
 #### 2.0.2 规划::
 * 增加PoalDb支持
