@@ -26,12 +26,6 @@ public final class ConfigM {
         this.value = null;
     }
 
-    public ConfigM(String key, String value) {
-        this.key = key;
-        this.value = value;
-        this.lastModified = 0;
-    }
-
     public ConfigM(String key, String value, long lastModified) {
         this.key = key;
         this.value = value;
