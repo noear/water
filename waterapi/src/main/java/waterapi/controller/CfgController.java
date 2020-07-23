@@ -104,10 +104,9 @@ public class CfgController implements XHandler {
             if (cfg.is_editable) {
                 DbWaterCfgApi.setConfig(tag, key, value);
             }
-            return;
+        }else {
+            DbWaterCfgApi.addConfig(tag, key, value);
         }
-
-        DbWaterCfgApi.addConfig(tag, key, value);
 
         ONode n = new ONode();
         n.set("code", 1);
