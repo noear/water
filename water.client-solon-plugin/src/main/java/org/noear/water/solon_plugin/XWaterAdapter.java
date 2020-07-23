@@ -8,6 +8,7 @@ import org.noear.water.dso.MessageHandler;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.model.MessageM;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
@@ -73,20 +74,29 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
         messageSubscribe();
 
+        configSubscribe();
+
         initWeed();
 
-        WaterClient.Config.subscribe("*", cfgSet -> {
-            //不等于0为true
-            int gzip = cfgSet.get("water.log.gzip").getInt(1);
-            int level = cfgSet.get("water.log.level").getInt(Level.INFO.code);
-            int interval = cfgSet.get("water.log.interval").getInt(500);
-            int packetSize = cfgSet.get("water.log.packetSize").getInt(100);
 
-            WaterLogger.setGzip(gzip != 0);
-            WaterLogger.setLevel(Level.of(level));
-            WaterLogger.setInterval(interval);
-            WaterLogger.setPacketSize(packetSize);
-        });
+    }
+
+    //配置订阅
+    private void configSubscribe(){
+        if(TextUtils.isEmpty(service_tag()) == false) {
+            WaterClient.Config.subscribe(service_tag(), cfgSet -> {
+                //不等于0为true
+                int gzip = cfgSet.get("water.log.gzip").getInt(1);
+                int level = cfgSet.get("water.log.level").getInt(Level.INFO.code);
+                int interval = cfgSet.get("water.log.interval").getInt(500);
+                int packetSize = cfgSet.get("water.log.packetSize").getInt(100);
+
+                WaterLogger.setGzip(gzip != 0);
+                WaterLogger.setLevel(Level.of(level));
+                WaterLogger.setInterval(interval);
+                WaterLogger.setPacketSize(packetSize);
+            });
+        }
     }
 
     //用于作行为记录
