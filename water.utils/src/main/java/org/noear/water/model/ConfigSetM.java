@@ -17,7 +17,7 @@ public class ConfigSetM {
 
     /**
      * 获取配置项
-     * */
+     */
     public ConfigM get(String key) {
         return _map.getOrDefault(key, _empty);
     }
@@ -28,8 +28,8 @@ public class ConfigSetM {
 
     /**
      * 遍历配置项
-     * */
-    public void forEach(BiConsumer<String,ConfigM> action){
+     */
+    public void forEach(BiConsumer<String, ConfigM> action) {
         _map.forEach(action);
     }
 
@@ -44,6 +44,10 @@ public class ConfigSetM {
                         v.get("lastModified").getLong());
 
                 _map.put(k, val);
+
+                if (k.startsWith("@@")) {
+                    System.getProperty(val.key.substring(2), val.value);
+                }
             });
         } else {
             System.err.println(node.toJson());
@@ -64,7 +68,11 @@ public class ConfigSetM {
 
                     //确定key
                     if (k.startsWith("@")) {
-                        keyTmp = k.substring(1);
+                        if (k.startsWith("@@")) {
+                            keyTmp = k.substring(2);
+                        } else {
+                            keyTmp = k.substring(1);
+                        }
                     } else {
                         keyTmp = _tag + "." + k;
                     }
