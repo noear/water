@@ -20,7 +20,7 @@ public class WaterConfig {
     public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
     public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
-    public static boolean enableGzipLog = false;
+    public static boolean enableLogGzip = false;
 
     private static String _water_logger_def = null;
     public static String water_logger_def(){
