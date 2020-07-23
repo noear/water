@@ -2,6 +2,7 @@ package org.noear.water;
 
 public class WW {
     public static final String mime_gzip="application/x-gzip";
+    public static final String mime_json="application/json";
 
     public static final String WATER_ID = "WATER_ID";
     public static final String WATER_ID_HOUR = "WATER_ID_HOUR";
