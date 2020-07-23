@@ -14,6 +14,11 @@ public class WW {
     public static final String msg_ucache_topic = "water.cache.update";
     public static final String msg_uconfig_topic = "water.config.update";
 
+    public static final String cfg_water_log_gzip = "water.log.gzip";
+    public static final String cfg_water_log_level = "water.log.level";
+    public static final String cfg_water_log_interval = "water.log.interval";
+    public static final String cfg_water_log_packetSize = "water.log.packetSize";
+
     public static final String path_service_check = "/run/check/";
     public static final String path_service_stop = "/run/stop/";
     public static final String path_msg_receiver = "/msg/receive";
@@ -22,6 +27,8 @@ public class WW {
 
     public static final String water_host = "water.host";
     public static final String water_logger = "water.logger";
+
+
 
     public static final String water_log = "water_log";
     public static final String water_log_upstream = "water_log_upstream";

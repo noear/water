@@ -22,6 +22,16 @@ public class ConfigSetM {
         return _map.getOrDefault(key, _empty);
     }
 
+    /**
+     * 检测是否存在
+     * */
+    public boolean has(String key){
+        return _map.containsKey(key);
+    }
+
+    /**
+     * 设置
+     * */
     public void set(String key, String value) {
         _map.put(key, new ConfigM(key, value, 0));
     }

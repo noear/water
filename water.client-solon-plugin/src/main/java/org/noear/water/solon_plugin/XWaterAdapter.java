@@ -82,19 +82,29 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     //配置订阅
-    private void configSubscribe(){
-        if(TextUtils.isEmpty(service_tag()) == false) {
+    private void configSubscribe() {
+        if (TextUtils.isEmpty(service_tag()) == false) {
             WaterClient.Config.subscribe(service_tag(), cfgSet -> {
                 //不等于0为true
-                int gzip = cfgSet.get("water.log.gzip").getInt(1);
-                int level = cfgSet.get("water.log.level").getInt(Level.INFO.code);
-                int interval = cfgSet.get("water.log.interval").getInt(500);
-                int packetSize = cfgSet.get("water.log.packetSize").getInt(100);
+                if (cfgSet.has(WW.cfg_water_log_gzip)) {
+                    int gzip = cfgSet.get(WW.cfg_water_log_gzip).getInt(1);
+                    WaterLogger.setGzip(gzip != 0);
+                }
 
-                WaterLogger.setGzip(gzip != 0);
-                WaterLogger.setLevel(Level.of(level));
-                WaterLogger.setInterval(interval);
-                WaterLogger.setPacketSize(packetSize);
+                if (cfgSet.has(WW.cfg_water_log_level)) {
+                    int level = cfgSet.get(WW.cfg_water_log_level).getInt(Level.INFO.code);
+                    WaterLogger.setLevel(Level.of(level));
+                }
+
+                if (cfgSet.has(WW.cfg_water_log_interval)) {
+                    int interval = cfgSet.get("water.log.interval").getInt(500);
+                    WaterLogger.setInterval(interval);
+                }
+
+                if (cfgSet.has(WW.cfg_water_log_packetSize)) {
+                    int packetSize = cfgSet.get("water.log.packetSize").getInt(100);
+                    WaterLogger.setPacketSize(packetSize);
+                }
             });
         }
     }
