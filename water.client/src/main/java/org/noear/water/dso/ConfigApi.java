@@ -19,7 +19,7 @@ public class ConfigApi {
      * 重新加载一个tag的配置
      */
     public void reload(String tag) {
-        synchronized (_cfgs){
+        synchronized (_cfgs) {
             if (_cfgs.containsKey(tag) == false) {
                 return;
             }
@@ -30,7 +30,7 @@ public class ConfigApi {
 
     /**
      * 加载一个tag的配置
-     * */
+     */
     public void load(String tag) {
         synchronized (_cfgs) {
             if (_cfgs.containsKey(tag)) {
@@ -68,7 +68,6 @@ public class ConfigApi {
     }
 
 
-
     /**
      * 获取系统配置
      */
@@ -97,10 +96,10 @@ public class ConfigApi {
 
     /**
      * 订阅配置集
-     * */
-    public void subscribe(String tag, ConfigHandler callback){
+     */
+    public void subscribe(String tag, ConfigHandler callback) {
         Set<ConfigHandler> tmp = _event.get(tag);
-        if(tmp == null){
+        if (tmp == null) {
             tmp = new HashSet<>();
             _event.put(tag, tmp);
         }
@@ -108,7 +107,7 @@ public class ConfigApi {
         tmp.add(callback);
 
         //如果已存在，及时通知
-        if(_cfgs.containsKey(tag)){
+        if (_cfgs.containsKey(tag)) {
             callback.handler(_cfgs.get(tag));
         }
     }
@@ -117,7 +116,7 @@ public class ConfigApi {
     /**
      * 设置配置，根据tag/key
      */
-    public void setByTagKey(String tagKey,String value) throws IOException{
+    public void setByTagKey(String tagKey, String value) throws IOException {
         String[] ss = tagKey.split("/");
         set(ss[0], ss[1], value);
     }
@@ -133,5 +132,9 @@ public class ConfigApi {
                 .data("value", value)
                 .post();
 
+
+        if (_cfgs.containsKey(tag)) {
+            _cfgs.get(tag).set(key, value);
+        }
     }
 }
