@@ -11,3 +11,10 @@ water:
   service:
     name: "wateradmin"
     secretKey: "b5fZK49x71Rnn5Cl"
+
+
+#water.log:
+#  gzip: 1
+#  level: 2
+#  interval: 1000
+#  packetSize: 100

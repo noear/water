@@ -5,6 +5,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.WaterConfig;
 import org.noear.water.dso.MessageHandler;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.model.MessageM;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
@@ -74,7 +75,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         initWeed();
 
         //不等于0为true
-        WaterConfig.enableGzip = !("0".equals(System.getProperty("water.gzip")));
+        WaterLogger.setGzip(!("0".equals(System.getProperty("water.log.gzip"))));
     }
 
     //用于作行为记录
