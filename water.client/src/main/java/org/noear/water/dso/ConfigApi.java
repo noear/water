@@ -59,7 +59,13 @@ public class ConfigApi {
 
         _cfgs.put(tag, cfgSet);
 
-        Set<ConfigHandler> tmp = _event.get(tag);
+        noticeTry("*", cfgSet);
+        noticeTry(tag, cfgSet);
+    }
+
+    private void noticeTry(String target, ConfigSetM cfgSet){
+        Set<ConfigHandler> tmp = _event.get(target);
+
         if (tmp != null) {
             for (ConfigHandler r : tmp) {
                 r.handler(cfgSet);
