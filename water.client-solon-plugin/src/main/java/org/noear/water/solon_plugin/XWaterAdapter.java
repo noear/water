@@ -3,6 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.WaterConfig;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.model.MessageM;
 import org.noear.weed.WeedConfig;
@@ -71,6 +72,8 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         messageSubscribe();
 
         initWeed();
+
+        WaterConfig.enableGzip = "1".equals(System.getProperty("water.gzip"));
     }
 
     //用于作行为记录

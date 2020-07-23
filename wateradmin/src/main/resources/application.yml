@@ -7,6 +7,7 @@ bcf.root: "water_admin"
 
 water:
   host: "http://water2"
+  gzip: 1
   service:
     name: "wateradmin"
     secretKey: "b5fZK49x71Rnn5Cl"
