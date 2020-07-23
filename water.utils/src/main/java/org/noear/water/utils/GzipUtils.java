@@ -64,6 +64,7 @@ public class GzipUtils {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         try {
@@ -80,19 +81,29 @@ public class GzipUtils {
     }
 
     public static byte[] uncompress(byte[] bytes) {
-        if(bytes == null){
+        if (bytes == null) {
             return null;
         }
 
-        return uncompressDo(bytes).toByteArray();
+        ByteArrayOutputStream tmp = uncompressDo(bytes);
+        if (tmp == null) {
+            return null;
+        } else {
+            return tmp.toByteArray();
+        }
     }
 
-    public static String uncompressToString(byte[] bytes, String encoding) throws IOException{
-        if(bytes == null){
+    public static String uncompressToString(byte[] bytes, String encoding) throws IOException {
+        if (bytes == null) {
             return null;
         }
 
-        return uncompressDo(bytes).toString(encoding);
+        ByteArrayOutputStream tmp = uncompressDo(bytes);
+        if (tmp == null) {
+            return null;
+        } else {
+            return tmp.toString(encoding);
+        }
     }
 
     public static String uncompressToString(byte[] bytes) throws IOException{
