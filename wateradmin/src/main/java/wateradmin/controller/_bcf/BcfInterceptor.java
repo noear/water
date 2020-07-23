@@ -22,7 +22,7 @@ public class BcfInterceptor extends BcfInterceptorBase {
     }
 
     @Override
-    @XMapping("/**")
+    @XMapping("**")
     public void verifyHandle(XContext ctx) throws Exception {
         if (ctx.path().equals("/login")) {
             return;
