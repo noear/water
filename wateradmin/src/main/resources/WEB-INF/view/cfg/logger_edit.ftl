@@ -130,7 +130,7 @@
                 <th></th>
                 <td>
                     <checkbox>
-                        <label class="mar10-r"><input type="checkbox" id="is_alarm"  /><a>及时报警</a></label>
+                        <label class="mar10-r"><input type="checkbox" id="is_alarm" ${(log.is_alarm = 1)?string('checked','')}  /><a>及时报警</a></label>
                     </checkbox>
                 </td>
             </tr>
