@@ -69,7 +69,7 @@
                     <td width="90px" class="right">今日<br/>记录数</td>
                     <td width="80px" class="right">今日<br/>错误数</td>
                     <td>数据源</td>
-                    <td width="60">及时<br/>报警</td>
+                    <td width="60">启用<br/>报警</td>
                     <#if is_admin == 1>
                         <td width="100px" rowspan="2">操作</td>
                     </#if>
