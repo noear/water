@@ -99,13 +99,16 @@ public class CfgController implements XHandler {
         //
         // 此处非线程安全
         //
+        boolean isOk = false;
         ConfigModel cfg = DbWaterCfgApi.getConfig(tag, key);
         if (key.equals(cfg.key)) {
             if (cfg.is_editable) {
                 DbWaterCfgApi.setConfig(tag, key, value);
+                isOk = true;
             }
-        }else {
+        } else {
             DbWaterCfgApi.addConfig(tag, key, value);
+            isOk = true;
         }
 
         ONode n = new ONode();
@@ -114,6 +117,8 @@ public class CfgController implements XHandler {
         ctx.outputAsJson(n.toJson());
 
         //发消息通知
-        DbWaterMsgApi.addMessage(IDUtils.buildGuid(), Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
+        if (isOk) {
+            DbWaterMsgApi.addMessage(IDUtils.buildGuid(), Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
+        }
     }
 }
