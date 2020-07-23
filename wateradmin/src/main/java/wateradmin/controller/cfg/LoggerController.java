@@ -85,9 +85,13 @@ public class LoggerController extends BaseController {
 
     //日志配置ajax 保存功能。
     @XMapping("logger/edit/ajax/save")
-    public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days, int is_alarm) throws SQLException {
+    public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days, Integer is_alarm) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
+        }
+
+        if(is_alarm == null){
+            is_alarm = 0;
         }
 
         boolean result = DbWaterCfgApi.setLogger(logger_id, tag, logger, source, note, keep_days, is_alarm);
