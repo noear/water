@@ -64,10 +64,10 @@
                 <thead>
                 <tr>
                     <td width="220px" class="left">logger</td>
-                    <td width="80px">保留天数</td>
+                    <td width="60px">保留<br/>天数</td>
                     <td width="100px">行数</td>
                     <td width="90px">今日<br/>记录数</td>
-                    <td width="90px">今日<br/>错误数</td>
+                    <td width="80px">今日<br/>错误数</td>
                     <td>数据源</td>
                     <td width="60">及时<br/>报警</td>
                     <#if is_admin == 1>
