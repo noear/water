@@ -8,7 +8,6 @@ import java.util.zip.GZIPOutputStream;
 
 public class GzipUtils {
     public static final String GZIP_ENCODE_UTF_8 = "UTF-8";
-    public static final String GZIP_ENCODE_ISO_8859_1 = "ISO-8859-1";
 
     private static ByteArrayOutputStream compressDo(String str, String encoding){
         if (str == null || str.length() == 0) {
