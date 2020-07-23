@@ -85,7 +85,7 @@ public class CfgController implements XHandler {
         String key = ctx.param("key");
         String value = ctx.param("value");
 
-        if(LockUtils.tryLock(Config.water_service_name, tag+"/"+key)){
+        if(LockUtils.tryLock(Config.water_service_name, tag+"/"+key) == false){
             ONode n = new ONode();
             n.set("code", 0);
             n.set("msg", "Too many requests");
