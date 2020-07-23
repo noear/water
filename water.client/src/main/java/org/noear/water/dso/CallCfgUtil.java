@@ -9,6 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * 用于配置的调用
+ * */
 class CallCfgUtil {
     public static HttpUtils http(String path){
         return WaterConfig.water_cfg_upstream().xcall(path);

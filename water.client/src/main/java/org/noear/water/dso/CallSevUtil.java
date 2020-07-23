@@ -9,6 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * 用于服务的调用（非配置）
+ * */
 class CallSevUtil {
     public static HttpUtils http(String path){
         return WaterConfig.water_sev_upstream().xcall(path);
