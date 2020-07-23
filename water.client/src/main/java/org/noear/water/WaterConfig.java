@@ -16,9 +16,9 @@ import java.util.concurrent.Executors;
 
 
 public class WaterConfig {
-    public static Map<String, DbContext> libOfDb = new ConcurrentHashMap();
-    public static Map<String, RedisX> libOfRd = new ConcurrentHashMap();
-    public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
+    public static final Map<String, DbContext> libOfDb = new ConcurrentHashMap();
+    public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
+    public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
     public static boolean enableGzipLog = false;
 
