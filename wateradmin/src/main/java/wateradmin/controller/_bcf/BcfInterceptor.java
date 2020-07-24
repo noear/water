@@ -15,12 +15,6 @@ import wateradmin.utils.IPUtil;
 
 @XInterceptor(before = true)
 public class BcfInterceptor extends BcfInterceptorBase {
-
-    @Override
-    public int getPUID() {
-        return Session.current().getPUID();
-    }
-
     @Override
     @XMapping("**")
     public void verifyHandle(XContext ctx) throws Exception {
