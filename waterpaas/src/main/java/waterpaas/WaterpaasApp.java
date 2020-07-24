@@ -4,6 +4,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XMethod;
 import org.noear.solonjt.dso.*;
 import org.noear.water.WaterClient;
+import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.Timecount;
 import solonjt.JtRun;
 import waterpaas.controller.AppHandler;
@@ -44,9 +45,10 @@ public class WaterpaasApp {
                 return;
             }
 
-            String node = WaterClient.localServiceHost();
+            long _times = timecount.stop().milliseconds();
+            String _node = XWaterAdapter.global().localHost();
 
-            WaterClient.Track.track("water-paas", "paas", c.path(), timecount.stop().milliseconds(), node);
+            WaterClient.Track.track(XWaterAdapter.global().service_name(), "paas", c.path(), _times, _node);
         });
     }
 }
