@@ -59,6 +59,7 @@ public class ConfigApi {
 
         _cfgs.put(tag, cfgSet);
 
+        //尝试通知订阅者
         noticeTry(tag, cfgSet);
     }
 
