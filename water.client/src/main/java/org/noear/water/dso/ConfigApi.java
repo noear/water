@@ -59,7 +59,6 @@ public class ConfigApi {
 
         _cfgs.put(tag, cfgSet);
 
-        noticeTry("*", cfgSet);
         noticeTry(tag, cfgSet);
     }
 
