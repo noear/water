@@ -54,10 +54,6 @@ public class ConfigSetM {
                         v.get("lastModified").getLong());
 
                 _map.put(k, val);
-
-                if (k.startsWith("@@")) {
-                    System.getProperty(val.key.substring(2), val.value);
-                }
             });
         } else {
             System.err.println(node.toJson());
@@ -78,11 +74,7 @@ public class ConfigSetM {
 
                     //确定key
                     if (k.startsWith("@")) {
-                        if (k.startsWith("@@")) {
-                            keyTmp = k.substring(2);
-                        } else {
-                            keyTmp = k.substring(1);
-                        }
+                        keyTmp = k.substring(1);
                     } else {
                         keyTmp = _tag + "." + k;
                     }
