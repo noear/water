@@ -56,7 +56,9 @@
                     <td>
                         ${log.interval}
                     </td>
-                    <td class="left break" style="font-size: small">${log.schema!}::${log.cmd_sql!} <br/>$$$ ${log.cmd_arg!}</td>
+                    <td class="left break" style="font-size: small">${log.schema!}::${log.cmd_sql!}
+                    <n-l>$$$ ${log.cmd_arg!}</n-l>
+                    </td>
                 </tr>
                 </#list>
                 </tbody>
