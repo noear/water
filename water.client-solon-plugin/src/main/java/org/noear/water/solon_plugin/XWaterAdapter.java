@@ -68,20 +68,26 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     protected void onInit() {
         _router = new HashMap<>();
 
+        //注册服务
         registerService();
 
+        //消息监听（收集本地监听者）
         messageListening(_router);
 
+        //订阅消息
         messageSubscribe();
 
+        //订阅配置更新
         configSubscribe();
 
+        //初始化Weed监听事件
         initWeed();
-
 
     }
 
-    //配置订阅
+    /**
+     * 订阅配置更新
+     * */
     private void configSubscribe() {
         if (TextUtils.isEmpty(service_tag()) == false) {
             WaterClient.Config.subscribe(service_tag(), cfgSet -> {
@@ -127,6 +133,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 初始化Weed监听事件
+     * */
     protected void initWeed() {
         Class<?> clz = XUtil.loadClass(WW.clz_BcfClient);
 
@@ -164,8 +173,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public void messageListening(Map<String, MessageHandler> map) {
     }
 
-    ;
 
+    /**
+     * 消息订阅处理
+     * */
     @Override
     public void messageSubscribeHandler() {
         if (_router.size() == 0) {
@@ -186,6 +197,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         messageSubscribeTopic(topics);
     }
 
+    /**
+     * 订阅消息主题
+     * */
     public void messageSubscribeTopic(String... topics) {
         try {
             messageSubscribeTopic(msg_receiver_url(), 0, topics);
@@ -194,6 +208,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 消息接收处理
+     * */
     @Override
     public boolean messageReceiveHandler(MessageM msg) throws Exception {
         MessageHandler handler = _router.get(msg.topic);
@@ -204,6 +221,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 缓存更新处理
+     * */
     @Override
     public void cacheUpdateHandler(String tag) {
         super.cacheUpdateHandler(tag);
