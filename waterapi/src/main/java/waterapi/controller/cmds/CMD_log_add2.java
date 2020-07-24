@@ -40,7 +40,7 @@ public class CMD_log_add2 extends CMDBase {
         }
 
         if (checkParamsIsOk(list_json) == false) {
-            LogUtils.warn(context, "ctx.bodyAsBytes() is null");
+            LogUtils.warn(context, contentType, "ctx.bodyAsBytes() is null");
             return;
         }
 
