@@ -24,18 +24,21 @@ public class CMD_log_add2 extends CMDBase {
     @Override
     protected void cmd_exec() throws Exception {
         String contentType = context.contentType();
-        String list_json = null;
-        if (WW.mime_gzip.equals(contentType)) {
-            list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
-        }
+        String list_json = context.param("list");
 
-        if (WW.mime_json.equals(contentType)) {
-            list_json = context.body();
-        }
+        if (list_json == null) {
+            if (WW.mime_gzip.equals(contentType)) {
+                list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
+            }
 
-        if (checkParamsIsOk(list_json) == false) {
-            LogUtils.warn(context, "ctx.bodyAsBytes() is null");
-            return;
+            if (WW.mime_json.equals(contentType)) {
+                list_json = context.body();
+            }
+
+            if (checkParamsIsOk(list_json) == false) {
+                LogUtils.warn(context, "ctx.bodyAsBytes() is null");
+                return;
+            }
         }
 
         List<LogEvent> list = ONode.deserialize(list_json);
