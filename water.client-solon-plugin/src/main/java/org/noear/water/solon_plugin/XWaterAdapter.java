@@ -91,24 +91,29 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     private void configSubscribe() {
         if (TextUtils.isEmpty(service_tag()) == false) {
             WaterClient.Config.subscribe(service_tag(), cfgSet -> {
-                //不等于0为true
-                if (cfgSet.has(WW.cfg_water_log_gzip)) {
-                    int gzip = cfgSet.get(WW.cfg_water_log_gzip).getInt(1);
+                //将@@同步到系统配置
+                cfgSet.sync();
+
+                //
+                //同步water配置
+                //
+                int gzip = XApp.cfg().getInt(WW.cfg_water_log_gzip, -1);
+                if (gzip > -1) {
                     WaterLogger.setGzip(gzip != 0);
                 }
 
-                if (cfgSet.has(WW.cfg_water_log_level)) {
-                    int level = cfgSet.get(WW.cfg_water_log_level).getInt(Level.INFO.code);
+                int level = XApp.cfg().getInt(WW.cfg_water_log_level, -1);
+                if (level > -1) {
                     WaterLogger.setLevel(Level.of(level));
                 }
 
-                if (cfgSet.has(WW.cfg_water_log_interval)) {
-                    int interval = cfgSet.get("water.log.interval").getInt(500);
+                int interval = XApp.cfg().getInt(WW.cfg_water_log_interval, -1);
+                if (interval > -1) {
                     WaterLogger.setInterval(interval);
                 }
 
-                if (cfgSet.has(WW.cfg_water_log_packetSize)) {
-                    int packetSize = cfgSet.get("water.log.packetSize").getInt(100);
+                int packetSize = XApp.cfg().getInt(WW.cfg_water_log_packetSize, -1);
+                if (packetSize > -1) {
                     WaterLogger.setPacketSize(packetSize);
                 }
             });
