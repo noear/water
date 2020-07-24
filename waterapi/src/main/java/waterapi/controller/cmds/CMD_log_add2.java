@@ -29,9 +29,13 @@ public class CMD_log_add2 extends CMDBase {
 
         if (WW.mime_gzip.equals(contentType)) {
             list_json = GzipUtils.uncompressToString(context.bodyAsBytes());
-        } else if (WW.mime_json.equals(contentType)) {
+        }
+
+        if (WW.mime_json.equals(contentType)) {
             list_json = context.body();
-        } else {
+        }
+
+        if (list_json == null) {
             list_json = context.param("list");
         }
 

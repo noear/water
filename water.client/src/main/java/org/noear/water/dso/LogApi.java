@@ -200,6 +200,7 @@ public class LogApi {
             } else {
                 Map<String,String> map = new HashMap<>();
                 map.put("list",json);
+
                 CallSevUtil.post("/log/add2/",map);
 
                 //CallSevUtil.postBody("/log/add2/", json, WW.mime_json);
