@@ -99,7 +99,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
                 //
                 int gzip = XApp.cfg().getInt(WW.cfg_water_log_gzip, -1);
                 if (gzip > -1) {
-                    WaterLogger.setGzip(gzip != 0);
+                    WaterLogger.setGzip(gzip == 1);
                 }
 
                 int level = XApp.cfg().getInt(WW.cfg_water_log_level, -1);

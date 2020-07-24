@@ -17,7 +17,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     }
 
     private static volatile Level level = Level.TRACE;
-    private static volatile boolean gzip = true;
+    private static volatile boolean gzip = false;
 
     public static void setLevel(Level level) {
         WaterLogger.level = level;
