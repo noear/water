@@ -27,10 +27,11 @@ import java.util.*;
 public final class MsgController implements IJob {
 
     private int _threads;
-    public MsgController(){
+
+    public MsgController() {
         _threads = XApp.cfg().argx().getInt("pool");
 
-        if(_threads < 1){
+        if (_threads < 1) {
             _threads = 1;
         }
     }
@@ -92,8 +93,6 @@ public final class MsgController implements IJob {
             distributeDo0(msg);
 
         } catch (Throwable ex) {
-            ex.printStackTrace();
-
             DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
@@ -106,10 +105,10 @@ public final class MsgController implements IJob {
 
     private void distributeDo0(MessageModel msg) throws SQLException {
         //1.取出订阅者
-        Map<Integer,SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
+        Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
 
         //1.2.如果没有订阅者，就收工
-        if(subsList.size()==0){
+        if (subsList.size() == 0) {
             DbWaterMsgApi.setMessageState(msg.msg_id, -2);
             return;
         }
@@ -124,7 +123,7 @@ public final class MsgController implements IJob {
         List<DistributionModel> distList_tmp = DbWaterMsgApi.getDistributionListByMsg(msg.msg_id);
 
         //3.1.过滤可能已不存在的订阅者
-        for(DistributionModel d : distList_tmp) { //可能会有什么意外，会产生重复数据
+        for (DistributionModel d : distList_tmp) { //可能会有什么意外，会产生重复数据
             SubscriberModel s1 = subsList.get(d.subscriber_id);
             if (s1 != null) {
                 d._is_unstable = s1.is_unstable;
@@ -133,7 +132,7 @@ public final class MsgController implements IJob {
         }
 
         //3.2.如果没有可派发对象，就收工
-        if(distList.size()==0){
+        if (distList.size() == 0) {
             DbWaterMsgApi.setMessageState(msg.msg_id, 2);
             return;
         }
@@ -151,7 +150,7 @@ public final class MsgController implements IJob {
         }
     }
 
-    private  Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
+    private Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
         synchronized (tag.msg.msg_id) {
             //
             //锁一下，确保计数的线程安全
@@ -194,7 +193,7 @@ public final class MsgController implements IJob {
         }
     };
 
-    private  void distributeMessage(StateTag tag, MessageModel msg, DistributionModel dist, Act3<StateTag, DistributionModel, Boolean> callback) {
+    private void distributeMessage(StateTag tag, MessageModel msg, DistributionModel dist, Act3<StateTag, DistributionModel, Boolean> callback) {
 
         //1.生成签名
         StringBuilder sb = new StringBuilder(200);
@@ -207,7 +206,7 @@ public final class MsgController implements IJob {
         String sgin = EncryptUtils.md5(sb.toString());
 
         //2.组装分源的数据
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("id", msg.msg_id + "");
         params.put("key", msg.msg_key);
         params.put("topic", msg.topic_name);
@@ -217,7 +216,7 @@ public final class MsgController implements IJob {
 
 
         try {
-            if(dist.receive_way == 0){
+            if (dist.receive_way == 0) {
                 //3.2.0.进行异步http分发
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
@@ -228,26 +227,22 @@ public final class MsgController implements IJob {
 
                         boolean isOk2 = "OK".equals(rst);
 
-                        LogUtil.writeForMsg(msg, dist, rst);
-
-                        if (isOk2 == false) {
-                            //同时在错误的书写器里，写入一条
+                        if (isOk2) {
+                            LogUtil.writeForMsg(msg, dist, rst);
+                        }else{
                             LogUtil.writeForMsgByError(msg, dist, rst);
                         }
 
                         callback.run(tag, dist, isOk2);
                     } else {
-                        LogUtil.writeForMsg(msg, dist, "http error");
-
-                        //同时在错误的书写器里，写入一条
-                        LogUtil.writeForMsgByError( msg, dist,"http error");
+                        LogUtil.writeForMsgByError(msg, dist, "http error");
 
                         callback.run(tag, dist, false);
                     }
                 });
             }
 
-            if(dist.receive_way == 2){
+            if (dist.receive_way == 2) {
                 //3.2.2.进行异步http分发 //不等待 //状态设为已完成
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
@@ -258,26 +253,21 @@ public final class MsgController implements IJob {
 
                         boolean isOk2 = "OK".equals(rst);
 
-                        LogUtil.writeForMsg( msg, dist, rst);
 
                         if (isOk2 == false) {
-                            //同时在错误的书写器里，写入一条
-                            LogUtil.writeForMsgByError( msg, dist, rst);
+                            LogUtil.writeForMsg(msg, dist, rst);
+                        }else{
+                            LogUtil.writeForMsgByError(msg, dist, rst);
                         }
-
-
                     } else {
-                        LogUtil.writeForMsg( msg, dist, "http error");
-
-                        //同时在错误的书写器里，写入一条
-                        LogUtil.writeForMsgByError( msg, dist,"http error");
+                        LogUtil.writeForMsgByError(msg, dist, "http error");
                     }
                 });
 
                 callback.run(tag, dist, true);
             }
 
-            if(dist.receive_way == 3){
+            if (dist.receive_way == 3) {
                 //3.2.3.进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
@@ -288,19 +278,14 @@ public final class MsgController implements IJob {
 
                         boolean isOk2 = "OK".equals(rst);
 
-                        LogUtil.writeForMsg( msg, dist, rst);
-
-                        if (isOk2 == false) {
+                        if (isOk2) {
+                            LogUtil.writeForMsg(msg, dist, rst);
+                        } else {
                             //同时在错误的书写器里，写入一条
-                            LogUtil.writeForMsgByError( msg, dist, rst);
+                            LogUtil.writeForMsgByError(msg, dist, rst);
                         }
-
-
                     } else {
-                        LogUtil.writeForMsg( msg, dist, "http error");
-
-                        //同时在错误的书写器里，写入一条
-                        LogUtil.writeForMsgByError(msg, dist,"http error");
+                        LogUtil.writeForMsgByError(msg, dist, "http error");
                     }
                 });
 
@@ -310,10 +295,7 @@ public final class MsgController implements IJob {
             }
 
         } catch (Exception ex) {
-            LogUtil.writeForMsg( msg, dist, ex.getLocalizedMessage());
-
-            //同时在错误的书写器里，写入一条
-            LogUtil.writeForMsgByError( msg, dist,ex.getLocalizedMessage());
+            LogUtil.writeForMsgByError(msg, dist, ex.getLocalizedMessage());
 
             callback.run(tag, dist, false);
         }
