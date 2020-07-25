@@ -88,10 +88,11 @@ public final class MsgController implements IJob {
         try {
             //置为处理中
             DbWaterMsgApi.setMessageState(msgID, 1);
-            //并将消息锁里取消掉
-            ProtocolHub.messageLock.unlock(msg_id_str);
 
             distributeDo0(msg);
+
+            //将消息锁取消掉
+            ProtocolHub.messageLock.unlock(msg_id_str);
         } catch (Throwable ex) {
             ex.printStackTrace();
 
