@@ -72,7 +72,7 @@ public final class MsgController implements IJob {
         }
     }
 
-    private void distributeDo(String msg_id_str) throws Exception{
+    private void distributeDo(String msg_id_str) throws Exception {
         long msgID = Long.parseLong(msg_id_str);
 
         MessageModel msg = DbWaterMsgApi.getMessage(msgID);
@@ -91,14 +91,15 @@ public final class MsgController implements IJob {
 
             distributeDo0(msg);
 
-            //将消息锁取消掉
-            ProtocolHub.messageLock.unlock(msg_id_str);
         } catch (Throwable ex) {
             ex.printStackTrace();
 
             DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
+        } finally {
+            //释放消息锁
+            ProtocolHub.messageLock.unlock(msg_id_str);
         }
     }
 
