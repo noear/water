@@ -169,7 +169,7 @@ public final class MsgController implements IJob {
                 if (tag.value == tag.total) {
                     DbWaterMsgApi.setMessageState(dist.msg_id, 2);
 
-                    if (tag.msg.dist_count >= 4) {
+                    if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag.msg, true, dist);
                     }
@@ -183,7 +183,7 @@ public final class MsgController implements IJob {
                     } else {
                         DbWaterMsgApi.setMessageRepet(tag.msg, 0);
 
-                        if (tag.msg.dist_count >= 4) {
+                        if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
                             AlarmUtil.tryAlarm(tag.msg, false, dist);
                         }
