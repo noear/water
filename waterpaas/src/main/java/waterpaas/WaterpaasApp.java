@@ -4,6 +4,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XMethod;
 import org.noear.solonjt.dso.*;
 import org.noear.water.WaterClient;
+import org.noear.water.solon_plugin.FromUtils;
 import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.Timecount;
 import solonjt.JtRun;
@@ -18,7 +19,7 @@ public class WaterpaasApp {
         XApp app = XApp.start(WaterpaasApp.class, args, (x) -> {
             Config.tryInit();
 
-            x.sharedAdd("cache",Config.cache_data);
+            x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
@@ -35,20 +36,24 @@ public class WaterpaasApp {
 
 
         //添加性能记录
-        app.before("**",XMethod.HTTP,-1,(c)->{
-            c.attrSet("_timecount", new Timecount().start());
+        app.before("**", XMethod.HTTP, (c) -> {
+            //
+            //不记录，检测的性能
+            //
+            if ("/run/check/".equals(c.path()) == false) {
+                c.attrSet("timecount", new Timecount().start());
+            }
         });
-        app.after("**", XMethod.HTTP,(c)->{
+        app.after("**", XMethod.HTTP, (c) -> {
             Timecount timecount = c.attr("_timecount", null);
 
-            if (timecount == null || c.status() == 404) {
-                return;
+            if (timecount != null && c.status() != 404) {
+                long _times = timecount.stop().milliseconds();
+                String _node = XWaterAdapter.global().localHost();
+                String _from = FromUtils.getFrom(c);
+
+                WaterClient.Track.track(XWaterAdapter.global().service_name(), "paas", c.path(), _times, _node, _from);
             }
-
-            long _times = timecount.stop().milliseconds();
-            String _node = XWaterAdapter.global().localHost();
-
-            WaterClient.Track.track(XWaterAdapter.global().service_name(), "paas", c.path(), _times, _node);
         });
     }
 }

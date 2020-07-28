@@ -54,18 +54,24 @@ public class WaterapiApp {
 		}
 
 		XApp.global().before("**", XMethod.HTTP, c -> {
-			c.attrSet("timecount", new Timecount().start());
+			//
+			//不记录，检测的性能
+			//
+			if ("/run/check/".equals(c.path()) == false) {
+				c.attrSet("timecount", new Timecount().start());
+			}
 		});
 
 		XApp.global().after("**", XMethod.HTTP, c -> {
 			Timecount timecount = c.attr("timecount", null);
 
 			if (timecount != null) {
+				long _times = timecount.stop().milliseconds();
 				String _node = Config.getLocalHost();
 				String _from = FromUtils.getFrom(c);
 
 				Timespan timespan = timecount.stop();
-				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), timespan.milliseconds(), _node, _from);
+				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), _times, _node, _from);
 			}
 		});
 
