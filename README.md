@@ -32,14 +32,15 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client-solon-plugin</artifactId>
-    <version>2.0.2-release</version>
+    <version>2.0.3</version>
 </dependency>
 ```
 
 * application.yml / 配置
 ```yaml
 water:
-  host: "http://water2"           #water服务地址；建议用域名
+  host: "water2"                  #water服务地址；建议用域名
+  logger: "water_log_admin"       #默认日志器
   service:
     name: "wateradmin"            #当前服务名称
     secretKey: "b5fZK49x71Rnn5Cl" #当前服务密钥，用于消息签名
