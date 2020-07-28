@@ -36,7 +36,7 @@ public class WaterpaasApp {
 
 
         //添加性能记录
-        app.before("**", XMethod.HTTP, (c) -> {
+        app.before("**", XMethod.HTTP, -1, (c) -> {
             //
             //不记录，检测的性能
             //

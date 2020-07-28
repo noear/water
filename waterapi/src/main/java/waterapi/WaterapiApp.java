@@ -53,7 +53,7 @@ public class WaterapiApp {
 			});
 		}
 
-		XApp.global().before("**", XMethod.HTTP, c -> {
+		XApp.global().before("**", XMethod.HTTP, -1, c -> {
 			//
 			//不记录，检测的性能
 			//
