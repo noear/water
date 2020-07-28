@@ -4,28 +4,30 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XMap;
-import org.noear.solon.core.XRender;
 import org.noear.solonclient.HttpUpstream;
+import org.noear.solonclient.Result;
 import org.noear.solonclient.XProxy;
+import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 
+import java.io.ByteArrayInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 /*
 * Water Gateway
 * */
-public class XWaterGateway implements XHandler, XRender {
-    Map<String,HttpUpstream> router = new HashMap<>();
+public class XWaterGateway implements XHandler {
+    Map<String, HttpUpstream> router = new HashMap<>();
 
     public XWaterGateway() {
         XMap map = XApp.cfg().getXmap("water.gateway");
 
-        map.forEach((alias, service) -> {
+        map.forEach((service, alias) -> {
             if (XApp.cfg().isDebugMode()) {
                 //增加debug模式支持
                 String url = System.getProperty("water.remoting-debug." + service);
-                if(url != null){
+                if (url != null) {
                     add(alias, (s) -> url);
                     return;
                 }
@@ -35,11 +37,11 @@ public class XWaterGateway implements XHandler, XRender {
         });
     }
 
-    protected void add(String alias,String service){
-        router.put(alias,  XWaterUpstream.get(service));
+    protected void add(String alias, String service) {
+        router.put(alias, XWaterUpstream.get(service));
     }
 
-    protected void add(String alias, HttpUpstream upstream){
+    protected void add(String alias, HttpUpstream upstream) {
         router.put(alias, upstream);
     }
 
@@ -48,7 +50,7 @@ public class XWaterGateway implements XHandler, XRender {
 
         String path = ctx.path();
         //长度不足3的，说明不够两段
-        if(path.length()<3){
+        if (path.length() < 3) {
             ctx.status(404);
             return;
         }
@@ -57,12 +59,12 @@ public class XWaterGateway implements XHandler, XRender {
 
         //尝试去header 取 alias
         String alias = ctx.header("_service");
-        if(TextUtils.isEmpty(alias)){
+        if (TextUtils.isEmpty(alias)) {
             //尝试去param 取 alias
             alias = ctx.param("_service");
         }
 
-        if(TextUtils.isEmpty(alias)) {
+        if (TextUtils.isEmpty(alias)) {
             //尝试去path 取 alias
             String[] paths = path.substring(1).split("/");
             //不够两段的肯定不是正常地址
@@ -75,7 +77,7 @@ public class XWaterGateway implements XHandler, XRender {
             //找到 fun 部分
             int idx = path.indexOf("/", 2) + 1;
             fun = path.substring(idx);
-        }else{
+        } else {
             fun = path;
         }
 
@@ -87,17 +89,29 @@ public class XWaterGateway implements XHandler, XRender {
             return;
         }
 
-        String rst = new XProxy(null)
+        Result rst = new XProxy(null)
                 .url(upstream.getTarget(alias), fun)
-                .call(ctx.headerMap(), ctx.paramMap())
-                .getString();
+                .call(headers(ctx), ctx.paramMap())
+                .result();
 
-        render(rst, ctx);
+        renderDo(rst, ctx);
     }
 
-    /** XRender,是为了进一步可以重载控制 */
-    @Override
-    public void render(Object obj, XContext ctx) throws Throwable {
-        ctx.output(obj.toString());
+    /**
+     * 用于添加头
+     */
+    protected Map<String, String> headers(XContext ctx) {
+        return null;
+    }
+
+    /**
+     * XRender,是为了进一步可以重载控制
+     */
+    protected void renderDo(Result rst, XContext ctx) throws Throwable {
+        rst.headers.forEach(kv -> {
+            ctx.headerSet(kv.getKey(), kv.getValue());
+        });
+
+        ctx.output(new ByteArrayInputStream(rst.body));
     }
 }
