@@ -6,4 +6,4 @@ water:
     name: "water-demo-api1"
     secretKey: "NJ8f6usfroGRi7iR"
   remoting-debug:
-    demo-rpc-service: "http://localhost:8020/bcf/user"
+    demo-rpc-service: "http://localhost:8020"
