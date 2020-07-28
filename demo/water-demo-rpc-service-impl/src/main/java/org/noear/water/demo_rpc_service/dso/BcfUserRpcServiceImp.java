@@ -2,6 +2,7 @@ package org.noear.water.demo_rpc_service.dso;
 
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.annotation.XMapping;
+import org.noear.solon.core.XContext;
 import org.noear.water.annotation.Water;
 import org.noear.water.demo_rpc_client.BcfUserRpcService;
 import org.noear.water.demo_rpc_client.UserModel;
@@ -24,6 +25,11 @@ public class BcfUserRpcServiceImp implements BcfUserRpcService {
 
     @Override
     public UserModel getUser(Integer puid) throws SQLException {
+        if(puid == null){
+            XContext.current().status(500);
+            throw new RuntimeException("error");
+        }
+
         return bcfDb.table("bcf_user")
                 .whereEq("puid",puid).select("*")
                 .getItem(UserModel.class);

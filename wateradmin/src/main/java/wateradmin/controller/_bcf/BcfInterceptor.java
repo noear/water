@@ -16,11 +16,13 @@ import wateradmin.utils.IPUtil;
 @XInterceptor(before = true)
 public class BcfInterceptor extends BcfInterceptorBase {
 
+    @Override
     public int getPUID() {
         return Session.current().getPUID();
     }
 
-    @XMapping("/**")
+    @Override
+    @XMapping("**")
     public void verifyHandle(XContext ctx) throws Exception {
         if (ctx.path().equals("/login")) {
             return;
@@ -30,12 +32,6 @@ public class BcfInterceptor extends BcfInterceptorBase {
             BcfUserModel um = BcfClient.login(1);
             Session.current().loadModel(um);
         }
-
-        if (getPUID() > 0) {
-            ctx.attrSet("user_puid", "" + XSessionBcf.global().getPUID());
-            ctx.attrSet("user_name", XSessionBcf.global().getUserName());
-        }
-
 
         if (ctx.uri().getHost().indexOf("localhost") < 0) {
             //IP白名单校验

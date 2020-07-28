@@ -53,7 +53,7 @@ public class LogUtils {
         }
     }
 
-    public static void warn(XContext ctx, String content) {
+    public static void warn(XContext ctx, String tag2,String content) {
         try {
             String _from = FromUtils.getFromName(ctx);
 
@@ -68,7 +68,7 @@ public class LogUtils {
                 });
             }
 
-            logger.warn(tag, null, null, _from, label.toJson(), content);
+            logger.warn(tag, null, tag2, _from, label.toJson(), content);
             //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();

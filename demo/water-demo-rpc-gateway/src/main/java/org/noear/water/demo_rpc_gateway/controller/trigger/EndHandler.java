@@ -7,7 +7,7 @@ public class EndHandler implements XHandler {
 
     @Override
     public void handle(XContext ctx) throws Exception {
-        long start = ctx.attr("_start", 0l);
+        long start = ctx.attr("_start", 0L);
         long times = System.currentTimeMillis() - start;
 
         ctx.headerSet("_times", times + "");

@@ -21,10 +21,12 @@ public class LogUtil {
         String summary = msg.msg_id + "#" + msg.dist_count + "#" + msg.topic_name + "=" + msg.content + "@" + dist._duration;
 
 
-        if (TextUtils.isEmpty(dist.receive_url))
-            log_msg.info( msg.topic_name, msg.msg_id + "", summary, content);
-        else
-            log_msg.info( msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
+        if (TextUtils.isEmpty(dist.receive_url)) {
+            log_msg.info(msg.topic_name, msg.msg_id + "", summary, content);
+        }
+        else {
+            log_msg.info(msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
+        }
     }
 
     public static void writeForMsgByError(MessageModel msg, DistributionModel dist, String content) {
@@ -34,10 +36,12 @@ public class LogUtil {
 
         String summary = msg.msg_id + "#" + msg.dist_count + "#" + msg.topic_name + "=" + msg.content;
 
-        if (TextUtils.isEmpty(dist.receive_url))
+        if (TextUtils.isEmpty(dist.receive_url)) {
             log_msg.error(msg.topic_name, msg.msg_id + "", summary, content);
-        else
+        }
+        else {
             log_msg.error(msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
+        }
 
     }
 

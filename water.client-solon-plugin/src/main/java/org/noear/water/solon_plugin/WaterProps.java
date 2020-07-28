@@ -11,6 +11,10 @@ class WaterProps {
         return XApp.cfg().get("water.service.name");
     }
 
+    public static String service_tag() {
+        return XApp.cfg().get("water.service.tag");
+    }
+
     public static String service_host() {
         return XApp.cfg().get("water.service.host");
     }

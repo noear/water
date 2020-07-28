@@ -52,6 +52,11 @@ public class XWaterAdapterImp extends XWaterAdapter {
     }
 
     @Override
+    public String service_tag() {
+        return WaterProps.service_tag();
+    }
+
+    @Override
     public String service_secretKey() {
         return WaterProps.service_secretKey();
     }

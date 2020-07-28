@@ -16,9 +16,9 @@ import java.util.concurrent.Executors;
 
 
 public class WaterConfig {
-    public static Map<String, DbContext> libOfDb = new ConcurrentHashMap();
-    public static Map<String, RedisX> libOfRd = new ConcurrentHashMap();
-    public static Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
+    public static final Map<String, DbContext> libOfDb = new ConcurrentHashMap();
+    public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
+    public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
     private static String _water_logger_def = null;
     public static String water_logger_def(){
@@ -34,7 +34,7 @@ public class WaterConfig {
     private static WaterUpstream _water_cfg_upstream = new WaterUpstreamImp();
     public static WaterUpstream water_cfg_upstream(){return _water_cfg_upstream;}
 
-    //可以修改
+    //可以修改（默认由，water-solon-plugin 的 XPlugin 初始化）
     private static WaterUpstream _water_sev_upstream = new WaterUpstreamImp();
     public static WaterUpstream water_sev_upstream(){return _water_sev_upstream;}
     public static void water_sev_upstream(WaterUpstream upstream) {

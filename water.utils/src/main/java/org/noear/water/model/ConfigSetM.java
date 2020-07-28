@@ -17,22 +17,35 @@ public class ConfigSetM {
 
     /**
      * 获取配置项
-     * */
+     */
     public ConfigM get(String key) {
         return _map.getOrDefault(key, _empty);
     }
 
+    /**
+     * 检测是否存在
+     */
+    public boolean has(String key) {
+        return _map.containsKey(key);
+    }
+
+    /**
+     * 设置
+     */
     public void set(String key, String value) {
         _map.put(key, new ConfigM(key, value, 0));
     }
 
     /**
      * 遍历配置项
-     * */
-    public void forEach(BiConsumer<String,ConfigM> action){
+     */
+    public void forEach(BiConsumer<String, ConfigM> action) {
         _map.forEach(action);
     }
 
+    /**
+     * 加载配置数据
+     * */
     public void load(ONode node) {
         int code = node.get("code").getInt();
 
@@ -52,6 +65,9 @@ public class ConfigSetM {
 
     private Properties _propSet;
 
+    /**
+     * 获取一个Properties集合
+     * */
     public Properties getPropSet() {
         if (_propSet == null) {
             _propSet = new Properties();
@@ -72,19 +88,38 @@ public class ConfigSetM {
                     String key = keyTmp;
 
                     //开始写数据
-                    if (v.value.indexOf("=") < 0) {
-                        _propSet.setProperty(key, v.value);
-                    } else {
-                        v.getProp().forEach((k1, v1) -> {
-                            if (v1 != null) {
-                                _propSet.setProperty(key + "." + k1, v1.toString());
-                            }
-                        });
-                    }
+                    putTo(key, v, _propSet);
                 }
             });
         }
 
         return _propSet;
+    }
+
+    /**
+     * 同步到系统
+     */
+    public void sync() {
+        _map.forEach((k, v) -> {
+            if (v != null && k.startsWith("@@")) {
+                //确定key
+                String key = k.substring(2);
+
+                //开始写数据
+                putTo(key, v, System.getProperties());
+            }
+        });
+    }
+
+    private void putTo(String key, ConfigM val, Properties target) {
+        if (val.value.indexOf("=") < 0) {
+            target.setProperty(key, val.value);
+        } else {
+            val.getProp().forEach((k1, v1) -> {
+                if (v1 != null) {
+                    target.setProperty(key + "." + k1, v1.toString());
+                }
+            });
+        }
     }
 }

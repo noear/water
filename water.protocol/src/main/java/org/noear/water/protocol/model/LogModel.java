@@ -2,6 +2,7 @@ package org.noear.water.protocol.model;
 
 
 import lombok.Getter;
+import org.noear.water.log.Level;
 import org.noear.water.utils.HtmlEncode;
 
 import java.util.Date;
@@ -19,6 +20,10 @@ public class LogModel {
     public String from;
     public int log_date;
     public Date log_fulltime;
+
+    public String levelHtml(){
+        return Level.of(level).name();
+    }
 
     public String summaryHtml() {
         if (summary == null) {

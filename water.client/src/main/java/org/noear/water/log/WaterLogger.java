@@ -17,9 +17,17 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     }
 
     private static volatile Level level = Level.TRACE;
+    private static volatile boolean gzip = false;
 
     public static void setLevel(Level level) {
         WaterLogger.level = level;
+    }
+
+    public static void setGzip(boolean gzip) {
+        WaterLogger.gzip = gzip;
+    }
+    public static boolean isGzip(){
+        return gzip;
     }
 
     public static void setInterval(long interval) {
@@ -29,6 +37,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     public static void setPacketSize(int packetSize) {
         LogPipeline.singleton().setPacketSize(packetSize);
     }
+
 
 
     private String _name;

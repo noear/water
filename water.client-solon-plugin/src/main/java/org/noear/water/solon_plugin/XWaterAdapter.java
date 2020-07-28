@@ -3,8 +3,12 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.WaterConfig;
 import org.noear.water.dso.MessageHandler;
+import org.noear.water.log.Level;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.model.MessageM;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
@@ -64,13 +68,56 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     protected void onInit() {
         _router = new HashMap<>();
 
+        //注册服务
         registerService();
 
+        //消息监听（收集本地监听者）
         messageListening(_router);
 
+        //订阅消息
         messageSubscribe();
 
+        //订阅配置更新
+        configSubscribe();
+
+        //初始化Weed监听事件
         initWeed();
+
+    }
+
+    /**
+     * 订阅配置更新
+     * */
+    private void configSubscribe() {
+        if (TextUtils.isEmpty(service_tag()) == false) {
+            WaterClient.Config.subscribe(service_tag(), cfgSet -> {
+                //将@@同步到系统配置
+                cfgSet.sync();
+
+                //
+                //同步water配置
+                //
+                int gzip = XApp.cfg().getInt(WW.cfg_water_log_gzip, -1);
+                if (gzip > -1) {
+                    WaterLogger.setGzip(gzip == 1);
+                }
+
+                int level = XApp.cfg().getInt(WW.cfg_water_log_level, -1);
+                if (level > -1) {
+                    WaterLogger.setLevel(Level.of(level));
+                }
+
+                int interval = XApp.cfg().getInt(WW.cfg_water_log_interval, -1);
+                if (interval > -1) {
+                    WaterLogger.setInterval(interval);
+                }
+
+                int packetSize = XApp.cfg().getInt(WW.cfg_water_log_packetSize, -1);
+                if (packetSize > -1) {
+                    WaterLogger.setPacketSize(packetSize);
+                }
+            });
+        }
     }
 
     //用于作行为记录
@@ -91,6 +138,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 初始化Weed监听事件
+     * */
     protected void initWeed() {
         Class<?> clz = XUtil.loadClass(WW.clz_BcfClient);
 
@@ -128,8 +178,10 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public void messageListening(Map<String, MessageHandler> map) {
     }
 
-    ;
 
+    /**
+     * 消息订阅处理
+     * */
     @Override
     public void messageSubscribeHandler() {
         if (_router.size() == 0) {
@@ -150,6 +202,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         messageSubscribeTopic(topics);
     }
 
+    /**
+     * 订阅消息主题
+     * */
     public void messageSubscribeTopic(String... topics) {
         try {
             messageSubscribeTopic(msg_receiver_url(), 0, topics);
@@ -158,6 +213,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 消息接收处理
+     * */
     @Override
     public boolean messageReceiveHandler(MessageM msg) throws Exception {
         MessageHandler handler = _router.get(msg.topic);
@@ -168,6 +226,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         }
     }
 
+    /**
+     * 缓存更新处理
+     * */
     @Override
     public void cacheUpdateHandler(String tag) {
         super.cacheUpdateHandler(tag);

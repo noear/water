@@ -25,6 +25,10 @@ class CallSevUtil {
         return http(path).bodyRaw(new ByteArrayInputStream(bytes), contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
     }
 
+    public static String postBody(String path, String text, String contentType) throws IOException {
+        return http(path).bodyTxt(text, contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
+    }
+
     public static void postAsync(String path, Map<String, String> data)  {
         try {
             http(path).data(data).header(WW.http_header_from, WaterClient.localServiceHost()).postAsync(null);

@@ -184,7 +184,7 @@ public class LogApi {
     }
 
     private void appendAllDo(List<LogEvent> list) {
-        if(list == null || list.size()==0){
+        if (list == null || list.size() == 0) {
             return;
         }
 
@@ -195,7 +195,16 @@ public class LogApi {
         String json = ONode.serialize(list);
 
         try {
-            CallSevUtil.postBody("/log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            if (WaterLogger.isGzip()) {
+                CallSevUtil.postBody("/log/add2/", GzipUtils.compress(json), WW.mime_gzip);
+            } else {
+                Map<String,String> map = new HashMap<>();
+                map.put("list",json);
+
+                CallSevUtil.post("/log/add2/",map);
+
+                //CallSevUtil.postBody("/log/add2/", json, WW.mime_json);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

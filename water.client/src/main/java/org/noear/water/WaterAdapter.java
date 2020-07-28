@@ -14,6 +14,9 @@ public abstract class WaterAdapter {
     /** 服务名称 :: 需要重写 */
     public abstract String service_name();
 
+    /** 服务空间 :: 可以重写 */
+    public String service_tag(){ return null; }
+
     /** 服务密钥 :: 可以重写 */
     public String service_secretKey() {
         return null;

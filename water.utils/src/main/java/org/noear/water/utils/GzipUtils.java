@@ -8,7 +8,6 @@ import java.util.zip.GZIPOutputStream;
 
 public class GzipUtils {
     public static final String GZIP_ENCODE_UTF_8 = "UTF-8";
-    public static final String GZIP_ENCODE_ISO_8859_1 = "ISO-8859-1";
 
     private static ByteArrayOutputStream compressDo(String str, String encoding){
         if (str == null || str.length() == 0) {
@@ -64,6 +63,7 @@ public class GzipUtils {
         if (bytes == null || bytes.length == 0) {
             return null;
         }
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         try {
@@ -74,25 +74,35 @@ public class GzipUtils {
                 out.write(buffer, 0, n);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return out;
     }
 
     public static byte[] uncompress(byte[] bytes) {
-        if(bytes == null){
+        if (bytes == null) {
             return null;
         }
 
-        return uncompressDo(bytes).toByteArray();
+        ByteArrayOutputStream tmp = uncompressDo(bytes);
+        if (tmp == null) {
+            return null;
+        } else {
+            return tmp.toByteArray();
+        }
     }
 
-    public static String uncompressToString(byte[] bytes, String encoding) throws IOException{
-        if(bytes == null){
+    public static String uncompressToString(byte[] bytes, String encoding) throws IOException {
+        if (bytes == null) {
             return null;
         }
 
-        return uncompressDo(bytes).toString(encoding);
+        ByteArrayOutputStream tmp = uncompressDo(bytes);
+        if (tmp == null) {
+            return null;
+        } else {
+            return tmp.toString(encoding);
+        }
     }
 
     public static String uncompressToString(byte[] bytes) throws IOException{
@@ -102,14 +112,4 @@ public class GzipUtils {
 
         return uncompressToString(bytes, GZIP_ENCODE_UTF_8);
     }
-
-//    public static void main(String[] args) throws IOException {
-//        String s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-//        System.out.println("字符串长度："+s.length());
-//        System.out.println("压缩后：："+compressToString(s));
-//        System.out.println("压缩后长度：："+compressToString(s).length());
-//        System.out.println("解压后："+uncompress(compress(s)).length);
-//        System.out.println("解压字符串后：："+uncompressToString(compress(s)));
-//        System.out.println("解压字符串后长度：："+uncompressToString(compress(s)).length());
-//    }
 }
