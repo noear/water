@@ -108,10 +108,10 @@ public class XWaterGateway implements XHandler {
      * XRender,是为了进一步可以重载控制
      */
     protected void renderDo(Result rst, XContext ctx) throws Throwable {
-        rst.headers.forEach(kv -> {
+        rst.headers().forEach(kv -> {
             ctx.headerSet(kv.getKey(), kv.getValue());
         });
 
-        ctx.output(new ByteArrayInputStream(rst.body));
+        ctx.output(new ByteArrayInputStream(rst.body()));
     }
 }
