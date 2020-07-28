@@ -2,6 +2,7 @@ server.port: 8030
 
 water:
   host: "http://water2"
+  logger: "water_log_admin"
   service:
     name: "demo-rpc-service"
     secretKey: "b5fZK49x71Rnn5Cl"
