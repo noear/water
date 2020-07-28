@@ -40,7 +40,7 @@
 ```yaml
 water:
   host: "water2"                  #water服务地址；建议用域名
-  logger: "water_log_admin"       #默认日志器
+  logger: "water_log_admin"       #默认日志记录器
   service:
     name: "wateradmin"            #当前服务名称
     secretKey: "b5fZK49x71Rnn5Cl" #当前服务密钥，用于消息签名
