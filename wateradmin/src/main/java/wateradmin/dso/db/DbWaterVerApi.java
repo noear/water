@@ -23,7 +23,7 @@ public class DbWaterVerApi {
     }
 
     /** 备份表的数据版本 */
-    public static void logVersion(String table,String keyName,Object keyValue0){
+    public static void logVersion(DbContext db,String table,String keyName,Object keyValue0){
 
         if(TextUtils.isEmpty(keyName)  || keyValue0 == null){
             return;
@@ -33,7 +33,7 @@ public class DbWaterVerApi {
 
 
         try {
-            DataItem data = db().table(table).whereEq(keyName , keyValue).limit(1).select("*").getDataItem();
+            DataItem data = db.table(table).whereEq(keyName , keyValue0).limit(1).select("*").getDataItem();
 
             if (data == null || data.count() == 0) {
                 return;

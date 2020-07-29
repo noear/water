@@ -131,7 +131,7 @@ public class DbPaaSApi {
             WaterClient.Notice.updateCache("paas:" + file_id);
 
             /** 记录历史版本 */
-            DbWaterVerApi.logVersion("paas_file", "file_id", file_id);
+            DbWaterVerApi.logVersion(db(),"paas_file", "file_id", file_id);
         }
     }
 
