@@ -41,12 +41,12 @@
         <solon.ver>1.0.7</solon.ver>
         <water.ver>2.0.3</water.ver>
         <weed3.ver>3.2.8.5</weed3.ver>
-        <snack3.ver>3.1.7.3</snack3.ver>
+        <snack3.ver>3.1.7.5</snack3.ver>
 
         <bcf.ver>2.0.2</bcf.ver>
 
 
-        <solonjt.ver>1.0.5</solonjt.ver>
+        <solonjt.ver>1.0.6</solonjt.ver>
     </properties>
 
 

@@ -89,7 +89,7 @@ public class XWaterGateway implements XHandler {
             return;
         }
 
-        Result rst = new XProxy(null)
+        Result rst = new XProxy()
                 .url(upstream.getTarget(alias), fun)
                 .call(headers(ctx), ctx.paramMap())
                 .result();
