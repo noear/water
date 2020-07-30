@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>waterraas</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>water-parent</artifactId>
-        <version>2.0.3</version>
+        <version>2.0.4</version>
     </parent>
 
     <dependencies>
