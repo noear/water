@@ -4,10 +4,9 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XMap;
-import org.noear.solonclient.HttpUpstream;
+import org.noear.solonclient.XUpstream;
 import org.noear.solonclient.Result;
 import org.noear.solonclient.XProxy;
-import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.ByteArrayInputStream;
@@ -18,7 +17,7 @@ import java.util.Map;
 * Water Gateway
 * */
 public class XWaterGateway implements XHandler {
-    Map<String, HttpUpstream> router = new HashMap<>();
+    Map<String, XUpstream> router = new HashMap<>();
 
     public XWaterGateway() {
         XMap map = XApp.cfg().getXmap("water.gateway");
@@ -41,7 +40,7 @@ public class XWaterGateway implements XHandler {
         router.put(alias, XWaterUpstream.get(service));
     }
 
-    protected void add(String alias, HttpUpstream upstream) {
+    protected void add(String alias, XUpstream upstream) {
         router.put(alias, upstream);
     }
 
@@ -81,7 +80,7 @@ public class XWaterGateway implements XHandler {
             fun = path;
         }
 
-        HttpUpstream upstream = router.get(alias); //第1段为sev
+        XUpstream upstream = router.get(alias); //第1段为sev
 
         //如果没有预配的负载不干活
         if (upstream == null) {
@@ -90,7 +89,7 @@ public class XWaterGateway implements XHandler {
         }
 
         Result rst = new XProxy()
-                .url(upstream.getTarget(alias), fun)
+                .url(upstream.getServer(alias), fun)
                 .call(headers(ctx), ctx.paramMap())
                 .result();
 

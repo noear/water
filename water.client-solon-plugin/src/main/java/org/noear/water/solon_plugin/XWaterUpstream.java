@@ -1,7 +1,7 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.XApp;
-import org.noear.solonclient.HttpUpstream;
+import org.noear.solonclient.XUpstream;
 import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, HttpUpstream {
+public class XWaterUpstream implements WaterUpstream, XUpstream {
     private final String TAG_SERVER = "{server}";
 
 
@@ -232,7 +232,7 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
     }
 
     @Override
-    public String getTarget(String name) {
+    public String getServer(String name) {
         return get();
     }
 
@@ -241,7 +241,7 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
     //
 
     @Override
-    public void setAgentDef(String url){
+    public void setDefault(String url){
         _def_agent_url = url;
     }
 
@@ -273,7 +273,7 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
             c_sev = c_sev.split(":")[0];
         }
 
-        HttpUpstream upstream = null;
+        XUpstream upstream = null;
         if (XApp.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
@@ -289,7 +289,7 @@ public class XWaterUpstream implements WaterUpstream, HttpUpstream {
         return xclient(clz, upstream);
     }
 
-    public static <T> T xclient(Class<?> clz, HttpUpstream upstream) {
+    public static <T> T xclient(Class<?> clz, XUpstream upstream) {
         return new XProxy()
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost())
                 .upstream(upstream)

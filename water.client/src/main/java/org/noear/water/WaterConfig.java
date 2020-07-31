@@ -39,7 +39,7 @@ public class WaterConfig {
     public static WaterUpstream water_sev_upstream(){return _water_sev_upstream;}
     public static void water_sev_upstream(WaterUpstream upstream) {
         //设置默认代理
-        upstream.setAgentDef(water_api_url());
+        upstream.setDefault(water_api_url());
         _water_sev_upstream = upstream;
     }
 
