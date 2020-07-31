@@ -152,7 +152,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         } else {
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
-                System.out.println(cmd.text);
+                if(XApp.cfg().isDebugMode()){
+                    System.out.println(cmd.text2());
+                }
 
                 if (cmd.isLog < 0) {
                     return;
