@@ -47,11 +47,14 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     private int _nodes_count;
 
     /**
-     * 使用代理url
+     * 启用代理
      * */
-    private boolean _use_agent_url;
+    private boolean _enable_agent;
 
-    private String _def_agent_url;
+    /**
+     * 备份服务节点
+     * */
+    private String _backup_server;
 
 
     protected final static Map<String, XWaterUpstream> _map = new ConcurrentHashMap<>();
@@ -111,11 +114,11 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
         //使用前，要锁一下
         //
         if (cfg == null || TextUtils.isEmpty(cfg.policy)) {
-            if(TextUtils.isNotEmpty(_def_agent_url)){
+            if(TextUtils.isNotEmpty(_backup_server)){
                 //
                 // 如果有默认的，则清空
                 //
-                _use_agent_url = false;
+                _enable_agent = false;
                 _nodes_count = 0;
                 _nodes.clear();
             }
@@ -126,7 +129,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
         if (cfg.url != null) {
             if (cfg.url.indexOf("://") > 0) {
                 _cfg = cfg;//不能删
-                _use_agent_url = true;
+                _enable_agent = true;
             }
         } else {
             cfg.url = "";
@@ -173,14 +176,14 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
      * */
     public String get() {
         //1.如果有代理，则使用代理
-        if (_use_agent_url) {
+        if (_enable_agent) {
             return _cfg.url;
         }
 
         //2.如果没有代理
         if (_nodes_count == 0) {
             //2.1.如果没有节点，则使用本地代理
-            return _def_agent_url; //可能是null
+            return _backup_server; //可能是null
         } else {
             //2.2.如果有节点；则使用节点
             if (_polling_val == 9999999) {
@@ -206,7 +209,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
      * 代理
      * */
     public String agent() {
-        if (_cfg == null || _use_agent_url == false) {
+        if (_cfg == null || _enable_agent == false) {
             return null;
         } else {
             return _cfg.url;
@@ -241,8 +244,8 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     //
 
     @Override
-    public void setDefault(String url){
-        _def_agent_url = url;
+    public void setBackup(String server){
+        _backup_server = server;
     }
 
     @Override
