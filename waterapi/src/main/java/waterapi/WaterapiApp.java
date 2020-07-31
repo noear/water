@@ -15,6 +15,7 @@ import org.noear.water.utils.Timespan;
 import org.noear.water.track.TrackUtils;
 import waterapi.dso.FromUtils;
 import waterapi.dso.IDUtils;
+import waterapi.dso.LogUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.wrap.LogSourceDef;
@@ -76,7 +77,7 @@ public class WaterapiApp {
 		});
 
 		XApp.global().onError((ctx, err) -> {
-
+			LogUtils.error(ctx, err);
 		});
 	}
 }

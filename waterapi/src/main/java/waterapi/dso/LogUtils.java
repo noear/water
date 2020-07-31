@@ -75,7 +75,11 @@ public class LogUtils {
         }
     }
 
-    public static void error(XContext ctx, Exception ex) {
+    public static void error(XContext ctx, Throwable ex) {
+        if(ctx == null){
+            return;
+        }
+
         try {
             String _from = FromUtils.getFromName(ctx);
 
