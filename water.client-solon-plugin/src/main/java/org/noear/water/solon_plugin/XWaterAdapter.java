@@ -143,16 +143,21 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
      * */
     protected void initWeed() {
         Class<?> clz = XUtil.loadClass(WW.clz_BcfClient);
+        final Boolean isDebugMode = XApp.cfg().isDebugMode();
 
         if (clz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
+                if(isDebugMode){
+                    System.out.println(cmd.text2());
+                }
+
                 WaterClient.Track.track(service_name(), cmd, 1000);
             });
         } else {
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
-                if(XApp.cfg().isDebugMode()){
+                if(isDebugMode){
                     System.out.println(cmd.text2());
                 }
 
