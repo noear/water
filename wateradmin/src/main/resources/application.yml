@@ -13,6 +13,7 @@ water:
     name: "wateradmin"
     secretKey: "b5fZK49x71Rnn5Cl"
 
+water.weed.log.style: "text2"
 
 #water.log:
 #  gzip: 1
