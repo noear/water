@@ -1,5 +1,6 @@
 package org.noear.water.solon_plugin;
 
+import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
@@ -149,7 +150,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
                 if(isDebugMode){
-                    System.out.println(cmd.text2());
+                    System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                 }
 
                 WaterClient.Track.track(service_name(), cmd, 1000);
@@ -158,7 +159,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
                 if(isDebugMode){
-                    System.out.println(cmd.text2());
+                    System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                 }
 
                 if (cmd.isLog < 0) {
