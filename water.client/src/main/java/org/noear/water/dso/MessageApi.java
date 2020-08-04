@@ -1,12 +1,19 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.*;
+import org.noear.water.utils.ext.Act1Ex;
+import org.noear.water.utils.ext.Fun1;
+import org.noear.water.utils.ext.Fun1Ex;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * 消息服务接口
@@ -275,5 +282,17 @@ public class MessageApi {
         String sgin_slf = EncryptUtils.md5(sb.toString());
 
         return sgin_slf.equals(msg.sgin);
+    }
+
+    public String receiveMessage(Fun1<String,String> paramS, String service_secretKey, Fun1Ex<MessageM,Boolean> consumer) throws Exception{
+        MessageM msg = new MessageM(paramS);
+
+        if (WaterClient.Message.checkMessage(msg, service_secretKey) == false) {
+            return "CHECK ERROR";
+        }
+
+        boolean isOk = consumer.run(msg);
+
+        return isOk ? "OK" : "ERROR";
     }
 }

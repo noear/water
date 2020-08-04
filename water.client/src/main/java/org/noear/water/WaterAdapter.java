@@ -7,6 +7,8 @@ import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
+import java.util.function.Function;
+
 public abstract class WaterAdapter {
     /** 报警手机号 :: 需要重写 */
     public abstract String alarm_mobile();
@@ -116,19 +118,12 @@ public abstract class WaterAdapter {
     }
 
 
-    protected String doMessageReceive(Fun1<String, String> paramters) throws Exception {
+    protected String doMessageReceive(Fun1<String, String> paramS) throws Exception {
+        return WaterClient.Message.receiveMessage(paramS, service_secretKey(), (msg) -> {
+            boolean isOk = messageReceiveForInner(msg);
 
-        MessageM msg = new MessageM(paramters);
-
-        if (WaterClient.Message.checkMessage(msg, service_secretKey()) == false) {
-            return "CHECK ERROR";
-        }
-
-        boolean isOk = messageReceiveForInner(msg);
-
-        isOk = messageReceiveHandler(msg) || isOk;
-
-        return isOk ? "OK" : "ERROR";
+            return messageReceiveHandler(msg) || isOk;
+        });
     }
 
 

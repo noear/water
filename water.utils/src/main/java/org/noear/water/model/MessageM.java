@@ -5,6 +5,8 @@ import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
+import java.util.function.Function;
+
 public class MessageM {
     public long id;
     public int times;
