@@ -1,7 +1,7 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.core.BeanInjector;
-import org.noear.solon.core.FieldWrapTmp;
+import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.utils.TypeUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
@@ -23,18 +23,18 @@ import java.util.Properties;
  * */
 public class XWaterBeanInjector implements BeanInjector<Water> {
     @Override
-    public void handler(FieldWrapTmp fwT, Water anno) {
+    public void handler(VarHolder varH, Water anno) {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
-            if (fwT.getType().isInterface()) {
-                fwT.setValue(XWaterUpstream.xclient(fwT.getType()));
+            if (varH.getType().isInterface()) {
+                varH.setValue(XWaterUpstream.xclient(varH.getType()));
             }
             return;
         }
 
         //日志注入
-        if(fwT.getType() == WaterLogger.class) {
-            fwT.setValue(WaterLogger.get(anno.value()));
+        if(varH.getType() == WaterLogger.class) {
+            varH.setValue(WaterLogger.get(anno.value()));
             return;
         }
 
@@ -55,18 +55,18 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
         ConfigM cfg = WaterClient.Config.getByTagKey(tagKey);
 
         //DbContext
-        if(DbContext.class.isAssignableFrom(fwT.getType())){
+        if(DbContext.class.isAssignableFrom(varH.getType())){
             DbContext db = WaterConfig.libOfDb.get(cfg.value);
             if(db == null){
                 db = cfg.getDb(true);
                 WaterConfig.libOfDb.put(cfg.value,db);
             }
-            fwT.setValue(db);
+            varH.setValue(db);
             return;
         }
 
         //RedisX
-        if(RedisX.class.isAssignableFrom(fwT.getType())){
+        if(RedisX.class.isAssignableFrom(varH.getType())){
             String key = cfg.value +"_"+arg;
 
             RedisX rdx = WaterConfig.libOfRd.get(key);
@@ -80,12 +80,12 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
                 WaterConfig.libOfRd.put(key,rdx);
             }
 
-            fwT.setValue(rdx);
+            varH.setValue(rdx);
             return;
         }
 
         //ICacheServiceEx
-        if(ICacheServiceEx.class.isAssignableFrom(fwT.getType())) {
+        if(ICacheServiceEx.class.isAssignableFrom(varH.getType())) {
             ICacheServiceEx cache = WaterConfig.libOfCache.get(cfg.value);
 
             if (cache == null) {
@@ -99,17 +99,17 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
                 WaterConfig.libOfCache.put(cfg.value, cache);
             }
 
-            fwT.setValue(cache);
+            varH.setValue(cache);
             return;
         }
 
         //Properties
-        if(Properties.class.isAssignableFrom(fwT.getType())){
-            fwT.setValue(cfg.getProp());
+        if(Properties.class.isAssignableFrom(varH.getType())){
+            varH.setValue(cfg.getProp());
             return;
         }
 
-        Object val2 = TypeUtil.changeOfPop(fwT.getType(), cfg.value);
-        fwT.setValue(val2);
+        Object val2 = TypeUtil.changeOfPop(varH.getType(), cfg.value);
+        varH.setValue(val2);
     }
 }
