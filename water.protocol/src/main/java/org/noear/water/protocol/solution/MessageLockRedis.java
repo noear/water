@@ -5,7 +5,7 @@ import org.noear.water.utils.RedisX;
 
 public class MessageLockRedis implements MessageLock {
     RedisX _redisX = null;
-    int _seconds = 3;
+    int _seconds = 5;
     String _lockKey = "water_message_lock_";
 
     public MessageLockRedis(RedisX redisX) {
