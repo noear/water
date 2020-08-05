@@ -74,12 +74,22 @@ public final class MsgController implements IJob {
     }
 
     private void distributeDo(String msg_id_str) throws Exception {
+        String lk_msg_id_do = msg_id_str + "_do";
+
+        if(ProtocolHub.messageLock.lock(lk_msg_id_do) == false){
+            return;
+        }
+
         long msgID = Long.parseLong(msg_id_str);
 
         MessageModel msg = DbWaterMsgApi.getMessage(msgID);
+        msg.lk_msg_id_do = lk_msg_id_do;
+
         if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
             return;
         }
+
+
 
         long ntime = DisttimeUtils.currTime();
         if (msg.dist_nexttime > ntime) { //如果时间还没到
@@ -96,6 +106,9 @@ public final class MsgController implements IJob {
             DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
+
+            //如果异常了，时和解锁（如果成功，在回调里解锁）
+            ProtocolHub.messageLock.unlock(lk_msg_id_do);
         }
     }
 
@@ -163,6 +176,9 @@ public final class MsgController implements IJob {
 
             //4.返回派发结果
             if (tag.count == tag.total) {
+                //处理完了后，解锁
+                ProtocolHub.messageLock.unlock(tag.msg.lk_msg_id_do);
+
                 if (tag.value == tag.total) {
                     DbWaterMsgApi.setMessageState(dist.msg_id, 2);
 

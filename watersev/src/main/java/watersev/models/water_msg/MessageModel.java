@@ -19,6 +19,8 @@ public class MessageModel implements IBinder {
     //状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
     public int state;
 
+    public String lk_msg_id_do;
+
     @Override
     public void bind(GetHandlerEx s) {
         msg_id = s.get("msg_id").value(0L);
