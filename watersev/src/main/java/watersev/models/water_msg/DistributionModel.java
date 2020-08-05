@@ -24,13 +24,14 @@ public class DistributionModel implements IBinder {
     public int state;
 
     public Date _start_time;
+    //派发处理的花费时间
     public long _duration = 0;
     public boolean _is_unstable;
 
     @Override
     public void bind(GetHandlerEx s) {
-        dist_id = s.get("dist_id").value(0l);
-        msg_id = s.get("msg_id").value(0l);
+        dist_id = s.get("dist_id").value(0L);
+        msg_id = s.get("msg_id").value(0L);
         subscriber_id = s.get("subscriber_id").value(0);
 
         alarm_mobile = s.get("alarm_mobile").value("");

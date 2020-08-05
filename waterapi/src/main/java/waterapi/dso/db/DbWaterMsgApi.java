@@ -177,7 +177,7 @@ public final class DbWaterMsgApi {
                 .set("log_date", "$DATE(NOW())")
                 .set("log_fulltime", "$NOW()").build((tb) -> {
                     if (plan_time != null) {
-                        tb.set("dist_nexttime", DisttimeUtils.nextTime(plan_time));
+                        tb.set("dist_nexttime", DisttimeUtils.distTime(plan_time));
                     }
                 }).insert();
 

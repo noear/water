@@ -59,7 +59,11 @@ public class DbWaterMsgApi {
         }
     }
 
-    //设置消息状态
+    /**
+     * 设置消息状态
+     *
+     * @param state -2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数
+     * */
     public static boolean setMessageState(long msgID, int state) {
         return setMessageState(msgID, state, 0);
     }

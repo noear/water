@@ -18,7 +18,14 @@ public class LogUtil {
             dist = new DistributionModel();
         }
 
-        String summary = msg.msg_id + "#" + msg.dist_count + "#" + msg.topic_name + "=" + msg.content + "@" + dist._duration;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(msg.msg_id)
+                .append("#").append(msg.dist_count)
+                .append("#").append(msg.topic_name).append("=").append(msg.content)
+                .append("@").append(dist._duration).append("ms");
+
+        String summary =  sb.toString();
 
 
         if (TextUtils.isEmpty(dist.receive_url)) {
@@ -34,7 +41,13 @@ public class LogUtil {
             dist = new DistributionModel();
         }
 
-        String summary = msg.msg_id + "#" + msg.dist_count + "#" + msg.topic_name + "=" + msg.content;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(msg.msg_id)
+                .append("#").append(msg.dist_count)
+                .append("#").append(msg.topic_name).append("=").append(msg.content);
+
+        String summary =  sb.toString();
 
         if (TextUtils.isEmpty(dist.receive_url)) {
             log_msg.error(msg.topic_name, msg.msg_id + "", summary, content);

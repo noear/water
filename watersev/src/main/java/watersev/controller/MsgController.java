@@ -96,9 +96,6 @@ public final class MsgController implements IJob {
             DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
-        } finally {
-            //释放消息锁
-            ProtocolHub.messageLock.unlock(msg_id_str);
         }
     }
 
@@ -220,7 +217,7 @@ public final class MsgController implements IJob {
                 //3.2.0.进行异步http分发
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
-                    dist._duration = new Timespan(dist._start_time).seconds();
+                    dist._duration = new Timespan(dist._start_time).milliseconds();
 
                     if (isOk) {
                         String rst = resp.body().string();
@@ -246,7 +243,7 @@ public final class MsgController implements IJob {
                 //3.2.2.进行异步http分发 //不等待 //状态设为已完成
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
-                    dist._duration = new Timespan(dist._start_time).seconds();
+                    dist._duration = new Timespan(dist._start_time).milliseconds();
 
                     if (isOk) {
                         String rst = resp.body().string();
@@ -271,7 +268,7 @@ public final class MsgController implements IJob {
                 //3.2.3.进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
                 HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
 
-                    dist._duration = new Timespan(dist._start_time).seconds();
+                    dist._duration = new Timespan(dist._start_time).milliseconds();
 
                     if (isOk) {
                         String rst = resp.body().string();
@@ -290,7 +287,7 @@ public final class MsgController implements IJob {
                 });
 
                 //推后一小时，可手工再恢复
-                long ntime = DisttimeUtils.nextTime(Datetime.Now().addHour(1).getFulltime());
+                long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
                 DbWaterMsgApi.setMessageState(msg.msg_id, 1, ntime);
             }
 

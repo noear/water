@@ -4,19 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.noear</groupId>
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>water-parent</artifactId>
+        <version>2.0.4</version>
+        <relativePath>../water-parent/pom.xml</relativePath>
+    </parent>
+
     <artifactId>watersev</artifactId>
-    <version>2.0.4</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>Java project for water</description>
 
-    <parent>
-        <groupId>org.noear</groupId>
-        <artifactId>water-parent</artifactId>
-        <version>2.0.4</version>
-    </parent>
+
 
     <dependencies>
         <dependency>

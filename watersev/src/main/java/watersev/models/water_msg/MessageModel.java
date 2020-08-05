@@ -21,7 +21,7 @@ public class MessageModel implements IBinder {
 
     @Override
     public void bind(GetHandlerEx s) {
-        msg_id = s.get("msg_id").value(0l);
+        msg_id = s.get("msg_id").value(0L);
         msg_key = s.get("msg_key").value("");
 
         topic_id = s.get("topic_id").value(0);
@@ -30,7 +30,7 @@ public class MessageModel implements IBinder {
         content = s.get("content").value("");
         state = s.get("state").value(0);
         dist_count = s.get("dist_count").value(0);
-        dist_nexttime = s.get("dist_nexttime").value(0l);
+        dist_nexttime = s.get("dist_nexttime").value(0L);
     }
 
     @Override

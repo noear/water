@@ -7,7 +7,7 @@ public class DisttimeUtils {
         return System.currentTimeMillis();
     }
 
-    public static long nextTime(Date date){
+    public static long distTime(Date date){
         return date.getTime();
     }
 
@@ -15,7 +15,7 @@ public class DisttimeUtils {
         int second = 0;
 
         switch (dist_count){
-            case 0:second  = 0;break;
+            case 0:second  = 0;break;//1秒
             case 1:second  = second+10;break; //10秒
             case 2:second  = second+30;break; //30秒
             case 3:second  = second+60;break; //1分钟
