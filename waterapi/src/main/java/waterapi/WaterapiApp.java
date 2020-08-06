@@ -71,7 +71,6 @@ public class WaterapiApp {
 				String _node = Config.getLocalHost();
 				String _from = FromUtils.getFrom(c);
 
-				Timespan timespan = timecount.stop();
 				TrackBuffer.singleton().append(Config.water_service_name, "cmd", c.path(), _times, _node, _from);
 			}
 		});

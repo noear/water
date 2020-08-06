@@ -45,7 +45,7 @@ public class WaterpaasApp {
             }
         });
         app.after("**", XMethod.HTTP, (c) -> {
-            Timecount timecount = c.attr("_timecount", null);
+            Timecount timecount = c.attr("timecount", null);
 
             if (timecount != null && c.status() != 404) {
                 long _times = timecount.stop().milliseconds();
