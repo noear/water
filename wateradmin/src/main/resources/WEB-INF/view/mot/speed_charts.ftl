@@ -15,9 +15,14 @@
     <base target="_blank">
 </head>
 <body>
-<block>
+<toolbar>
+    <left>
     ${tag}::${name}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
-</block>
+    </left>
+    <right>
+        <button type="button" onclick="location.reload()"></button>
+    </right>
+</toolbar>
 <block>
     <toolbar>
         <div style="padding: 5px;overflow: hidden;">
