@@ -11,6 +11,7 @@ import org.noear.water.annotation.WaterMessage;
 import org.noear.water.dso.ConfigHandler;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.utils.TextUtils;
+import org.noear.weed.xml.XmlSqlLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class XPluginImp implements XPlugin {
     Map<String, MessageHandler> _router  =new HashMap<>();
     @Override
     public void start(XApp app) {
+        XmlSqlLoader.tryLoad();
 
         //尝试注册
         if (app.port() > 0) {
