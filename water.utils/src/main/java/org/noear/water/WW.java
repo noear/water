@@ -19,8 +19,8 @@ public class WW {
     public static final String cfg_water_log_interval = "water.log.pipeline.interval";
     public static final String cfg_water_log_packetSize = "water.log.pipeline.packetSize";
 
-    public static final String path_service_check = "/run/check/";
-    public static final String path_service_stop = "/run/stop/";
+    public static final String path_run_check = "/run/check/";
+    public static final String path_run_stop = "/run/stop/";
     public static final String path_msg_receiver = "/msg/receive";
 
     public static final String clz_BcfClient = "org.noear.bcf.BcfClient";

@@ -27,8 +27,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     public XWaterAdapterBase(XMap args, int port) {
         service_args = args;
         service_port = port;
-        service_check_path = WW.path_service_check;
-        service_stop_path = WW.path_service_stop;
+        service_check_path = WW.path_run_check;
+        service_stop_path = WW.path_run_stop;
         msg_receiver_path = WW.path_msg_receiver;
 
         onInit();

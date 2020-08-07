@@ -4,6 +4,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solon.core.XMethod;
 import org.noear.solon.extend.staticfiles.XStaticFiles;
+import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
@@ -11,8 +12,6 @@ import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.Timecount;
-import org.noear.water.utils.Timespan;
-import org.noear.water.track.TrackUtils;
 import waterapi.dso.FromUtils;
 import waterapi.dso.IDUtils;
 import waterapi.dso.LogUtils;
@@ -58,7 +57,7 @@ public class WaterapiApp {
 			//
 			//不记录，检测的性能
 			//
-			if ("/run/check/".equals(c.path()) == false) {
+			if (WW.path_run_check.equals(c.path()) == false) {
 				c.attrSet("timecount", new Timecount().start());
 			}
 		});

@@ -86,7 +86,7 @@ public class Config {
                 //
                 DbWaterRegApi.addService(water_service_name,
                         localHost,
-                        WW.path_service_check,
+                        WW.path_run_check,
                         0,
                         XApp.cfg().isDriftMode());
             } catch (Exception ex) {
