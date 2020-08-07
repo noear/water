@@ -475,7 +475,12 @@ import java.util.*;
 
 
         public long zsetIdx(String val){
-            return client.zrank(_key,val);
+            Long tmp = client.zrank(_key,val);
+            if(tmp == null){
+                return -1;
+            }else{
+                return tmp;
+            }
         }
 
         public List<Tuple> zsetScan(String valPattern, int count) {
