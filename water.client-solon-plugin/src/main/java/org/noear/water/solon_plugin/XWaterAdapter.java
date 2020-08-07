@@ -1,6 +1,7 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
+import org.noear.solon.core.Aop;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
@@ -60,9 +61,13 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     @Override
     public void start(XApp app) {
-        app.all(service_check_path, this::handle);
-        app.all(service_stop_path, this::handle);
-        app.all(msg_receiver_path, this::handle);
+        //Bean 初始化完成化再启动监听，免得过早被检测
+        //
+        Aop.beanOnloaded(()->{
+            app.all(service_check_path, this::handle);
+            app.all(service_stop_path, this::handle);
+            app.all(msg_receiver_path, this::handle);
+        });
     }
 
     @Override
