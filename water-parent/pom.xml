@@ -41,7 +41,7 @@
         <solon.ver>1.0.10</solon.ver>
         <water.ver>2.0.4</water.ver>
         <weed3.ver>3.2.9</weed3.ver>
-        <snack3.ver>3.1.8</snack3.ver>
+        <snack3.ver>3.1.8.1</snack3.ver>
 
         <bcf.ver>2.0.3</bcf.ver>
 
@@ -165,7 +165,7 @@
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>weed3-solon-plugin</artifactId>
-                <version>${weed3.ver}</version>
+                <version>${solon.ver}</version>
             </dependency>
 
             <dependency>
