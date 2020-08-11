@@ -152,6 +152,16 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         final Boolean isDebugMode = XApp.cfg().isDebugMode();
         final Boolean  isWeedStyle2= "text2".equals(XApp.cfg().get("water.weed.log.style"));
 
+        if(isDebugMode){
+            WeedConfig.onException((cmd,err)->{
+                if(isWeedStyle2){
+                    System.out.println(cmd.text2());
+                }else {
+                    System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
+                }
+            });
+        }
+
         if (clz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {

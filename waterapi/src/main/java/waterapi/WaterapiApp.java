@@ -1,6 +1,7 @@
 package waterapi;
 
 import org.noear.solon.XApp;
+import org.noear.solon.core.XContext;
 import org.noear.solon.core.XMap;
 import org.noear.solon.core.XMethod;
 import org.noear.solon.extend.staticfiles.XStaticFiles;
@@ -74,8 +75,8 @@ public class WaterapiApp {
 			}
 		});
 
-		XApp.global().onError((ctx, err) -> {
-			LogUtils.error(ctx, err);
+		XApp.global().onError((err) -> {
+			LogUtils.error(XContext.current(), err);
 		});
 	}
 }
