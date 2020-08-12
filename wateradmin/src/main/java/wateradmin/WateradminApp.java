@@ -14,7 +14,7 @@ public class WateradminApp {
         // http://139.224.74.31:9371/cfg/get/?tag=water
         //
         XApp.start(WateradminApp.class, args, app -> {
-            Config.tryInit();
+            Config.tryInit(app);
 
 
             //设置接口

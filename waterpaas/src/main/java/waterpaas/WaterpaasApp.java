@@ -17,7 +17,7 @@ public class WaterpaasApp {
         JtRun.init();
 
         XApp app = XApp.start(WaterpaasApp.class, args, (x) -> {
-            Config.tryInit();
+            Config.tryInit(x);
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);

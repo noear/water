@@ -5,6 +5,9 @@ import org.noear.solon.core.XHandler;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
+import org.noear.water.WaterClient;
+import org.noear.water.model.MessageM;
+import waterpaas.Config;
 import waterpaas.dso.AFileStaticHandler;
 import waterpaas.dso.AFileUtil;
 import waterpaas.dso.RouteHelper;
@@ -15,16 +18,17 @@ import waterpaas.dso.RouteHelper;
 public class AppHandler implements XHandler {
 
     private static final String _lock = "";
-    private static  AppHandler _g = null;
-    public static AppHandler g(){
-        if(_g == null){
-            synchronized (_lock){
-                if(_g == null){
+    private static AppHandler _g = null;
+
+    public static AppHandler g() {
+        if (_g == null) {
+            synchronized (_lock) {
+                if (_g == null) {
                     _g = new AppHandler();
                 }
             }
         }
-        return  _g;
+        return _g;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class AppHandler implements XHandler {
         do_handle(path, ctx, debug);
     }
 
-    private void do_handle(String path,XContext ctx, boolean debug) throws Exception {
+    private void do_handle(String path, XContext ctx, boolean debug) throws Exception {
         String path2 = AFileUtil.path2(path);
         String name = null;
 
@@ -69,7 +73,7 @@ public class AppHandler implements XHandler {
             return;
         }
 
-        if(file.content_type != null && file.content_type.startsWith("code/")){
+        if (file.content_type != null && file.content_type.startsWith("code/")) {
             ctx.status(403);
             return;
         }
@@ -92,6 +96,18 @@ public class AppHandler implements XHandler {
                 AFileStaticHandler.handle(ctx, path, file);
             }
             return;
+        }
+
+        //water message 注入
+        if (file.label != null && file.label.startsWith("@")) {
+            MessageM msg = new MessageM(ctx::param);
+
+            if (WaterClient.Message.checkMessage(msg, Config.waterpaas_secretKey) == false) {
+                ctx.output("CHECK ERROR");
+                return;
+            } else {
+                ctx.attr("message", msg);
+            }
         }
 
         ExecutorFactory.exec(name, file, ctx);

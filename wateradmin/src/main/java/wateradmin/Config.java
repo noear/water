@@ -32,6 +32,7 @@ public class Config {
         return "1".equals(cfg("is_use_tag_checker").getString());
     }
 
+    public static String waterpaas_secretKey;
 
     //================================
     //
@@ -42,7 +43,10 @@ public class Config {
         WeedConfig.isUsingValueExpression = false;
     }
 
-    public static void tryInit() {
+    public static void tryInit(XApp app) {
+
+        waterpaas_secretKey = app.prop().get("waterpaas.secretKey");
+
         WaterClient.Config.getProperties(WW.water_session).forEach((k, v) -> {
             if (XApp.cfg().isDebugMode()) {
                 String key = k.toString();

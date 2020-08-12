@@ -1,5 +1,6 @@
 package waterpaas;
 
+import org.noear.solon.XApp;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -18,9 +19,13 @@ public class Config {
 
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
-    public static void tryInit() {
+    public static String waterpaas_secretKey;
+
+    public static void tryInit(XApp app) {
 
         //WeedConfig.isUsingValueExpression = false;
+
+        waterpaas_secretKey = app.prop().get("water.service.secretKey");
     }
 
 
