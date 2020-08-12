@@ -151,17 +151,18 @@ public class FileController extends BaseController {
 
         Object tmp = ajax_save(ctx, data, PaasFileType.api);
 
-        String label = ctx.param("label","");
+        String label = ctx.param("label", "");
         String path = ctx.param("path");
         if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
             String receiver_url = Config.paas_uri() + path;
             String topic = label.substring(1);
             int is_disabled = ctx.paramAsInt("is_disabled");
+            String subscriber_key = EncryptUtils.md5(path);
 
             if (is_disabled == 1) {
-                WaterClient.Message.unSubscribeTopic("waterpaas", topic);
+                WaterClient.Message.unSubscribeTopic(subscriber_key, topic);
             } else {
-                WaterClient.Message.subscribeTopic("waterpaas", receiver_url,
+                WaterClient.Message.subscribeTopic(subscriber_key, receiver_url,
                         Config.waterpaas_secretKey, "", 0, false, topic);
             }
         }
