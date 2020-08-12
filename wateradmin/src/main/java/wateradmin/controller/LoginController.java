@@ -108,5 +108,6 @@ public class LoginController extends BaseController {
         ImageIO.setUseCache(false);
         ImageIO.write(bufferedImage, "jpeg", ctx.outputStream());
 
+
     }
 }

@@ -2,13 +2,16 @@ package wateradmin.controller.paas;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
+import org.noear.solon.XApp;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XFile;
+import org.noear.water.WaterClient;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
+import wateradmin.Config;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -150,14 +153,31 @@ public class FileController extends BaseController {
     }
 
     @XMapping("pln/ajax/save")
-    public Object pln_ajax_save(XContext ctx) throws SQLException {
+    public Object pln_ajax_save(XContext ctx) throws Exception {
         DataItem data = new DataItem();
 
         data.set("plan_begin_time", ctx.param("plan_begin_time"));
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
 
-        return ajax_save(ctx, data, PaasFileType.pln);
+        Object rst = ajax_save(ctx, data, PaasFileType.pln);
+
+        String label = ctx.param("label");
+        String path = ctx.param("path");
+        if (label != null && label.startsWith("@") && TextUtils.isEmpty(path) == false) {
+            String secretKey = XApp.cfg().get("waterpaas.secretKey");
+            String receiver_url = Config.raas_uri() + path;
+            String topic = label.substring(1);
+            int is_disabled = ctx.paramAsInt("is_disabled");
+
+            if (is_disabled == 1) {
+                WaterClient.Message.unSubscribeTopic("waterpaas",topic);
+            } else {
+                WaterClient.Message.subscribeTopic("waterpaas",receiver_url,secretKey,"",0, false,topic);
+            }
+        }
+
+        return rst;
     }
 
     @XMapping("tml/ajax/save")

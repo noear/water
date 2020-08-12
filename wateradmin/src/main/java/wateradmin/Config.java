@@ -32,6 +32,7 @@ public class Config {
         return "1".equals(cfg("is_use_tag_checker").getString());
     }
 
+
     //================================
     //
     //获取一个数据库配置

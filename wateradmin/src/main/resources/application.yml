@@ -5,6 +5,8 @@ server.session.timeout: 7200
 
 bcf.root: "water_admin"
 
+waterpaas.secretKey: "0zJt0J88TkIvqYgC"
+
 water:
   host: "http://water2"
   logger: "water_log_admin"
