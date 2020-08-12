@@ -142,14 +142,31 @@ public class FileController extends BaseController {
     }
 
     @XMapping("api/ajax/save")
-    public Object api_ajax_save(XContext ctx) throws SQLException {
+    public Object api_ajax_save(XContext ctx) throws Exception {
         DataItem data = new DataItem();
 
         data.set("link_to", ctx.param("link_to"));
         data.set("content_type", ctx.param("content_type"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
-        return ajax_save(ctx, data, PaasFileType.api);
+        Object tmp = ajax_save(ctx, data, PaasFileType.api);
+
+        String label = ctx.param("label","");
+        String path = ctx.param("path");
+        if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
+            String receiver_url = Config.paas_uri() + path;
+            String topic = label.substring(1);
+            int is_disabled = ctx.paramAsInt("is_disabled");
+
+            if (is_disabled == 1) {
+                WaterClient.Message.unSubscribeTopic("waterpaas", topic);
+            } else {
+                WaterClient.Message.subscribeTopic("waterpaas", receiver_url,
+                        Config.waterpaas_secretKey, "", 0, false, topic);
+            }
+        }
+
+        return tmp;
     }
 
     @XMapping("pln/ajax/save")
@@ -160,24 +177,7 @@ public class FileController extends BaseController {
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
 
-        Object rst = ajax_save(ctx, data, PaasFileType.pln);
-
-        String label = ctx.param("label");
-        String path = ctx.param("path");
-        if (label != null && label.startsWith("@") && TextUtils.isEmpty(path) == false) {
-            String secretKey = XApp.cfg().get("waterpaas.secretKey");
-            String receiver_url = Config.raas_uri() + path;
-            String topic = label.substring(1);
-            int is_disabled = ctx.paramAsInt("is_disabled");
-
-            if (is_disabled == 1) {
-                WaterClient.Message.unSubscribeTopic("waterpaas",topic);
-            } else {
-                WaterClient.Message.subscribeTopic("waterpaas",receiver_url,secretKey,"",0, false,topic);
-            }
-        }
-
-        return rst;
+        return ajax_save(ctx, data, PaasFileType.pln);
     }
 
     @XMapping("tml/ajax/save")
@@ -191,11 +191,11 @@ public class FileController extends BaseController {
     }
 
     public Object ajax_save(XContext ctx, DataItem data, PaasFileType type) throws SQLException {
-        data.set("label", ctx.param("label"));
-        data.set("tag", ctx.param("tag"));
-        data.set("path", ctx.param("path"));
+        data.set("label", ctx.param("label",""));
+        data.set("tag", ctx.param("tag",""));
+        data.set("path", ctx.param("path",""));
         data.set("edit_mode", ctx.param("edit_mode"));
-        data.set("note", ctx.param("note"));
+        data.set("note", ctx.param("note",""));
         data.set("is_disabled", ctx.paramAsInt("is_disabled"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
