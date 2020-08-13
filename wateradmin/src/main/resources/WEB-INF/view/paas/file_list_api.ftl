@@ -150,7 +150,7 @@
                 <tr>
                     <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                     <td>路径</td>
-                    <td class="left" width="80">标记</td>
+                    <td class="left">标记</td>
                     <td class="left" width="80">编辑模式</td>
                     <td colspan="2"></td>
                     <td width="120"></td>
@@ -160,9 +160,9 @@
                 <#list mlist as m1>
                     <tr title="${m1.content_type!}">
                         <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
-                        <td class="left"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}'  class="t2" target="_blank">${m1.path!}</a>
+                        <td class="left break"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}' target="_blank">${m1.path!}</a>
                             <#if (m1.note!'') != ''>
-                                <n-l class="mar10-l">::${m1.note!}</n-l>
+                                <n-l>${m1.note!}</n-l>
                             </#if>
                         </td>
                         <td class="left">${m1.label!}</td>
