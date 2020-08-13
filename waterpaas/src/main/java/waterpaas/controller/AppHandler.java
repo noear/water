@@ -106,7 +106,7 @@ public class AppHandler implements XHandler {
                 ctx.output("CHECK ERROR");
                 return;
             } else {
-                ctx.attr("message", msg);
+                ctx.attrSet("message", msg);
             }
         }
 
