@@ -284,7 +284,7 @@ public class MessageApi {
         return sgin_slf.equals(msg.sgin);
     }
 
-    public String receiveMessage(Fun1<String,String> paramS, String service_secretKey, Fun1Ex<MessageM,Boolean> consumer) throws Exception{
+    public String receiveMessage(Fun1<String,String> paramS, String service_secretKey, Fun1Ex<MessageM,Boolean> consumer) throws Throwable{
         MessageM msg = new MessageM(paramS);
 
         if (WaterClient.Message.checkMessage(msg, service_secretKey) == false) {

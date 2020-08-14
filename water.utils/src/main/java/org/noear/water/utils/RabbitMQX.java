@@ -44,10 +44,10 @@ public class RabbitMQX {
         connectionFactory.setHost(host);
         connectionFactory.setPort(port);
         connectionFactory.setVirtualHost(virtualHost);
-        if(TextUtils.isEmpty(user) == false) {
+        if (TextUtils.isEmpty(user) == false) {
             connectionFactory.setUsername(user);
         }
-        if(TextUtils.isEmpty(password) == false) {
+        if (TextUtils.isEmpty(password) == false) {
             connectionFactory.setPassword(password);
         }
 
@@ -76,7 +76,9 @@ public class RabbitMQX {
                     return action.run(channel);
                 }
             }
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
+            throw ex;
+        } catch (Throwable ex) {
             throw new RuntimeException(ex);
         }
     }

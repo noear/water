@@ -249,7 +249,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
      * 消息接收处理
      * */
     @Override
-    public boolean messageReceiveHandler(MessageM msg) throws Exception {
+    public boolean messageReceiveHandler(MessageM msg) throws Throwable {
         MessageHandler handler = _router.get(msg.topic);
         if (handler == null) {
             return true;

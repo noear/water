@@ -100,7 +100,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     }
 
     //2.1.提供服务供查入口 //必须重写
-    public String serviceCheck(XContext cxt) throws Exception {
+    public String serviceCheck(XContext cxt)  {
         String ups = cxt.param("upstream");
 
         if (TextUtils.isEmpty(ups) == false) {
@@ -140,7 +140,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
 
     //::可以重写，且需要RequestMapping
     //2.2.接收消息
-    public String messageReceive(XContext cxt) throws Exception {
+    public String messageReceive(XContext cxt) throws Throwable {
         return doMessageReceive(k -> cxt.param(k));
     }
 
@@ -166,7 +166,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 //msg/receive
                 text = messageReceive(context);
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             text = XUtil.getFullStackTrace(ex);
             ex.printStackTrace();
         }

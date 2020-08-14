@@ -118,7 +118,7 @@ public abstract class WaterAdapter {
     }
 
 
-    protected String doMessageReceive(Fun1<String, String> paramS) throws Exception {
+    protected String doMessageReceive(Fun1<String, String> paramS) throws Throwable {
         return WaterClient.Message.receiveMessage(paramS, service_secretKey(), (msg) -> {
             boolean isOk = messageReceiveForInner(msg);
 
@@ -128,7 +128,7 @@ public abstract class WaterAdapter {
 
 
     //2.2.2.处理消息 //可以重写
-    public boolean messageReceiveHandler(MessageM msg) throws Exception {
+    public boolean messageReceiveHandler(MessageM msg) throws Throwable {
         return true;
     }
 
