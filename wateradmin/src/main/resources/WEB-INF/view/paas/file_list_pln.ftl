@@ -179,7 +179,7 @@
                         <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
                         <td class="left"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}'  target="_blank">${m1.path!}</a>
                             <#if (m1.note!'') != ''>
-                                <n class="mar10">::${m1.note!}</n>
+                                <n-l>${m1.note!}</n-l>
                             </#if>
                         </td>
                         <td  class="left">

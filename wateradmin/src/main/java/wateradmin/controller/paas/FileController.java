@@ -149,13 +149,25 @@ public class FileController extends BaseController {
         data.set("content_type", ctx.param("content_type"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
-        Object tmp = ajax_save(ctx, data, PaasFileType.api);
+        int file_id = ctx.paramAsInt("id", 0);
 
+        //处理消息订阅
         String label = ctx.param("label", "");
-        String path = ctx.param("path");
+        String path = ctx.param("path", "");
         if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
-            String receiver_url = Config.paas_uri() + path;
             String topic = label.substring(1);
+            //尝试退订
+            if(file_id > 0) {
+                String path_old = DbPaaSApi.getFile(file_id).path;
+                if(path.equals(path_old) == false){
+                    //如果地址变了，退订
+                    String subscriber_key_old = EncryptUtils.md5(path_old);
+                    WaterClient.Message.unSubscribeTopic(subscriber_key_old, topic);
+                }
+            }
+
+            //订阅
+            String receiver_url = Config.paas_uri() + path;
             int is_disabled = ctx.paramAsInt("is_disabled");
             String subscriber_key = EncryptUtils.md5(path);
 
@@ -166,6 +178,8 @@ public class FileController extends BaseController {
                         Config.waterpaas_secretKey, "", 0, false, topic);
             }
         }
+
+        Object tmp = ajax_save(ctx, data, PaasFileType.api);
 
         return tmp;
     }
