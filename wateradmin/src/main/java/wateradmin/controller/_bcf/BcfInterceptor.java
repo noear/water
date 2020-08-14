@@ -13,7 +13,7 @@ import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.utils.IPUtil;
 
 
-@XInterceptor(before = true)
+@XInterceptor
 public class BcfInterceptor extends BcfInterceptorBase {
 
     @Override
@@ -22,7 +22,7 @@ public class BcfInterceptor extends BcfInterceptorBase {
     }
 
     @Override
-    @XMapping("**")
+    @XMapping(value = "**", before = true)
     public void verifyHandle(XContext ctx) throws Exception {
         if (ctx.path().equals("/login")) {
             return;
