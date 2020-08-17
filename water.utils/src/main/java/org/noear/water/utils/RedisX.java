@@ -3,6 +3,7 @@ package org.noear.water.utils;
 import org.noear.water.utils.ext.Act1;
 import org.noear.water.utils.ext.Fun1;
 import redis.clients.jedis.*;
+import redis.clients.jedis.params.SetParams;
 
 import java.util.*;
 
@@ -10,6 +11,15 @@ import java.util.*;
  * Redis 使用类
  */
  public class RedisX {
+    private static final String SET_SUCCEED = "OK";
+    /**
+     * NX: IF_NOT_EXIST（只在键不存在时，才对键进行设置操作）
+     * XX: IF_EXIST（只在键已经存在时，才对键进行设置操作）
+     *
+     * EX: SET_WITH_EXPIRE_TIME for second
+     * PX: SET_WITH_EXPIRE_TIME for millisecond
+     * */
+
     private JedisPool _jedisPool;
 
     public RedisX(Properties prop) {
@@ -229,13 +239,18 @@ import java.util.*;
         }
 
         public boolean lock(String val) {
-            long rst = client.setnx(_key, val); //设置成功，返回 1 。//设置失败，返回 0 。
+            /**
+             * NX: IF_NOT_EXIST（只在键不存在时，才对键进行设置操作）
+             * XX: IF_EXIST（只在键已经存在时，才对键进行设置操作）
+             *
+             * EX: SET_WITH_EXPIRE_TIME for second
+             * PX: SET_WITH_EXPIRE_TIME for millisecond
+             * */
 
-            if(rst > 0) {
-                reset_expire();
-            }
+            SetParams options = new SetParams().nx().ex(_seconds);
+            String rst = client.set(_key, val, options); //设置成功，返回 1 。//设置失败，返回 0 。
 
-            return rst > 0;//成功获得锁
+            return SET_SUCCEED.equals(rst);//成功获得锁
         }
 
         public boolean lock() {
