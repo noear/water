@@ -38,10 +38,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.0.11</solon.ver>
+        <solon.ver>1.0.13</solon.ver>
         <water.ver>2.0.4</water.ver>
-        <weed3.ver>3.2.11</weed3.ver>
-        <snack3.ver>3.1.8.1</snack3.ver>
+        <weed3.ver>3.2.12</weed3.ver>
+        <snack3.ver>3.1.9</snack3.ver>
 
         <bcf.ver>2.0.3</bcf.ver>
 
