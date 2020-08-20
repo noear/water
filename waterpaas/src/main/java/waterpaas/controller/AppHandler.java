@@ -100,13 +100,15 @@ public class AppHandler implements XHandler {
 
         //water message 注入
         if (file.label != null && file.label.startsWith("@")) {
-            MessageM msg = new MessageM(ctx::param);
+            if (debug == false) {
+                MessageM msg = new MessageM(ctx::param);
 
-            if (WaterClient.Message.checkMessage(msg, Config.waterpaas_secretKey) == false) {
-                ctx.output("CHECK ERROR");
-                return;
-            } else {
-                ctx.attrSet("message", msg);
+                if (WaterClient.Message.checkMessage(msg, Config.waterpaas_secretKey) == false) {
+                    ctx.output("CHECK ERROR");
+                    return;
+                } else {
+                    ctx.attrSet("message", msg);
+                }
             }
         }
 
