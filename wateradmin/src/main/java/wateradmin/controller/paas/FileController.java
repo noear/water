@@ -2,18 +2,16 @@ package wateradmin.controller.paas;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.XApp;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XFile;
-import org.noear.water.WaterClient;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
-import wateradmin.Config;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.PaasUtils;
 import wateradmin.dso.Session;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbPaaSApi;
@@ -154,30 +152,9 @@ public class FileController extends BaseController {
         //处理消息订阅
         String label = ctx.param("label", "");
         String path = ctx.param("path", "");
-        if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
-            String topic = label.substring(1);
-            //尝试退订
-            if(file_id > 0) {
-                String path_old = DbPaaSApi.getFile(file_id).path;
-                if(path.equals(path_old) == false){
-                    //如果地址变了，退订
-                    String subscriber_key_old = EncryptUtils.md5(path_old);
-                    WaterClient.Message.unSubscribeTopic(subscriber_key_old, topic);
-                }
-            }
+        int is_disabled = ctx.paramAsInt("is_disabled");
 
-            //订阅
-            String receiver_url = Config.paas_uri() + path;
-            int is_disabled = ctx.paramAsInt("is_disabled");
-            String subscriber_key = EncryptUtils.md5(path);
-
-            if (is_disabled == 1) {
-                WaterClient.Message.unSubscribeTopic(subscriber_key, topic);
-            } else {
-                WaterClient.Message.subscribeTopic(subscriber_key, receiver_url,
-                        Config.waterpaas_secretKey, "", 0, false, topic);
-            }
-        }
+        PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
 
         Object tmp = ajax_save(ctx, data, PaasFileType.api);
 
@@ -323,9 +300,13 @@ public class FileController extends BaseController {
 
         for (PaasFileModel m : list) {
             DbPaaSApi.impFile(fileType, tag, m);
+
+            if (fileType == PaasFileType.api) {
+                PaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
+            }
         }
 
-        return viewModel.code(1,"ok");
+        return viewModel.code(1, "ok");
     }
 
     //批量删除
