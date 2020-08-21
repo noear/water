@@ -299,11 +299,13 @@ public class FileController extends BaseController {
         PaasFileType fileType = PaasFileType.valueOf(type);
 
         for (PaasFileModel m : list) {
-            DbPaaSApi.impFile(fileType, tag, m);
-
+            //订阅在先
             if (fileType == PaasFileType.api) {
                 PaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
             }
+
+            //存入在后
+            DbPaaSApi.impFile(fileType, tag, m);
         }
 
         return viewModel.code(1, "ok");
