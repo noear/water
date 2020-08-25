@@ -4,7 +4,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XMap;
-import org.noear.solonclient.XUpstream;
+import org.noear.solon.core.XUpstream;
 import org.noear.solonclient.Result;
 import org.noear.solonclient.XProxy;
 import org.noear.water.utils.TextUtils;
@@ -27,7 +27,7 @@ public class XWaterGateway implements XHandler {
                 //增加debug模式支持
                 String url = System.getProperty("water.remoting-debug." + service);
                 if (url != null) {
-                    add(alias, (s) -> url);
+                    add(alias, () -> url);
                     return;
                 }
             }
@@ -89,7 +89,7 @@ public class XWaterGateway implements XHandler {
         }
 
         Result rst = new XProxy()
-                .url(upstream.getServer(alias), fun)
+                .url(upstream.getServer(), fun)
                 .call(headers(ctx), ctx.paramMap())
                 .result();
 

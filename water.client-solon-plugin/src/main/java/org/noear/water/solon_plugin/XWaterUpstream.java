@@ -1,12 +1,11 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.XApp;
-import org.noear.solonclient.XUpstream;
+import org.noear.solon.core.XUpstream;
 import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
-import org.noear.water.dso.WaterUpstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -21,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, XUpstream {
+public class XWaterUpstream implements WaterUpstreamEx {
     private final String TAG_SERVER = "{server}";
 
 
@@ -235,7 +234,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     }
 
     @Override
-    public String getServer(String name) {
+    public String getServer() {
         return get();
     }
 
@@ -281,7 +280,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
             if (url != null) {
-                upstream = (s) -> url;
+                upstream = () -> url;
             }
         }
 
