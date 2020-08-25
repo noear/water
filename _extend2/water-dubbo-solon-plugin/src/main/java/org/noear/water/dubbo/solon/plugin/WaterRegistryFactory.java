@@ -7,6 +7,6 @@ import org.apache.dubbo.registry.RegistryFactory;
 public class WaterRegistryFactory implements RegistryFactory {
     @Override
     public Registry getRegistry(URL url) {
-        return null;
+        return new WaterRegistry(url);
     }
 }

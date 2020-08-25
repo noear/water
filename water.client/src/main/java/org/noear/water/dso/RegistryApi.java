@@ -10,6 +10,14 @@ import java.util.Map;
  * 注册服务（使用 CallCfgUtil）
  * */
 public class RegistryApi {
+
+    /**
+     * 注册（用于对接外部框架）
+     * */
+    public void register(String service, String address, boolean is_unstable) {
+        register(service, address, "", 1, "", is_unstable);
+    }
+
     /**
      * 注册
      * */
@@ -48,8 +56,12 @@ public class RegistryApi {
     }
 
     /**
-     * 注销
+     * 注销（用于对接外部框架）
      * */
+    public void unregister(String service, String address){
+        unregister(service,address,"");
+    }
+
     public void unregister(String service, String address, String note){
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
