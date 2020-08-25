@@ -42,7 +42,7 @@ public class ChkController implements IJob {
         boolean is_unstable = XApp.cfg().isDriftMode();
 
         try {
-            WaterClient.Registry.add(Config.water_service_name, LocalUtils.getLocalIp(), _args.toJson(), "", 1, "", is_unstable);
+            WaterClient.Registry.register(Config.water_service_name, LocalUtils.getLocalIp(), _args.toJson(), "", 1, "", is_unstable);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -45,8 +45,9 @@
 
         <bcf.ver>2.0.3</bcf.ver>
 
-
         <solonjt.ver>1.0.7</solonjt.ver>
+
+        <dubbo.ver>2.7.6</dubbo.ver>
     </properties>
 
 
@@ -348,5 +349,8 @@
         <module>../water.protocol</module>
         <module>../water.client</module>
         <module>../water.client-solon-plugin</module>
+
+
+        <module>../_extend2/water-dubbo-solon-plugin</module>
     </modules>
 </project>

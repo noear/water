@@ -7,8 +7,6 @@ import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
-import java.util.function.Function;
-
 public abstract class WaterAdapter {
     /** 报警手机号 :: 需要重写 */
     public abstract String alarm_mobile();
@@ -51,7 +49,7 @@ public abstract class WaterAdapter {
             String local_host = getLocalAddress(service_port);
 
             //1.注册到服务
-            WaterClient.Registry.add(service_name(), local_host, service_check_path, alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(service_name(), local_host, service_check_path, alarm_mobile(), is_unstable());
         }
     }
 

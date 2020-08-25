@@ -10,17 +10,25 @@ import java.util.Map;
  * 注册服务（使用 CallCfgUtil）
  * */
 public class RegistryApi {
-    public void add(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
-        add(service, address, check_url, 0, alarm_mobile, is_unstable);
+    /**
+     * 注册
+     * */
+    public void register(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
+        register(service, address, check_url, 0, alarm_mobile, is_unstable);
     }
 
-    //@parme checkType: 0通过check_url检查，1自己定时签到
-    //
-    public void add(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
-        add(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
+    /**
+     * 注册
+     * @param check_type 0:通过check_url检查，1:自己定时签到
+     * */
+    public void register(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+        register(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
     }
 
-    public void add(String service, String address, String note, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    /**
+     * 注册
+     * */
+    public void register(String service, String address, String note, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -34,6 +42,21 @@ public class RegistryApi {
 
         try {
             CallCfgUtil.postAsync("/sev/reg/", params);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 注销
+     * */
+    public void unregister(String service, String address){
+        Map<String, String> params = new HashMap<>();
+        params.put("service", service);
+        params.put("address", address);
+
+        try {
+            CallCfgUtil.postAsync("/sev/unreg/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -56,6 +79,9 @@ public class RegistryApi {
         }
     }
 
+    /**
+     * 发现
+     * */
     public DiscoverM discover(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);

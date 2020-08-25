@@ -67,9 +67,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         }
 
         if (service_port > 0) {
-            WaterClient.Registry.add(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(), is_unstable());
         } else {
-            WaterClient.Registry.add(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(), is_unstable());
         }
     }
 
