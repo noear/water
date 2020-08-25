@@ -3,6 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XPlugin;
+import org.noear.solon.core.XUpstreamFactory;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
@@ -21,6 +22,8 @@ public class XPluginImp implements XPlugin {
     @Override
     public void start(XApp app) {
         XmlSqlLoader.tryLoad();
+
+        XUpstreamFactory.global = new XUpstreamFactoryNew();
 
         //尝试注册
         if (app.port() > 0) {
