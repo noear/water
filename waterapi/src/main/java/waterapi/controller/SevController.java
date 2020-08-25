@@ -20,6 +20,9 @@ public class SevController implements XHandler {
             case "/sev/reg/":
                 new CMD_sev_reg().exec(c);
                 break;
+            case "/sev/unreg/":
+                new CMD_sev_reg().exec(c);
+                break;
             case "/sev/set/":
                 new CMD_sev_set().exec(c);
                 break;

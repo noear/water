@@ -75,6 +75,23 @@ public final class DbWaterRegApi {
         }
     }
 
+    public static boolean delService(String service, String address, String note) throws SQLException {
+        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
+
+        boolean isOk = db().table("water_reg_service")
+                .where("`key` = ?", key)
+                .delete() > 0;
+
+        //通知负载更新
+        if (service.contains(":") == false) {
+            if (DbWaterCfgApi.hasGateway(service)) {
+                MsgUtils.updateCache("upstream:" + service);
+            }
+        }
+
+        return isOk;
+    }
+
     public static boolean disableService(String service, String address,String note, boolean is_enabled) throws SQLException {
         String key = EncryptUtils.md5(service + "#" + address + "#" + note);
 

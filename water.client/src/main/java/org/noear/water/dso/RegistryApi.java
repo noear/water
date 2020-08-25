@@ -50,10 +50,11 @@ public class RegistryApi {
     /**
      * 注销
      * */
-    public void unregister(String service, String address){
+    public void unregister(String service, String address, String note){
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
+        params.put("note", note);
 
         try {
             CallCfgUtil.postAsync("/sev/unreg/", params);
