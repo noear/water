@@ -5,6 +5,7 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
 import solonjt.JtRun;
@@ -56,9 +57,12 @@ public class PlnController implements IJob {
         System.out.println("查到任务数：" + list.size());
 
         for (PaasFileModel task : list) {
-            CallUtil.asynCall(() -> {
-                doExec(task);
-            });
+            //加锁，以支持多节点处理
+            if (LockUtils.tryLock("waterplan", task.file_id + "")) {
+                CallUtil.asynCall(() -> {
+                    doExec(task);
+                });
+            }
         }
     }
 
