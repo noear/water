@@ -2,6 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
+import org.noear.solon.core.XBridge;
 import org.noear.solon.core.XPlugin;
 import org.noear.solon.core.XUpstreamFactory;
 import org.noear.water.WW;
@@ -23,7 +24,7 @@ public class XPluginImp implements XPlugin {
     public void start(XApp app) {
         XmlSqlLoader.tryLoad();
 
-        XUpstreamFactory.global = new XUpstreamFactoryNew();
+        XBridge.upstreamFactorySet(new XUpstreamFactoryImp());
 
         //尝试注册
         if (app.port() > 0) {
