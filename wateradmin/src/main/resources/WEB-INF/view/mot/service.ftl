@@ -123,10 +123,11 @@
                         <tr style="color: red">
                     </#if>
                         <td class="left">${m.name}</td>
-                        <td class="left break">${m.address}
+                        <td class="left break"><a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">${m.address}
                             <#if m.note?default("")?length gt 0>
                                 - ${m.note}
                             </#if>
+                            </a>
                         </td>
                         <td>
                             <#if m.check_type == 0>

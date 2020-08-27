@@ -4,6 +4,9 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
+import org.noear.solon.core.XContext;
+import org.noear.water.utils.HttpUtils;
+import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -40,6 +43,23 @@ public class SevController extends BaseController {
         viewModel.put("services", services);
         viewModel.put("name",name);
         return view("mot/service");
+    }
+
+    @XMapping("/service/check")
+    public String service_check(String s) throws Exception{
+        if(TextUtils.isEmpty(s)){
+            return null;
+        }
+
+        if(s.indexOf("@") < 0 || s.indexOf(":") < 0){
+            return null;
+        }
+
+        String ca = s.split("@")[1];
+
+        String url = "http://" + ca + "/run/status/";
+
+        return HttpUtils.getString(url);
     }
 
     //页面自动刷新获取表单数据
