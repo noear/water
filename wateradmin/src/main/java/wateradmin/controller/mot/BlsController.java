@@ -15,16 +15,12 @@ import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
 import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.water.ServerTrackBlsModel;
-import org.noear.water.protocol.model.EChartModel;
 import wateradmin.models.aliyun.BlsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @XController
@@ -79,54 +75,13 @@ public class BlsController extends BaseController {
             dateType = 0;
         }
 
-        ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
-
-        if (cfg == null) {
-            return null;
-        }
-
-
-        List<ELineModel> rearr = new ArrayList<>();
-
-        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, dataType);
-        rearr.add(res1);
-
-        if (dataType == 0) { //并发连接
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 5);
-            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 6);
-            rearr.add(res2);
-            rearr.add(res3);
-        }
-
-        if (dataType == 2) { //QPS
-            rearr.clear();
-
-            //增加多线支持
-            Map<String, ELineModel> mline = new HashMap<>();
-
-            for (EChartModel m : res1) {
-                if (mline.containsKey(m.label) == false) {
-                    mline.put(m.label, new ELineModel());
-                }
-
-                mline.get(m.label).add(m);
-            }
-
-            rearr.addAll(mline.values());
-        }
-
-        if (dataType == 3) { //流量
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 4);
-            rearr.add(res2);
-        }
-
-        return rearr;
+        return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, dateType, dataType);
     }
 
     @XMapping("track/ajax/pull")
     public ViewModel bls_track_ajax_pull() throws Exception {
 
-        ProtocolHub.monitorPuller.pull(MonitorType.LBS);
+        ProtocolHub.monitoring.pull(MonitorType.LBS);
 
         return viewModel.code(1, "OK");
     }

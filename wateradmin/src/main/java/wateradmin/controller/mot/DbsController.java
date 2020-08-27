@@ -13,7 +13,6 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunDbsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import org.noear.water.protocol.model.EChartModel;
 import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.water.ServerTrackDbsModel;
 import wateradmin.models.aliyun.DbsViewModel;
@@ -97,24 +96,21 @@ public class DbsController extends BaseController {
             type = 0;
         }
 
-        List<ELineModel> lines  =new ArrayList<>();
-
-        ELineModel res = new ELineModel();
-
-        ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
-
-        if (cfg != null) {
-            res = AliyunDbsUtil.baseQuery(cfg, instanceId, dateType, dataType, type);
+        if (type == 2) {
+            return ProtocolHub.monitoring.query(MonitorType.RDS, instanceId, dateType, dataType);
+        } else if (type == 3) {
+            return ProtocolHub.monitoring.query(MonitorType.Redis, instanceId, dateType, dataType);
+        } else if (type == 4) {
+            return ProtocolHub.monitoring.query(MonitorType.Memcached, instanceId, dateType, dataType);
+        } else {
+            return null;
         }
-
-        lines.add(res);
-
-        return lines;
     }
 
     @XMapping("track/ajax/pull")
     public ViewModel dbs_rds_track_ajax_pull() throws Exception {
-        ProtocolHub.monitorPuller.pull(MonitorType.RDS);
+        ProtocolHub.monitoring.pull(MonitorType.RDS);
+        ProtocolHub.monitoring.pull(MonitorType.PolarDB);
 
         return viewModel.code(1, "OK");
     }
@@ -122,14 +118,14 @@ public class DbsController extends BaseController {
 
     @XMapping("redis/track/ajax/pull")
     public ViewModel dbs_redis_track_ajax_pull() throws Exception {
-        ProtocolHub.monitorPuller.pull(MonitorType.Redis);
+        ProtocolHub.monitoring.pull(MonitorType.Redis);
 
         return viewModel.code(1, "OK");
     }
 
     @XMapping("mencache/track/ajax/pull")
     public ViewModel dbs_mencache_track_ajax_pull() throws Exception {
-        ProtocolHub.monitorPuller.pull(MonitorType.Memcached);
+        ProtocolHub.monitoring.pull(MonitorType.Memcached);
 
         return viewModel.code(1, "OK");
     }

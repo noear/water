@@ -25,7 +25,7 @@ public class WateradminApp {
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
             ProtocolHub.logQuerier = new LogQuerierImp();
 
-            ProtocolHub.monitorPuller = new MonitoringAliyun();
+            ProtocolHub.monitoring = new MonitoringAliyun();
         });
     }
 }

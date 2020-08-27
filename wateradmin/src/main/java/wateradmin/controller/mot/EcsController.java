@@ -112,7 +112,7 @@ public class EcsController extends BaseController {
 
     @XMapping("track/ajax/pull")
     public ViewModel ecs_track_ajax_pull() throws Exception {
-        ProtocolHub.monitorPuller.pull(MonitorType.ECS);
+        ProtocolHub.monitoring.pull(MonitorType.ECS);
 
         return viewModel.code(1, "OK");
     }

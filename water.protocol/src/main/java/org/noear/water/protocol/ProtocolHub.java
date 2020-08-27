@@ -21,7 +21,7 @@ public final class ProtocolHub {
     public static MessageLock messageLock;
     public static MessageQueue messageQueue;
 
-    public static Monitoring monitorPuller;
+    public static Monitoring monitoring;
 
     public static Heihei heihei;
 
