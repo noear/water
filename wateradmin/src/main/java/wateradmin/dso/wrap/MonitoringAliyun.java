@@ -15,6 +15,7 @@ import wateradmin.models.aliyun.DbsTrackModel;
 import wateradmin.models.aliyun.EcsTrackModel;
 import wateradmin.models.water_cfg.ConfigModel;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +40,17 @@ public class MonitoringAliyun implements Monitoring {
 
     @Override
     public List<ELineModel> query(MonitorType type, String instanceId, Integer dateType, Integer dataType) throws Exception {
-        switch (type){
-            case LBS: return query_bls_chart(instanceId, dateType, dataType);
-            case RDS: return query_dbs_chart(instanceId, dateType, dataType, 2);
-            case Redis: return query_dbs_chart(instanceId, dateType, dataType, 3);
-            case Memcached: return query_dbs_chart(instanceId, dateType, dataType, 4);
+        switch (type) {
+            case LBS:
+                return query_bls_chart(instanceId, dateType, dataType);
+            case ECS:
+                return query_ecs_chart(instanceId, dateType, dataType);
+            case RDS:
+                return query_dbs_chart(instanceId, dateType, dataType, 2);
+            case Redis:
+                return query_dbs_chart(instanceId, dateType, dataType, 3);
+            case Memcached:
+                return query_dbs_chart(instanceId, dateType, dataType, 4);
         }
 
         return null;
@@ -192,5 +199,47 @@ public class MonitoringAliyun implements Monitoring {
         lines.add(res);
 
         return lines;
+    }
+
+    private List<ELineModel> query_ecs_chart(String instanceId, Integer dateType, Integer dataType) throws SQLException {
+        if (dataType == null) {
+            dataType = 0;
+        }
+        if (dateType == null) {
+            dateType = 0;
+        }
+
+        ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
+
+        if (cfg == null) {
+            return null;
+        }
+
+        ELineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, dataType);
+        List<ELineModel> rearr = new ArrayList<>();
+
+        if (dataType == 2 || dataType == 4) {
+            //增加多线支持
+            Map<String, ELineModel> mline = new HashMap<>();
+
+            for (EChartModel m : res) {
+                if (mline.containsKey(m.label) == false) {
+                    mline.put(m.label, new ELineModel());
+                }
+
+                mline.get(m.label).add(m);
+            }
+
+            rearr.addAll(mline.values());
+        } else {
+            rearr.add(res);
+        }
+
+        if (dataType == 3) {
+            ELineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, 5);
+            rearr.add(res2);
+        }
+
+        return rearr;
     }
 }

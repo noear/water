@@ -68,7 +68,7 @@ public class EcsController extends BaseController {
 
 
     @XMapping("charts/ajax/reqtate")
-    public List<ELineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws SQLException {
+    public List<ELineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
         if (dataType == null) {
             dataType = 0;
         }
@@ -76,38 +76,7 @@ public class EcsController extends BaseController {
             dateType = 0;
         }
 
-        ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
-
-        if (cfg == null) {
-            return null;
-        }
-
-        ELineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, dataType);
-        List<ELineModel> rearr = new ArrayList<>();
-
-        if (dataType == 2 || dataType == 4) {
-            //增加多线支持
-            Map<String, ELineModel> mline = new HashMap<>();
-
-            for (EChartModel m : res) {
-                if (mline.containsKey(m.label) == false) {
-                    mline.put(m.label, new ELineModel());
-                }
-
-                mline.get(m.label).add(m);
-            }
-
-            rearr.addAll(mline.values());
-        } else {
-            rearr.add(res);
-        }
-
-        if (dataType == 3) {
-            ELineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, 5);
-            rearr.add(res2);
-        }
-
-        return rearr;
+        return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, dateType, dataType);
     }
 
     @XMapping("track/ajax/pull")
