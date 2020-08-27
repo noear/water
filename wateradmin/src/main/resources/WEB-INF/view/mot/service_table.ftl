@@ -2,8 +2,7 @@
     <thead>
     <tr>
         <td width="120px" class="left">名称</td>
-        <td width="65px" class="left">地址</td>
-        <td class="left">启动备注</td>
+        <td class="left">地址</td>
         <td width="75px">检测类型</td>
         <td>检查路径</td>
         <td width="120px">最后检查时间</td>
@@ -20,8 +19,11 @@
                         <tr style="color: red">
                     </#if>
         <td class="left">${m.name}</td>
-        <td class="left">${m.address}</td>
-        <td class="left">${m.note}</td>
+        <td class="left break">${m.address}
+            <#if m.note?default("")?length gt 0>
+                - ${m.note}
+            </#if>
+        </td>
         <td>
                             <#if m.check_type == 0>
                                 被动检查
