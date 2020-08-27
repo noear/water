@@ -17,6 +17,7 @@ import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesRequest;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesResponse;
 import org.noear.water.protocol.model.EChartModel;
 import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.StringUtils;
 import wateradmin.models.aliyun.*;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -53,7 +54,7 @@ public class AliyunDbsUtil {
     }
 
     //基础信息获取
-    public static ELineModel baseQuery(ConfigModel cfg, String id, int dateType, int dataType, int type) throws Exception {
+    public static ELineModel baseQuery(ConfigModel cfg, String id, ETimeType timeType, int dataType, int type) throws Exception {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
@@ -70,7 +71,7 @@ public class AliyunDbsUtil {
                 break;        //redis
         }
 
-        AliyunCmsUtil.setRequestDateInit(dateType, request);
+        AliyunCmsUtil.setRequestDateInit(timeType, request);
 
         if (dataType == 3 && type != 2) {
             dataType = 4;
@@ -96,7 +97,7 @@ public class AliyunDbsUtil {
             model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
             List<String> timelist = new ArrayList<>();
 
-            if (dateType < 3) {
+            if (timeType.code < 3) {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(dt));
             } else {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));

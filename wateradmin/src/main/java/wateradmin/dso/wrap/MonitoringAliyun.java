@@ -1,10 +1,10 @@
 package wateradmin.dso.wrap;
 
-import org.noear.solon.annotation.XMapping;
 import org.noear.water.protocol.Monitoring;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.model.EChartModel;
 import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;
@@ -39,18 +39,18 @@ public class MonitoringAliyun implements Monitoring {
     }
 
     @Override
-    public List<ELineModel> query(MonitorType type, String instanceId, Integer dateType, Integer dataType) throws Exception {
+    public List<ELineModel> query(MonitorType type, String instanceId, ETimeType timeType, Integer dataType) throws Exception {
         switch (type) {
             case LBS:
-                return query_bls_chart(instanceId, dateType, dataType);
+                return query_bls_chart(instanceId, timeType, dataType);
             case ECS:
-                return query_ecs_chart(instanceId, dateType, dataType);
+                return query_ecs_chart(instanceId, timeType, dataType);
             case RDS:
-                return query_dbs_chart(instanceId, dateType, dataType, 2);
+                return query_dbs_chart(instanceId, timeType, dataType, 2);
             case Redis:
-                return query_dbs_chart(instanceId, dateType, dataType, 3);
+                return query_dbs_chart(instanceId, timeType, dataType, 3);
             case Memcached:
-                return query_dbs_chart(instanceId, dateType, dataType, 4);
+                return query_dbs_chart(instanceId, timeType, dataType, 4);
         }
 
         return null;
@@ -123,12 +123,9 @@ public class MonitoringAliyun implements Monitoring {
     }
 
 
-    private List<ELineModel> query_bls_chart(String instanceId, Integer dateType, Integer dataType) throws Exception {
+    private List<ELineModel> query_bls_chart(String instanceId, ETimeType timeType, Integer dataType) throws Exception {
         if (dataType == null) {
             dataType = 0;
-        }
-        if (dateType == null) {
-            dateType = 0;
         }
 
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
@@ -140,12 +137,12 @@ public class MonitoringAliyun implements Monitoring {
 
         List<ELineModel> rearr = new ArrayList<>();
 
-        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, dataType);
+        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, dataType);
         rearr.add(res1);
 
         if (dataType == 0) { //并发连接
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 5);
-            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 6);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 5);
+            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 6);
             rearr.add(res2);
             rearr.add(res3);
         }
@@ -168,20 +165,18 @@ public class MonitoringAliyun implements Monitoring {
         }
 
         if (dataType == 3) { //流量
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 4);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 4);
             rearr.add(res2);
         }
 
         return rearr;
     }
 
-    private List<ELineModel> query_dbs_chart(String instanceId, Integer dateType, Integer dataType, Integer type) throws Exception {
+    private List<ELineModel> query_dbs_chart(String instanceId, ETimeType timeType, Integer dataType, Integer type) throws Exception {
         if (dataType == null) {
             dataType = 0;
         }
-        if (dateType == null) {
-            dateType = 0;
-        }
+
         if (type == null) {
             type = 0;
         }
@@ -193,7 +188,7 @@ public class MonitoringAliyun implements Monitoring {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
         if (cfg != null) {
-            res = AliyunDbsUtil.baseQuery(cfg, instanceId, dateType, dataType, type);
+            res = AliyunDbsUtil.baseQuery(cfg, instanceId, timeType, dataType, type);
         }
 
         lines.add(res);
@@ -201,12 +196,9 @@ public class MonitoringAliyun implements Monitoring {
         return lines;
     }
 
-    private List<ELineModel> query_ecs_chart(String instanceId, Integer dateType, Integer dataType) throws SQLException {
+    private List<ELineModel> query_ecs_chart(String instanceId, ETimeType timeType, Integer dataType) throws SQLException {
         if (dataType == null) {
             dataType = 0;
-        }
-        if (dateType == null) {
-            dateType = 0;
         }
 
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
@@ -215,7 +207,7 @@ public class MonitoringAliyun implements Monitoring {
             return null;
         }
 
-        ELineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, dataType);
+        ELineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, timeType, dataType);
         List<ELineModel> rearr = new ArrayList<>();
 
         if (dataType == 2 || dataType == 4) {
@@ -236,7 +228,7 @@ public class MonitoringAliyun implements Monitoring {
         }
 
         if (dataType == 3) {
-            ELineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, 5);
+            ELineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, timeType, 5);
             rearr.add(res2);
         }
 

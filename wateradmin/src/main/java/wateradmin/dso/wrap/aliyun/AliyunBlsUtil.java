@@ -18,6 +18,7 @@ import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersRequest;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersResponse;
 import org.noear.water.protocol.model.EChartModel;
 import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.StringUtils;
 import wateradmin.models.aliyun.*;
@@ -132,12 +133,12 @@ public class AliyunBlsUtil {
     }
 
     //基本信息查询
-    public static ELineModel baseQuery(ConfigModel cfg, String instanceId, int dateType, int dataType) throws Exception {
+    public static ELineModel baseQuery(ConfigModel cfg, String instanceId, ETimeType timeType, int dataType) throws Exception {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
         request.setProject("acs_slb_dashboard");
-        AliyunCmsUtil.setRequestDateInit(dateType, request);
+        AliyunCmsUtil.setRequestDateInit(timeType, request);
         setMetricInit(dataType, request);
         JSONObject dim = new JSONObject();
         dim.put("instanceId", instanceId);
@@ -164,7 +165,7 @@ public class AliyunBlsUtil {
             }
 
             List<String> timelist = new ArrayList<>();
-            if (dateType < 3) {
+            if (timeType.code < 3) {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(dt));
             } else {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));
@@ -177,12 +178,12 @@ public class AliyunBlsUtil {
     }
 
     //查询最新数据
-    public static void baseQueryLast(ConfigModel cfg, String bls_id, int dateType, int dataType) throws Exception {
+    public static void baseQueryLast(ConfigModel cfg, String bls_id, ETimeType timeType, int dataType) throws Exception {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricLastRequest request = new QueryMetricLastRequest();
         request.setProject("acs_slb_dashboard");
-        AliyunCmsUtil.setRequestDateInit(dateType, request);
+        AliyunCmsUtil.setRequestDateInit(timeType, request);
         setMetricInit(dataType, request);
         JSONObject dim = new JSONObject();
         dim.put("instanceId", bls_id);
@@ -200,7 +201,7 @@ public class AliyunBlsUtil {
             Date dt = new Date(item.timestamp);
             model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
             List<String> timelist = new ArrayList<>();
-            if (dateType < 3) {
+            if (timeType.code < 3) {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(dt));
             } else {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));

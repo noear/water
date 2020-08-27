@@ -3,6 +3,7 @@ package wateradmin.controller.mot;
 import com.aliyuncs.exceptions.ClientException;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
@@ -97,11 +98,11 @@ public class DbsController extends BaseController {
         }
 
         if (type == 2) {
-            return ProtocolHub.monitoring.query(MonitorType.RDS, instanceId, dateType, dataType);
+            return ProtocolHub.monitoring.query(MonitorType.RDS, instanceId, ETimeType.of(dataType), dataType);
         } else if (type == 3) {
-            return ProtocolHub.monitoring.query(MonitorType.Redis, instanceId, dateType, dataType);
+            return ProtocolHub.monitoring.query(MonitorType.Redis, instanceId, ETimeType.of(dataType), dataType);
         } else if (type == 4) {
-            return ProtocolHub.monitoring.query(MonitorType.Memcached, instanceId, dateType, dataType);
+            return ProtocolHub.monitoring.query(MonitorType.Memcached, instanceId, ETimeType.of(dataType), dataType);
         } else {
             return null;
         }

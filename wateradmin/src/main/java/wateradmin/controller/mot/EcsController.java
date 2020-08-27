@@ -3,6 +3,7 @@ package wateradmin.controller.mot;
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
@@ -76,7 +77,7 @@ public class EcsController extends BaseController {
             dateType = 0;
         }
 
-        return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, dateType, dataType);
+        return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, ETimeType.of(dataType), dataType);
     }
 
     @XMapping("track/ajax/pull")

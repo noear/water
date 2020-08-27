@@ -3,6 +3,7 @@ package wateradmin.controller.mot;
 import com.aliyuncs.exceptions.ClientException;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
@@ -75,7 +76,7 @@ public class BlsController extends BaseController {
             dateType = 0;
         }
 
-        return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, dateType, dataType);
+        return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, ETimeType.of(dataType), dataType);
     }
 
     @XMapping("track/ajax/pull")

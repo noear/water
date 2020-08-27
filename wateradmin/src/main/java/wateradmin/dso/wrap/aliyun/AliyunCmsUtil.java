@@ -14,6 +14,7 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.FormatType;
 import com.aliyuncs.profile.IClientProfile;
 import org.noear.snack.ONode;
+import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.protocol.model.EChartModel;
@@ -33,29 +34,29 @@ public class AliyunCmsUtil {
     }
 
     //阿里云监控请求时间初始化
-    public static void setRequestDateInit(Integer type, QueryMetricListRequest request) {
-        switch (type) {
-            case 0:
+    public static void setRequestDateInit(ETimeType timeType, QueryMetricListRequest request) {
+        switch (timeType) {
+            case hour1:
                 request.setStartTime(Datetime.Now().addHour(-1).toString());
                 request.setPeriod("60");//一分钟监控一次
                 break;        //六小时
-            case 1:
+            case hour6:
                 request.setStartTime(Datetime.Now().addHour(-6).toString());
                 request.setPeriod("300");//5分钟监控一次
                 break;        //1天
-            case 2:
+            case day1:
                 request.setStartTime(Datetime.Now().addDay(-1).toString());
                 request.setPeriod("1800");//半小时监控一次
                 break;        //3天
-            case 3:
+            case day3:
                 request.setStartTime(Datetime.Now().addDay(-3).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;        //7天
-            case 4:
+            case day7:
                 request.setStartTime(Datetime.Now().addDay(-7).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;       //15天
-            case 5:
+            case day14:
                 request.setStartTime(Datetime.Now().addDay(-14).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;        //30天
@@ -63,29 +64,29 @@ public class AliyunCmsUtil {
     }
 
     //阿里云监控请求时间初始化
-    public static void setRequestDateInit(Integer type, QueryMetricLastRequest request) {
-        switch (type) {
-            case 0:
+    public static void setRequestDateInit(ETimeType timeType, QueryMetricLastRequest request) {
+        switch (timeType) {
+            case hour1:
                 request.setStartTime(Datetime.Now().addHour(-1).toString());
                 request.setPeriod("60");//一分钟监控一次
                 break;        //六小时
-            case 1:
+            case hour6:
                 request.setStartTime(Datetime.Now().addHour(-6).toString());
                 request.setPeriod("300");//5分钟监控一次
                 break;        //1天
-            case 2:
+            case day1:
                 request.setStartTime(Datetime.Now().addDay(-1).toString());
                 request.setPeriod("1800");//半小时监控一次
                 break;        //3天
-            case 3:
+            case day3:
                 request.setStartTime(Datetime.Now().addDay(-3).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;        //7天
-            case 4:
+            case day7:
                 request.setStartTime(Datetime.Now().addDay(-7).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;       //15天
-            case 5:
+            case day14:
                 request.setStartTime(Datetime.Now().addDay(-14).toString());
                 request.setPeriod("3600");//1小时监控一次
                 break;        //30天
@@ -120,18 +121,18 @@ public class AliyunCmsUtil {
     }
 
     //基础查询获取参数
-    public static ELineModel baseQuery(ConfigModel cfg, String input, Integer dateType, Integer dataType) {
+    public static ELineModel baseQuery(ConfigModel cfg, String instanceId, ETimeType timeType, Integer dataType) {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
         request.setProject("acs_ecs_dashboard");
 
         setMetricInit(dataType, request);
-        setRequestDateInit(dateType, request);
+        setRequestDateInit(timeType, request);
 
         request.setEndTime(Datetime.Now().toString());
         JSONObject dim = new JSONObject();
-        dim.put("instanceId", input);
+        dim.put("instanceId", instanceId);
         request.setDimensions(dim.toJSONString());
         request.setAcceptFormat(FormatType.JSON);
 
@@ -152,7 +153,7 @@ public class AliyunCmsUtil {
                     model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
                     List<String> timelist = new ArrayList<>();
 
-                    if (dateType < 3) {
+                    if (timeType.code < 3) {
                         timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(dt));
                     } else {
                         timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));
@@ -168,7 +169,7 @@ public class AliyunCmsUtil {
                     model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
                     List<String> timelist = new ArrayList<>();
 
-                    if (dateType < 3) {
+                    if (timeType.code < 3) {
                         model.label = item.diskname; //增加多硬盘支持 //外部可根据group进行硬盘分组
 
                         timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm").format(dt));

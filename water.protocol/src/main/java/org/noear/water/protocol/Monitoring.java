@@ -1,6 +1,7 @@
 package org.noear.water.protocol;
 
 import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.ETimeType;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  * */
 public interface Monitoring {
     void pull(MonitorType type) throws Exception;
-    List<ELineModel> query(MonitorType type, String instanceId,Integer dateType, Integer dataType) throws Exception;
+    List<ELineModel> query(MonitorType type, String instanceId, ETimeType timeType, Integer dataType) throws Exception;
 }
