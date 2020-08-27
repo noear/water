@@ -10,7 +10,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
-import org.noear.water.utils.MonitorUtils;
+import org.noear.water.utils.RuntimeUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
@@ -166,9 +166,10 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                     text = (ip + ",not is whitelist!");
                 }
             } else if(service_status_path.equals(path)){
+                //run/status/
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
-                    text = ONode.stringify(MonitorUtils.getStatus());
+                    text = ONode.stringify(RuntimeUtils.getStatus());
                 } else {
                     text = (ip + ",not is whitelist!");
                 }

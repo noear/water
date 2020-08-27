@@ -4,11 +4,11 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadMXBean;
 
-public class MonitorUtils {
-    private static MonitorStatus status = new MonitorStatus();
+public class RuntimeUtils {
+    private static RuntimeStatus status = new RuntimeStatus();
 
 
-    public static MonitorStatus getStatus() {
+    public static RuntimeStatus getStatus() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 

@@ -52,4 +52,17 @@ public class WW {
     public static final String type_logger = "logger.type";
     public static final String type_queue = "queue.type";
 
+    /**
+     * 主控组
+     * */
+    public static final String whitelist_tag_master = "master";
+    /**
+     * 客户端组（一般用于检测管理后台客户端）
+     * */
+    public static final String whitelist_tag_client = "client";
+    /**
+     * 服务端组（一般用于检测服务端IP）
+     * */
+    public static final String whitelist_tag_server = "server";
+
 }

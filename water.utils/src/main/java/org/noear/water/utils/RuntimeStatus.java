@@ -1,6 +1,6 @@
 package org.noear.water.utils;
 
-public class MonitorStatus {
+public class RuntimeStatus {
     /**
      * 内存总量
      */
