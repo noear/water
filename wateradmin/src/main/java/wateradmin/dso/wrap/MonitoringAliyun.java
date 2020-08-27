@@ -137,12 +137,12 @@ public class MonitoringAliyun implements Monitoring {
 
         List<ELineModel> rearr = new ArrayList<>();
 
-        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, dataType);
+        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType, dataType);
         rearr.add(res1);
 
         if (dataType == 0) { //并发连接
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 5);
-            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 6);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType, 5);
+            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType, 6);
             rearr.add(res2);
             rearr.add(res3);
         }
