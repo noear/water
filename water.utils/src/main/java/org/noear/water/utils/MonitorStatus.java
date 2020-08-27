@@ -1,46 +1,41 @@
 package org.noear.water.utils;
-import java.util.Date;
 
 public class MonitorStatus {
     /**
-     * 空闲内存
-     */
-    public long freeMemory;
-    /**
      * 内存总量
      */
-    public long totalMemory;
+    public long memoryTotal;
     /**
      * java虚拟机允许开启的最大的内存
      */
-    public long maxMemory;
+    public long memoryMax;
 
     /**
-     * 操作系统名称
+     * 空闲内存
      */
-    public String osName;
-    /**
-     * 进程号
-     */
-    public long pid;
+    public long memoryFree;
 
 
     /**
      * 程序启动时间
      */
-    public Date startTime;
-
-    /**
-     * 类所在路径
-     */
-    public String classPath;
-
-    public String projectPath;
+    public String timeStart;
 
     /**
      * 程序运行时间，单位毫秒
      */
-    public long runtime;
+    public long timeElapsed;
+
+    /**
+     * 操作系统名称
+     */
+    public String os;
+
+    /**
+     * 进程号
+     */
+    public long pid;
+
     /**
      * 线程总量
      */
