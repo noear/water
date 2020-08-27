@@ -3,7 +3,7 @@
     <tr>
         <td width="120px" class="left">名称</td>
         <td class="left">地址</td>
-        <td width="75px">检测类型</td>
+        <td width="50px">检测<br/>类型</td>
         <td>检查路径</td>
         <td width="120px">最后检查时间</td>
         <td width="60px">最后检<br/>查状态</td>
@@ -27,10 +27,10 @@
         </td>
         <td>
             <#if m.check_type == 0>
-                被动检查
+                被动
             </#if>
             <#if m.check_type == 1>
-                主动签到
+                主动
             </#if>
         </td>
         <td class="left">${m.check_url!}</td>
