@@ -46,7 +46,7 @@
     var datatype = 0;
     var datetype = 0;
     var chartsMonth = echarts.init(document.getElementById("chartsMonth"));
-    option = {
+    var option = {
         grid: {
             left: '3%',
             right: '4%',
