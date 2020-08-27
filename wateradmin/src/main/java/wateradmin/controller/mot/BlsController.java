@@ -1,6 +1,8 @@
 package wateradmin.controller.mot;
 
 import com.aliyuncs.exceptions.ClientException;
+import org.noear.water.protocol.MonitorType;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
 
@@ -8,11 +10,10 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.aliyun.AliyunBlsUtil;
+import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.aliyun.AliyunElineModel;
-import wateradmin.models.aliyun.BlsTrackModel;
 import wateradmin.models.water.ServerTrackBlsModel;
 import wateradmin.models.aliyun.AliyunEchartModel;
 import wateradmin.models.aliyun.BlsViewModel;
@@ -125,17 +126,7 @@ public class BlsController extends BaseController {
     @XMapping("track/ajax/pull")
     public ViewModel bls_track_ajax_pull() throws Exception {
 
-        List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
-
-        for (ConfigModel cfg : cfgList) {
-            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
-                continue;
-            }
-
-            List<BlsTrackModel> list = AliyunBlsUtil.pullBlsTrack(cfg);
-
-            DbWaterOpsApi.setServerBlsTracks(list);
-        }
+        ProtocolHub.monitorPuller.pull(MonitorType.LBS);
 
         return viewModel.code(1, "OK");
     }

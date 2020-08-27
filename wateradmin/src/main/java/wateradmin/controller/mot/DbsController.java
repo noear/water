@@ -1,6 +1,8 @@
 package wateradmin.controller.mot;
 
 import com.aliyuncs.exceptions.ClientException;
+import org.noear.water.protocol.MonitorType;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
 
@@ -8,13 +10,12 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.aliyun.AliyunDbsUtil;
+import wateradmin.dso.wrap.aliyun.AliyunDbsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.aliyun.AliyunEchartModel;
 import wateradmin.models.aliyun.AliyunElineModel;
 import wateradmin.models.water.ServerTrackDbsModel;
-import wateradmin.models.aliyun.DbsTrackModel;
 import wateradmin.models.aliyun.DbsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -107,14 +108,8 @@ public class DbsController extends BaseController {
     }
 
     @XMapping("track/ajax/pull")
-    public ViewModel dbs_track_ajax_pull() throws Exception {
-        List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
-
-        for (ConfigModel cfg : cfgList) {
-            List<DbsTrackModel> list = AliyunDbsUtil.pullRdsTrack(cfg);
-
-            DbWaterOpsApi.setServerDbsTracks(list);
-        }
+    public ViewModel dbs_rds_track_ajax_pull() throws Exception {
+        ProtocolHub.monitorPuller.pull(MonitorType.RDS);
 
         return viewModel.code(1, "OK");
     }
@@ -122,34 +117,14 @@ public class DbsController extends BaseController {
 
     @XMapping("redis/track/ajax/pull")
     public ViewModel dbs_redis_track_ajax_pull() throws Exception {
-        List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
-
-        for (ConfigModel cfg : cfgList) {
-            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
-                continue;
-            }
-
-            List<DbsTrackModel> list = AliyunDbsUtil.pullRedisTrack(cfg);
-
-            DbWaterOpsApi.setServerDbsTracks(list);
-        }
+        ProtocolHub.monitorPuller.pull(MonitorType.Redis);
 
         return viewModel.code(1, "OK");
     }
 
     @XMapping("mencache/track/ajax/pull")
     public ViewModel dbs_mencache_track_ajax_pull() throws Exception {
-        List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
-
-        for (ConfigModel cfg : cfgList) {
-            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
-                continue;
-            }
-
-            List<DbsTrackModel> list = AliyunDbsUtil.pullMemcacheTrack(cfg);
-
-            DbWaterOpsApi.setServerDbsTracks(list);
-        }
+        ProtocolHub.monitorPuller.pull(MonitorType.Memcached);
 
         return viewModel.code(1, "OK");
     }

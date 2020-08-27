@@ -23,6 +23,8 @@ public final class ProtocolHub {
     public static MessageLock messageLock;
     public static MessageQueue messageQueue;
 
+    public static MonitorPuller monitorPuller;
+
     public static Heihei heihei;
 
     private static Map<String, MessageQueue> messageQueueMap = new HashMap<>();

@@ -1,6 +1,8 @@
 package wateradmin.controller.mot;
 
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse;
+import org.noear.water.protocol.MonitorType;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
 
@@ -8,13 +10,12 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.aliyun.AliyunCmsUtil;
+import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.aliyun.AliyunEchartModel;
 import wateradmin.models.aliyun.AliyunElineModel;
 import wateradmin.models.water.ServerTrackEcsModel;
-import wateradmin.models.aliyun.EcsTrackModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -111,17 +112,7 @@ public class EcsController extends BaseController {
 
     @XMapping("track/ajax/pull")
     public ViewModel ecs_track_ajax_pull() throws Exception {
-        List<ConfigModel> cfgList = DbWaterOpsApi.getIAASAccionts();
-
-        for (ConfigModel cfg : cfgList) {
-            if (TextUtils.isEmpty(cfg.value) || cfg.value.indexOf("regionId") < 0) {
-                continue;
-            }
-
-            List<EcsTrackModel> list = AliyunCmsUtil.pullEcsTrack(cfg);
-
-            DbWaterOpsApi.setServerEcsTracks(list);
-        }
+        ProtocolHub.monitorPuller.pull(MonitorType.ECS);
 
         return viewModel.code(1, "OK");
     }

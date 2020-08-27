@@ -1,4 +1,4 @@
-package wateradmin.dso.aliyun;
+package wateradmin.dso.wrap.aliyun;
 
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
