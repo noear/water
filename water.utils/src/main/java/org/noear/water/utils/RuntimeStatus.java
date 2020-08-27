@@ -2,13 +2,14 @@ package org.noear.water.utils;
 
 public class RuntimeStatus {
     /**
-     * 内存总量
-     */
-    public long memoryTotal;
-    /**
      * java虚拟机允许开启的最大的内存
      */
     public long memoryMax;
+
+    /**
+     * 内存总量
+     */
+    public long memoryTotal;
 
     /**
      * 空闲内存
