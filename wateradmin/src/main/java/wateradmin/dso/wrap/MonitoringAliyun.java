@@ -165,7 +165,7 @@ public class MonitoringAliyun implements Monitoring {
         }
 
         if (dataType == 3) { //流量
-            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType.code, 4);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, timeType, 4);
             rearr.add(res2);
         }
 
