@@ -13,9 +13,9 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.aliyun.AliyunElineModel;
+import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.water.ServerTrackBlsModel;
-import wateradmin.models.aliyun.AliyunEchartModel;
+import org.noear.water.protocol.model.EChartModel;
 import wateradmin.models.aliyun.BlsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -71,7 +71,7 @@ public class BlsController extends BaseController {
 
 
     @XMapping("charts/ajax/reqtate")
-    public List<AliyunElineModel> bls_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
+    public List<ELineModel> bls_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
         if (dataType == null) {
             dataType = 0;
         }
@@ -86,14 +86,14 @@ public class BlsController extends BaseController {
         }
 
 
-        List<AliyunElineModel> rearr = new ArrayList<>();
+        List<ELineModel> rearr = new ArrayList<>();
 
-        AliyunElineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, dataType);
+        ELineModel res1 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, dataType);
         rearr.add(res1);
 
         if (dataType == 0) { //并发连接
-            AliyunElineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 5);
-            AliyunElineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 6);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 5);
+            ELineModel res3 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 6);
             rearr.add(res2);
             rearr.add(res3);
         }
@@ -102,11 +102,11 @@ public class BlsController extends BaseController {
             rearr.clear();
 
             //增加多线支持
-            Map<String, AliyunElineModel> mline = new HashMap<>();
+            Map<String, ELineModel> mline = new HashMap<>();
 
-            for (AliyunEchartModel m : res1) {
+            for (EChartModel m : res1) {
                 if (mline.containsKey(m.label) == false) {
-                    mline.put(m.label, new AliyunElineModel());
+                    mline.put(m.label, new ELineModel());
                 }
 
                 mline.get(m.label).add(m);
@@ -116,7 +116,7 @@ public class BlsController extends BaseController {
         }
 
         if (dataType == 3) { //流量
-            AliyunElineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 4);
+            ELineModel res2 = AliyunBlsUtil.baseQuery(cfg, instanceId, dateType, 4);
             rearr.add(res2);
         }
 

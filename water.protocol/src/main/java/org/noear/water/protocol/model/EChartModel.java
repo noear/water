@@ -1,8 +1,8 @@
-package wateradmin.models.aliyun;
+package org.noear.water.protocol.model;
 
 import java.util.List;
 
-public class AliyunEchartModel {
+public class EChartModel {
 
     public String label;
 

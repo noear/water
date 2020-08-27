@@ -16,8 +16,8 @@ import com.aliyuncs.profile.IClientProfile;
 import org.noear.snack.ONode;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.StringUtils;
-import wateradmin.models.aliyun.AliyunEchartModel;
-import wateradmin.models.aliyun.AliyunElineModel;
+import org.noear.water.protocol.model.EChartModel;
+import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.aliyun.AliyunResponse;
 import wateradmin.models.aliyun.EcsTrackModel;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -120,7 +120,7 @@ public class AliyunCmsUtil {
     }
 
     //基础查询获取参数
-    public static AliyunElineModel baseQuery(ConfigModel cfg, String input, Integer dateType, Integer dataType) {
+    public static ELineModel baseQuery(ConfigModel cfg, String input, Integer dateType, Integer dataType) {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
@@ -142,11 +142,11 @@ public class AliyunCmsUtil {
             String res = response.getDatapoints();
             System.out.println(res);
             List<AliyunResponse> list = JSON.parseArray(res, AliyunResponse.class);
-            AliyunElineModel avageList = new AliyunElineModel();
+            ELineModel avageList = new ELineModel();
             for (AliyunResponse item : list) {
 
                 if (dataType == 4) { //这里特殊处理, 因为网卡返回的数据有三种, 我们只需要Total的.
-                    AliyunEchartModel model = new AliyunEchartModel();
+                    EChartModel model = new EChartModel();
                     Date dt = new Date(item.timestamp);
                     model.label = item.state;
                     model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
@@ -163,7 +163,7 @@ public class AliyunCmsUtil {
                     avageList.add(model);
 
                 } else {
-                    AliyunEchartModel model = new AliyunEchartModel();
+                    EChartModel model = new EChartModel();
                     Date dt = new Date(item.timestamp);
                     model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
                     List<String> timelist = new ArrayList<>();

@@ -13,8 +13,8 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.aliyun.AliyunEchartModel;
-import wateradmin.models.aliyun.AliyunElineModel;
+import org.noear.water.protocol.model.EChartModel;
+import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.water.ServerTrackEcsModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -68,7 +68,7 @@ public class EcsController extends BaseController {
 
 
     @XMapping("charts/ajax/reqtate")
-    public List<AliyunElineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws SQLException {
+    public List<ELineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws SQLException {
         if (dataType == null) {
             dataType = 0;
         }
@@ -82,16 +82,16 @@ public class EcsController extends BaseController {
             return null;
         }
 
-        AliyunElineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, dataType);
-        List<AliyunElineModel> rearr = new ArrayList<>();
+        ELineModel res = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, dataType);
+        List<ELineModel> rearr = new ArrayList<>();
 
         if (dataType == 2 || dataType == 4) {
             //增加多线支持
-            Map<String, AliyunElineModel> mline = new HashMap<>();
+            Map<String, ELineModel> mline = new HashMap<>();
 
-            for (AliyunEchartModel m : res) {
+            for (EChartModel m : res) {
                 if (mline.containsKey(m.label) == false) {
-                    mline.put(m.label, new AliyunElineModel());
+                    mline.put(m.label, new ELineModel());
                 }
 
                 mline.get(m.label).add(m);
@@ -103,7 +103,7 @@ public class EcsController extends BaseController {
         }
 
         if (dataType == 3) {
-            AliyunElineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, 5);
+            ELineModel res2 = AliyunCmsUtil.baseQuery(cfg, instanceId, dateType, 5);
             rearr.add(res2);
         }
 

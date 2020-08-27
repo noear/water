@@ -13,14 +13,15 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunDbsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.aliyun.AliyunEchartModel;
-import wateradmin.models.aliyun.AliyunElineModel;
+import org.noear.water.protocol.model.EChartModel;
+import org.noear.water.protocol.model.ELineModel;
 import wateradmin.models.water.ServerTrackDbsModel;
 import wateradmin.models.aliyun.DbsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -85,7 +86,7 @@ public class DbsController extends BaseController {
 
 
     @XMapping("charts/ajax/reqtate")
-    public List<AliyunEchartModel> dbs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId, Integer type) throws Exception {
+    public List<ELineModel> dbs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId, Integer type) throws Exception {
         if (dataType == null) {
             dataType = 0;
         }
@@ -96,7 +97,9 @@ public class DbsController extends BaseController {
             type = 0;
         }
 
-        AliyunElineModel res = new AliyunElineModel();
+        List<ELineModel> lines  =new ArrayList<>();
+
+        ELineModel res = new ELineModel();
 
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
@@ -104,7 +107,9 @@ public class DbsController extends BaseController {
             res = AliyunDbsUtil.baseQuery(cfg, instanceId, dateType, dataType, type);
         }
 
-        return res;
+        lines.add(res);
+
+        return lines;
     }
 
     @XMapping("track/ajax/pull")

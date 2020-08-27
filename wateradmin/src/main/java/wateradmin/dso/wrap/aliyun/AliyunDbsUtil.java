@@ -15,6 +15,8 @@ import com.aliyuncs.rds.model.v20140815.DescribeDBInstanceAttributeRequest;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstanceAttributeResponse;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesRequest;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesResponse;
+import org.noear.water.protocol.model.EChartModel;
+import org.noear.water.protocol.model.ELineModel;
 import org.noear.water.utils.StringUtils;
 import wateradmin.models.aliyun.*;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -51,7 +53,7 @@ public class AliyunDbsUtil {
     }
 
     //基础信息获取
-    public static AliyunElineModel baseQuery(ConfigModel cfg, String id, int dateType, int dataType, int type) throws Exception {
+    public static ELineModel baseQuery(ConfigModel cfg, String id, int dateType, int dataType, int type) throws Exception {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
@@ -84,12 +86,12 @@ public class AliyunDbsUtil {
         String res = response.getDatapoints();
         System.out.println(res);
         List<AliyunBlsResponse> list = JSON.parseArray(res, AliyunBlsResponse.class);
-        AliyunElineModel avageList = new AliyunElineModel();
+        ELineModel avageList = new ELineModel();
         for (AliyunBlsResponse item : list) {
             if ("80".equals(item.getPort()) && dataType == 2) {
                 continue;
             }
-            AliyunEchartModel model = new AliyunEchartModel();
+            EChartModel model = new EChartModel();
             Date dt = new Date(item.timestamp);
             model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
             List<String> timelist = new ArrayList<>();

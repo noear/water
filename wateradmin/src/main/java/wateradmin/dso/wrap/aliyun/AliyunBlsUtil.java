@@ -16,6 +16,8 @@ import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancerAttributeRequest;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancerAttributeResponse;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersRequest;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersResponse;
+import org.noear.water.protocol.model.EChartModel;
+import org.noear.water.protocol.model.ELineModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.StringUtils;
 import wateradmin.models.aliyun.*;
@@ -130,7 +132,7 @@ public class AliyunBlsUtil {
     }
 
     //基本信息查询
-    public static AliyunElineModel baseQuery(ConfigModel cfg, String instanceId, int dateType, int dataType) throws Exception {
+    public static ELineModel baseQuery(ConfigModel cfg, String instanceId, int dateType, int dataType) throws Exception {
         IClientProfile profile = AliyunUtil.getProfile(cfg);
 
         QueryMetricListRequest request = new QueryMetricListRequest();
@@ -147,13 +149,13 @@ public class AliyunBlsUtil {
         String res = response.getDatapoints();
         System.out.println(res);
         List<AliyunBlsResponse> list = JSON.parseArray(res, AliyunBlsResponse.class);
-        AliyunElineModel avageList = new AliyunElineModel();
+        ELineModel avageList = new ELineModel();
         for (AliyunBlsResponse item : list) {
 //            if ("80".equals(item.getPort()) && dataType == 2) { //因为返回了443和80端口的数据,但是现在都只要https端口的
 //                continue;
 //            }
 
-            AliyunEchartModel model = new AliyunEchartModel();
+            EChartModel model = new EChartModel();
             Date dt = new Date(item.timestamp);
             model.name = getDataType(dataType);
 
@@ -192,9 +194,9 @@ public class AliyunBlsUtil {
         System.out.println(res);
 
         List<AliyunBlsResponse> list = JSON.parseArray(res, AliyunBlsResponse.class);
-        List<AliyunEchartModel> avageList = new ArrayList<>();
+        List<EChartModel> avageList = new ArrayList<>();
         for (AliyunBlsResponse item : list) {
-            AliyunEchartModel model = new AliyunEchartModel();
+            EChartModel model = new EChartModel();
             Date dt = new Date(item.timestamp);
             model.name = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(dt);
             List<String> timelist = new ArrayList<>();
