@@ -139,7 +139,7 @@
                             smooth: true,
                             showSymbol: false,
                             hoverAnimation: false,
-                            data: data,
+                            data: data[0],
                             markLine: {
                                 data: [
                                     {type: 'average', name: '平均值'}
@@ -173,7 +173,7 @@
                                 smooth: true,
                                 showSymbol: false,
                                 hoverAnimation: false,
-                                data: data,
+                                data: data[0],
                                 markLine: {
                                     data: [
                                         {type: 'average', name: '平均值'}
