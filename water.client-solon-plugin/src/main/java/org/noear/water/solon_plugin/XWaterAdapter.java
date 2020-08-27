@@ -155,7 +155,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
         if(isDebugMode){
             WeedConfig.onException((cmd,err)->{
                 if(isWeedStyle2){
-                    System.out.println(cmd.text2());
+                    System.out.println(cmd.toSqlString());
                 }else {
                     System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                 }
@@ -167,7 +167,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
             WeedConfig.onExecuteAft(cmd -> {
                 if(isDebugMode){
                     if(isWeedStyle2){
-                        System.out.println(cmd.text2());
+                        System.out.println(cmd.toSqlString());
                     }else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                     }
