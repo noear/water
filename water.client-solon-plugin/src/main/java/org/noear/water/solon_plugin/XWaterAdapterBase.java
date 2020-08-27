@@ -10,6 +10,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.MonitorUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
@@ -27,6 +28,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     public XWaterAdapterBase(XMap args, int port) {
         service_args = args;
         service_port = port;
+
+        service_status_path = WW.path_run_status;
         service_check_path = WW.path_run_check;
         service_stop_path = WW.path_run_stop;
         msg_receiver_path = WW.path_msg_receiver;
@@ -144,17 +147,17 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         return doMessageReceive(k -> cxt.param(k));
     }
 
-    public void handle(XContext context) throws IOException {
-        String path = context.path();
+    public void handle(XContext ctx) throws IOException {
+        String path = ctx.path();
 
         String text = "";
         try {
             if (service_check_path.equals(path)) {
                 //run/check/
-                text = serviceCheck(context);
+                text = serviceCheck(ctx);
             } else if (service_stop_path.equals(path)) {
                 //run/stop/
-                String ip = IPUtils.getIP(context);
+                String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
                     stateSet(false);
                     XApp.stop();
@@ -162,15 +165,22 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 } else {
                     text = (ip + ",not is whitelist!");
                 }
+            } else if(service_status_path.equals(path)){
+                String ip = IPUtils.getIP(ctx);
+                if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
+                    text = ONode.stringify(MonitorUtils.getStatus());
+                } else {
+                    text = (ip + ",not is whitelist!");
+                }
             } else if (msg_receiver_path.equals(path)) {
                 //msg/receive
-                text = messageReceive(context);
+                text = messageReceive(ctx);
             }
         } catch (Throwable ex) {
             text = XUtil.getFullStackTrace(ex);
             ex.printStackTrace();
         }
 
-        context.output(text);
+        ctx.output(text);
     }
 }
