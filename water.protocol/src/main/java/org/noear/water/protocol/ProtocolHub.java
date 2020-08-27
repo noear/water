@@ -2,8 +2,6 @@ package org.noear.water.protocol;
 
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
-import org.noear.water.protocol.solution.LogQuerierImp;
-import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.ProtocolUtil;
 
 import java.util.HashMap;
@@ -23,7 +21,7 @@ public final class ProtocolHub {
     public static MessageLock messageLock;
     public static MessageQueue messageQueue;
 
-    public static MonitorPuller monitorPuller;
+    public static Monitoring monitorPuller;
 
     public static Heihei heihei;
 

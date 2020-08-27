@@ -7,7 +7,7 @@ import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.LogSourceDef;
-import wateradmin.dso.wrap.MonitorPullerAliyun;
+import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class WateradminApp {
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
             ProtocolHub.logQuerier = new LogQuerierImp();
 
-            ProtocolHub.monitorPuller = new MonitorPullerAliyun();
+            ProtocolHub.monitorPuller = new MonitoringAliyun();
         });
     }
 }

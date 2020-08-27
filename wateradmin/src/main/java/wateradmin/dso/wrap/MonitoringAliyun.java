@@ -1,6 +1,6 @@
 package wateradmin.dso.wrap;
 
-import org.noear.water.protocol.MonitorPuller;
+import org.noear.water.protocol.Monitoring;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.utils.TextUtils;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
@@ -14,7 +14,7 @@ import wateradmin.models.water_cfg.ConfigModel;
 
 import java.util.List;
 
-public class MonitorPullerAliyun implements MonitorPuller {
+public class MonitoringAliyun implements Monitoring {
     @Override
     public void pull(MonitorType type) throws Exception {
         switch (type) {
