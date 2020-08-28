@@ -46,12 +46,12 @@ public class SevController extends BaseController {
     }
 
     @XMapping("/service/check")
-    public String service_check(String s) throws Exception{
-        if(TextUtils.isEmpty(s)){
+    public String service_check(String s) throws Exception {
+        if (TextUtils.isEmpty(s)) {
             return null;
         }
 
-        if(s.indexOf("@") < 0 || s.indexOf(":") < 0){
+        if (s.indexOf("@") < 0 || s.indexOf(":") < 0) {
             return null;
         }
 
@@ -59,7 +59,11 @@ public class SevController extends BaseController {
 
         String url = "http://" + ca + "/run/status/";
 
-        return HttpUtils.getString(url);
+        try {
+            return HttpUtils.getString(url);
+        } catch (Throwable ex) {
+            return "The service unsupported";
+        }
     }
 
     //页面自动刷新获取表单数据
