@@ -43,11 +43,16 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String service = url.getParameter("interface");
+        String service = "hello-service";//url.getParameter("interface");
 
         if (TextUtils.isNotEmpty(service)) {
-            WaterClient.Registry.unregister(service, url.toFullString());
+
+            String address = url.toFullString();
+
+            WaterClient.Registry.unregister(service, address);
         }
+
+        System.out.println("unregister!!!");
     }
 
     public static void register(URL url) {
@@ -56,11 +61,14 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String service = url.getParameter("interface");
+        String service = "hello-service";//url.getParameter("interface");
 
         if(TextUtils.isNotEmpty(service)) {
             WaterRegistryLib.add(url);
-            WaterClient.Registry.register(service, url.toFullString(), XApp.cfg().isDriftMode());
+
+            String address = url.toFullString();
+
+            WaterClient.Registry.register(service, address, XApp.cfg().isDriftMode());
         }
     }
 }

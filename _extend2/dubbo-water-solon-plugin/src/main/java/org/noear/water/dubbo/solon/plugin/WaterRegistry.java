@@ -58,7 +58,8 @@ public class WaterRegistry implements Registry {
 
     @Override
     public List<URL> lookup(URL url) {
-        String service = url.getParameter("interface");
+        String service = "hello-service";//url.getParameter("interface");
+        String api = url.getParameter("interface");
 
         DiscoverM discoverM = WaterClient.Registry.discover(service, "", "");
 
@@ -66,7 +67,9 @@ public class WaterRegistry implements Registry {
 
         if(discoverM != null) {
             discoverM.list.forEach(m1 -> {
-                list.add(URL.valueOf(m1.address));
+                if(m1.address.indexOf(api) > 0) {
+                    list.add(URL.valueOf(m1.address));
+                }
             });
         }
 
