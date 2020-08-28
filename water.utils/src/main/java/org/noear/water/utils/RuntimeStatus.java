@@ -47,10 +47,7 @@ public class RuntimeStatus {
      */
     public long memoryTotal;
 
-    /**
-     * 空闲内存
-     */
-    public long memoryFree;
+    public long memoryUsed;
 
 
     public List<Map<String,Object>> memoryPools = new ArrayList<>();

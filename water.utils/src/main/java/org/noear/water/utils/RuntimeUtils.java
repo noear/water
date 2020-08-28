@@ -13,8 +13,8 @@ public class RuntimeUtils {
 
         Runtime runtime = Runtime.getRuntime();
 
-        status.memoryFree = (byteToM(runtime.freeMemory()));
         status.memoryTotal = (byteToM(runtime.totalMemory()));
+        status.memoryUsed = (byteToM(runtime.totalMemory() - runtime.freeMemory()));
 
 
         List<Map<String,Object>> memoryPools = new ArrayList<>();
