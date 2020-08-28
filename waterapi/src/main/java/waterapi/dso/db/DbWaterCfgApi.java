@@ -42,6 +42,7 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getConfigByTag(String tag) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
+                .andEq("is_enabled",1)
                 .select("*")
 //                .caching(CacheUtil.data)
 //                .usingCache(5)
@@ -56,6 +57,7 @@ public class DbWaterCfgApi {
         try {
             return db().table("water_cfg_properties")
                     .where("tag=? AND `key`=?", tag, key)
+                    .andEq("is_enabled",1)
                     .select("*")
                     .caching(CacheUtils.data)
                     .getItem(new ConfigModel());
@@ -87,6 +89,7 @@ public class DbWaterCfgApi {
     public static ConfigModel getConfigNoCache(String tag, String key) throws SQLException {
         return db().table("water_cfg_properties")
                 .where("tag=? AND `key`=?", tag, key)
+                .andEq("is_enabled",1)
                 .select("*")
                 .getItem(new ConfigModel());
     }
@@ -97,6 +100,7 @@ public class DbWaterCfgApi {
         return Config.water.table("water_cfg_whitelist")
                 .whereEq("type","mobile")
                 .andEq("tag","_alarm")
+                .andEq("is_enabled",1)
                 .andNeq("value","")
                 .select("value ")
                 .caching(CacheUtils.data)
@@ -119,6 +123,7 @@ public class DbWaterCfgApi {
         _whitelist = db().table("water_cfg_whitelist")
                 .whereEq("type","ip")
                 .andEq("tag","server")
+                .andEq("is_enabled",1)
                 .select("value")
                 .caching(CacheUtils.data).usingCache(60)
                 .getArray("value");
@@ -133,6 +138,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_whitelist")
                 .whereEq("type", type)
                 .andEq("value", value)
+                .andEq("is_enabled",1)
                 .build((tb)->{
                     if(tags.length()  > 0){
                         if(tags.indexOf(",") < 0){
@@ -165,6 +171,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_properties")
                     .whereEq("tag", "_gateway")
                     .andEq("key", name)
+                    .andEq("is_enabled",1)
                     .exists();
         }catch (Exception ex){
             return false;

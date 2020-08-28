@@ -16,6 +16,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_whitelist")
                 .whereEq("tag", "_alarm")
                 .andEq("type", "mobile")
+                .andEq("is_enabled",1)
                 .andNeq("value", "")
                 .select("value ")
                 .caching(Config.cache_data)
