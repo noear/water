@@ -34,31 +34,12 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void register(URL url) {
-        if("consumer".equals(url.getProtocol())){
-            return;
-        }
-
-        url = url.removeParameter("timestamp");
-        String service = url.getParameter("interface");
-
-        if(TextUtils.isNotEmpty(service)) {
-            WaterRegistryLib.add(url);
-            WaterClient.Registry.register(service, url.toFullString(), false);
-        }
+        WaterRegistryLib.register(url);
     }
 
     @Override
     public void unregister(URL url) {
-        if("consumer".equals(url.getProtocol())){
-            return;
-        }
-
-        url = url.removeParameter("timestamp");
-        String service = url.getParameter("interface");
-
-        if(TextUtils.isNotEmpty(service)) {
-            WaterClient.Registry.unregister(service, url.toFullString());
-        }
+        WaterRegistryLib.unregister(url);
     }
 
     @Override

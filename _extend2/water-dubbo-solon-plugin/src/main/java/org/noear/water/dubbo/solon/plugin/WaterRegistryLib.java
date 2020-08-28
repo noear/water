@@ -1,6 +1,7 @@
 package org.noear.water.dubbo.solon.plugin;
 
 import org.apache.dubbo.common.URL;
+import org.noear.solon.XApp;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TaskUtils;
 import org.noear.water.utils.TextUtils;
@@ -31,12 +32,12 @@ public class WaterRegistryLib {
             }
 
             for (URL url : cached) {
-                registerDo(url);
+                register(url);
             }
         });
     }
 
-    private static void unregisterDo(URL url) {
+    public static void unregister(URL url) {
         if ("consumer".equals(url.getProtocol())) {
             return;
         }
@@ -49,7 +50,7 @@ public class WaterRegistryLib {
         }
     }
 
-    private static void registerDo(URL url) {
+    public static void register(URL url) {
         if("consumer".equals(url.getProtocol())){
             return;
         }
@@ -59,7 +60,7 @@ public class WaterRegistryLib {
 
         if(TextUtils.isNotEmpty(service)) {
             WaterRegistryLib.add(url);
-            WaterClient.Registry.register(service, url.toFullString(), false);
+            WaterClient.Registry.register(service, url.toFullString(), XApp.cfg().isDriftMode());
         }
     }
 }
