@@ -8,10 +8,10 @@ import org.noear.water.demo_dubbo.service.UserService;
 
 @XController
 public class HelloConsume {
-    @Reference
+    @Reference(application = "hello-provider", group = "xxx")
     HelloService helloService;
 
-    @Reference
+    @Reference(application = "hello-provider")
     UserService userService;
 
     @XMapping("/")

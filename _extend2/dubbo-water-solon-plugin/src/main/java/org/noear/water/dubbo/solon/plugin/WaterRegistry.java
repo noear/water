@@ -44,32 +44,33 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void subscribe(URL url, NotifyListener listener) {
-        if("consumer".equals(url.getProtocol())){
+        if ("consumer".equals(url.getProtocol())) {
             listener.notify(lookup(url));
         }
     }
 
     @Override
     public void unsubscribe(URL url, NotifyListener listener) {
-        if("consumer".equals(url.getProtocol())){
+        if ("consumer".equals(url.getProtocol())) {
             listener.notify(lookup(url));
         }
     }
 
     @Override
     public List<URL> lookup(URL url) {
+        String group = url.getParameter("group","");
         String service = url.getParameter("interface");
-        String api = url.getParameter("interface");
 
-        DiscoverM discoverM = WaterClient.Registry.discover(service, "", "");
+        String consumer = WaterClient.localService();
+        String consumer_address = WaterClient.localHost();
+
+        DiscoverM discoverM = WaterClient.Registry.discover(group + ":" + service, consumer, consumer_address);
 
         List<URL> list = new ArrayList<>();
 
-        if(discoverM != null) {
+        if (discoverM != null) {
             discoverM.list.forEach(m1 -> {
-                if(m1.address.indexOf(api) > 0) {
-                    list.add(URL.valueOf(m1.address));
-                }
+                list.add(URL.valueOf(m1.address));
             });
         }
 

@@ -22,7 +22,8 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water.client</artifactId>
+            <artifactId>water.client-solon-plugin</artifactId>
+            <version>${water.ver}</version>
         </dependency>
 
         <dependency>
