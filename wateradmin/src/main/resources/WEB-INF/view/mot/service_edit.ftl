@@ -72,15 +72,15 @@
             <table>
                 <tr>
                 <tr>
-                    <td>名称</td>
+                    <th>名称</th>
                     <td><input type="text" autofocus id="name" value="${model.name!}"/><n>（name | web:name）</n></td>
                 </tr>
                 <tr>
-                    <td>地址</td>
+                    <th>地址</th>
                     <td><input type="text" id="address" value="${model.address!}" /><n>（ip | ip:port | x://host）</n></td>
                 </tr>
                 <tr>
-                    <td>检查类型</td>
+                    <th>检查类型</th>
                     <td><select id="check_type">
                             <option value="0" selected="selected">被动检查</option>
                             <option value="1">主动签到</option>
@@ -91,11 +91,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>检查路径</td>
+                    <th>检查路径</th>
                     <td><input  type="text" id="check_url" value="${model.check_url!'/'}" /><n>（/x）</n></td>
                 </tr>
                 <tr>
-                    <td>启动备注</td>
+                    <th>启动备注</th>
                     <td><input type="text" id="note" value="${model.note!}" class="longtxt"/></td>
                 </tr>
             </table>
