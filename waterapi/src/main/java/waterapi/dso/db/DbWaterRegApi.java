@@ -28,20 +28,21 @@ public final class DbWaterRegApi {
     }
 
     //添加服务（key）
-    public static void addService(String service, String address, String check_url, int check_type, boolean is_unstable) throws SQLException{
-        addService(service,address,"","",check_url,check_type, is_unstable);
+    public static void addService(String service, String address, String check_url, int check_type, boolean is_unstable) throws SQLException {
+        addService(service, address, "", "", check_url, check_type, is_unstable);
     }
-    public static void addService(String service, String address, String note, String alarm_mobile ,String check_url, int check_type, boolean is_unstable) throws SQLException {
-        if(note == null) {
+
+    public static void addService(String service, String address, String note, String alarm_mobile, String check_url, int check_type, boolean is_unstable) throws SQLException {
+        if (note == null) {
             note = "";
         }
 
-        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
+        String key = serviceMd5(service, address, note);
 
         boolean isOk = db().table("water_reg_service").usingExpr(true)
                 .set("note", note)
                 .set("alarm_mobile", alarm_mobile)
-                .set("is_unstable",(is_unstable?1:0))
+                .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("check_url", check_url)
                 .set("check_type", check_type)
                 .set("check_last_state", 0)
@@ -58,7 +59,7 @@ public final class DbWaterRegApi {
                     .set("address", address)
                     .set("note", note)
                     .set("alarm_mobile", alarm_mobile)
-                    .set("is_unstable",(is_unstable?1:0))
+                    .set("is_unstable", (is_unstable ? 1 : 0))
                     .set("check_url", check_url)
                     .set("check_type", check_type)
                     .set("check_last_state", 0)
@@ -76,7 +77,7 @@ public final class DbWaterRegApi {
     }
 
     public static boolean delService(String service, String address, String note) throws SQLException {
-        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
+        String key = serviceMd5(service, address, note);
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
@@ -92,8 +93,8 @@ public final class DbWaterRegApi {
         return isOk;
     }
 
-    public static boolean disableService(String service, String address,String note, boolean is_enabled) throws SQLException {
-        String key = EncryptUtils.md5(service + "#" + address + "#" + note);
+    public static boolean disableService(String service, String address, String note, boolean is_enabled) throws SQLException {
+        String key = serviceMd5(service, address, note);
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
@@ -111,7 +112,7 @@ public final class DbWaterRegApi {
     }
 
 
-    public static void logConsume(String service,String consumer,String consumer_address) {
+    public static void logConsume(String service, String consumer, String consumer_address) {
         try {
             db().table("water_reg_consumer")
                     .usingExpr(true)
@@ -121,9 +122,17 @@ public final class DbWaterRegApi {
                     .set("consumer_ip", IPUtils.getIP(XContext.current()))
                     .set("chk_fulltime", "$NOW()")
                     .upsertBy("service,consumer_address");
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtils.error(XContext.current(),ex);
+            LogUtils.error(XContext.current(), ex);
+        }
+    }
+
+    public static String serviceMd5(String service, String address, String note) {
+        if (address.length() < 100) {
+            return EncryptUtils.md5(service + "#" + address + "#" + note);
+        } else {
+            return EncryptUtils.md5(service + "#" + address.substring(0, 100) + "#" + note);
         }
     }
 }

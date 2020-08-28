@@ -20,30 +20,38 @@ public class CMD_sev_discover extends CMDBase {
         String consumer_address = get("consumer_address", "");
         String service = get("service", "");
 
-        if (checkParamsIsOk(service, consumer, consumer_address) == false) {
+        if (checkParamsIsOk(service) == false) {
             return;
         }
 
-        DbWaterRegApi.logConsume(service, consumer, consumer_address);
+        if(TextUtils.isNotEmpty(consumer)) {
+            DbWaterRegApi.logConsume(service, consumer, consumer_address);
+        }
 
         List<ServiceModel> list = DbWaterRegApi.getServiceList(service);
 
         ConfigModel cfg = DbWaterCfgApi.getConfigNoCache("_gateway", service);
+        String url = null;
+        String policy = null;
 
-        if(cfg.is_enabled == false){
-            data.set("code", 0);
-            data.set("msg", "No gateway is available");
-            return;
-        }
-
-
-        ONode prop = cfg.getNode();
-
-        String url = prop.get("url").getString();
-        String policy = prop.get("policy").getString();
-
-        if(TextUtils.isEmpty(policy)){
+        if(TextUtils.isEmpty(cfg.value)){
+            url = "";
             policy = "default";
+        }else {
+            if (cfg.is_enabled == false) {
+                data.set("code", 0);
+                data.set("msg", "No gateway is available");
+                return;
+            }
+
+            ONode prop = cfg.getNode();
+
+            url = prop.get("url").getString();
+            policy = prop.get("policy").getString();
+
+            if (TextUtils.isEmpty(policy)) {
+                policy = "default";
+            }
         }
 
 

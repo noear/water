@@ -5,6 +5,7 @@ import org.apache.dubbo.registry.NotifyListener;
 import org.apache.dubbo.registry.Registry;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
+import org.noear.water.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,20 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void register(URL url) {
-        WaterClient.Registry.register("dubbo", url.getAddress(), false);
+        String service = url.getParameter("application");
+
+        if(TextUtils.isNotEmpty(service)) {
+            WaterClient.Registry.register(service, url.toFullString(), false);
+        }
     }
 
     @Override
     public void unregister(URL url) {
-        WaterClient.Registry.unregister("dubbo", url.getAddress());
+        String service = url.getParameter("application");
+
+        if(TextUtils.isNotEmpty(service)) {
+            WaterClient.Registry.unregister(service, url.toFullString());
+        }
     }
 
     @Override
@@ -53,13 +62,17 @@ public class WaterRegistry implements Registry {
 
     @Override
     public List<URL> lookup(URL url) {
-        DiscoverM discoverM = WaterClient.Registry.discover("", "", "");
+        String service = url.getParameter("application");
+
+        DiscoverM discoverM = WaterClient.Registry.discover(service, "", "");
 
         List<URL> list = new ArrayList<>();
 
-        discoverM.list.forEach(m1 -> {
-            list.add(URL.valueOf(m1.address));
-        });
+        if(discoverM != null) {
+            discoverM.list.forEach(m1 -> {
+                list.add(URL.valueOf(m1.address));
+            });
+        }
 
         return list;
     }

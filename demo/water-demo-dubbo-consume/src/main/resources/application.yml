@@ -1,0 +1,17 @@
+
+
+water:
+  host: "http://water2"
+  service:
+    name: "water-demo-dubbo"
+    secretKey: "NJ8f6usfroGRi7iR"
+
+dubbo:
+  application:
+    name: hello-consume
+    owner: noear
+  registry:
+    address: water://water2
+  protocol:
+    name: dubbo
+    port: 20880

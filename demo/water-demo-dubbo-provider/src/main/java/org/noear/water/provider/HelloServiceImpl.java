@@ -1,0 +1,13 @@
+package org.noear.water.provider;
+
+import org.apache.dubbo.config.annotation.Service;
+import org.noear.water.demo_dubbo.service.HelloService;
+
+@Service
+public class HelloServiceImpl implements HelloService {
+    @Override
+    public String sayHello(String name) {
+        System.out.println("from client ：" + name);
+        return "hello, " + name;
+    }
+}

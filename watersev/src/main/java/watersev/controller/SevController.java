@@ -130,6 +130,10 @@ public final class SevController implements IJob {
             }
         }
 
+        if(url.startsWith("http") ==false){
+            return;
+        }
+
         try {
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
