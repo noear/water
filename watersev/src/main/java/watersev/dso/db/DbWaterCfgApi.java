@@ -28,6 +28,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_properties")
                     .whereEq("tag", "_gateway")
                     .andEq("key", name)
+                    .andEq("is_enabled",1)
                     .exists();
         }catch (Exception ex){
             return false;
