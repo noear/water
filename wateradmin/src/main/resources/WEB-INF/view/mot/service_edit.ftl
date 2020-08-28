@@ -6,23 +6,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
-    <script src="${js}/lib.js"></script>
+    <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
-    <script src="https://static.kdz6.cn/lib/vue.min.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
     </style>
 
     <script>
-        var viewModel = ${data};
-
         function saveEdit() {
-            if(!viewModel.name){
+            var vm = formToMap('form');
+
+            if(!vm.name){
                 top.layer.msg("名字不能为空！");
                 return;
             }
 
-            if(!viewModel.address){
+            if(!vm.address){
                 top.layer.msg("地址不能为空！");
                 return;
             }
@@ -33,13 +32,13 @@
                 $.ajax({
                     type:"POST",
                     url:"/mot/service/edit/ajax/save",
-                    data:viewModel,
+                    data:vm,
                     success:function (data) {
                         if(data.code==1) {
                             top.layer.msg(data.msg);
                             setTimeout(function(){
                                 location.href="/mot/service";
-                            },1000);
+                            },800);
                         }else{
                             top.layer.msg(data.msg);
                         }
@@ -49,56 +48,59 @@
         }
 
         $(function () {
-            window.vue = new Vue({
-                el:'#view',
-                data: viewModel
-            });
+            ctl_s_save_bind(document,save);
         })
     </script>
 </head>
 <body>
 <main>
 
-    <blockquote>
-        <h2><a href="#" onclick="javascript:history.back(-1);" class="t2">服务状态</a> / 添加</h2>
-    </blockquote>
+    <toolbar class="blockquote">
+        <left>
+            <h2 class="ln30"><a href="#" onclick="history.back(-1)" class="noline">服务状态</a></h2> / 添加
+        </left>
+        <right class="form">
+            <#if is_admin == 1>
+                <n>ctrl + s 可快捷保存</n>
+                <button type="button" class="w80" onclick="saveEdit()">保存</button>
+            </#if>
+        </right>
+    </toolbar>
 
-        <detail>
-            <form>
-                <table id="view">
-                    <tr>
-                    <tr>
-                        <td>名称</td>
-                        <td><input type="text" autofocus v-model="name"/></td>
-                    </tr>
-                    <tr>
-                        <td>地址</td>
-                        <td><input type="text" v-model="address"/><note>（ip | ip:port | x://host）</note></td>
-                    </tr>
-                    <tr>
-                        <td>检查类型</td>
-                        <td><select v-model="check_type" >
+    <detail>
+        <form>
+            <table>
+                <tr>
+                <tr>
+                    <td>名称</td>
+                    <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
+                </tr>
+                <tr>
+                    <td>地址</td>
+                    <td><input type="text" id="address" value="${model.address!}" /><note>（ip | ip:port | x://host）</note></td>
+                </tr>
+                <tr>
+                    <td>检查类型</td>
+                    <td><select id="check_type">
                             <option value="0" selected="selected">被动检查</option>
                             <option value="1">主动签到</option>
                         </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>检查路径</td>
-                        <td><input  type="text" v-model="check_url"/></td>
-                    </tr>
-                    <tr>
-                        <td>启动备注</td>
-                        <td><input type="text" v-model="note" class="longtxt"/></td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td><button type="button" onclick="saveEdit()">保存</button></td>
-                    </tr>
-                </table>
-            </form>
-        </detail>
+                        <script>
+                            $('#check_type').val("${model.check_type!0}");
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>检查路径</td>
+                    <td><input  type="text" id="check_url" value="${model.check_url!}" /></td>
+                </tr>
+                <tr>
+                    <td>启动备注</td>
+                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/></td>
+                </tr>
+            </table>
+        </form>
+    </detail>
 
 </main>
 

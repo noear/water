@@ -124,13 +124,12 @@ public class SevController extends BaseController {
     //服务状态
     @XMapping("/service/edit")
     public ModelAndView service_edit(Integer service_id) throws SQLException {
+        ServiceModel model = new ServiceModel();
         if(service_id!=null) {
-            ServiceModel m = DbWaterRegApi.getServiceById(service_id);
-            viewModel.put("data", ONode.load(m).toJson());
-        }else{
-            viewModel.put("data", ONode.load(new ServiceModel()).toJson());
+            model = DbWaterRegApi.getServiceById(service_id);
         }
 
+        viewModel.put("model", model);
         viewModel.put("service_id",service_id);
 
         return view("mot/service_edit");
