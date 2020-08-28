@@ -12,6 +12,3 @@ dubbo:
     owner: noear
   registry:
     address: water://water2
-  protocol:
-    name: dubbo
-    port: 20880

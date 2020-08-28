@@ -1,4 +1,4 @@
-server.prot: 8011
+server.port: 8011
 
 water:
   host: "http://water2"

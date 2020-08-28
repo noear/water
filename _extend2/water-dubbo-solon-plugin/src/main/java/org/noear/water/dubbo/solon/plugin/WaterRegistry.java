@@ -34,7 +34,13 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void register(URL url) {
-        String service = url.getParameter("application");
+        if("consumer".equals(url.getProtocol())){
+            return;
+        }
+
+        url.removeParameter("timestamp");
+
+        String service = url.getParameter("interface");
 
         if(TextUtils.isNotEmpty(service)) {
             WaterClient.Registry.register(service, url.toFullString(), false);
@@ -43,7 +49,12 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void unregister(URL url) {
-        String service = url.getParameter("application");
+        if("consumer".equals(url.getProtocol())){
+            return;
+        }
+
+        url.removeParameter("timestamp");
+        String service = url.getParameter("interface");
 
         if(TextUtils.isNotEmpty(service)) {
             WaterClient.Registry.unregister(service, url.toFullString());
@@ -52,17 +63,21 @@ public class WaterRegistry implements Registry {
 
     @Override
     public void subscribe(URL url, NotifyListener listener) {
-        listener.notify(lookup(url));
+        if("consumer".equals(url.getProtocol())){
+            listener.notify(lookup(url));
+        }
     }
 
     @Override
     public void unsubscribe(URL url, NotifyListener listener) {
-
+        if("consumer".equals(url.getProtocol())){
+            listener.notify(lookup(url));
+        }
     }
 
     @Override
     public List<URL> lookup(URL url) {
-        String service = url.getParameter("application");
+        String service = url.getParameter("interface");
 
         DiscoverM discoverM = WaterClient.Registry.discover(service, "", "");
 
