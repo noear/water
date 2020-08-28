@@ -16,16 +16,21 @@ public class RuntimeUtils {
 
         status.memoryFree = (byteToM(runtime.freeMemory()));
         status.memoryTotal = (byteToM(runtime.totalMemory()));
-        status.memoryMax = (byteToM(runtime.maxMemory()));
 
-        status.timeStart = new Datetime(runtimeMXBean.getStartTime()).toString();
         status.timeElapsed = (runtimeMXBean.getUptime());
 
+        status.threadCount = (threadMXBean.getThreadCount());
+
         if(status.pid == null) {
+            //这些只需要取一次
+            //
+            status.memoryMax = (byteToM(runtime.maxMemory()));
+
+            status.timeStart = new Datetime(runtimeMXBean.getStartTime()).toString();
+
             status.pid = runtimeMXBean.getName();
             status.os = (System.getProperty("os.name"));
         }
-        status.threadCount = (threadMXBean.getThreadCount());
 
 
         return status;
