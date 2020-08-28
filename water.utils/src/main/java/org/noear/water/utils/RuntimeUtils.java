@@ -26,9 +26,9 @@ public class RuntimeUtils {
                 Map<String, Object> map = new LinkedHashMap<>();
 
                 map.put("name", pool.getName());
-                map.put("init", usage.getInit());
-                map.put("max", usage.getMax());
-                map.put("used", usage.getUsed());
+                map.put("init", byteToM(usage.getInit()));
+                map.put("max", byteToM(usage.getMax()));
+                map.put("used", byteToM(usage.getUsed()));
 
                 memoryPools.add(map);
             }
