@@ -48,7 +48,7 @@
         }
 
         $(function () {
-            ctl_s_save_bind(document,save);
+            ctl_s_save_bind(document,saveEdit);
         })
     </script>
 </head>
