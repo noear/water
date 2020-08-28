@@ -8,9 +8,6 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
-    <style>
-        datagrid b{color: #8D8D8D;font-weight: normal}
-    </style>
 
     <script>
         function saveEdit() {
@@ -35,7 +32,7 @@
                     data:vm,
                     success:function (data) {
                         if(data.code==1) {
-                            top.layer.msg(data.msg);
+                            top.layer.msg('操作成功');
                             setTimeout(function(){
                                 location.href="/mot/service";
                             },800);
