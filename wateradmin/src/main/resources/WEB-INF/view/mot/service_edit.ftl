@@ -73,11 +73,11 @@
                 <tr>
                 <tr>
                     <td>名称</td>
-                    <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
+                    <td><input type="text" autofocus id="name" value="${model.name!}"/><n>（name | web:name）</n></td>
                 </tr>
                 <tr>
                     <td>地址</td>
-                    <td><input type="text" id="address" value="${model.address!}" /><note>（ip | ip:port | x://host）</note></td>
+                    <td><input type="text" id="address" value="${model.address!}" /><n>（ip | ip:port | x://host）</n></td>
                 </tr>
                 <tr>
                     <td>检查类型</td>
@@ -96,7 +96,7 @@
                 </tr>
                 <tr>
                     <td>启动备注</td>
-                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/></td>
+                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/><n>（/x）</n></td>
                 </tr>
             </table>
         </form>
