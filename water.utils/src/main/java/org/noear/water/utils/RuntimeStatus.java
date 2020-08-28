@@ -1,35 +1,10 @@
 package org.noear.water.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class RuntimeStatus {
-    /**
-     * java虚拟机允许开启的最大的内存
-     */
-    public long memoryMax;
-
-    /**
-     * 内存总量
-     */
-    public long memoryTotal;
-
-    /**
-     * 空闲内存
-     */
-    public long memoryFree;
-
-
-    /**
-     * 老生代
-     * */
-    public long memoryOldGenMax;
-    public long memoryOldGenUsed;
-    /**
-     * 新生代
-     * */
-    public long memoryPermGenMax;
-    public long memoryPermGenUsed;
-
-
-
     /**
      * 程序启动时间
      */
@@ -59,4 +34,26 @@ public class RuntimeStatus {
     public int threadPeakCount;
     //后台线程数
     public int threadDaemonCount;
+
+    /**
+     * java虚拟机允许开启的最大的内存
+     */
+    public long memoryMax;
+
+    /**
+     * 内存总量
+     */
+    public long memoryTotal;
+
+    /**
+     * 空闲内存
+     */
+    public long memoryFree;
+
+
+    public List<Map<String,Object>> memoryPools = new ArrayList<>();
+
+
+
+
 }

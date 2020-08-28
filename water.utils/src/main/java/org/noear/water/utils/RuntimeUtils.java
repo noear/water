@@ -1,6 +1,7 @@
 package org.noear.water.utils;
 
 import java.lang.management.*;
+import java.util.*;
 
 public class RuntimeUtils {
     private static RuntimeStatus status = new RuntimeStatus();
@@ -15,19 +16,25 @@ public class RuntimeUtils {
         status.memoryFree = (byteToM(runtime.freeMemory()));
         status.memoryTotal = (byteToM(runtime.totalMemory()));
 
-        final MemoryPoolMXBean oldGen = getOldGenMemoryPool();
-        if(oldGen != null) {
-            final MemoryUsage usage = oldGen.getUsage();
-            status.memoryOldGenMax = (byteToM(usage.getMax()));
-            status.memoryOldGenUsed = (byteToM(usage.getUsed()));
+
+        List<Map<String,Object>> memoryPools = new ArrayList<>();
+
+        List<MemoryPoolMXBean> pools = ManagementFactory.getMemoryPoolMXBeans();
+        if(pools != null && !pools.isEmpty()) {
+            for (final MemoryPoolMXBean pool : pools) {
+                MemoryUsage usage = pool.getUsage();
+                Map<String, Object> map = new LinkedHashMap<>();
+
+                map.put("name", pool.getName());
+                map.put("init", usage.getInit());
+                map.put("max", usage.getMax());
+                map.put("used", usage.getUsed());
+
+                memoryPools.add(map);
+            }
         }
 
-        final MemoryPoolMXBean permGen = getPermGenMemoryPool();
-        if(permGen != null) {
-            final MemoryUsage usage = permGen.getUsage();
-            status.memoryPermGenMax = (byteToM(usage.getMax()));
-            status.memoryPermGenUsed = (byteToM(usage.getUsed()));
-        }
+        status.memoryPools = memoryPools;
 
 
         status.timeElapsed = (runtimeMXBean.getUptime());
@@ -54,32 +61,5 @@ public class RuntimeUtils {
     public static long byteToM(long bytes) {
         long kb = (bytes / 1024 / 1024);
         return kb;
-    }
-
-    private static MemoryPoolMXBean getEdenSpacePool() {
-        for (final MemoryPoolMXBean memoryPool : ManagementFactory.getMemoryPoolMXBeans()) {
-            if (memoryPool.getName().endsWith("Eden Space")) {
-                return memoryPool;
-            }
-        }
-        return null;
-    }
-
-    private static MemoryPoolMXBean getOldGenMemoryPool() {
-        for (final MemoryPoolMXBean memoryPool : ManagementFactory.getMemoryPoolMXBeans()) {
-            if (memoryPool.getName().endsWith("Old Gen")) {
-                return memoryPool;
-            }
-        }
-        return null;
-    }
-
-    private static MemoryPoolMXBean getPermGenMemoryPool() {
-        for (final MemoryPoolMXBean memoryPool : ManagementFactory.getMemoryPoolMXBeans()) {
-            if (memoryPool.getName().endsWith("Perm Gen")) {
-                return memoryPool;
-            }
-        }
-        return null;
     }
 }
