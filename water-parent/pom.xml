@@ -351,6 +351,6 @@
         <module>../water.client-solon-plugin</module>
 
 
-        <module>../_extend2/water-dubbo-solon-plugin</module>
+        <module>../_extend2/dubbo-water-solon-plugin</module>
     </modules>
 </project>
