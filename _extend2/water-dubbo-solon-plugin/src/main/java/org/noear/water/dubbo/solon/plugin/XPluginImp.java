@@ -6,12 +6,12 @@ import org.noear.solon.core.XPlugin;
 public class XPluginImp implements XPlugin {
     @Override
     public void start(XApp app) {
-
+        WaterRegistryLib.start();
     }
 
     @Override
     public void stop() throws Throwable {
-        WaterRegistryLib.unregister();
+        WaterRegistryLib.stop();
         System.out.println("Water-dubbo-solon-plugin stop");
     }
 }

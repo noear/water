@@ -10,4 +10,14 @@ public class HelloServiceImpl implements HelloService {
         System.out.println("from client ：" + name);
         return "hello, " + name;
     }
+
+    @Override
+    public String sayHello2(String name) {
+        return "hello2, " + name;
+    }
+
+    @Override
+    public String sayHello3(String name) {
+        return "hello3, " + name;
+    }
 }
