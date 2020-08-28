@@ -53,8 +53,8 @@ public class RuntimeUtils {
             status.pid = runtimeMXBean.getName();
             status.os = (System.getProperty("os.name"));
             status.vm = (System.getProperty("java.vm.vendor")
-                    + " - " + System.getProperty("java.vm.name")
-                    + " - " + System.getProperty("java.vm.version"));
+                    + " / " + System.getProperty("java.vm.name")
+                    + " / " + System.getProperty("java.vm.version"));
         }
 
 
