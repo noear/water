@@ -18,6 +18,19 @@ public class RuntimeStatus {
 
 
     /**
+     * 老生代
+     * */
+    public long memoryOldGenMax;
+    public long memoryOldGenUsed;
+    /**
+     * 新生代
+     * */
+    public long memoryPermGenMax;
+    public long memoryPermGenUsed;
+
+
+
+    /**
      * 程序启动时间
      */
     public String timeStart;
@@ -37,8 +50,13 @@ public class RuntimeStatus {
      */
     public String pid;
 
+
     /**
      * 线程总量
      */
     public int threadCount;
+    //高峰线程数
+    public int threadPeakCount;
+    //后台线程数
+    public int threadDaemonCount;
 }
