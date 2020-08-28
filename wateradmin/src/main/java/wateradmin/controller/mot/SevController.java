@@ -48,11 +48,11 @@ public class SevController extends BaseController {
     @XMapping("/service/check")
     public String service_check(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
-            return null;
+            return "Not supported";
         }
 
         if (s.indexOf("@") < 0 || s.indexOf(":") < 0) {
-            return null;
+            return "Not supported";
         }
 
         String ca = s.split("@")[1];
