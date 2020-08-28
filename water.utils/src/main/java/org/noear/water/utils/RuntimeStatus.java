@@ -20,6 +20,8 @@ public class RuntimeStatus {
      */
     public String os;
 
+    public String vm;
+
     /**
      * 进程号
      */

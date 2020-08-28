@@ -26,8 +26,8 @@ public class RuntimeUtils {
                 Map<String, Object> map = new LinkedHashMap<>();
 
                 map.put("name", pool.getName());
-                map.put("init", byteToM(usage.getInit()));
                 map.put("max", byteToM(usage.getMax()));
+                map.put("init", byteToM(usage.getInit()));
                 map.put("used", byteToM(usage.getUsed()));
 
                 memoryPools.add(map);
@@ -52,6 +52,9 @@ public class RuntimeUtils {
 
             status.pid = runtimeMXBean.getName();
             status.os = (System.getProperty("os.name"));
+            status.vm = (System.getProperty("java.vm.vendor")
+                    + " - " + System.getProperty("java.vm.name")
+                    + " - " + System.getProperty("java.vm.version"));
         }
 
 
