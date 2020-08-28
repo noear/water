@@ -35,7 +35,7 @@ public class RuntimeStatus {
     /**
      * 进程号
      */
-    public long pid;
+    public String pid;
 
     /**
      * 线程总量

@@ -21,7 +21,7 @@ public class RuntimeUtils {
         status.timeStart = new Datetime(runtimeMXBean.getStartTime()).toString();
         status.timeElapsed = (runtimeMXBean.getUptime());
 
-        status.pid = getPid();
+        status.pid = runtimeMXBean.getName();
         status.os = (System.getProperty("os.name"));
         status.threadCount = (threadMXBean.getThreadCount());
 
@@ -32,15 +32,5 @@ public class RuntimeUtils {
     public static long byteToM(long bytes) {
         long kb = (bytes / 1024 / 1024);
         return kb;
-    }
-
-    public static long getPid() {
-        try {
-            String name = ManagementFactory.getRuntimeMXBean().getName();
-            String pid = name.split("@")[0];
-            return Long.parseLong(pid);
-        } catch (Throwable e) {
-            return 0;
-        }
     }
 }
