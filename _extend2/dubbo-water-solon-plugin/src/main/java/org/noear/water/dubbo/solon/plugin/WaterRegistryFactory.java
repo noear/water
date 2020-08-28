@@ -8,6 +8,7 @@ import org.apache.dubbo.registry.support.AbstractRegistryFactory;
 public class WaterRegistryFactory extends AbstractRegistryFactory {
     @Override
     protected Registry createRegistry(URL url) {
+
         return new WaterRegistry(url);
     }
 }
