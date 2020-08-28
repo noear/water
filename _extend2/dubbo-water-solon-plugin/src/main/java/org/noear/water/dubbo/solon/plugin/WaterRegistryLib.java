@@ -25,9 +25,9 @@ public class WaterRegistryLib {
 //        }
     }
 
-    public static void start(){
-        TaskUtils.run(1000 * 4,()->{
-            if(is_closed){
+    public static void start() {
+        TaskUtils.run(1000 * 4, () -> {
+            if (is_closed) {
                 return;
             }
 
@@ -43,32 +43,28 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String service = "hello-service";//url.getParameter("interface");
+        String service = url.getParameter("interface");
 
         if (TextUtils.isNotEmpty(service)) {
 
-            String address = url.toFullString();
-
-            WaterClient.Registry.unregister(service, address);
+            WaterClient.Registry.unregister(service, url.toFullString());
         }
 
         System.out.println("unregister!!!");
     }
 
     public static void register(URL url) {
-        if("consumer".equals(url.getProtocol())){
+        if ("consumer".equals(url.getProtocol())) {
             return;
         }
 
         url = url.removeParameter("timestamp");
-        String service = "hello-service";//url.getParameter("interface");
+        String service = url.getParameter("interface");
 
-        if(TextUtils.isNotEmpty(service)) {
+        if (TextUtils.isNotEmpty(service)) {
             WaterRegistryLib.add(url);
 
-            String address = url.toFullString();
-
-            WaterClient.Registry.register(service, address, XApp.cfg().isDriftMode());
+            WaterClient.Registry.register(service, url.toFullString(), XApp.cfg().isDriftMode());
         }
     }
 }

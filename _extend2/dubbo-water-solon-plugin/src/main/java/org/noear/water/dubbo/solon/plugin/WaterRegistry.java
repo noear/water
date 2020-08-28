@@ -58,7 +58,7 @@ public class WaterRegistry implements Registry {
 
     @Override
     public List<URL> lookup(URL url) {
-        String service = "hello-service";//url.getParameter("interface");
+        String service = url.getParameter("interface");
         String api = url.getParameter("interface");
 
         DiscoverM discoverM = WaterClient.Registry.discover(service, "", "");
