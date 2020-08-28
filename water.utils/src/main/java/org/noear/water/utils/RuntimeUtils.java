@@ -82,13 +82,4 @@ public class RuntimeUtils {
         }
         return null;
     }
-
-    private static MemoryPoolMXBean getSurvivorSpaceMemoryPool() {
-        for (final MemoryPoolMXBean memoryPool : ManagementFactory.getMemoryPoolMXBeans()) {
-            if (memoryPool.getName().endsWith("Survivor Space")) {
-                return memoryPool;
-            }
-        }
-        return null;
-    }
 }
