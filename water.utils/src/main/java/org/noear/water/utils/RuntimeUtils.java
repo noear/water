@@ -21,8 +21,10 @@ public class RuntimeUtils {
         status.timeStart = new Datetime(runtimeMXBean.getStartTime()).toString();
         status.timeElapsed = (runtimeMXBean.getUptime());
 
-        status.pid = runtimeMXBean.getName();
-        status.os = (System.getProperty("os.name"));
+        if(status.pid == null) {
+            status.pid = runtimeMXBean.getName();
+            status.os = (System.getProperty("os.name"));
+        }
         status.threadCount = (threadMXBean.getThreadCount());
 
 
