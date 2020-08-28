@@ -92,11 +92,11 @@
                 </tr>
                 <tr>
                     <td>检查路径</td>
-                    <td><input  type="text" id="check_url" value="${model.check_url!}" /></td>
+                    <td><input  type="text" id="check_url" value="${model.check_url!'/'}" /><n>（/x）</n></td>
                 </tr>
                 <tr>
                     <td>启动备注</td>
-                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/><n>（/x）</n></td>
+                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/></td>
                 </tr>
             </table>
         </form>
