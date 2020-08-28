@@ -8,4 +8,10 @@ public class XPluginImp implements XPlugin {
     public void start(XApp app) {
 
     }
+
+    @Override
+    public void stop() throws Throwable {
+        WaterRegistryLib.unregister();
+        System.out.println("Water-dubbo-solon-plugin stop");
+    }
 }

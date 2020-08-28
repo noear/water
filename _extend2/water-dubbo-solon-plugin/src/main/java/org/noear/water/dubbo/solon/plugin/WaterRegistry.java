@@ -38,11 +38,11 @@ public class WaterRegistry implements Registry {
             return;
         }
 
-        url.removeParameter("timestamp");
-
+        url = url.removeParameter("timestamp");
         String service = url.getParameter("interface");
 
         if(TextUtils.isNotEmpty(service)) {
+            WaterRegistryLib.add(url);
             WaterClient.Registry.register(service, url.toFullString(), false);
         }
     }
@@ -53,7 +53,7 @@ public class WaterRegistry implements Registry {
             return;
         }
 
-        url.removeParameter("timestamp");
+        url = url.removeParameter("timestamp");
         String service = url.getParameter("interface");
 
         if(TextUtils.isNotEmpty(service)) {
