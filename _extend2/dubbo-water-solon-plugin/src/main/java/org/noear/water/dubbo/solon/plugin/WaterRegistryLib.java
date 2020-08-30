@@ -43,7 +43,7 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String group = url.getParameter("group","");
+        String group = "dubbo";//url.getParameter("group","");
         String service = url.getParameter("interface");
 
         if (TextUtils.isNotEmpty(service)) {
@@ -60,7 +60,7 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String group = url.getParameter("group","");
+        String group = "dubbo";//url.getParameter("group","");
         String service = url.getParameter("interface");
 
         if (TextUtils.isNotEmpty(service)) {

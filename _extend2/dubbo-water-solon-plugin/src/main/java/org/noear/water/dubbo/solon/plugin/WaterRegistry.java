@@ -58,7 +58,7 @@ public class WaterRegistry implements Registry {
 
     @Override
     public List<URL> lookup(URL url) {
-        String group = url.getParameter("group","");
+        String group = "dubbo";//url.getParameter("group","");
         String service = url.getParameter("interface");
 
         String consumer = WaterClient.localService();

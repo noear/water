@@ -8,7 +8,7 @@ import org.noear.water.demo_dubbo.service.UserService;
 
 @XController
 public class HelloConsume {
-    @Reference
+    @Reference(group = "hello")
     HelloService helloService;
 
     @Reference
