@@ -161,7 +161,7 @@
                     <tr title="${m1.content_type!}">
                         <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
                         <td class="left break"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}' target="_blank">${m1.path!}</a>
-                            <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">只读查看</a>
+                            <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">查看</a>
 
                             <#if (m1.note!'') != ''>
                                 <n-l>${m1.note!}</n-l>
