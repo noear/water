@@ -181,7 +181,7 @@
                         <td class="op">
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
-                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">运行</a>
+                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
                         </td>
                     </tr>
                 </#list>

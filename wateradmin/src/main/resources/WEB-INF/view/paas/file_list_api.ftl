@@ -177,7 +177,7 @@
                             |
                             <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=5&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
                             |
-                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">运行</a>
+                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
                         </td>
                     </tr>
                 </#list>
