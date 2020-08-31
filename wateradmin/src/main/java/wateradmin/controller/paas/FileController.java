@@ -218,7 +218,7 @@ public class FileController extends BaseController {
     }
 
     @XMapping("{type}/code")
-    public ModelAndView code(XContext ctx, Integer file_id) throws SQLException {
+    public ModelAndView code(XContext ctx, Integer file_id, Integer readonley) throws SQLException {
         PaasFileModel file = DbPaaSApi.getFile(file_id);
 
         viewModel.put("id", file_id);
@@ -252,7 +252,11 @@ public class FileController extends BaseController {
         viewModel.put("edit_mode", edit_mode);
         viewModel.put("code64", Base64Utils.encode(file.content));
 
-        return view("paas/file_code");
+        if(readonley != null){
+            return view("paas/file_view");
+        }else{
+            return view("paas/file_code");
+        }
     }
 
     @XMapping("{type}/code/ajax/save")
