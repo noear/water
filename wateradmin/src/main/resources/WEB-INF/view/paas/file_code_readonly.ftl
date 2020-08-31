@@ -27,21 +27,10 @@
 </head>
 <body>
 <main>
-    <pre id="editor" style="height: calc(100vh - 80px);"></pre>
-
-    <flex style="margin-top: 18px;">
-        <left class="col-6">
-            <a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" target="_blank">run</a>
-        </left>
-        <right class="col-6">
-            <@versions table="paas_file" keyName="file_id" keyValue="${m1.file_id}">
-                window.editor.setValue(m.content);
-            </@versions>
-        </right>
-    </flex>
-
+    <pre id="editor" style="height: calc(100vh - 20px);"></pre>
 
     <script>
+        var base64 = new Base64();
         var code64 = "${code64}";
         var ext_tools = ace.require("ace/ext/language_tools");
 
