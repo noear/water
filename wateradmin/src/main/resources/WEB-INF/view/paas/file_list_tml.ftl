@@ -154,7 +154,7 @@
                     <td width="50">排序</td>
                     <td class="left" width="140">内容类型</td>
                     <td class="left" width="80">编辑模式</td>
-                    <td colspan="2"></td>
+                    <td width="20"></td>
                     <td width="80"></td>
                 </tr>
                 </thead>
@@ -175,13 +175,12 @@
                             ${m1.rank!0}
                         <td  class="left">${m1.content_type!}</td>
                         <td  class="left">${m1.edit_mode!}</td>
-                        <td width="20"></td>
-                        <td width="20"></td>
+                        <td width="20">${m1.staticize()?string("静","")}</td>
                         </td>
                         <td class="op">
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
-                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" target="_blank">调试</a>
+                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" target="_blank">预览</a>
                         </td>
                     </tr>
                 </#list>

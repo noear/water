@@ -152,7 +152,7 @@
                     <td>路径</td>
                     <td class="left">标记</td>
                     <td class="left" width="80">编辑模式</td>
-                    <td colspan="2"></td>
+                    <td width="20"></td>
                     <td width="120"></td>
                 </tr>
                 </thead>
@@ -169,8 +169,7 @@
                         </td>
                         <td class="left">${m1.label!}</td>
                         <td  class="left">${m1.edit_mode!}</td>
-                        <td width="20"></td>
-                        <td width="20"></td>
+                        <td width="20">${m1.staticize()?string("静","")}</td>
                         </td>
                         <td class="op">
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
