@@ -11,7 +11,7 @@ public class DiscoverM {
     //服务列表
     public final List<DiscoverTargetM> list = new ArrayList<>();
 
-    public void add(String protocol, String address, int w) {
-        list.add(new DiscoverTargetM(protocol, address, 1));
+    public void add(String protocol, String address, String meta, int w) {
+        list.add(new DiscoverTargetM(protocol, address, meta,1));
     }
 }

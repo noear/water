@@ -32,15 +32,16 @@ public final class DbWaterRegApi {
         addService(service, address, "", "", check_url, check_type, is_unstable);
     }
 
-    public static void addService(String service, String address, String note, String alarm_mobile, String check_url, int check_type, boolean is_unstable) throws SQLException {
-        if (note == null) {
-            note = "";
+    public static void addService(String service, String address, String meta, String alarm_mobile, String check_url, int check_type, boolean is_unstable) throws SQLException {
+        if (meta == null) {
+            meta = "";
         }
 
-        String key = serviceMd5(service, address, note);
+        String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service").usingExpr(true)
-                .set("note", note)
+                .set("note", meta)
+                .set("meta", meta)
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("check_url", check_url)
@@ -57,7 +58,8 @@ public final class DbWaterRegApi {
                     .set("`key`", key)
                     .set("name", service)
                     .set("address", address)
-                    .set("note", note)
+                    .set("note", meta)
+                    .set("meta", meta)
                     .set("alarm_mobile", alarm_mobile)
                     .set("is_unstable", (is_unstable ? 1 : 0))
                     .set("check_url", check_url)
@@ -76,8 +78,8 @@ public final class DbWaterRegApi {
         }
     }
 
-    public static boolean delService(String service, String address, String note) throws SQLException {
-        String key = serviceMd5(service, address, note);
+    public static boolean delService(String service, String address, String meta) throws SQLException {
+        String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
@@ -93,8 +95,8 @@ public final class DbWaterRegApi {
         return isOk;
     }
 
-    public static boolean disableService(String service, String address, String note, boolean is_enabled) throws SQLException {
-        String key = serviceMd5(service, address, note);
+    public static boolean disableService(String service, String address, String meta, boolean is_enabled) throws SQLException {
+        String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service")
                 .where("`key` = ?", key)
@@ -128,11 +130,11 @@ public final class DbWaterRegApi {
         }
     }
 
-    public static String serviceMd5(String service, String address, String note) {
+    public static String serviceMd5(String service, String address, String meta) {
         if (address.length() < 100) {
-            return EncryptUtils.md5(service + "#" + address + "#" + note);
+            return EncryptUtils.md5(service + "#" + address + "#" + meta);
         } else {
-            return EncryptUtils.md5(service + "#" + address.substring(0, 100) + "#" + note);
+            return EncryptUtils.md5(service + "#" + address.substring(0, 100) + "#" + meta);
         }
     }
 }

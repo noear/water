@@ -20,10 +20,17 @@ public class CMD_sev_unreg extends CMDBase {
             return;
         }
 
-        String note = get("note","");
+        String meta = get("meta");
+        if(meta == null){
+            meta = get("note"); //旧的
+        }
+
+        if (meta == null) {
+            meta = "";
+        }
 
 
-        DbWaterRegApi.delService(service, address, note);
+        DbWaterRegApi.delService(service, address, meta);
         data.set("code", 1);
         data.set("msg", "success");
     }

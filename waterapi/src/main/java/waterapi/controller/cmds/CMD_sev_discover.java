@@ -66,6 +66,7 @@ public class CMD_sev_discover extends CMDBase {
         rst.get("list").addAll(list, (n, m) -> {
             n.set("protocol", "http");
             n.set("address", m.address);
+            n.set("meta", m.note);
             n.set("weight", 1);
         });
     }

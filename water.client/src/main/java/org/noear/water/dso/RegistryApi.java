@@ -14,8 +14,8 @@ public class RegistryApi {
     /**
      * 注册（用于对接外部框架）
      * */
-    public void register(String service, String address, boolean is_unstable) {
-        register(service, address, "", 1, "", is_unstable);
+    public void register(String service, String address, String meta, boolean is_unstable) {
+        register(service, address, meta,"", 1, "", is_unstable);
     }
 
     /**
@@ -36,11 +36,11 @@ public class RegistryApi {
     /**
      * 注册
      * */
-    public void register(String service, String address, String note, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
-        params.put("note", note);
+        params.put("meta", meta);
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
@@ -58,15 +58,11 @@ public class RegistryApi {
     /**
      * 注销（用于对接外部框架）
      * */
-    public void unregister(String service, String address){
-        unregister(service,address,"");
-    }
-
-    public void unregister(String service, String address, String note){
+    public void unregister(String service, String address, String meta){
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
-        params.put("note", note);
+        params.put("meta", meta);
 
         try {
             CallCfgUtil.post("/sev/unreg/", params);
@@ -78,11 +74,11 @@ public class RegistryApi {
     /**
      * 设置启用状态
      */
-    public void set(String service, String address, String note, boolean enabled) {
+    public void set(String service, String address, String meta, boolean enabled) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
-        params.put("note", note);
+        params.put("meta", meta);
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
@@ -122,6 +118,7 @@ public class RegistryApi {
                     for (ONode n : data.get("list").ary()) {
                         cfg.add(n.get("protocol").getString(),
                                 n.get("address").getString(),
+                                n.get("meta").getString(),
                                 n.get("weight").getInt());
                     }
                 }
