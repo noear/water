@@ -88,6 +88,8 @@ public class AppHandler implements XHandler {
             return;
         }
 
+        ctx.attr("file_tag", file.tag);
+
         //如果是静态
         if (file.is_staticize) {
             if (file.content == null) {

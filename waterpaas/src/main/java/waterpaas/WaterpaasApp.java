@@ -48,11 +48,13 @@ public class WaterpaasApp {
             Timecount timecount = c.attr("timecount", null);
 
             if (timecount != null && c.status() != 404) {
+                String tag = c.attr("file_tag", "paas");
+
                 long _times = timecount.stop().milliseconds();
                 String _node = XWaterAdapter.global().localHost();
                 String _from = FromUtils.getFrom(c);
 
-                WaterClient.Track.track(XWaterAdapter.global().service_name(), "paas", c.path(), _times, _node, _from);
+                WaterClient.Track.track(XWaterAdapter.global().service_name(), tag, c.path(), _times, _node, _from);
             }
         });
     }
