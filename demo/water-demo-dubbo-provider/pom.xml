@@ -42,23 +42,23 @@
             <version>${solon.ver}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.apache.dubbo</groupId>-->
-<!--            <artifactId>dubbo-registry-nacos</artifactId>-->
-<!--            <version>${dubbo.ver}</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.nacos</groupId>-->
-<!--            <artifactId>nacos-client</artifactId>-->
-<!--            <version>1.3.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-registry-nacos</artifactId>
+            <version>${dubbo.ver}</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>dubbo-water-solon-plugin</artifactId>
-            <version>${water.ver}</version>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>1.3.1</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>dubbo-water-solon-plugin</artifactId>-->
+<!--            <version>${water.ver}</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
