@@ -47,6 +47,7 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
+        url = url.removeParameter("pid");
 
         String service_key = RegistryUtils.buildServiceKey(url);
 
@@ -66,6 +67,7 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
+        url = url.removeParameter("pid");
 
         String service_key = RegistryUtils.buildServiceKey(url);
 

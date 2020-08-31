@@ -19,13 +19,16 @@ class RegistryUtils {
 
     public static URL buildUrl(DiscoverTargetM target) {
         Map<String, String> meta = ONode.deserialize(target.meta);
-        String tmp = meta.get("_protocol") + "://" + target.address + meta.get("_path");
+        String _protocol = meta.get("_protocol");
+        String _path = meta.get("_path");
+
+        String address = target.address.split(":")[0];
+        String port = target.address.split(":")[1];
 
         meta.remove("_protocol");
         meta.remove("_path");
 
-        URL url = URL.valueOf(tmp);
-        url.getParameters().putAll(meta);
+        URL url = new URL(_protocol, address, Integer.parseInt(port), _path, meta);
 
         return url;
     }
