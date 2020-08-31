@@ -170,7 +170,7 @@
                     <td width="160" class="left">最后执行（时长）</td>
                     <td width="50">状态</td>
                     <td width="50">次数</td>
-                    <td width="120"></td>
+                    <td width="80"></td>
                 </tr>
                 </thead>
                 <tbody class="sel_from">
@@ -178,7 +178,7 @@
                     <tr>
                         <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
                         <td class="left"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}'  target="_blank">${m1.path!}</a>
-                            <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">查看</a>
+                            <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">只读</a>
                             <#if (m1.note!'') != ''>
                                 <n-l>${m1.note!}</n-l>
                             </#if>
@@ -228,8 +228,6 @@
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
                             <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=5&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
-                            |
-                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
 
                         </td>
                     </tr>
