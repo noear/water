@@ -1,12 +1,16 @@
 package org.noear.water.dubbo.solon.plugin;
 
 import org.apache.dubbo.common.URL;
+import org.noear.snack.ONode;
 import org.noear.solon.XApp;
 import org.noear.water.WaterClient;
+import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.TaskUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class WaterRegistryLib {
@@ -43,12 +47,14 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String group = "dubbo";//url.getParameter("group","");
-        String service = url.getParameter("interface");
 
-        if (TextUtils.isNotEmpty(service)) {
+        String service_key = RegistryUtils.buildServiceKey(url);
 
-            WaterClient.Registry.unregister(group + ":" + service, url.toFullString());
+        if (TextUtils.isNotEmpty(service_key)) {
+            String meta = RegistryUtils.buildMeta(url);
+            String address = url.getAuthority();
+
+            WaterClient.Registry.unregister(service_key, address, meta);
         }
 
         System.out.println("unregister!!!");
@@ -60,13 +66,17 @@ public class WaterRegistryLib {
         }
 
         url = url.removeParameter("timestamp");
-        String group = "dubbo";//url.getParameter("group","");
-        String service = url.getParameter("interface");
 
-        if (TextUtils.isNotEmpty(service)) {
+        String service_key = RegistryUtils.buildServiceKey(url);
+
+        if (TextUtils.isNotEmpty(service_key)) {
             WaterRegistryLib.add(url);
 
-            WaterClient.Registry.register(group + ":" + service, url.toFullString(), XApp.cfg().isDriftMode());
+
+            String meta = RegistryUtils.buildMeta(url);
+            String address = url.getAddress();
+
+            WaterClient.Registry.register(service_key, address, meta, XApp.cfg().isDriftMode());
         }
     }
 }

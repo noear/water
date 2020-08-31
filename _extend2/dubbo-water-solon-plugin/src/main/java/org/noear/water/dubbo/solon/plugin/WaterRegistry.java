@@ -3,12 +3,13 @@ package org.noear.water.dubbo.solon.plugin;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.registry.NotifyListener;
 import org.apache.dubbo.registry.Registry;
+import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
-import org.noear.water.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class WaterRegistry implements Registry {
     private URL url;
@@ -58,19 +59,20 @@ public class WaterRegistry implements Registry {
 
     @Override
     public List<URL> lookup(URL url) {
-        String group = "dubbo";//url.getParameter("group","");
-        String service = url.getParameter("interface");
+        String service_key = RegistryUtils.buildServiceKey(url);
 
         String consumer = WaterClient.localService();
         String consumer_address = WaterClient.localHost();
 
-        DiscoverM discoverM = WaterClient.Registry.discover(group + ":" + service, consumer, consumer_address);
+        DiscoverM discoverM = WaterClient.Registry.discover(service_key, consumer, consumer_address);
 
         List<URL> list = new ArrayList<>();
 
         if (discoverM != null) {
             discoverM.list.forEach(m1 -> {
-                list.add(URL.valueOf(m1.address));
+                URL tmp = RegistryUtils.buildUrl(m1);
+
+                list.add(tmp);
             });
         }
 
