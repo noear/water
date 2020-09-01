@@ -39,6 +39,7 @@
     <option value="ruby"></option>
     <option value="lua"></option>
     <option value="graaljs"></option>
+    <option value="sh"></option>
 
     <option value="freemarker"></option>
     <option value="velocity"></option>
