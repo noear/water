@@ -245,6 +245,10 @@ public class FileController extends BaseController {
             edit_mode = "javascript";
         }
 
+        if ("shell".equals(edit_mode)) {
+            edit_mode = "sh";
+        }
+
         if (file.content == null) {
             file.content = "";
         }
