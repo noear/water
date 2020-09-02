@@ -3,6 +3,7 @@ package waterpaas.controller;
 
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import org.noear.solonjt.dso.LogLevel;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
@@ -75,7 +76,7 @@ public class FrmInterceptor implements XHandler {
         }catch (Exception ex) {
             String err = ExceptionUtils.getString(ex);
             ctx.output(err);
-            LogUtil.log("_paas", file.tag, file.path, 0, "", err);
+            LogUtil.log("_paas", file.tag, file.path, LogLevel.ERROR, "", err);
 
             ctx.setHandled(true);
         }
