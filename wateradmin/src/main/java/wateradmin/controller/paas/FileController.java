@@ -259,7 +259,11 @@ public class FileController extends BaseController {
         if(readonly != null){
             return view("paas/file_code_readonly");
         }else{
-            return view("paas/file_code");
+            if("ftl".equals(edit_mode) || "velocity".equals(edit_mode)) {
+                return view("paas/file_code");
+            }else{
+                return view("paas/file_code2");
+            }
         }
     }
 

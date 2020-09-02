@@ -19,7 +19,7 @@
         .btn2:hover { background-color: #fd7f38; }
         .btn2:disabled { background-color: #aaa; }
 
-        pre{border:1px solid #C9C9C9;}
+        main > pre{border:1px solid #C9C9C9; margin: 0px;}
 
         em{color:#999;font-style:normal;}
         .code_run{color:#999;text-decoration : none}
