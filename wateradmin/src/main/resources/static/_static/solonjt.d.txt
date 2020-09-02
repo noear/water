@@ -638,3 +638,149 @@ declare function modelAndView(path:string, model:Map<string,object>): string;
 
 
 
+/////////////// RockClient
+
+interface AppModel{
+    app_id:number;
+    app_key:string;
+    akey:string;
+
+    agroup_id:number;
+    ugroup_id:number;
+
+    name:string;
+    note:string;
+}
+
+interface RockClient{
+    getApp(appID:number):AppModel;
+    getApp(akey:string):AppModel;
+    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
+}
+
+interface RockUtil{
+
+}
+
+interface rock{
+    client:RockClient;
+    util:RockUtil;
+
+    app(appID:number):AppModel;
+
+    cmd(service:string, cmd:string, args:Map<string,object>):string;
+    api(service:string, fun:string, args:Map<string,object>):string;
+
+    newID(group:string, key:string, times:number):number;
+}
+
+declare var RockClient: RockClient;
+declare var RockUtil: RockUtil;
+
+declare var rock: rock;
+
+
+/////////////// WaterClient
+
+interface ConfigApi{
+
+}
+
+interface MessageApi{
+
+}
+
+interface LogApi{
+
+}
+
+interface RegistryApi{
+
+}
+
+interface TrackApi{
+
+}
+
+interface NoticeApi{
+
+}
+
+interface WhitelistApi{
+
+}
+
+interface WaterClient{
+    Config:ConfigApi;
+    Message:MessageApi;
+    Log:LogApi;
+    Registry:RegistryApi;
+    Track:TrackApi;
+    Notice:NoticeApi;
+    Whitelist:WhitelistApi;
+}
+
+interface WaterProxy{
+    call(service:string, fun:string, args:Map<string,object>):string;
+    paas(path:string, args:Map<string,object>):string;
+    raas(path:string, args:Map<string,object>):string;
+    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
+}
+
+interface WaterLogger{
+
+}
+
+interface RedisUsing{
+    key(key:string):RedisUsing;
+    expire(seconds:number):RedisUsing;
+
+    exists():boolean;
+    delete():boolean;
+    rename(newKey:string):void;
+
+    set(val:string):RedisUsing;
+    get():string;
+    getMore(keys:string[]):JList<string>;
+    incr(num:number):number;
+    lock():boolean;
+    lock(val:string):boolean;
+
+    hashHas(field:string):boolean;
+    hashScan(fieldPattern:string, count:number):JList<object>;
+    hashMatch(fieldPattern:string):boolean;
+    hashDel(fields:string[]):boolean;
+    hashSet(field:string, val:string):RedisUsing;
+    hashSet(field:string, val:number):RedisUsing;
+    hashSetAll(map:Map<string,string>):RedisUsing;
+}
+
+interface RedisX{
+    open0(callbackfn:(ru:RedisUsing)=>void):void;
+    open1(callbackfn:(ru:RedisUsing)=>object):object;
+}
+
+interface water{
+    client:WaterClient;
+    proxy:WaterProxy;
+
+    cfg(tagKey:string):AConfigM;
+    db(tagKey:string):DbContext;
+    rd(tagKey:string):RedisX;
+
+    updateCache(tags:string):void;
+
+    call(service:string,fun:string,args:Map<string,object>):string;
+    paas(path:string,args:Map<string,object>):string;
+    raas(path:string,args:Map<string,object>):string;
+
+    heihei(target:string,msg:string):string;
+
+    sendMessage(topic:string,message:string):string;
+}
+
+declare var WaterClient: WaterClient;
+declare var WaterProxy: WaterProxy;
+declare var WaterLogger: WaterLogger;
+
+declare var water: water;
