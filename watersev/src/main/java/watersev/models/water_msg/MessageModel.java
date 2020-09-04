@@ -16,6 +16,8 @@ public class MessageModel implements IBinder {
     public int dist_count;
     public long dist_nexttime;
 
+    public String tags;
+
     //状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
     public int state;
 
@@ -30,6 +32,8 @@ public class MessageModel implements IBinder {
         topic_name = s.get("topic_name").value("");
 
         content = s.get("content").value("");
+        tags = s.get("tags").value("");
+
         state = s.get("state").value(0);
         dist_count = s.get("dist_count").value(0);
         dist_nexttime = s.get("dist_nexttime").value(0L);

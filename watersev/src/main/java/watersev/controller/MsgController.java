@@ -225,6 +225,7 @@ public final class MsgController implements IJob {
         params.put("topic", msg.topic_name);
         params.put("times", msg.dist_count + "");
         params.put("message", Base64Utils.encode(msg.content));
+        params.put("tags", msg.tags);
         params.put("sgin", sgin);
 
 
