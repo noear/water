@@ -14,6 +14,7 @@ public class MessageM {
     public String topic;
     public String message;
     public String sgin;
+    public String tags;
 
 
 
@@ -32,6 +33,7 @@ public class MessageM {
             this.times = Integer.parseInt(_times);
         }
         this.message = args.run("message");
+        this.tags = args.run("tags");
         this.sgin = args.run("sgin");
 
         this.message = Base64Utils.decode(this.message);
@@ -44,6 +46,7 @@ public class MessageM {
         d.set("key",key);
         d.set("topic",topic);
         d.set("message",message);
+        d.set("tags",tags);
         d.set("sgin",sgin);
 
         return d.toJson();
