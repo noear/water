@@ -123,19 +123,23 @@
                         <tr style="color: red">
                     </#if>
                         <td class="left">${m.name}</td>
-                        <td class="left break"><a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">${m.address}
-                            <#if m.note?default("")?length gt 0>
-                                - ${m.note}
+                        <td class="left break">
+                            <#if m.check_type == 0>
+                                <a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">
+                                    ${m.address}
+                                    <#if m.note?default("")?length gt 0>
+                                        - ${m.note}
+                                    </#if>
+                                </a>
+                            <#else>
+                                ${m.address}
+                                <#if m.note?default("")?length gt 0>
+                                    - ${m.note}
+                                </#if>
                             </#if>
-                            </a>
                         </td>
                         <td>
-                            <#if m.check_type == 0>
-                                被动
-                            </#if>
-                            <#if m.check_type == 1>
-                                主动
-                            </#if>
+                            ${(m.check_type == 0)?string("被动","主动")}
                         </td>
                         <td class="left">${m.check_url!}</td>
                         <td style='${m.isAlarm()?string("color:red","")}'>${(m.check_last_time?string('MM-dd HH:mm:ss'))!}</td>
