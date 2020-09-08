@@ -1,7 +1,5 @@
 package watersev.utils;
 
-import okhttp3.Response;
-import org.noear.water.utils.HttpUtils;
 import watersev.utils.ext.Act3;
 
 import java.io.IOException;
@@ -22,12 +20,7 @@ public class HttpUtilEx {
      */
     public static void getStatusByAsync(String url, Act3<Boolean, Integer, String> callback)  {
         CallUtil.asynCall(()->{
-//            long time_start = System.currentTimeMillis();
-
             getHttpStatusDo(url, (isOk, code, hint) -> {
-//                long times = System.currentTimeMillis() - time_start;
-//                System.out.println(url + "::" + times + "ms");
-
                 callback.run(isOk, code, hint);
             });
         });
