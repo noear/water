@@ -143,6 +143,8 @@ public final class SevController implements IJob {
              * code:如果成功，状态码为何?
              * hint:如果出错，提示信息?
              */
+
+            String url2 = url;
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
                 if (code >= 200 && code < 400) { //正常
                     DbWaterRegApi.udpService0(sev.service_id, 0, code + "");
@@ -161,7 +163,7 @@ public final class SevController implements IJob {
                         DbWaterRegApi.delService(sev.service_id);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, hint);
+                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2+"，"+hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             AlarmUtil.tryAlarm(sev, false, code);

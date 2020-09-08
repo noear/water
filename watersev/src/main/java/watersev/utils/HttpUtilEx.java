@@ -22,7 +22,7 @@ public class HttpUtilEx {
         CallUtil.asynCall(()->{
 //            long time_start = System.currentTimeMillis();
 
-            do_getHttpStatus(url, (isOk, code, hint) -> {
+            getHttpStatusDo(url, (isOk, code, hint) -> {
 //                long times = System.currentTimeMillis() - time_start;
 //                System.out.println(url + "::" + times + "ms");
 
@@ -31,7 +31,7 @@ public class HttpUtilEx {
         });
     }
 
-    private static void do_getHttpStatus(String url, Act3<Boolean, Integer, String> callback) {
+    private static void getHttpStatusDo(String url, Act3<Boolean, Integer, String> callback) {
         try {
             URL u = new URL(url);
             try {
@@ -45,17 +45,17 @@ public class HttpUtilEx {
 
                     callback.run(true, code, "");
                 } catch (Throwable e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     callback.run(false, 0, e.getLocalizedMessage());
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 callback.run(false, 0, e.getLocalizedMessage());
             }
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             callback.run(false, 0, "build url failed");
         }
     }
