@@ -42,7 +42,13 @@
                 主动
             </#if>
         </td>
-        <td class="left">${m.check_url!}</td>
+        <td class="left">
+            <#if m.check_url?default('')?length gt 0 >
+                <a href="/mot/service/runcheck?s=${m.name}@${m.address}" target="_blank">
+                    ${m.check_url!}
+                </a>
+            </#if>
+        </td>
         <td style='${m.isAlarm()?string("color:red","")}'>${(m.check_last_time?string('MM-dd HH:mm:ss'))!}</td>
         <td>
             <#if m.check_last_state == 0>

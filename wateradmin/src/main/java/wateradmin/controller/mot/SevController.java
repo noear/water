@@ -66,6 +66,27 @@ public class SevController extends BaseController {
         }
     }
 
+    @XMapping("/service/runcheck")
+    public String service_runcheck(String s) throws Exception {
+        if (TextUtils.isEmpty(s)) {
+            return "Not supported";
+        }
+
+        if (s.indexOf("@") < 0 || s.indexOf(":") < 0) {
+            return "Not supported";
+        }
+
+        String ca = s.split("@")[1];
+
+        String url = "http://" + ca + "/run/check/";
+
+        try {
+            return HttpUtils.getString(url);
+        } catch (Throwable ex) {
+            return "The service unsupported";
+        }
+    }
+
     //页面自动刷新获取表单数据
     @XMapping("/service/ajax/service_table")
     public ModelAndView manageS_table(String name,Integer _state, String _type) throws SQLException {
