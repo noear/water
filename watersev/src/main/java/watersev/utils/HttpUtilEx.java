@@ -1,5 +1,7 @@
 package watersev.utils;
 
+import okhttp3.Response;
+import org.noear.water.utils.HttpUtils;
 import watersev.utils.ext.Act3;
 
 import java.io.IOException;
@@ -37,7 +39,7 @@ public class HttpUtilEx {
             try {
                 HttpURLConnection uConnection = (HttpURLConnection) u.openConnection();
                 try {
-                    uConnection.setRequestMethod("GET"); //HEAD
+                    uConnection.setRequestMethod("HEAD"); //HEAD
                     uConnection.setConnectTimeout(1000 * 3);//3秒超时
                     uConnection.setReadTimeout(1000 * 3);//3秒超时
                     uConnection.connect();
