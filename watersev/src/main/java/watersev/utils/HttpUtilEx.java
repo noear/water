@@ -37,7 +37,7 @@ public class HttpUtilEx {
             try {
                 HttpURLConnection uConnection = (HttpURLConnection) u.openConnection();
                 try {
-                    uConnection.setRequestMethod("HEAD");
+                    uConnection.setRequestMethod("GET"); //HEAD
                     uConnection.setConnectTimeout(1000 * 3);//3秒超时
                     uConnection.setReadTimeout(1000 * 3);//3秒超时
                     uConnection.connect();
@@ -46,12 +46,12 @@ public class HttpUtilEx {
                     callback.run(true, code, "");
                 } catch (Throwable e) {
                     //e.printStackTrace();
-                    callback.run(false, 0, e.getLocalizedMessage());
+                    callback.run(false, 0, e.getMessage());
                 }
 
             } catch (IOException e) {
                 //e.printStackTrace();
-                callback.run(false, 0, e.getLocalizedMessage());
+                callback.run(false, 0, e.getMessage());
             }
 
         } catch (MalformedURLException e) {

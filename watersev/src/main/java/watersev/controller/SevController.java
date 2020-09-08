@@ -130,7 +130,7 @@ public final class SevController implements IJob {
             }
         }
 
-        if(url.startsWith("http") ==false){
+        if (url.startsWith("http") == false) {
             return;
         }
 
@@ -163,7 +163,7 @@ public final class SevController implements IJob {
                         DbWaterRegApi.delService(sev.service_id);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2+"，"+hint);
+                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2 + "，" + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             AlarmUtil.tryAlarm(sev, false, code);
