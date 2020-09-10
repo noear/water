@@ -61,7 +61,7 @@
 
         require.config({ paths: { 'vs': '//cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
         require(['vs/editor/editor.main'], function() {
-            $.get("/_static/solonjt.d.txt",(rst)=>{
+            $.get("/_static/solonjt.d.txt?v=1",(rst)=>{
                 monaco.languages.typescript.javascriptDefaults.addExtraLib(rst);
             });
 

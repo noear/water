@@ -310,6 +310,10 @@ interface DbContext{
 }
 
 interface ONode{
+    load(obj:object):ONode;
+    loadObj(obj:object):ONode;
+    loadStr(str:string):ONode;
+
     rename(key:string, newKey:string):ONode;
 
     isNull():boolean;
@@ -622,6 +626,79 @@ interface ICacheServiceEx{
 
 }
 
+interface TimeZone{
+
+}
+
+interface Locale{
+
+}
+
+interface Datetime{
+    Now():Datetime;
+    parse(datetime:string, format:string):Datetime;
+    parseEx(datetime:string, format:JList<string>):Datetime;
+
+    setFulltime(date:JDate):Datetime;
+    getFulltime():JDate;
+
+    addYear(year:number):Datetime;
+    addMonth(month:number):Datetime;
+    addDay(day:number):Datetime;
+    addHour(hour:number):Datetime;
+    addMinute(minute:number):Datetime;
+    addSecond(second:number):Datetime;
+    addMillisecond(millisecond:number):Datetime;
+
+    setYear(year:number):Datetime;
+    setMonth(month:number):Datetime;
+    setDay(day:number):Datetime;
+    setHour(hour:number):Datetime;
+    setMinute(minute:number):Datetime;
+    setSecond(second:number):Datetime;
+    setMillisecond(millisecond:number):Datetime;
+
+    getYear():number;
+    getMonth():number;
+    getDays():number;
+    getHours():number;
+    getMinutes():number;
+    getSeconds():number;
+    getMilliseconds():number;
+
+    getAllDays():number;
+    getAllHours():number;
+    getAllMinutes():number;
+    getAllSeconds():number;
+    getAllMilliseconds():number;
+    getTicks():number;
+
+    getDate():number;
+    toString():string;
+    toString(format:string):string;
+    toString(format:string, locale:Locale, timeZone:TimeZone):string;
+    toGmtString():string;
+}
+
+interface Timespan{
+    milliseconds():number;
+    seconds():number;
+    minutes():number;
+    hours():number;
+    days():number;
+}
+
+interface Timecount{
+    start():Timecount;
+    stop():Timespan;
+    stop(ref_second:number):Timespan;
+
+}
+
+declare var Datetime: Datetime;
+declare var Timecount: Timecount;
+declare var Timespan: Timespan;
+
 declare var db: DbContext;
 declare var ctx: XContext;
 declare var cache: ICacheServiceEx;
@@ -635,8 +712,6 @@ declare var XLock: JtLock;
 
 declare function requireX(path:string): void;
 declare function modelAndView(path:string, model:Map<string,object>): string;
-
-
 
 /////////////// RockClient
 
