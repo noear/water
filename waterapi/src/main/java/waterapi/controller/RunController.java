@@ -7,6 +7,7 @@ import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WW;
 import org.noear.water.utils.RuntimeUtils;
+import waterapi.Config;
 import waterapi.controller.cmds.CMD_run_push;
 import waterapi.dso.IPUtils;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -67,6 +68,12 @@ public class RunController {
         String tags = ctx.param("tags", "");
         String type = ctx.param("type", "");
         String value = ctx.param("value", "");
+
+        if(tags.contains("client")){
+            if(Config.whitelist_disable_client()){
+                return "OK";
+            }
+        }
 
         if (DbWaterCfgApi.isWhitelist(tags, type, value)) {
             return ("OK");

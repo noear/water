@@ -8,6 +8,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.annotation.XInterceptor;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
+import org.noear.water.WaterClient;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.utils.IPUtil;
@@ -37,7 +38,7 @@ public class BcfInterceptor extends BcfInterceptorBase {
             //IP白名单校验
             String ip = IPUtil.getIP(ctx);
 
-            if (DbWaterCfgApi.isWhitelist(ip) == false) {
+            if (WaterClient.Whitelist.existsOfClientIp(ip) == false) {
                 ctx.output(ip + ",not is whitelist!");
                 ctx.setHandled(true);
                 return;

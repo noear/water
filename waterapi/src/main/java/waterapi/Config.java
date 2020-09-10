@@ -28,13 +28,15 @@ public class Config {
     public static RedisX rd_msg;   //db:3
     public static RedisX rd_track; //db:5
 
-    public static boolean is_debug;
-
     public static String water_cache_header;
 
     public static ConfigM water_msg_queue;
 
     public static String localHost;
+
+    public static boolean whitelist_disable_client(){
+        return  "1".equals(cfg("whitelist_disable_client").value);
+    }
 
 
 
@@ -72,7 +74,6 @@ public class Config {
                 rd_track = cm2.getRd(5);
             }
 
-            is_debug = "1".equals(cfg("is_debug").getString());
 
             water_cache_header = cfg("water_cache_header")
                     .getString("WATER2_CACHE") + "_API2";
