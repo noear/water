@@ -143,7 +143,7 @@ public class DbWaterCfgApi {
                 .caching(CacheUtils.data).usingCache(60)
                 .getArray("value");
 
-        String tmp = getConfig("water", "whitelist_ignore_client").value;
+        String tmp = getConfig("water", "whitelist_ignore_client", 60).value;
 
         _whitelist_ignore_client = "1".equals(tmp);
     }
