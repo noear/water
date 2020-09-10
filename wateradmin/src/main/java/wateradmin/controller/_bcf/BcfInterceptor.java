@@ -38,7 +38,7 @@ public class BcfInterceptor extends BcfInterceptorBase {
             //IP白名单校验
             String ip = IPUtil.getIP(ctx);
 
-            if (WaterClient.Whitelist.existsOfClientIp(ip) == false) {
+            if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
                 ctx.output(ip + ",not is whitelist!");
                 ctx.setHandled(true);
                 return;
