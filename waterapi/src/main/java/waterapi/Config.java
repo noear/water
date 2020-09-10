@@ -34,10 +34,6 @@ public class Config {
 
     public static String localHost;
 
-    public static boolean whitelist_disable_client(){
-        return  "1".equals(cfg("whitelist_disable_client").value);
-    }
-
 
 
     //================================

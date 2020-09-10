@@ -54,16 +54,26 @@ public class DbWaterCfgApi {
     }
 
     public static ConfigModel getConfig(String tag, String key) {
+        return getConfig(tag, key, 0);
+    }
+
+    public static ConfigModel getConfig(String tag, String key, int cachedSeconds) {
         try {
             return db().table("water_cfg_properties")
                     .where("tag=? AND `key`=?", tag, key)
-                    .andEq("is_enabled",1)
-                    .select("*")
+                    .andEq("is_enabled", 1)
                     .caching(CacheUtils.data)
+                    .build(tb -> {
+                        if (cachedSeconds > 0) {
+                            tb.usingCache(cachedSeconds);
+                        }
+                    })
+                    .select("*")
                     .getItem(new ConfigModel());
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+
     }
 
     public static void setConfig(String tag, String key, String value) throws SQLException {
@@ -109,6 +119,7 @@ public class DbWaterCfgApi {
 
     //获取IP白名单
     private static List<String> _whitelist = null;
+    private static boolean _whitelist_ignore_client = false ;
 
     private static synchronized List<String> getWhitelist() throws SQLException {
         if (_whitelist == null) {
@@ -118,15 +129,23 @@ public class DbWaterCfgApi {
         return _whitelist;
     }
 
+    public static boolean whitelistIgnoreClient(){
+        return _whitelist_ignore_client;
+    }
+
     //加载IP白名单到静态缓存里
     public static void loadWhitelist() throws SQLException {
         _whitelist = db().table("water_cfg_whitelist")
-                .whereEq("type","ip")
-                .andEq("tag","server")
-                .andEq("is_enabled",1)
+                .whereEq("type", "ip")
+                .andEq("tag", "server")
+                .andEq("is_enabled", 1)
                 .select("value")
                 .caching(CacheUtils.data).usingCache(60)
                 .getArray("value");
+
+        String tmp = getConfig("water", "whitelist_ignore_client").value;
+
+        _whitelist_ignore_client = "1".equals(tmp);
     }
 
     //检查是否为IP白名单

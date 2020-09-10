@@ -70,7 +70,7 @@ public class RunController {
         String value = ctx.param("value", "");
 
         if(tags.contains("client")){
-            if(Config.whitelist_disable_client()){
+            if(DbWaterCfgApi.whitelistIgnoreClient()){
                 return "OK";
             }
         }
