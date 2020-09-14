@@ -52,7 +52,4 @@ public class RuntimeStatus {
 
     public List<Map<String,Object>> memoryPools = new ArrayList<>();
 
-
-
-
 }
