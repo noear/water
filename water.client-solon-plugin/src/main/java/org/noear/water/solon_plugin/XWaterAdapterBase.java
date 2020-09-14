@@ -10,6 +10,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.RuntimeStatus;
 import org.noear.water.utils.RuntimeUtils;
 import org.noear.water.utils.TextUtils;
 
@@ -169,7 +170,11 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 //run/status/
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
-                    text = ONode.stringify(RuntimeUtils.getStatus());
+                    RuntimeStatus rs = RuntimeUtils.getStatus();
+                    rs.name = XWaterAdapter.global().service_name();
+                    rs.address = XWaterAdapter.global().localHost();
+
+                    text = ONode.stringify(rs);
                 } else {
                     text = (ip + ",not is whitelist!");
                 }

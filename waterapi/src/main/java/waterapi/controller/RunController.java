@@ -6,10 +6,12 @@ import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WW;
+import org.noear.water.utils.RuntimeStatus;
 import org.noear.water.utils.RuntimeUtils;
 import waterapi.Config;
 import waterapi.controller.cmds.CMD_run_push;
 import waterapi.dso.IPUtils;
+import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbWaterCfgApi;
 
 import java.util.Map;
@@ -37,7 +39,11 @@ public class RunController {
     public String run_status(XContext ctx) throws Exception{
         String ip = IPUtils.getIP(ctx);
         if (DbWaterCfgApi.isWhitelist(WW.whitelist_tag_master,"ip",ip)) {
-            return ONode.stringify(RuntimeUtils.getStatus());
+            RuntimeStatus rs = RuntimeUtils.getStatus();
+            rs.name = Config.water_service_name;
+            rs.address = Config.localHost;
+
+            return ONode.stringify(rs);
         } else {
             return  (ip + ",not is whitelist!");
         }

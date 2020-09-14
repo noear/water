@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 public class RuntimeStatus {
+    public String name;
+    public String address;
+
     /**
      * 程序启动时间
      */
