@@ -121,9 +121,11 @@ public class PlnController implements IJob {
             String s2 = task.plan_interval.substring(task.plan_interval.length() - 1);
 
             switch (s2) {
+                case "s": //秒
+                    last_time.addSecond(Integer.parseInt(s1));
+                    break;
                 case "m": //分
                     last_time.setSecond(begin_time.getSeconds());
-
                     last_time.addMinute(Integer.parseInt(s1));
                     break;
                 case "h": //时
