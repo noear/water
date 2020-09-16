@@ -38,7 +38,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.0.28</solon.ver>
+        <solon.ver>1.0.29</solon.ver>
         <water.ver>2.0.4</water.ver>
         <weed3.ver>3.2.19</weed3.ver>
         <snack3.ver>3.1.10</snack3.ver>
@@ -134,7 +134,7 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solon-mvc</artifactId>
+                <artifactId>solon-web</artifactId>
                 <version>${solon.ver}</version>
                 <type>pom</type>
             </dependency>
