@@ -10,7 +10,7 @@ public class ConfigUtilsEx extends ConfigUtils {
     @Override
     public PropertiesM getProp(String text) {
         PropertiesM prop = new PropertiesM();
-        Properties tmp = XUtil.getProperties(text);
+        Properties tmp = XUtil.buildProperties(text);
 
         if (tmp != null) {
             prop.putAll(tmp);

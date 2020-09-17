@@ -82,7 +82,7 @@ public class ConfigModel implements IBinder {
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = XUtil.getProperties(value);
+            _prop = XUtil.buildProperties(value);
         }
 
         return _prop;
