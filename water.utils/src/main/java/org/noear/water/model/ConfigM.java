@@ -6,11 +6,13 @@ import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbDataSource;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.SecondCache;
 import org.noear.weed.cache.memcached.MemCache;
 
+import javax.sql.DataSource;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,7 +53,7 @@ public final class ConfigM {
         }
     }
 
-    public int getInt(){
+    public int getInt() {
         return getInt(0);
     }
 
@@ -96,12 +98,12 @@ public final class ConfigM {
         return _node;
     }
 
-    public <T> T getObject(Class<T> clz){
-        if(TextUtils.isEmpty(value)){
-            return  null;
+    public <T> T getObject(Class<T> clz) {
+        if (TextUtils.isEmpty(value)) {
+            return null;
         }
 
-        if(value.trim().startsWith("{")){
+        if (value.trim().startsWith("{")) {
             return getNode().toObject(clz);
         }
 
@@ -112,16 +114,16 @@ public final class ConfigM {
     /**
      * 获取 rd:RedisX
      */
-    public RedisX getRd(){
-        if(TextUtils.isEmpty(value)){
+    public RedisX getRd() {
+        if (TextUtils.isEmpty(value)) {
             return null;
         }
 
         return new RedisX(getProp());
     }
-    
+
     public RedisX getRd(int db) {
-        if(TextUtils.isEmpty(value)){
+        if (TextUtils.isEmpty(value)) {
             return null;
         }
 
@@ -129,7 +131,7 @@ public final class ConfigM {
     }
 
     public RedisX getRd(int db, int maxTotaol) {
-        if(TextUtils.isEmpty(value)){
+        if (TextUtils.isEmpty(value)) {
             return null;
         }
 
@@ -159,7 +161,7 @@ public final class ConfigM {
 
     /**
      * 获取 二级缓存 ICacheServiceEx
-     * */
+     */
     public ICacheServiceEx getCh2(String keyHeader, int defSeconds) {
         ICacheServiceEx cache1 = new LocalCache(defSeconds);
         ICacheServiceEx cache2 = getCh(keyHeader, defSeconds);
@@ -180,7 +182,8 @@ public final class ConfigM {
     /**
      * 获取 db:DbContext
      */
-    private static Map<String,DbContext> _dbMap = new ConcurrentHashMap<>();
+    private static Map<String, DbContext> _dbMap = new ConcurrentHashMap<>();
+
     public DbContext getDb() {
         return getDb(false);
     }
@@ -205,12 +208,31 @@ public final class ConfigM {
         Properties prop = getProp();
         String url = prop.getProperty("url");
 
-        if(TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             return null;
         }
 
+        String schema = prop.getProperty("schema");
+
 
         DbContext db = new DbContext();
+        db.schemaSet(schema);
+        db.dataSourceSet(getDs(pool));
+
+        return db;
+    }
+
+    public DataSource getDs(boolean pool) {
+        Properties prop = getProp();
+        String url = prop.getProperty("url");
+
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+        String driverClassName = prop.getProperty("driverClassName");
 
         if (pool) {
 
@@ -218,9 +240,6 @@ public final class ConfigM {
             source.setDataSourceProperties(prop);
 
             String schema = prop.getProperty("schema");
-            String username = prop.getProperty("username");
-            String password = prop.getProperty("password");
-            String driverClassName = prop.getProperty("driverClassName");
 
             String connectionTimeout = prop.getProperty("connectionTimeout");
             String idleTimeout = prop.getProperty("idleTimeout");
@@ -247,28 +266,34 @@ public final class ConfigM {
                 source.setDriverClassName(driverClassName);
             }
 
-            if(TextUtils.isEmpty(connectionTimeout) == false){
+            if (TextUtils.isEmpty(connectionTimeout) == false) {
                 source.setConnectionTimeout(Long.parseLong(connectionTimeout));
             }
 
-            if(TextUtils.isEmpty(idleTimeout) == false){
+            if (TextUtils.isEmpty(idleTimeout) == false) {
                 source.setIdleTimeout(Long.parseLong(idleTimeout));
             }
 
-            if(TextUtils.isEmpty(maxLifetime) == false){
+            if (TextUtils.isEmpty(maxLifetime) == false) {
                 source.setMaxLifetime(Long.parseLong(maxLifetime));
             }
 
-            if(TextUtils.isEmpty(maximumPoolSize) == false){
+            if (TextUtils.isEmpty(maximumPoolSize) == false) {
                 source.setMaximumPoolSize(Integer.parseInt(maximumPoolSize));
             }
 
-            db.dataSourceSet(source);
-            db.schemaSet(schema);
+            return source;
         } else {
-            db.propSet(getProp());
-        }
+            if (TextUtils.isNotEmpty(driverClassName)) {
+                try {
+                    Class.forName(driverClassName);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
 
-        return db;
+            return new DbDataSource(url, username, password);
+
+        }
     }
 }
