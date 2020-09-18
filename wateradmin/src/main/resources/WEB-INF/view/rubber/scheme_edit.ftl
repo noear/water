@@ -71,9 +71,9 @@
                 </td>
             </tr>
             <tr>
-                <th>引用数据</th>
+                <th>引用指标</th>
                 <td>
-                    <input type="text" id="related_block" value="${scheme.related_block!}" placeholder="tag/*;tag/block..."/>（D-Block）
+                    <input type="text" id="related_block" value="${scheme.related_block!}" placeholder="tag/*;tag/block..."/>（指标库）
                 </td>
             </tr>
             <tr>
