@@ -27,16 +27,6 @@ import java.util.*;
 @XBean
 public final class MsgController implements IJob {
 
-    private int _threads;
-
-    public MsgController() {
-        _threads = XApp.cfg().argx().getInt("pool");
-
-        if (_threads < 1) {
-            _threads = 1;
-        }
-    }
-
     @Override
     public String getName() {
         return "msg";
@@ -48,21 +38,16 @@ public final class MsgController implements IJob {
     }
 
     @Override
-    public int getThreads() {
-        return _threads;
-    }
-
-    @Override
     public void exec() throws Exception {
-        String msg_id_str = ProtocolHub.messageQueue.poll();
+        ProtocolHub.messageQueue.pollGet(msg_id_str -> {
+            if (TextUtils.isEmpty(msg_id_str)) {
+                //说明没有了
+                return;
+            }
 
-        if (TextUtils.isEmpty(msg_id_str)) {
-            //说明没有了
-            return;
-        }
-
-        //改用线程池处理
-        Config.pools.execute(() -> distribute(msg_id_str));
+            //改用线程池处理
+            Config.pools.execute(() -> distribute(msg_id_str));
+        });
     }
 
     private void distribute(String msg_id_str) {
