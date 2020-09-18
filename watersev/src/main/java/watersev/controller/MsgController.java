@@ -2,6 +2,7 @@ package watersev.controller;
 
 import org.noear.solon.XApp;
 import org.noear.solon.annotation.XBean;
+import org.noear.solon.core.XEventBus;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.*;
@@ -69,7 +70,7 @@ public final class MsgController implements IJob {
         try {
             distributeDo(msg_id_str);
         } catch (Throwable ex) {
-            ex.printStackTrace();
+            XEventBus.push(ex);
         }
     }
 
