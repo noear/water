@@ -54,16 +54,15 @@ public final class MsgController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        String msg_id_str = ProtocolHub.messageQueue.poll();
 
-        ProtocolHub.messageQueue.pollGet(msg_id_str -> {
-            if (TextUtils.isEmpty(msg_id_str)) {
-                //说明没有了
-                return;
-            }
+        if (TextUtils.isEmpty(msg_id_str)) {
+            //说明没有了
+            return;
+        }
 
-            //改用线程池处理
-            Config.pools.execute(() -> distribute(msg_id_str));
-        });
+        //改用线程池处理
+        Config.pools.execute(() -> distribute(msg_id_str));
     }
 
     private void distribute(String msg_id_str) {
