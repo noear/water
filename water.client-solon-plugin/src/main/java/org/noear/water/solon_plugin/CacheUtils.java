@@ -17,7 +17,11 @@ public class CacheUtils {
 
         @Override
         public void store(String key, Object obj, int seconds) {
-            real.store(key, obj, seconds);
+            if(seconds == 0) {
+                real.store(key, obj, getDefalutSeconds());
+            }else {
+                real.store(key, obj, seconds);
+            }
         }
 
         @Override
