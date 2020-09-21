@@ -70,7 +70,7 @@ public class XPluginImp implements XPlugin {
                 String topic = anno.value();
 
                 if (TextUtils.isEmpty(topic) == false) {
-                    _router.put(topic,wrap.raw());
+                    _router.put(topic, wrap.raw());
                 }
             }
         });
@@ -81,7 +81,7 @@ public class XPluginImp implements XPlugin {
                 String tag = anno.value();
 
                 if (TextUtils.isEmpty(tag) == false) {
-                    WaterClient.Config.subscribe(tag,wrap.raw());
+                    WaterClient.Config.subscribe(tag, wrap.raw());
                 }
             }
         });
@@ -97,7 +97,7 @@ public class XPluginImp implements XPlugin {
                     }
                 });
 
-                if(_router.size() > 0) {
+                if (_router.size() > 0) {
                     XWaterAdapter.global().router().putAll(_router);
                     XWaterAdapter.global().messageSubscribeHandler();
                     _router.clear();
@@ -109,15 +109,19 @@ public class XPluginImp implements XPlugin {
         XWaterUpstream wup = XWaterUpstream.get(WW.waterapi);
         org.noear.water.WaterConfig.water_sev_upstream(wup);
 
-        org.noear.water.WaterConfig.water_trace_id_supplier(()->{
+        org.noear.water.WaterConfig.water_trace_id_supplier(() -> {
             XContext ctx = XContext.current();
-            String trace_id = ctx.header(HEADER_TRACE_ID);
-            if(TextUtils.isEmpty(trace_id)){
-                trace_id = XUtil.guid();
-                ctx.headerSet(HEADER_TRACE_ID,trace_id);
-            }
+            if (ctx == null) {
+                return null;
+            } else {
+                String trace_id = ctx.header(HEADER_TRACE_ID);
+                if (TextUtils.isEmpty(trace_id)) {
+                    trace_id = XUtil.guid();
+                    ctx.headerSet(HEADER_TRACE_ID, trace_id);
+                }
 
-            return trace_id;
+                return trace_id;
+            }
         });
     }
 
