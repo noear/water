@@ -14,30 +14,32 @@ import java.util.Map;
  * */
 class CallSevUtil {
     public static HttpUtils http(String path){
-        return WaterConfig.water_sev_upstream().xcall(path);
+        return WaterConfig.water_sev_upstream().xcall(path)
+                .header(WW.http_header_from, WaterClient.localServiceHost())
+                .header(WW.http_header_trace,WaterClient.waterTraceId());
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {
-        return http(path).data(data).header(WW.http_header_from, WaterClient.localServiceHost()).post();
+        return http(path).data(data).post();
     }
 
     public static String postBody(String path, byte[] bytes, String contentType) throws IOException {
-        return http(path).bodyRaw(new ByteArrayInputStream(bytes), contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
+        return http(path).bodyRaw(new ByteArrayInputStream(bytes), contentType).post();
     }
 
     public static String postBody(String path, String text, String contentType) throws IOException {
-        return http(path).bodyTxt(text, contentType).header(WW.http_header_from, WaterClient.localServiceHost()).post();
+        return http(path).bodyTxt(text, contentType).post();
     }
 
     public static void postAsync(String path, Map<String, String> data)  {
         try {
-            http(path).data(data).header(WW.http_header_from, WaterClient.localServiceHost()).postAsync(null);
+            http(path).data(data).postAsync(null);
         }catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
     public static String get(String path) throws IOException {
-        return http(path).header(WW.http_header_from, WaterClient.localServiceHost()).get();
+        return http(path).get();
     }
 }
