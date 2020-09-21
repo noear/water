@@ -58,7 +58,7 @@
             <div class="break">
                 <span>${log.log_fulltime?string('yyyy-MM-dd HH:mm:ss')}</span>
                 <span>:</span>
-                <span>${log.log_id}-${log.levelHtml()}#${log.tag}@${log.tag1}@${log.tag2}@${log.tag3}#${log.from!}</span>
+                <span>${log.log_id}-${log.levelHtml()}#${log.trace_id!}#${log.tag}@${log.tag1}@${log.tag2}@${log.tag3}#${log.from!}</span>
             </div>
             <div class="break">
                 <span>${log.log_fulltime?string('yyyy-MM-dd HH:mm:ss')}</span>
