@@ -1,5 +1,6 @@
 package waterapi.controller.cmds;
 
+import org.noear.water.WW;
 import org.noear.water.utils.DisttimeUtils;
 import waterapi.dso.db.DbWaterMsgApi;
 
@@ -16,6 +17,7 @@ public class CMD_msg_send extends CMDBase {
         String message = get("message"); //消息内容
         String plan_time = get("plan_time"); //分发时间 //yyyy-MM-dd HH:mm:ss
 
+
         if (checkParamsIsOk(key, topic, message) == false) {
             return;
         }
@@ -31,8 +33,9 @@ public class CMD_msg_send extends CMDBase {
         }
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
+        String trace_id = context.header(WW.http_header_trace);
 
-        if (DbWaterMsgApi.addMessage(key, tags, topic, message, plan_time2) > 0) {
+        if (DbWaterMsgApi.addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
             data.set("code", 1);
             data.set("msg", "success");
             return;
