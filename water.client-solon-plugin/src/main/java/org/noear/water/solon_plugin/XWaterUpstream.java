@@ -296,10 +296,10 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     public static <T> T xclient(Class<?> clz, XUpstream upstream) {
         return new XProxy()
-                .interceptAdd((p,h,a)->{
+                .filterAdd((p,h,a)->{
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());
+                    h.put(WW.http_header_from, WaterClient.localServiceHost());
                 })
-                .headerAdd(WW.http_header_from, WaterClient.localServiceHost())
                 .upstream(upstream)
                 .create(clz);
     }
