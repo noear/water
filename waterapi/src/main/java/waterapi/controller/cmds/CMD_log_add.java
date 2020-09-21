@@ -38,6 +38,7 @@ public class CMD_log_add extends CMDBase {
         String content = get("content");
 
         String from = get("from");
+        String trace_id = get("trace_id");
 
         String log_fulltime_str = get("log_fulltime");
         Date log_fulltime = null;
@@ -46,7 +47,13 @@ public class CMD_log_add extends CMDBase {
             log_fulltime = Datetime.parse(log_fulltime_str, log_fulltime_formt).getFulltime();
         }
 
-        ProtocolHub.logStorer.write(logger, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime);
+        if (TextUtils.isNotEmpty(trace_id)) {
+            if (trace_id.length() > 40) {
+                trace_id = trace_id.substring(0, 40);
+            }
+        }
+
+        ProtocolHub.logStorer.write(logger, trace_id, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime);
         data.set("code", 1);
         data.set("msg", "success");
     }

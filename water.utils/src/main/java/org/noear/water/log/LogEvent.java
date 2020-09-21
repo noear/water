@@ -5,6 +5,7 @@ import java.util.Date;
 public class LogEvent {
     public long log_id;
     public String logger;
+    public String trace_id;
     public int level;
     public String tag;
     public String tag1;

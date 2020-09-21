@@ -54,10 +54,11 @@ public class LogSourceDb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
         try {
             DbTableQuery qr = _db.table(logger).usingExpr(true)
                     .set("log_id", log_id)
+                    .set("trace_id",trace_id)
                     .set("level", level.code)
                     .setDf("tag", tag, "")
                     .setDf("tag1", tag1, "")
@@ -92,6 +93,7 @@ public class LogSourceDb implements LogSource {
         try {
             _db.table(logger).insertList(list, (log, item) -> {
                 item.set("log_id", log.log_id)
+                        .set("trace_id", log.trace_id)
                         .set("level", log.level)
                         .setDf("tag", log.tag, "")
                         .setDf("tag1", log.tag1, "")
