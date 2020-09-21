@@ -11,7 +11,7 @@ public class TestController {
     @XMapping("/")
     public String home(String msg) throws Exception{
         if(XUtil.isNotEmpty(msg)){
-            WaterClient.Message.sendMessage("water.test.hello", msg);
+            WaterClient.Message.sendMessage("test.hello", msg);
         }
         return "OK";
     }

@@ -31,6 +31,8 @@
 <!--        <module>demo/water-demo-dubbo-provider</module>-->
 <!--        <module>demo/water-demo-dubbo-service</module>-->
 
+        <module>demo/water-test</module>
+
 <!--        <module>demo/water-demo-api1</module>-->
 <!--        <module>demo/water-demo-api2</module>-->
 <!--        <module>demo/water-demo-rpc-gateway</module>-->
