@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 
 public class WaterConfig {
@@ -28,6 +29,17 @@ public class WaterConfig {
     private static String _water_api_url = null;
     public static String water_api_url(){
         return _water_api_url;
+    }
+
+    //trace_id_supplier
+    private static Supplier<String> _water_trace_id_supplier = ()->null;
+    public static void water_trace_id_supplier(Supplier<String> supplier){
+        if(supplier != null){
+            _water_trace_id_supplier = supplier;
+        }
+    }
+    public static String water_trace_id(){
+        return _water_trace_id_supplier.get();
     }
 
     //不可修改

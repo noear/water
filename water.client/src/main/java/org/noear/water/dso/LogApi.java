@@ -116,8 +116,15 @@ public class LogApi {
             return;
         }
 
+        String trace_id = WaterConfig.water_trace_id();
+
         Map<String, String> params = new HashMap<>();
         params.put("logger", logger);
+
+        if(TextUtils.isNotEmpty(trace_id)) {
+            params.put("trace_id", trace_id);
+        }
+
         params.put("level", String.valueOf(level.code));
 
         if (tag != null) {

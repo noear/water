@@ -1,10 +1,8 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.XApp;
-import org.noear.solon.core.Aop;
-import org.noear.solon.core.XBridge;
-import org.noear.solon.core.XPlugin;
-import org.noear.solon.core.XUpstreamFactory;
+import org.noear.solon.XUtil;
+import org.noear.solon.core.*;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
@@ -20,6 +18,8 @@ import java.util.Map;
 
 public class XPluginImp implements XPlugin {
     Map<String, MessageHandler> _router  =new HashMap<>();
+    String HEADER_TRACE_ID = "X-Water-Trace-Id";
+
     @Override
     public void start(XApp app) {
         XmlSqlLoader.tryLoad();
@@ -108,6 +108,17 @@ public class XPluginImp implements XPlugin {
         //改为upstream模式，可跳过nginx代理
         XWaterUpstream wup = XWaterUpstream.get(WW.waterapi);
         org.noear.water.WaterConfig.water_sev_upstream(wup);
+
+        org.noear.water.WaterConfig.water_trace_id_supplier(()->{
+            XContext ctx = XContext.current();
+            String trace_id = ctx.header(HEADER_TRACE_ID);
+            if(TextUtils.isEmpty(trace_id)){
+                trace_id = XUtil.guid();
+                ctx.headerSet(HEADER_TRACE_ID,trace_id);
+            }
+
+            return trace_id;
+        });
     }
 
     @Override
