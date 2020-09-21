@@ -100,7 +100,7 @@ public class WaterProxy {
         }
     }
 
-    public static HttpUtils http(String url) {
+    private static HttpUtils http(String url) {
         return HttpUtils.http(url)
                 .header(WW.http_header_trace, WaterClient.waterTraceId())
                 .header(WW.http_header_from, WaterClient.localServiceHost());
