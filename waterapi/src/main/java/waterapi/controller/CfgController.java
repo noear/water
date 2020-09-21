@@ -118,7 +118,8 @@ public class CfgController implements XHandler {
 
         //发消息通知
         if (isOk) {
-            DbWaterMsgApi.addMessage(IDUtils.buildGuid(), Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
+            String trace_id = ctx.header(WW.http_header_trace);
+            DbWaterMsgApi.addMessage(IDUtils.buildGuid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
         }
     }
 }

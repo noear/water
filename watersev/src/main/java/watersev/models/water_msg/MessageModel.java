@@ -10,6 +10,7 @@ import watersev.dso.db.DbWaterMsgApi;
 public class MessageModel implements IBinder {
     public Long msg_id;
     public String msg_key;
+    public String trace_id;
     public int topic_id;
     public String topic_name;
     public String content;
@@ -27,6 +28,8 @@ public class MessageModel implements IBinder {
     public void bind(GetHandlerEx s) {
         msg_id = s.get("msg_id").value(0L);
         msg_key = s.get("msg_key").value("");
+
+        trace_id = s.get("trace_id").value("");
 
         topic_id = s.get("topic_id").value(0);
         topic_name = s.get("topic_name").value("");

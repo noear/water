@@ -4,6 +4,7 @@ import org.noear.solon.XApp;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XEventBus;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.*;
 import watersev.Config;
@@ -217,7 +218,9 @@ public final class MsgController implements IJob {
         try {
             if (dist.receive_way == 0) {
                 //3.2.0.进行异步http分发
-                HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
+                HttpUtils.http(dist.receive_url)
+                        .header(WW.http_header_trace,msg.trace_id)
+                        .data(params).postAsync((isOk, resp, ex) -> {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
@@ -243,7 +246,9 @@ public final class MsgController implements IJob {
 
             if (dist.receive_way == 2) {
                 //3.2.2.进行异步http分发 //不等待 //状态设为已完成
-                HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
+                HttpUtils.http(dist.receive_url)
+                        .header(WW.http_header_trace,msg.trace_id)
+                        .data(params).postAsync((isOk, resp, ex) -> {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
@@ -268,7 +273,9 @@ public final class MsgController implements IJob {
 
             if (dist.receive_way == 3) {
                 //3.2.3.进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
-                HttpUtils.http(dist.receive_url).data(params).postAsync((isOk, resp, ex) -> {
+                HttpUtils.http(dist.receive_url)
+                        .header(WW.http_header_trace,msg.trace_id)
+                        .data(params).postAsync((isOk, resp, ex) -> {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
