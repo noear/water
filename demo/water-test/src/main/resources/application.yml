@@ -1,0 +1,8 @@
+server.port: 8011
+
+
+water:
+  host: "http://water2"
+  service:
+    name: "watertest"
+    secretKey: "0zJt0J88TkIvqYgC"
