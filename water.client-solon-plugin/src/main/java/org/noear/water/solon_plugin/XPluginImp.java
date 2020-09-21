@@ -111,7 +111,7 @@ public class XPluginImp implements XPlugin {
         org.noear.water.WaterConfig.water_trace_id_supplier(() -> {
             XContext ctx = XContext.current();
             if (ctx == null) {
-                return null;
+                return "";
             } else {
                 String trace_id = ctx.header(WW.http_header_trace);
                 if (TextUtils.isEmpty(trace_id)) {
