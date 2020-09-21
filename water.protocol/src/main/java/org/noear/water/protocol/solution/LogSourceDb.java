@@ -21,7 +21,7 @@ public class LogSourceDb implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
+    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -40,6 +40,7 @@ public class LogSourceDb implements LogSource {
 
         return _db.table(logger)
                 .where("1 = 1")
+                .andIf(TextUtils.isNotEmpty(trace_id), "trace_id = ?", trace_id)
                 .andIf(TextUtils.isNotEmpty(tag), "tag = ?", tag)
                 .andIf(TextUtils.isNotEmpty(tag1), "tag1 = ?", tag1)
                 .andIf(TextUtils.isNotEmpty(tag2), "tag2 = ?", tag2)

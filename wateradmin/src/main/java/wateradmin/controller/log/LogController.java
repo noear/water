@@ -35,16 +35,16 @@ public class LogController extends BaseController {
     }
 
     @XMapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String trace_id, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
-        if(TextUtils.isEmpty(logger)) {
+        if (TextUtils.isEmpty(logger)) {
             logger = ctx.cookie("wateradmin_log__tag_" + tag_name);
         }
 
-        if(TextUtils.isEmpty(logger)){
-            if(loggers.size() > 0){
+        if (TextUtils.isEmpty(logger)) {
+            if (loggers.size() > 0) {
                 logger = loggers.get(0).logger;
             }
         }
@@ -81,14 +81,14 @@ public class LogController extends BaseController {
             LoggerModel log = DbWaterCfgApi.getLogger(logger);
 
             try {
-                list = ProtocolHub.logQuerier.query(logger, level, 50, tag, tag1, tag2, tag3, log_date, log_id);
-            }catch (Exception ex){
+                list = ProtocolHub.logQuerier.query(logger, trace_id, level, 50, tag, tag1, tag2, tag3, log_date, log_id);
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
             viewModel.put("log", log);
             viewModel.put("logger", log.logger);
-        }else{
+        } else {
             viewModel.put("logger", "");
         }
 
