@@ -96,7 +96,7 @@
             var x = 10;
             var y = 20;
             $("tr[title]").mouseover(function(e){
-                this.myTitle = this.title.replace('；',"<br/>")
+                this.myTitle = this.title.replace(/；/g,"<br/>")
                 this.title = "";
                 var tooltip = "<div id='tooltip'>"+ this.myTitle +"<\/div>"; //创建 div 元素 文字提示
                 $("body").append(tooltip);    //把它追加到文档中
@@ -160,7 +160,7 @@
             </thead>
             <tbody id="tbody">
             <#list list as msg>
-                <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}">
+                <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}；跟踪标识：${msg.trace_id!}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
                     <td class="left">${msg.topic_name}

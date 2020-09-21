@@ -63,23 +63,23 @@ public class LogController extends BaseController {
 
         if (TextUtils.isNotEmpty(tagx)) {
             if(tagx.startsWith("*")){
-                trace_id = tagx.substring(1);
+                trace_id = tagx.substring(1).trim();
             }else {
                 String[] ss = tagx.split("@");
                 if (ss.length > 0) {
-                    tag = ss[0];
+                    tag = ss[0].trim();
                 }
 
                 if (ss.length > 1) {
-                    tag1 = ss[1];
+                    tag1 = ss[1].trim();
                 }
 
                 if (ss.length > 2) {
-                    tag2 = ss[2];
+                    tag2 = ss[2].trim();
                 }
 
                 if (ss.length > 3) {
-                    tag3 = ss[3];
+                    tag3 = ss[3].trim();
                 }
             }
         }
