@@ -10,6 +10,7 @@ import java.util.function.Function;
 public class MessageM {
     public long id;
     public int times;
+    public String trace_id;
     public String key;
     public String topic;
     public String message;
@@ -32,6 +33,7 @@ public class MessageM {
         if(TextUtils.isEmpty(_times)==false){
             this.times = Integer.parseInt(_times);
         }
+        this.trace_id = args.run("trace_id");
         this.message = args.run("message");
         this.tags = args.run("tags");
         this.sgin = args.run("sgin");
@@ -45,6 +47,7 @@ public class MessageM {
         d.set("id",id);
         d.set("key",key);
         d.set("topic",topic);
+        d.set("trace_id",trace_id);
         d.set("message",message);
         d.set("tags",tags);
         d.set("sgin",sgin);
