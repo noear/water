@@ -1,4 +1,4 @@
-package org.noear.water.testapi.controller;
+package testapi.controller;
 
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.WaterMessage;

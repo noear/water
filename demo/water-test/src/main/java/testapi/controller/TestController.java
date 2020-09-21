@@ -1,4 +1,4 @@
-package org.noear.water.testapi.controller;
+package testapi.controller;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;

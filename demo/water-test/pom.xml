@@ -59,7 +59,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>watersev.WateradminApp</mainClass>
+                            <mainClass>testapi.TestApi1App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
