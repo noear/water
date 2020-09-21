@@ -31,13 +31,12 @@ public class WaterProxy {
             });
         }
 
-        return HttpUtils.http(fun_url)
-                .data(form).header(WW.http_header_from,WaterClient.localServiceHost()).post();
+        return http(fun_url).data(form).post();
     }
 
     /**
      * 调用_service接口
-     * */
+     */
     public static String call(String service, String fun, Map<String, Object> args) throws Exception {
         if (service.indexOf("://") > 0) {
             return callDo(service, fun, args);
@@ -49,7 +48,7 @@ public class WaterProxy {
 
     /**
      * 调用_service接口，并尝试缓存控制
-     * */
+     */
     public static String callAndCache(String service, String fun, Map<String, Object> args, CacheUsing cacheUsing) throws Exception {
         if (cacheUsing == null) {
             return call(service, fun, args);
@@ -65,10 +64,9 @@ public class WaterProxy {
     }
 
 
-
     /**
      * 调用RaaS
-     * */
+     */
     public static String raas(String type, String tag, String name, Map<String, Object> args) throws IOException {
         String path = "/" + type + "/" + tag + "/" + name;
 
@@ -77,14 +75,13 @@ public class WaterProxy {
 
     /**
      * 调用RaaS
-     * */
-    public static String raas(String path, Map<String, Object> args) throws IOException{
+     */
+    public static String raas(String path, Map<String, Object> args) throws IOException {
         if (raas_uri == null) {
             raas_uri = WaterClient.Config.get("water", "raas_uri").value;
         }
 
-        return HttpUtils.http(raas_uri + path)
-                .data(args).header(WW.http_header_from,WaterClient.localServiceHost()).post();
+        return http(raas_uri + path).data(args).post();
     }
 
 
@@ -96,11 +93,16 @@ public class WaterProxy {
             paas_uri = WaterClient.Config.get("water", "paas_uri").value;
         }
 
-        if(args == null){
-            return HttpUtils.http(paas_uri + path).header(WW.http_header_from,WaterClient.localServiceHost()).get();
-        }else{
-            return HttpUtils.http(paas_uri + path).header(WW.http_header_from,WaterClient.localServiceHost()).data(args).post();
+        if (args == null) {
+            return http(paas_uri + path).get();
+        } else {
+            return http(paas_uri + path).data(args).post();
         }
+    }
 
+    public static HttpUtils http(String url) {
+        return HttpUtils.http(url)
+                .header(WW.http_header_trace, WaterClient.waterTraceId())
+                .header(WW.http_header_from, WaterClient.localServiceHost());
     }
 }

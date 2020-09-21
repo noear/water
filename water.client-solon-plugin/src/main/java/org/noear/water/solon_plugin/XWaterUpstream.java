@@ -252,6 +252,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     @Override
     public HttpUtils xcall(String path){
         return HttpUtils.http(get() + path)
+                .headerAdd(WW.http_header_trace,WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 
     }
@@ -295,7 +296,9 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     public static <T> T xclient(Class<?> clz, XUpstream upstream) {
         return new XProxy()
-                .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
+                .interceptAdd((p,h,a)->{
+                    h.put(WW.http_header_trace, WaterClient.waterTraceId());
+                })
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost())
                 .upstream(upstream)
                 .create(clz);

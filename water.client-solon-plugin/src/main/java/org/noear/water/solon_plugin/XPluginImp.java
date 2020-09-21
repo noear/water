@@ -116,7 +116,7 @@ public class XPluginImp implements XPlugin {
                 String trace_id = ctx.header(WW.http_header_trace);
                 if (TextUtils.isEmpty(trace_id)) {
                     trace_id = XUtil.guid();
-                    ctx.headerSet(WW.http_header_trace, trace_id);
+                    ctx.headerMap().put(WW.http_header_trace, trace_id);
                 }
 
                 return trace_id;
