@@ -35,7 +35,7 @@ public class LogController extends BaseController {
     }
 
     @XMapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String trace_id, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
@@ -57,23 +57,30 @@ public class LogController extends BaseController {
         List list = new ArrayList<>();
 
 
+        String trace_id = null;
         String tag = null, tag1 = null, tag2 = null, tag3 = null;
-        if (TextUtils.isEmpty(tagx) == false) {
-            String[] ss = tagx.split("@");
-            if (ss.length > 0) {
-                tag = ss[0];
-            }
 
-            if (ss.length > 1) {
-                tag1 = ss[1];
-            }
 
-            if (ss.length > 2) {
-                tag2 = ss[2];
-            }
+        if (TextUtils.isNotEmpty(tagx)) {
+            if(tagx.startsWith("*")){
+                trace_id = tagx.substring(1);
+            }else {
+                String[] ss = tagx.split("@");
+                if (ss.length > 0) {
+                    tag = ss[0];
+                }
 
-            if (ss.length > 3) {
-                tag3 = ss[3];
+                if (ss.length > 1) {
+                    tag1 = ss[1];
+                }
+
+                if (ss.length > 2) {
+                    tag2 = ss[2];
+                }
+
+                if (ss.length > 3) {
+                    tag3 = ss[3];
+                }
             }
         }
 
