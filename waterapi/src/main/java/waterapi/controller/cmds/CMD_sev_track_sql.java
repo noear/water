@@ -1,5 +1,6 @@
 package waterapi.controller.cmds;
 
+import org.noear.water.WW;
 import waterapi.dso.db.DbWaterLogApi;
 
 /**
@@ -31,8 +32,9 @@ public class CMD_sev_track_sql extends CMDBase {
         String ua = get("ua");
         String note = get("note");
 
+        String trace_id = context.header(WW.http_header_trace);
 
-        DbWaterLogApi.addTrack(service,schema,interval,cmd_sql,cmd_arg,operator,operator_ip,path,ua,note);
+        DbWaterLogApi.addTrack(service, trace_id, schema, interval, cmd_sql, cmd_arg, operator, operator_ip, path, ua, note);
         data.set("code", 1);
         data.set("msg", "success");
     }

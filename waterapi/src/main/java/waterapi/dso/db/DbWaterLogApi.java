@@ -42,7 +42,7 @@ public final class DbWaterLogApi {
 //                .insert();
 //    }
 
-    public static void addTrack(String service, String schema, long interval, String cmd_sql, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
+    public static void addTrack(String service, String trace_id, String schema, long interval, String cmd_sql, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
 
         int seconds = (int) (interval / 1000);
         String sqlUp = cmd_sql.toUpperCase();
@@ -73,17 +73,17 @@ public final class DbWaterLogApi {
 
 
         if (TextUtils.isEmpty(path)) {
-            do_addTrack("water_exam_log_sql", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack("water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
         } else {
-            do_addTrack("water_exam_log_bcf", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack("water_exam_log_bcf", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
 
             if (interval >= 2000) {
-                do_addTrack("water_exam_log_sql", service, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+                do_addTrack("water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
             }
         }
     }
 
-    private static void do_addTrack(String logger, String service, String schema, String method, int seconds, long interval, String cmd_sql, String cmd_sql_md5, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
+    private static void do_addTrack(String logger, String service, String trace_id, String schema, String method, int seconds, long interval, String cmd_sql, String cmd_sql_md5, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
         DbContext db = Config.water_log;
 
         Datetime now = Datetime.Now();
@@ -91,19 +91,20 @@ public final class DbWaterLogApi {
 
         db.table(logger).usingExpr(true)
                 .set("log_id", IDUtils.buildLogID())
-                .set("`service`", service)
-                .set("`schema`", schema)
-                .set("`method`", method)
-                .set("`cmd_sql`", cmd_sql)
-                .set("`cmd_sql_md5`", cmd_sql_md5)
-                .set("`cmd_arg`", cmd_arg)
-                .set("`seconds`", seconds)
-                .set("`interval`", interval)
-                .set("`operator`", operator)
-                .set("`operator_ip`", operator_ip)
-                .set("`path`", path)
-                .set("`ua`", ua)
-                .set("`note`", note)
+                .set("service", service)
+                .set("trace_id", trace_id)
+                .set("schema", schema)
+                .set("method", method)
+                .set("cmd_sql", cmd_sql)
+                .set("cmd_sql_md5", cmd_sql_md5)
+                .set("cmd_arg", cmd_arg)
+                .set("seconds", seconds)
+                .set("interval", interval)
+                .set("operator", operator)
+                .set("operator_ip", operator_ip)
+                .set("path", path)
+                .set("ua", ua)
+                .set("note", note)
                 .set("log_date", now.getDate())
                 .set("log_hour", now.getHours())
                 .set("log_fulltime", "$NOW()")
