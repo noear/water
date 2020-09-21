@@ -33,13 +33,13 @@ public class WaterConfig {
 
     //trace_id_supplier
     private static Supplier<String> _water_trace_id_supplier = ()->null;
+    public static Supplier<String> water_trace_id_supplier(){
+        return _water_trace_id_supplier;
+    }
     public static void water_trace_id_supplier(Supplier<String> supplier){
         if(supplier != null){
             _water_trace_id_supplier = supplier;
         }
-    }
-    public static String water_trace_id(){
-        return _water_trace_id_supplier.get();
     }
 
     //不可修改

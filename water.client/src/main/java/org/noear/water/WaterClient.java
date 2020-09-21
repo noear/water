@@ -43,6 +43,10 @@ public final class WaterClient {
         return _localServiceHost;
     }
 
+    public static String waterTraceId(){
+        return WaterConfig.water_trace_id_supplier().get();
+    }
+
     /**
      * 配置服务接口
      * */

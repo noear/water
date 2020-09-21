@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class XPluginImp implements XPlugin {
     Map<String, MessageHandler> _router  =new HashMap<>();
-    String HEADER_TRACE_ID = "X-Water-Trace-Id";
 
     @Override
     public void start(XApp app) {
@@ -114,10 +113,10 @@ public class XPluginImp implements XPlugin {
             if (ctx == null) {
                 return null;
             } else {
-                String trace_id = ctx.header(HEADER_TRACE_ID);
+                String trace_id = ctx.header(WW.http_header_trace);
                 if (TextUtils.isEmpty(trace_id)) {
                     trace_id = XUtil.guid();
-                    ctx.headerSet(HEADER_TRACE_ID, trace_id);
+                    ctx.headerSet(WW.http_header_trace, trace_id);
                 }
 
                 return trace_id;

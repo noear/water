@@ -6,6 +6,7 @@ import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.WaterConfig;
 import org.noear.water.dso.WaterUpstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
@@ -294,6 +295,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     public static <T> T xclient(Class<?> clz, XUpstream upstream) {
         return new XProxy()
+                .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost())
                 .upstream(upstream)
                 .create(clz);

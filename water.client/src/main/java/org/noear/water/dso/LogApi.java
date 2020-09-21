@@ -116,7 +116,7 @@ public class LogApi {
             return;
         }
 
-        String trace_id = WaterConfig.water_trace_id();
+        String trace_id = WaterClient.waterTraceId();
 
         Map<String, String> params = new HashMap<>();
         params.put("logger", logger);

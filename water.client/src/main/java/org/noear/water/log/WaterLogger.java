@@ -294,7 +294,7 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
         LogEvent log = new LogEvent();
 
         log.logger = getName();
-        log.trace_id = WaterConfig.water_trace_id();
+        log.trace_id = WaterClient.waterTraceId();
         log.level = level.code;
         log.tag = tag;
         log.tag1 = tag1;
