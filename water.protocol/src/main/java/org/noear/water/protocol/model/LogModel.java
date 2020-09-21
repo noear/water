@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 public class LogModel {
     public long log_id;
+    public String trace_id;
     public int level;
     public String tag;
     public String tag1;
