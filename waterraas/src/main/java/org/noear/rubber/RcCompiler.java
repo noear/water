@@ -226,7 +226,7 @@ final class RcCompiler {
         StringBuilder sb = new StringBuilder();
 
         if(is_preview) {
-            sb.append(" /*D-Block.实例：").append(block.name_display).append("*/ \r\n");
+            sb.append(" /*指标仓库.实例：").append(block.name_display).append("*/ \r\n");
         }
 
         sb.append("this.DD_").append(block.tag).append("_").append(block.name).append(" = {");

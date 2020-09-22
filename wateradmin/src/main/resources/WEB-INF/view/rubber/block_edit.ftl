@@ -141,7 +141,7 @@
 
 <toolbar class="blockquote">
     <left>
-        <h2 class="ln30"><a href="#" onclick="javascript:history.back(-1);" class="noline">D-Block</a></h2> / 编辑
+        <h2 class="ln30"><a href="#" onclick="javascript:history.back(-1);" class="noline">指标仓库</a></h2> / 编辑
     </left>
     <right>
         <#if (is_admin == 1) && (block.block_id > 0) >

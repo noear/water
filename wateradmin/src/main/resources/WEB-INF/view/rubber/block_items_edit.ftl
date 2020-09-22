@@ -42,7 +42,7 @@
 <main>
     <toolbar class="blockquote">
         <left>
-            <h2><a href="/rubber/block/inner?tag_name=${block.tag!}" class="noline">D-Block</a> / <a href="#" onclick="javascript:history.back(-1);" class="noline">内容列表</a></h2> / 编辑 :: ${block.name_display!}
+            <h2><a href="/rubber/block/inner?tag_name=${block.tag!}" class="noline">指标仓库</a> / <a href="#" onclick="javascript:history.back(-1);" class="noline">内容列表</a></h2> / 编辑 :: ${block.name_display!}
         </left>
         <right>
             <#if (block.block_id > 0)>

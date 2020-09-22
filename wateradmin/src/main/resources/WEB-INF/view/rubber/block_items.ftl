@@ -22,7 +22,7 @@
 <body>
 <main class="frm">
     <blockquote>
-        <h2 class="ln30"><a href="/rubber/block/inner?tag_name=${block.tag!}" class="noline">D-Block</a></h2> / 内容列表 :: ${block.name_display!}
+        <h2 class="ln30"><a href="/rubber/block/inner?tag_name=${block.tag!}" class="noline">指标仓库</a></h2> / 内容列表 :: ${block.name_display!}
     </blockquote>
     <toolbar>
         <left>
