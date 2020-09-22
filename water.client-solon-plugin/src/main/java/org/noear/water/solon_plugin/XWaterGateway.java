@@ -1,12 +1,12 @@
 package org.noear.water.solon_plugin;
 
+import org.noear.fairy.Fairy;
+import org.noear.fairy.Result;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XMap;
 import org.noear.solon.core.XUpstream;
-import org.noear.solonclient.Result;
-import org.noear.solonclient.XProxy;
 import org.noear.water.utils.TextUtils;
 
 import java.io.ByteArrayInputStream;
@@ -88,7 +88,7 @@ public class XWaterGateway implements XHandler {
             return;
         }
 
-        Result rst = new XProxy()
+        Result rst = new Fairy()
                 .url(upstream.getServer(), fun)
                 .call(headers(ctx), ctx.paramMap())
                 .result();

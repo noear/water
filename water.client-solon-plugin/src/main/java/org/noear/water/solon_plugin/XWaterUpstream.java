@@ -1,12 +1,12 @@
 package org.noear.water.solon_plugin;
 
+import org.noear.fairy.Fairy;
+import org.noear.fairy.Upstream;
+import org.noear.fairy.annotation.FairyClient;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XUpstream;
-import org.noear.solonclient.XProxy;
-import org.noear.solonclient.annotation.XClient;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
-import org.noear.water.WaterConfig;
 import org.noear.water.dso.WaterUpstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
@@ -22,39 +22,39 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, XUpstream {
+public class XWaterUpstream implements WaterUpstream, XUpstream, Upstream {
     private final String TAG_SERVER = "{server}";
 
 
     /**
      * 服务名
-     * */
+     */
     private String _service;
     /**
      * 配置
-     * */
+     */
     private DiscoverM _cfg;
     /**
      * 轮询值
-     * */
+     */
     private int _polling_val = 0;
     /**
      * 节点列表
-     * */
+     */
     protected List<String> _nodes = new ArrayList<>();
     /**
      * 节点数量
-     * */
+     */
     private int _nodes_count;
 
     /**
      * 启用代理
-     * */
+     */
     private boolean _enable_agent;
 
     /**
      * 备份服务节点
-     * */
+     */
     private String _backup_server;
 
 
@@ -66,7 +66,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     /**
      * 获取一个负载器
-     * */
+     */
     public static XWaterUpstream get(String service) {
         XWaterUpstream tmp = _map.get(service);
         if (tmp == null) {
@@ -87,7 +87,6 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     }
 
 
-
     /**
      * 重新加载负载配置
      */
@@ -99,11 +98,11 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
         DiscoverM cfg = WaterClient.Registry.discover(_service, WaterClient.localService(), WaterClient.localHost());
 
-        if(lock){
+        if (lock) {
             synchronized (_service.intern()) { //::与获取形成互锁
                 loadDo0(cfg);
             }
-        }else{
+        } else {
             loadDo0(cfg);
         }
 
@@ -115,7 +114,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
         //使用前，要锁一下
         //
         if (cfg == null || TextUtils.isEmpty(cfg.policy)) {
-            if(TextUtils.isNotEmpty(_backup_server)){
+            if (TextUtils.isNotEmpty(_backup_server)) {
                 //
                 // 如果有默认的，则清空
                 //
@@ -160,11 +159,11 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
         //记录可用服务数
         //
-        if(_nodes2.size() < _nodes_count){
+        if (_nodes2.size() < _nodes_count) {
             //旧的多，则先更新数量
             _nodes_count = _nodes.size();
             _nodes = _nodes2;
-        }else{
+        } else {
             //新的多，则先更新节点
             _nodes = _nodes2;
             _nodes_count = _nodes.size();
@@ -174,7 +173,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     /**
      * 获取一个轮询节点
-     * */
+     */
     public String get() {
         //1.如果有代理，则使用代理
         if (_enable_agent) {
@@ -208,7 +207,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
 
     /**
      * 代理
-     * */
+     */
     public String agent() {
         if (_cfg == null || _enable_agent == false) {
             return null;
@@ -245,14 +244,14 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     //
 
     @Override
-    public void setBackup(String server){
+    public void setBackup(String server) {
         _backup_server = server;
     }
 
     @Override
-    public HttpUtils xcall(String path){
+    public HttpUtils xcall(String path) {
         return HttpUtils.http(get() + path)
-                .headerAdd(WW.http_header_trace,WaterClient.waterTraceId())
+                .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 
     }
@@ -262,7 +261,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
     //
 
     public static <T> T xclient(Class<?> clz) {
-        XClient c_meta = clz.getAnnotation(XClient.class);
+        FairyClient c_meta = clz.getAnnotation(FairyClient.class);
 
         if (c_meta == null) {
             throw new RuntimeException("No xclient annotation");
@@ -278,7 +277,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
             c_sev = c_sev.split(":")[0];
         }
 
-        XUpstream upstream = null;
+        Upstream upstream = null;
         if (XApp.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
@@ -294,9 +293,9 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
         return xclient(clz, upstream);
     }
 
-    public static <T> T xclient(Class<?> clz, XUpstream upstream) {
-        return new XProxy()
-                .filterAdd((p,h,a)->{
+    public static <T> T xclient(Class<?> clz, Upstream upstream) {
+        return Fairy.builder()
+                .filterAdd((cfg, url, h, a) -> {
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());
                     h.put(WW.http_header_from, WaterClient.localServiceHost());
                 })
