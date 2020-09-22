@@ -98,16 +98,18 @@ public class LogApi {
      * @param async   是否异步提交
      */
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
+        String trace_id = WaterClient.waterTraceId();
+
         if (async) {
             WaterConfig.pools.submit(() -> {
-                appendDo(logger, level, tag, tag1, tag2, tag3, summary, content);
+                appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
             });
         } else {
-            appendDo(logger, level, tag, tag1, tag2, tag3, summary, content);
+            appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
         }
     }
 
-    private void appendDo(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+    private void appendDo(String logger, String trace_id,Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }
@@ -115,8 +117,6 @@ public class LogApi {
         if (logger.indexOf(".") > 0) {
             return;
         }
-
-        String trace_id = WaterClient.waterTraceId();
 
         Map<String, String> params = new HashMap<>();
         params.put("logger", logger);

@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.RedisX;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class TrackApi {
     //db:5
     public static RedisX rd_track;
+
     static {
         rd_track = WaterConfig.redis_track_cfg().getRd(5);
         TrackBuffer.singleton().bind(rd_track);
@@ -104,12 +106,14 @@ public class TrackApi {
      */
     private void track0(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
         long interval = cmd.timespan();
+        String trace_id = WaterClient.waterTraceId();
+
         WaterConfig.pools.submit(() -> {
-            track0Do(service, cmd, interval, ua, path, operator, operator_ip, note);
+            track0Do(service, trace_id, cmd, interval, ua, path, operator, operator_ip, note);
         });
     }
 
-    private void track0Do(String service, Command cmd, long interval, String ua, String path, String operator, String operator_ip, String note) {
+    private void track0Do(String service, String trace_id, Command cmd, long interval, String ua, String path, String operator, String operator_ip, String note) {
 
 
         Map<String, Object> map = cmd.paramMap();
@@ -144,11 +148,9 @@ public class TrackApi {
         }
 
         try {
-            CallSevUtil.post("/sev/track/sql/", params);
+            CallSevUtil.post("/sev/track/sql/", params, trace_id);
         } catch (Exception ex) {
 
         }
-
-//        CallUtil.postAsync("/sev/track/sql/", params);
     }
 }

@@ -17,6 +17,10 @@ class CallSevUtil {
         return WaterConfig.water_sev_upstream().xcall(path);
     }
 
+    public static String post(String path, Map<String, String> data, String trace_id) throws IOException {
+        return http(path).header(WW.http_header_trace, trace_id).data(data).post();
+    }
+
     public static String post(String path, Map<String, String> data) throws IOException {
         return http(path).data(data).post();
     }
