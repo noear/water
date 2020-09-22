@@ -56,8 +56,11 @@
                     <td>
                         ${log.interval}
                     </td>
-                    <td class="left break" style="font-size: small">${log.schema!}::${log.cmd_sql!}
-                    <n-l>$$$ ${log.cmd_arg!}</n-l>
+                    <td class="left break" style="font-size: small">
+                        <div>*${log.trace_id!}</div>
+                        <div style="font-size: small">${log.schema!}::${log.cmd_sql!}
+                            <n-l>$$$ ${log.cmd_arg!}</n-l>
+                        </div>
                     </td>
                 </tr>
                 </#list>
