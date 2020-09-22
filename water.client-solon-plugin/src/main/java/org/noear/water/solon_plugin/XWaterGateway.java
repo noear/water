@@ -31,8 +31,9 @@ public class XWaterGateway implements XHandler {
                     return;
                 }
             }
-
-            add(alias, service);
+            if (router.containsKey(alias) == false) {
+                add(alias, service);
+            }
         });
     }
 
@@ -84,7 +85,7 @@ public class XWaterGateway implements XHandler {
 
         //如果没有预配的负载不干活
         if (upstream == null) {
-            ctx.status(404);
+            ctx.statusSet(404);
             return;
         }
 

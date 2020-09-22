@@ -32,7 +32,7 @@ public class WaterConfig {
     }
 
     //trace_id_supplier
-    private static Supplier<String> _water_trace_id_supplier = ()->null;
+    private static Supplier<String> _water_trace_id_supplier = ()->"";
     public static Supplier<String> water_trace_id_supplier(){
         return _water_trace_id_supplier;
     }
