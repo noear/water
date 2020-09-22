@@ -5,14 +5,15 @@ import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.water.WaterClient;
 
-
 @XController
 public class TestController {
     @XMapping("/")
-    public String home(String msg) throws Exception{
-        if(XUtil.isNotEmpty(msg)){
+    public String home(String msg) throws Exception {
+        if (XUtil.isNotEmpty(msg)) {
             WaterClient.Message.sendMessage("test.hello", msg);
+            return "OK: *" + WaterClient.waterTraceId();
+        }else{
+            return "NO";
         }
-        return "OK";
     }
 }
