@@ -4,6 +4,7 @@ import org.noear.weed.DbContext;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_log.LogSqlModel;
 
 import java.sql.SQLException;
@@ -96,14 +97,14 @@ public class DbWaterLogApi {
                 .count();
     }
 
-    public static List<LogSqlModel> getSqlServiceTags(String tableName) throws SQLException {
+    public static List<TagCountsModel> getSqlServiceTags(String tableName) throws SQLException {
         return db().table(tableName)
                 .where("1 = 1")
                 .groupBy("`service`")
                 .orderBy("`service` ASC")
                 .select("`service` tag")
                 .caching(CacheUtil.data).usingCache(60 * 3)
-                .getList(new LogSqlModel());
+                .getList(TagCountsModel.class);
     }
 
     public static List<LogSqlModel> getSqlSecondsTags(String tableName, String service) throws SQLException {
@@ -116,13 +117,13 @@ public class DbWaterLogApi {
                 .getList(new LogSqlModel());
     }
 
-    public static List<LogSqlModel> getSqlOperatorTags(String tableName, String service) throws SQLException {
+    public static List<TagCountsModel> getSqlOperatorTags(String tableName, String service) throws SQLException {
         return db().table(tableName)
                 .where("`service`=?", service)
                 .groupBy("operator")
                 .orderBy("operator ASC")
                 .select("operator tag")
                 .caching(CacheUtil.data).usingCache(60 * 3)
-                .getList(new LogSqlModel());
+                .getList(TagCountsModel.class);
     }
 }

@@ -57,7 +57,7 @@
                 </td>
                 <td>${log.operator!}</td>
                 <td class="left break">
-                    <div>${log.path!} (${log.operator_ip!})</div>
+                    <div>${log.path!} (${log.operator_ip!}) *${log.trace_id!}</div>
                     <div style="font-size: small">${log.schema!}::${log.cmd_sql!}
                     <n-l>$$$ ${log.cmd_arg!}</n-l>
                     </div>

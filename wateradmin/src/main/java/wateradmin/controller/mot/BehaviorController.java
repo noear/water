@@ -9,6 +9,7 @@ import org.noear.solon.core.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.db.DbWaterLogApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_log.LogSqlModel;
 
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class BehaviorController extends BaseController {
     //消息异常记录
     @XMapping("behavior")
     public ModelAndView behavior(String tag_name) throws SQLException {
-        List<LogSqlModel> tags = DbWaterLogApi.getSqlServiceTags(tableName);
+        List<TagCountsModel> tags = DbWaterLogApi.getSqlServiceTags(tableName);
 
 
         BcfServiceChecker.filter(tags, m -> m.tag);
@@ -48,7 +49,7 @@ public class BehaviorController extends BaseController {
             page=1;
         }
 
-        List<LogSqlModel> tag2s = DbWaterLogApi.getSqlOperatorTags(tableName,tag_name);
+        List<TagCountsModel> tag2s = DbWaterLogApi.getSqlOperatorTags(tableName,tag_name);
         List<LogSqlModel> logs = new ArrayList<>();
 
         int i_hour = 0;

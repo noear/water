@@ -10,6 +10,7 @@ import java.util.Date;
 public class LogSqlModel implements IBinder
 {
     public long log_id;
+    public String trace_id;
     public String service;
     public String schema;
     public String method;
@@ -33,6 +34,7 @@ public class LogSqlModel implements IBinder
         //1.source:数据源
         //
         log_id = s.get("log_id").value(0L);
+        trace_id = s.get("trace_id").value(null);
         service = s.get("service").value(null);
         schema = s.get("schema").value(null);
         method = s.get("method").value(null);
