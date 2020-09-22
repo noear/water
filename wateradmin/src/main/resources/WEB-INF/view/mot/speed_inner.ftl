@@ -13,7 +13,7 @@
 <main>
 <toolbar>
         <form>
-            接口：<input type="text"  name="name" placeholder="分组:: 或 接口名" id="name"/>&nbsp;&nbsp;
+            接口：<input type="text" class="w250" name="name" placeholder="分组:: 或 接口名" id="name"/>&nbsp;&nbsp;
             <input type="text" name="serviceName" id="serviceName" value="${serviceName}" style="display: none"/>
             <button type="submit">查询</button>&nbsp;&nbsp;
         </form>

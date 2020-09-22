@@ -31,9 +31,9 @@
     </datalist>
         <toolbar>
             <left>
-                账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
-                log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
-                path：<input type="text"  id="path" placeholder="/"  id="path" style="width: 100px;"/>&nbsp;&nbsp;
+                账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
+                log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" class="w100"/>&nbsp;&nbsp;
+                path：<input type="text"  id="path" placeholder="/"  id="path" class="w150"/>&nbsp;&nbsp;
                 <button type="button" onclick="do_query()">查询</button>
             </left>
             <right>
