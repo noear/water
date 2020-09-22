@@ -3,25 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.noear</groupId>
-    <artifactId>water-demo-rpc-service</artifactId>
-
-    <packaging>jar</packaging>
-
-    <name>${project.artifactId}</name>
-    <description>Java project for water</description>
-
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>water-parent</artifactId>
         <version>2.0.4</version>
     </parent>
 
+    <artifactId>water-demo-rpc-service</artifactId>
+    <version>demo</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>Java project for water</description>
+
+
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonclient</artifactId>
+            <artifactId>fairy</artifactId>
         </dependency>
     </dependencies>
 </project>
