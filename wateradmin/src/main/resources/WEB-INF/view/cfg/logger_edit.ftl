@@ -34,7 +34,7 @@
                 url:"/cfg/logger/edit/ajax/save",
                 data:vm,
                 success:function (data) {
-                    if(data.code==1) {
+                    if(data.code == 1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
                             parent.location.href="/cfg/logger?tag_name="+vm.tag;

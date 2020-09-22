@@ -34,12 +34,11 @@
                 url:"/cfg/logger/isEnable",
                 data:{"logger_id":logger_id,"is_enabled":is_enabled},
                 success:function(data){
-
-                    if (data == true) {
+                    if (data.code == 1) {
                         top.layer.msg("操作成功");
                         setTimeout(function(){
                             location.reload();
-                        },1000);
+                        },800);
                     } else {
                         top.layer.msg("操作失败");
                     }
