@@ -18,11 +18,6 @@ import waterapi.dso.interceptor.Logging;
 @Whitelist
 @XController
 public class CMD_sev_reg extends UapiBase {
-//    @Override
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @NotEmpty({"service", "address"})
     @XMapping("/sev/reg/")
     public XResult cmd_exec(XContext ctx, String service, String address, String meta, int is_unstable, String check_url, int check_type) throws Exception {

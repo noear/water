@@ -17,11 +17,6 @@ import waterapi.dso.db.DbWaterLogApi;
 @XController
 public class CMD_sev_track_sql extends UapiBase {
 
-//    @Override
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @NotEmpty({"service", ""})
     @XMapping("/sev/track/sql/")
     public XResult cmd_exec(XContext ctx, String service, long interval,

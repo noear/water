@@ -19,11 +19,6 @@ import waterapi.dso.interceptor.Logging;
 @Whitelist
 @XController
 public class CMD_sev_set extends UapiBase {
-
-//    protected boolean isLogging() {
-//        return true;
-//    }
-
     @XMapping("/sev/set/")
     public XResult cmd_exec(XContext ctx, String s) throws Exception {
         if (TextUtils.isEmpty(s)) {

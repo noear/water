@@ -4,9 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgApi;
 
 import java.util.Map;
 

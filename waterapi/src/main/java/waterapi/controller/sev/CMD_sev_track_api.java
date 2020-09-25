@@ -16,14 +16,6 @@ import waterapi.controller.UapiBase;
 @XController
 public class CMD_sev_track_api extends UapiBase {
 
-//    protected boolean isTrack() {
-//        return false;
-//    }
-//
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @NotEmpty({"service", "tag", "name", "timespan"})
     @XMapping("/sev/track/")
     protected XResult cmd_exec(String _node, String _from,

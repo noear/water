@@ -28,10 +28,6 @@ import java.util.List;
 @XController
 public class CMD_log_add2 extends UapiBase {
 
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @XMapping("/log/add2/")
     public XResult cmd_exec(XContext ctx) throws Exception {
         String contentType = ctx.contentType();

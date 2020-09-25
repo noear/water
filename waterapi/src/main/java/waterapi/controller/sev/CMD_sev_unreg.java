@@ -16,10 +16,6 @@ import waterapi.dso.db.DbWaterRegApi;
 @XController
 public class CMD_sev_unreg extends UapiBase {
 
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @NotEmpty({"service", "address"})
     @XMapping("/sev/unreg/")
     protected XResult cmd_exec(XContext ctx, String service, String address, String meta) throws Exception {

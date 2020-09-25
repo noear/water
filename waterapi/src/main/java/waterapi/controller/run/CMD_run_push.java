@@ -22,11 +22,6 @@ import java.util.List;
 @XController
 public class CMD_run_push extends UapiBase {
 
-
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     @NotEmpty({"msg", "target"})
     @XMapping("/run/push/")
     public XResult cmd_exec(String msg, String target) throws Exception {

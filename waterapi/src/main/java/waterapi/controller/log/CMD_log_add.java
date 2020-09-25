@@ -26,10 +26,6 @@ import java.util.Date;
 public class CMD_log_add extends UapiBase {
     static final String log_fulltime_formt = "yyyy-MM-dd HH:mm:ss";
 
-//    protected boolean isLogging() {
-//        return false;
-//    }
-
     /**
      * @param logger   日志记录器name
      * @param level    日志级别

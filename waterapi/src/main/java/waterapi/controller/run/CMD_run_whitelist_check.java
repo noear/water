@@ -10,7 +10,7 @@ import waterapi.dso.db.DbWaterCfgApi;
 @Whitelist
 @XController
 public class CMD_run_whitelist_check extends UapiBase {
-    @XMapping("whitelist/check/")
+    @XMapping("/run/whitelist/check/")
     public String cmd_exec(XContext ctx) throws Exception {
         String tags = ctx.param("tags", "");
         String type = ctx.param("type", "");
