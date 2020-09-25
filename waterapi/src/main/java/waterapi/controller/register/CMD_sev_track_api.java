@@ -20,6 +20,12 @@ import waterapi.controller.UapiBase;
 @XController
 public class CMD_sev_track_api extends UapiBase {
 
+    /**
+     * @param service  服务名
+     * @param tag      标签
+     * @param name     名称
+     * @param timespan 时长
+     */
     @NotEmpty({"service", "tag", "name", "timespan"})
     @XMapping("/sev/track/")
     protected XResult cmd_exec(String _node, String _from,

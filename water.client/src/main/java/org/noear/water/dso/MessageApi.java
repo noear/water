@@ -43,7 +43,7 @@ public class MessageApi {
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
         params.put("topic", String.join(",", topics));
-        params.put("receiver_url", receiver_url);//**此字段名将充用。by 2020-09
+        params.put("receiver_url", receiver_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receiver_url);
         params.put("receive_way", receive_way + "");
         params.put("access_key", access_key);

@@ -21,7 +21,11 @@ import waterapi.dso.db.DbWaterLogApi;
 @XController
 public class CMD_sev_track_sql extends UapiBase {
 
-    @NotEmpty({"service", ""})
+    /**
+     * @param service 服务名
+     * @param interval 时长
+     * */
+    @NotEmpty({"service", "interval"})
     @XMapping("/sev/track/sql/")
     public XResult cmd_exec(XContext ctx, String service, long interval,
                             String operator, String operator_ip, String path, String ua, String note) throws Exception {

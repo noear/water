@@ -34,11 +34,10 @@ public class CMD_msg_unsubscribe extends UapiBase {
         if(XUtil.isEmpty(subscriber_key)){
             subscriber_key = ctx.param("key");//**兼容旧版变量名。by 2020.09
         }
+
         if (XUtil.isEmpty(subscriber_key) == false) {
             throw UapiCodes.CODE_13("subscriber_key");
         }
-
-
 
         boolean isOk = true;
         for (String topic2 : topic.split(",")) {//多个主题以","隔开
@@ -46,7 +45,6 @@ public class CMD_msg_unsubscribe extends UapiBase {
                 isOk = isOk & do_unsubscprebe(subscriber_key, topic2);
             }
         }
-
 
         if(isOk) {
             return XResult.succeed();

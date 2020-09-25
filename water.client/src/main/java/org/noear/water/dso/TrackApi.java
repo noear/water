@@ -72,14 +72,14 @@ public class TrackApi {
         params.put("service", service);
         params.put("tag", tag);
         params.put("name", name);
-        params.put("timespan", timespan + "");
+        params.put("timespan", timespan + ""); //**此字段名将弃用。by 2020-09
+        params.put("interval",timespan + "");
 
         try {
             CallSevUtil.post("/sev/track/api/", params);
         } catch (Exception ex) {
 
         }
-        //CallUtil.postAsync("/sev/track/api/", params);
     }
 
     /**

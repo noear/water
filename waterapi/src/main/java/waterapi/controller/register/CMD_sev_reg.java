@@ -23,6 +23,13 @@ import waterapi.dso.interceptor.Logging;
 @Whitelist
 @XController
 public class CMD_sev_reg extends UapiBase {
+    /**
+     * @param service    服务名
+     * @param address    地址
+     * @param meta       元信息
+     * @param check_type 检测类型
+     * @param check_url  检测地址
+     */
     @NotEmpty({"service", "address"})
     @XMapping("/sev/reg/")
     public XResult cmd_exec(XContext ctx, String service, String address, String meta, int is_unstable, String check_url, int check_type) throws Exception {

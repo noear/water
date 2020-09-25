@@ -28,13 +28,18 @@ import java.util.List;
 @Whitelist
 @XController
 public class CMD_sev_discover extends UapiBase {
+    /**
+     * @param service          服务名
+     * @param consumer         消费者服务名
+     * @param consumer_address 消费者地址
+     */
     @NotEmpty("service")
     @XMapping("/sev/discover/")
-    public XResult cmd_exec(XContext ctx, String service) throws Exception {
-        String consumer = ctx.param("consumer", "");
-        String consumer_address = ctx.param("consumer_address", "");
+    public XResult cmd_exec(XContext ctx, String service, String consumer, String consumer_address) throws Exception {
 
-        if(TextUtils.isNotEmpty(consumer)) {
+        if (TextUtils.isNotEmpty(consumer) && TextUtils.isNotEmpty(consumer_address)) {
+            //记录消费者
+            //
             DbWaterRegApi.logConsume(service, consumer, consumer_address);
         }
 
@@ -44,10 +49,10 @@ public class CMD_sev_discover extends UapiBase {
         String url = null;
         String policy = null;
 
-        if(TextUtils.isEmpty(cfg.value)){
+        if (TextUtils.isEmpty(cfg.value)) {
             url = "";
             policy = "default";
-        }else {
+        } else {
             if (cfg.is_enabled == false) {
                 return XResult.failure("No gateway is available");
             }
@@ -63,7 +68,7 @@ public class CMD_sev_discover extends UapiBase {
         }
 
 
-        ONode data  =new ONode();
+        ONode data = new ONode();
 
         data.set("url", url);
         data.set("policy", policy); //default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希) //default=polling
