@@ -58,7 +58,7 @@ public class UapiCodes {
             case 15:
                 return "Too many requests";
             case 16:
-                return "The request is not in the whitelist: " + error.getDescription();
+                return "The request is not in the whitelist" + (error.getDescription() == null ? "" : "(" + error.getDescription() + ")");
             default:
                 return "Unknown error!";
         }
