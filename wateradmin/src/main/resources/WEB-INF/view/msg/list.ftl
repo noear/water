@@ -120,19 +120,19 @@
 <main>
     <toolbar>
         <flex>
-            <left class="col-4">
+            <left class="col-3">
                 <#if _m!=3 && is_admin == 1>
                     <button type='button' class="edit" onclick="distribute()" >立即派发</button>
                     <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
                     <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
                 </#if>
             </left>
-            <middle class="col-4 center">
+            <middle class="col-6 center">
                 <input type="text" id="key" value="${key!}" placeholder="ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>
-            <right class="col-4">
+            <right class="col-3">
                 <selector>
                     <a class="${(_m =0)?string('sel','')}" href="?_m=0">异常的</a>
                     <a class="${(_m =1)?string('sel','')}" href="?_m=1">等待中</a>
