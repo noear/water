@@ -11,6 +11,7 @@
 * 完善 WaterClient.Config.set(k,v) 机制
 * 增加链路相关性跟踪机制
 * waterapi 改为新的开发模式
+* 完成dubbo注册服务适配
 
 #### 2.0.2 规划::
 * 增加PoalDb支持
