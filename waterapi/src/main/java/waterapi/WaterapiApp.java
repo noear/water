@@ -40,7 +40,7 @@ public class WaterapiApp {
 			System.setProperty("org.noear.solon.extend.staticfiles.enabled", "0");
 
 			XApp.start(WaterapiApp.class, argx, app -> {
-				Config.tryInit(app.port(), app.prop().getProp("water.dataSource"));
+				Config.tryInit();
 
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
 

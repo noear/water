@@ -50,9 +50,12 @@ public class Config {
 
     private static boolean _inited = false;
 
-    public static void tryInit(int service_port, Properties prop) {
+    public static void tryInit() {
         if (_inited == false) {
             _inited = true;
+
+            int service_port = XApp.global().port();;
+            Properties prop = XApp.cfg().getProp("water.dataSource");
 
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
