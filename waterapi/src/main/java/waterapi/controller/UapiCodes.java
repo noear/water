@@ -35,10 +35,13 @@ public class UapiCodes {
      * 请求太频繁了
      */
     public static final UapiCode CODE_15 = new UapiCode(15);
+
     /**
      * 请求不在白名单
      */
-    public static final UapiCode CODE_16 = new UapiCode(16);
+    public static final UapiCode CODE_16(String ip) {
+        return new UapiCode(16, ip);
+    }
 
     public static final String getDescription(UapiCode error) {
         switch (error.getCode()) {
@@ -55,7 +58,7 @@ public class UapiCodes {
             case 15:
                 return "Too many requests";
             case 16:
-                return "The request is not in the whitelist";
+                return "The request is not in the whitelist: " + error.getDescription();
             default:
                 return "Unknown error!";
         }
