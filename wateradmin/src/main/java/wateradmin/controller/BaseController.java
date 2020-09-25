@@ -26,10 +26,6 @@ public abstract class BaseController {
         return request.paramAsInt(key,-1);
     }
 
-    public String getIP(XContext request) {
-        return IPUtil.getIP(request);
-    }
-
 
     /*视图数据模型*/
     protected ViewModel viewModel = new ViewModel();
