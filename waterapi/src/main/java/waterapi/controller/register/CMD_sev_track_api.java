@@ -10,7 +10,7 @@ import waterapi.Config;
 import waterapi.controller.UapiBase;
 
 /**
- * 服务接口跟踪
+ * 服务接口跟踪（此接口之后会弃用）
  *
  * @author noear
  * @since 2017.07
