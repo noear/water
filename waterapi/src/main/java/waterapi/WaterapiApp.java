@@ -37,9 +37,11 @@ public class WaterapiApp {
 		} else {
 			//关掉静态文件支持//启动运行界面
 			//
-			System.setProperty("org.noear.solon.extend.staticfiles.enabled", "0");
+			//System.setProperty("org.noear.solon.extend.staticfiles.enabled", "0");
 
 			XApp.start(WaterapiApp.class, argx, app -> {
+				app.enableStaticfiles(false);
+
 				Config.tryInit();
 
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;

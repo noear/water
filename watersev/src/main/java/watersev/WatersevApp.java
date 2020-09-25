@@ -34,7 +34,7 @@ public class WatersevApp {
 
         XApp.start(WatersevApp.class, xMap, (x) -> {
             //有端口才开启http能力
-            x.enableHttp = has_server_port;
+            x.enableHttp(has_server_port);
 
             Config.tryInit();
 
