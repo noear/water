@@ -3,6 +3,7 @@ package waterapi.controller.run;
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
+import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -10,11 +11,10 @@ import waterapi.dso.db.DbWaterCfgApi;
 @Whitelist
 @XController
 public class CMD_run_whitelist_check extends UapiBase {
+    @NotEmpty({"type", "value"})
     @XMapping("/run/whitelist/check/")
-    public String cmd_exec(XContext ctx) throws Exception {
+    public String cmd_exec(XContext ctx, String type, String value) throws Exception {
         String tags = ctx.param("tags", "");
-        String type = ctx.param("type", "");
-        String value = ctx.param("value", "");
 
         if (tags.contains("client")) {
             if (DbWaterCfgApi.whitelistIgnoreClient()) {
