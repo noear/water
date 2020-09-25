@@ -73,12 +73,12 @@ public class MsgController extends BaseController {
     public ViewModel sendMessage(String topic, String message,String tags) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            ONode data = WaterClient.Message.sendMessageAndTags(topic, message, tags);
+            boolean isOk = WaterClient.Message.sendMessageAndTags(topic, message, tags);
 
-            if (data.get("code").getInt() == 1) {
+            if (isOk) {
                 viewModel.code(1,"消息派发成功！");
             } else {
-                viewModel.code(0,"消息发送失败:" + data.toJson());
+                viewModel.code(0,"消息发送失败!");
             }
         } else {
             viewModel.code(0,"没有权限！");
