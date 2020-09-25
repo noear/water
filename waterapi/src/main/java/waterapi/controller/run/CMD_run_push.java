@@ -1,8 +1,14 @@
-package waterapi.controller.cmds;
+package waterapi.controller.run;
 
 import org.noear.snack.ONode;
+import org.noear.solon.annotation.XController;
+import org.noear.solon.annotation.XMapping;
+import org.noear.solon.core.XResult;
+import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
+import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.Config;
 
@@ -12,23 +18,18 @@ import java.util.List;
 /**
  * Created by noear on 2017/7/19.
  */
-public class CMD_run_push extends CMDBase {
+@Whitelist
+@XController
+public class CMD_run_push extends UapiBase {
 
-    @Override
-    protected boolean isLogging() {
-        return false;
-    }
 
-    @Override
-    protected void cmd_exec() throws Exception {
+//    protected boolean isLogging() {
+//        return false;
+//    }
 
-        String msg = get("msg");
-        String target = get("target");
-
-        if (checkParamsIsOk(target, msg) == false) {
-            return;
-        }
-
+    @NotEmpty({"msg", "target"})
+    @XMapping("/run/push/")
+    public XResult cmd_exec(String msg, String target) throws Exception {
 
         List<String> list = new ArrayList<String>();
         for (String str : target.split(",")) {
@@ -43,13 +44,10 @@ public class CMD_run_push extends CMDBase {
 
         String rest = ProtocolHub.heihei.push(Config.water_service_name, list, msg);
 
-        data.set("code", 1);
-        data.set("msg", "success");
         if (TextUtils.isEmpty(rest) == false) {
-            data.set("data", ONode.load(rest));
+            return XResult.succeed(ONode.load(rest));
         } else {
-            data.set("data", "null");
+            return XResult.failure();
         }
-
     }
 }

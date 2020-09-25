@@ -43,10 +43,11 @@ public class MessageApi {
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
         params.put("topic", String.join(",", topics));
-        params.put("receiver_url", receiver_url);
+        params.put("receiver_url", receiver_url);//**此字段名将充用。by 2020-09
+        params.put("receive_url", receiver_url);
+        params.put("receive_way", receive_way + "");
         params.put("access_key", access_key);
         params.put("alarm_mobile", alarm_mobile);
-        params.put("receive_way", receive_way + "");
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
         String txt = CallSevUtil.post("/msg/subscribe/", params);
@@ -64,7 +65,9 @@ public class MessageApi {
      */
     public ONode unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("key", subscriber_key);
+        params.put("key", subscriber_key);//**此字段名将充用。by 2020-09
+
+        params.put("subscriber_key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
         String txt = CallSevUtil.post("/msg/unsubscribe/", params);

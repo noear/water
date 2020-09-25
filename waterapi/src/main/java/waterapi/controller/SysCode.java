@@ -1,4 +1,4 @@
-package waterapi.controller.cmds;
+package waterapi.controller;
 
 /**
  * Created by noear on 2017/7/19.
