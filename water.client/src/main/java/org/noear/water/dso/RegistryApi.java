@@ -13,29 +13,30 @@ public class RegistryApi {
 
     /**
      * 注册（用于对接外部框架）
-     * */
+     */
     public void register(String service, String address, String meta, boolean is_unstable) {
-        register(service, address, meta,"", 1, "", is_unstable);
+        register(service, address, meta, "", 1, "", is_unstable);
     }
 
     /**
      * 注册
-     * */
+     */
     public void register(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
         register(service, address, check_url, 0, alarm_mobile, is_unstable);
     }
 
     /**
      * 注册
+     *
      * @param check_type 0:通过check_url检查，1:自己定时签到
-     * */
+     */
     public void register(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         register(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
     }
 
     /**
      * 注册
-     * */
+     */
     public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
@@ -51,14 +52,14 @@ public class RegistryApi {
         try {
             CallCfgUtil.post("/sev/reg/", params);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 
     /**
      * 注销（用于对接外部框架）
-     * */
-    public void unregister(String service, String address, String meta){
+     */
+    public void unregister(String service, String address, String meta) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -67,7 +68,7 @@ public class RegistryApi {
         try {
             CallCfgUtil.post("/sev/unreg/", params);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 
@@ -84,13 +85,13 @@ public class RegistryApi {
         try {
             CallCfgUtil.post("/sev/set/", params);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 
     /**
      * 发现
-     * */
+     */
     public DiscoverM discover(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
@@ -102,7 +103,7 @@ public class RegistryApi {
             String json = CallCfgUtil.post("/sev/discover/", params);
             ONode rst = ONode.loadStr(json);
 
-            if(rst.get("code").getInt() != 1){
+            if (rst.get("code").getInt() != 1) {
                 return null;
             }
 

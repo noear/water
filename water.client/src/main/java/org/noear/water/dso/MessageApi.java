@@ -23,7 +23,7 @@ public class MessageApi {
     /**
      * 订阅
      */
-    public ONode subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         return subscribeTopic(subscriber_key, "", receiver_url, access_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
@@ -38,7 +38,7 @@ public class MessageApi {
      * @param alarm_mobile    报警手机号
      * @param topics          主题..
      */
-    public ONode subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
@@ -54,7 +54,7 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/subscribe/:" + txt);
 
-        return ONode.loadStr(txt);
+        return ONode.loadStr(txt).get("code").getInt() == 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class MessageApi {
      * @param subscriber_key 订阅者标识
      * @param topics         主题..
      */
-    public ONode unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
+    public boolean unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);//**此字段名将充用。by 2020-09
 
@@ -74,13 +74,13 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
 
-        return ONode.loadStr(txt);
+        return ONode.loadStr(txt).get("code").getInt() == 1;
     }
 
     /**
      * 发送消息
      */
-    public ONode sendMessage(String topic, String message) throws Exception {
+    public boolean sendMessage(String topic, String message) throws Exception {
         return sendMessage(null, topic, message, null);
     }
 
@@ -88,7 +88,7 @@ public class MessageApi {
     /**
      * 发送消息
      */
-    public ONode sendMessage(String msg_key, String topic, String message) throws Exception {
+    public boolean sendMessage(String msg_key, String topic, String message) throws Exception {
         return sendMessage(msg_key, topic, message, null);
     }
 
@@ -101,16 +101,16 @@ public class MessageApi {
      * @param message  消息内容
      * @param planTime 计划通知时间
      */
-    public ONode sendMessage(String msg_key, String topic, String message, Date planTime) throws Exception {
+    public boolean sendMessage(String msg_key, String topic, String message, Date planTime) throws Exception {
         return sendMessageAndTags(msg_key, topic, message, planTime, null);
     }
 
 
-    public ONode sendMessageAndTags(String topic, String message, String tags) throws Exception {
+    public boolean sendMessageAndTags(String topic, String message, String tags) throws Exception {
         return sendMessageAndTags(null, topic, message, tags);
     }
 
-    public ONode sendMessageAndTags(String msg_key, String topic, String message, String tags) throws Exception {
+    public boolean sendMessageAndTags(String msg_key, String topic, String message, String tags) throws Exception {
         return sendMessageAndTags(msg_key, topic, message, null, tags);
     }
 
@@ -123,7 +123,7 @@ public class MessageApi {
      * @param message  消息内容
      * @param planTime 计划通知时间
      */
-    public ONode sendMessageAndTags(String msg_key, String topic, String message, Date planTime, String tags) throws Exception {
+    public boolean sendMessageAndTags(String msg_key, String topic, String message, Date planTime, String tags) throws Exception {
         if (TextUtils.isEmpty(msg_key)) {
             msg_key = IDUtils.guid();
         }
@@ -150,24 +150,24 @@ public class MessageApi {
 
         ONode data = ONode.loadStr(txt);
         if (data.get("code").getInt() == 1) {
-            return data;
+            return true;
         } else {
-            throw new Exception("消息发送失败:" + data.toJson());
+            throw new RuntimeException("消息发送失败:" + data.toJson());
         }
     }
 
     /**
      * 发送消息回调
      */
-    public ONode sendMessageCallback(String message, String receiver_url, String receiver_cehck) throws Exception {
+    public boolean sendMessageCallback(String message, String receiver_url, String receiver_cehck) throws Exception {
         return sendMessageCallback(null, message, null, receiver_url, receiver_cehck);
     }
 
-    public ONode sendMessageCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception{
+    public boolean sendMessageCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception{
         return sendMessageAndTagsCallback(msg_key, message, planTime, receiver_url,receiver_cehck, null);
     }
 
-    public ONode sendMessageAndTagsCallback(String message, String receiver_url, String receiver_cehck, String tags) throws Exception {
+    public boolean sendMessageAndTagsCallback(String message, String receiver_url, String receiver_cehck, String tags) throws Exception {
         return sendMessageAndTagsCallback(null, message, null, receiver_url, receiver_cehck, tags);
     }
 
@@ -181,7 +181,7 @@ public class MessageApi {
      * @param receiver_cehck 接收检测
      * @param planTime       计划发送时间
      */
-    public ONode sendMessageAndTagsCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck, String tags) throws Exception {
+    public boolean sendMessageAndTagsCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck, String tags) throws Exception {
         if (TextUtils.isEmpty(msg_key)) {
             msg_key = IDUtils.guid();
         }
@@ -209,23 +209,23 @@ public class MessageApi {
 
         ONode data = ONode.loadStr(txt);
         if (data.get("code").getInt() == 1) {
-            return data;
+            return true;
         } else {
-            throw new Exception("消息发送失败:" + data.toJson());
+            throw new RuntimeException("消息发送失败:" + data.toJson());
         }
     }
 
     /**
      * 取消消息
      */
-    public ONode cancelMessage(String msg_key) throws Exception {
+    public boolean cancelMessage(String msg_key) throws Exception {
         return cancelMessage(msg_key, null);
     }
 
     /**
      * 取消XXX订阅者的消息
      */
-    public ONode cancelMessage(String msg_key, String subscriber_key) throws Exception {
+    public boolean cancelMessage(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
@@ -237,20 +237,20 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/cancel/:" + txt);
 
-        return ONode.loadStr(txt);
+        return ONode.loadStr(txt).get("code").getInt() == 1;
     }
 
     /**
      * 完成消息（设为成功）
      */
-    public ONode succeedMessage(String msg_key) throws Exception {
+    public boolean succeedMessage(String msg_key) throws Exception {
         return succeedMessage(msg_key, null);
     }
 
     /**
      * 完成XXX订阅者的消息
      */
-    public ONode succeedMessage(String msg_key, String subscriber_key) throws Exception {
+    public boolean succeedMessage(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", msg_key);
 
@@ -263,7 +263,7 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/succeed/:" + txt);
 
-        return ONode.loadStr(txt);
+        return ONode.loadStr(txt).get("code").getInt() == 1;
     }
 
     /**

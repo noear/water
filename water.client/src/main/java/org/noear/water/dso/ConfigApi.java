@@ -45,7 +45,7 @@ public class ConfigApi {
         ConfigSetM cfgSet = new ConfigSetM(tag);
 
         try {
-            String temp = CallSevUtil.get("/cfg/get/?v=2&tag=" + tag);
+            String temp = CallCfgUtil.get("/cfg/get/?v=2&tag=" + tag);
             cfgSet.load(ONode.loadStr(temp));
         } catch (Exception ex) {
             ex.printStackTrace();
