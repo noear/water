@@ -1,4 +1,4 @@
-package waterapi.controller.msg;
+package waterapi.controller.message;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
@@ -8,6 +8,7 @@ import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterMsgApi;
+import waterapi.dso.interceptor.Logging;
 
 /**
  * 消息置为取消
@@ -16,6 +17,7 @@ import waterapi.dso.db.DbWaterMsgApi;
  * @since 2017.07
  * Update time 2020.09
  */
+@Logging
 @Whitelist
 @XController
 public class CMD_msg_cancel extends UapiBase {

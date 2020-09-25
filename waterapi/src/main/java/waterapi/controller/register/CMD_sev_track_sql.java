@@ -1,4 +1,4 @@
-package waterapi.controller.sev;
+package waterapi.controller.register;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
@@ -11,7 +11,11 @@ import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterLogApi;
 
 /**
- * Created by noear on 2017/7/19.
+ * 服务SQL跟踪
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
  */
 @Whitelist
 @XController

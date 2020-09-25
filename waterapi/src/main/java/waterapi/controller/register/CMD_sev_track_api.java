@@ -1,4 +1,4 @@
-package waterapi.controller.sev;
+package waterapi.controller.register;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
@@ -10,7 +10,11 @@ import waterapi.Config;
 import waterapi.controller.UapiBase;
 
 /**
- * Created by noear on 2017/7/19.
+ * 服务接口跟踪
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
  */
 @Whitelist
 @XController

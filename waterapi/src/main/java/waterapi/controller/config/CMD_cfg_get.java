@@ -1,4 +1,4 @@
-package waterapi.controller.cfg;
+package waterapi.controller.config;
 
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
@@ -16,6 +16,13 @@ import waterapi.models.ConfigModel;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 获取配置
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
+ */
 @Logging
 @Whitelist
 @XController

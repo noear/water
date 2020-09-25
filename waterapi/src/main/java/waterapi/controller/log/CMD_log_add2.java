@@ -18,7 +18,7 @@ import waterapi.dso.LogUtils;
 import java.util.List;
 
 /**
- * 批量添加日志
+ * 批量添加日志（用于支持管道模式）
  *
  * @author noear
  * @since 2017.07

@@ -1,10 +1,11 @@
-package waterapi.controller.cfg;
+package waterapi.controller.config;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XResult;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
@@ -16,7 +17,15 @@ import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
 import waterapi.models.ConfigModel;
 
+/**
+ * 设置配置
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
+ */
 @Logging
+@Whitelist
 @XController
 public class CMD_cfg_set extends UapiBase {
     @NotEmpty({"tag", "key"})

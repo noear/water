@@ -8,6 +8,13 @@ import waterapi.controller.UapiBase;
 
 import java.util.Map;
 
+/**
+ * 运行检测HTTP
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
+ */
 @XController
 public class CMD_run_check_http extends UapiBase {
     @XMapping("/run/check/http/")

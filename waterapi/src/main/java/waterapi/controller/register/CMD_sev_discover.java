@@ -1,4 +1,4 @@
-package waterapi.controller.sev;
+package waterapi.controller.register;
 
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.XController;
@@ -18,7 +18,11 @@ import waterapi.models.ServiceModel;
 import java.util.List;
 
 /**
- * Created by noear on 2017/7/19.
+ * 服务发现
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
  */
 @Logging
 @Whitelist

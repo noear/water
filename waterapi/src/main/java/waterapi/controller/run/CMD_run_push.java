@@ -15,8 +15,13 @@ import waterapi.Config;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by noear on 2017/7/19.
+ * 嘿嘿推送
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
  */
 @Whitelist
 @XController

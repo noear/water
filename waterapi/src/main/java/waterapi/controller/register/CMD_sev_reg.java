@@ -1,4 +1,4 @@
-package waterapi.controller.sev;
+package waterapi.controller.register;
 
 import org.noear.solon.XUtil;
 import org.noear.solon.annotation.XController;
@@ -13,8 +13,13 @@ import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.interceptor.Logging;
 
 /**
- * Created by noear on 2017/7/19.
+ * 服务注册
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
  */
+@Logging
 @Whitelist
 @XController
 public class CMD_sev_reg extends UapiBase {

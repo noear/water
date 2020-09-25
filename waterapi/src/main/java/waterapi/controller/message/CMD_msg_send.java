@@ -1,4 +1,4 @@
-package waterapi.controller.msg;
+package waterapi.controller.message;
 
 import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
@@ -10,6 +10,7 @@ import org.noear.water.WW;
 import org.noear.water.utils.DisttimeUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterMsgApi;
+import waterapi.dso.interceptor.Logging;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ import java.util.Date;
  * @since 2017.07
  * Update time 2020.09
  */
+@Logging
 @Whitelist
 @XController
 public class CMD_msg_send extends UapiBase {

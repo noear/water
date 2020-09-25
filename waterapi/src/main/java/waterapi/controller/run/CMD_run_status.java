@@ -9,6 +9,13 @@ import org.noear.water.utils.RuntimeUtils;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
 
+/**
+ * 运行时状态
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
+ */
 @Whitelist
 @XController
 public class CMD_run_status extends UapiBase {

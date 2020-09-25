@@ -7,6 +7,13 @@ import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
 
+/**
+ * 白名单重新加载
+ *
+ * @author noear
+ * @since 2017.07
+ * Update time 2020.09
+ */
 @Whitelist
 @XController
 public class CMD_run_whitelist_reload extends UapiBase {
