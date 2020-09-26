@@ -22,29 +22,34 @@ public class MessageApi {
 
     /**
      * 订阅
+     *
+     * @param subscriber_key 订阅者key
+     * @param receive_url    接收地址
+     * @param receive_way    接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
+     * @param access_key     接收访问密钥
      */
-    public boolean subscribeTopic(String subscriber_key, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
-        return subscribeTopic(subscriber_key, "", receiver_url, access_key, alarm_mobile, receive_way, is_unstable, topics);
+    public boolean subscribeTopic(String subscriber_key, String receive_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+        return subscribeTopic(subscriber_key, "", receive_url, access_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
     /**
      * 订阅
      *
-     * @param subscriber_key  订阅者标识
+     * @param subscriber_key  订阅者key
      * @param subscriber_note 订阅者简介
-     * @param receiver_url    接收地址
+     * @param receive_url     接收地址
      * @param receive_way     接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
      * @param access_key      接收访问密钥
      * @param alarm_mobile    报警手机号
      * @param topics          主题..
      */
-    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receiver_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receive_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
         params.put("topic", String.join(",", topics));
-        params.put("receiver_url", receiver_url); //**此字段名将弃用。by 2020-09
-        params.put("receive_url", receiver_url);
+        params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
+        params.put("receive_url", receive_url);
         params.put("receive_way", receive_way + "");
         params.put("access_key", access_key);
         params.put("alarm_mobile", alarm_mobile);
