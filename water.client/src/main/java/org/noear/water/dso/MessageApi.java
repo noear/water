@@ -79,6 +79,9 @@ public class MessageApi {
 
     /**
      * 发送消息
+     *
+     * @param topic   消息主题
+     * @param message 消息内容
      */
     public boolean sendMessage(String topic, String message) throws Exception {
         return sendMessage(null, topic, message, null);
@@ -87,6 +90,10 @@ public class MessageApi {
 
     /**
      * 发送消息
+     *
+     * @param msg_key 消息key（用于建立本地关键）
+     * @param topic   消息主题
+     * @param message 消息内容
      */
     public boolean sendMessage(String msg_key, String topic, String message) throws Exception {
         return sendMessage(msg_key, topic, message, null);
@@ -118,7 +125,7 @@ public class MessageApi {
      * 发送消息
      *
      * @param msg_key  消息标识（用于建立本地关键）
-     * @param tags           标签
+     * @param tags     标签
      * @param topic    主题
      * @param message  消息内容
      * @param planTime 计划通知时间
@@ -163,8 +170,8 @@ public class MessageApi {
         return sendMessageCallback(null, message, null, receiver_url, receiver_cehck);
     }
 
-    public boolean sendMessageCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception{
-        return sendMessageAndTagsCallback(msg_key, message, planTime, receiver_url,receiver_cehck, null);
+    public boolean sendMessageCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception {
+        return sendMessageAndTagsCallback(msg_key, message, planTime, receiver_url, receiver_cehck, null);
     }
 
     public boolean sendMessageAndTagsCallback(String message, String receiver_url, String receiver_cehck, String tags) throws Exception {
@@ -287,7 +294,7 @@ public class MessageApi {
         return sgin_slf.equals(msg.sgin);
     }
 
-    public String receiveMessage(Fun1<String,String> paramS, String service_secretKey, Fun1Ex<MessageM,Boolean> consumer) throws Throwable{
+    public String receiveMessage(Fun1<String, String> paramS, String service_secretKey, Fun1Ex<MessageM, Boolean> consumer) throws Throwable {
         MessageM msg = new MessageM(paramS);
 
         if (WaterClient.Message.checkMessage(msg, service_secretKey) == false) {
