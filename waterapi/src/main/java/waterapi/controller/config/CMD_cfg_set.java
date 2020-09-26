@@ -32,7 +32,6 @@ public class CMD_cfg_set extends UapiBase {
     @XMapping("/cfg/set/")
     public XResult cmd_exec(XContext ctx, String tag, String key, String value) throws Throwable {
 
-
         if (LockUtils.tryLock(Config.water_service_name, tag + "/" + key) == false) {
             throw UapiCodes.CODE_15;
         }
