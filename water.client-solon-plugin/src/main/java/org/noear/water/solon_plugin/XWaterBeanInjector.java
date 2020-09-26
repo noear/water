@@ -1,8 +1,8 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.core.BeanInjector;
+import org.noear.solon.core.TypeUtil;
 import org.noear.solon.core.VarHolder;
-import org.noear.solon.core.utils.TypeUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.annotation.Water;
@@ -11,7 +11,6 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.SecondCache;
