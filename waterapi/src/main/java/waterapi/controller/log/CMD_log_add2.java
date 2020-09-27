@@ -33,20 +33,22 @@ public class CMD_log_add2 extends UapiBase {
         String contentType = ctx.contentType();
         String list_json = null;
 
+        if(contentType!=null){
+            if (contentType.startsWith(WW.mime_gzip)) {
+                list_json = GzipUtils.uncompressToString(ctx.bodyAsBytes());
+            }
 
-        if (WW.mime_gzip.equals(contentType)) {
-            list_json = GzipUtils.uncompressToString(ctx.bodyAsBytes());
+            if (contentType.startsWith(WW.mime_json)) {
+                list_json = ctx.body();
+            }
         }
 
-        if (WW.mime_json.equals(contentType)) {
-            list_json = ctx.body();
-        }
 
         if (list_json == null) {
             list_json = ctx.param("list");
         }
 
-        if (XUtil.isEmpty(list_json) == false) {
+        if (XUtil.isEmpty(list_json)) {
             LogUtils.warn(ctx, contentType, "XContext body or @list is null");
             throw UapiCodes.CODE_13("list");
         }
