@@ -47,7 +47,7 @@ public class CMD_log_add extends UapiBase {
         String log_fulltime_str = ctx.param("log_fulltime");
         Date log_fulltime = null;
 
-        if (TextUtils.isEmpty(log_fulltime_str) == false) {
+        if (TextUtils.isNotEmpty(log_fulltime_str)) {
             log_fulltime = Datetime.parse(log_fulltime_str, log_fulltime_formt).getFulltime();
         }
 

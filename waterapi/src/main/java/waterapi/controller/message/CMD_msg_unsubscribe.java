@@ -35,7 +35,7 @@ public class CMD_msg_unsubscribe extends UapiBase {
             subscriber_key = ctx.param("key");//**兼容旧版变量名。by 2020.09
         }
 
-        if (XUtil.isEmpty(subscriber_key) == false) {
+        if (XUtil.isEmpty(subscriber_key)) {
             throw UapiCodes.CODE_13("subscriber_key");
         }
 

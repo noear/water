@@ -44,7 +44,7 @@ public class CMD_run_push extends UapiBase {
 
         String rest = ProtocolHub.heihei.push(Config.water_service_name, list, msg);
 
-        if (TextUtils.isEmpty(rest) == false) {
+        if (TextUtils.isNotEmpty(rest)) {
             return XResult.succeed(ONode.load(rest));
         } else {
             return XResult.failure();
