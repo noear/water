@@ -1,15 +1,15 @@
 server.port: 8011
 
-#water:
-#  host: "http://water2"
-#  service:
-#    name: "water-demo-dubbo-provider"
-#    secretKey: "NJ8f6usfroGRi7iR"
+water:
+  host: "http://water2"
+  service:
+    name: "water-demo-dubbo-provider"
+    secretKey: "NJ8f6usfroGRi7iR"
 
 dubbo:
   application:
     name: hello-provider
     owner: noear
   registry:
-    address: nacos://192.168.8.118:8848
-#    address: water://water2
+#    address: nacos://192.168.8.118:8848
+    address: water://water2
