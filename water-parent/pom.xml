@@ -42,7 +42,6 @@
         <water.ver>2.0.4</water.ver>
         <weed3.ver>3.2.27</weed3.ver>
         <snack3.ver>3.1.11</snack3.ver>
-        <fairy.ver>1.0</fairy.ver>
 
         <bcf.ver>2.0.3</bcf.ver>
 
@@ -142,7 +141,7 @@
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>fairy</artifactId>
-                <version>${fairy.ver}</version>
+                <version>${solon.ver}</version>
             </dependency>
 
             <dependency>
