@@ -30,9 +30,7 @@ public class CMD_run_whitelist_check extends UapiBase {
             }
         }
 
-        boolean isOk = DbWaterCfgApi.isWhitelist(tags, type, value);
-
-        if (isOk) {
+        if (DbWaterCfgApi.isWhitelist(tags, type, value)) {
             return ("OK");
         } else {
             return (value + ",not is whitelist!");
