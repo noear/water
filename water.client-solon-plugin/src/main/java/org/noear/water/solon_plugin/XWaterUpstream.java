@@ -295,7 +295,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream, Upstream {
 
     public static <T> T xclient(Class<?> clz, Upstream upstream) {
         return Fairy.builder()
-                .filterAdd((cfg, url, h, a) -> {
+                .filterAdd((cfg, m, url, h, a) -> {
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());
                     h.put(WW.http_header_from, WaterClient.localServiceHost());
                 })
