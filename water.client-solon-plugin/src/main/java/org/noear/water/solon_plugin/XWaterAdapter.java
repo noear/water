@@ -63,7 +63,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     public void start(XApp app) {
         //Bean 初始化完成化再启动监听，免得过早被检测
         //
-        Aop.beanOnloaded(()->{
+        Aop.context().beanOnloaded(()->{
             app.all(service_status_path, this::handle);
             app.all(service_check_path, this::handle);
             app.all(service_stop_path, this::handle);

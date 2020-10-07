@@ -61,10 +61,10 @@ public class XPluginImp implements XPlugin {
         }
 
         //添加Water注入支持
-        Aop.factory().beanInjectorAdd(Water.class, new XWaterBeanInjector());
+        Aop.context().beanInjectorAdd(Water.class, new XWaterBeanInjector());
 
         //添加WaterMessage注解支持
-        Aop.factory().beanCreatorAdd(WaterMessage.class, (clz, wrap, anno) -> {
+        Aop.context().beanBuilderAdd(WaterMessage.class, (clz, wrap, anno) -> {
             if (MessageHandler.class.isAssignableFrom(clz)) {
                 String topic = anno.value();
 
@@ -75,7 +75,7 @@ public class XPluginImp implements XPlugin {
         });
 
         //添加WaterConfig注解支持
-        Aop.factory().beanCreatorAdd(WaterConfig.class, (clz, wrap, anno) -> {
+        Aop.context().beanBuilderAdd(WaterConfig.class, (clz, wrap, anno) -> {
             if (ConfigHandler.class.isAssignableFrom(clz)) {
                 String tag = anno.value();
 
@@ -86,9 +86,9 @@ public class XPluginImp implements XPlugin {
         });
 
         //尝试加载消息订阅
-        Aop.beanOnloaded(() -> {
+        Aop.context().beanOnloaded(() -> {
             if (XWaterAdapter.global() != null) {
-                Aop.beanForeach((k, v) -> {
+                Aop.context().beanForeach((k, v) -> {
                     if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
                         String topic = k.split(":")[1];
 
