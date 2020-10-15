@@ -1,8 +1,8 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.core.BeanInjector;
-import org.noear.solon.core.TypeUtil;
 import org.noear.solon.core.VarHolder;
+import org.noear.solon.ext.ConvertUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.annotation.Water;
@@ -108,7 +108,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
             return;
         }
 
-        Object val2 = TypeUtil.convertByProp(varH.getType(), cfg.value);
+        Object val2 = ConvertUtil.to(varH.getType(), cfg.value);
         varH.setValue(val2);
     }
 }
