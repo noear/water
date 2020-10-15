@@ -22,7 +22,7 @@ import java.util.Properties;
  * */
 public class XWaterBeanInjector implements BeanInjector<Water> {
     @Override
-    public void handler(VarHolder varH, Water anno) {
+    public void doInject(VarHolder varH, Water anno) {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
             if (varH.getType().isInterface()) {
@@ -108,7 +108,7 @@ public class XWaterBeanInjector implements BeanInjector<Water> {
             return;
         }
 
-        Object val2 = TypeUtil.changeOfPop(varH.getType(), cfg.value);
+        Object val2 = TypeUtil.convertByProp(varH.getType(), cfg.value);
         varH.setValue(val2);
     }
 }
