@@ -1,16 +1,15 @@
 package waterapi.dso.interceptor;
 
-import org.noear.solon.annotation.XInterceptor;
+import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
-import org.noear.solon.core.XMethod;
 import org.noear.water.WW;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.Timecount;
 import waterapi.Config;
 import waterapi.dso.FromUtils;
 
-@XInterceptor
+@XController
 public class TrackInterceptor {
     @XMapping(value = "**", before = true, index = -1)
     public void before(XContext c) {

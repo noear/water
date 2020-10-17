@@ -2,7 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.VarHolder;
-import org.noear.solon.ext.ConvertUtil;
+import org.noear.solon.core.util.ConvertUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterConfig;
 import org.noear.water.annotation.Water;

@@ -2,19 +2,17 @@ package wateradmin.controller._bcf;
 
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfInterceptorBase;
-import org.noear.bcf.XSessionBcf;
 import org.noear.bcf.models.BcfUserModel;
 import org.noear.solon.XApp;
-import org.noear.solon.annotation.XInterceptor;
+import org.noear.solon.annotation.XController;
 import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XContext;
 import org.noear.water.WaterClient;
 import wateradmin.dso.Session;
-import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.utils.IPUtil;
 
 
-@XInterceptor
+@XController
 public class BcfInterceptor extends BcfInterceptorBase {
 
     @Override

@@ -1,6 +1,6 @@
 package waterapi.controller;
 
-import org.noear.solon.core.DataThrowable;
+import org.noear.solon.ext.DataThrowable;
 
 public class UapiCode extends DataThrowable {
     private int code = 0;
