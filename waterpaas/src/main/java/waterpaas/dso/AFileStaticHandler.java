@@ -2,7 +2,7 @@ package waterpaas.dso;
 
 
 import org.noear.solon.core.XContext;
-import org.noear.solonjt.model.AFileModel;
+import org.noear.luffy.model.AFileModel;
 
 import java.util.Date;
 

@@ -1,6 +1,6 @@
 package watersev.models.water_paas;
 
-import org.noear.solonjt.model.AFileModel;
+import org.noear.luffy.model.AFileModel;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 

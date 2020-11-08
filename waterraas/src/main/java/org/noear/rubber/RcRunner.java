@@ -2,7 +2,7 @@ package org.noear.rubber;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.noear.snack.ONode;
-import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.ext.Fun0Ex;
 import org.noear.rubber.models.BlockModel;

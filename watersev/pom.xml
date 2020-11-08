@@ -37,20 +37,20 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.base</artifactId>
-            <version>${solonjt.ver}</version>
+            <artifactId>luffy.base</artifactId>
+            <version>${luffy.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.executor.s.javascript</artifactId>
-            <version>${solonjt.ver}</version>
+            <artifactId>luffy.executor.s.javascript</artifactId>
+            <version>${luffy.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.executor.m.freemarker</artifactId>
-            <version>${solonjt.ver}</version>
+            <artifactId>luffy.executor.m.freemarker</artifactId>
+            <version>${luffy.ver}</version>
         </dependency>
 
 

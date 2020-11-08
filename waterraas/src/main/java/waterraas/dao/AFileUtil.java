@@ -1,6 +1,6 @@
 package waterraas.dao;
 
-import org.noear.solonjt.model.AFileModel;
+import org.noear.luffy.model.AFileModel;
 
 import java.util.HashMap;
 import java.util.Map;

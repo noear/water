@@ -2,8 +2,8 @@ package waterraas;
 
 import org.noear.rubber.Rubber;
 import org.noear.solon.XApp;
-import org.noear.solonjt.dso.*;
-import solonjt.JtRun;
+import org.noear.luffy.dso.*;
+import luffy.JtRun;
 import waterraas.controller.DebugController;
 import waterraas.controller.PreviewController;
 import waterraas.controller.ReleaseController;

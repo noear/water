@@ -1,6 +1,6 @@
 package watersev.utils;
 
-import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.water.utils.EncryptUtils;
 import watersev.dso.LogUtil;
 

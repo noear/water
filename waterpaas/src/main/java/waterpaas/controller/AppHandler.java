@@ -2,9 +2,9 @@ package waterpaas.controller;
 
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import org.noear.solonjt.executor.ExecutorFactory;
-import org.noear.solonjt.model.AFileModel;
-import org.noear.solonjt.utils.TextUtils;
+import org.noear.luffy.executor.ExecutorFactory;
+import org.noear.luffy.model.AFileModel;
+import org.noear.luffy.utils.TextUtils;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import waterpaas.Config;

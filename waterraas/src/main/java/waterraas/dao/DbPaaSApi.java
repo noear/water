@@ -1,7 +1,7 @@
 package waterraas.dao;
 
-import org.noear.solonjt.model.AFileModel;
-import org.noear.solonjt.utils.TextUtils;
+import org.noear.luffy.model.AFileModel;
+import org.noear.luffy.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterraas.Config;
 

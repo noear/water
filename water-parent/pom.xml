@@ -38,14 +38,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.1.4</solon.ver>
+        <solon.ver>1.1.9</solon.ver>
         <water.ver>2.0.4</water.ver>
         <weed3.ver>3.2.27</weed3.ver>
         <snack3.ver>3.1.11</snack3.ver>
 
         <bcf.ver>2.0.3</bcf.ver>
 
-        <solonjt.ver>1.0.7</solonjt.ver>
+        <luffy.ver>1.0</luffy.ver>
 
         <dubbo.ver>2.7.6</dubbo.ver>
     </properties>

@@ -2,12 +2,12 @@ package waterpaas;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMethod;
-import org.noear.solonjt.dso.*;
+import org.noear.luffy.dso.*;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.FromUtils;
 import org.noear.water.solon_plugin.XWaterAdapter;
 import org.noear.water.utils.Timecount;
-import solonjt.JtRun;
+import luffy.JtRun;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
 

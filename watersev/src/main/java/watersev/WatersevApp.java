@@ -4,13 +4,13 @@ import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
-import org.noear.solonjt.dso.*;
+import org.noear.luffy.dso.*;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.MessageLockRedis;
-import solonjt.JtRun;
+import luffy.JtRun;
 import watersev.dso.JobRunnerEx;
 
 /**

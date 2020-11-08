@@ -1,7 +1,7 @@
 package watersev.dso;
 
 import org.noear.solon.extend.schedule.IJob;
-import org.noear.solonjt.model.AFileModel;
+import org.noear.luffy.model.AFileModel;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.TextUtils;
