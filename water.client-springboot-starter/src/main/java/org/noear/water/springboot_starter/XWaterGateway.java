@@ -3,7 +3,7 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
-import org.noear.solon.core.XMap;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.core.XUpstream;
 import org.noear.solonclient.Result;
 import org.noear.solonclient.XProxy;
@@ -20,7 +20,7 @@ public class XWaterGateway implements XHandler {
     Map<String, XUpstream> router = new HashMap<>();
 
     public XWaterGateway() {
-        XMap map = Solon.cfg().getXmap("water.gateway");
+        NvMap map = Solon.cfg().getXmap("water.gateway");
 
         map.forEach((service, alias) -> {
             if (Solon.cfg().isDebugMode()) {

@@ -2,7 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.core.XMap;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterAdapter;
@@ -22,11 +22,11 @@ import java.io.IOException;
 abstract class XWaterAdapterBase extends WaterAdapter {
     static Logger logger = WaterLogger.get(WW.water_log_upstream, XWaterAdapterBase.class);
 
-    XMap service_args;
+    NvMap service_args;
     private String _localHost;
     private String _note = "";
 
-    public XWaterAdapterBase(XMap args, int port) {
+    public XWaterAdapterBase(NvMap args, int port) {
         service_args = args;
         service_port = port;
 

@@ -1,7 +1,7 @@
 package watersev;
 
 import org.noear.solon.Solon;
-import org.noear.solon.core.XMap;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
@@ -23,7 +23,7 @@ import watersev.dso.JobRunnerEx;
  * */
 public class WatersevApp {
     public static void main(String[] args) throws Exception {
-        XMap xMap = XMap.from(args);
+        NvMap xMap = NvMap.from(args);
 
         //是否有端口
         boolean has_server_port = xMap.containsKey("server.port");
