@@ -2,7 +2,7 @@ package watersev.controller;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.Constants;
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -19,7 +19,7 @@ import watersev.models.water.MonitorModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XBean
+@Component
 public final class MotController implements IJob {
     static Constants json_cfg = new Constants();
 

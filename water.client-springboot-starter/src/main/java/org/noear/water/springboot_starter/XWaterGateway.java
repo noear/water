@@ -2,7 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.XUpstream;
 import org.noear.solonclient.Result;
@@ -16,7 +16,7 @@ import java.util.Map;
 /*
 * Water Gateway
 * */
-public class XWaterGateway implements XHandler {
+public class XWaterGateway implements Handler {
     Map<String, XUpstream> router = new HashMap<>();
 
     public XWaterGateway() {

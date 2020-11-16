@@ -1,13 +1,13 @@
 package waterapi.dso.interceptor;
 
 
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.event.EventListener;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XEventListener;
 import waterapi.dso.LogUtils;
 
-@XBean
-public class ErrorListener implements XEventListener<Throwable> {
+@Component
+public class ErrorListener implements EventListener<Throwable> {
     @Override
     public void onEvent(Throwable err) {
         Context ctx = Context.current();

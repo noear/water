@@ -25,7 +25,7 @@ public class Config {
 
         //WeedConfig.isUsingValueExpression = false;
 
-        waterpaas_secretKey = app.prop().get("water.service.secretKey");
+        waterpaas_secretKey = app.props().get("water.service.secretKey");
     }
 
 

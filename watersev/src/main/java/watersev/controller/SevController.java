@@ -1,6 +1,6 @@
 package watersev.controller;
 
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.Datetime;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 服务检测（已支持 is_unstable）
  * */
-@XBean
+@Component
 public final class SevController implements IJob {
 
     public SevController() {

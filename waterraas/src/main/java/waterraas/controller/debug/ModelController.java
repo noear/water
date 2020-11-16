@@ -4,13 +4,13 @@ import org.noear.rubber.Rubber;
 import org.noear.rubber.RubberException;
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.controller.SystemCode;
 
-public class ModelController implements XHandler {
+public class ModelController implements Handler {
     @Override
     public void handle(Context context) throws Exception {
         String model = context.param("model");

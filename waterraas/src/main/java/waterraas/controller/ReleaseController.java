@@ -1,13 +1,13 @@
 package waterraas.controller;
 
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 import waterraas.controller.debug.BlockController;
 import waterraas.controller.debug.QueryController;
 import waterraas.controller.release.ModelController;
 import waterraas.controller.release.SchemeController;
 
-public class ReleaseController implements XHandler {
+public class ReleaseController implements Handler {
     @Override
     public void handle(Context context) throws Exception {
 

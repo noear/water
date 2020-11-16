@@ -3,13 +3,13 @@ package waterraas.controller.debug;
 import org.noear.rubber.Rubber;
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 import waterraas.controller.SystemCode;
 import waterraas.dao.SchemeUtil;
 
-public class SchemeController implements XHandler {
+public class SchemeController implements Handler {
     @Override
     public void handle(Context context) throws Exception {
         String scheme = context.param("scheme"); //通过参数传入

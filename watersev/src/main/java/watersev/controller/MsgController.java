@@ -1,8 +1,8 @@
 package watersev.controller;
 
 import org.noear.solon.Solon;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XEventBus;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.event.EventBus;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
@@ -25,7 +25,7 @@ import java.util.*;
  *
  * 状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
  * */
-@XBean
+@Component
 public final class MsgController implements IJob {
 
     @Override
@@ -55,7 +55,7 @@ public final class MsgController implements IJob {
         try {
             distributeDo(msg_id_str);
         } catch (Throwable ex) {
-            XEventBus.push(ex);
+            EventBus.push(ex);
         }
     }
 

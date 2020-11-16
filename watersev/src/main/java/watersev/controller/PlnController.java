@@ -1,6 +1,6 @@
 package watersev.controller;
 
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.XWaterAdapter;
@@ -24,7 +24,7 @@ import java.util.List;
  * 待处理:0
  *
  * */
-@XBean
+@Component
 public class PlnController implements IJob {
     @Override
     public String getName() {

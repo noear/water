@@ -2,9 +2,9 @@ package waterraas.controller;
 
 import org.noear.rubber.Rubber;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 
-public class PreviewController implements XHandler {
+public class PreviewController implements Handler {
     @Override
     public void handle(Context context) throws Exception {
 

@@ -2,7 +2,7 @@ package watersev.controller;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LocalUtils;
@@ -12,7 +12,7 @@ import watersev.Config;
 
 //check in
 //
-@XBean
+@Component
 public class ChkController implements IJob {
     private ONode _args;
 

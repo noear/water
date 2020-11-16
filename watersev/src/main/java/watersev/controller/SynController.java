@@ -1,6 +1,6 @@
 package watersev.controller;
 
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 同步控制
  * */
-@XBean
+@Component
 public final class SynController implements IJob {
     @Override
     public String getName() {

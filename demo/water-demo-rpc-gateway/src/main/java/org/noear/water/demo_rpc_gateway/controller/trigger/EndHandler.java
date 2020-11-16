@@ -1,9 +1,9 @@
 package org.noear.water.demo_rpc_gateway.controller.trigger;
 
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 
-public class EndHandler implements XHandler {
+public class EndHandler implements Handler {
 
     @Override
     public void handle(Context ctx) throws Exception {

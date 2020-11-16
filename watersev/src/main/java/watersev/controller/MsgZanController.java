@@ -1,6 +1,6 @@
 package watersev.controller;
 
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.Datetime;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 消息入站（队列）
  * */
-@XBean
+@Component
 public class MsgZanController implements IJob {
     @Override
     public String getName() {

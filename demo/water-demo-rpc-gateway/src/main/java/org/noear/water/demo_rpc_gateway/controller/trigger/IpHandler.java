@@ -1,11 +1,11 @@
 package org.noear.water.demo_rpc_gateway.controller.trigger;
 
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Handler;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.IPUtils;
 
-public class IpHandler implements XHandler {
+public class IpHandler implements Handler {
 
     @Override
     public void handle(Context ctx) throws Exception {
