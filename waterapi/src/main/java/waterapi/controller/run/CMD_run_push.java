@@ -1,9 +1,9 @@
 package waterapi.controller.run;
 
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.protocol.ProtocolHub;
@@ -24,12 +24,12 @@ import java.util.List;
  * Update time 2020.09
  */
 @Whitelist
-@XController
+@Controller
 public class CMD_run_push extends UapiBase {
 
     @NotEmpty({"msg", "target"})
-    @XMapping("/run/push/")
-    public XResult cmd_exec(String msg, String target) throws Exception {
+    @Mapping("/run/push/")
+    public Result cmd_exec(String msg, String target) throws Exception {
 
         List<String> list = new ArrayList<String>();
         for (String str : target.split(",")) {
@@ -45,9 +45,9 @@ public class CMD_run_push extends UapiBase {
         String rest = ProtocolHub.heihei.push(Config.water_service_name, list, msg);
 
         if (TextUtils.isNotEmpty(rest)) {
-            return XResult.succeed(ONode.load(rest));
+            return Result.succeed(ONode.load(rest));
         } else {
-            return XResult.failure();
+            return Result.failure();
         }
     }
 }

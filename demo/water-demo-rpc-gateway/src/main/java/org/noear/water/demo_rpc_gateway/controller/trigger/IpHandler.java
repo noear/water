@@ -1,6 +1,6 @@
 package org.noear.water.demo_rpc_gateway.controller.trigger;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.IPUtils;
@@ -8,7 +8,7 @@ import org.noear.water.solon_plugin.IPUtils;
 public class IpHandler implements XHandler {
 
     @Override
-    public void handle(XContext ctx) throws Exception {
+    public void handle(Context ctx) throws Exception {
         String ip = IPUtils.getIP(ctx);
 
         if (WaterClient.Whitelist.existsOfServerIp(ip) == false) {

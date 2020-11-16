@@ -3,9 +3,9 @@ package wateradmin.controller.rubber;
 import com.alibaba.fastjson.JSONObject;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.water_rebber.CountModel;
@@ -15,11 +15,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class ReqRecordController extends BaseController {
 
-    @XMapping("reqrecord")
+    @Mapping("reqrecord")
     public ModelAndView reqRecord(Integer page, Integer pageSize,String key) throws SQLException{
         //return view("rubber/reqrecord");
 
@@ -41,7 +41,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_inner");
     }
 
-    @XMapping("reqrecord/exec/scheme")
+    @Mapping("reqrecord/exec/scheme")
     public ModelAndView reqrecord_exec_scheme() throws Exception{
 
         viewModel.set("list",DbRubberApi.getSchemes());
@@ -49,7 +49,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_exec_scheme");
     }
 
-    @XMapping("reqrecord/exec/query")
+    @Mapping("reqrecord/exec/query")
     public ModelAndView reqrecord_exec_query() throws Exception{
 
         viewModel.set("list",DbRubberApi.getSchemes());
@@ -57,7 +57,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_exec_query");
     }
 
-    @XMapping("reqrecord/exec/model")
+    @Mapping("reqrecord/exec/model")
     public ModelAndView reqrecord_exec_model() throws Exception{
 
         viewModel.set("list",DbRubberApi.getModelList());
@@ -67,7 +67,7 @@ public class ReqRecordController extends BaseController {
 
 
     //数据模型右侧列表
-//    @XMapping("reqrecord/inner")
+//    @Mapping("reqrecord/inner")
 //    public ModelAndView inner(Integer page, Integer pageSize,String key) throws SQLException {
 //
 //        if (page == null) {
@@ -90,7 +90,7 @@ public class ReqRecordController extends BaseController {
 //    }
 
     //请求记录详情
-    @XMapping("rerecord/detil")
+    @Mapping("rerecord/detil")
     public ModelAndView detail(Long log_id) throws SQLException{
         LogRequestModel log = DbRubberApi.getLogReqById(log_id);
         //JSONArray evaluation = DbRubberApi.getEvaluationResult(log.details_json);

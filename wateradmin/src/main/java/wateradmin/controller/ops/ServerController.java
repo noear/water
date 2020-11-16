@@ -3,9 +3,9 @@ package wateradmin.controller.ops;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -16,11 +16,11 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/ops/")
+@Controller
+@Mapping("/ops/")
 public class ServerController extends BaseController {
 
-    @XMapping("server")
+    @Mapping("server")
     public ModelAndView project(String tag_name) throws SQLException {
         List<ServerModel> tags = DbWaterOpsApi.getServerTags();
         viewModel.put("tags", tags);
@@ -36,7 +36,7 @@ public class ServerController extends BaseController {
         return view("ops/server");
     }
 
-    @XMapping("server/inner")
+    @Mapping("server/inner")
     public ModelAndView projectInner(String tag_name, Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
@@ -57,7 +57,7 @@ public class ServerController extends BaseController {
     }
 
     //禁用 启用服务
-    @XMapping("server/disable")
+    @Mapping("server/disable")
     public ViewModel disable(Integer server_id, Integer is_enabled) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin() > 0;
         if (is_admin == false) {
@@ -74,7 +74,7 @@ public class ServerController extends BaseController {
     }
 
     //删除 服务
-    @XMapping("server/delete")
+    @Mapping("server/delete")
     public ViewModel delete(Integer server_id) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin() > 0;
         if (is_admin == false) {
@@ -93,7 +93,7 @@ public class ServerController extends BaseController {
 
 
     //跳转服务编辑页面
-    @XMapping("server/edit")
+    @Mapping("server/edit")
     public ModelAndView serverEdit(String tag_name, Integer server_id) throws SQLException {
         if(server_id == null){
             server_id = 0;
@@ -113,7 +113,7 @@ public class ServerController extends BaseController {
     }
 
     //保存编辑
-    @XMapping("server/edit/ajax/save")
+    @Mapping("server/edit/ajax/save")
     public ViewModel serverEditSave(Integer server_id, String tag, String name, String address, String address_local, Integer iaas_type, String iaas_key,  String iaas_account, String hosts_local, String note, Integer is_enabled, Integer env_type) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin() > 0;
 

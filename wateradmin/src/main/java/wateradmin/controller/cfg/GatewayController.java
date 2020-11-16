@@ -1,8 +1,8 @@
 package wateradmin.controller.cfg;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@XController
-@XMapping("/cfg/gateway")
+@Controller
+@Mapping("/cfg/gateway")
 public class GatewayController extends BaseController {
 
     private static final String SEV_CONFIG_TAG = "_gateway";
     private static final String SEV_SERVER_TAG = "_service";
 
-    @XMapping("")
+    @Mapping("")
     public ModelAndView gateway(String tag) throws SQLException {
         List<ConfigModel> sevs = DbWaterCfgApi.getGateways();
 
@@ -48,7 +48,7 @@ public class GatewayController extends BaseController {
 
     }
 
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView inner(String sev_key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
@@ -105,7 +105,7 @@ public class GatewayController extends BaseController {
 
     }
 
-    @XMapping("check")
+    @Mapping("check")
     public String check(String s, String upstream) throws IOException {
         if (TextUtils.isNotEmpty(s) && TextUtils.isNotEmpty(upstream)) {
             if(s.indexOf("@")>0) {
@@ -118,7 +118,7 @@ public class GatewayController extends BaseController {
         return "";
     }
 
-    @XMapping("add")
+    @Mapping("add")
     public ModelAndView add() {
         viewModel.set("is_enabled", 1);
         viewModel.set("cfg", new HashMap<>());
@@ -126,7 +126,7 @@ public class GatewayController extends BaseController {
         return view("cfg/gateway_edit");
     }
 
-    @XMapping("edit/{sev_key}")
+    @Mapping("edit/{sev_key}")
     public ModelAndView edit(String sev_key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
@@ -139,7 +139,7 @@ public class GatewayController extends BaseController {
 
     }
 
-    @XMapping("ajax/save")
+    @Mapping("ajax/save")
     public ViewModel save(String ori_key, String sev_key, String url, String policy, int is_enabled) {
 
         try {
@@ -160,7 +160,7 @@ public class GatewayController extends BaseController {
 
     }
 
-    @XMapping("ajax/enabled")
+    @Mapping("ajax/enabled")
     public ViewModel sev_enabled(int service_id, int is_enabled) {
 
         try {

@@ -8,9 +8,9 @@ import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbProcedure;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.JtRunner;
@@ -31,13 +31,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //非单例
-@XController
-@XMapping("/tool/report")
+@Controller
+@Mapping("/tool/report")
 public class ReportController extends BaseController {
 
     static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+)");
 
-    @XMapping("")
+    @Mapping("")
     public ModelAndView query(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.reportGetTags();
 
@@ -54,7 +54,7 @@ public class ReportController extends BaseController {
         return view("tool/report");
     }
 
-    @XMapping("report_inner")
+    @Mapping("report_inner")
     public ModelAndView reportInner(String tag_name) throws SQLException{
         boolean is_admin = Session.current().getIsAdmin()>0;
         List<ReportModel> tags = DbWaterApi.reportGetListByTag(tag_name);
@@ -64,7 +64,7 @@ public class ReportController extends BaseController {
         return view("tool/report_inner");
     }
 
-    @XMapping("edit")
+    @Mapping("edit")
     public ModelAndView edit(Integer row_id) throws SQLException{
         List<ConfigModel> cfgs = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.db);
 
@@ -75,7 +75,7 @@ public class ReportController extends BaseController {
         return view("tool/report_edit");
     }
 
-    @XMapping("edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel save(Integer row_id,String tag,String name,String code,String note,String args) throws SQLException{
         boolean isOk = DbWaterApi.reportSave(row_id, tag, name, code,note,args);
         if (isOk){
@@ -88,7 +88,7 @@ public class ReportController extends BaseController {
         return viewModel;
     }
 
-    @XMapping("edit/ajax/del")
+    @Mapping("edit/ajax/del")
     public ViewModel del(Integer row_id) throws SQLException{
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -106,7 +106,7 @@ public class ReportController extends BaseController {
         return viewModel;
     }
 
-    @XMapping("ajax/getConditionBuild")
+    @Mapping("ajax/getConditionBuild")
     public ViewModel getConditionBuild(Integer row_id) throws SQLException{
 
         ReportModel report = DbWaterApi.reportGet(row_id);
@@ -142,7 +142,7 @@ public class ReportController extends BaseController {
         return viewModel;
     }
 
-    @XMapping(value = "ajax/do")
+    @Mapping(value = "ajax/do")
     public String doQuery(Integer row_id,Boolean is_condition,String conditon_param) throws SQLException{
         JSONObject params = new JSONObject();
         if (!TextUtils.isEmpty(conditon_param))

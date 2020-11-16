@@ -1,8 +1,8 @@
 package wateradmin.controller.cfg;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -17,11 +17,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/cfg/")
+@Controller
+@Mapping("/cfg/")
 public class LoggerController extends BaseController {
 
-    @XMapping("logger")
+    @Mapping("logger")
     public ModelAndView logger(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
@@ -34,7 +34,7 @@ public class LoggerController extends BaseController {
         return view("cfg/logger");
     }
 
-    @XMapping("logger/inner")
+    @Mapping("logger/inner")
     public ModelAndView loggerInner(String tag_name, Integer _state) throws Exception {
         if (_state != null) {
             viewModel.put("_state", _state);
@@ -57,7 +57,7 @@ public class LoggerController extends BaseController {
         return view("cfg/logger_inner");
     }
     //日志配置编辑页面跳转。
-    @XMapping("logger/edit")
+    @Mapping("logger/edit")
     public ModelAndView loggerEdit(String tag_name,Integer logger_id) throws Exception {
         if (logger_id == null) {
             logger_id = 0;
@@ -84,7 +84,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
-    @XMapping("logger/edit/ajax/save")
+    @Mapping("logger/edit/ajax/save")
     public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days, Integer is_alarm) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -105,7 +105,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
-    @XMapping("logger/edit/ajax/del")
+    @Mapping("logger/edit/ajax/del")
     public  ViewModel delLogger(Integer logger_id) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -116,7 +116,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志启用/禁用
-    @XMapping("logger/isEnable")
+    @Mapping("logger/isEnable")
     public ViewModel loggerDelete(Integer logger_id,Integer is_enabled) throws SQLException {
         DbWaterCfgApi.setLoggerEnabled(logger_id,is_enabled);
 

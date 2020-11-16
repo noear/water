@@ -1,10 +1,10 @@
 package waterapi.controller.message;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
@@ -21,7 +21,7 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_msg_unsubscribe extends UapiBase {
 
     /**
@@ -29,13 +29,13 @@ public class CMD_msg_unsubscribe extends UapiBase {
      * @param topic 消息主题
      * */
     @NotEmpty("topic")
-    @XMapping("/msg/unsubscribe/")
-    public XResult cmd_exec(XContext ctx, String subscriber_key, String topic) throws Exception {
-        if(XUtil.isEmpty(subscriber_key)){
+    @Mapping("/msg/unsubscribe/")
+    public Result cmd_exec(Context ctx, String subscriber_key, String topic) throws Exception {
+        if(Utils.isEmpty(subscriber_key)){
             subscriber_key = ctx.param("key");//**兼容旧版变量名。by 2020.09
         }
 
-        if (XUtil.isEmpty(subscriber_key)) {
+        if (Utils.isEmpty(subscriber_key)) {
             throw UapiCodes.CODE_13("subscriber_key");
         }
 
@@ -47,9 +47,9 @@ public class CMD_msg_unsubscribe extends UapiBase {
         }
 
         if(isOk) {
-            return XResult.succeed();
+            return Result.succeed();
         }else{
-            return XResult.failure();
+            return Result.failure();
         }
     }
 

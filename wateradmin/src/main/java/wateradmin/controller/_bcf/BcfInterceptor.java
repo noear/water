@@ -3,16 +3,16 @@ package wateradmin.controller._bcf;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfInterceptorBase;
 import org.noear.bcf.models.BcfUserModel;
-import org.noear.solon.XApp;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
+import org.noear.solon.Solon;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import wateradmin.dso.Session;
 import wateradmin.utils.IPUtil;
 
 
-@XController
+@Controller
 public class BcfInterceptor extends BcfInterceptorBase {
 
     @Override
@@ -21,13 +21,13 @@ public class BcfInterceptor extends BcfInterceptorBase {
     }
 
     @Override
-    @XMapping(value = "**", before = true)
-    public void verifyHandle(XContext ctx) throws Exception {
+    @Mapping(value = "**", before = true)
+    public void verifyHandle(Context ctx) throws Exception {
         if (ctx.path().equals("/login")) {
             return;
         }
 
-        if(XApp.cfg().isDebugMode() && getPUID() == 0){
+        if(Solon.cfg().isDebugMode() && getPUID() == 0){
             BcfUserModel um = BcfClient.login(1);
             Session.current().loadModel(um);
         }

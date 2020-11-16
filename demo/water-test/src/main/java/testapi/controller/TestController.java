@@ -1,15 +1,15 @@
 package testapi.controller;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
 import org.noear.water.WaterClient;
 
-@XController
+@Controller
 public class TestController {
-    @XMapping("/")
+    @Mapping("/")
     public String home(String msg) throws Exception {
-        if (XUtil.isNotEmpty(msg)) {
+        if (Utils.isNotEmpty(msg)) {
             WaterClient.Message.sendMessage("test.hello", msg);
             return "OK: *" + WaterClient.waterTraceId();
         }else{

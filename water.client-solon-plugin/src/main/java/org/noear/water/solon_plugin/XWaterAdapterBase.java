@@ -1,10 +1,10 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
-import org.noear.solon.XApp;
-import org.noear.solon.core.XMap;
-import org.noear.solon.XUtil;
-import org.noear.solon.core.XContext;
+import org.noear.solon.Solon;
+import org.noear.solon.Utils;
+import org.noear.solon.core.NvMap;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterAdapter;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
@@ -15,6 +15,7 @@ import org.noear.water.utils.RuntimeUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
+import java.util.Map;
 
 //
 // Water for service project adapter
@@ -22,11 +23,11 @@ import java.io.IOException;
 abstract class XWaterAdapterBase extends WaterAdapter {
     static Logger logger = WaterLogger.get(WW.water_log_upstream, XWaterAdapterBase.class);
 
-    XMap service_args;
+    NvMap service_args;
     private String _localHost;
     private String _note = "";
 
-    public XWaterAdapterBase(XMap args, int port) {
+    public XWaterAdapterBase(NvMap args, int port) {
         service_args = args;
         service_port = port;
 
@@ -104,7 +105,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
     }
 
     //2.1.提供服务供查入口 //必须重写
-    public String serviceCheck(XContext cxt)  {
+    public String serviceCheck(Context cxt)  {
         String ups = cxt.param("upstream");
 
         if (TextUtils.isEmpty(ups) == false) {
@@ -144,11 +145,11 @@ abstract class XWaterAdapterBase extends WaterAdapter {
 
     //::可以重写，且需要RequestMapping
     //2.2.接收消息
-    public String messageReceive(XContext cxt) throws Throwable {
+    public String messageReceive(Context cxt) throws Throwable {
         return doMessageReceive(k -> cxt.param(k));
     }
 
-    public void handle(XContext ctx) throws IOException {
+    public void handle(Context ctx) throws IOException {
         String path = ctx.path();
 
         String text = "";
@@ -161,7 +162,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
                     stateSet(false);
-                    XApp.stop();
+                    Solon.stop();
                     text = "OK";
                 } else {
                     text = (ip + ",not is whitelist!");
@@ -183,7 +184,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 text = messageReceive(ctx);
             }
         } catch (Throwable ex) {
-            text = XUtil.getFullStackTrace(ex);
+            text = Utils.getFullStackTrace(ex);
             ex.printStackTrace();
         }
 

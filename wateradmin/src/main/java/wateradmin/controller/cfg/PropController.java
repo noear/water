@@ -2,14 +2,14 @@ package wateradmin.controller.cfg;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
 import org.noear.water.utils.JsonxUtils;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -22,10 +22,10 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/cfg/prop")
+@Controller
+@Mapping("/cfg/prop")
 public class PropController extends BaseController {
-    @XMapping("")
+    @Mapping("")
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
@@ -38,8 +38,8 @@ public class PropController extends BaseController {
         return view("cfg/prop");
     }
 
-    @XMapping("inner")
-    public ModelAndView innerDo(XContext ctx, String tag_name,String key) throws SQLException {
+    @Mapping("inner")
+    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws SQLException {
         int state = ctx.paramAsInt("state",1);
 
         TagUtil.cookieSet(tag_name);
@@ -56,7 +56,7 @@ public class PropController extends BaseController {
 
 
     //跳转编辑页面。
-    @XMapping("edit")
+    @Mapping("edit")
     public ModelAndView editConfig(String tag_name, Integer row_id) throws SQLException {
         if(row_id == null){
             row_id = 0;
@@ -75,7 +75,7 @@ public class PropController extends BaseController {
     }
 
     //编辑、保存功能。
-    @XMapping("edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -93,7 +93,7 @@ public class PropController extends BaseController {
     }
 
     //编辑、保存功能。
-    @XMapping("edit/ajax/del")
+    @Mapping("edit/ajax/del")
     public ViewModel del(Integer row_id) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -109,8 +109,8 @@ public class PropController extends BaseController {
 
 
     //批量导出
-    @XMapping("ajax/export")
-    public void exportDo(XContext ctx, String tag, String ids) throws Exception {
+    @Mapping("ajax/export")
+    public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<ConfigModel> list = DbWaterCfgApi.getConfigByIds(ids);
         String json = ONode.stringify(list);
         String jsonX = JsonxUtils.encode(json);
@@ -123,8 +123,8 @@ public class PropController extends BaseController {
 
 
     //批量导入
-    @XMapping("ajax/import")
-    public ViewModel importDo(XContext ctx, String tag, XFile file) throws Exception {
+    @Mapping("ajax/import")
+    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -143,8 +143,8 @@ public class PropController extends BaseController {
     }
 
     //批量处理
-    @XMapping("ajax/batch")
-    public ViewModel batchDo(XContext ctx, String tag, Integer act, String ids) throws Exception {
+    @Mapping("ajax/batch")
+    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

@@ -1,9 +1,9 @@
 package waterapi.controller.register;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
@@ -18,7 +18,7 @@ import waterapi.dso.db.DbWaterLogApi;
  * Update time 2020.09
  */
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_track_sql extends UapiBase {
 
     /**
@@ -26,8 +26,8 @@ public class CMD_sev_track_sql extends UapiBase {
      * @param interval 时长
      * */
     @NotEmpty({"service", "interval"})
-    @XMapping("/sev/track/sql/")
-    public XResult cmd_exec(XContext ctx, String service, long interval,
+    @Mapping("/sev/track/sql/")
+    public Result cmd_exec(Context ctx, String service, long interval,
                             String operator, String operator_ip, String path, String ua, String note) throws Exception {
         String schema = ctx.param("schema", "");
         String cmd_sql = ctx.param("cmd_sql", "");
@@ -37,6 +37,6 @@ public class CMD_sev_track_sql extends UapiBase {
 
         DbWaterLogApi.addTrack(service, trace_id, schema, interval, cmd_sql, cmd_arg, operator, operator_ip, path, ua, note);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

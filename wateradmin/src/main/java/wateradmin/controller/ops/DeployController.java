@@ -1,16 +1,16 @@
 package wateradmin.controller.ops;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 
 import java.sql.SQLException;
 
-@XController
-@XMapping("/ops/")
+@Controller
+@Mapping("/ops/")
 public class DeployController extends BaseController {
-    @XMapping("deploy")
+    @Mapping("deploy")
     public ModelAndView deploy(String tag_name) throws SQLException {
 
         return view("ops/deploy");

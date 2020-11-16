@@ -1,12 +1,12 @@
 package wateradmin.controller.log;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.TagUtil;
@@ -17,12 +17,12 @@ import wateradmin.models.water_cfg.LoggerModel;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/log/")
+@Controller
+@Mapping("/log/")
 public class LogController extends BaseController {
 
-    @XMapping("query")
-    public ModelAndView index(String tag_name, XContext ctx) throws Exception {
+    @Mapping("query")
+    public ModelAndView index(String tag_name, Context ctx) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
@@ -34,8 +34,8 @@ public class LogController extends BaseController {
         return view("log/query");
     }
 
-    @XMapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, XContext ctx) throws Exception {
+    @Mapping("query/inner")
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, Context ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 

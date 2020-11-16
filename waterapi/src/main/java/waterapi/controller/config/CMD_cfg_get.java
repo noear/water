@@ -1,10 +1,10 @@
 package waterapi.controller.config;
 
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
@@ -25,11 +25,11 @@ import java.util.List;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_cfg_get extends UapiBase {
     @NotEmpty("tag")
-    @XMapping("/cfg/get/")
-    public XResult cmd_exec(XContext ctx, String tag) throws Throwable {
+    @Mapping("/cfg/get/")
+    public Result cmd_exec(Context ctx, String tag) throws Throwable {
         ONode nList = new ONode().asObject();
 
         if (TextUtils.isEmpty(tag) == false) {
@@ -58,7 +58,7 @@ public class CMD_cfg_get extends UapiBase {
             ctx.outputAsJson(nList.toJson());
             return null;
         } else {
-            return XResult.succeed(nList);
+            return Result.succeed(nList);
         }
     }
 }

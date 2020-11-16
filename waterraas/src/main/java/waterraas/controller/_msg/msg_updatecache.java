@@ -1,6 +1,6 @@
 package waterraas.controller._msg;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.annotation.WaterMessage;
@@ -43,7 +43,7 @@ public class msg_updatecache implements MessageHandler {
                         //处理hook.start
                         //
                         if (label_hook_start.equals(file.label)) {
-                            ExecutorFactory.execOnly(file, XContext.current());
+                            ExecutorFactory.execOnly(file, Context.current());
                         }
                     }
                 }

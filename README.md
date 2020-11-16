@@ -50,7 +50,7 @@ water:
 ```java
 public class DemoApp{
   public void main(String[] args){
-      XApp app = XApp.start(args);
+      Solon app = Solon.start(args);
 
       //监控服务：之：添加接口性能记录
       app.before("**",XMethod.HTTP,-1,(c)->{
@@ -71,7 +71,7 @@ public class DemoApp{
   }
 }
 
-@XController
+@Controller
 class demo{
     @Water("water_log_admin") //日志服务的功能
     WaterLogger log;
@@ -82,7 +82,7 @@ class demo{
     @Water          //RPC服务发现的功能
     RockRpc rock;
    
-    @XMapping("/")
+    @Mapping("/")
     public void test(){
         //日志服务：写个日志
         log.info("你好，日志服务"); //(content)

@@ -2,7 +2,7 @@ package waterraas.controller.debug;
 
 import org.noear.rubber.Rubber;
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -11,7 +11,7 @@ import waterraas.dao.SchemeUtil;
 
 public class SchemeController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
         String scheme = context.param("scheme"); //通过参数传入
         String request_id = context.param("request_id");
         String args_str = context.param("args");

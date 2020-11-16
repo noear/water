@@ -3,7 +3,7 @@ package waterraas.controller.release;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
@@ -16,7 +16,7 @@ import waterraas.dao.SchemeUtil;
 //::/([^\/]+)/([^\/]+)
 public class SchemeController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
         String scheme = context.param("scheme"); //通过参数传入
         if (scheme == null) {
             scheme = context.path().substring(3); //通过路径传入
@@ -68,7 +68,7 @@ public class SchemeController implements XHandler {
         }
     }
 
-    private static boolean tryOut(XContext context, String request_id) throws Exception {
+    private static boolean tryOut(Context context, String request_id) throws Exception {
         LogRequestModel req = Rubber.get(request_id);
         if (req.log_id > 0) {
             SchemeUtil.out(context, req);

@@ -1,6 +1,6 @@
 package watersev.controller;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.XBean;
 import org.noear.solon.core.XEventBus;
 import org.noear.solon.extend.schedule.IJob;

@@ -7,9 +7,9 @@ import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 
-@XController
-@XMapping("/mot/ecs")
+@Controller
+@Mapping("/mot/ecs")
 public class EcsController extends BaseController {
     //进入ecs视图
-    @XMapping
+    @Mapping
     public ModelAndView ecs(String tag_name, String name, String sort) throws Exception {
         List<TagCountsModel> tags = DbWaterOpsApi.getServerEcsAccounts();
 
@@ -50,7 +50,7 @@ public class EcsController extends BaseController {
     }
 
 
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView ecs_inner(String instanceId) throws Exception {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
@@ -68,7 +68,7 @@ public class EcsController extends BaseController {
     }
 
 
-    @XMapping("charts/ajax/reqtate")
+    @Mapping("charts/ajax/reqtate")
     public List<ELineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
         if (dataType == null) {
             dataType = 0;
@@ -80,7 +80,7 @@ public class EcsController extends BaseController {
         return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, ETimeType.of(dataType), dataType);
     }
 
-    @XMapping("track/ajax/pull")
+    @Mapping("track/ajax/pull")
     public ViewModel ecs_track_ajax_pull() throws Exception {
         ProtocolHub.monitoring.pull(MonitorType.ECS);
 

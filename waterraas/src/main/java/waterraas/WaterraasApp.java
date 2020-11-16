@@ -1,7 +1,7 @@
 package waterraas;
 
 import org.noear.rubber.Rubber;
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import luffy.JtRun;
 import waterraas.controller.DebugController;
@@ -19,7 +19,7 @@ public class WaterraasApp {
     public static void main(String[] args) {
         JtRun.init();
 
-        XApp app = XApp.start(WaterraasApp.class, args, (x) -> {
+        Solon app = Solon.start(WaterraasApp.class, args, (x) -> {
             Config.tryInit();
 
             x.sharedAdd("cache",Config.cache_data);

@@ -7,9 +7,9 @@ import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -24,11 +24,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/bls")
+@Controller
+@Mapping("/mot/bls")
 public class BlsController extends BaseController {
 
-    @XMapping
+    @Mapping
     public ModelAndView bls(String tag_name, String name, String sort) throws Exception {
         List<TagCountsModel> tags = DbWaterOpsApi.getServerBlsAccounts();
 
@@ -50,7 +50,7 @@ public class BlsController extends BaseController {
         return view("mot/bls");
     }
 
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView bls_sinner(String instanceId, String name) throws SQLException, ClientException {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
@@ -67,7 +67,7 @@ public class BlsController extends BaseController {
     }
 
 
-    @XMapping("charts/ajax/reqtate")
+    @Mapping("charts/ajax/reqtate")
     public List<ELineModel> bls_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {
         if (dataType == null) {
             dataType = 0;
@@ -79,7 +79,7 @@ public class BlsController extends BaseController {
         return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, ETimeType.of(dataType), dataType);
     }
 
-    @XMapping("track/ajax/pull")
+    @Mapping("track/ajax/pull")
     public ViewModel bls_track_ajax_pull() throws Exception {
 
         ProtocolHub.monitoring.pull(MonitorType.LBS);

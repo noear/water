@@ -1,7 +1,7 @@
 package watersev.controller;
 
 import org.noear.snack.ONode;
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.XBean;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.Datetime;
@@ -36,10 +36,10 @@ public class ChkController implements IJob {
         }
 
         if (_args == null) {
-            _args = ONode.loadObj(XApp.cfg().argx());
+            _args = ONode.loadObj(Solon.cfg().argx());
         }
 
-        boolean is_unstable = XApp.cfg().isDriftMode();
+        boolean is_unstable = Solon.cfg().isDriftMode();
 
         try {
             WaterClient.Registry.register(Config.water_service_name, LocalUtils.getLocalIp(), _args.toJson(), "", 1, "", is_unstable);

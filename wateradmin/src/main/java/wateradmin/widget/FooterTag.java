@@ -5,18 +5,18 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;
 import java.util.Map;
 
 
-@XBean("ftl:footer")
+@Component("ftl:footer")
 public class FooterTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {
-        String cpath = XContext.current().path();
+        String cpath = Context.current().path();
 
         if (cpath.startsWith("/login")) {
             StringBuffer sb = new StringBuffer();

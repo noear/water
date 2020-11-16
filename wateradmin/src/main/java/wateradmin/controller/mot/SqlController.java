@@ -4,9 +4,9 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.db.DbWaterLogApi;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class SqlController extends BaseController {
 
     private final static String tableName = "water_exam_log_sql";
 
     //消息异常记录
-    @XMapping("sql")
+    @Mapping("sql")
     public ModelAndView sql(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterLogApi.getSqlServiceTags(tableName);
 
@@ -44,7 +44,7 @@ public class SqlController extends BaseController {
 
 
     /** state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER */
-    @XMapping("sql/inner")
+    @Mapping("sql/inner")
     public ModelAndView behavior_inner(Integer page,String tag_name, String tagx,  String log_date,Integer _state) throws SQLException {
         if(page == null){
             page=1;

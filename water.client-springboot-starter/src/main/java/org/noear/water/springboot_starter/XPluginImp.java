@@ -1,6 +1,6 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.XBridge;
 import org.noear.solon.core.XPlugin;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class XPluginImp implements XPlugin {
     Map<String, MessageHandler> _router  =new HashMap<>();
     @Override
-    public void start(XApp app) {
+    public void start(Solon app) {
         XmlSqlLoader.tryLoad();
 
         XBridge.upstreamFactorySet(new XUpstreamFactoryImp());
@@ -54,7 +54,7 @@ public class XPluginImp implements XPlugin {
 
                 WaterClient.Config.getProperties(tag).forEach((k, v) -> {
                     if (key.equals("*") || k.toString().indexOf(key) >= 0) {
-                        XApp.cfg().put(k, v);
+                        Solon.cfg().put(k, v);
                     }
                 });
 

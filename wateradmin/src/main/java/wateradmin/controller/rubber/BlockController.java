@@ -3,8 +3,8 @@ package wateradmin.controller.rubber;
 import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
 import org.noear.water.utils.JsonxUtils;
@@ -13,9 +13,9 @@ import org.noear.weed.DataList;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -30,12 +30,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class BlockController extends BaseController {
 
     //数据block
-    @XMapping("block")
+    @Mapping("block")
     public ModelAndView block(Integer block_id,String tag_name) throws SQLException{
 
         List<TagCountsModel> tags = DbRubberApi.getBlockTags();
@@ -58,7 +58,7 @@ public class BlockController extends BaseController {
     }
 
     //数据block右侧列表
-    @XMapping("block/inner")
+    @Mapping("block/inner")
     public ModelAndView blockInner(Integer block_id,String tag_name) throws SQLException{
         if(block_id == null){
             block_id = 0;
@@ -77,7 +77,7 @@ public class BlockController extends BaseController {
     }
 
     //数据块items
-    @XMapping("block/items")
+    @Mapping("block/items")
     public ModelAndView blockItems(Integer block_id,String fname,String fval) throws Exception{
         BlockModel block = DbRubberApi.getBlockById(block_id);
 
@@ -91,7 +91,7 @@ public class BlockController extends BaseController {
     }
 
     //编辑数据块
-    @XMapping("block/edit")
+    @Mapping("block/edit")
     public ModelAndView blockEdit(Integer block_id) throws SQLException{
         if (block_id == null) {
             block_id = 0;
@@ -116,7 +116,7 @@ public class BlockController extends BaseController {
     }
 
     //保存数据块编辑
-    @XMapping("block/edit/ajax/save")
+    @Mapping("block/edit/ajax/save")
     public ViewModel editSave(Integer block_id, String tag, String name, String name_display, String related_db, String related_tb,
                               String struct, String app_expr, Integer is_editable, String note) throws SQLException{
         long result = DbRubberApi.blockSave(block_id, tag, name, name_display, related_db, related_tb, struct, app_expr,is_editable,note);
@@ -131,7 +131,7 @@ public class BlockController extends BaseController {
         return viewModel;
     }
 
-    @XMapping("block/edit/ajax/del")
+    @Mapping("block/edit/ajax/del")
     public ViewModel del(Integer block_id) throws SQLException{
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
@@ -150,7 +150,7 @@ public class BlockController extends BaseController {
     }
 
     //d-block item内容编辑页
-    @XMapping("block/item/edit")
+    @Mapping("block/item/edit")
     public ModelAndView itemsEdit(String item_key,Integer block_id) throws SQLException{
 
         BlockModel block = DbRubberApi.getBlockById(block_id);
@@ -166,7 +166,7 @@ public class BlockController extends BaseController {
     }
 
     //d-block item编辑保存
-    @XMapping("block/item/edit/ajax/save")
+    @Mapping("block/item/edit/ajax/save")
     public ViewModel itemEditSave(Integer block_id,String item_key,String data) throws SQLException {
 
         BlockModel block = DbRubberApi.getBlockById(block_id);
@@ -180,8 +180,8 @@ public class BlockController extends BaseController {
 
 
     //批量导出
-    @XMapping("block/ajax/export")
-    public void exportDo(XContext ctx, String tag, String ids) throws Exception {
+    @Mapping("block/ajax/export")
+    public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<BlockModel> list = DbRubberApi.getBlockByIds(ids);
 
         String json = ONode.stringify(list);
@@ -195,8 +195,8 @@ public class BlockController extends BaseController {
 
 
     //批量导入
-    @XMapping("block/ajax/import")
-    public ViewModel importDo(XContext ctx, String tag, XFile file) throws Exception {
+    @Mapping("block/ajax/import")
+    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

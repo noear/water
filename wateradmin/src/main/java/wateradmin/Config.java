@@ -1,6 +1,6 @@
 package wateradmin;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -43,18 +43,18 @@ public class Config {
         WeedConfig.isUsingValueExpression = false;
     }
 
-    public static void tryInit(XApp app) {
+    public static void tryInit(Solon app) {
 
-        waterpaas_secretKey = app.prop().get("waterpaas.secretKey");
+        waterpaas_secretKey = app.props().get("waterpaas.secretKey");
 
         WaterClient.Config.getProperties(WW.water_session).forEach((k, v) -> {
-            if (XApp.cfg().isDebugMode()) {
+            if (Solon.cfg().isDebugMode()) {
                 String key = k.toString();
                 if (key.indexOf(".session.") < 0) {
-                    XApp.cfg().put(k, v);
+                    Solon.cfg().put(k, v);
                 }
             } else {
-                XApp.cfg().put(k, v);
+                Solon.cfg().put(k, v);
             }
         });
     }

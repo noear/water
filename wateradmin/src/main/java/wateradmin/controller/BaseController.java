@@ -1,9 +1,9 @@
 package wateradmin.controller;
 
 
-import org.noear.solon.annotation.XSingleton;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Singleton;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.Config;
 import wateradmin.dso.Session;
 import wateradmin.utils.IPUtil;
@@ -13,16 +13,16 @@ import wateradmin.viewModels.ViewModel;
 /**
  * Created by noear on 14-9-11.
  */
-@XSingleton(false)
+@Singleton(false)
 public abstract class BaseController {
 
     //获取 StateSelectorTag 传来的值
-    public int getState(XContext request)
+    public int getState(Context request)
     {
         return getInt(request,"_state");
     }
 
-    public int getInt(XContext request, String key) {
+    public int getInt(Context request, String key) {
         return request.paramAsInt(key,-1);
     }
 
@@ -58,7 +58,7 @@ public abstract class BaseController {
         viewModel.put("is_operator", Session.current().getIsOperator());
 
 
-        viewModel.put("ref_url", XContext.current().header("referer"));
+        viewModel.put("ref_url", Context.current().header("referer"));
         viewModel.put("paas_uri",Config.paas_uri());
         viewModel.put("raas_uri",Config.raas_uri());
 
@@ -71,7 +71,7 @@ public abstract class BaseController {
     * */
     public void redirect(String url) {
         try {
-            XContext.current().redirect(url);
+            Context.current().redirect(url);
         }catch (Exception ex){
             ex.printStackTrace();
         }

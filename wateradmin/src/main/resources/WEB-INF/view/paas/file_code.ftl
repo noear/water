@@ -71,7 +71,7 @@
                     [
                         {name: "db",value: "db", meta: "DbContext",type: "local",score: 1000},
                         {name: "cache",value: "cache", meta: "ICacheServiceEx",type: "local",score: 1000},
-                        {name: "ctx",value: "ctx", meta: "XContext",type: "local",score: 1000},
+                        {name: "ctx",value: "ctx", meta: "Context",type: "local",score: 1000},
                         {name: "localCache",value: "localCache", meta: "ICacheServiceEx",type: "local",score: 1000},
 
                         {name: "XMsg",value: "XMsg", meta: "XMsg",type: "local",score: 1000},

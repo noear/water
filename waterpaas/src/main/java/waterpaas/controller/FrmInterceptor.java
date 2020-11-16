@@ -1,14 +1,14 @@
 package waterpaas.controller;
 
 
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Context;
 import org.noear.luffy.dso.LogLevel;
 import org.noear.luffy.dso.LogUtil;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.luffy.utils.ExceptionUtils;
 import org.noear.luffy.utils.TextUtils;
+import org.noear.solon.core.handle.Handler;
 import waterpaas.Config;
 import waterpaas.dso.AFileUtil;
 import waterpaas.dso.DbPaaSApi;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 文件路径拦截器的代理（数据库安全）
  * */
-public class FrmInterceptor implements XHandler {
+public class FrmInterceptor implements Handler {
     private static final String _lock = "";
     private static  FrmInterceptor _g = null;
     public static FrmInterceptor g(){
@@ -41,7 +41,7 @@ public class FrmInterceptor implements XHandler {
 
 
     @Override
-    public void handle(XContext ctx) throws Exception {
+    public void handle(Context ctx) throws Exception {
         String path = ctx.path();
 
         _cacheMap.forEach((path2,suf)->{
@@ -51,7 +51,7 @@ public class FrmInterceptor implements XHandler {
         });
     }
 
-    private void exec(XContext ctx, String path2){
+    private void exec(Context ctx, String path2){
         try{
             do_exec(ctx,path2);
         }catch (Exception ex){
@@ -59,7 +59,7 @@ public class FrmInterceptor implements XHandler {
         }
     }
 
-    private void do_exec(XContext ctx, String path2) throws Exception {
+    private void do_exec(Context ctx, String path2) throws Exception {
         AFileModel file = AFileUtil.get(path2);
 
         if (file.file_id == 0) {

@@ -3,20 +3,20 @@ package wateradmin.controller;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfResourceModel;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
 import java.net.URLDecoder;
 
  //非单例
-@XController
+@Controller
 public class DockController extends BaseController {
     //支持外部url
-    @XMapping("/**/$*") //视图 返回
-    public ModelAndView dock1(XContext context) {
+    @Mapping("/**/$*") //视图 返回
+    public ModelAndView dock1(Context context) {
         String uri = context.path().toLowerCase();
         String query = context.uri().getQuery();
 
@@ -38,8 +38,8 @@ public class DockController extends BaseController {
     }
 
     //此处改过，xyj，201811(uadmin) //增加内部url支持
-    @XMapping("/**/@*") //视图 返回
-    public ModelAndView dock2(XContext context) {
+    @Mapping("/**/@*") //视图 返回
+    public ModelAndView dock2(Context context) {
         String uri = context.path();
         String query = context.uri().getQuery();
 

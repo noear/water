@@ -1,7 +1,7 @@
 package wateradmin.dso.db;
 
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.solon_plugin.IPUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
@@ -57,7 +57,7 @@ public class DbWaterVerApi {
                     .set("data", data_json)
                     .set("data_md5",data_md5)
                     .set("log_user", Session.current().getUserName())
-                    .set("log_ip", IPUtils.getIP(XContext.current()))
+                    .set("log_ip", IPUtils.getIP(Context.current()))
                     .set("log_date", now_time.getDate())
                     .set("log_fulltime",now_time.getFulltime())
                     .insert();

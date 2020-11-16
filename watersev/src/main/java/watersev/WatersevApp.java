@@ -1,6 +1,6 @@
 package watersev;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.solon.core.XMap;
 import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
@@ -32,7 +32,7 @@ public class WatersevApp {
         JobRunner.global = new JobRunnerEx(xMap.get("sss"));
         JtRun.init();
 
-        XApp.start(WatersevApp.class, xMap, (x) -> {
+        Solon.start(WatersevApp.class, xMap, (x) -> {
             //有端口才开启http能力
             x.enableHttp(has_server_port);
 

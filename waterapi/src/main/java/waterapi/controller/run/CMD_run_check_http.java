@@ -1,9 +1,9 @@
 package waterapi.controller.run;
 
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import waterapi.controller.UapiBase;
 
 import java.util.Map;
@@ -15,10 +15,10 @@ import java.util.Map;
  * @since 2017.07
  * Update time 2020.09
  */
-@XController
+@Controller
 public class CMD_run_check_http extends UapiBase {
-    @XMapping("/run/check/http/")
-    public String run_check_http(XContext ctx) {
+    @Mapping("/run/check/http/")
+    public String run_check_http(Context ctx) {
         ONode data = new ONode();
 
         Map<String, String> map = ctx.headerMap();

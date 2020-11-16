@@ -5,7 +5,7 @@ import org.noear.rubber.RubberException;
 import org.noear.rubber.RubberResponse;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -13,7 +13,7 @@ import waterraas.Config;
 import waterraas.controller.SystemCode;
 
 public class SchemeUtil {
-    public static void run(XContext context, String request_id, String scheme, int policy, String args_str, int type, String rule, boolean is_debug) throws Exception {
+    public static void run(Context context, String request_id, String scheme, int policy, String args_str, int type, String rule, boolean is_debug) throws Exception {
         if (TextUtils.isEmpty(request_id)) {
             request_id = Rubber.guid();
         }
@@ -78,7 +78,7 @@ public class SchemeUtil {
         return resp;
     }
 
-    public static void asynRun(XContext context, String request_id, String scheme, String args_str, int policy, String callback) throws Exception {
+    public static void asynRun(Context context, String request_id, String scheme, String args_str, int policy, String callback) throws Exception {
         if (TextUtils.isEmpty(request_id)) {
             request_id = Rubber.guid();
         }
@@ -102,7 +102,7 @@ public class SchemeUtil {
         context.output(data.toJson());
     }
 
-    public static void out(XContext context, LogRequestModel log) throws Exception {
+    public static void out(Context context, LogRequestModel log) throws Exception {
         ONode data = new ONode();
 
         data.set("code", 1).set("msg", SystemCode.code_1);

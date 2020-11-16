@@ -1,9 +1,9 @@
 package waterapi.controller.config;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
@@ -26,11 +26,11 @@ import waterapi.models.ConfigModel;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_cfg_set extends UapiBase {
     @NotEmpty({"tag", "key"})
-    @XMapping("/cfg/set/")
-    public XResult cmd_exec(XContext ctx, String tag, String key, String value) throws Throwable {
+    @Mapping("/cfg/set/")
+    public Result cmd_exec(Context ctx, String tag, String key, String value) throws Throwable {
 
         if (LockUtils.tryLock(Config.water_service_name, tag + "/" + key) == false) {
             throw UapiCodes.CODE_15;
@@ -57,6 +57,6 @@ public class CMD_cfg_set extends UapiBase {
             DbWaterMsgApi.addMessage(IDUtils.buildGuid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
         }
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

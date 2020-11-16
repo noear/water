@@ -1,6 +1,6 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.core.CacheService;
+import org.noear.solon.core.cache.CacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 
 public class CacheUtils {

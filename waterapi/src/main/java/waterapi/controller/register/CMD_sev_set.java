@@ -1,10 +1,10 @@
 package waterapi.controller.register;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
@@ -21,13 +21,13 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_set extends UapiBase {
     /**
      * @param s 指令
      * */
-    @XMapping("/sev/set/")
-    public XResult cmd_exec(XContext ctx, String s) throws Exception {
+    @Mapping("/sev/set/")
+    public Result cmd_exec(Context ctx, String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             String service = ctx.param("service");
             String address = ctx.param("address");
@@ -49,13 +49,13 @@ public class CMD_sev_set extends UapiBase {
         }
     }
 
-    private XResult exec0(XContext ctx, String service, String address, int enabled) throws Exception {
+    private Result exec0(Context ctx, String service, String address, int enabled) throws Exception {
 
-        if (XUtil.isEmpty(service)) {
+        if (Utils.isEmpty(service)) {
             throw UapiCodes.CODE_13("s or service");
         }
 
-        if (XUtil.isEmpty(address)) {
+        if (Utils.isEmpty(address)) {
             throw UapiCodes.CODE_13("s or address");
         }
 
@@ -63,6 +63,6 @@ public class CMD_sev_set extends UapiBase {
 
         DbWaterRegApi.disableService(service, address, note, enabled > 0);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

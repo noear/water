@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -16,13 +16,13 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class SpeedController extends BaseController {
 
 
     //性能监控
-    @XMapping("speed")
+    @Mapping("speed")
     public ModelAndView speed(String serviceName) throws SQLException {
         List<ServiceSpeedModel> services = DbWaterOpsApi.getSpeedServices();
 
@@ -42,7 +42,7 @@ public class SpeedController extends BaseController {
     }
 
     //性能监控-列表
-    @XMapping("speed/inner")
+    @Mapping("speed/inner")
     public ModelAndView speedList(String serviceName,String name, String sort) throws SQLException {
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(serviceName,null,name, sort);
         viewModel.put("speeds",speeds);
@@ -51,7 +51,7 @@ public class SpeedController extends BaseController {
     }
 
     //性能监控图标统计
-    @XMapping("speed/charts")
+    @Mapping("speed/charts")
     public ModelAndView speedCharts(String tag,String name,String service) throws SQLException{
         JSONObject speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name, service,"total_num");
         JSONObject speeds = DbWaterOpsApi.getSpeedForMonth(tag, name, service);
@@ -62,7 +62,7 @@ public class SpeedController extends BaseController {
         viewModel.put("service",service);
         return view("mot/speed_charts");
     }
-    @XMapping("speed/charts/ajax/reqtate")
+    @Mapping("speed/charts/ajax/reqtate")
     public ViewModel speedCharts_reqtate(String tag,String name,String service, Integer type) throws SQLException{
         String valField = "total_num";
         if(type == null){type=0;}

@@ -1,7 +1,7 @@
 package org.noear.rubber;
 
 import org.noear.snack.ONode;
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -21,7 +21,7 @@ public class Rubber {
         RcConfig.inner_cache = cache;
         RcRunner.tryInit();
 
-        XApp.global().sharedAdd("RubberUtil", new RubberUtil());
+        Solon.global().sharedAdd("RubberUtil", new RubberUtil());
     }
 
     //

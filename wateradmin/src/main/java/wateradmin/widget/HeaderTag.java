@@ -10,8 +10,8 @@ import org.noear.bcf.BcfUtil;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.Context;
 import wateradmin.Config;
 import wateradmin.dso.Session;
 
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@XBean("ftl:header")
+@Component("ftl:header")
 public class HeaderTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {
@@ -32,7 +32,7 @@ public class HeaderTag implements TemplateDirectiveModel {
 
     private void build(Environment env) throws Exception{
         //当前视图path //此处改过，xyj，20180831
-        XContext context = XContext.current();
+        Context context = Context.current();
         String cPath = context.path();
 
 

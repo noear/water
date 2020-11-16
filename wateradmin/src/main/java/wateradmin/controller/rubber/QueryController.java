@@ -1,8 +1,8 @@
 package wateradmin.controller.rubber;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbRubberQueryApi;
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class QueryController extends BaseController {
     //代码查询视图跳转
-    @XMapping("query")
+    @Mapping("query")
     public ModelAndView plan(Integer code_type,String code) throws SQLException {
         List<CodeQueryModel> list = new ArrayList<>();
         if (code_type != null && TextUtils.isEmpty(code) == false) {
@@ -28,7 +28,7 @@ public class QueryController extends BaseController {
     }
 
     //查看代码
-    @XMapping("query/code")
+    @Mapping("query/code")
     public ModelAndView code(Integer id,Integer code_type) throws SQLException{
         String code = DbRubberQueryApi.queryCode(code_type, id);
         code = code.replaceAll("<", "&lt;")

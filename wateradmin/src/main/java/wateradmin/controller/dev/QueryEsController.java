@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.http.util.TextUtils;
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.EsUtil;
@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 //非单例
-@XController
-@XMapping("/dev/query_es")
+@Controller
+@Mapping("/dev/query_es")
 public class QueryEsController extends BaseController {
-    @XMapping("")
+    @Mapping("")
     public ModelAndView query() throws SQLException {
         List<ConfigModel> list = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.elasticsearch);
 
@@ -35,7 +35,7 @@ public class QueryEsController extends BaseController {
     static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+)");
 
 
-    @XMapping(value = "ajax/do")
+    @Mapping(value = "ajax/do")
     public String query_do(String code) {
         String tmp = query_exec(code);
         if (tmp != null && tmp.startsWith("{")) {

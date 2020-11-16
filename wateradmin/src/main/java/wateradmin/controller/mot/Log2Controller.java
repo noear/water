@@ -3,9 +3,9 @@ package wateradmin.controller.mot;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -15,12 +15,12 @@ import wateradmin.models.water_cfg.LoggerModel;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class Log2Controller extends BaseController {
 
     //日志统计
-    @XMapping("log")
+    @Mapping("log")
     public ModelAndView logger(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
@@ -40,7 +40,7 @@ public class Log2Controller extends BaseController {
     }
 
     //日志统计列表
-    @XMapping("log/inner")
+    @Mapping("log/inner")
     public ModelAndView loggerInner(String tag_name,Integer _state, String sort) throws Exception {
         if (_state != null) {
             viewModel.put("_state", _state);

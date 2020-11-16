@@ -1,10 +1,10 @@
 package waterpaas.controller;
 
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.luffy.utils.TextUtils;
+import org.noear.solon.core.handle.Handler;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import waterpaas.Config;
@@ -15,7 +15,7 @@ import waterpaas.dso.RouteHelper;
 /**
  * 应用文件的代理，静态文件或动态文件（数据库安全）
  * */
-public class AppHandler implements XHandler {
+public class AppHandler implements Handler {
 
     private static final String _lock = "";
     private static AppHandler _g = null;
@@ -32,7 +32,7 @@ public class AppHandler implements XHandler {
     }
 
     @Override
-    public void handle(XContext ctx) throws Exception {
+    public void handle(Context ctx) throws Exception {
         String path = ctx.path();
         boolean debug = ctx.paramAsInt("_debug", 0) == 1;
 
@@ -47,7 +47,7 @@ public class AppHandler implements XHandler {
         do_handle(path, ctx, debug);
     }
 
-    private void do_handle(String path, XContext ctx, boolean debug) throws Exception {
+    private void do_handle(String path, Context ctx, boolean debug) throws Exception {
         String path2 = AFileUtil.path2(path);
         String name = null;
 

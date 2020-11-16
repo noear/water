@@ -1,9 +1,9 @@
 package waterapi.controller.log;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.log.Level;
@@ -22,7 +22,7 @@ import java.util.Date;
  * Update time 2020.09
  */
 @Whitelist
-@XController
+@Controller
 public class CMD_log_add extends UapiBase {
     static final String log_fulltime_formt = "yyyy-MM-dd HH:mm:ss";
 
@@ -35,8 +35,8 @@ public class CMD_log_add extends UapiBase {
      * @param trace_id 链跟跟踪ID
      */
     @NotEmpty("logger")
-    @XMapping("/log/add/")
-    public XResult cmd_exec(XContext ctx, String logger, int level, String summary, String content,
+    @Mapping("/log/add/")
+    public Result cmd_exec(Context ctx, String logger, int level, String summary, String content,
                             String from, String trace_id) throws Exception {
 
         String tag = ctx.param("tag", "");
@@ -59,6 +59,6 @@ public class CMD_log_add extends UapiBase {
 
         ProtocolHub.logStorer.write(logger, trace_id, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

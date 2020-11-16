@@ -1,10 +1,10 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
 public class IPUtils {
-    public static String getIP(XContext request){
+    public static String getIP(Context request){
         String ip =  request.header("RemoteIp");
 
         if (TextUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {

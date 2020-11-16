@@ -2,9 +2,9 @@ package wateradmin.controller.dev;
 
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.view.freemarker.XRenderUtil;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbPaaSApi;
@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@XController
-@XMapping("/dev/code")
+@Controller
+@Mapping("/dev/code")
 public class CodeGenerationController extends BaseController {
 
     private static final int CFG_TYPE_DB = 10;
@@ -36,7 +36,7 @@ public class CodeGenerationController extends BaseController {
         return "SHOW FULL FIELDS FROM `" + table + "`;";
     }
 
-    @XMapping("")
+    @Mapping("")
     public ModelAndView code(String tag_name) throws SQLException {
 
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(CFG_TYPE_DB);
@@ -49,7 +49,7 @@ public class CodeGenerationController extends BaseController {
 
     }
 
-    @XMapping("inner/{tag}")
+    @Mapping("inner/{tag}")
     public ModelAndView inner(String tag) throws SQLException {
 
         List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, CFG_TYPE_DB);
@@ -65,7 +65,7 @@ public class CodeGenerationController extends BaseController {
 
     }
 
-    @XMapping("ajax/tb")
+    @Mapping("ajax/tb")
     public ViewModel tb(String tag,
                         String key) throws SQLException {
 
@@ -82,7 +82,7 @@ public class CodeGenerationController extends BaseController {
 
     }
 
-    @XMapping("ajax/getcode")
+    @Mapping("ajax/getcode")
     public ViewModel get(String tag,
                          String key,
                          String tb,

@@ -1,10 +1,10 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.fairy.Fairy;
-import org.noear.fairy.Upstream;
+import org.noear.fairy.UpstreamService;
 import org.noear.fairy.annotation.FairyClient;
-import org.noear.solon.XApp;
-import org.noear.solon.core.XUpstream;
+import org.noear.solon.Solon;
+import org.noear.solon.core.Upstream;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.dso.WaterUpstream;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, XUpstream, Upstream {
+public class XWaterUpstream implements WaterUpstream, Upstream, UpstreamService {
     private final String TAG_SERVER = "{server}";
 
 
@@ -277,8 +277,8 @@ public class XWaterUpstream implements WaterUpstream, XUpstream, Upstream {
             c_sev = c_sev.split(":")[0];
         }
 
-        Upstream upstream = null;
-        if (XApp.cfg().isDebugMode()) {
+        UpstreamService upstream = null;
+        if (Solon.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
             if (url != null) {
@@ -293,7 +293,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream, Upstream {
         return xclient(clz, upstream);
     }
 
-    public static <T> T xclient(Class<?> clz, Upstream upstream) {
+    public static <T> T xclient(Class<?> clz, UpstreamService upstream) {
         return Fairy.builder()
                 .filterAdd((cfg, m, url, h, a) -> {
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());

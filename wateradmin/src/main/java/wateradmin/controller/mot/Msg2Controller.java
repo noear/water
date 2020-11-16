@@ -3,9 +3,9 @@ package wateradmin.controller.mot;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.models.water_msg.MessageModel;
@@ -14,12 +14,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class Msg2Controller extends BaseController {
 
     //消息异常记录
-    @XMapping("/msg")
+    @Mapping("/msg")
     public ModelAndView warm() throws SQLException {
         int topic_id = 0;
         String t = "";

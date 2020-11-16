@@ -1,8 +1,8 @@
 package luffy;
 
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XContextEmpty;
-import org.noear.solon.core.XContextUtil;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.ContextEmpty;
+import org.noear.solon.core.handle.ContextUtil;
 import org.noear.luffy.dso.CallUtil;
 import org.noear.luffy.dso.JtBridge;
 import org.noear.luffy.dso.JtFun;
@@ -26,13 +26,13 @@ public class JtRun {
         }
     }
 
-    public static Object call(String path, XContext ctx) throws Exception {
+    public static Object call(String path, Context ctx) throws Exception {
         AFileModel file = JtBridge.fileGet(path);
 
         return ExecutorFactory.execOnly(file, ctx);
     }
 
-    public static void exec(String path, XContext ctx) throws Exception {
+    public static void exec(String path, Context ctx) throws Exception {
         AFileModel file = JtBridge.fileGet(path);
 
         ExecutorFactory.execOnly( file, ctx);
@@ -50,11 +50,11 @@ public class JtRun {
     public static void exec(AFileModel file) throws Exception {
         initFuture.get();
 
-        XContext ctx = XContextEmpty.create();
+        Context ctx = ContextEmpty.create();
 
-        XContextUtil.currentSet(ctx);
+        ContextUtil.currentSet(ctx);
         ExecutorFactory.execOnly(file, ctx);
-        XContextUtil.currentRemove();
+        ContextUtil.currentRemove();
     }
 
     public static void xfunInit(){

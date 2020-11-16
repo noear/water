@@ -1,9 +1,9 @@
 package wateradmin.controller.paas;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -15,11 +15,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/paas/query")
+@Controller
+@Mapping("/paas/query")
 public class QueryController extends BaseController {
-    @XMapping("")
-    public ModelAndView list(XContext ctx) throws SQLException {
+    @Mapping("")
+    public ModelAndView list(Context ctx) throws SQLException {
         String key = ctx.param("key", "");
         int act = ctx.paramAsInt("act",11);
 

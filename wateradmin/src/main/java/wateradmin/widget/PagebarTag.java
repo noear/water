@@ -5,13 +5,13 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;
 import java.util.Map;
 
-@XBean("ftl:pagebar")
+@Component("ftl:pagebar")
 public class PagebarTag implements TemplateDirectiveModel {
 
     private int pageIndex;
@@ -43,7 +43,7 @@ public class PagebarTag implements TemplateDirectiveModel {
         if (pageCount == 0)
             pageCount = 1;
 
-        XContext context = XContext.current();
+        Context context = Context.current();
 
         pageIndex = context.paramAsInt("page", 1);
 

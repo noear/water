@@ -3,9 +3,9 @@ package wateradmin.controller.msg;
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
@@ -19,16 +19,16 @@ import wateradmin.models.water_msg.SubscriberModel;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-@XController
+@Controller
 public class MsgController extends BaseController {
-    @XMapping("/msg")
+    @Mapping("/msg")
     public ModelAndView index(){
         return view("msg/msg");
     }
 
 
     //消息调试
-    @XMapping("/msg/debug")
+    @Mapping("/msg/debug")
     public ModelAndView debug(String key) throws SQLException {
         MessageModel msg = DbWaterMsgApi.getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
@@ -39,7 +39,7 @@ public class MsgController extends BaseController {
     }
 
     //提交消息调试
-    @XMapping("/msg/debug/ajax/submitDebug")
+    @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
         MessageModel msg = DbWaterMsgApi.getMessageById(id);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
@@ -63,13 +63,13 @@ public class MsgController extends BaseController {
         return viewModel.code(1,result);
     }
 
-    @XMapping("/msg/send")
+    @Mapping("/msg/send")
     public ModelAndView distribute(){
 
         return view("msg/send");
     }
 
-    @XMapping("/msg/send/ajax/dosend")
+    @Mapping("/msg/send/ajax/dosend")
     public ViewModel sendMessage(String topic, String message,String tags) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
@@ -89,13 +89,13 @@ public class MsgController extends BaseController {
 
 
     //消息清理
-    @XMapping("/msg/clean")
+    @Mapping("/msg/clean")
     public ModelAndView clean(){
         return view("msg/msg_clean");
     }
 
     //执行消息清理
-    @XMapping("/msg/clean/ajax/submitClean")
+    @Mapping("/msg/clean/ajax/submitClean")
     public ViewModel submitClean(Integer state) throws SQLException{
         boolean is_admin = Session.current().getIsAdmin()>0;
         if (is_admin == false) {
@@ -108,7 +108,7 @@ public class MsgController extends BaseController {
     }
 
     //后端加密
-    @XMapping("/msg/debug/ajax/getSign")
+    @Mapping("/msg/debug/ajax/getSign")
     public HashMap<String,String> getSign(Long id,String msg_key,String topic_name,String content,String access_key){
         StringBuilder sb = new StringBuilder(200);
         sb.append(id).append("#");

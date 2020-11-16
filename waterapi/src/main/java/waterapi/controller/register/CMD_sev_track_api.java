@@ -1,8 +1,8 @@
 package waterapi.controller.register;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.track.TrackUtils;
@@ -17,7 +17,7 @@ import waterapi.controller.UapiBase;
  * Update time 2020.09
  */
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_track_api extends UapiBase {
 
     /**
@@ -27,22 +27,22 @@ public class CMD_sev_track_api extends UapiBase {
      * @param timespan 时长
      */
     @NotEmpty({"service", "tag", "name", "timespan"})
-    @XMapping("/sev/track/")
-    protected XResult cmd_exec(String _node, String _from,
+    @Mapping("/sev/track/")
+    protected Result cmd_exec(String _node, String _from,
                                String service, String tag, String name, long timespan) throws Exception {
 
         TrackUtils.track(Config.rd_track, service, tag, name, timespan, _node, _from);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 
     @NotEmpty({"service", "tag", "name", "timespan"})
-    @XMapping("/sev/track/api/")
-    protected XResult cmd_exec2(String _node, String _from,
+    @Mapping("/sev/track/api/")
+    protected Result cmd_exec2(String _node, String _from,
                                 String service, String tag, String name, long timespan) throws Exception {
 
         TrackUtils.track(Config.rd_track, service, tag, name, timespan, _node, _from);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

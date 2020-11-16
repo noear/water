@@ -1,6 +1,7 @@
 package wateradmin.viewModels;
 
-import org.noear.solon.core.ModelAndView;
+
+import org.noear.solon.core.handle.ModelAndView;
 
 /**
  * Created by noear on 14-9-10.

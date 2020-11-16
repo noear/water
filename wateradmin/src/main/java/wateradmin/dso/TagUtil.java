@@ -1,6 +1,6 @@
 package wateradmin.dso;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 import wateradmin.models.TagCountsModel;
 
@@ -24,7 +24,7 @@ public class TagUtil {
     }
 
     public static String cookieGet(){
-        return XContext.current().cookie("wateradmin_log__tag");
+        return Context.current().cookie("wateradmin_log__tag");
     }
 
     public static void cookieSet(String tag){
@@ -32,6 +32,6 @@ public class TagUtil {
             return;
         }
 
-        XContext.current().cookieSet("wateradmin_log__tag", tag);
+        Context.current().cookieSet("wateradmin_log__tag", tag);
     }
 }

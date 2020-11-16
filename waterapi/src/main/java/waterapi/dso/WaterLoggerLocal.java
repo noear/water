@@ -1,6 +1,6 @@
 package waterapi.dso;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
@@ -209,7 +209,7 @@ public class WaterLoggerLocal implements Logger {
         }
 
         Datetime datetime = Datetime.Now();
-        XContext ctx = XContext.current();
+        Context ctx = Context.current();
         LogEvent log = new LogEvent();
 
         log.logger = _name;

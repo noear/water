@@ -1,10 +1,10 @@
 package wateradmin.controller.mot;
 
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -17,12 +17,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class SevController extends BaseController {
 
     //服务状态
-    @XMapping("/service")
+    @Mapping("/service")
     public ModelAndView index(String name,Integer _state, String _type) throws SQLException {
 
         if (_state != null) {
@@ -45,7 +45,7 @@ public class SevController extends BaseController {
         return view("mot/service");
     }
 
-    @XMapping("/service/check")
+    @Mapping("/service/check")
     public String service_check(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
@@ -66,7 +66,7 @@ public class SevController extends BaseController {
         }
     }
 
-    @XMapping("/service/runcheck")
+    @Mapping("/service/runcheck")
     public String service_runcheck(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
@@ -88,7 +88,7 @@ public class SevController extends BaseController {
     }
 
     //页面自动刷新获取表单数据
-    @XMapping("/service/ajax/service_table")
+    @Mapping("/service/ajax/service_table")
     public ModelAndView manageS_table(String name,Integer _state, String _type) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
@@ -107,7 +107,7 @@ public class SevController extends BaseController {
     }
 
     //删除服务
-    @XMapping("/service/ajax/deleteService")
+    @Mapping("/service/ajax/deleteService")
     public ViewModel deleteServiceById(Integer service_id) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin()>0;
         if (is_admin == false) {
@@ -125,7 +125,7 @@ public class SevController extends BaseController {
     }
 
     //启用 | 禁用 服务
-    @XMapping("/service/ajax/disable")
+    @Mapping("/service/ajax/disable")
     public ViewModel disable(Integer service_id,Integer is_enabled) throws SQLException {
         boolean is_admin = Session.current().getIsAdmin()>0;
         if (is_admin == false) {
@@ -143,7 +143,7 @@ public class SevController extends BaseController {
     }
 
     //服务状态
-    @XMapping("/service/edit")
+    @Mapping("/service/edit")
     public ModelAndView service_edit(Integer service_id) throws SQLException {
         ServiceModel model = new ServiceModel();
         if(service_id!=null) {
@@ -155,7 +155,7 @@ public class SevController extends BaseController {
 
         return view("mot/service_edit");
     }
-    @XMapping("/service/edit/ajax/save")
+    @Mapping("/service/edit/ajax/save")
     public ViewModel service_edit_ajax_save(Integer service_id,String name,String address,String note,Integer check_type,String check_url) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
 

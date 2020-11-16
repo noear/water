@@ -1,9 +1,9 @@
 package waterapi.controller.message;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
@@ -23,7 +23,7 @@ import java.util.Date;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_msg_send extends UapiBase {
     /**
      * @param key       消息key（派发时会回传）
@@ -33,22 +33,22 @@ public class CMD_msg_send extends UapiBase {
      * @param tags      查询标签
      */
     @NotEmpty({"key", "topic", "message"})
-    @XMapping("/msg/send/")
-    public XResult cmd_exec(XContext ctx, String key, String topic, String message, String plan_time, String tags) throws Exception {
+    @Mapping("/msg/send/")
+    public Result cmd_exec(Context ctx, String key, String topic, String message, String plan_time, String tags) throws Exception {
 
         //如果不需要修改，检查是否已存在
         //
         if (DbWaterMsgApi.hasMessage(key)) {
-            return XResult.succeed();
+            return Result.succeed();
         }
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
         String trace_id = ctx.header(WW.http_header_trace);
 
         if (DbWaterMsgApi.addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
-            return XResult.succeed();
+            return Result.succeed();
         } else {
-            return XResult.failure();
+            return Result.failure();
         }
     }
 }

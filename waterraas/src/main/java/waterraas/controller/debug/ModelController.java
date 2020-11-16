@@ -3,7 +3,7 @@ package waterraas.controller.debug;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.RubberException;
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -12,7 +12,7 @@ import waterraas.controller.SystemCode;
 
 public class ModelController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
         String model = context.param("model");
         String field = context.param("field");
         String args_str = context.param("args");

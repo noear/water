@@ -1,6 +1,6 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.solon.core.XUpstream;
 import org.noear.solonclient.XProxy;
 import org.noear.solonclient.annotation.XClient;
@@ -277,7 +277,7 @@ public class XWaterUpstream implements WaterUpstream, XUpstream {
         }
 
         XUpstream upstream = null;
-        if (XApp.cfg().isDebugMode()) {
+        if (Solon.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
             if (url != null) {

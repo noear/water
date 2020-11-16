@@ -2,9 +2,9 @@ package wateradmin.controller.msg;
 
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterMsgApi;
@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@XController
+@Controller
 public class SubsController extends BaseController {
     //订阅列表
-    @XMapping("/msg/subs")
+    @Mapping("/msg/subs")
     public ModelAndView subscriber(String topic_name,Integer _state) throws SQLException{
 
         if (_state != null) {
@@ -50,7 +50,7 @@ public class SubsController extends BaseController {
     }
 
     //ajax删除功能。
-    @XMapping("/msg/subs/ajax/delete")
+    @Mapping("/msg/subs/ajax/delete")
     public ViewModel deleteSubscriber(String ids) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin==1){
@@ -68,7 +68,7 @@ public class SubsController extends BaseController {
     }
 
     //订阅主题 启用/禁用功能。
-    @XMapping("/msg/subs/ajax/enabled")
+    @Mapping("/msg/subs/ajax/enabled")
     public ViewModel enabledSubscriber(String ids,Integer is_enabled) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin==1){

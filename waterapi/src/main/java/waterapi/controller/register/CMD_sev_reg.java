@@ -1,10 +1,10 @@
 package waterapi.controller.register;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
@@ -21,7 +21,7 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_reg extends UapiBase {
     /**
      * @param service    服务名
@@ -31,8 +31,8 @@ public class CMD_sev_reg extends UapiBase {
      * @param check_url  检测地址
      */
     @NotEmpty({"service", "address"})
-    @XMapping("/sev/reg/")
-    public XResult cmd_exec(XContext ctx, String service, String address, String meta, int is_unstable, String check_url, int check_type) throws Exception {
+    @Mapping("/sev/reg/")
+    public Result cmd_exec(Context ctx, String service, String address, String meta, int is_unstable, String check_url, int check_type) throws Exception {
         if (meta == null) {
             meta = ctx.param("note");
         }
@@ -40,7 +40,7 @@ public class CMD_sev_reg extends UapiBase {
         String alarm_mobile = ctx.param("alarm_mobile", "");
 
         if (check_type == 0) {
-            if (XUtil.isEmpty(check_url)) {
+            if (Utils.isEmpty(check_url)) {
                 throw UapiCodes.CODE_13("check_url");
             }
         }
@@ -52,6 +52,6 @@ public class CMD_sev_reg extends UapiBase {
 
         DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, is_unstable > 0);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

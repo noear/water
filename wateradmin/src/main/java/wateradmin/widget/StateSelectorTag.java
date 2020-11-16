@@ -3,14 +3,14 @@ package wateradmin.widget;
 import freemarker.core.Environment;
 import freemarker.template.*;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;
 import java.util.Map;
 
 
-@XBean("ftl:stateselector")
+@Component("ftl:stateselector")
 public class StateSelectorTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {
@@ -88,7 +88,7 @@ public class StateSelectorTag implements TemplateDirectiveModel {
     private String items;
 
     private int getInt(String key) {
-        return XContext.current().paramAsInt(key,-1);
+        return Context.current().paramAsInt(key,-1);
     }
 
     protected String buildHtml()

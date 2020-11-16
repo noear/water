@@ -2,7 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.Aop;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.WaterConfig;
@@ -12,8 +12,8 @@ import org.noear.water.log.WaterLogger;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
-import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
+import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.core.XPlugin;
 import org.noear.weed.cache.ICacheServiceEx;
 
@@ -48,19 +48,19 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
      * */
     @Override
     public boolean is_unstable() {
-        return XApp.cfg().isDriftMode();
+        return Solon.cfg().isDriftMode();
     }
 
     public XWaterAdapter() {
-        super(XApp.cfg().argx(), XApp.global().port());
+        super(Solon.cfg().argx(), Solon.global().port());
         _global = this;
 
-        XUtil.loadClass("com.mysql.jdbc.Driver");
-        XUtil.loadClass("com.mysql.cj.jdbc.Driver");
+        Utils.loadClass("com.mysql.jdbc.Driver");
+        Utils.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     @Override
-    public void start(XApp app) {
+    public void start(Solon app) {
         //Bean 初始化完成化再启动监听，免得过早被检测
         //
         Aop.beanOnloaded(()->{
@@ -104,22 +104,22 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
                 //
                 //同步water配置
                 //
-                int gzip = XApp.cfg().getInt(WW.cfg_water_log_gzip, -1);
+                int gzip = Solon.cfg().getInt(WW.cfg_water_log_gzip, -1);
                 if (gzip > -1) {
                     WaterLogger.setGzip(gzip == 1);
                 }
 
-                int level = XApp.cfg().getInt(WW.cfg_water_log_level, -1);
+                int level = Solon.cfg().getInt(WW.cfg_water_log_level, -1);
                 if (level > -1) {
                     WaterLogger.setLevel(Level.of(level));
                 }
 
-                int interval = XApp.cfg().getInt(WW.cfg_water_log_interval, -1);
+                int interval = Solon.cfg().getInt(WW.cfg_water_log_interval, -1);
                 if (interval > -1) {
                     WaterLogger.setInterval(interval);
                 }
 
-                int packetSize = XApp.cfg().getInt(WW.cfg_water_log_packetSize, -1);
+                int packetSize = Solon.cfg().getInt(WW.cfg_water_log_packetSize, -1);
                 if (packetSize > -1) {
                     WaterLogger.setPacketSize(packetSize);
                 }
@@ -129,8 +129,8 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
 
     //用于作行为记录
     public int user_puid() {
-        if (XContext.current() != null) {
-            String tmp = XContext.current().attr("user_puid", "0");
+        if (Context.current() != null) {
+            String tmp = Context.current().attr("user_puid", "0");
             return Integer.parseInt(tmp);
         } else {
             return 0;
@@ -138,8 +138,8 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
     }
 
     public String user_name() {
-        if (XContext.current() != null) {
-            return XContext.current().attr("user_name", null);
+        if (Context.current() != null) {
+            return Context.current().attr("user_name", null);
         } else {
             return null;
         }
@@ -149,9 +149,9 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
      * 初始化Weed监听事件
      * */
     protected void initWeed() {
-        Class<?> clz = XUtil.loadClass(WW.clz_BcfClient);
-        final Boolean isDebugMode = XApp.cfg().isDebugMode();
-        final Boolean  isWeedStyle2= "text2".equals(XApp.cfg().get("water.weed.log.style"));
+        Class<?> clz = Utils.loadClass(WW.clz_BcfClient);
+        final Boolean isDebugMode = Solon.cfg().isDebugMode();
+        final Boolean  isWeedStyle2= "text2".equals(Solon.cfg().get("water.weed.log.style"));
 
         if(isDebugMode){
             WeedConfig.onException((cmd,err)->{
@@ -195,7 +195,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements XPlugin
                     return;
                 }
 
-                XContext context = XContext.current();
+                Context context = Context.current();
 
                 String sqlUp = cmd.text.toUpperCase();
                 String chkUp = "User_Id=? AND Pass_Wd=? AND Is_Disabled=0".toUpperCase();

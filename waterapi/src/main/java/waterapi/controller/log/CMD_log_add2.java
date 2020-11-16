@@ -1,11 +1,11 @@
 package waterapi.controller.log;
 
 import org.noear.snack.ONode;
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import org.noear.water.log.LogEvent;
@@ -25,11 +25,11 @@ import java.util.List;
  * Update time 2020.09
  */
 @Whitelist
-@XController
+@Controller
 public class CMD_log_add2 extends UapiBase {
 
-    @XMapping("/log/add2/")
-    public XResult cmd_exec(XContext ctx) throws Exception {
+    @Mapping("/log/add2/")
+    public Result cmd_exec(Context ctx) throws Exception {
         String contentType = ctx.contentType();
         String list_json = null;
 
@@ -48,8 +48,8 @@ public class CMD_log_add2 extends UapiBase {
             list_json = ctx.param("list");
         }
 
-        if (XUtil.isEmpty(list_json)) {
-            LogUtils.warn(ctx, contentType, "XContext body or @list is null");
+        if (Utils.isEmpty(list_json)) {
+            LogUtils.warn(ctx, contentType, "Context body or @list is null");
             throw UapiCodes.CODE_13("list");
         }
 
@@ -57,6 +57,6 @@ public class CMD_log_add2 extends UapiBase {
 
         ProtocolHub.logStorer.writeAll(list);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

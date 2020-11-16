@@ -1,7 +1,7 @@
 package org.noear.water.demo_api.controller;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
 import org.noear.water.WaterProxy;
 import org.noear.water.annotation.Water;
 import org.noear.water.demo_rpc_client.BcfUserRpcService;
@@ -13,7 +13,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 
 import java.util.Map;
 
-@XController
+@Controller
 public class TestController {
     //::配置服务
     @Water("water/water")
@@ -38,7 +38,7 @@ public class TestController {
     @Water //要启动：water-demo-rpc-service-impl 项目
     BcfUserRpcService userRpcService;
 
-    @XMapping("/test/")
+    @Mapping("/test/")
     public String test() throws Exception {
         //db access
         Map dbmap = waterDb.table("bcf_user").limit(1).select("*").caching(cache).getMap();

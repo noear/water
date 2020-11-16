@@ -7,9 +7,9 @@ import org.noear.water.protocol.model.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunDbsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@XController
-@XMapping("/mot/dbs")
+@Controller
+@Mapping("/mot/dbs")
 public class DbsController extends BaseController {
 
-    @XMapping
+    @Mapping
     public ModelAndView dbs(String tag_name, String name, String sort) throws Exception {
         List<TagCountsModel> tags = DbWaterOpsApi.getServerDbsAccounts();
 
@@ -48,7 +48,7 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView dbs_sinner(String instanceId, String type, String name) throws SQLException, ClientException {
         DbsViewModel instance = null;
 
@@ -85,7 +85,7 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("charts/ajax/reqtate")
+    @Mapping("charts/ajax/reqtate")
     public List<ELineModel> dbs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId, Integer type) throws Exception {
         if (dataType == null) {
             dataType = 0;
@@ -108,7 +108,7 @@ public class DbsController extends BaseController {
         }
     }
 
-    @XMapping("track/ajax/pull")
+    @Mapping("track/ajax/pull")
     public ViewModel dbs_rds_track_ajax_pull() throws Exception {
         ProtocolHub.monitoring.pull(MonitorType.RDS);
         ProtocolHub.monitoring.pull(MonitorType.PolarDB);
@@ -117,14 +117,14 @@ public class DbsController extends BaseController {
     }
 
 
-    @XMapping("redis/track/ajax/pull")
+    @Mapping("redis/track/ajax/pull")
     public ViewModel dbs_redis_track_ajax_pull() throws Exception {
         ProtocolHub.monitoring.pull(MonitorType.Redis);
 
         return viewModel.code(1, "OK");
     }
 
-    @XMapping("mencache/track/ajax/pull")
+    @Mapping("mencache/track/ajax/pull")
     public ViewModel dbs_mencache_track_ajax_pull() throws Exception {
         ProtocolHub.monitoring.pull(MonitorType.Memcached);
 

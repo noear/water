@@ -2,11 +2,11 @@ package wateradmin.controller.cfg;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
@@ -21,12 +21,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/cfg/whitelist")
+@Controller
+@Mapping("/cfg/whitelist")
 public class WhitelistController extends BaseController {
 
     //IP白名单列表
-    @XMapping("")
+    @Mapping("")
     public ModelAndView whitelist(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getWhitelistTags();
 
@@ -39,8 +39,8 @@ public class WhitelistController extends BaseController {
         return view("cfg/whitelist");
     }
 
-    @XMapping("inner")
-    public ModelAndView innerDo(XContext ctx, String tag_name, String key) throws Exception {
+    @Mapping("inner")
+    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
         int state = ctx.paramAsInt("state",1);
 
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByTag(tag_name, key, state);
@@ -56,7 +56,7 @@ public class WhitelistController extends BaseController {
     }
 
     //跳转ip白名单新增页面
-    @XMapping("edit")
+    @Mapping("edit")
     public ModelAndView whitelistAdd(Integer id, String tag_name) throws SQLException {
         WhitelistModel model = null;
         if (id != null) {
@@ -76,7 +76,7 @@ public class WhitelistController extends BaseController {
     }
 
     //保存ip白名单新增
-    @XMapping("edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel saveWhitelistAdd(Integer row_id, String tag,String type, String value, String note) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -97,7 +97,7 @@ public class WhitelistController extends BaseController {
 
 
     //删除IP白名单记录
-    @XMapping("ajax/del")
+    @Mapping("ajax/del")
     public ViewModel saveWhitelistDel(Integer row_id) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
@@ -118,8 +118,8 @@ public class WhitelistController extends BaseController {
 
 
     //批量导出
-    @XMapping("ajax/export")
-    public void exportDo(XContext ctx, String tag, String ids) throws Exception {
+    @Mapping("ajax/export")
+    public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByIds(ids);
         String json = ONode.stringify(list);
         String jsonX = JsonxUtils.encode(json);
@@ -132,8 +132,8 @@ public class WhitelistController extends BaseController {
 
 
     //批量导入
-    @XMapping("ajax/import")
-    public ViewModel importDo(XContext ctx, String tag, XFile file) throws Exception {
+    @Mapping("ajax/import")
+    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -152,8 +152,8 @@ public class WhitelistController extends BaseController {
     }
 
     //批量删除
-    @XMapping("ajax/batch")
-    public ViewModel batchDo(XContext ctx, String tag, Integer act, String ids) throws Exception {
+    @Mapping("ajax/batch")
+    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

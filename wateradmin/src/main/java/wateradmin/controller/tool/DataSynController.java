@@ -3,9 +3,9 @@ package wateradmin.controller.tool;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.ConfigType;
@@ -20,11 +20,11 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/tool/sync")
+@Controller
+@Mapping("/tool/sync")
 public class DataSynController extends BaseController {
     //plan视图跳转
-    @XMapping("")
+    @Mapping("")
     public ModelAndView plan(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.syncGetTags();
 
@@ -44,7 +44,7 @@ public class DataSynController extends BaseController {
     }
 
     //数据同步的iframe inner视图。
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView planInner(String tag_name,String sync_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
@@ -64,7 +64,7 @@ public class DataSynController extends BaseController {
     }
 
     //跳转数据同步编辑页面
-    @XMapping("edit")
+    @Mapping("edit")
     public ModelAndView edit(Integer sync_id) throws SQLException{
         if(sync_id == null){
             sync_id = 0;
@@ -79,7 +79,7 @@ public class DataSynController extends BaseController {
     }
 
     //保存数据同步编辑
-    @XMapping("edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel saveEdit(Integer syn_id, Integer type, String name, String tag, Integer interval, String target, String target_pk,
                               String source_model, String alarm_mobile, Integer is_enabled) throws SQLException{
         boolean result = DbWaterApi.syncSave(syn_id,type, name, tag, interval, target, target_pk, source_model, alarm_mobile, is_enabled);
@@ -92,7 +92,7 @@ public class DataSynController extends BaseController {
         return viewModel;
     }
 
-    @XMapping("edit/ajax/del")
+    @Mapping("edit/ajax/del")
     public ViewModel del(Integer syn_id) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");

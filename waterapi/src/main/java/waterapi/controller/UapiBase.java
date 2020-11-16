@@ -1,15 +1,15 @@
 package waterapi.controller;
 
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XRender;
-import org.noear.solon.core.XResult;
-import org.noear.solon.extend.validation.annotation.XValid;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Render;
+import org.noear.solon.core.handle.Result;
+import org.noear.solon.extend.validation.annotation.Valid;
 
-@XValid
-public class UapiBase implements XRender {
+@Valid
+public class UapiBase implements Render {
     @Override
-    public void render(Object obj, XContext ctx) throws Throwable {
+    public void render(Object obj, Context ctx) throws Throwable {
         if (obj == null) {
             return;
         }
@@ -22,12 +22,12 @@ public class UapiBase implements XRender {
             } else {
                 if (obj instanceof UapiCode) {
                     UapiCode err = (UapiCode) obj;
-                    obj = XResult.failure(err.getCode(), UapiCodes.getDescription(err));
+                    obj = Result.failure(err.getCode(), UapiCodes.getDescription(err));
                 }
 
                 if (obj instanceof Throwable) {
                     Throwable err = (Throwable) obj;
-                    obj = XResult.failure(err.getMessage());
+                    obj = Result.failure(err.getMessage());
                 }
 
                 ctx.outputAsJson(ONode.stringify(obj));

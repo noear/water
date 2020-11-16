@@ -350,14 +350,14 @@ interface ONode{
     select(jpath:string, useStandard:boolean, cacheJpath:boolean):ONode;
 }
 
-interface XFile{
+interface UploadedFile{
     contentType:string;
     content:InputStream;
     name:string;
     extension:string;
 }
 
-interface XContext{
+interface Context{
     setHandled(handled:boolean):void;
     getHandled():boolean;
 
@@ -401,8 +401,8 @@ interface XContext{
     paramsMap():JMap<string,JList<string>>;
     paramsAdd(key:string, val:string):void;
 
-    files(key:string):JList<XFile>;
-    file(key:string):XFile;
+    files(key:string):JList<UploadedFile>;
+    file(key:string):UploadedFile;
 
     cookie(key:string):string;
     cookie(key:string, def:string):string;
@@ -472,7 +472,7 @@ interface JtUtil {
     newSet():JSet<object>;
 
     newOutputStream():OutputStream;
-    newXfile():XFile;
+    newXfile():UploadedFile;
     newUri(url:string):URI;
 
     http(url:string):HttpUtils;
@@ -518,8 +518,8 @@ interface JtUtil {
     oNode(obj:object):ONode;
 
 
-    paging(ctx:XContext, pageSize:number):PagingModel;
-    paging(ctx:XContext, pageSize:number, fixedSize:number):PagingModel;
+    paging(ctx:Context, pageSize:number):PagingModel;
+    paging(ctx:Context, pageSize:number, fixedSize:number):PagingModel;
 
     liveTime(date: JDate):string;
     liveString(str:string, len:number, salt:string):string;
@@ -553,21 +553,21 @@ interface JtUtil {
     menuGet(label:string, pid:number) : JList<JMap<string,object>>;
     menuGet(label:string) : JList<JMap<string,object>>;
 
-    imgSet(file:XFile) : string;
-    imgSet(file:XFile, tag:string, dir:string, name_mod:Number) : String;
-    imgSet(file:XFile, extension:string) : string;
+    imgSet(file:UploadedFile) : string;
+    imgSet(file:UploadedFile, tag:string, dir:string, name_mod:Number) : String;
+    imgSet(file:UploadedFile, extension:string) : string;
     imgSet(content:string, contentType:string, extension:string) : string;
     imgSet(content:string, contentType:string, extension:string, name:string) : string;
     imgSet(content:string, contentType:string, extension:string, name:string, label:string) : string;
 
-    imgOutName(ctx:XContext, filename:string) : void;
+    imgOutName(ctx:Context, filename:string) : void;
     imgUpd(path:string, content:string) : string;
     imgGet(path:string) : string;
     imgGetBytes(path:string) : Int8Array;
     img2String(data:string) : string;
 
     fileGet(path:string): string;
-    fileNew(fid:number, ctx:XContext) : boolean;
+    fileNew(fid:number, ctx:Context) : boolean;
     fileSet(fid:number, fcontent:string) : boolean;
     fileFlush(path:string, is_del:boolean) : boolean;
     fileFlush(path:string, is_del:boolean, label:string, note:string) : boolean;
@@ -700,7 +700,7 @@ declare var Timecount: Timecount;
 declare var Timespan: Timespan;
 
 declare var db: DbContext;
-declare var ctx: XContext;
+declare var ctx: Context;
 declare var cache: ICacheServiceEx;
 declare var localCache: ICacheServiceEx;
 

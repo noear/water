@@ -1,12 +1,12 @@
 package waterraas.controller;
 
 import org.noear.rubber.Rubber;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 
 public class PreviewController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
 
         if (context.param("model") != null) {
             String model = context.param("model");

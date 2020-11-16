@@ -10,7 +10,7 @@ import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.XUtil;
+import org.noear.solon.Utils;
 import wateradmin.Config;
 import wateradmin.models.water_rebber.*;
 import wateradmin.models.TagCountsModel;
@@ -578,7 +578,7 @@ public class DbRubberApi {
         return db().table("rubber_scheme_rule").
                 where("scheme_id=?", scheme_id)
                 .build(tb -> {
-                    if (!XUtil.isEmpty(name)) {
+                    if (!Utils.isEmpty(name)) {
                         tb.and("name_display like ?", "%" + name + "%");
                     }
                 })
@@ -1169,7 +1169,7 @@ public class DbRubberApi {
     //处理分支表达式
     public static String checkCondition(String condition) {
         List<JSONObject> list = new ArrayList<>();
-        if (!XUtil.isEmpty(condition)) {
+        if (!Utils.isEmpty(condition)) {
             list = (List<JSONObject>) JSON.parse(condition);
         }
         String exprDisplay = "";
@@ -1186,7 +1186,7 @@ public class DbRubberApi {
             JSONObject exprValueItem = new JSONObject();
             exprValueItem.put("l", leftValue);
             exprValueItem.put("op", center);
-            if (!XUtil.isEmpty(right)) {
+            if (!Utils.isEmpty(right)) {
                 exprValueItem.put("r", right);
             } else {
                 exprValueItem.put("r", rightVal);
@@ -1195,7 +1195,7 @@ public class DbRubberApi {
             exprValue.put("_" + index, exprValueItem);
 
             String rightValue = "";
-            if (XUtil.isEmpty(right)) {
+            if (Utils.isEmpty(right)) {
                 rightValue = "{_" + index + ":" + rightVal + "}";
             } else {
                 rightValue = rightVal;

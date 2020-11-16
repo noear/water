@@ -1,10 +1,10 @@
 package waterapi.controller.message;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.Utils;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
@@ -21,7 +21,7 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_msg_subscribe extends UapiBase {
 
     /**
@@ -34,13 +34,13 @@ public class CMD_msg_subscribe extends UapiBase {
      * @param access_key  访问密钥（消息包签名用）
      */
     @NotEmpty({"key", "topic", "access_key"})
-    @XMapping("/msg/subscribe/")
-    public XResult cmd_exec(XContext ctx, String key, String note, int is_unstable, String topic, String receive_url, int receive_way, String access_key) throws Exception {
+    @Mapping("/msg/subscribe/")
+    public Result cmd_exec(Context ctx, String key, String note, int is_unstable, String topic, String receive_url, int receive_way, String access_key) throws Exception {
         if(receive_url == null){
             receive_url = ctx.param("receiver_url"); //**兼容旧版变量名。by 2020.09
         }
 
-        if(XUtil.isEmpty(receive_url)){
+        if(Utils.isEmpty(receive_url)){
             throw UapiCodes.CODE_13("receive_url");
         }
 
@@ -54,9 +54,9 @@ public class CMD_msg_subscribe extends UapiBase {
         }
 
         if (isOk) {
-            return XResult.succeed();
+            return Result.succeed();
         } else {
-            return XResult.failure();
+            return Result.failure();
         }
     }
 

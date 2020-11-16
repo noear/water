@@ -1,9 +1,9 @@
 package wateradmin.controller.dev;
 
 import org.apache.http.util.TextUtils;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
@@ -20,10 +20,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //非单例
-@XController
-@XMapping("/dev/query_db")
+@Controller
+@Mapping("/dev/query_db")
 public class QuerySqlDbController extends BaseController {
-   @XMapping("")
+   @Mapping("")
    public ModelAndView query() throws SQLException {
        List<ConfigModel> cfgs = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.db);
 
@@ -34,7 +34,7 @@ public class QuerySqlDbController extends BaseController {
 
    static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+,)?(\\d+)");
 
-   @XMapping(value = "ajax/do")
+   @Mapping(value = "ajax/do")
    public String query_do(String code) {
 
        //1.对不良条件进行过滤

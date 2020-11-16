@@ -1,16 +1,16 @@
 package waterapi.dso.validation;
 
-import org.noear.solon.XApp;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XPlugin;
+import org.noear.solon.Solon;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.Plugin;
 import org.noear.solon.extend.validation.ValidatorManager;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiCodes;
 
-@XBean
-public class ValidatorAdapter implements XPlugin {
+@Component
+public class ValidatorAdapter implements Plugin {
     @Override
-    public void start(XApp app) {
+    public void start(Solon app) {
         ValidatorManager.global().register(Whitelist.class, new WhitelistValidatorImp());
 
         ValidatorManager.global().onFailure((ctx, ano, result, message) -> {

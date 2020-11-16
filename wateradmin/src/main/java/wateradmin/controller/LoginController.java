@@ -7,11 +7,11 @@ import org.noear.bcf.models.BcfUserModel;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XMethod;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.MethodType;
 import wateradmin.dso.Session;
 import wateradmin.viewModels.ViewModel;
 
@@ -19,15 +19,15 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-@XController
+@Controller
 public class LoginController extends BaseController {
 
-    @XMapping("login") //视图 返回
+    @Mapping("login") //视图 返回
     public ModelAndView login() {
         return view("login");
     }
 
-    @XMapping("/")
+    @Mapping("/")
     public void index() {
         redirect("/login");
     }
@@ -36,7 +36,7 @@ public class LoginController extends BaseController {
     //ajax.path like "{view}/ajax/{cmd}"
 
     //$共享SESSOIN$::自动跳转
-    @XMapping("/login/auto")
+    @Mapping("/login/auto")
     public void login_auto() throws Exception {
         int puid = Session.current().getPUID();
         if (puid > 0) {
@@ -50,7 +50,7 @@ public class LoginController extends BaseController {
         redirect("/login");
     }
 
-    @XMapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
+    @Mapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
     public ViewModel login_ajax_check(String userName, String passWord, String captcha) throws Exception {
 
         //验证码检查
@@ -90,8 +90,8 @@ public class LoginController extends BaseController {
     /*
      * 获取验证码图片
      */
-    @XMapping(value = "/login/validation/img", method = XMethod.GET, produces = "image/jpeg")
-    public void getValidationImg(XContext ctx) throws IOException {
+    @Mapping(value = "/login/validation/img", method = MethodType.GET, produces = "image/jpeg")
+    public void getValidationImg(Context ctx) throws IOException {
         // 生成验证码存入session
         String validation = RandomUtils.code(4);
         Session.current().setValidation(validation);

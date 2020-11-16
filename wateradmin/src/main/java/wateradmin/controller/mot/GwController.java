@@ -1,8 +1,8 @@
 package wateradmin.controller.mot;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -18,14 +18,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/mot/gw")
+@Controller
+@Mapping("/mot/gw")
 public class GwController extends BaseController {
 
     private static final String SEV_CONFIG_TAG = "_gateway";
     private static final String SEV_SERVER_TAG = "_service";
 
-    @XMapping("")
+    @Mapping("")
     public ModelAndView gw(String tag) throws SQLException {
         List<ConfigModel> sevs = DbWaterCfgApi.getGateways();
 
@@ -43,7 +43,7 @@ public class GwController extends BaseController {
 
     }
 
-    @XMapping("inner")
+    @Mapping("inner")
     public ModelAndView gw_inner(String sev_key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);

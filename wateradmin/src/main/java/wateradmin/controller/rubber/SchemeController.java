@@ -5,18 +5,18 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.Utils;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
 import org.noear.water.utils.JsonxUtils;
 import org.noear.water.utils.TextUtils;
 
-import org.noear.solon.XUtil;
-import org.noear.solon.annotation.XMapping;
+import org.noear.solon.annotation.Mapping;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -30,12 +30,12 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class SchemeController extends BaseController {
 
     //获取计算方案分组列表
-    @XMapping("scheme")
+    @Mapping("scheme")
     public ModelAndView scheme(Integer scheme_id,String tag_name, String name) throws SQLException {
         List<TagCountsModel> tags = DbRubberApi.getSchemeTags();
 
@@ -57,7 +57,7 @@ public class SchemeController extends BaseController {
     }
 
     //获取计算方案列表
-    @XMapping("scheme/inner")
+    @Mapping("scheme/inner")
     public ModelAndView inner(Integer scheme_id, String tag_name, String name,String f) throws SQLException {
         if(scheme_id!=null && scheme_id>0){
             return eventEdit(scheme_id,f);
@@ -74,7 +74,7 @@ public class SchemeController extends BaseController {
     }
 
     //跳转计算方案添加、修改
-    @XMapping("scheme/edit")
+    @Mapping("scheme/edit")
     public ModelAndView toAddScheme(Integer scheme_id,String f) throws SQLException {
         List<ModelModel> modelList = DbRubberApi.getModelList();
         viewModel.put("models",modelList);
@@ -96,7 +96,7 @@ public class SchemeController extends BaseController {
     }
 
     //ajax保存计算方案
-    @XMapping("scheme/edit/ajax/save")
+    @Mapping("scheme/edit/ajax/save")
     public ViewModel saveScheme(Integer id, String tag, String name, String name_display, String related_model, String related_model_display, String related_block,String debug_args) {
         try {
             long schemeId = DbRubberApi.setScheme(id, tag, name, name_display, related_model, related_model_display, related_block,debug_args);
@@ -112,7 +112,7 @@ public class SchemeController extends BaseController {
     }
 
     //跳转计算方案事件编辑页面
-    @XMapping("scheme/event/edit")
+    @Mapping("scheme/event/edit")
     public ModelAndView eventEdit(Integer scheme_id,String f) throws SQLException{
         SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
         viewModel.put("scheme",scheme);
@@ -126,7 +126,7 @@ public class SchemeController extends BaseController {
     }
 
     //计算方案事件编辑保存
-    @XMapping("scheme/event/edit/ajax/save")
+    @Mapping("scheme/event/edit/ajax/save")
     public  ViewModel saveEdit(Integer scheme_id,String event) throws SQLException{
         boolean result = DbRubberApi.updateSchemeEvent(scheme_id, event);
         if (result) {
@@ -138,7 +138,7 @@ public class SchemeController extends BaseController {
     }
 
     //ajax另存为计算方案
-    @XMapping("scheme/edit/ajax/saveAs")
+    @Mapping("scheme/edit/ajax/saveAs")
     public ViewModel saveScheme(String tag,Integer scheme_id, String name,String name_display,String debug_args) throws SQLException{
         boolean result = DbRubberApi.saveAsScheme(tag,scheme_id,name,name_display,debug_args);
         if (result) {
@@ -150,7 +150,7 @@ public class SchemeController extends BaseController {
     }
 
     //ajax删除计算方案
-    @XMapping("scheme/edit/ajax/del")
+    @Mapping("scheme/edit/ajax/del")
     public ViewModel delScheme(Integer scheme_id) throws SQLException{
 
         boolean result = DbRubberApi.delScheme(scheme_id);
@@ -165,14 +165,14 @@ public class SchemeController extends BaseController {
 
 
     //跳转计算方案规则列表
-    @XMapping("scheme/rule/design")
+    @Mapping("scheme/rule/design")
     public ModelAndView rule_inner(Integer scheme_id,String tag_name,String name_display,String name,String f) throws SQLException {
         List<SchemeRuleModel> rules = DbRubberApi.getSchemeRuleListBySchemeId(scheme_id,name);
         SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
 
         //控制，是否显示查询
         ModelModel model = null;
-        if (!XUtil.isEmpty(scheme.related_model)){
+        if (!Utils.isEmpty(scheme.related_model)){
             model = DbRubberApi.getModelFieldListByModelTagAndName(scheme.related_model);
             viewModel.put("related_db",model.related_db);
         }else{
@@ -192,7 +192,7 @@ public class SchemeController extends BaseController {
     }
 
     //跳转规则设计
-    @XMapping("scheme/rule/edit")
+    @Mapping("scheme/rule/edit")
     public ModelAndView toRuleAdd(Integer rule_id, Integer scheme_id,String debug_args,String f) throws SQLException {
         if(rule_id==null){
             rule_id = 0;
@@ -213,12 +213,12 @@ public class SchemeController extends BaseController {
         if (scheme_id != null && scheme_id != 0){
             scheme = DbRubberApi.getSchemeById(scheme_id);
 
-            if (!XUtil.isEmpty(scheme.related_model)){
+            if (!Utils.isEmpty(scheme.related_model)){
                 model = DbRubberApi.getModelFieldListByModelTagAndName(scheme.related_model);
             }
 
             if (scheme != null){
-                if(!XUtil.isEmpty(scheme.related_block)){
+                if(!Utils.isEmpty(scheme.related_block)){
                     functions = DbRubberApi.getBlocksByTagOrNameArray(scheme.related_block);
                 }
             }
@@ -283,12 +283,12 @@ public class SchemeController extends BaseController {
 
 
     //ajax编辑保存功能
-    @XMapping("scheme/rule/edit/ajax/save")
+    @Mapping("scheme/rule/edit/ajax/save")
     public ViewModel ruleSave(Integer rule_id ,Integer scheme_id ,String name_display,Integer advice,Integer score,Integer sort, String expr) throws SQLException {
         boolean result = false;
         System.out.println(expr);
         List<JSONObject> list = new ArrayList<>();
-        if (!XUtil.isEmpty(expr)){
+        if (!Utils.isEmpty(expr)){
             list = (List<JSONObject>) JSON.parse(expr);
         }
         String exprDisplay = "";
@@ -306,7 +306,7 @@ public class SchemeController extends BaseController {
             exprValueItem.put("l", leftValue);
             exprValueItem.put("op", center);
 
-            if (!XUtil.isEmpty(right)){
+            if (!Utils.isEmpty(right)){
                 exprValueItem.put("r", right);
             }else{
                 exprValueItem.put("r", rightVal);
@@ -316,7 +316,7 @@ public class SchemeController extends BaseController {
             exprValue.put("_" + index, exprValueItem);
 
             String rightValue = "";
-            if (XUtil.isEmpty(right)){
+            if (Utils.isEmpty(right)){
                 rightValue = "{_"+ index +":"+rightVal+"}";
             }else{
                 rightValue = rightVal;
@@ -344,7 +344,7 @@ public class SchemeController extends BaseController {
     }
 
     //删除计算方案-规则
-    @XMapping("scheme/rule/del/ajax/save")
+    @Mapping("scheme/rule/del/ajax/save")
     public ViewModel ruleSave(Integer rule_id,Integer scheme_id) throws SQLException{
         boolean result = DbRubberApi.delSchemeRule(rule_id, scheme_id);
         if (result) {
@@ -356,7 +356,7 @@ public class SchemeController extends BaseController {
     }
 
     //ajax编辑保存功能
-    @XMapping("scheme/rule/expr/edit/ajax/save")
+    @Mapping("scheme/rule/expr/edit/ajax/save")
     public ViewModel schemeInserSave(String exprs,Integer rule_relation,Integer scheme_id) throws SQLException {
         boolean result = false;
         JSONObject exprResult = (JSONObject )JSON.parse(exprs);
@@ -410,7 +410,7 @@ public class SchemeController extends BaseController {
     }
 
     //计算方案-流程设计
-    @XMapping("scheme/flow")
+    @Mapping("scheme/flow")
     public ModelAndView process(Integer scheme_id) throws SQLException{
         SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
         SchemeNodeDesignModel design = DbRubberApi.getSchemeNodeDesign(scheme_id);
@@ -421,13 +421,13 @@ public class SchemeController extends BaseController {
     }
 
     //保存计算方案流程设计
-    @XMapping("scheme/flow/ajax/savedesign")
+    @Mapping("scheme/flow/ajax/savedesign")
     public JSONObject saveDesign(Integer scheme_id,String details) throws SQLException{
         return DbRubberApi.setSchemeNodeAll(scheme_id,details);
     }
 
     //计算方案-流程设计 执行节点弹出窗
-    @XMapping("scheme/flow/excute")
+    @Mapping("scheme/flow/excute")
     public ModelAndView excuteLayer(String node_id,Integer scheme_id) throws SQLException{
 
         SchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_id,scheme_id);
@@ -442,7 +442,7 @@ public class SchemeController extends BaseController {
     }
 
     //获取执行任务默认选项
-    @XMapping("scheme/flow/ajax/getTask")
+    @Mapping("scheme/flow/ajax/getTask")
     public JSONArray getTask(String taskType,Integer scheme_id) throws SQLException{
         //taskType: F->动态函数  R->计算方案
         JSONArray resp = DbRubberApi.getTaskDefultByType(taskType,scheme_id);
@@ -450,13 +450,13 @@ public class SchemeController extends BaseController {
     }
 
     //执行节点编辑保存
-    @XMapping("scheme/flow/ajax/saveExcuteNode")
+    @Mapping("scheme/flow/ajax/saveExcuteNode")
     public Boolean saveExcuteNode(Integer scheme_id,String node_id,String name,String actor,String tasks) throws SQLException{
         return DbRubberApi.setSchemeNodeExcute(scheme_id,node_id, name, actor, tasks);
     }
 
     //计算方案-流程设计 分支节点弹出窗
-    @XMapping("scheme/flow/branch")
+    @Mapping("scheme/flow/branch")
     public ModelAndView branchLayer(Integer scheme_id,String node_key) throws SQLException{
 
         SchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_key,scheme_id);
@@ -466,7 +466,7 @@ public class SchemeController extends BaseController {
             ModelModel model = DbRubberApi.getModelFieldListByModelTagAndName(schemeInfo.related_model);
             List<BlockModel> functions = new ArrayList<>();
             if (schemeInfo != null){
-                if(!XUtil.isEmpty(schemeInfo.related_block)){
+                if(!Utils.isEmpty(schemeInfo.related_block)){
                     functions = DbRubberApi.getBlocksByTagOrNameArray(schemeInfo.related_block);
                 }
             }
@@ -512,15 +512,15 @@ public class SchemeController extends BaseController {
     }
 
     //分支节点编辑保存
-    @XMapping("scheme/flow/ajax/saveBranchNode")
+    @Mapping("scheme/flow/ajax/saveBranchNode")
     public Boolean saveBranchNode(Integer scheme_id,String node_id,String name,String condition) throws SQLException{
         return DbRubberApi.setSchemeNodeBranch(scheme_id,node_id, name, condition);
     }
 
 
     //批量导出
-    @XMapping("scheme/ajax/export")
-    public void exportDo(XContext ctx, String tag, String ids) throws Exception {
+    @Mapping("scheme/ajax/export")
+    public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<SchemeModel> tmpList = DbRubberApi.getSchemeByIds(ids);
 
         List<SchemeSerializeModel> list = new ArrayList<>(tmpList.size());
@@ -545,8 +545,8 @@ public class SchemeController extends BaseController {
 
 
     //批量导入
-    @XMapping("scheme/ajax/import")
-    public ViewModel importDo(XContext ctx, String tag, XFile file) throws Exception {
+    @Mapping("scheme/ajax/import")
+    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

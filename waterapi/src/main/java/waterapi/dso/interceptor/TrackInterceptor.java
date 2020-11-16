@@ -1,18 +1,18 @@
 package waterapi.dso.interceptor;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.Timecount;
 import waterapi.Config;
 import waterapi.dso.FromUtils;
 
-@XController
+@Controller
 public class TrackInterceptor {
-    @XMapping(value = "**", before = true, index = -1)
-    public void before(XContext c) {
+    @Mapping(value = "**", before = true, index = -1)
+    public void before(Context c) {
         //
         //不记录，检测的性能
         //
@@ -21,8 +21,8 @@ public class TrackInterceptor {
         }
     }
 
-    @XMapping(value = "**", after = true, index = 99)
-    public void after(XContext c) {
+    @Mapping(value = "**", after = true, index = 99)
+    public void after(Context c) {
         Timecount timecount = c.attr("timecount", null);
 
         if (timecount != null) {

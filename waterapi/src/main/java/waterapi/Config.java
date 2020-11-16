@@ -1,7 +1,7 @@
 package waterapi;
 
-import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
+import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
@@ -44,8 +44,8 @@ public class Config {
         WeedConfig.isDebug = false;
         WeedConfig.isUsingValueExpression = false;
 
-        XUtil.loadClass("com.mysql.jdbc.Driver");
-        XUtil.loadClass("com.mysql.cj.jdbc.Driver");
+        Utils.loadClass("com.mysql.jdbc.Driver");
+        Utils.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     private static boolean _inited = false;
@@ -54,8 +54,8 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            int service_port = XApp.global().port();;
-            Properties prop = XApp.cfg().getProp("water.dataSource");
+            int service_port = Solon.global().port();;
+            Properties prop = Solon.cfg().getProp("water.dataSource");
 
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
@@ -88,7 +88,7 @@ public class Config {
                         localHost,
                         WW.path_run_check,
                         0,
-                        XApp.cfg().isDriftMode());
+                        Solon.cfg().isDriftMode());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

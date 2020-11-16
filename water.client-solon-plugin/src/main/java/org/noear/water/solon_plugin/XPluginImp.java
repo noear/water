@@ -1,8 +1,9 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
+import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.core.*;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.annotation.Water;
@@ -16,14 +17,14 @@ import org.noear.weed.xml.XmlSqlLoader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XPluginImp implements XPlugin {
+public class XPluginImp implements Plugin {
     Map<String, MessageHandler> _router  =new HashMap<>();
 
     @Override
-    public void start(XApp app) {
+    public void start(Solon app) {
         XmlSqlLoader.tryLoad();
 
-        XBridge.upstreamFactorySet(new XUpstreamFactoryImp());
+        Bridge.upstreamFactorySet(new XUpstreamFactoryImp());
 
         //尝试注册
         if (app.port() > 0) {
@@ -53,7 +54,7 @@ public class XPluginImp implements XPlugin {
 
                 WaterClient.Config.getProperties(tag).forEach((k, v) -> {
                     if (key.equals("*") || k.toString().indexOf(key) >= 0) {
-                        XApp.cfg().put(k, v);
+                        Solon.cfg().put(k, v);
                     }
                 });
 
@@ -109,13 +110,13 @@ public class XPluginImp implements XPlugin {
         org.noear.water.WaterConfig.water_sev_upstream(wup);
 
         org.noear.water.WaterConfig.water_trace_id_supplier(() -> {
-            XContext ctx = XContext.current();
+            Context ctx = Context.current();
             if (ctx == null) {
                 return "";
             } else {
                 String trace_id = ctx.header(WW.http_header_trace);
                 if (TextUtils.isEmpty(trace_id)) {
-                    trace_id = XUtil.guid();
+                    trace_id = Utils.guid();
                     ctx.headerMap().put(WW.http_header_trace, trace_id);
                 }
 

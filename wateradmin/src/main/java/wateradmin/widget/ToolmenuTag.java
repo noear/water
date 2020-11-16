@@ -9,8 +9,8 @@ import freemarker.template.TemplateModel;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
-import org.noear.solon.annotation.XBean;
-import org.noear.solon.core.XContext;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.Context;
 import wateradmin.dso.Session;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by noear on 14-9-10.
  */
-@XBean("ftl:toolmenu")
+@Component("ftl:toolmenu")
 public class ToolmenuTag implements TemplateDirectiveModel {
     private String pack;
 
@@ -39,7 +39,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
 
         pack = mapExt.get("pack");
 
-        XContext request = XContext.current();
+        Context request = Context.current();
         //当前视图path
         String cPath = request.path();
         StringBuffer sb = new StringBuffer();
@@ -59,7 +59,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    private void forPack(XContext request, int packID, StringBuffer sb, String cPath) throws SQLException {
+    private void forPack(Context request, int packID, StringBuffer sb, String cPath) throws SQLException {
         List<BcfResourceModel> list = BcfClient.getUserResourcesByPack(Session.current().getPUID(), packID);
 
         for (BcfResourceModel r : list) {
@@ -67,7 +67,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    private void buildItem(XContext request,StringBuffer sb,String title,String url,String cPath) {
+    private void buildItem(Context request,StringBuffer sb,String title,String url,String cPath) {
         String url2 = url + "?"+request.uri().getQuery();
 
         if(cPath.indexOf(url)>0)

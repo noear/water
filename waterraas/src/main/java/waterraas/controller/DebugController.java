@@ -1,6 +1,6 @@
 package waterraas.controller;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import waterraas.controller.debug.BlockController;
 import waterraas.controller.debug.ModelController;
@@ -9,7 +9,7 @@ import waterraas.controller.debug.SchemeController;
 
 public class DebugController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
 
         if (context.param("model") != null) {
             new ModelController().handle(context);

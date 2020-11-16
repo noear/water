@@ -2,23 +2,23 @@ package wateradmin.controller.tool;
 
 import org.noear.snack.ONode;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WaterClient;
 import wateradmin.controller.BaseController;
 import wateradmin.viewModels.ViewModel;
 
-@XController
-@XMapping("/tool/")
+@Controller
+@Mapping("/tool/")
 public class HeiheiController extends BaseController {
-    @XMapping("heihei")
+    @Mapping("heihei")
     public ModelAndView index() {
         return view("tool/heihei");
     }
 
     //提交嘿嘿调试
-    @XMapping("heihei/ajax/submit")
+    @Mapping("heihei/ajax/submit")
     public ViewModel submit(String msg, String target) throws Exception {
 
         String response = WaterClient.Notice.heihei(target, msg);

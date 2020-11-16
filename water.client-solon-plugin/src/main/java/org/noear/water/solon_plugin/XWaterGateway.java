@@ -2,11 +2,11 @@ package org.noear.water.solon_plugin;
 
 import org.noear.fairy.Fairy;
 import org.noear.fairy.Result;
-import org.noear.solon.XApp;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XHandler;
-import org.noear.solon.core.XMap;
-import org.noear.solon.core.XUpstream;
+import org.noear.solon.Solon;
+import org.noear.solon.core.NvMap;
+import org.noear.solon.core.Upstream;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 
 import java.io.ByteArrayInputStream;
@@ -16,14 +16,14 @@ import java.util.Map;
 /*
 * Water Gateway
 * */
-public class XWaterGateway implements XHandler {
-    Map<String, XUpstream> router = new HashMap<>();
+public class XWaterGateway implements Handler {
+    Map<String, Upstream> router = new HashMap<>();
 
     public XWaterGateway() {
-        XMap map = XApp.cfg().getXmap("water.gateway");
+        NvMap map = Solon.cfg().getXmap("water.gateway");
 
         map.forEach((service, alias) -> {
-            if (XApp.cfg().isDebugMode()) {
+            if (Solon.cfg().isDebugMode()) {
                 //增加debug模式支持
                 String url = System.getProperty("water.remoting-debug." + service);
                 if (url != null) {
@@ -41,12 +41,12 @@ public class XWaterGateway implements XHandler {
         router.put(alias, XWaterUpstream.get(service));
     }
 
-    protected void add(String alias, XUpstream upstream) {
+    protected void add(String alias, Upstream upstream) {
         router.put(alias, upstream);
     }
 
     @Override
-    public void handle(XContext ctx) throws Throwable {
+    public void handle(Context ctx) throws Throwable {
 
         String path = ctx.path();
         //长度不足3的，说明不够两段
@@ -81,7 +81,7 @@ public class XWaterGateway implements XHandler {
             fun = path;
         }
 
-        XUpstream upstream = router.get(alias); //第1段为sev
+        Upstream upstream = router.get(alias); //第1段为sev
 
         //如果没有预配的负载不干活
         if (upstream == null) {
@@ -100,14 +100,14 @@ public class XWaterGateway implements XHandler {
     /**
      * 用于添加头
      */
-    protected Map<String, String> headers(XContext ctx) {
+    protected Map<String, String> headers(Context ctx) {
         return null;
     }
 
     /**
      * XRender,是为了进一步可以重载控制
      */
-    protected void renderDo(Result rst, XContext ctx) throws Throwable {
+    protected void renderDo(Result rst, Context ctx) throws Throwable {
         rst.headers().forEach(kv -> {
             ctx.headerSet(kv.getKey(), kv.getValue());
         });

@@ -2,7 +2,7 @@ package waterapi.models;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
-import org.noear.solon.XUtil;
+import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
@@ -82,7 +82,7 @@ public class ConfigModel implements IBinder {
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = XUtil.buildProperties(value);
+            _prop = Utils.buildProperties(value);
         }
 
         return _prop;

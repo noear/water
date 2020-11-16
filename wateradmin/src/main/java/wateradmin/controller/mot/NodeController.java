@@ -1,8 +1,8 @@
 package wateradmin.controller.mot;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.water_reg.ServiceSpeedModel;
@@ -10,12 +10,12 @@ import wateradmin.models.water_reg.ServiceSpeedModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/mot/")
+@Controller
+@Mapping("/mot/")
 public class NodeController extends BaseController {
 
     //性能监控
-    @XMapping("node")
+    @Mapping("node")
     public ModelAndView speed(String name,String sort) throws SQLException {
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName("_service",name, null, sort);
         viewModel.put("speeds",speeds);

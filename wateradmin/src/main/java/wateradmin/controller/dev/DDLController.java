@@ -3,10 +3,10 @@ package wateradmin.controller.dev;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 
-import org.noear.solon.annotation.XMapping;
+import org.noear.solon.annotation.Mapping;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -17,8 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("dev/ddl")
+@Controller
+@Mapping("dev/ddl")
 public class DDLController extends BaseController {
 
     private static final int CFG_TYPE_DB = 10;
@@ -29,7 +29,7 @@ public class DDLController extends BaseController {
         return "SHOW CREATE TABLE `" + table + "`;";
     }
 
-    @XMapping("")
+    @Mapping("")
     public ModelAndView ddl(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(CFG_TYPE_DB);
 
@@ -49,7 +49,7 @@ public class DDLController extends BaseController {
         return view("dev/ddl");
     }
 
-    @XMapping("inner/{tag}")
+    @Mapping("inner/{tag}")
     public ModelAndView inner(String tag) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, CFG_TYPE_DB);
 
@@ -60,7 +60,7 @@ public class DDLController extends BaseController {
         return view("dev/ddl_inner");
     }
 
-    @XMapping("ajax/tb")
+    @Mapping("ajax/tb")
     public ViewModel tb(String tag, String key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tag, key);
@@ -76,7 +76,7 @@ public class DDLController extends BaseController {
 
     }
 
-    @XMapping("ajax/getddl")
+    @Mapping("ajax/getddl")
     public ViewModel get(String tag,
                          String key,
                          String tb) throws SQLException {

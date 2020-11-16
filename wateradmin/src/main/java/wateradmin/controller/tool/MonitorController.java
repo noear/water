@@ -3,9 +3,9 @@ package wateradmin.controller.tool;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -20,12 +20,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/tool/")
+@Controller
+@Mapping("/tool/")
 public class MonitorController extends BaseController {
 
     //monitor视图跳转。
-    @XMapping("monitor")
+    @Mapping("monitor")
     public ModelAndView MonitorIndex(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
 
@@ -45,7 +45,7 @@ public class MonitorController extends BaseController {
     }
 
     //Monitor的 iframe inner视图。
-    @XMapping("monitor/inner")
+    @Mapping("monitor/inner")
     public ModelAndView monitorInner(String tag_name,String monitor_name,Integer _state) throws SQLException {
         if (_state!=null) {
             viewModel.put("_state", _state);
@@ -64,7 +64,7 @@ public class MonitorController extends BaseController {
         return view("tool/monitor_inner");
     }
 
-    @XMapping("monitor/edit")
+    @Mapping("monitor/edit")
     public ModelAndView editMonitor(String tag,Integer monitor_id) throws SQLException {
         if(monitor_id == null){
             monitor_id = 0;
@@ -91,7 +91,7 @@ public class MonitorController extends BaseController {
     }
 
 
-    @XMapping("monitor/edit/ajax/save")
+    @Mapping("monitor/edit/ajax/save")
     public ViewModel save(Integer monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_sign, String alarm_exp, Integer is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
@@ -113,7 +113,7 @@ public class MonitorController extends BaseController {
         return viewModel;
     }
 
-    @XMapping("monitor/edit/ajax/del")
+    @Mapping("monitor/edit/ajax/del")
     public ViewModel del(Integer monitor_id) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");

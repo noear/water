@@ -2,7 +2,7 @@ package waterapi.dso.db;
 
 import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.DbContext;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import waterapi.dso.IPUtils;
 import waterapi.dso.MsgUtils;
 import waterapi.Config;
@@ -121,12 +121,12 @@ public final class DbWaterRegApi {
                     .set("service", service)
                     .set("consumer", consumer)
                     .set("consumer_address", consumer_address)
-                    .set("consumer_ip", IPUtils.getIP(XContext.current()))
+                    .set("consumer_ip", IPUtils.getIP(Context.current()))
                     .set("chk_fulltime", "$NOW()")
                     .upsertBy("service,consumer_address");
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtils.error(XContext.current(), ex);
+            LogUtils.error(Context.current(), ex);
         }
     }
 

@@ -1,12 +1,12 @@
 package waterapi.dso.interceptor;
 
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XHandler;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Handler;
 import waterapi.dso.LogUtils;
 
-public class LoggingInterceptor implements XHandler {
+public class LoggingInterceptor implements Handler {
     @Override
-    public void handle(XContext ctx) throws Throwable {
+    public void handle(Context ctx) throws Throwable {
         //记录输入
         //
         LogUtils.info("", ctx);

@@ -2,7 +2,7 @@ package waterraas.controller.debug;
 
 import org.noear.rubber.Rubber;
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.XHandler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timecount;
@@ -11,7 +11,7 @@ import waterraas.dao.LogUtil;
 
 public class BlockController implements XHandler {
     @Override
-    public void handle(XContext context) throws Exception {
+    public void handle(Context context) throws Exception {
         String block = context.param("block");
         if(block == null) {
             block = context.path().substring(3); //通过路径传入
@@ -42,7 +42,7 @@ public class BlockController implements XHandler {
 
     }
 
-    private void run(XContext context, String block, ONode args) throws Exception{
+    private void run(Context context, String block, ONode args) throws Exception{
         ONode data = new ONode();
 
         data.set("code",1).set("msg",SystemCode.code_1);

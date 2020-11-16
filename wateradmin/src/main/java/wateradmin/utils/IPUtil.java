@@ -1,10 +1,10 @@
 package wateradmin.utils;
 
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
 public class IPUtil {
-    public static String getIP(XContext context){
+    public static String getIP(Context context){
         String ip =  context.header("RemoteIp");
 
         if (TextUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip)) {

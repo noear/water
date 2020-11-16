@@ -3,17 +3,17 @@ package wateradmin.controller.rubber;
 import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
 import org.noear.water.utils.JsonxUtils;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -30,12 +30,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class ModelController extends BaseController {
 
     //计算模型
-    @XMapping("model")
+    @Mapping("model")
     public ModelAndView model(Integer model_id,Integer field_id,String tag_name,String name,String f) throws SQLException {
         List<TagCountsModel> tags = DbRubberApi.getModelTags();
 
@@ -60,7 +60,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型右侧列表
-    @XMapping("model/inner")
+    @Mapping("model/inner")
     public ModelAndView inner(Integer model_id, Integer field_id,String tag_name, String name,String f) throws SQLException {
 
         if(field_id!=null && field_id>0){
@@ -83,7 +83,7 @@ public class ModelController extends BaseController {
 
 
     //修改数据模型
-    @XMapping("model/edit")
+    @Mapping("model/edit")
     public ModelAndView edit(Integer model_id,String f) throws SQLException{
         if(model_id == null){
             model_id = 0;
@@ -109,7 +109,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型保存编辑
-    @XMapping("model/edit/ajax/save")
+    @Mapping("model/edit/ajax/save")
     public JSONObject editSave(Integer model_id,String tag,String name,String name_display,String init_expr,String debug_args,String related_db) throws SQLException{
         JSONObject resp = new JSONObject();
         boolean result = DbRubberApi.setModel(model_id, tag, name, name_display, init_expr,debug_args,related_db) > 0;
@@ -126,7 +126,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型删除
-    @XMapping("model/edit/ajax/del")
+    @Mapping("model/edit/ajax/del")
     public ViewModel modelDel(Integer model_id) throws SQLException{
         boolean result = DbRubberApi.delModel(model_id);
         if (result) {
@@ -140,7 +140,7 @@ public class ModelController extends BaseController {
 
 
     //数据模型字段列表
-    @XMapping("model/field")
+    @Mapping("model/field")
     public ModelAndView field(Integer model_id,String name,String f) throws SQLException{
         ModelModel model = DbRubberApi.getModelById(model_id);
         List<ModelFieldModel> fields = DbRubberApi.getFieldList(model_id, name);
@@ -155,7 +155,7 @@ public class ModelController extends BaseController {
 
 
     //数据模型字段编辑页面
-    @XMapping("model/field/edit")
+    @Mapping("model/field/edit")
     public ModelAndView fieldEdit(Integer model_id,Integer field_id,String f) throws SQLException{
         if(field_id == null){
             field_id = 0;
@@ -181,7 +181,7 @@ public class ModelController extends BaseController {
 
 
     //数据模型字段保存编辑
-    @XMapping("model/field/edit/ajax/save")
+    @Mapping("model/field/edit/ajax/save")
     public JSONObject fieldEditSave(Integer model_id,Integer field_id,String name,String name_display,
                                     String expr,String note,Integer is_pk) throws SQLException{
         JSONObject resp = new JSONObject();
@@ -199,7 +199,7 @@ public class ModelController extends BaseController {
     }
 
     //删除模型字段
-    @XMapping("model/field/del/ajax/save")
+    @Mapping("model/field/del/ajax/save")
     public JSONObject fieldDelSave(Integer field_id,Integer model_id) throws SQLException{
         JSONObject resp = new JSONObject();
         boolean result = DbRubberApi.delModelField(field_id,model_id);
@@ -216,7 +216,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型字段另存为
-    @XMapping("model/edit/ajax/saveAs")
+    @Mapping("model/edit/ajax/saveAs")
     public ViewModel modelEditSaveAs(String tag,Integer model_id,String name,String name_display,String debug_args,String init_expr,String related_db) throws SQLException{
         boolean result = DbRubberApi.saveAsModel(tag,model_id,name,name_display,debug_args,init_expr,related_db);
 
@@ -231,8 +231,8 @@ public class ModelController extends BaseController {
 
 
     //批量导出
-    @XMapping("model/ajax/export")
-    public void exportDo(XContext ctx,  String tag, String ids) throws Exception {
+    @Mapping("model/ajax/export")
+    public void exportDo(Context ctx,  String tag, String ids) throws Exception {
         List<ModelModel> tmpList = DbRubberApi.getModelByIds(ids);
 
         List<ModelSerializeModel> list = new ArrayList<>(tmpList.size());
@@ -255,8 +255,8 @@ public class ModelController extends BaseController {
 
 
     //批量导入
-    @XMapping("model/ajax/import")
-    public ViewModel importDo(XContext ctx, String tag, XFile file) throws Exception {
+    @Mapping("model/ajax/import")
+    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

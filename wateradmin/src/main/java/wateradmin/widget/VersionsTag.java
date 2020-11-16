@@ -7,7 +7,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import wateradmin.dso.IDUtil;
 import wateradmin.dso.db.DbWaterVerApi;
 import wateradmin.models.water.VersionModel;
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@XBean("ftl:versions")
+@Component("ftl:versions")
 public class VersionsTag implements TemplateDirectiveModel {
 
     private String table;

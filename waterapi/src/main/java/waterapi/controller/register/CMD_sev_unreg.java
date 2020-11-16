@@ -1,9 +1,9 @@
 package waterapi.controller.register;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
@@ -19,12 +19,12 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_unreg extends UapiBase {
 
     @NotEmpty({"service", "address"})
-    @XMapping("/sev/unreg/")
-    protected XResult cmd_exec(XContext ctx, String service, String address, String meta) throws Exception {
+    @Mapping("/sev/unreg/")
+    protected Result cmd_exec(Context ctx, String service, String address, String meta) throws Exception {
 
         if (meta == null) {
             meta = ctx.param("note"); //旧的
@@ -36,6 +36,6 @@ public class CMD_sev_unreg extends UapiBase {
 
         DbWaterRegApi.delService(service, address, meta);
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

@@ -1,8 +1,8 @@
 package waterapi.controller.message;
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
@@ -19,15 +19,15 @@ import waterapi.dso.interceptor.Logging;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_msg_cancel extends UapiBase {
     /**
      * @param key            消息key
      * @param subscriber_key 订阅者key
      */
     @NotEmpty("key")
-    @XMapping("/msg/cancel/")
-    public XResult cmd_exec(String key, String subscriber_key) throws Exception {
+    @Mapping("/msg/cancel/")
+    public Result cmd_exec(String key, String subscriber_key) throws Exception {
 
         //如果不需要修改，检查是否已存在
         //
@@ -37,6 +37,6 @@ public class CMD_msg_cancel extends UapiBase {
             DbWaterMsgApi.cancelMsgDistribution(key, subscriber_key);
         }
 
-        return XResult.succeed();
+        return Result.succeed();
     }
 }

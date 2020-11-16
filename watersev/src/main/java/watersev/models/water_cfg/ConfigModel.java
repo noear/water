@@ -2,7 +2,7 @@ package watersev.models.water_cfg;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
-import org.noear.solon.XUtil;
+import org.noear.solon.Utils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -74,7 +74,7 @@ public class ConfigModel implements IBinder {
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = XUtil.buildProperties(value);
+            _prop = Utils.buildProperties(value);
         }
 
         return _prop;

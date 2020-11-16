@@ -2,7 +2,7 @@ package org.noear.water.dubbo.solon.plugin;
 
 import org.apache.dubbo.common.URL;
 import org.noear.snack.ONode;
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.TaskUtils;
@@ -78,7 +78,7 @@ public class WaterRegistryLib {
             String meta = RegistryUtils.buildMeta(url);
             String address = url.getAddress();
 
-            WaterClient.Registry.register(service_key, address, meta, XApp.cfg().isDriftMode());
+            WaterClient.Registry.register(service_key, address, meta, Solon.cfg().isDriftMode());
         }
     }
 }

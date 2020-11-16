@@ -1,7 +1,7 @@
 package waterapi.dso;
 
 import org.noear.snack.ONode;
-import org.noear.solon.core.XContext;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
@@ -21,7 +21,7 @@ public class LogUtils {
         return logger;
     }
 
-    public static void info(String summary, XContext ctx) {
+    public static void info(String summary, Context ctx) {
         try {
             String tag = ctx.path();
 
@@ -53,7 +53,7 @@ public class LogUtils {
         }
     }
 
-    public static void warn(XContext ctx, String tag2,String content) {
+    public static void warn(Context ctx, String tag2,String content) {
         try {
             String _from = FromUtils.getFromName(ctx);
 
@@ -75,7 +75,7 @@ public class LogUtils {
         }
     }
 
-    public static void error(XContext ctx, Throwable ex) {
+    public static void error(Context ctx, Throwable ex) {
         if(ctx == null){
             return;
         }
@@ -104,7 +104,7 @@ public class LogUtils {
 
     public static void error(String tag, String tag1, String summary, Exception ex) {
         try {
-            String _from = FromUtils.getFromName(XContext.current());
+            String _from = FromUtils.getFromName(Context.current());
 
             String content = getFullStackTrace(ex);
 

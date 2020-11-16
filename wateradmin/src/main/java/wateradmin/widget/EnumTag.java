@@ -6,14 +6,14 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.water.utils.TextUtils;
-import org.noear.solon.annotation.XBean;
+import org.noear.solon.annotation.Component;
 import wateradmin.dso.EnumUtil;
 import wateradmin.models.water_cfg.EnumModel;
 
 import java.io.IOException;
 import java.util.*;
 
-@XBean("ftl:enum")
+@Component("ftl:enum")
 public class EnumTag implements TemplateDirectiveModel {
     private String group;
     private String style; //select,checkbox,radio

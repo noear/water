@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import org.noear.water.utils.TextUtils;
 
 
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.db.DbRubberApi;
@@ -19,11 +19,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-@XController
-@XMapping("/rubber/")
+@Controller
+@Mapping("/rubber/")
 public class ActorController extends BaseController {
 
-    @XMapping("actor")
+    @Mapping("actor")
     public ModelAndView joiner(String tag_name,String name) throws SQLException {
         List<TagCountsModel> tags = DbRubberApi.getActorTags();
 
@@ -52,7 +52,7 @@ public class ActorController extends BaseController {
 
 
     //参与人员右侧列表
-    @XMapping("actor/inner")
+    @Mapping("actor/inner")
     public ModelAndView inner(String tag_name,String name) throws SQLException {
         List<ActorModel> models = DbRubberApi.getActorList(tag_name,name);
         viewModel.put("models",models);
@@ -63,7 +63,7 @@ public class ActorController extends BaseController {
 
 
     //参与人员编辑
-    @XMapping("actor/edit")
+    @Mapping("actor/edit")
     public ModelAndView edit(Integer actor_id,String tag_name) throws SQLException{
         viewModel.put("actor_id",actor_id);
         viewModel.put("tag_name",tag_name);
@@ -71,7 +71,7 @@ public class ActorController extends BaseController {
         return view("rubber/actor_edit");
     }
 
-    @XMapping("actor/ajax/getactor")
+    @Mapping("actor/ajax/getactor")
     public ActorModel getActorModel(Integer actor_id) throws SQLException{
         if(actor_id==null){
             actor_id=0;
@@ -81,7 +81,7 @@ public class ActorController extends BaseController {
 
 
     //参与人员保存编辑
-    @XMapping("actor/edit/ajax/save")
+    @Mapping("actor/edit/ajax/save")
     public JSONObject editSave(Integer actor_id, String tag, String name, String name_display, String note) throws SQLException{
         JSONObject resp = new JSONObject();
         if(actor_id==null){
@@ -101,7 +101,7 @@ public class ActorController extends BaseController {
     }
 
     //参与人员删除
-    @XMapping("actor/edit/ajax/del")
+    @Mapping("actor/edit/ajax/del")
     public ViewModel editDel(Integer actor_id) throws SQLException{
         boolean result = DbRubberApi.delActor(actor_id);
 

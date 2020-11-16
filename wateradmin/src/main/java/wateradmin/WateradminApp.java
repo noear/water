@@ -1,6 +1,6 @@
 package wateradmin;
 
-import org.noear.solon.XApp;
+import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogQuerierImp;
@@ -14,7 +14,7 @@ public class WateradminApp {
         //
         // http://139.224.74.31:9371/cfg/get/?tag=water
         //
-        XApp.start(WateradminApp.class, args, app -> {
+        Solon.start(WateradminApp.class, args, app -> {
             Config.tryInit(app);
 
 

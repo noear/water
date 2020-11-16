@@ -2,11 +2,11 @@ package wateradmin.controller.paas;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.ModelAndView;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
 import wateradmin.controller.BaseController;
@@ -23,21 +23,21 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-@XController
-@XMapping("/paas/file")
+@Controller
+@Mapping("/paas/file")
 public class FileController extends BaseController {
 
-    @XMapping("api/home")
+    @Mapping("api/home")
     public ModelAndView nav_api(String tag_name, String key) throws SQLException {
         return nav(tag_name, PaasFileType.api, key);
     }
 
-    @XMapping("tml/home")
+    @Mapping("tml/home")
     public ModelAndView nav_tml(String tag_name, String key) throws SQLException {
         return nav(tag_name, PaasFileType.tml, key);
     }
 
-    @XMapping("pln/home")
+    @Mapping("pln/home")
     public ModelAndView nav_pln(String tag_name, String key) throws SQLException {
         return nav(tag_name, PaasFileType.pln, key);
     }
@@ -54,22 +54,22 @@ public class FileController extends BaseController {
         return view("paas/file");
     }
 
-    @XMapping("api/list")
-    public ModelAndView api_list(XContext ctx) throws SQLException {
+    @Mapping("api/list")
+    public ModelAndView api_list(Context ctx) throws SQLException {
         return list(ctx, PaasFileType.api);
     }
 
-    @XMapping("pln/list")
-    public ModelAndView pln_list(XContext ctx) throws SQLException {
+    @Mapping("pln/list")
+    public ModelAndView pln_list(Context ctx) throws SQLException {
         return list(ctx, PaasFileType.pln);
     }
 
-    @XMapping("tml/list")
-    public ModelAndView tml_list(XContext ctx) throws SQLException {
+    @Mapping("tml/list")
+    public ModelAndView tml_list(Context ctx) throws SQLException {
         return list(ctx, PaasFileType.tml);
     }
 
-    private ModelAndView list(XContext ctx, PaasFileType type) throws SQLException {
+    private ModelAndView list(Context ctx, PaasFileType type) throws SQLException {
         String tag_name = ctx.param("tag_name", "");
         String key = ctx.param("key", "");
         int act = ctx.paramAsInt("act",11);
@@ -99,22 +99,22 @@ public class FileController extends BaseController {
         return view("paas/file_list_"+type.name());
     }
 
-    @XMapping("api/edit")
-    public ModelAndView api_edit(String tag, Integer file_id, XContext ctx) throws SQLException {
+    @Mapping("api/edit")
+    public ModelAndView api_edit(String tag, Integer file_id, Context ctx) throws SQLException {
         return edit(tag, PaasFileType.api, file_id, ctx);
     }
 
-    @XMapping("pln/edit")
-    public ModelAndView pln_edit(String tag, Integer file_id, XContext ctx) throws SQLException {
+    @Mapping("pln/edit")
+    public ModelAndView pln_edit(String tag, Integer file_id, Context ctx) throws SQLException {
         return edit(tag, PaasFileType.pln, file_id, ctx);
     }
 
-    @XMapping("tml/edit")
-    public ModelAndView tml_edit(String tag, Integer file_id, XContext ctx) throws SQLException {
+    @Mapping("tml/edit")
+    public ModelAndView tml_edit(String tag, Integer file_id, Context ctx) throws SQLException {
         return edit(tag, PaasFileType.tml, file_id, ctx);
     }
 
-    private ModelAndView edit(String tag, PaasFileType type, Integer file_id, XContext ctx) throws SQLException {
+    private ModelAndView edit(String tag, PaasFileType type, Integer file_id, Context ctx) throws SQLException {
         PaasFileModel file = null;
         if (file_id == null) {
             file_id = 0;
@@ -139,8 +139,8 @@ public class FileController extends BaseController {
         return view("paas/file_edit_" + type.name());
     }
 
-    @XMapping("api/ajax/save")
-    public Object api_ajax_save(XContext ctx) throws Exception {
+    @Mapping("api/ajax/save")
+    public Object api_ajax_save(Context ctx) throws Exception {
         DataItem data = new DataItem();
 
         data.set("link_to", ctx.param("link_to"));
@@ -161,8 +161,8 @@ public class FileController extends BaseController {
         return tmp;
     }
 
-    @XMapping("pln/ajax/save")
-    public Object pln_ajax_save(XContext ctx) throws Exception {
+    @Mapping("pln/ajax/save")
+    public Object pln_ajax_save(Context ctx) throws Exception {
         DataItem data = new DataItem();
 
         data.set("plan_begin_time", ctx.param("plan_begin_time"));
@@ -172,8 +172,8 @@ public class FileController extends BaseController {
         return ajax_save(ctx, data, PaasFileType.pln);
     }
 
-    @XMapping("tml/ajax/save")
-    public Object tml_ajax_save(XContext ctx) throws SQLException {
+    @Mapping("tml/ajax/save")
+    public Object tml_ajax_save(Context ctx) throws SQLException {
         DataItem data = new DataItem();
 
         data.set("content_type", ctx.param("content_type"));
@@ -182,7 +182,7 @@ public class FileController extends BaseController {
         return ajax_save(ctx, data, PaasFileType.tml);
     }
 
-    public Object ajax_save(XContext ctx, DataItem data, PaasFileType type) throws SQLException {
+    public Object ajax_save(Context ctx, DataItem data, PaasFileType type) throws SQLException {
         data.set("label", ctx.param("label",""));
         data.set("tag", ctx.param("tag",""));
         data.set("path", ctx.param("path",""));
@@ -197,8 +197,8 @@ public class FileController extends BaseController {
         return viewModel.code(1,"ok");
     }
 
-    @XMapping("{type}/ajax/del")
-    public Object ajax_del(XContext ctx, String type, Integer id) throws SQLException {
+    @Mapping("{type}/ajax/del")
+    public Object ajax_del(Context ctx, String type, Integer id) throws SQLException {
         if (id != null) {
             DbPaaSApi.delFile(id);
         }
@@ -206,8 +206,8 @@ public class FileController extends BaseController {
         return viewModel.code(1,"ok");
     }
 
-    @XMapping("pln/ajax/reset")
-    public Object reset(XContext ctx, String ids) throws Exception {
+    @Mapping("pln/ajax/reset")
+    public Object reset(Context ctx, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -217,8 +217,8 @@ public class FileController extends BaseController {
         return viewModel.code(1, "ok");
     }
 
-    @XMapping("{type}/code")
-    public ModelAndView code(XContext ctx, Integer file_id, Integer readonly) throws SQLException {
+    @Mapping("{type}/code")
+    public ModelAndView code(Context ctx, Integer file_id, Integer readonly) throws SQLException {
         PaasFileModel file = DbPaaSApi.getFile(file_id);
 
         viewModel.put("id", file_id);
@@ -267,8 +267,8 @@ public class FileController extends BaseController {
         }
     }
 
-    @XMapping("{type}/code/ajax/save")
-    public Object code_save(XContext ctx, Integer id, String fc64, String path) throws SQLException {
+    @Mapping("{type}/code/ajax/save")
+    public Object code_save(Context ctx, Integer id, String fc64, String path) throws SQLException {
         if(id == null || id == 0){
             return viewModel.code(0,"");
         }
@@ -282,8 +282,8 @@ public class FileController extends BaseController {
 
 
     //批量导出
-    @XMapping("{type}/ajax/export")
-    public void exportDo(XContext ctx, String type, String tag, String ids) throws Exception {
+    @Mapping("{type}/ajax/export")
+    public void exportDo(Context ctx, String type, String tag, String ids) throws Exception {
         List<PaasFileModel> list = DbPaaSApi.getFilesByIds(PaasFileType.valueOf(type), ids);
         String json = ONode.stringify(list);
         String jsonX = JsonxUtils.encode(json);
@@ -296,8 +296,8 @@ public class FileController extends BaseController {
 
 
     //批量导入
-    @XMapping("{type}/ajax/import")
-    public ViewModel importDo(XContext ctx, String type, String tag, XFile file) throws Exception {
+    @Mapping("{type}/ajax/import")
+    public ViewModel importDo(Context ctx, String type, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -324,8 +324,8 @@ public class FileController extends BaseController {
     }
 
     //批量删除
-    @XMapping("{type}/ajax/batch")
-    public ViewModel batchDo(XContext ctx, String type, String tag, Integer act, String ids) throws Exception {
+    @Mapping("{type}/ajax/batch")
+    public ViewModel batchDo(Context ctx, String type, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

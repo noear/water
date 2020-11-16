@@ -1,10 +1,10 @@
 package waterapi.controller.register;
 
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.XController;
-import org.noear.solon.annotation.XMapping;
-import org.noear.solon.core.XContext;
-import org.noear.solon.core.XResult;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 @Logging
 @Whitelist
-@XController
+@Controller
 public class CMD_sev_discover extends UapiBase {
     /**
      * @param service          服务名
@@ -34,8 +34,8 @@ public class CMD_sev_discover extends UapiBase {
      * @param consumer_address 消费者地址
      */
     @NotEmpty("service")
-    @XMapping("/sev/discover/")
-    public XResult cmd_exec(XContext ctx, String service, String consumer, String consumer_address) throws Exception {
+    @Mapping("/sev/discover/")
+    public Result cmd_exec(Context ctx, String service, String consumer, String consumer_address) throws Exception {
 
         if (TextUtils.isNotEmpty(consumer) && TextUtils.isNotEmpty(consumer_address)) {
             //记录消费者
@@ -54,7 +54,7 @@ public class CMD_sev_discover extends UapiBase {
             policy = "default";
         } else {
             if (cfg.is_enabled == false) {
-                return XResult.failure("No gateway is available");
+                return Result.failure("No gateway is available");
             }
 
             ONode prop = cfg.getNode();
@@ -80,6 +80,6 @@ public class CMD_sev_discover extends UapiBase {
             n.set("weight", 1);
         });
 
-        return XResult.succeed(data);
+        return Result.succeed(data);
     }
 }
