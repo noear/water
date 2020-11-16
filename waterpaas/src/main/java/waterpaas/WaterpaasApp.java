@@ -2,6 +2,7 @@ package waterpaas;
 
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
+import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
 import org.noear.water.solon_plugin.FromUtils;
@@ -18,7 +19,7 @@ public class WaterpaasApp {
     public static void main(String[] args) {
         JtRun.init();
 
-        Solon app = Solon.start(WaterpaasApp.class, args, (x) -> {
+        SolonApp app = Solon.start(WaterpaasApp.class, args, (x) -> {
             Config.tryInit(x);
 
             x.sharedAdd("cache", Config.cache_data);

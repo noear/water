@@ -1,6 +1,6 @@
 package waterpaas;
 
-import org.noear.solon.Solon;
+import org.noear.solon.SolonApp;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -21,11 +21,11 @@ public class Config {
 
     public static String waterpaas_secretKey;
 
-    public static void tryInit(Solon app) {
+    public static void tryInit(SolonApp app) {
 
         //WeedConfig.isUsingValueExpression = false;
 
-        waterpaas_secretKey = app.props().get("water.service.secretKey");
+        waterpaas_secretKey = app.cfg().get("water.service.secretKey");
     }
 
 

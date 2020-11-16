@@ -2,6 +2,7 @@ package org.noear.water.solon_plugin;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
+import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.Plugin;
@@ -60,7 +61,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements Plugin 
     }
 
     @Override
-    public void start(Solon app) {
+    public void start(SolonApp app) {
         //Bean 初始化完成化再启动监听，免得过早被检测
         //
         Aop.context().beanOnloaded(()->{
