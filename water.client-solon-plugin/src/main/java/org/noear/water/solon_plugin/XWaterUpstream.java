@@ -1,9 +1,9 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.fairy.Fairy;
-import org.noear.fairy.annotation.FairyClient;
+import org.noear.nami.Nami;
+import org.noear.nami.annotation.NamiClient;
 import org.noear.solon.Solon;
-import org.noear.solon.core.Upstream;
+import org.noear.solon.core.LoadBalance;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.dso.WaterUpstream;
@@ -17,12 +17,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, Upstream {
+public class XWaterUpstream implements WaterUpstream, LoadBalance {
     private final String TAG_SERVER = "{server}";
 
 
@@ -261,7 +260,7 @@ public class XWaterUpstream implements WaterUpstream, Upstream {
     //
 
     public static <T> T xclient(Class<?> clz) {
-        FairyClient c_meta = clz.getAnnotation(FairyClient.class);
+        NamiClient c_meta = clz.getAnnotation(NamiClient.class);
 
         if (c_meta == null) {
             throw new RuntimeException("No xclient annotation");
@@ -277,7 +276,7 @@ public class XWaterUpstream implements WaterUpstream, Upstream {
             c_sev = c_sev.split(":")[0];
         }
 
-        Upstream upstream = null;
+        LoadBalance upstream = null;
         if (Solon.cfg().isDebugMode()) {
             //增加debug模式支持
             String url = System.getProperty("water.remoting-debug." + c_sev);
@@ -293,8 +292,8 @@ public class XWaterUpstream implements WaterUpstream, Upstream {
         return xclient(clz, upstream);
     }
 
-    public static <T> T xclient(Class<?> clz, Upstream upstream) {
-        return Fairy.builder()
+    public static <T> T xclient(Class<?> clz, LoadBalance upstream) {
+        return Nami.builder()
                 .filterAdd((cfg, m, url, h, a) -> {
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());
                     h.put(WW.http_header_from, WaterClient.localServiceHost());

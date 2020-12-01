@@ -1,10 +1,10 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.core.Upstream;
+import org.noear.solon.core.LoadBalance;
 
-public class XUpstreamFactoryImp implements Upstream.Factory {
+public class XUpstreamFactoryImp implements LoadBalance.Factory {
     @Override
-    public Upstream create(String service) {
+    public LoadBalance create(String service) {
         return XWaterUpstream.get(service);
     }
 }

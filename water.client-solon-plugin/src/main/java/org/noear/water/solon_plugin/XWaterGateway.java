@@ -1,10 +1,10 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.fairy.Fairy;
-import org.noear.fairy.Result;
+import org.noear.nami.Nami;
+import org.noear.nami.Result;
 import org.noear.solon.Solon;
+import org.noear.solon.core.LoadBalance;
 import org.noear.solon.core.NvMap;
-import org.noear.solon.core.Upstream;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
@@ -17,7 +17,7 @@ import java.util.Map;
 * Water Gateway
 * */
 public class XWaterGateway implements Handler {
-    Map<String, Upstream> router = new HashMap<>();
+    Map<String, LoadBalance> router = new HashMap<>();
 
     public XWaterGateway() {
         NvMap map = Solon.cfg().getXmap("water.gateway");
@@ -41,7 +41,7 @@ public class XWaterGateway implements Handler {
         router.put(alias, XWaterUpstream.get(service));
     }
 
-    protected void add(String alias, Upstream upstream) {
+    protected void add(String alias, LoadBalance upstream) {
         router.put(alias, upstream);
     }
 
@@ -81,7 +81,7 @@ public class XWaterGateway implements Handler {
             fun = path;
         }
 
-        Upstream upstream = router.get(alias); //第1段为sev
+        LoadBalance upstream = router.get(alias); //第1段为sev
 
         //如果没有预配的负载不干活
         if (upstream == null) {
@@ -89,7 +89,7 @@ public class XWaterGateway implements Handler {
             return;
         }
 
-        Result rst = new Fairy()
+        Result rst = new Nami()
                 .url(upstream.getServer(), fun)
                 .call(headers(ctx), ctx.paramMap())
                 .result();
