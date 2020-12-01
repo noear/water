@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>fairy</artifactId>
+            <artifactId>nami</artifactId>
         </dependency>
     </dependencies>
 </project>
