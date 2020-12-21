@@ -8,7 +8,7 @@ bcf.root: "water_admin"
 waterpaas.secretKey: "0zJt0J88TkIvqYgC"
 
 water:
-  host: "http://water2"
+  host: "http://localhost:9371"
   logger: "water_log_admin"
   service:
     tag: "water"
