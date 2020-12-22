@@ -43,6 +43,10 @@ public class LogController extends BaseController {
             logger = ctx.cookie("wateradmin_log__tag_" + tag_name);
         }
 
+        if("null".equals(logger)){
+            logger = "";
+        }
+
         if (TextUtils.isEmpty(logger)) {
             if (loggers.size() > 0) {
                 logger = loggers.get(0).logger;

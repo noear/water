@@ -7,18 +7,25 @@ import wateradmin.models.TagCountsModel;
 import java.util.List;
 
 public class TagUtil {
-    public static String build(String tag_name, List<TagCountsModel> tags){
-        if(TextUtils.isEmpty(tag_name)){
+    public static String build(String tag_name, List<TagCountsModel> tags) {
+        if (TextUtils.isEmpty(tag_name)) {
             tag_name = cookieGet();
         }
 
-        if(TextUtils.isEmpty(tag_name) && tags.isEmpty() == false){
+        if (TextUtils.isNotEmpty(tag_name)) {
+            String tag  = tag_name;
+            if (tags.stream().anyMatch(m -> tag.equals(m.tag)) == false) {
+                tag_name = "";
+            }
+        }
+
+        if (TextUtils.isEmpty(tag_name) && tags.isEmpty() == false) {
             tag_name = tags.get(0).tag;
         }
 
-        if(tag_name == null){
+        if (tag_name == null) {
             return "";
-        }else{
+        } else {
             return tag_name;
         }
     }
