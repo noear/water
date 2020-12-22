@@ -5,7 +5,7 @@ import org.noear.weed.DbContext;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.view.freemarker.XRenderUtil;
+import org.noear.solon.view.freemarker.RenderUtil;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbPaaSApi;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -136,7 +136,7 @@ public class CodeGenerationController extends BaseController {
         model.put("key", key);
         model.put("tb", tb);
 
-        String rst = XRenderUtil.reander(tml.content, model);
+        String rst = RenderUtil.render(tml.content, model);
 
         return new ViewModel().code(1, "成功").set("rst", rst);
     }
