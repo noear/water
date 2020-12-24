@@ -2,6 +2,7 @@ package org.noear.water.model;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -235,51 +236,11 @@ public final class ConfigM {
         String driverClassName = prop.getProperty("driverClassName");
 
         if (pool) {
-
             HikariDataSource source = new HikariDataSource();
-            source.setDataSourceProperties(prop);
 
-            String schema = prop.getProperty("schema");
-
-            String connectionTimeout = prop.getProperty("connectionTimeout");
-            String idleTimeout = prop.getProperty("idleTimeout");
-            String maxLifetime = prop.getProperty("maxLifetime");
-            String maximumPoolSize = prop.getProperty("maximumPoolSize");
-
-            if (TextUtils.isEmpty(url) == false) {
+            Utils.injectProperties(source, prop);
+            if(TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
-            }
-
-            if (TextUtils.isEmpty(username) == false) {
-                source.setUsername(username);
-            }
-
-            if (TextUtils.isEmpty(password) == false) {
-                source.setPassword(password);
-            }
-
-            if (TextUtils.isEmpty(schema) == false) {
-                source.setSchema(schema);
-            }
-
-            if (TextUtils.isEmpty(driverClassName) == false) {
-                source.setDriverClassName(driverClassName);
-            }
-
-            if (TextUtils.isEmpty(connectionTimeout) == false) {
-                source.setConnectionTimeout(Long.parseLong(connectionTimeout));
-            }
-
-            if (TextUtils.isEmpty(idleTimeout) == false) {
-                source.setIdleTimeout(Long.parseLong(idleTimeout));
-            }
-
-            if (TextUtils.isEmpty(maxLifetime) == false) {
-                source.setMaxLifetime(Long.parseLong(maxLifetime));
-            }
-
-            if (TextUtils.isEmpty(maximumPoolSize) == false) {
-                source.setMaximumPoolSize(Integer.parseInt(maximumPoolSize));
             }
 
             return source;

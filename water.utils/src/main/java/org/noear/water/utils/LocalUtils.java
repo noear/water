@@ -5,11 +5,21 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 
 public class LocalUtils {
-    public static String getLocalAddr(int port){
+    public static String getLocalAddr(int port) {
         return getLocalIp() + ":" + port;
     }
 
-    public static String getLocalIp(){
+    private static String localIp;
+
+    public static String getLocalIp() {
+        if (localIp == null) {
+            localIp = getLocalIp0();
+        }
+
+        return localIp;
+    }
+
+    private static String getLocalIp0() {
 
         NetworkInterface neti = null;
         String host = null;
@@ -17,17 +27,17 @@ public class LocalUtils {
 
         try {
             Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-            Enumeration<InetAddress>      ee = null;
+            Enumeration<InetAddress> ee = null;
 
             while (en.hasMoreElements()) {
                 neti = en.nextElement();//网卡
 
-                if(neti.getName() == null){
+                if (neti.getName() == null) {
                     continue;
                 }
 
                 //检查网卡名
-                if(neti.getName().startsWith("en") ||  neti.getName().startsWith("eth")) {
+                if (neti.getName().startsWith("en") || neti.getName().startsWith("eth")) {
                     //网卡绑定的地址
                     ee = neti.getInetAddresses();
 
@@ -43,7 +53,7 @@ public class LocalUtils {
                     }
                 }
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 

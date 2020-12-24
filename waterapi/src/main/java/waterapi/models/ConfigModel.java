@@ -135,56 +135,16 @@ public class ConfigModel implements IBinder {
     public DbContext getDb(boolean pool) {
         DbContext db = new DbContext();
         Properties prop = getProp();
-        String url = prop.getProperty("url");
 
         if (pool) {
             HikariDataSource source = new HikariDataSource();
-            source.setDataSourceProperties(prop);
-
             String schema = prop.getProperty("schema");
-            String username = prop.getProperty("username");
-            String password = prop.getProperty("password");
-            String driverClassName = prop.getProperty("driverClassName");
+            String url = prop.getProperty("url");
 
-            String connectionTimeout = prop.getProperty("connectionTimeout");
-            String idleTimeout = prop.getProperty("idleTimeout");
-            String maxLifetime = prop.getProperty("maxLifetime");
-            String maximumPoolSize = prop.getProperty("maximumPoolSize");
+            Utils.injectProperties(source, prop);
 
-            if (TextUtils.isEmpty(url) == false) {
+            if(TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
-            }
-
-            if (TextUtils.isEmpty(username) == false) {
-                source.setUsername(username);
-            }
-
-            if (TextUtils.isEmpty(password) == false) {
-                source.setPassword(password);
-            }
-
-            if (TextUtils.isEmpty(schema) == false) {
-                source.setSchema(schema);
-            }
-
-            if (TextUtils.isEmpty(driverClassName) == false) {
-                source.setDriverClassName(driverClassName);
-            }
-
-            if(TextUtils.isEmpty(connectionTimeout) == false){
-                source.setConnectionTimeout(Long.parseLong(connectionTimeout));
-            }
-
-            if(TextUtils.isEmpty(idleTimeout) == false){
-                source.setIdleTimeout(Long.parseLong(idleTimeout));
-            }
-
-            if(TextUtils.isEmpty(maxLifetime) == false){
-                source.setMaxLifetime(Long.parseLong(maxLifetime));
-            }
-
-            if(TextUtils.isEmpty(maximumPoolSize) == false){
-                source.setMaximumPoolSize(Integer.parseInt(maximumPoolSize));
             }
 
             db.dataSourceSet(source);
