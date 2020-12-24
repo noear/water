@@ -16,9 +16,9 @@ import java.net.URLDecoder;
 public class DockController extends BaseController {
     //支持外部url
     @Mapping("/**/$*") //视图 返回
-    public ModelAndView dock1(Context context) {
-        String uri = context.path().toLowerCase();
-        String query = context.uri().getQuery();
+    public ModelAndView dock1(Context ctx) {
+        String uri = ctx.path().toLowerCase();
+        String query = ctx.queryString();
 
         try {
             BcfResourceModel res = BcfClient.getResourceByPath(uri);
@@ -39,9 +39,9 @@ public class DockController extends BaseController {
 
     //此处改过，xyj，201811(uadmin) //增加内部url支持
     @Mapping("/**/@*") //视图 返回
-    public ModelAndView dock2(Context context) {
-        String uri = context.path();
-        String query = context.uri().getQuery();
+    public ModelAndView dock2(Context ctx) {
+        String uri = ctx.path();
+        String query = ctx.queryString();
 
         String fun_name = uri.split("/@")[1];
         String fun_url = uri.split("/@")[0].toLowerCase();
