@@ -6,6 +6,9 @@ import org.noear.water.WW;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 通知服务接口
+ * */
 public class NoticeApi {
     /**
      * 嘿嘿通知（经Water服务端处理后再推送）

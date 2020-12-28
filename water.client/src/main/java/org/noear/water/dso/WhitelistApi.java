@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 白名单接口
+ * 白名单服务接口
  * */
 public class WhitelistApi {
     /**
