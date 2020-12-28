@@ -7,7 +7,7 @@ import org.noear.water.WaterClient;
 
 @Controller
 public class TestController {
-    @Mapping("/")
+    @Mapping("/test")
     public String home(String msg) throws Exception {
         if (Utils.isNotEmpty(msg)) {
             WaterClient.Message.sendMessage("test.hello", "test-"+msg);
