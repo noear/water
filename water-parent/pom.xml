@@ -128,6 +128,12 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>springboot-solon-plugin</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>solon.extend.properties.yaml</artifactId>
                 <version>${solon.ver}</version>
             </dependency>

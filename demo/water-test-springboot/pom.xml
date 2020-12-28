@@ -18,14 +18,9 @@
     </parent>
 
     <dependencies>
-
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.servlet</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon.extend.properties.yaml</artifactId>
+            <artifactId>springboot-solon-plugin</artifactId>
         </dependency>
 
         <dependency>
