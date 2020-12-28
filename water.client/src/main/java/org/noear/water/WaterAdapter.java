@@ -7,6 +7,12 @@ import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
+/**
+ * Water 适配器
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public abstract class WaterAdapter {
     /** 报警手机号 :: 需要重写 */
     public abstract String alarm_mobile();

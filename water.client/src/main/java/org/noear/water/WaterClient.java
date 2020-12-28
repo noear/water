@@ -4,6 +4,9 @@ import org.noear.water.dso.*;
 
 /**
  * Water 客户端
+ *
+ * @author noear
+ * @since 2.0
  * */
 public final class WaterClient {
 

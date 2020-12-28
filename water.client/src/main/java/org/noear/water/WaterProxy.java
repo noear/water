@@ -10,6 +10,9 @@ import java.util.Map;
 
 /**
  * Water 内部接口代理
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class WaterProxy {
     private static String paas_uri;

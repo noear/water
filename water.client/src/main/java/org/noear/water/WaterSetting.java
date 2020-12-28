@@ -15,7 +15,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
-
+/**
+ * Water 内部设置
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class WaterSetting {
     public static final Map<String, DbContext> libOfDb = new ConcurrentHashMap();
     public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
