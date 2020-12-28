@@ -10,7 +10,7 @@ public class TestController {
     @Mapping("/")
     public String home(String msg) throws Exception {
         if (Utils.isNotEmpty(msg)) {
-            WaterClient.Message.sendMessage("test.hello", msg);
+            WaterClient.Message.sendMessage("test.hello", "test-"+msg);
             return "OK: *" + WaterClient.waterTraceId();
         }else{
             return "NO";

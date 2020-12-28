@@ -1,10 +1,10 @@
 package testapi2;
 
 import org.noear.solon.Solon;
-import org.noear.solon.extend.servlet.SolonHttpServlet;
+import org.noear.solon.extend.servlet.SolonServletFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,12 +20,10 @@ public class TestApi2App {
     }
 
     @Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        //实例化注册器
-        ServletRegistrationBean registration = new ServletRegistrationBean(new SolonHttpServlet(), "/");
+    public FilterRegistrationBean servletRegistrationBean() {
 
-        //降低该注册器的优先级，避免int方法中的bean未被加载
-        registration.setLoadOnStartup(3);
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new SolonServletFilter());
 
         return registration;
     }
