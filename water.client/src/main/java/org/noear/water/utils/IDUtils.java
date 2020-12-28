@@ -6,6 +6,9 @@ import java.util.UUID;
 
 /**
  * 分布式ID工具
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class IDUtils {
     private static RedisX _redis_idx = WaterSetting.redis_cfg().getRd(1);

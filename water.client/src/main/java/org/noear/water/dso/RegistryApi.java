@@ -8,6 +8,9 @@ import java.util.Map;
 
 /**
  * 注册服务（使用 CallCfgUtil）
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class RegistryApi {
 

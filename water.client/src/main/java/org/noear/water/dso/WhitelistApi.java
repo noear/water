@@ -8,6 +8,9 @@ import java.util.Map;
 
 /**
  * 白名单服务接口
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class WhitelistApi {
     /**

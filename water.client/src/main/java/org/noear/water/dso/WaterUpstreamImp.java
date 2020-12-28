@@ -5,6 +5,12 @@ import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.utils.HttpUtils;
 
+/**
+ * Water 负载器
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class WaterUpstreamImp implements WaterUpstream {
     @Override
     public HttpUtils xcall(String path) {

@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface WaterMessage {
     /**
-     * message topic
+     * 消息主题
      * */
     String value();
 }

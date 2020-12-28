@@ -13,6 +13,9 @@ import java.util.Map;
 
 /**
  * 消息服务接口
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class MessageApi {
 

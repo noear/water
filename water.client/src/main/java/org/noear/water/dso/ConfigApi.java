@@ -9,6 +9,9 @@ import java.util.*;
 
 /**
  * 配置服务接口（使用 CallCfgUtil）
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class ConfigApi {
 

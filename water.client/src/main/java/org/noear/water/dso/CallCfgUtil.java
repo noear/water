@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * 用于配置的调用
+ * 用于配置的调用工具
+ *
+ * @author noear
+ * @since 2.0
  * */
 class CallCfgUtil {
     public static HttpUtils http(String path) {

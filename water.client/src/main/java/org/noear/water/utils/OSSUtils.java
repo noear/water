@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 基于Http api 的OSS工具类
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class OSSUtils {
     private String bucket;

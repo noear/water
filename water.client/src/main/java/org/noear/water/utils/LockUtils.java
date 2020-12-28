@@ -4,6 +4,9 @@ import org.noear.water.WaterSetting;
 
 /**
  * 分布式锁工具
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class LockUtils {
     private static RedisX _redis_uni = WaterSetting.redis_cfg().getRd(2);

@@ -7,6 +7,12 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.impl.Slf4jWaterWriter;
 
+/**
+ * Water 日志器
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class WaterLogger implements Logger, Slf4jWaterWriter {
     public static WaterLogger get(String name) {
         return new WaterLogger(name);

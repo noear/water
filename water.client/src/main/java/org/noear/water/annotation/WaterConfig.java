@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface WaterConfig {
     /**
-     * config tag
+     * 配置标签
      * */
     String value();
 }

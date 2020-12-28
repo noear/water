@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * 用于服务的调用（非配置）
+ * 用于服务的调用工具（会使用负载器）
+ *
+ * @author noear
+ * @since 2.0
  * */
 class CallSevUtil {
     public static HttpUtils http(String path){
