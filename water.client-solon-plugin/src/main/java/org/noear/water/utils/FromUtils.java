@@ -1,9 +1,14 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.utils;
 
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.water.utils.TextUtils;
 
+/**
+ * 来源获取工具（用于链路跟踪）
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class FromUtils {
     /**
      * from = service@address:port

@@ -5,14 +5,12 @@ import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
-import org.noear.water.solon_plugin.FromUtils;
-import org.noear.water.solon_plugin.XWaterAdapter;
+import org.noear.water.utils.FromUtils;
+import org.noear.water.solon_plugin.WaterAdapter;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
-
-import javax.swing.text.html.FormSubmitEvent;
 
 
 public class WaterpaasApp {
@@ -54,10 +52,10 @@ public class WaterpaasApp {
                 String tag = c.attr("file_tag", "paas");
 
                 long _times = timecount.stop().milliseconds();
-                String _node = XWaterAdapter.global().localHost();
+                String _node = WaterAdapter.global().localHost();
                 String _from = FromUtils.getFrom(c);
 
-                WaterClient.Track.track(XWaterAdapter.global().service_name(), tag, c.path(), _times, _node, _from);
+                WaterClient.Track.track(WaterAdapter.global().service_name(), tag, c.path(), _times, _node, _from);
             }
         });
     }

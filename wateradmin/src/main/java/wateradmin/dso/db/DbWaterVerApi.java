@@ -2,7 +2,7 @@ package wateradmin.dso.db;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.solon_plugin.IPUtils;
+import org.noear.water.utils.IPUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;

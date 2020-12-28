@@ -3,6 +3,12 @@ package org.noear.water.solon_plugin;
 import org.noear.solon.Solon;
 import org.noear.water.utils.TextUtils;
 
+/**
+ * Water 配置属性获取
+ *
+ * @author noear
+ * @since 2.0
+ * */
 class WaterProps {
     public static String host() {
         return Solon.cfg().get("water.host");

@@ -3,7 +3,7 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
-import org.noear.water.solon_plugin.XWaterAdapter;
+import org.noear.water.solon_plugin.WaterAdapter;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
@@ -171,7 +171,7 @@ public class PlnController implements IJob {
 
         //计时结束
         long _times = timecount.stop().milliseconds();
-        String _node = XWaterAdapter.global().localHost();
+        String _node = WaterAdapter.global().localHost();
 
         WaterClient.Track.track("waterplan", task.tag, task.path, _times, _node);
     }

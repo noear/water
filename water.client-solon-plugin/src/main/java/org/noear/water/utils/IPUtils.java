@@ -1,8 +1,14 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.utils;
 
 import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
+/**
+ * 用户IP获取工具
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class IPUtils {
     public static String getIP(Context request){
         String ip =  request.header("RemoteIp");

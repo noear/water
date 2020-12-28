@@ -26,12 +26,12 @@ public class XPluginImp implements Plugin {
     public void start(SolonApp app) {
         XmlSqlLoader.tryLoad();
 
-        Bridge.upstreamFactorySet(new XUpstreamFactoryImp());
+        Bridge.upstreamFactorySet(new WaterUpstreamFactoryImp());
 
         //尝试注册
         if (app.port() > 0) {
             if (WaterProps.service_name() != null) {
-                app.plug(new XWaterAdapterImp());
+                app.plug(new WaterAdapterImp());
             }
         }
 
@@ -64,7 +64,7 @@ public class XPluginImp implements Plugin {
         }
 
         //添加Water注入支持
-        Aop.context().beanInjectorAdd(Water.class, new XWaterBeanInjector());
+        Aop.context().beanInjectorAdd(Water.class, new WaterBeanInjector());
 
         //添加WaterMessage注解支持
         Aop.context().beanBuilderAdd(WaterMessage.class, (clz, wrap, anno) -> {
@@ -90,7 +90,7 @@ public class XPluginImp implements Plugin {
 
         //尝试加载消息订阅
         Aop.context().beanOnloaded(() -> {
-            if (XWaterAdapter.global() != null) {
+            if (WaterAdapter.global() != null) {
                 Aop.context().beanForeach((k, v) -> {
                     if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
                         String topic = k.split(":")[1];
@@ -100,15 +100,15 @@ public class XPluginImp implements Plugin {
                 });
 
                 if (_router.size() > 0) {
-                    XWaterAdapter.global().router().putAll(_router);
-                    XWaterAdapter.global().messageSubscribeHandler();
+                    WaterAdapter.global().router().putAll(_router);
+                    WaterAdapter.global().messageSubscribeHandler();
                     _router.clear();
                 }
             }
         });
 
         //改为upstream模式，可跳过nginx代理
-        XWaterUpstream wup = XWaterUpstream.get(WW.waterapi);
+        WaterUpstream wup = WaterUpstream.get(WW.waterapi);
         WaterSetting.water_sev_upstream(wup);
 
         WaterSetting.water_trace_id_supplier(() -> {

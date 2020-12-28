@@ -16,10 +16,10 @@ import java.util.Map;
 /*
 * Water Gateway
 * */
-public class XWaterGateway implements Handler {
+public class WaterGateway implements Handler {
     Map<String, LoadBalance> router = new HashMap<>();
 
-    public XWaterGateway() {
+    public WaterGateway() {
         NvMap map = Solon.cfg().getXmap("water.gateway");
 
         map.forEach((service, alias) -> {
@@ -38,7 +38,7 @@ public class XWaterGateway implements Handler {
     }
 
     protected void add(String alias, String service) {
-        router.put(alias, XWaterUpstream.get(service));
+        router.put(alias, WaterUpstream.get(service));
     }
 
     protected void add(String alias, LoadBalance upstream) {

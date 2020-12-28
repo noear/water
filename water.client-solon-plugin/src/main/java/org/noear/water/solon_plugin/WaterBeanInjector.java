@@ -20,13 +20,13 @@ import java.util.Properties;
 /**
  * 提供water注入支持
  * */
-public class XWaterBeanInjector implements BeanInjector<Water> {
+public class WaterBeanInjector implements BeanInjector<Water> {
     @Override
     public void doInject(VarHolder varH, Water anno) {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
             if (varH.getType().isInterface()) {
-                varH.setValue(XWaterUpstream.xclient(varH.getType()));
+                varH.setValue(WaterUpstream.xclient(varH.getType()));
             }
             return;
         }

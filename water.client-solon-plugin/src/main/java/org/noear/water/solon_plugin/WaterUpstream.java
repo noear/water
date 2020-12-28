@@ -6,7 +6,6 @@ import org.noear.solon.Solon;
 import org.noear.solon.core.LoadBalance;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
-import org.noear.water.dso.WaterUpstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -21,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class XWaterUpstream implements WaterUpstream, LoadBalance {
+public class WaterUpstream implements org.noear.water.dso.WaterUpstream, LoadBalance {
     private final String TAG_SERVER = "{server}";
 
 
@@ -57,22 +56,22 @@ public class XWaterUpstream implements WaterUpstream, LoadBalance {
     private String _backup_server;
 
 
-    protected final static Map<String, XWaterUpstream> _map = new ConcurrentHashMap<>();
+    protected final static Map<String, WaterUpstream> _map = new ConcurrentHashMap<>();
 
-    private XWaterUpstream(String service) {
+    private WaterUpstream(String service) {
         _service = service;
     }
 
     /**
      * 获取一个负载器
      */
-    public static XWaterUpstream get(String service) {
-        XWaterUpstream tmp = _map.get(service);
+    public static WaterUpstream get(String service) {
+        WaterUpstream tmp = _map.get(service);
         if (tmp == null) {
             synchronized (service.intern()) { //::与获取形成互锁
                 tmp = _map.get(service);
                 if (tmp == null) {
-                    tmp = new XWaterUpstream(service).loadDo(false);
+                    tmp = new WaterUpstream(service).loadDo(false);
                     _map.put(service, tmp);
                 }
             }
@@ -81,7 +80,7 @@ public class XWaterUpstream implements WaterUpstream, LoadBalance {
         return tmp;
     }
 
-    protected static XWaterUpstream getOnly(String service) {
+    protected static WaterUpstream getOnly(String service) {
         return _map.get(service);
     }
 
@@ -89,11 +88,11 @@ public class XWaterUpstream implements WaterUpstream, LoadBalance {
     /**
      * 重新加载负载配置
      */
-    public XWaterUpstream reload() {
+    public WaterUpstream reload() {
         return loadDo(true);
     }
 
-    private XWaterUpstream loadDo(boolean lock) {
+    private WaterUpstream loadDo(boolean lock) {
 
         DiscoverM cfg = WaterClient.Registry.discover(_service, WaterClient.localService(), WaterClient.localHost());
 
@@ -286,7 +285,7 @@ public class XWaterUpstream implements WaterUpstream, LoadBalance {
         }
 
         if (upstream == null) {
-            upstream = XWaterUpstream.get(c_sev);
+            upstream = WaterUpstream.get(c_sev);
         }
 
         return xclient(clz, upstream);

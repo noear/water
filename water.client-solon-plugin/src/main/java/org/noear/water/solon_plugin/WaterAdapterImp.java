@@ -1,14 +1,13 @@
 package org.noear.water.solon_plugin;
 
-import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 
-public class XWaterAdapterImp extends XWaterAdapter {
+public class WaterAdapterImp extends WaterAdapter {
 
     private String _msg_receiver_url = null;
 
-    public XWaterAdapterImp() {
+    public WaterAdapterImp() {
         String host = WaterProps.service_hostname();
 
         if (TextUtils.isEmpty(host)) {

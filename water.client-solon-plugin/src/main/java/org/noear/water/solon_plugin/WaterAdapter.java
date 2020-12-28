@@ -13,6 +13,7 @@ import org.noear.water.dso.MessageHandler;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.model.MessageM;
+import org.noear.water.utils.IPUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -25,9 +26,9 @@ import java.util.Map;
 //
 // Water for service project adapter
 //
-public abstract class XWaterAdapter extends XWaterAdapterBase implements Plugin {
-    protected static XWaterAdapter _global;
-    public static XWaterAdapter global() {
+public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
+    protected static WaterAdapter _global;
+    public static WaterAdapter global() {
         return _global;
     }
 
@@ -51,7 +52,7 @@ public abstract class XWaterAdapter extends XWaterAdapterBase implements Plugin 
         return Solon.cfg().isDriftMode();
     }
 
-    public XWaterAdapter() {
+    public WaterAdapter() {
         super(Solon.cfg().argx(), Solon.global().port());
         _global = this;
 

@@ -1,8 +1,14 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.utils;
 
 import org.noear.solon.core.cache.CacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 
+/**
+ * 缓存工具类，包装缓存供Solon和Weed共用
+ *
+ * @author noear
+ * @since 2.0
+ * */
 public class CacheUtils {
     public static CacheWrap wrap(ICacheServiceEx cache) {
         return new CacheWrap(cache);
