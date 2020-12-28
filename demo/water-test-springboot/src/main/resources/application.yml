@@ -1,0 +1,9 @@
+server.port: 7111
+
+
+water:
+  host: "localhost:9371"
+  service:
+    name: "testapi"
+    secretKey: "0zJt0J88TkIvqYgC"
+    hostname: "localhost:7111"

@@ -77,7 +77,7 @@ public class Config {
             water_cache_header = cfg("water_cache_header")
                     .getString("WATER2_CACHE") + "_API2";
 
-            water_msg_queue = cfg("water_msg_queue2").toConfigM();
+            water_msg_queue = cfg("water_msg_queue").toConfigM();
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);

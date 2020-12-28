@@ -1,6 +1,7 @@
 package org.noear.water.solon_plugin;
 
 import org.noear.solon.Solon;
+import org.noear.water.utils.TextUtils;
 
 class WaterProps {
     public static String host() {
@@ -16,7 +17,12 @@ class WaterProps {
     }
 
     public static String service_hostname() {
-        return Solon.cfg().get("water.service.hostname");
+        String host = Solon.cfg().get("water.service.hostname");
+        if (TextUtils.isEmpty(host)) {
+            host = Solon.cfg().get("water.service.host"); //旧的标准
+        }
+
+        return host;
     }
 
     public static String service_alarm() {

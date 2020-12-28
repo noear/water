@@ -9,7 +9,7 @@ public class XWaterAdapterImp extends XWaterAdapter {
     private String _msg_receiver_url = null;
 
     public XWaterAdapterImp() {
-        String host = Solon.cfg().get("water.service.host");
+        String host = WaterProps.service_hostname();
 
         if (TextUtils.isEmpty(host)) {
             return;
@@ -26,9 +26,13 @@ public class XWaterAdapterImp extends XWaterAdapter {
             throw new RuntimeException("Configuration " + host_old + " could not be found");
         }
 
-        if(host.endsWith("/")){
+        if (host.indexOf("://") < 0) {
+            host = "http://" + host;
+        }
+
+        if (host.endsWith("/")) {
             _msg_receiver_url = host + "msg/receive";
-        }else {
+        } else {
             _msg_receiver_url = host + "/msg/receive";
         }
     }
