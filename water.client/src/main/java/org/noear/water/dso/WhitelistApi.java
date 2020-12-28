@@ -1,6 +1,6 @@
 package org.noear.water.dso;
 
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class WhitelistApi {
         //
         String cache_key = new StringBuilder(100).append(tags).append("_").append(type).append("_").append(value).toString();
         try {
-            String val = WaterConfig.cacheLocal.getBy(10, cache_key, (us) -> checkDo0(tags, type, value));
+            String val = WaterSetting.cacheLocal.getBy(10, cache_key, (us) -> checkDo0(tags, type, value));
             return "OK".equals(val);
         }catch (Exception ex){
             ex.printStackTrace();

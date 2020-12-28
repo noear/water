@@ -1,9 +1,6 @@
 package org.slf4j.impl;
 
-import org.noear.water.WaterConfig;
 import org.noear.water.log.Level;
-import org.noear.water.log.WaterLogger;
-import org.noear.water.utils.TextUtils;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 

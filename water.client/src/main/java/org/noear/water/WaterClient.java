@@ -44,7 +44,7 @@ public final class WaterClient {
     }
 
     public static String waterTraceId(){
-        return WaterConfig.water_trace_id_supplier().get();
+        return WaterSetting.water_trace_id_supplier().get();
     }
 
     /**

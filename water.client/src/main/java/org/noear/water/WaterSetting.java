@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 
-public class WaterConfig {
+public class WaterSetting {
     public static final Map<String, DbContext> libOfDb = new ConcurrentHashMap();
     public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
     public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();

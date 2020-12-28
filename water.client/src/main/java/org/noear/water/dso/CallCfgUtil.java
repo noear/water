@@ -1,6 +1,6 @@
 package org.noear.water.dso;
 
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 import org.noear.water.utils.HttpUtils;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.Map;
  * */
 class CallCfgUtil {
     public static HttpUtils http(String path) {
-        return WaterConfig.water_cfg_upstream().xcall(path);
+        return WaterSetting.water_cfg_upstream().xcall(path);
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {

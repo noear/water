@@ -9,7 +9,6 @@ import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
-import org.noear.water.WaterConfig;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;

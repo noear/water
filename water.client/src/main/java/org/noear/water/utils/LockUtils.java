@@ -1,12 +1,12 @@
 package org.noear.water.utils;
 
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 
 /**
  * 分布式锁工具
  * */
 public class LockUtils {
-    private static RedisX _redis_uni = WaterConfig.redis_cfg().getRd(2);
+    private static RedisX _redis_uni = WaterSetting.redis_cfg().getRd(2);
 
     /**
      * 尝试把 group_key 锁定给 inMaster

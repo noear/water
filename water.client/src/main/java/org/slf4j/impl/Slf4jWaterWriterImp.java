@@ -1,6 +1,6 @@
 package org.slf4j.impl;
 
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 import org.noear.water.log.WaterLogger;
 
 public class Slf4jWaterWriterImp extends WaterLogger {
@@ -11,7 +11,7 @@ public class Slf4jWaterWriterImp extends WaterLogger {
 
     @Override
     public String getName() {
-        return WaterConfig.water_logger_def();
+        return WaterSetting.water_logger_def();
     }
 
     @Override

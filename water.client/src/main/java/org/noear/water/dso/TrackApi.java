@@ -2,7 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -19,7 +19,7 @@ public class TrackApi {
     public static RedisX rd_track;
 
     static {
-        rd_track = WaterConfig.redis_track_cfg().getRd(5);
+        rd_track = WaterSetting.redis_track_cfg().getRd(5);
         TrackBuffer.singleton().bind(rd_track);
     }
 
@@ -108,7 +108,7 @@ public class TrackApi {
         long interval = cmd.timespan();
         String trace_id = WaterClient.waterTraceId();
 
-        WaterConfig.pools.submit(() -> {
+        WaterSetting.pools.submit(() -> {
             track0Do(service, trace_id, cmd, interval, ua, path, operator, operator_ip, note);
         });
     }

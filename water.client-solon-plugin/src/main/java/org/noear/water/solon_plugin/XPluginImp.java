@@ -7,6 +7,7 @@ import org.noear.solon.core.*;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterSetting;
 import org.noear.water.annotation.Water;
 import org.noear.water.annotation.WaterConfig;
 import org.noear.water.annotation.WaterMessage;
@@ -108,9 +109,9 @@ public class XPluginImp implements Plugin {
 
         //改为upstream模式，可跳过nginx代理
         XWaterUpstream wup = XWaterUpstream.get(WW.waterapi);
-        org.noear.water.WaterConfig.water_sev_upstream(wup);
+        WaterSetting.water_sev_upstream(wup);
 
-        org.noear.water.WaterConfig.water_trace_id_supplier(() -> {
+        WaterSetting.water_trace_id_supplier(() -> {
             Context ctx = Context.current();
             if (ctx == null) {
                 return "";
@@ -128,8 +129,8 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void stop() throws Throwable {
-        org.noear.water.WaterConfig.libOfDb.clear();
-        org.noear.water.WaterConfig.libOfRd.clear();
-        org.noear.water.WaterConfig.libOfCache.clear();
+        WaterSetting.libOfDb.clear();
+        WaterSetting.libOfRd.clear();
+        WaterSetting.libOfCache.clear();
     }
 }

@@ -3,7 +3,7 @@ package org.noear.water.dso;
 import org.noear.snack.ONode;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.WaterConfig;
+import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
@@ -101,7 +101,7 @@ public class LogApi {
         String trace_id = WaterClient.waterTraceId();
 
         if (async) {
-            WaterConfig.pools.submit(() -> {
+            WaterSetting.pools.submit(() -> {
                 appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
             });
         } else {
@@ -182,7 +182,7 @@ public class LogApi {
 
     public void appendAll(List<LogEvent> list, boolean async) {
         if (async) {
-            WaterConfig.pools.submit(() -> {
+            WaterSetting.pools.submit(() -> {
                 appendAllDo(list);
             });
         } else {
