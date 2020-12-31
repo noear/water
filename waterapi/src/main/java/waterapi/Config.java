@@ -81,7 +81,7 @@ public class Config {
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);
-                String code_location = Solon.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+                String code_location = Solon.global().source().getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
                 //本地IP订阅
                 //

@@ -16,7 +16,9 @@
     <tbody id="tbody" >
     <#list services as m>
         <#if m.check_last_state == 1>
-            <tr style="color: red">
+            <tr style="color: red" title="${m.code_location!}">
+            <#else>
+            <tr title="${m.code_location!}">
         </#if>
         <td class="left">${m.name}</td>
         <td class="left break">

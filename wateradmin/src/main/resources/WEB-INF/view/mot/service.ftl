@@ -8,6 +8,18 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
+    <style>
+        /* tooltip */
+        #tooltip{
+            position:absolute;
+            border:1px solid #aaa;
+            background:#eee;
+            padding:1px;
+            color:#333;
+            display:none;
+            font-size: small;
+        }
+    </style>
     <script>
        function deleteService(service_id) {
            top.layer.confirm('确定删除', {
@@ -76,6 +88,29 @@
                $('datagrid').html(rst);
            })
        };
+
+       $(function(){
+           var x = 10;
+           var y = 20;
+           $("tr[title]").mouseover(function(e){
+               this.myTitle = this.title.replace(/；/g,"<br/>")
+               this.title = "";
+               var tooltip = "<div id='tooltip'>"+ this.myTitle +"<\/div>"; //创建 div 元素 文字提示
+               $("body").append(tooltip);    //把它追加到文档中
+               $("#tooltip").css({
+                   "top": (e.pageY+y) + "px",
+                   "left": (e.pageX+x)  + "px"
+               }).show();      //设置x坐标和y坐标，并且显示
+           }).mouseout(function(){
+               this.title = this.myTitle;
+               $("#tooltip").remove();   //移除
+           }).mousemove(function(e){
+               $("#tooltip").css({
+                   "top": (e.pageY+y) + "px",
+                   "left": (e.pageX+x)  + "px"
+               });
+           });
+       });
     </script>
 </head>
 <body>
@@ -120,7 +155,9 @@
                 <tbody id="tbody" >
                 <#list services as m>
                     <#if m.check_last_state == 1>
-                        <tr style="color: red">
+                        <tr style="color: red" title="${m.code_location!}">
+                    <#else>
+                        <tr title="${m.code_location!}">
                     </#if>
                         <td class="left">${m.name}</td>
                         <td class="left break">

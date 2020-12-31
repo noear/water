@@ -26,6 +26,7 @@ public class ServiceModel implements IBinder
     public String alarm_mobile;
     public String alarm_sign;
     public int state;
+    public String code_location;
     public int check_type;
     public String check_url;
     public Date check_last_time;
@@ -57,6 +58,7 @@ public class ServiceModel implements IBinder
         alarm_mobile = s.get("alarm_mobile").value(null);
         alarm_sign = s.get("alarm_sign").value(null);
         state = s.get("state").intValue(0);
+        code_location = s.get("code_location").value(null);
         check_type = s.get("check_type").value(0);
         check_url = s.get("check_url").value(null);
         check_last_time = s.get("check_last_time").value(null);
