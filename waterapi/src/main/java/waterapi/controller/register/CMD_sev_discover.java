@@ -76,7 +76,7 @@ public class CMD_sev_discover extends UapiBase {
         data.get("list").addAll(list, (n, m) -> {
             n.set("protocol", "http");
             n.set("address", m.address);
-            n.set("meta", m.note);
+            n.set("meta", m.meta);
             n.set("weight", 1);
         });
 

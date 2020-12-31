@@ -97,6 +97,15 @@ public final class DbWaterRegApi {
         return isOk;
     }
 
+    public static ServiceModel getService(String service, String address, String meta) throws SQLException {
+        String key = serviceMd5(service, address, meta);
+
+        return db().table("water_reg_service")
+                .whereEq("key", key)
+                .select("*")
+                .getItem(new ServiceModel());
+    }
+
     public static boolean disableService(String service, String address, String meta, boolean is_enabled) throws SQLException {
         String key = serviceMd5(service, address, meta);
 
