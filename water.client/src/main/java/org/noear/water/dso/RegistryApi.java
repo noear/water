@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
 
 import java.util.HashMap;
@@ -37,10 +38,16 @@ public class RegistryApi {
         register(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
     }
 
+    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+        String code_location = WaterClient.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
+        register(service, address, meta, check_url, check_type, alarm_mobile, code_location, is_unstable);
+    }
+
     /**
      * 注册
      */
-    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, String code_location, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
@@ -48,6 +55,7 @@ public class RegistryApi {
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
+        params.put("code_location", code_location);
 
         params.put("check_url", check_url);
         params.put("check_type", check_type + "");

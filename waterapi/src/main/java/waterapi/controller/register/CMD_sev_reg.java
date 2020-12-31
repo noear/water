@@ -32,7 +32,7 @@ public class CMD_sev_reg extends UapiBase {
      */
     @NotEmpty({"service", "address"})
     @Mapping("/sev/reg/")
-    public Result cmd_exec(Context ctx, String service, String address, String meta, int is_unstable, String check_url, int check_type) throws Exception {
+    public Result cmd_exec(Context ctx, String service, String address, String meta, int is_unstable, String check_url, String code_location, int check_type) throws Exception {
         if (meta == null) {
             meta = ctx.param("note");
         }
@@ -50,7 +50,7 @@ public class CMD_sev_reg extends UapiBase {
         }
 
 
-        DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, is_unstable > 0);
+        DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, code_location,is_unstable > 0);
 
         return Result.succeed();
     }

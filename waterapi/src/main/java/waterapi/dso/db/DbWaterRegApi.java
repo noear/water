@@ -29,10 +29,10 @@ public final class DbWaterRegApi {
 
     //添加服务（key）
     public static void addService(String service, String address, String check_url, int check_type, boolean is_unstable) throws SQLException {
-        addService(service, address, "", "", check_url, check_type, is_unstable);
+        addService(service, address, "", "", check_url, check_type, "",is_unstable);
     }
 
-    public static void addService(String service, String address, String meta, String alarm_mobile, String check_url, int check_type, boolean is_unstable) throws SQLException {
+    public static void addService(String service, String address, String meta, String alarm_mobile, String check_url, int check_type, String code_location,boolean is_unstable) throws SQLException {
         if (meta == null) {
             meta = "";
         }
@@ -46,10 +46,11 @@ public final class DbWaterRegApi {
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("check_url", check_url)
                 .set("check_type", check_type)
+                .set("code_location",code_location)
                 .set("check_last_state", 0)
                 .set("check_last_time", "$NOW()")
                 .set("check_last_note", "")
-                .where("`key`=?", key)
+                .whereEq("key", key)
                 .update() > 0;
 
 
@@ -64,6 +65,7 @@ public final class DbWaterRegApi {
                     .set("is_unstable", (is_unstable ? 1 : 0))
                     .set("check_url", check_url)
                     .set("check_type", check_type)
+                    .set("code_location",code_location)
                     .set("check_last_state", 0)
                     .set("check_last_time", "$NOW()")
                     .set("check_last_note", "")
