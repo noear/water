@@ -81,13 +81,16 @@ public class Config {
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);
+                String code_location = Solon.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
                 //本地IP订阅
                 //
+
                 DbWaterRegApi.addService(water_service_name,
                         localHost,
                         WW.path_run_check,
                         0,
+                        code_location,
                         Solon.cfg().isDriftMode());
             } catch (Exception ex) {
                 ex.printStackTrace();
