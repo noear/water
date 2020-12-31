@@ -4,6 +4,7 @@ import org.noear.solon.core.BeanInjector;
 import org.noear.solon.core.VarHolder;
 import org.noear.solon.core.util.ConvertUtil;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterProps;
 import org.noear.water.WaterSetting;
 import org.noear.water.annotation.Water;
 import org.noear.water.log.WaterLogger;

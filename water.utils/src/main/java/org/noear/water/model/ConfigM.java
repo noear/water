@@ -3,6 +3,7 @@ package org.noear.water.model;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
+import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -151,7 +152,7 @@ public final class ConfigM {
     }
 
     public ICacheServiceEx getCh() {
-        String name = System.getProperty("water.service.name");
+        String name = WaterProps.service_name();
 
         if (TextUtils.isEmpty(name)) {
             throw new RuntimeException("System.getProperty(\"water.service.name\") is null, please configure!");
@@ -171,7 +172,7 @@ public final class ConfigM {
     }
 
     public ICacheServiceEx getCh2() {
-        String name = System.getProperty("water.service.name");
+        String name = WaterProps.service_name();
 
         if (TextUtils.isEmpty(name)) {
             throw new RuntimeException("System.getProperty(\"water.service.name\") is null, please configure!");

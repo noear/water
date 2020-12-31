@@ -7,6 +7,7 @@ import org.noear.solon.core.*;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterProps;
 import org.noear.water.WaterSetting;
 import org.noear.water.annotation.Water;
 import org.noear.water.annotation.WaterConfig;
