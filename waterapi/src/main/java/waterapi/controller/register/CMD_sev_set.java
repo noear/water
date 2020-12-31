@@ -25,16 +25,20 @@ import waterapi.dso.interceptor.Logging;
 public class CMD_sev_set extends UapiBase {
     /**
      * @param s 指令
-     * */
+     */
     @Mapping("/sev/set/")
-    public Result cmd_exec(Context ctx, String s) throws Exception {
+    public Result cmd_exec(Context ctx, String s, String meta) throws Exception {
+        if (meta == null) {
+            meta = ctx.param("note", "");
+        }
+
         if (TextUtils.isEmpty(s)) {
             String service = ctx.param("service");
             String address = ctx.param("address");
 
             int enabled = ctx.paramAsInt("enabled", 9);
 
-            return exec0(ctx, service, address, enabled);
+            return exec0(ctx, service, address, meta, enabled);
         } else {
             // 为运维带来便利
             // s=${service}@${ip:port},${enabled}
@@ -45,11 +49,11 @@ public class CMD_sev_set extends UapiBase {
 
             int enabled = Integer.parseInt(ss2[1]);
 
-            return exec0(ctx, ss[0], ss2[0], enabled);
+            return exec0(ctx, ss[0], ss2[0], meta, enabled);
         }
     }
 
-    private Result exec0(Context ctx, String service, String address, int enabled) throws Exception {
+    private Result exec0(Context ctx, String service, String address, String meta, int enabled) throws Exception {
 
         if (Utils.isEmpty(service)) {
             throw UapiCodes.CODE_13("s or service");
@@ -59,9 +63,8 @@ public class CMD_sev_set extends UapiBase {
             throw UapiCodes.CODE_13("s or address");
         }
 
-        String note = ctx.param("note", "");
 
-        DbWaterRegApi.disableService(service, address, note, enabled > 0);
+        DbWaterRegApi.disableService(service, address, meta, enabled > 0);
 
         return Result.succeed();
     }
