@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>nami</artifactId>
+            <artifactId>nami.channel.okhttp</artifactId>
         </dependency>
     </dependencies>
 </project>

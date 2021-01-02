@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TestApi2App {
     public static void main(String[] args) {
-        Solon.start(TestApi2App.class, args);
         SpringApplication.run(TestApi2App.class, args);
     }
 }
