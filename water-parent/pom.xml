@@ -170,6 +170,18 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>nami.coder.snack3</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>nami</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>solon-web</artifactId>
                 <version>${solon.ver}</version>
                 <type>pom</type>
