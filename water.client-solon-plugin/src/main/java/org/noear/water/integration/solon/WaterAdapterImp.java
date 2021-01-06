@@ -1,17 +1,14 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.integration.solon;
 
-import org.noear.solon.Solon;
-import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterProps;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.WeedConfig;
-import org.noear.weed.cache.ICacheServiceEx;
 
-public class XWaterAdapterImp extends XWaterAdapter {
+public class WaterAdapterImp extends WaterAdapter {
 
     private String _msg_receiver_url = null;
 
-    public XWaterAdapterImp() {
+    public WaterAdapterImp() {
         String host = WaterProps.service_hostname();
 
         if (TextUtils.isEmpty(host)) {
@@ -33,9 +30,9 @@ public class XWaterAdapterImp extends XWaterAdapter {
             host = "http://" + host;
         }
 
-        if(host.endsWith("/")){
+        if (host.endsWith("/")) {
             _msg_receiver_url = host + "msg/receive";
-        }else {
+        } else {
             _msg_receiver_url = host + "/msg/receive";
         }
     }

@@ -1,4 +1,4 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.integration.solon;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;

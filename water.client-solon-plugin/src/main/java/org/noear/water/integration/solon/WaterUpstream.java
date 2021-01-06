@@ -1,4 +1,4 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.integration.solon;
 
 import org.noear.nami.Nami;
 import org.noear.nami.annotation.NamiClient;

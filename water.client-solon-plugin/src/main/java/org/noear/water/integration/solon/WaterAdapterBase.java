@@ -1,15 +1,16 @@
-package org.noear.water.solon_plugin;
+package org.noear.water.integration.solon;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.core.NvMap;
 import org.noear.solon.Utils;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WaterAdapter;
+import org.noear.water.AbstractWaterAdapter;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.IPUtils;
 import org.noear.water.utils.RuntimeStatus;
 import org.noear.water.utils.RuntimeUtils;
 import org.noear.water.utils.TextUtils;
@@ -19,14 +20,14 @@ import java.io.IOException;
 //
 // Water for service project adapter
 //
-abstract class XWaterAdapterBase extends WaterAdapter {
-    static Logger logger = WaterLogger.get(WW.water_log_upstream, XWaterAdapterBase.class);
+abstract class WaterAdapterBase extends AbstractWaterAdapter {
+    static Logger logger = WaterLogger.get(WW.water_log_upstream, WaterAdapterBase.class);
 
     NvMap service_args;
     private String _localHost;
     private String _note = "";
 
-    public XWaterAdapterBase(NvMap args, int port) {
+    public WaterAdapterBase(NvMap args, int port) {
         service_args = args;
         service_port = port;
 
@@ -71,9 +72,9 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         }
 
         if (service_port > 0) {
-            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(),  is_unstable());
         } else {
-            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(),  is_unstable());
         }
     }
 
@@ -91,7 +92,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
         super.cacheUpdateHandler(tag);
         String[] ss = tag.split(":");
         if ("upstream".equals(ss[0])) {
-            XWaterUpstream tmp = XWaterUpstream.getOnly(ss[1]);
+            WaterUpstream tmp = WaterUpstream.getOnly(ss[1]);
             if (tmp != null) {
                 try {
                     tmp.reload();
@@ -112,7 +113,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
             ONode odata = new ONode().asObject();
 
             if ("*".equals(ups)) {
-                XWaterUpstream._map.forEach((k, v) -> {
+                WaterUpstream._map.forEach((k, v) -> {
                     ONode n = odata.get(k);
 
                     n.set("service", k);
@@ -122,7 +123,7 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                     });
                 });
             } else {
-                XWaterUpstream v = XWaterUpstream.getOnly(ups);
+                WaterUpstream v = WaterUpstream.getOnly(ups);
                 if (v != null) {
                     ONode n = odata.get(ups);
 
@@ -171,8 +172,8 @@ abstract class XWaterAdapterBase extends WaterAdapter {
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
                     RuntimeStatus rs = RuntimeUtils.getStatus();
-                    rs.name = XWaterAdapter.global().service_name();
-                    rs.address = XWaterAdapter.global().localHost();
+                    rs.name = WaterAdapter.global().service_name();
+                    rs.address = WaterAdapter.global().localHost();
 
                     text = ONode.stringify(rs);
                 } else {

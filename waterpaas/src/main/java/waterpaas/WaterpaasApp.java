@@ -6,7 +6,7 @@ import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.FromUtils;
-import org.noear.water.solon_plugin.WaterAdapter;
+import org.noear.water.integration.solon.WaterAdapter;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import waterpaas.controller.AppHandler;
