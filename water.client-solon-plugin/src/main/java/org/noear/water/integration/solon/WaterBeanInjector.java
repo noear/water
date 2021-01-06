@@ -26,18 +26,25 @@ public class WaterBeanInjector implements BeanInjector<Water> {
 
     @Override
     public void doInject(VarHolder varH, Water anno) {
+        Object val2 = build(varH.getType(), anno);
+
+        if (val2 != null) {
+            varH.setValue(val2);
+        }
+    }
+
+    public Object build(Class<?> type, Water anno) {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
-            if (varH.getType().isInterface()) {
-                varH.setValue(WaterUpstream.xclient(varH.getType()));
+            if (type.isInterface()) {
+                return (WaterUpstream.xclient(type));
             }
-            return;
+            return null;
         }
 
         //日志注入
-        if(varH.getType() == WaterLogger.class) {
-            varH.setValue(WaterLogger.get(anno.value()));
-            return;
+        if(type == WaterLogger.class) {
+            return (WaterLogger.get(anno.value()));
         }
 
         //配置注入
@@ -51,24 +58,24 @@ public class WaterBeanInjector implements BeanInjector<Water> {
 
 
         if(TextUtils.isEmpty(tagKey)){
-            return;
+            return null;
         }
 
         ConfigM cfg = WaterClient.Config.getByTagKey(tagKey);
 
         //DbContext
-        if(DbContext.class.isAssignableFrom(varH.getType())){
+        if(DbContext.class.isAssignableFrom(type)){
             DbContext db = WaterSetting.libOfDb.get(cfg.value);
             if(db == null){
                 db = cfg.getDb(true);
                 WaterSetting.libOfDb.put(cfg.value,db);
             }
-            varH.setValue(db);
-            return;
+
+            return db;
         }
 
         //RedisX
-        if(RedisX.class.isAssignableFrom(varH.getType())){
+        if(RedisX.class.isAssignableFrom(type)){
             String key = cfg.value +"_"+arg;
 
             RedisX rdx = WaterSetting.libOfRd.get(key);
@@ -82,12 +89,11 @@ public class WaterBeanInjector implements BeanInjector<Water> {
                 WaterSetting.libOfRd.put(key,rdx);
             }
 
-            varH.setValue(rdx);
-            return;
+            return rdx;
         }
 
         //ICacheServiceEx
-        if(ICacheServiceEx.class.isAssignableFrom(varH.getType())) {
+        if(ICacheServiceEx.class.isAssignableFrom(type)) {
             ICacheServiceEx cache = WaterSetting.libOfCache.get(cfg.value);
 
             if (cache == null) {
@@ -101,17 +107,15 @@ public class WaterBeanInjector implements BeanInjector<Water> {
                 WaterSetting.libOfCache.put(cfg.value, cache);
             }
 
-            varH.setValue(cache);
-            return;
+            return cache;
         }
 
         //Properties
-        if(Properties.class.isAssignableFrom(varH.getType())){
-            varH.setValue(cfg.getProp());
-            return;
+        if(Properties.class.isAssignableFrom(type)){
+             return cfg.getProp();
         }
 
-        Object val2 = ConvertUtil.to(varH.getType(), cfg.value);
-        varH.setValue(val2);
+        Object val2 = ConvertUtil.to(type, cfg.value);
+        return val2;
     }
 }
