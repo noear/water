@@ -81,6 +81,12 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>water.client-springboot-starter</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>solon</artifactId>
                 <version>${solon.ver}</version>
             </dependency>

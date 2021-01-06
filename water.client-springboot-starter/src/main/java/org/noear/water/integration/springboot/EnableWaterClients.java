@@ -1,6 +1,5 @@
 package org.noear.water.integration.springboot;
 
-import org.noear.nami.integration.springboot.AutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

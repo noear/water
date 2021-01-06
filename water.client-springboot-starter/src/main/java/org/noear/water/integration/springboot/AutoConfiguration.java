@@ -1,9 +1,5 @@
 package org.noear.water.integration.springboot;
 
-import org.noear.nami.Nami;
-import org.noear.nami.NamiException;
-import org.noear.nami.annotation.NamiClient;
-import org.noear.solon.Utils;
 import org.noear.solon.extend.springboot.SpringBootLinkSolon;
 import org.noear.water.annotation.Water;
 import org.noear.water.integration.solon.WaterBeanInjector;

@@ -20,12 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>springboot-solon-plugin</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>water.client-solon-plugin</artifactId>
+            <artifactId>water.client-springboot-starter</artifactId>
         </dependency>
 
         <dependency>

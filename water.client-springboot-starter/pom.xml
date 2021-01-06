@@ -24,7 +24,6 @@
             <groupId>org.noear</groupId>
             <artifactId>springboot-solon-plugin</artifactId>
             <version>${solon.ver}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
