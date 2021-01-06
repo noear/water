@@ -106,7 +106,7 @@ class demo{
     }
 }
 
-//消息服务：订阅消息并处理
+//消息订阅：订阅消息并处理
 @WaterMessage("test.order.end")
 public class msg_updatecache implements MessageHandler {
     @Override
@@ -115,6 +115,14 @@ public class msg_updatecache implements MessageHandler {
     }
 }
 
+//配置订阅：关注配置的实时更新
+@WaterConfig("test")
+public class TestConfigHandler implements ConfigHandler {
+    @Override
+    public void handler(ConfigSetM cfgSet) {
+
+    }
+}
 
 
 ```
