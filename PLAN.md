@@ -1,7 +1,7 @@
 #### 2.0.7 规划::
 * 监控数据获取，改成基于协议
 * 开发项目部署功能
-* 日志器适配MangoDb和ES
+* 日志器适配MangoDb、HBase、ES
 
 #### 2.0.6 规划::
 * 添加springboot适配：water.client-springboot-starter
