@@ -65,7 +65,7 @@ public class XPluginImp implements Plugin {
         }
 
         //添加Water注入支持
-        Aop.context().beanInjectorAdd(Water.class, new WaterBeanInjector());
+        Aop.context().beanInjectorAdd(Water.class, WaterBeanInjector.instance);
 
         //添加WaterMessage注解支持
         Aop.context().beanBuilderAdd(WaterMessage.class, (clz, wrap, anno) -> {

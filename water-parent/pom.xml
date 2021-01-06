@@ -48,6 +48,7 @@
         <luffy.ver>1.0</luffy.ver>
 
         <dubbo.ver>2.7.6</dubbo.ver>
+        <springboot.ver>2.0.4.RELEASE</springboot.ver>
     </properties>
 
 

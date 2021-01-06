@@ -22,6 +22,8 @@ import java.util.Properties;
  * 提供water注入支持
  * */
 public class WaterBeanInjector implements BeanInjector<Water> {
+    public static final WaterBeanInjector instance = new WaterBeanInjector();
+
     @Override
     public void doInject(VarHolder varH, Water anno) {
         //RPC client注入
