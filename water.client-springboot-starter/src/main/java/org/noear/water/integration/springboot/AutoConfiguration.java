@@ -26,9 +26,7 @@ public class AutoConfiguration extends InstantiationAwareBeanPostProcessorAdapte
             Water anno = field.getAnnotation(Water.class);
 
             if (anno != null) {
-                if (field.getType().isInterface()) {
-                    postAnno(anno, field, bean);
-                }
+                postAnno(anno, field, bean);
             }
         }));
 
@@ -36,6 +34,7 @@ public class AutoConfiguration extends InstantiationAwareBeanPostProcessorAdapte
     }
 
     private void postAnno(Water anno, Field field, Object bean) {
+        field.setAccessible(true);
         VarHolderOfField vh = new VarHolderOfField(bean.getClass(), field, anno);
         WaterBeanInjector.instance.doInject(vh, anno);
     }
