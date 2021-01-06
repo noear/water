@@ -8,7 +8,7 @@ import org.noear.water.model.MessageM;
 import org.noear.water.utils.Datetime;
 
 @WaterMessage("test.hello")
-public class TestMessage implements MessageHandler {
+public class TestMessageHandler implements MessageHandler {
     @Override
     public boolean handler(MessageM msg) throws Throwable {
         Datetime dt = Datetime.Now().addSecond(10);
