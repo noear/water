@@ -16,6 +16,7 @@
 | --- | --- |
 | org.noear:water.client | 框架：Water 客户端 |
 | org.noear:water.client-solon-plugin | 框架：Water 客户端 for solon |
+| org.noear:water.client-springboot-starter | 框架：Water 客户端 for springboot |
 | | |
 | org.noear:waterapi | 构建：Water 服务端 |
 | org.noear:watersev | 构建：Water 后台任务（消息派发；定时任务；服务检测；数据同步...可分指令部署） |
@@ -32,7 +33,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client-solon-plugin</artifactId>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
 </dependency>
 ```
 
