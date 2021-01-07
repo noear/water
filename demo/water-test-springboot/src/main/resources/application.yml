@@ -2,7 +2,7 @@ server.port: 7111
 
 
 water:
-  host: "localhost:9371"
+  host: "water"
   service:
     name: "testapi"
     secretKey: "0zJt0J88TkIvqYgC"
