@@ -11,7 +11,7 @@
     <script>
         $(function () {
             if ('${tag_name!}') {
-                $('#${tag_name}').addClass('sel');
+                $('#${tag_name!}').addClass('sel');
             } else {
                 $('tree li:first').addClass('sel');
             }
