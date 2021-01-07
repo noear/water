@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>water-parent</artifactId>
-    <version>2.0.6</version>
+    <version>2.0.7</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -38,14 +38,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.2.16</solon.ver>
-        <water.ver>2.0.6</water.ver>
+        <solon.ver>1.2.18</solon.ver>
+        <water.ver>2.0.7</water.ver>
         <weed3.ver>3.2.28</weed3.ver>
         <snack3.ver>3.1.13</snack3.ver>
 
-        <bcf.ver>2.0.5</bcf.ver>
+        <bcf.ver>2.0.6</bcf.ver>
 
-        <luffy.ver>1.0</luffy.ver>
+        <luffy.ver>1.0.1</luffy.ver>
 
         <dubbo.ver>2.7.6</dubbo.ver>
         <springboot.ver>2.0.4.RELEASE</springboot.ver>
@@ -177,7 +177,7 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>nami.channel.okhttp</artifactId>
+                <artifactId>nami.channel.http.okhttp</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 

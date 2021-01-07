@@ -3,7 +3,7 @@ solon.extend: "watersev_ext"
 server.port: 9372
 
 water:
-  host: "localhost:9371"
+  host: "water"
   logger: "water_log_sev"
   service:
     name: "watersev"

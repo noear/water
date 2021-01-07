@@ -10,11 +10,16 @@ public class RuntimeUtils {
     public static RuntimeStatus getStatus() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        OperatingSystemMXBean systemMXBean = ManagementFactory.getOperatingSystemMXBean();
 
         Runtime runtime = Runtime.getRuntime();
 
         status.memoryTotal = (byteToM(runtime.totalMemory()));
         status.memoryUsed = (byteToM(runtime.totalMemory() - runtime.freeMemory()));
+
+        status.system.put("arch",systemMXBean.getArch());
+        status.system.put("systemLoadAverage",systemMXBean.getSystemLoadAverage());
+        status.system.put("availableProcessors",systemMXBean.getAvailableProcessors());
 
 
         List<Map<String,Object>> memoryPools = new ArrayList<>();
