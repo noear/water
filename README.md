@@ -19,8 +19,8 @@
 | org.noear:water.client-springboot-starter | 框架：Water 客户端 for springboot |
 | | |
 | org.noear:waterapi | 构建：Water 服务端 |
-| org.noear:watersev | 构建：Water 后台任务（消息派发；定时任务；服务检测；数据同步...可分指令部署） |
-| org.noear:wateradmin | 构建：Water 统一管理后台 |
+| org.noear:watersev | 构建：Water 后台服务（消息派发；定时任务；服务检测；数据同步...） |
+| org.noear:wateradmin | 构建：Water 控制台 |
 | org.noear:waterpaas | 构建：Water PaaS 服务，提供轻量级接口服务 |
 | org.noear:waterraas | 构建：Water RaaS 服务，提供轻量级规则计算服务 |
 
