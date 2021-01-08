@@ -417,7 +417,6 @@
         <module>../water.client-solon-plugin</module>
         <module>../water.client-springboot-starter</module>
 
-
         <module>../_extend2/dubbo-water-solon-plugin</module>
     </modules>
 </project>

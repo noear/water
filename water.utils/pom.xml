@@ -39,6 +39,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.cache.memcached</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
