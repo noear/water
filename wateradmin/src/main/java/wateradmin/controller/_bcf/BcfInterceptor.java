@@ -33,13 +33,15 @@ public class BcfInterceptor extends BcfInterceptorBase {
         }
 
         if (ctx.uri().getHost().indexOf("localhost") < 0) {
-            //IP白名单校验
-            String ip = IPUtil.getIP(ctx);
 
-            if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
-                ctx.output(ip + ",not is whitelist!");
-                ctx.setHandled(true);
-                return;
+            if(Solon.cfg().isWhiteMode()) {
+                String ip = IPUtil.getIP(ctx);
+
+                if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
+                    ctx.output(ip + ",not is whitelist!");
+                    ctx.setHandled(true);
+                    return;
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 package waterapi.dso.validation;
 
+import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.Whitelist;
@@ -12,16 +13,20 @@ import java.sql.SQLException;
 public class WhitelistValidatorImp extends WhitelistValidator {
     @Override
     public Result validate(Context ctx, Whitelist anno, String name, StringBuilder tmp) {
-        String ip = IPUtils.getIP(ctx);
+        if (Solon.cfg().isWhiteMode()) {
+            String ip = IPUtils.getIP(ctx);
 
-        try {
-            if (DbWaterCfgApi.isWhitelist(ip)) {
-                return Result.succeed();
-            } else {
-                return Result.failure(ip);
+            try {
+                if (DbWaterCfgApi.isWhitelist(ip)) {
+                    return Result.succeed();
+                } else {
+                    return Result.failure(ip);
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } else {
+            return Result.succeed();
         }
     }
 }
