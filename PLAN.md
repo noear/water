@@ -1,9 +1,9 @@
-#### 2.0.7 规划::
+#### 2.0.7.1 规划::
 * 监控数据获取，改成基于协议
 * 开发项目部署功能
 * 日志器适配MangoDb、HBase、ES
 
-#### 2.0.7 规划::
+#### 2.0.7.1 规划::
 * 添加springboot适配：water.client-springboot-starter
 * 升级solon 到 1.2.16 版本
 
