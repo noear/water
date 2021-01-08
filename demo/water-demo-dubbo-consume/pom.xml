@@ -28,7 +28,6 @@
             <groupId>org.noear</groupId>
             <artifactId>solon-api</artifactId>
             <version>${solon.ver}</version>
-            <type>pom</type>
         </dependency>
 
         <dependency>

@@ -18,11 +18,10 @@
     </parent>
 
     <dependencies>
-
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
-            <type>pom</type>
+            <version>${solon.ver}</version>
         </dependency>
 
         <dependency>
@@ -49,8 +48,9 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.3.0</version>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>

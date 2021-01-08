@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
-            <type>pom</type>
+            <version>${solon.ver}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.noear</groupId>
