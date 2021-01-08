@@ -7,11 +7,14 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.StringReader;
 import java.util.Properties;
 
+/**
+ * @see org.noear.water.utils.ConfigUtilsEx
+ * */
 public class ConfigUtils {
     public static ConfigUtils global = new ConfigUtils();
 
     static {
-        String loaderEx = "org.noear.water.solon_plugin.ConfigUtilsEx";
+        String loaderEx = "org.noear.water.utils.ConfigUtilsEx";
 
         try {
             Class<?> clz = Class.forName(loaderEx);
@@ -20,7 +23,7 @@ public class ConfigUtils {
                 global = (ConfigUtils) tmp;
             }
         } catch (Exception ex) {
-            System.out.println("Not found: org.noear.water.solon_plugin.ConfigUtilsEx");
+            System.out.println("Not found: " + loaderEx);
         }
     }
 
