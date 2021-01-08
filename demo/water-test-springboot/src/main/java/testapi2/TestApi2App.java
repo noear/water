@@ -1,5 +1,6 @@
 package testapi2;
 
+import org.noear.solon.Solon;
 import org.noear.water.integration.springboot.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

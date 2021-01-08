@@ -7,3 +7,4 @@ water:
     name: "testapi"
     secretKey: "0zJt0J88TkIvqYgC"
     hostname: "localhost:7111"
+    config: "@water_session"

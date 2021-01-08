@@ -7,6 +7,9 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.water.WaterClient;
 import testapi2.dso.HelloService;
 
+/**
+ * 这是Solon的控制器（基于Solon Bean 容器运行）；可以跳过
+ * */
 @Controller
 public class TestController {
     @Inject

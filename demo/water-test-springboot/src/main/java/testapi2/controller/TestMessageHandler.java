@@ -7,6 +7,10 @@ import org.noear.water.dso.MessageHandler;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.Datetime;
 
+/**
+ * 消息订阅（可以自己发出去，再自己订阅回来；起来拆解性能消耗的作用）
+ *
+ * */
 @WaterMessage("test.hello")
 public class TestMessageHandler implements MessageHandler {
     @Override

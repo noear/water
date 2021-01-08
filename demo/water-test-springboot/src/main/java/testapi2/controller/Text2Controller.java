@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 这是Solon的控制器（基于Solon Bean 容器运行）；可以跳过
+ *
  * @author noear 2020/12/28 created
  */
 @RestController
