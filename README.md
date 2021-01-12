@@ -127,12 +127,15 @@ public class TestConfigHandler implements ConfigHandler {
 
 ```
 
+### （二）演示代码
 
-### （二）部署
+[https://gitee.com/noear/water_demo](https://gitee.com/noear/water_demo)
+
+### （三）部署
 
 > 相关材料未准备好...
 
-### （三）架构说明
+### （四）架构说明
 
 > 相关材料未准备好...
 
