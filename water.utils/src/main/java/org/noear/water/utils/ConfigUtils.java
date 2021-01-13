@@ -31,10 +31,26 @@ public class ConfigUtils {
         try {
             PropertiesM m = new PropertiesM();
             m.load(new StringReader(text));
+
+            buildPropOfMacro(m);
+
             return m;
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    protected void buildPropOfMacro(PropertiesM prop) {
+        prop.forEach((k, v) -> {
+            if (v != null) {
+                String v2 = v.toString();
+
+                if (v2.startsWith("${") && v2.endsWith("}")) {
+                    v2 = prop.getProperty(v2.substring(2, v2.length() - 1));
+                    prop.put(k, v2);
+                }
+            }
+        });
     }
 
     public ONode getNode(String text) {

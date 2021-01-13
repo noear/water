@@ -22,6 +22,8 @@ public class ConfigUtilsEx extends ConfigUtils {
             prop.putAll(tmp);
         }
 
+        buildPropOfMacro(prop);
+
         return prop;
     }
 }
