@@ -6,6 +6,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.core.LoadBalance;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.dso.Upstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -20,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class WaterUpstream implements org.noear.water.dso.WaterUpstream, LoadBalance {
+public class WaterUpstream implements Upstream, LoadBalance {
     private final String TAG_SERVER = "{server}";
 
 
@@ -247,7 +248,7 @@ public class WaterUpstream implements org.noear.water.dso.WaterUpstream, LoadBal
     }
 
     @Override
-    public HttpUtils xcall(String path) {
+    public HttpUtils http(String path) {
         return HttpUtils.http(get() + path)
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
@@ -257,8 +258,7 @@ public class WaterUpstream implements org.noear.water.dso.WaterUpstream, LoadBal
     //
     // for rpc client
     //
-
-    public static <T> T xclient(Class<?> clz) {
+    public static <T> T client(Class<?> clz) {
         NamiClient c_meta = clz.getAnnotation(NamiClient.class);
 
         if (c_meta == null) {
@@ -288,10 +288,10 @@ public class WaterUpstream implements org.noear.water.dso.WaterUpstream, LoadBal
             upstream = WaterUpstream.get(c_sev);
         }
 
-        return xclient(clz, upstream);
+        return client(clz, upstream);
     }
 
-    public static <T> T xclient(Class<?> clz, LoadBalance upstream) {
+    public static <T> T client(Class<?> clz, LoadBalance upstream) {
         return Nami.builder()
                 .filterAdd((cfg, m, url, h, a) -> {
                     h.put(WW.http_header_trace, WaterClient.waterTraceId());

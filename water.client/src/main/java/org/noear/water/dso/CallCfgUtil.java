@@ -14,7 +14,7 @@ import java.util.Map;
  * */
 class CallCfgUtil {
     public static HttpUtils http(String path) {
-        return WaterSetting.water_cfg_upstream().xcall(path);
+        return WaterSetting.water_cfg_upstream().http(path);
     }
 
     public static String post(String path, Map<String, String> data) throws IOException {

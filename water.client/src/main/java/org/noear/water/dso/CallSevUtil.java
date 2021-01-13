@@ -16,7 +16,7 @@ import java.util.Map;
  * */
 class CallSevUtil {
     public static HttpUtils http(String path){
-        return WaterSetting.water_sev_upstream().xcall(path);
+        return WaterSetting.water_sev_upstream().http(path);
     }
 
     public static String post(String path, Map<String, String> data, String trace_id) throws IOException {

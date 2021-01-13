@@ -37,7 +37,7 @@ public class WaterBeanInjector implements BeanInjector<Water> {
         //RPC client注入
         if(TextUtils.isEmpty(anno.value())) {
             if (type.isInterface()) {
-                return (WaterUpstream.xclient(type));
+                return (WaterUpstream.client(type));
             }
             return null;
         }

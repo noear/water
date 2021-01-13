@@ -8,7 +8,7 @@ import org.noear.water.utils.HttpUtils;
  * @author noear
  * @since 2.0
  * */
-public interface WaterUpstream {
+public interface Upstream {
     default void setBackup(String server){}
-    HttpUtils xcall(String path);
+    HttpUtils http(String path);
 }
