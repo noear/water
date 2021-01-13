@@ -107,7 +107,7 @@ class demo{
 
         //Rpc发现服务：调用Rpc接口
         AppModel app = rock.getAppById(12);
-        WaterUpstream.xclient(RockRpc.class).getAppById(12); //非注解模式
+        WaterUpstream.client(RockRpc.class).getAppById(12); //非注解模式
     }
 }
 
