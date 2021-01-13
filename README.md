@@ -97,7 +97,7 @@ class demo{
         
         //配置服务：使用配置的数据库上下文进行查询
         var map = waterDb.table("bcf_user").limit(1).select("*").getMap();
-        WaterClient.Config.get("water/water").getDb().table("bcf_user").select("*").getMap();//（非注解模式）
+        WaterClient.Config.getByTagKey("water/water").getDb().table("bcf_user").select("*").getMap();//（非注解模式）
 
         //消息服务：发送消息
         WaterClient.Messsage.sendMessage("test.order.start", "{\"order_id\":1}"); //（非注解模式）
