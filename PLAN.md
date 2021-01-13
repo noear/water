@@ -3,6 +3,13 @@
 * 开发项目部署功能
 * 日志器适配MangoDb、HBase、ES
 
+
+#### 2.0.9 规划::
+* 调整xcall,xclient不：http,client
+
+#### 2.0.8 规划::
+* 增加 ConfigM 配置块内引用
+
 #### 2.0.7.1 规划::
 * 添加springboot适配：water.client-springboot-starter
 * 升级solon 到 1.2.16 版本
