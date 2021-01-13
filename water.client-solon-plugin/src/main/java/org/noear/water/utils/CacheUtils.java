@@ -1,6 +1,5 @@
 package org.noear.water.utils;
 
-import org.noear.solon.core.cache.CacheService;
 import org.noear.weed.cache.ICacheServiceEx;
 
 /**
@@ -14,7 +13,7 @@ public class CacheUtils {
         return new CacheWrap(cache);
     }
 
-    public static class CacheWrap implements CacheService, ICacheServiceEx {
+    public static class CacheWrap implements WaterCacheService {
         private final ICacheServiceEx real;
 
         public CacheWrap(ICacheServiceEx cache) {
