@@ -119,6 +119,7 @@ public class ConfigSetM {
             prop.forEach((k1, v1) -> {
                 if (v1 != null) {
                     //支持块内的宏模式::by noear, 2021.01.13
+                    //
                     //url=xxxxxx
                     //jdbcUrl=${url}
                     //
