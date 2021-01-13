@@ -21,8 +21,8 @@
     <modules>
         <module>water-parent</module>
 
-        <module>wateradmin</module>
         <module>waterapi</module>
+        <module>wateradmin</module>
         <module>watersev</module>
         <module>waterpaas</module>
         <module>waterraas</module>
