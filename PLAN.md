@@ -5,7 +5,7 @@
 
 
 #### 2.0.9 规划::
-* 调整xcall,xclient不：http,client
+* 调整xcall,xclient为：http, client
 
 #### 2.0.8 规划::
 * 增加 ConfigM 配置块内引用
