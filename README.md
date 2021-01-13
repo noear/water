@@ -49,7 +49,7 @@ water:
     #hostname: "@water/water_api_host"  #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
     secretKey: "r6rSehL8E9fcEgeA"       #当前服务接收消息时的签名密钥
     alarm: "18611112222"                #当前服务出问题时的告警手机号
-    config: "@water/*"                  #当前服务默认加载的配置（@开头，表示从water配置服务获取；会同步到sytem properties）
+    config: "@water/*"                  #当前服务默认加载的配置（@开头，表示从water配置服务获取；会同步到Solon.cfg()）
 ```
 
 #### 代码
