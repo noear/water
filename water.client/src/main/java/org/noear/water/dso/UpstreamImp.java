@@ -13,8 +13,13 @@ import org.noear.water.utils.HttpUtils;
  * */
 public class UpstreamImp implements Upstream {
     @Override
+    public String getServer() {
+        return WaterSetting.water_api_url();
+    }
+
+    @Override
     public HttpUtils http(String path) {
-        return HttpUtils.http(WaterSetting.water_api_url() + path)
+        return HttpUtils.http(getServer() + path)
                 .header(WW.http_header_trace, WaterClient.waterTraceId())
                 .header(WW.http_header_from, WaterClient.localServiceHost());
     }

@@ -173,7 +173,8 @@ public class WaterUpstream implements Upstream, LoadBalance {
     /**
      * 获取一个轮询节点
      */
-    public String get() {
+    @Override
+    public String getServer() {
         //1.如果有代理，则使用代理
         if (_enable_agent) {
             return _cfg.url;
@@ -233,10 +234,6 @@ public class WaterUpstream implements Upstream, LoadBalance {
         return Collections.unmodifiableList(_nodes);
     }
 
-    @Override
-    public String getServer() {
-        return get();
-    }
 
     //
     // for http client
@@ -249,7 +246,7 @@ public class WaterUpstream implements Upstream, LoadBalance {
 
     @Override
     public HttpUtils http(String path) {
-        return HttpUtils.http(get() + path)
+        return HttpUtils.http(getServer() + path)
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 

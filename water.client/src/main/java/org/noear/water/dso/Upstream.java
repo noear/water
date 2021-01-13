@@ -10,5 +10,6 @@ import org.noear.water.utils.HttpUtils;
  * */
 public interface Upstream {
     default void setBackup(String server){}
+    String getServer();
     HttpUtils http(String path);
 }
