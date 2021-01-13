@@ -123,12 +123,12 @@ public class ConfigSetM {
                     //url=xxxxxx
                     //jdbcUrl=${url}
                     //
-                    String tmpV = v1.toString();
-                    if (tmpV.startsWith("${") && tmpV.endsWith("}")) {
-                        v1 = prop.getProperty(tmpV.substring(2, tmpV.length() - 1));
+                    String v2 = v1.toString();
+                    if (v2.startsWith("${") && v2.endsWith("}")) {
+                        v2 = prop.getProperty(v2.substring(2, v2.length() - 1));
                     }
 
-                    target.put(key + "." + k1, v1);
+                    target.setProperty(key + "." + k1, v2);
                 }
             });
         }
