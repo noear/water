@@ -37,14 +37,19 @@
 </dependency>
 ```
 
-* application.yml / 配置
+* application.yml / 配置说明
 ```yaml
 water:
-  host: "water2"                  #water服务地址；建议用域名
-  logger: "water_log_admin"       #默认日志记录器
-  service:
-    name: "wateradmin"            #当前服务名称
-    secretKey: "b5fZK49x71Rnn5Cl" #当前服务密钥，用于消息签名
+  host: "water"                         #WATER服务地址
+  logger: "water_log_api"               #默认的日志书写器（将Slf4f的日是志转发到这上来）
+  service:                              #当前服务配置
+    tag: "water"                        #当前服务标签（可以理解为服务组，或业务线技术代号）
+    name: "wateradmin"                  #当前服务名称
+    hostname: "api.water.io"            #当前服务主机地址（一般设为外网地址；用于订阅业务消息用）
+    #hostname: "@water/water_api_host"  #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
+    secretKey: "r6rSehL8E9fcEgeA"       #当前服务接收消息时的签名密钥
+    alarm: "18611112222"                #当前服务出问题时的告警手机号
+    config: "@water/*"                  #当前服务默认加载的配置（@开头，表示从water配置服务获取；会同步到sytem properties）
 ```
 
 #### 代码
@@ -74,7 +79,7 @@ public class DemoApp{
 
 @Controller
 class demo{
-    @Water("water_log_admin") //日志服务的功能（注解模式）
+    @Water("water_log_api") //日志服务的功能（注解模式）
     WaterLogger log;
     
     @Water("water/water")  //配置服务的功能（注解模式）
@@ -88,7 +93,7 @@ class demo{
         //日志服务：写个日志
         log.info("你好，日志服务"); //(content)
         log.error("demo","test","你好，日志服务"); //(tag,summary,content)
-        WaterClient.Log.append("water_log_admin",Level.info,"你好,世界!");//（非注解模式）
+        WaterClient.Log.append("water_log_api",Level.info,"你好,世界!");//（非注解模式）
         
         //配置服务：使用配置的数据库上下文进行查询
         var map = waterDb.table("bcf_user").limit(1).select("*").getMap();
@@ -106,7 +111,7 @@ class demo{
     }
 }
 
-//消息订阅：订阅消息并处理
+//消息订阅：订阅消息并处理（根据：topic 进行订阅）
 @WaterMessage("test.order.end")
 public class msg_updatecache implements MessageHandler {
     @Override
@@ -115,8 +120,8 @@ public class msg_updatecache implements MessageHandler {
     }
 }
 
-//配置订阅：关注配置的实时更新
-@WaterConfig("test")
+//配置订阅：关注配置的实时更新（根据：tag 进行订阅）
+@WaterConfig("water")
 public class TestConfigHandler implements ConfigHandler {
     @Override
     public void handler(ConfigSetM cfgSet) {
