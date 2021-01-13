@@ -118,17 +118,17 @@ public class ConfigSetM {
             PropertiesM prop = val.getProp();
             prop.forEach((k1, v1) -> {
                 if (v1 != null) {
-                    //支持块内的宏模式::by noear, 2021.01.13
+                    //Support for in-block macro definitions::by noear, 2021.01.13
                     //
                     //url=xxxxxx
                     //jdbcUrl=${url}
                     //
-                    String v2 = v1.toString();
-                    if (v2.startsWith("${") && v2.endsWith("}")) {
-                        v2 = prop.getProperty(v2.substring(2, v2.length() - 1));
+                    String tmpV = v1.toString();
+                    if (tmpV.startsWith("${") && tmpV.endsWith("}")) {
+                        v1 = prop.getProperty(tmpV.substring(2, tmpV.length() - 1));
                     }
 
-                    target.setProperty(key + "." + k1, v2);
+                    target.put(key + "." + k1, v1);
                 }
             });
         }
