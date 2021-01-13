@@ -89,16 +89,16 @@ public class XPluginImp implements Plugin {
             }
         });
 
-        //尝试加载消息订阅
+        //尝试加载消息订阅提交
         Aop.context().beanOnloaded(() -> {
             if (WaterAdapter.global() != null) {
-                Aop.context().beanForeach((k, v) -> {
-                    if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
-                        String topic = k.split(":")[1];
-
-                        _router.put(topic, v.raw());
-                    }
-                });
+//                Aop.context().beanForeach((k, v) -> {  //交由：WaterMessage 处理了
+//                    if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
+//                        String topic = k.split(":")[1];
+//
+//                        _router.put(topic, v.raw());
+//                    }
+//                });
 
                 if (_router.size() > 0) {
                     WaterAdapter.global().router().putAll(_router);
