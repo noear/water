@@ -69,7 +69,7 @@ public class DemoApp{
               return;
           }
   
-          String node = XWaterAdapter.global().localHost();
+          String node = WaterAdapter.global().localHost();
           long times = timecount.stop().milliseconds();
   
           WaterClient.Track.track("water-demo", "path", c.path(), times, node);
@@ -107,7 +107,7 @@ class demo{
 
         //Rpc发现服务：调用Rpc接口
         AppModel app = rock.getAppById(12);
-        XWaterUpstream.xclient(RockRpc.class).getAppById(12); //非注解模式
+        WaterUpstream.xclient(RockRpc.class).getAppById(12); //非注解模式
     }
 }
 
