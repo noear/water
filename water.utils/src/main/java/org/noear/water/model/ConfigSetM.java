@@ -45,7 +45,7 @@ public class ConfigSetM {
 
     /**
      * 加载配置数据
-     * */
+     */
     public void load(ONode node) {
         int code = node.get("code").getInt();
 
@@ -67,7 +67,7 @@ public class ConfigSetM {
 
     /**
      * 获取一个Properties集合
-     * */
+     */
     public Properties getPropSet() {
         if (_propSet == null) {
             _propSet = new Properties();
@@ -115,9 +115,19 @@ public class ConfigSetM {
         if (val.value.indexOf("=") < 0) {
             target.setProperty(key, val.value);
         } else {
-            val.getProp().forEach((k1, v1) -> {
+            PropertiesM prop = val.getProp();
+            prop.forEach((k1, v1) -> {
                 if (v1 != null) {
-                    target.setProperty(key + "." + k1, v1.toString());
+                    //支持块内的宏模式::by noear, 2021.01.13
+                    //url=xxxxxx
+                    //jdbcUrl=${url}
+                    //
+                    String v2 = v1.toString();
+                    if (v2.startsWith("${") && v2.endsWith("}")) {
+                        v2 = prop.getProperty(v2.substring(2, v2.length() - 1));
+                    }
+
+                    target.setProperty(key + "." + k1, v2);
                 }
             });
         }
