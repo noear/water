@@ -25,10 +25,10 @@
             <version>${solon.ver}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.noear</groupId>-->
-<!--            <artifactId>solon.extend.sessionstate.redis</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.extend.sessionstate.redis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
