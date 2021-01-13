@@ -23,16 +23,6 @@
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
             <version>${solon.ver}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.noear</groupId>
-                    <artifactId>solon.boot.jlhttp</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon.boot.smarthttp</artifactId>
         </dependency>
 
 <!--        <dependency>-->
