@@ -1,11 +1,11 @@
 package org.noear.water.utils;
 
-import org.noear.water.utils.ext.Act1;
-import org.noear.water.utils.ext.Fun1;
 import redis.clients.jedis.*;
 import redis.clients.jedis.params.SetParams;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Redis 使用类
@@ -102,22 +102,22 @@ import java.util.*;
         return new RedisUsing(jx);
     }
 
-    public void open0(Act1<RedisUsing> using){
+    public void open0(Consumer<RedisUsing> using){
         RedisUsing ru = doOpen();
 
         try {
-            using.run(ru);
+            using.accept(ru);
         }finally {
             ru.close();
         }
     }
 
-    public <T> T open1(Fun1<RedisUsing,T> using){
+    public <T> T open1(Function<RedisUsing,T> using){
         RedisUsing ru = doOpen();
 
         T temp;
         try {
-            temp = using.run(ru);
+            temp = using.apply(ru);
         }finally {
             ru.close();
         }
