@@ -259,12 +259,12 @@ public class WaterUpstream implements Upstream, LoadBalance {
         NamiClient c_meta = clz.getAnnotation(NamiClient.class);
 
         if (c_meta == null) {
-            throw new RuntimeException("No xclient annotation");
+            throw new RuntimeException("No @NamiClient annotation");
         }
 
         String c_sev = c_meta.value();
         if (TextUtils.isEmpty(c_sev)) {
-            throw new RuntimeException("XClient no name");
+            throw new RuntimeException("NamiClient no name");
         }
 
         //支持 rockrpc:/rpc 模式
