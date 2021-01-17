@@ -1,7 +1,6 @@
 package org.noear.water.utils;
 
 import org.noear.solon.core.handle.Context;
-import org.noear.water.utils.TextUtils;
 
 /**
  * 用户IP获取工具
