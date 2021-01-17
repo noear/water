@@ -1,43 +1,27 @@
 package org.noear.water.utils;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.water.model.PropertiesM;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.StringReader;
 import java.util.Properties;
 
-/**
- * @see org.noear.water.utils.ConfigUtilsEx
- * */
 public class ConfigUtils {
     public static ConfigUtils global = new ConfigUtils();
 
-    static {
-        String loaderEx = "org.noear.water.utils.ConfigUtilsEx";
-
-        try {
-            Class<?> clz = Class.forName(loaderEx);
-            if (clz != null) {
-                Object tmp = clz.newInstance();
-                global = (ConfigUtils) tmp;
-            }
-        } catch (Exception ex) {
-            System.out.println("Not found: " + loaderEx);
-        }
-    }
-
     public PropertiesM getProp(String text) {
-        try {
-            PropertiesM m = new PropertiesM();
-            m.load(new StringReader(text));
+        PropertiesM prop = new PropertiesM();
+        Properties tmp = Utils.buildProperties(text);
 
-            buildPropOfMacro(m);
-
-            return m;
-        }catch (Exception ex){
-            throw new RuntimeException(ex);
+        if (tmp != null) {
+            prop.putAll(tmp);
         }
+
+        buildPropOfMacro(prop);
+
+        return prop;
     }
 
     protected void buildPropOfMacro(PropertiesM prop) {
