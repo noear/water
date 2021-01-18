@@ -1,6 +1,7 @@
 package org.slf4j.impl;
 
 import org.noear.water.log.Level;
+import org.noear.water.log.Slf4jWaterWriter;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 

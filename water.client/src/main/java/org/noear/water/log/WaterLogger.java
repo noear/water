@@ -5,7 +5,6 @@ import org.noear.water.WaterSetting;
 import org.noear.water.dso.LogPipeline;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
-import org.slf4j.impl.Slf4jWaterWriter;
 
 /**
  * Water 日志器

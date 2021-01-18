@@ -1,4 +1,4 @@
-package org.slf4j.impl;
+package org.noear.water.log;
 
 import org.noear.water.log.Level;
 
