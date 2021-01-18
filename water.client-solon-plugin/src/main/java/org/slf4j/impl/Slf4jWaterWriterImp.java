@@ -1,21 +1,18 @@
 package org.slf4j.impl;
 
 import org.noear.water.WaterSetting;
+import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 
-public class Slf4jWaterWriterImp extends WaterLogger {
+public class Slf4jWaterWriterImp implements Slf4jWaterWriter {
+    WaterLogger logger;
 
     public Slf4jWaterWriterImp() {
-        super((String) null);
+        logger = new WaterLogger(WaterSetting.water_logger_def());
     }
 
     @Override
-    public String getName() {
-        return WaterSetting.water_logger_def();
-    }
-
-    @Override
-    public void setName(String name) {
-        //不许改
+    public void write(String name, Level level, String content) {
+        logger.slf4jWrite(level, name, content);
     }
 }

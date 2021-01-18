@@ -12,7 +12,7 @@ import org.noear.water.utils.TextUtils;
  * @author noear
  * @since 2.0
  * */
-public class WaterLogger implements Logger, Slf4jWaterWriter {
+public class WaterLogger implements Logger {
     public static WaterLogger get(String name) {
         return new WaterLogger(name);
     }
@@ -31,7 +31,8 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     public static void setGzip(boolean gzip) {
         WaterLogger.gzip = gzip;
     }
-    public static boolean isGzip(){
+
+    public static boolean isGzip() {
         return gzip;
     }
 
@@ -42,7 +43,6 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     public static void setPacketSize(int packetSize) {
         LogPipeline.singleton().setPacketSize(packetSize);
     }
-
 
 
     private String _name;
@@ -326,10 +326,9 @@ public class WaterLogger implements Logger, Slf4jWaterWriter {
     /**
      * for Slf4jWaterWriter
      */
-    @Override
-    public void write(String name, Level level, String content) {
+    public void slf4jWrite(Level level, String tag, String content) {
         //slf4 的 name ，做为 tag1 用
         //
-        appendDo(level, "slf4j", name, null, null, null, content);
+        appendDo(level, "slf4j", tag, null, null, null, content);
     }
 }
