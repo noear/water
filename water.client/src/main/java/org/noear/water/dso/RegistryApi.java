@@ -2,10 +2,13 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
+import org.noear.water.model.ConfigSetM;
 import org.noear.water.model.DiscoverM;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 注册服务（使用 CallCfgUtil）
@@ -14,6 +17,7 @@ import java.util.Map;
  * @since 2.0
  * */
 public class RegistryApi {
+    private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();
 
     /**
      * 注册（用于对接外部框架）
@@ -134,6 +138,7 @@ public class RegistryApi {
                                 n.get("weight").getInt());
                     }
                 }
+                noticeTry(service, cfg);
                 return cfg;
             } else {
                 return null;
@@ -141,5 +146,28 @@ public class RegistryApi {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private void noticeTry(String service, DiscoverM discover){
+        Set<DiscoverHandler> tmp = _event.get(service);
+
+        if (tmp != null) {
+            for (DiscoverHandler r : tmp) {
+                r.handler(discover);
+            }
+        }
+    }
+
+    /**
+     * 订阅配置集
+     */
+    public void subscribe(String service, DiscoverHandler callback) {
+        Set<DiscoverHandler> tmp = _event.get(service);
+        if (tmp == null) {
+            tmp = new HashSet<>();
+            _event.put(service, tmp);
+        }
+
+        tmp.add(callback);
     }
 }

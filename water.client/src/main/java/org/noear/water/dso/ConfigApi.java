@@ -66,15 +66,7 @@ public class ConfigApi {
         noticeTry(tag, cfgSet);
     }
 
-    private void noticeTry(String target, ConfigSetM cfgSet){
-        Set<ConfigHandler> tmp = _event.get(target);
 
-        if (tmp != null) {
-            for (ConfigHandler r : tmp) {
-                r.handler(cfgSet);
-            }
-        }
-    }
 
 
     /**
@@ -101,6 +93,16 @@ public class ConfigApi {
         load(tag);
 
         return _cfgs.get(tag).get(key);
+    }
+
+    private void noticeTry(String target, ConfigSetM cfgSet){
+        Set<ConfigHandler> tmp = _event.get(target);
+
+        if (tmp != null) {
+            for (ConfigHandler r : tmp) {
+                r.handler(cfgSet);
+            }
+        }
     }
 
     /**
