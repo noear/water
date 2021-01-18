@@ -1,6 +1,5 @@
 package watersev.controller;
 
-import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.extend.schedule.IJob;
