@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * 注册服务（使用 CallCfgUtil）
@@ -108,6 +110,18 @@ public class RegistryApi {
      * 发现
      */
     public DiscoverM discover(String service, String consumer, String consumer_address) {
+        return load0(service, consumer ,consumer_address);
+    }
+
+    /**
+     * 发现刷新
+     * */
+    public void discoverFlush(String service, String consumer, String consumer_address) {
+        DiscoverM d1 = load0(service, consumer, consumer_address);
+        noticeTry(service, d1);
+    }
+
+    private DiscoverM load0(String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("consumer", consumer);
@@ -138,7 +152,6 @@ public class RegistryApi {
                                 n.get("weight").getInt());
                     }
                 }
-                noticeTry(service, cfg);
                 return cfg;
             } else {
                 return null;
@@ -147,6 +160,8 @@ public class RegistryApi {
             throw new RuntimeException(ex);
         }
     }
+
+
 
     private void noticeTry(String service, DiscoverM discover){
         Set<DiscoverHandler> tmp = _event.get(service);
