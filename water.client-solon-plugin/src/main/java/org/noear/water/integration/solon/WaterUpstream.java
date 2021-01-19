@@ -262,14 +262,9 @@ public class WaterUpstream implements Upstream, LoadBalance {
             throw new RuntimeException("No @NamiClient annotation");
         }
 
-        String c_sev = c_meta.value();
+        String c_sev = c_meta.name();
         if (TextUtils.isEmpty(c_sev)) {
             throw new RuntimeException("NamiClient no name");
-        }
-
-        //支持 rockrpc:/rpc 模式
-        if (c_sev.indexOf(":") > 0) {
-            c_sev = c_sev.split(":")[0];
         }
 
         LoadBalance upstream = null;
