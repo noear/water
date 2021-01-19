@@ -1,5 +1,6 @@
 package org.noear.water.integration.springboot;
 
+import org.noear.solon.extend.springboot.EnableSolon;
 import org.noear.water.annotation.Water;
 import org.noear.water.integration.solon.WaterBeanInjector;
 import org.springframework.beans.BeansException;
@@ -10,6 +11,7 @@ import org.springframework.util.ReflectionUtils;
 /**
  * @author noear 2021/1/6 created
  */
+@EnableSolon
 @Configuration
 public class AutoConfiguration extends InstantiationAwareBeanPostProcessorAdapter {
 
