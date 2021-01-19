@@ -2,7 +2,11 @@
 * 监控数据获取，改成基于协议
 * 开发项目部署功能
 * 日志器适配MangoDb、HBase、ES
+* 消息入队处理，改为重消息方案（更利于扩展派发能力）
 
+#### 2.0.10 规划::
+* 调整 water.client 及 water.client-solon-plugin
+* 尝试构建基于 solon.cloud 标准的接口：water-solon-plugin
 
 #### 2.0.9 规划::
 * 调整xcall,xclient为：http, client
