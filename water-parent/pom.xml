@@ -73,6 +73,7 @@
                 <version>${water.ver}</version>
             </dependency>
 
+
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>water.client-solon-plugin</artifactId>
@@ -414,6 +415,7 @@
         <module>../water.utils</module>
         <module>../water.protocol</module>
         <module>../water.client</module>
+        <module>../water.client.slf4j</module>
         <module>../water.client-solon-plugin</module>
         <module>../water.client-springboot-starter</module>
 

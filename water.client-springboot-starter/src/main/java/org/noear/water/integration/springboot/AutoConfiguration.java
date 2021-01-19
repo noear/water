@@ -17,17 +17,21 @@ public class AutoConfiguration extends InstantiationAwareBeanPostProcessorAdapte
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        Class<?> beanClz = bean.getClass();
+        try {
+            Class<?> beanClz = bean.getClass();
 
-        ReflectionUtils.doWithFields(beanClz, (field -> {
-            Water anno = field.getAnnotation(Water.class);
+            ReflectionUtils.doWithFields(beanClz, (field -> {
+                Water anno = field.getAnnotation(Water.class);
 
-            if (anno != null) {
-                Object val = WaterBeanInjector.instance.build(field.getType(), anno);
-                field.setAccessible(true);
-                field.set(bean, val);
-            }
-        }));
+                if (anno != null) {
+                    Object val = WaterBeanInjector.instance.build(field.getType(), anno);
+                    field.setAccessible(true);
+                    field.set(bean, val);
+                }
+            }));
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+        }
 
         return bean;
     }
