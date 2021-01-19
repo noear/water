@@ -8,11 +8,14 @@ public class Slf4jWaterWriterImp implements Slf4jWaterWriter {
     WaterLogger logger;
 
     public Slf4jWaterWriterImp() {
-        logger = new WaterLogger(WaterSetting.water_logger_def());
     }
 
     @Override
     public void write(String name, Level level, String content) {
+        if (logger == null) {
+            logger = new WaterLogger(WaterSetting.water_logger_def());
+        }
+
         logger.slf4jWrite(level, name, content);
     }
 }
