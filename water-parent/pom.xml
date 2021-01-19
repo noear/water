@@ -73,6 +73,12 @@
                 <version>${water.ver}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>water.client.slf4j</artifactId>
+                <version>${water.ver}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.noear</groupId>
