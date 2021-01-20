@@ -1,115 +1,88 @@
 package org.noear.water.utils;
 
+import org.apache.commons.lang3.CharEncoding;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class GzipUtils {
-    public static final String GZIP_ENCODE_UTF_8 = "UTF-8";
-
-    private static ByteArrayOutputStream compressDo(String str, String encoding){
-        if (str == null || str.length() == 0) {
-            return null;
-        }
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        GZIPOutputStream gzip;
+    /**
+     * 压缩GZip
+     *
+     * @return String
+     */
+    public static String gZip(String input) throws IOException {
+        byte[] bytes = null;
+        GZIPOutputStream gzip = null;
+        ByteArrayOutputStream bos = null;
         try {
-            gzip = new GZIPOutputStream(out);
-            gzip.write(str.getBytes(encoding));
+            bos = new ByteArrayOutputStream();
+            gzip = new GZIPOutputStream(bos);
+            gzip.write(input.getBytes(CharEncoding.UTF_8));
+            gzip.finish();
             gzip.close();
+            bytes = bos.toByteArray();
+            bos.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        return out;
-    }
-
-    public static byte[] compress(String str, String encoding) {
-        if(TextUtils.isEmpty(str)){
-            return null;
-        }
-
-        return compressDo(str, encoding).toByteArray();
-    }
-
-    public static byte[] compress(String str)  {
-        if(TextUtils.isEmpty(str)){
-            return null;
-        }
-
-        return compress(str, GZIP_ENCODE_UTF_8);
-    }
-
-    public static String compressToString(String str, String encoding) throws IOException{
-        if(TextUtils.isEmpty(str)){
-            return null;
-        }
-
-        return compressDo(str, encoding).toString(encoding);
-    }
-
-    public static String compressToString(String str) throws IOException {
-        if(TextUtils.isEmpty(str)){
-            return null;
-        }
-
-        return compressToString(str, GZIP_ENCODE_UTF_8);
-    }
-
-
-    private static ByteArrayOutputStream uncompressDo(byte[] bytes) {
-        if (bytes == null || bytes.length == 0) {
-            return null;
-        }
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-        try {
-            GZIPInputStream ungzip = new GZIPInputStream(in);
-            byte[] buffer = new byte[256];
-            int n;
-            while ((n = ungzip.read(buffer)) >= 0) {
-                out.write(buffer, 0, n);
+        } finally {
+            if (gzip != null) {
+                gzip.close();
             }
+
+            if (bos != null) {
+                bos.close();
+            }
+        }
+
+        return Base64Utils.encodeByte(bytes);
+    }
+
+    /**
+     * 解压GZip
+     *
+     * @return String
+     */
+    public static String unGZip(String input) throws IOException {
+        byte[] bytes;
+        String out = input;
+        GZIPInputStream gzip = null;
+        ByteArrayInputStream bis;
+        ByteArrayOutputStream bos = null;
+        try {
+            bis = new ByteArrayInputStream(Base64Utils.decodeByte(input));
+            gzip = new GZIPInputStream(bis);
+            byte[] buf = new byte[1024];
+            int num;
+            bos = new ByteArrayOutputStream();
+            while ((num = gzip.read(buf, 0, buf.length)) != -1) {
+                bos.write(buf, 0, num);
+            }
+            bytes = bos.toByteArray();
+
+            out = new String(bytes, CharEncoding.UTF_8);
+
+            gzip.close();
+            bis.close();
+            bos.flush();
+            bos.close();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+
+            if (gzip != null) {
+                gzip.close();
+            }
+
+            if (bos != null) {
+                bos.close();
+            }
         }
+
         return out;
-    }
-
-    public static byte[] uncompress(byte[] bytes) {
-        if (bytes == null) {
-            return null;
-        }
-
-        ByteArrayOutputStream tmp = uncompressDo(bytes);
-        if (tmp == null) {
-            return null;
-        } else {
-            return tmp.toByteArray();
-        }
-    }
-
-    public static String uncompressToString(byte[] bytes, String encoding) throws IOException {
-        if (bytes == null) {
-            return null;
-        }
-
-        ByteArrayOutputStream tmp = uncompressDo(bytes);
-        if (tmp == null) {
-            return null;
-        } else {
-            return tmp.toString(encoding);
-        }
-    }
-
-    public static String uncompressToString(byte[] bytes) throws IOException{
-        if(bytes == null){
-            return null;
-        }
-
-        return uncompressToString(bytes, GZIP_ENCODE_UTF_8);
     }
 }

@@ -77,6 +77,13 @@
             <artifactId>spymemcached</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-test</artifactId>
+            <version>${solon.ver}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

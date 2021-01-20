@@ -14,11 +14,11 @@ public class JsondUtils {
         entity.table = table;
         entity.data = ONode.loadObj(data);
 
-        //转码
+        //序列化
         String json = ONode.stringify(entity);
 
         //压缩
-        String gzip = GzipUtils.compressToString(json);
+        String gzip = GzipUtils.gZip(json);
 
         //加密
         return EncryptUtils.aesEncrypt(gzip, key);
@@ -29,9 +29,9 @@ public class JsondUtils {
         String gzip = EncryptUtils.aesDecrypt(jsonD, key);
 
         //解压
-        String json = GzipUtils.uncompressToString(gzip.getBytes(StandardCharsets.UTF_8));
+        String json = GzipUtils.unGZip(gzip);
 
-        //转码
+        //反序列化
         return ONode.deserialize(json, JsondEntity.class);
     }
 }
