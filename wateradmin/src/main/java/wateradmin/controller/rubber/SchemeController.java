@@ -10,7 +10,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsonxUtils;
+import org.noear.water.utils.JsondUtils;
 import org.noear.water.utils.TextUtils;
 
 import org.noear.solon.annotation.Mapping;
@@ -535,9 +535,9 @@ public class SchemeController extends BaseController {
         }
 
         String json = ONode.stringify(list);
-        String jsonX = JsonxUtils.encode(json);
+        String jsonX = JsondUtils.encode(json);
 
-        String filename2 = "water_raasfile_scheme_" + tag + "_" + Datetime.Now().getDate() + ".jsonx";
+        String filename2 = "water_raasfile_scheme_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
         ctx.output(jsonX);
@@ -552,7 +552,7 @@ public class SchemeController extends BaseController {
         }
 
         String jsonX = IOUtils.toString(file.content);
-        String json = JsonxUtils.decode(jsonX);
+        String json = JsondUtils.decode(jsonX);
 
         List<SchemeSerializeModel> list = ONode.deserialize(json, new TypeRef<List<SchemeSerializeModel>>() {
         }.getClass());

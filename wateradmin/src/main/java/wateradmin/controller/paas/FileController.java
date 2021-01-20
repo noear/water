@@ -286,9 +286,9 @@ public class FileController extends BaseController {
     public void exportDo(Context ctx, String type, String tag, String ids) throws Exception {
         List<PaasFileModel> list = DbPaaSApi.getFilesByIds(PaasFileType.valueOf(type), ids);
         String json = ONode.stringify(list);
-        String jsonX = JsonxUtils.encode(json);
+        String jsonX = JsondUtils.encode(json);
 
-        String filename2 = "water_paasfile_" + type +"_" + tag + "_" + Datetime.Now().getDate() + ".jsonx";
+        String filename2 = "water_paasfile_" + type +"_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
         ctx.output(jsonX);
@@ -303,7 +303,7 @@ public class FileController extends BaseController {
         }
 
         String jsonX = IOUtils.toString(file.content);
-        String json = JsonxUtils.decode(jsonX);
+        String json = JsondUtils.decode(jsonX);
 
         List<PaasFileModel> list = ONode.deserialize(json, new TypeRef<List<PaasFileModel>>() {
         }.getClass());

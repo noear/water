@@ -7,7 +7,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsonxUtils;
+import org.noear.water.utils.JsondUtils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
@@ -113,9 +113,9 @@ public class PropController extends BaseController {
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<ConfigModel> list = DbWaterCfgApi.getConfigByIds(ids);
         String json = ONode.stringify(list);
-        String jsonX = JsonxUtils.encode(json);
+        String jsonX = JsondUtils.encode(json);
 
-        String filename2 = "water_config_" + tag + "_" + Datetime.Now().getDate() + ".jsonx";
+        String filename2 = "water_config_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
         ctx.output(jsonX);
@@ -130,7 +130,7 @@ public class PropController extends BaseController {
         }
 
         String jsonX = IOUtils.toString(file.content);
-        String json = JsonxUtils.decode(jsonX);
+        String json = JsondUtils.decode(jsonX);
 
         List<ConfigModel> list = ONode.deserialize(json, new TypeRef<List<ConfigModel>>() {
         }.getClass());

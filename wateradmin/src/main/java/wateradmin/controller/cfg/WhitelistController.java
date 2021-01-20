@@ -122,9 +122,9 @@ public class WhitelistController extends BaseController {
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByIds(ids);
         String json = ONode.stringify(list);
-        String jsonX = JsonxUtils.encode(json);
+        String jsonX = JsondUtils.encode(json);
 
-        String filename2 = "water_whitelist_" + tag + "_" + Datetime.Now().getDate() + ".jsonx";
+        String filename2 = "water_whitelist_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
         ctx.output(jsonX);
@@ -139,7 +139,7 @@ public class WhitelistController extends BaseController {
         }
 
         String jsonX = IOUtils.toString(file.content);
-        String json = JsonxUtils.decode(jsonX);
+        String json = JsondUtils.decode(jsonX);
 
         List<WhitelistModel> list = ONode.deserialize(json, new TypeRef<List<WhitelistModel>>() {
         }.getClass());

@@ -71,7 +71,7 @@
         </form>
         <div>
             <a class="w50"></a><file>
-                <label><input id="imp_file" type="file" accept=".jsonx"/><a class="btn minor w80">导入</a></label>
+                <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
             </file>
 
             <button type='button' class="minor w80 mar10-l" onclick="exp()" >导出</button>
