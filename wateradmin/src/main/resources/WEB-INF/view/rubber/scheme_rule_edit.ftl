@@ -14,7 +14,7 @@
         }
 
         div[name='select'] >select:nth-child(odd) {
-            width: 304px;
+            width: 300px;
         }
 
         div[name='select'] >input[type='text'],datalist {
