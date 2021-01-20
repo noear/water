@@ -7,7 +7,7 @@ public class TaskUtils {
     public static void run(ITask task) {
         new Thread(() -> {
             doRun(task);
-        }).start();
+        },"Simple task").start();
     }
 
     public static void run(long interval, Act0Ex runnable) {
