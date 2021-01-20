@@ -285,13 +285,14 @@ public class FileController extends BaseController {
     @Mapping("{type}/ajax/export")
     public void exportDo(Context ctx, String type, String tag, String ids) throws Exception {
         List<PaasFileModel> list = DbPaaSApi.getFilesByIds(PaasFileType.valueOf(type), ids);
-        String json = ONode.stringify(list);
-        String jsonX = JsondUtils.encode(json);
+
+        String jsonD = JsondUtils.encode("paas_file", list);
 
         String filename2 = "water_paasfile_" + type +"_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
-        ctx.output(jsonX);
+
+        ctx.output(jsonD);
     }
 
 
@@ -302,11 +303,14 @@ public class FileController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonX = IOUtils.toString(file.content);
-        String json = JsondUtils.decode(jsonX);
+        String jsonD = IOUtils.toString(file.content);
+        JsondEntity entity = JsondUtils.decode(jsonD);
 
-        List<PaasFileModel> list = ONode.deserialize(json, new TypeRef<List<PaasFileModel>>() {
-        }.getClass());
+        if(entity == null || "paas_file".equals(entity.table) == false){
+            return viewModel.code(0, "数据不对！");
+        }
+
+        List<PaasFileModel> list = entity.data.toObjectList(PaasFileModel.class);
 
         PaasFileType fileType = PaasFileType.valueOf(type);
 

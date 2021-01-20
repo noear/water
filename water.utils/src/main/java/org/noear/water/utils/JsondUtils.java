@@ -9,7 +9,7 @@ import java.util.List;
 public class JsondUtils {
     private static final String key = "j$6gxA^KJgBiOgco";
 
-    public static String encode(String table, List data) throws IOException {
+    public static String encode(String table, Object data) throws IOException {
         JsondEntity entity = new JsondEntity();
         entity.table = table;
         entity.data = ONode.loadObj(data);
