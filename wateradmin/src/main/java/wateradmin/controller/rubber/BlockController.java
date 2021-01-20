@@ -5,12 +5,9 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsondUtils;
+import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
-import org.noear.water.utils.TextUtils;
 
 
 import org.noear.solon.annotation.Controller;
@@ -184,13 +181,12 @@ public class BlockController extends BaseController {
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<BlockModel> list = DbRubberApi.getBlockByIds(ids);
 
-        String json = ONode.stringify(list);
-        String jsonX = JsondUtils.encode(json);
+        String jsonD = JsondUtils.encode("rubber_block", list);
 
         String filename2 = "water_raasfile_block_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
-        ctx.output(jsonX);
+        ctx.output(jsonD);
     }
 
 
@@ -201,11 +197,14 @@ public class BlockController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonX = IOUtils.toString(file.content);
-        String json = JsondUtils.decode(jsonX);
+        String jsonD = IOUtils.toString(file.content);
+        JsondEntity entity = JsondUtils.decode(jsonD);
 
-        List<BlockModel> list = ONode.deserialize(json, new TypeRef<List<BlockModel>>() {
-        }.getClass());
+        if(entity == null || "rubber_block".equals(entity.table) == false){
+            return viewModel.code(0, "数据不对！");
+        }
+
+        List<BlockModel> list = entity.data.toObjectList(BlockModel.class);
 
 
         for (BlockModel vm : list) {

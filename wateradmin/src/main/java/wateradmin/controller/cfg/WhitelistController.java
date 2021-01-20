@@ -121,13 +121,14 @@ public class WhitelistController extends BaseController {
     @Mapping("ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByIds(ids);
-        String json = ONode.stringify(list);
-        String jsonX = JsondUtils.encode(json);
+
+        String jsonD = JsondUtils.encode("water_cfg_whitelist", list);
 
         String filename2 = "water_whitelist_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
-        ctx.output(jsonX);
+
+        ctx.output(jsonD);
     }
 
 
@@ -138,11 +139,14 @@ public class WhitelistController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonX = IOUtils.toString(file.content);
-        String json = JsondUtils.decode(jsonX);
+        String jsonD = IOUtils.toString(file.content);
+        JsondEntity entity = JsondUtils.decode(jsonD);
 
-        List<WhitelistModel> list = ONode.deserialize(json, new TypeRef<List<WhitelistModel>>() {
-        }.getClass());
+        if(entity == null || "water_cfg_whitelist".equals(entity.table) == false){
+            return viewModel.code(0, "数据不对！");
+        }
+
+        List<WhitelistModel> list = entity.data.toObjectList(WhitelistModel.class);
 
         for (WhitelistModel m : list) {
             DbWaterCfgApi.impWhitelist(tag, m);

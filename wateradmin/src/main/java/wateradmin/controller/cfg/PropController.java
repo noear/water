@@ -7,6 +7,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IOUtils;
+import org.noear.water.utils.JsondEntity;
 import org.noear.water.utils.JsondUtils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -112,13 +113,13 @@ public class PropController extends BaseController {
     @Mapping("ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<ConfigModel> list = DbWaterCfgApi.getConfigByIds(ids);
-        String json = ONode.stringify(list);
-        String jsonX = JsondUtils.encode(json);
+
+        String jsonD = JsondUtils.encode("water_cfg_properties", list);
 
         String filename2 = "water_config_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
-        ctx.output(jsonX);
+        ctx.output(jsonD);
     }
 
 
@@ -129,11 +130,14 @@ public class PropController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonX = IOUtils.toString(file.content);
-        String json = JsondUtils.decode(jsonX);
+        String jsonD = IOUtils.toString(file.content);
+        JsondEntity entity = JsondUtils.decode(jsonD);
 
-        List<ConfigModel> list = ONode.deserialize(json, new TypeRef<List<ConfigModel>>() {
-        }.getClass());
+        if(entity == null || "water_cfg_properties".equals(entity.table) == false){
+            return viewModel.code(0, "数据不对！");
+        }
+
+        List<ConfigModel> list = entity.data.toObjectList(ConfigModel.class);
 
         for (ConfigModel m : list) {
             DbWaterCfgApi.impConfig(tag, m);

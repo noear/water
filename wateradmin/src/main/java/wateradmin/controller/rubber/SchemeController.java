@@ -8,10 +8,7 @@ import org.noear.snack.core.TypeRef;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsondUtils;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 
 import org.noear.solon.annotation.Mapping;
 
@@ -524,7 +521,7 @@ public class SchemeController extends BaseController {
         List<SchemeModel> tmpList = DbRubberApi.getSchemeByIds(ids);
 
         List<SchemeSerializeModel> list = new ArrayList<>(tmpList.size());
-        for(SchemeModel m1 : tmpList){
+        for (SchemeModel m1 : tmpList) {
             SchemeSerializeModel vm = new SchemeSerializeModel();
             vm.model = m1;
             vm.node_design = DbRubberApi.getSchemeNodeDesign(m1.scheme_id);
@@ -534,13 +531,12 @@ public class SchemeController extends BaseController {
             list.add(vm);
         }
 
-        String json = ONode.stringify(list);
-        String jsonX = JsondUtils.encode(json);
+        String jsonD = JsondUtils.encode("rubber_scheme", list);
 
         String filename2 = "water_raasfile_scheme_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
-        ctx.output(jsonX);
+        ctx.output(jsonD);
     }
 
 
@@ -551,11 +547,14 @@ public class SchemeController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonX = IOUtils.toString(file.content);
-        String json = JsondUtils.decode(jsonX);
+        String jsonD = IOUtils.toString(file.content);
+        JsondEntity entity = JsondUtils.decode(jsonD);
 
-        List<SchemeSerializeModel> list = ONode.deserialize(json, new TypeRef<List<SchemeSerializeModel>>() {
-        }.getClass());
+        if(entity == null || "rubber_scheme".equals(entity.table) == false){
+            return viewModel.code(0, "数据不对！");
+        }
+
+        List<SchemeSerializeModel> list = entity.data.toObjectList(SchemeSerializeModel.class);
 
 
         for (SchemeSerializeModel vm : list) {
