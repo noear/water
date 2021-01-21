@@ -34,7 +34,7 @@ public class CMD_log_add2 extends UapiBase {
         String list_json = null;
 
         if (contentType != null) {
-            if (contentType.startsWith(WW.mime_gzip)) {
+            if (contentType.startsWith(WW.mime_glog)) {
                 list_json = GzipUtils.unGZip(ctx.body());
             }
 

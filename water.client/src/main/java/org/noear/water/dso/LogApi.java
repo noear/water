@@ -203,14 +203,12 @@ public class LogApi {
 
         try {
             if (WaterLogger.isGzip()) {
-                CallSevUtil.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_gzip);
+                CallSevUtil.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_glog);
             } else {
                 Map<String,String> map = new HashMap<>();
                 map.put("list",json);
 
                 CallSevUtil.post("/log/add2/",map);
-
-                //CallSevUtil.postBody("/log/add2/", json, WW.mime_json);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
