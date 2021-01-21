@@ -22,7 +22,7 @@ public class WaterLogger implements Logger {
     }
 
     private static volatile Level level = Level.TRACE;
-    private static volatile boolean gzip = false;
+    private static volatile boolean gzip = true;
 
     public static void setLevel(Level level) {
         WaterLogger.level = level;
