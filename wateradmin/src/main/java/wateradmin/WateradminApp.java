@@ -1,5 +1,6 @@
 package wateradmin;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
@@ -34,8 +35,11 @@ public class WateradminApp {
         }).onError((ex) -> {
             Context ctx = Context.current();
 
-            if (ctx != null) {
-                logger.error(ctx.path(), ex);
+            if (ctx == null) {
+                logger.error("global", "", ex);
+            } else {
+                String summary = ONode.stringify(ctx.paramMap());
+                logger.error(ctx.path(), summary, ex);
             }
         });
     }
