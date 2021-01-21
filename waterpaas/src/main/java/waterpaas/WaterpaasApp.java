@@ -45,6 +45,7 @@ public class WaterpaasApp {
                 c.attrSet("timecount", new Timecount().start());
             }
         });
+
         app.after("**", MethodType.HTTP, (c) -> {
             Timecount timecount = c.attr("timecount", null);
 
