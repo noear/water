@@ -46,8 +46,6 @@ public class LogUtils {
             }
 
             logger.info(tag, null, null, _from, summary, args.toJson());
-            //ProtocolHub.logStorer.write("", Level.INFO, tag, null, null, _from, summary, args.toJson(), Config.localHost);
-            //DbWaterLogApi.addLog(logger_api, tag, ip, "", label, args.toJson());
         } catch (Exception ee) {
             ee.printStackTrace();
         }
@@ -69,7 +67,6 @@ public class LogUtils {
             }
 
             logger.warn(tag, null, tag2, _from, label.toJson(), content);
-            //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
@@ -86,7 +83,6 @@ public class LogUtils {
             Map<String, String> pnames = ctx.paramMap();
             String tag = ctx.path();
 
-            String content = getFullStackTrace(ex);
             ONode label = new ONode();
 
             if (pnames != null) {
@@ -95,29 +91,25 @@ public class LogUtils {
                 });
             }
 
-            logger.error(tag, null, null, _from, label.toJson(), content);
-            //DbWaterLogApi.addLog(logger_error, tag, "", "", label.toJson(), content);
+            logger.error(tag, null, null, _from, label.toJson(), ex);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
     }
 
-    public static void error(String tag, String tag1, String summary, Exception ex) {
+    public static void error(String tag, String tag1, String summary, Throwable ex) {
         try {
             String _from = FromUtils.getFromName(Context.current());
 
-            String content = getFullStackTrace(ex);
-
-            logger.error(tag, tag1, null, _from, summary, content);
-            //DbWaterLogApi.addLog(logger_error, tag, tag1, "", label, content);
+            logger.error(tag, tag1, null, _from, summary, ex);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
     }
 
-    public static String getFullStackTrace(Throwable e) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        e.printStackTrace(new PrintStream(baos));
-        return baos.toString();
-    }
+//    public static String getFullStackTrace(Throwable e) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        e.printStackTrace(new PrintStream(baos));
+//        return baos.toString();
+//    }
 }

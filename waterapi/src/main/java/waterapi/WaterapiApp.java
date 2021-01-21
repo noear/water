@@ -2,6 +2,7 @@ package waterapi;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.NvMap;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.extend.staticfiles.StaticFiles;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.HeiheiImp;
@@ -10,6 +11,7 @@ import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import org.noear.water.track.TrackBuffer;
 import waterapi.dso.IDUtils;
+import waterapi.dso.LogUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.wrap.LogSourceDef;
@@ -47,6 +49,13 @@ public class WaterapiApp {
 				ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 
 				TrackBuffer.singleton().bind(Config.rd_track);
+			}).onError(err -> {
+				Context ctx = Context.current();
+				if (ctx == null) {
+					LogUtils.error("global", "", "", err);
+				} else {
+					LogUtils.error(ctx, err);
+				}
 			});
 		}
 	}
