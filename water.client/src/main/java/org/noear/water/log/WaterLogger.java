@@ -299,7 +299,6 @@ public class WaterLogger implements Logger {
         LogEvent log = new LogEvent();
 
         log.logger = getName();
-        log.trace_id = WaterClient.waterTraceId();
         log.level = level.code;
         log.tag = tag;
         log.tag1 = tag1;
@@ -307,6 +306,8 @@ public class WaterLogger implements Logger {
         log.tag3 = tag3;
         log.summary = summary;
         log.content = content;
+
+        log.trace_id = WaterClient.waterTraceId();
         log.from = WaterClient.localServiceHost();
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();

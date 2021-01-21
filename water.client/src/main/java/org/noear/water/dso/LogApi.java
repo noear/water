@@ -8,6 +8,7 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -118,49 +119,25 @@ public class LogApi {
             return;
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("logger", logger);
+        Datetime datetime = Datetime.Now();
 
-        if(TextUtils.isNotEmpty(trace_id)) {
-            params.put("trace_id", trace_id);
-        }
+        LogEvent log = new LogEvent();
 
-        params.put("level", String.valueOf(level.code));
+        log.logger = logger;
+        log.level = level.code;
+        log.tag = tag;
+        log.tag1 = tag1;
+        log.tag2 = tag2;
+        log.tag3 = tag3;
+        log.summary = summary;
+        log.content = content;
 
-        if (tag != null) {
-            params.put("tag", tag);
-        }
+        log.trace_id = trace_id;
+        log.from = WaterClient.localServiceHost();
+        log.log_date = datetime.getDate();
+        log.log_fulltime = datetime.getFulltime();
 
-        if (tag1 != null) {
-            params.put("tag1", tag1);
-        }
-
-        if (tag2 != null) {
-            params.put("tag2", tag2);
-        }
-
-        if (tag3 != null) {
-            params.put("tag3", tag3);
-        }
-
-        if (summary != null) {
-            params.put("summary", summary);
-        }
-
-        if (WaterClient.localServiceHost() != null) {
-            params.put("from", WaterClient.localServiceHost());
-        }
-
-        String content_str = content_str(content);
-        if (content_str != null) {
-            params.put("content", content_str);
-        }
-
-        try {
-            CallSevUtil.post("/log/add/", params);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        LogPipeline.singleton().add(log);
     }
 
     private String content_str(Object content) {
