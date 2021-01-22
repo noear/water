@@ -75,7 +75,6 @@ public final class WaterClient {
      * */
     public final static TrackApi Track = new TrackApi();
 
-
     /**
      * 通知接口
      * */

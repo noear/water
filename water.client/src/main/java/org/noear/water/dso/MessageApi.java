@@ -298,14 +298,14 @@ public class MessageApi {
         return sgin_slf.equals(msg.sgin);
     }
 
-    public String receiveMessage(Fun1<String, String> paramS, String service_secretKey, Fun1Ex<MessageM, Boolean> consumer) throws Throwable {
+    public String receiveMessage(Fun1<String, String> paramS, String service_secretKey, MessageHandler consumer) throws Throwable {
         MessageM msg = new MessageM(paramS);
 
         if (WaterClient.Message.checkMessage(msg, service_secretKey) == false) {
             return "CHECK ERROR";
         }
 
-        boolean isOk = consumer.run(msg);
+        boolean isOk = consumer.handler(msg);
 
         return isOk ? "OK" : "ERROR";
     }
