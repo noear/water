@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigSetM;
 import org.noear.water.model.DiscoverM;
@@ -20,8 +21,8 @@ import java.util.function.Consumer;
  * */
 public class RegistryApi {
     protected final CallUtils callUtils;
-    public RegistryApi(String server){
-        callUtils = new CallUtils(server);
+    public RegistryApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getRegistryApiUrl());
     }
 
     private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();

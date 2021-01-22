@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.*;
@@ -18,8 +19,8 @@ import java.util.Map;
  * */
 public class MessageApi {
     protected final CallUtils callUtils;
-    public MessageApi(String server){
-        callUtils = new CallUtils(server);
+    public MessageApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getMessageApiUrl());
     }
 
 

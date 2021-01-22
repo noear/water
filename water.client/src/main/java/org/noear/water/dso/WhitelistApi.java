@@ -1,5 +1,6 @@
 package org.noear.water.dso;
 
+import org.noear.water.WaterAddress;
 import org.noear.water.WaterSetting;
 
 import java.io.IOException;
@@ -14,8 +15,8 @@ import java.util.Map;
  * */
 public class WhitelistApi {
     protected final CallUtils callUtils;
-    public WhitelistApi(String server){
-        callUtils = new CallUtils(server);
+    public WhitelistApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getWhitelistApiUrl());
     }
 
     /**

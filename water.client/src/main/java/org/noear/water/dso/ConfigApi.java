@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterAddress;
 import org.noear.water.model.ConfigM;
 import org.noear.water.model.ConfigSetM;
 
@@ -19,8 +20,8 @@ public class ConfigApi {
     private Map<String, Set<ConfigHandler>> _event = new HashMap<>();
 
     protected final CallUtils callUtils;
-    public ConfigApi(String server){
-        callUtils = new CallUtils(server);
+    public ConfigApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getConfigApiUrl());
     }
 
     /**

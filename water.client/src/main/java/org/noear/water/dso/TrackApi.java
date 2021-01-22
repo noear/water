@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.snack.ONode;
+import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.track.TrackBuffer;
@@ -19,8 +20,8 @@ import java.util.Map;
  * */
 public class TrackApi {
     protected final CallUtils callUtils;
-    public TrackApi(String server){
-        callUtils = new CallUtils(server);
+    public TrackApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getTrackApiUrl());
     }
 
     //db:5

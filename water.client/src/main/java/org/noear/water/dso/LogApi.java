@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WW;
+import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
@@ -25,8 +26,8 @@ public class LogApi {
     private Map<String, Logger> loggerMap = new ConcurrentHashMap<>();
 
     protected final CallUtils callUtils;
-    public LogApi(String server){
-        callUtils = new CallUtils(server);
+    public LogApi(){
+        callUtils = new CallUtils(WaterAddress.getInstance().getLogApiUrl());
     }
 
     public Logger logger(String logger) {
