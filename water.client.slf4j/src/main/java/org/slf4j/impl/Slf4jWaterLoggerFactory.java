@@ -1,6 +1,8 @@
 package org.slf4j.impl;
 
+import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
+import org.noear.water.log.WaterLogger;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
@@ -20,10 +22,6 @@ public enum Slf4jWaterLoggerFactory implements ILoggerFactory {
      */
     private volatile Level level = Level.WARN;
 
-    /**
-     * 书写器
-     * */
-    private volatile Slf4jWaterWriter writer = new Slf4jWaterWriterImp();
 
     Slf4jWaterLoggerFactory() {
 
@@ -42,15 +40,13 @@ public enum Slf4jWaterLoggerFactory implements ILoggerFactory {
         return this.level;
     }
 
-    public void setWriter(Slf4jWaterWriter writer) {
-        this.writer = writer;
-    }
+    WaterLogger logger;
 
     public void write(String name, Level level, String content) {
-        if (writer == null) {
-            return;
+        if (logger == null) {
+            logger = new WaterLogger(WaterSetting.water_logger_def());
         }
 
-        writer.write(name, level, content);
+        logger.slf4jWrite(level, name, content);
     }
 }
