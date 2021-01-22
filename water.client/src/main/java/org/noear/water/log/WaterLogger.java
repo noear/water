@@ -1,5 +1,6 @@
 package org.noear.water.log;
 
+import org.noear.snack.core.exts.ClassWrap;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.dso.LogPipeline;
@@ -46,30 +47,23 @@ public class WaterLogger implements Logger {
 
 
     private String _name;
-    private String _tag;
+    private Class<?> clz;
 
     public WaterLogger(String name) {
         _name = name;
     }
-
-    public WaterLogger(String name, String tag) {
-        this(name);
-        _tag = tag;
-    }
-
 
     public WaterLogger() {
         this(WaterSetting.water_logger_def());
     }
 
     public WaterLogger(Class<?> clz) {
-        this(WaterSetting.water_logger_def());
-        _tag = clz.getSimpleName();
+        this(WaterSetting.water_logger_def(), clz);
     }
 
     public WaterLogger(String name, Class<?> clz) {
         this(name);
-        _tag = clz.getSimpleName();
+        this.clz = clz;
     }
 
 
@@ -91,12 +85,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void trace(Object content) {
-        trace(_tag, null, null, null, null, content);
+        trace(null, null, null, null, null, content);
     }
 
     @Override
     public void trace(String summary, Object content) {
-        trace(_tag, null, null, null, summary, content);
+        trace(null, null, null, null, summary, content);
     }
 
     @Override
@@ -132,12 +126,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void debug(Object content) {
-        debug(_tag, null, null, null, null, content);
+        debug(null, null, null, null, null, content);
     }
 
     @Override
     public void debug(String summary, Object content) {
-        debug(_tag, null, null, null, summary, content);
+        debug(null, null, null, null, summary, content);
     }
 
     @Override
@@ -173,12 +167,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void info(Object content) {
-        info(_tag, null, null, null, null, content);
+        info(null, null, null, null, null, content);
     }
 
     @Override
     public void info(String summary, Object content) {
-        info(_tag, null, null, null, summary, content);
+        info(null, null, null, null, summary, content);
     }
 
     @Override
@@ -214,12 +208,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void warn(Object content) {
-        warn(_tag, null, null, null, null, content);
+        warn(null, null, null, null, null, content);
     }
 
     @Override
     public void warn(String summary, Object content) {
-        warn(_tag, null, null, null, summary, content);
+        warn(null, null, null, null, summary, content);
     }
 
     @Override
@@ -255,12 +249,12 @@ public class WaterLogger implements Logger {
 
     @Override
     public void error(Object content) {
-        error(_tag, null, null, null, null, content);
+        error(null, null, null, null, null, content);
     }
 
     @Override
     public void error(String summary, Object content) {
-        error(_tag, null, null, null, summary, content);
+        error(null, null, null, null, summary, content);
     }
 
     @Override
@@ -306,6 +300,16 @@ public class WaterLogger implements Logger {
         log.tag3 = tag3;
         log.summary = summary;
         log.content = content;
+
+        if(clz != null) {
+            if (TextUtils.isEmpty(summary)) {
+                log.summary = clz.getTypeName();
+            }
+
+            if (TextUtils.isEmpty(tag3)) {
+                log.tag3 = clz.getSimpleName();
+            }
+        }
 
         log.trace_id = WaterClient.waterTraceId();
         log.from = WaterClient.localServiceHost();
