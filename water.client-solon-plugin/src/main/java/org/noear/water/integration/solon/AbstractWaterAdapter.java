@@ -1,5 +1,7 @@
-package org.noear.water;
+package org.noear.water.integration.solon;
 
+import org.noear.water.WW;
+import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.LocalUtils;

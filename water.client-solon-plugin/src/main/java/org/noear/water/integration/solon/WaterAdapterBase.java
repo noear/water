@@ -5,7 +5,6 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.AbstractWaterAdapter;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.log.Logger;
