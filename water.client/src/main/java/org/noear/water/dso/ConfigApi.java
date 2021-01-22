@@ -21,7 +21,7 @@ public class ConfigApi {
 
     protected final CallUtils callUtils;
     public ConfigApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getConfigApiUrl());
+        callUtils = new CallUtils(WaterAddress.getConfigApiUrl());
     }
 
     /**

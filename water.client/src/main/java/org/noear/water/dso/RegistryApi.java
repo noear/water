@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public class RegistryApi {
     protected final CallUtils callUtils;
     public RegistryApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getRegistryApiUrl());
+        callUtils = new CallUtils(WaterAddress.getRegistryApiUrl());
     }
 
     private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();

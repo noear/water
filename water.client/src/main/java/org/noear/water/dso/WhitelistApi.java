@@ -16,7 +16,7 @@ import java.util.Map;
 public class WhitelistApi {
     protected final CallUtils callUtils;
     public WhitelistApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getWhitelistApiUrl());
+        callUtils = new CallUtils(WaterAddress.getWhitelistApiUrl());
     }
 
     /**

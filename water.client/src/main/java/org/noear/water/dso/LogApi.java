@@ -27,7 +27,7 @@ public class LogApi {
 
     protected final CallUtils callUtils;
     public LogApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getLogApiUrl());
+        callUtils = new CallUtils(WaterAddress.getLogApiUrl());
     }
 
     public Logger logger(String logger) {

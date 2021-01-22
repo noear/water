@@ -30,7 +30,7 @@ public class WaterSetting {
     }
 
     private static String _water_api_url = null;
-    public static String water_api_url(){
+    protected static String water_api_url(){
         return _water_api_url;
     }
 

@@ -7,82 +7,67 @@ package org.noear.water;
  * @since 2.0
  */
 public class WaterAddress {
-    private static WaterAddress waterAddress = new WaterAddress();
-    public static WaterAddress getInstance(){
-        return waterAddress;
-    }
+    private static String configApiUrl = WaterSetting.water_api_url();
+    private static String messageApiUrl = WaterSetting.water_api_url();
+    private static String logApiUrl = WaterSetting.water_api_url();
+    private static String registryApiUrl = WaterSetting.water_api_url();
+    private static String trackApiUrl = WaterSetting.water_api_url();
+    private static String noticeApiUrl = WaterSetting.water_api_url();
+    private static String whitelistApiUrl = WaterSetting.water_api_url();
 
-    private String configApiUrl;
-    private String messageApiUrl;
-    private String logApiUrl;
-    private String registryApiUrl;
-    private String trackApiUrl;
-    private String noticeApiUrl;
-    private String whitelistApiUrl;
-
-    public WaterAddress(){
-        configApiUrl = WaterSetting.water_api_url();
-        messageApiUrl = WaterSetting.water_api_url();
-        logApiUrl = WaterSetting.water_api_url();
-        registryApiUrl = WaterSetting.water_api_url();
-        trackApiUrl = WaterSetting.water_api_url();
-        noticeApiUrl = WaterSetting.water_api_url();
-        whitelistApiUrl = WaterSetting.water_api_url();
-    }
-
-    public String getConfigApiUrl() {
+    public static String getConfigApiUrl() {
         return configApiUrl;
     }
 
-    public void setConfigApiUrl(String configApiUrl) {
-        this.configApiUrl = configApiUrl;
+    public static void setConfigApiUrl(String url) {
+        configApiUrl = url;
     }
 
-    public String getMessageApiUrl() {
+    public static String getMessageApiUrl() {
         return messageApiUrl;
     }
 
-    public void setMessageApiUrl(String messageApiUrl) {
-        this.messageApiUrl = messageApiUrl;
+    public static void setMessageApiUrl(String url) {
+        messageApiUrl = url;
     }
 
-    public String getLogApiUrl() {
+    public static String getLogApiUrl() {
         return logApiUrl;
     }
 
-    public void setLogApiUrl(String logApiUrl) {
-        this.logApiUrl = logApiUrl;
+    public static void setLogApiUrl(String url) {
+        logApiUrl = url;
     }
 
-    public String getRegistryApiUrl() {
+    public static String getRegistryApiUrl() {
         return registryApiUrl;
     }
 
-    public void setRegistryApiUrl(String registryApiUrl) {
-        this.registryApiUrl = registryApiUrl;
+    public static void setRegistryApiUrl(String url) {
+        registryApiUrl = url;
     }
 
-    public String getTrackApiUrl() {
+    public static String getTrackApiUrl() {
         return trackApiUrl;
     }
 
-    public void setTrackApiUrl(String trackApiUrl) {
-        this.trackApiUrl = trackApiUrl;
+    public static void setTrackApiUrl(String url) {
+        trackApiUrl = url;
     }
 
-    public String getNoticeApiUrl() {
+    public static String getNoticeApiUrl() {
         return noticeApiUrl;
     }
 
-    public void setNoticeApiUrl(String noticeApiUrl) {
-        this.noticeApiUrl = noticeApiUrl;
+    public static void setNoticeApiUrl(String url) {
+        noticeApiUrl = url;
     }
 
-    public String getWhitelistApiUrl() {
+    public static String getWhitelistApiUrl() {
         return whitelistApiUrl;
     }
 
-    public void setWhitelistApiUrl(String whitelistApiUrl) {
-        this.whitelistApiUrl = whitelistApiUrl;
+    public static void setWhitelistApiUrl(String url) {
+        whitelistApiUrl = url;
     }
 }

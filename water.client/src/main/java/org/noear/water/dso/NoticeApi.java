@@ -16,7 +16,7 @@ import java.util.Map;
 public class NoticeApi {
     protected final CallUtils callUtils;
     public NoticeApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getNoticeApiUrl());
+        callUtils = new CallUtils(WaterAddress.getNoticeApiUrl());
     }
 
     /**

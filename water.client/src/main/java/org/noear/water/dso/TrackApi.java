@@ -21,7 +21,7 @@ import java.util.Map;
 public class TrackApi {
     protected final CallUtils callUtils;
     public TrackApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getTrackApiUrl());
+        callUtils = new CallUtils(WaterAddress.getTrackApiUrl());
     }
 
     //db:5

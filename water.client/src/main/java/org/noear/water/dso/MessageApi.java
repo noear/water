@@ -20,7 +20,7 @@ import java.util.Map;
 public class MessageApi {
     protected final CallUtils callUtils;
     public MessageApi(){
-        callUtils = new CallUtils(WaterAddress.getInstance().getMessageApiUrl());
+        callUtils = new CallUtils(WaterAddress.getMessageApiUrl());
     }
 
 
