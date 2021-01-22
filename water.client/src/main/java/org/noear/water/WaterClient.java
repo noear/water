@@ -53,35 +53,35 @@ public final class WaterClient {
     /**
      * 配置服务接口
      * */
-    public final static ConfigApi Config = new ConfigApi();
+    public final static ConfigApi Config = new ConfigApi(WaterSetting.water_api_url());
 
     /**
      * 消息服务接口
      * */
-    public final static MessageApi Message = new MessageApi();
+    public final static MessageApi Message = new MessageApi(WaterSetting.water_api_url());
 
     /**
      * 日志服务接口
      * */
-    public final static LogApi Log = new LogApi();
+    public final static LogApi Log = new LogApi(WaterSetting.water_api_url());
 
     /**
      * 注册服务接口
      * */
-    public final static RegistryApi Registry = new RegistryApi();
+    public final static RegistryApi Registry = new RegistryApi(WaterSetting.water_api_url());
 
     /**
      * 跟踪服务接口
      * */
-    public final static TrackApi Track = new TrackApi();
+    public final static TrackApi Track = new TrackApi(WaterSetting.water_api_url());
 
     /**
      * 通知接口
      * */
-    public final static NoticeApi Notice = new NoticeApi();
+    public final static NoticeApi Notice = new NoticeApi(WaterSetting.water_api_url());
 
     /**
      * 白名单接口
      * */
-    public final static WhitelistApi Whitelist = new WhitelistApi();
+    public final static WhitelistApi Whitelist = new WhitelistApi(WaterSetting.water_api_url());
 }

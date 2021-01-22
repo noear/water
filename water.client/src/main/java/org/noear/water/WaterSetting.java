@@ -1,7 +1,5 @@
 package org.noear.water;
 
-import org.noear.water.dso.Upstream;
-import org.noear.water.dso.UpstreamImp;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -47,18 +45,6 @@ public class WaterSetting {
         }
     }
 
-    //不可修改
-    private static Upstream _water_cfg_upstream = new UpstreamImp();
-    public static Upstream water_cfg_upstream(){return _water_cfg_upstream;}
-
-    //可以修改（默认由，water-solon-plugin 的 XPlugin 初始化）
-    private static Upstream _water_sev_upstream = new UpstreamImp();
-    public static Upstream water_sev_upstream(){return _water_sev_upstream;}
-    public static void water_sev_upstream(Upstream upstream) {
-        //设置默认代理
-        upstream.setBackup(water_api_url());
-        _water_sev_upstream = upstream;
-    }
 
     static {
         _water_logger_def = System.getProperty(WW.water_logger);

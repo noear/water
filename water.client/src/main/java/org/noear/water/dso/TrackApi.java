@@ -18,6 +18,11 @@ import java.util.Map;
  * @since 2.0
  * */
 public class TrackApi {
+    protected final CallUtils callUtils;
+    public TrackApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     //db:5
     public static RedisX rd_track;
 
@@ -79,7 +84,7 @@ public class TrackApi {
         params.put("interval",timespan + "");
 
         try {
-            CallSevUtil.post("/sev/track/api/", params);
+            callUtils.post("/sev/track/api/", params);
         } catch (Exception ex) {
 
         }
@@ -151,7 +156,7 @@ public class TrackApi {
         }
 
         try {
-            CallSevUtil.post("/sev/track/sql/", params, trace_id);
+            callUtils.post("/sev/track/sql/", params, trace_id);
         } catch (Exception ex) {
 
         }

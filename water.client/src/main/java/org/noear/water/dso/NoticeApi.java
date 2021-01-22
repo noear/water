@@ -13,6 +13,11 @@ import java.util.Map;
  * @since 2.0
  * */
 public class NoticeApi {
+    protected final CallUtils callUtils;
+    public NoticeApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     /**
      * 嘿嘿通知（经Water服务端处理后再推送）
      *
@@ -24,7 +29,7 @@ public class NoticeApi {
         params.put("msg", msg);
 
         try {
-            String txt = CallSevUtil.post("/run/push/", params);
+            String txt = callUtils.post("/run/push/", params);
 
             System.out.println("NoticeApi::/run/push/:" + txt);
 

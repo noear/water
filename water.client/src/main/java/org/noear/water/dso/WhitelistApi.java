@@ -13,6 +13,11 @@ import java.util.Map;
  * @since 2.0
  * */
 public class WhitelistApi {
+    protected final CallUtils callUtils;
+    public WhitelistApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     /**
      * 主控组
      * */
@@ -44,7 +49,7 @@ public class WhitelistApi {
         params.put("type", type);
         params.put("value", value);
 
-        return CallSevUtil.post("/run/whitelist/check/", params);
+        return callUtils.post("/run/whitelist/check/", params);
     }
 
     private boolean checkDo(String tags, String type, String value) {

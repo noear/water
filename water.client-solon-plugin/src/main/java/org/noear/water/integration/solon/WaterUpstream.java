@@ -6,7 +6,6 @@ import org.noear.solon.Solon;
 import org.noear.solon.core.LoadBalance;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
-import org.noear.water.dso.Upstream;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -21,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
  * */
-public class WaterUpstream implements Upstream, LoadBalance {
+public class WaterUpstream implements LoadBalance {
     private final String TAG_SERVER = "{server}";
 
 
@@ -238,13 +237,10 @@ public class WaterUpstream implements Upstream, LoadBalance {
     //
     // for http client
     //
-
-    @Override
     public void setBackup(String server) {
         _backup_server = server;
     }
 
-    @Override
     public HttpUtils http(String path) {
         return HttpUtils.http(getServer() + path)
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())

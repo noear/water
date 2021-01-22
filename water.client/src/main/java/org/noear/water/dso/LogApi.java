@@ -24,6 +24,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LogApi {
     private Map<String, Logger> loggerMap = new ConcurrentHashMap<>();
 
+    protected final CallUtils callUtils;
+    public LogApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     public Logger logger(String logger) {
         Logger tmp = loggerMap.get(logger);
         if (tmp == null) {
@@ -180,12 +185,12 @@ public class LogApi {
 
         try {
             if (WaterLogger.isGzip()) {
-                CallSevUtil.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_glog);
+                callUtils.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_glog);
             } else {
                 Map<String,String> map = new HashMap<>();
                 map.put("list",json);
 
-                CallSevUtil.post("/log/add2/",map);
+                callUtils.post("/log/add2/",map);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

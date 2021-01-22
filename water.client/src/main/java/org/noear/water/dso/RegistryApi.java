@@ -19,6 +19,11 @@ import java.util.function.Consumer;
  * @since 2.0
  * */
 public class RegistryApi {
+    protected final CallUtils callUtils;
+    public RegistryApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();
 
     /**
@@ -67,7 +72,7 @@ public class RegistryApi {
         params.put("check_type", check_type + "");
 
         try {
-            CallCfgUtil.post("/sev/reg/", params);
+            callUtils.post("/sev/reg/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -83,7 +88,7 @@ public class RegistryApi {
         params.put("meta", meta);
 
         try {
-            CallCfgUtil.post("/sev/unreg/", params);
+            callUtils.post("/sev/unreg/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -100,7 +105,7 @@ public class RegistryApi {
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
-            CallCfgUtil.post("/sev/set/", params);
+            callUtils.post("/sev/set/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -129,7 +134,7 @@ public class RegistryApi {
 
         try {
 
-            String json = CallCfgUtil.post("/sev/discover/", params);
+            String json = callUtils.post("/sev/discover/", params);
             ONode rst = ONode.loadStr(json);
 
             if (rst.get("code").getInt() != 1) {

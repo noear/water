@@ -109,8 +109,6 @@ public class XPluginImp implements Plugin {
         });
 
         //改为upstream模式，可跳过nginx代理
-        WaterUpstream wup = WaterUpstream.get(WW.waterapi);
-        WaterSetting.water_sev_upstream(wup);
 
         WaterSetting.water_trace_id_supplier(() -> {
             Context ctx = Context.current();

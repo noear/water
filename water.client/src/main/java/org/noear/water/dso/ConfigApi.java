@@ -18,6 +18,11 @@ public class ConfigApi {
     private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
     private Map<String, Set<ConfigHandler>> _event = new HashMap<>();
 
+    protected final CallUtils callUtils;
+    public ConfigApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
     /**
      * 重新加载一个tag的配置
      */
@@ -48,7 +53,7 @@ public class ConfigApi {
         ConfigSetM cfgSet = new ConfigSetM(tag);
 
         try {
-            String temp = CallCfgUtil.get("/cfg/get/?v=2&tag=" + tag);
+            String temp = callUtils.get("/cfg/get/?v=2&tag=" + tag);
             cfgSet.load(ONode.loadStr(temp));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -137,7 +142,7 @@ public class ConfigApi {
      */
     public void set(String tag, String key, String value) throws IOException {
 
-        CallCfgUtil.http("/cfg/set/")
+        callUtils.http("/cfg/set/")
                 .data("tag", tag)
                 .data("key", key)
                 .data("value", value)

@@ -5,7 +5,6 @@ import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Fun1;
-import org.noear.water.utils.ext.Fun1Ex;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +17,11 @@ import java.util.Map;
  * @since 2.0
  * */
 public class MessageApi {
+    protected final CallUtils callUtils;
+    public MessageApi(String server){
+        callUtils = new CallUtils(server);
+    }
+
 
     /**
      * 订阅
@@ -54,7 +58,7 @@ public class MessageApi {
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
-        String txt = CallSevUtil.post("/msg/subscribe/", params);
+        String txt = callUtils.post("/msg/subscribe/", params);
 
         System.out.println("MessageApi::/msg/subscribe/:" + txt);
 
@@ -74,7 +78,7 @@ public class MessageApi {
         params.put("subscriber_key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
-        String txt = CallSevUtil.post("/msg/unsubscribe/", params);
+        String txt = callUtils.post("/msg/unsubscribe/", params);
 
         System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
 
@@ -155,7 +159,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = CallSevUtil.post("/msg/send/", params);
+        String txt = callUtils.post("/msg/send/", params);
 
         System.out.println("MessageApi::/msg/send/:" + txt);
 
@@ -214,7 +218,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = CallSevUtil.post("/msg/send/", params);
+        String txt = callUtils.post("/msg/send/", params);
 
         System.out.println("MessageApi::/msg/send/:" + txt);
 
@@ -244,7 +248,7 @@ public class MessageApi {
             params.put("subscriber_key", subscriber_key);
         }
 
-        String txt = CallSevUtil.post("/msg/cancel/", params);
+        String txt = callUtils.post("/msg/cancel/", params);
 
         System.out.println("MessageApi::/msg/cancel/:" + txt);
 
@@ -270,7 +274,7 @@ public class MessageApi {
         }
 
 
-        String txt = CallSevUtil.post("/msg/succeed/", params);
+        String txt = callUtils.post("/msg/succeed/", params);
 
         System.out.println("MessageApi::/msg/succeed/:" + txt);
 
