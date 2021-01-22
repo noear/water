@@ -128,7 +128,7 @@
                 </#if>
             </left>
             <middle class="col-6 center">
-                <input type="text" id="key" value="${key!}" placeholder="ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
+                <input type="text" id="key" value="${key!}" placeholder="*TrackId or ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>

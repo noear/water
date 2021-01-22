@@ -34,7 +34,7 @@
                         <option value="${m.logger}">${m.logger} (${m.row_num})</option>
                     </#list>
                 </select>&nbsp;&nbsp;
-                标签：<input type="text" class="w200"  name="tagx" placeholder="tag@tag1@tag2@tag3" id="tagx"/>&nbsp;&nbsp;
+                标签：<input type="text" class="w250"  name="tagx" placeholder="tag@tag1@tag2@tag3 or *TrackId" id="tagx"/>&nbsp;&nbsp;
                 时间：<input type="text"  name="log_date" placeholder="yyyyMMdd" id="log_date" class="w70"/>&nbsp;&nbsp;
                 ID：<input type="text"  name="log_id" placeholder="" id="log_id" class="w70"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
