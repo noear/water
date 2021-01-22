@@ -1,5 +1,7 @@
 package org.noear.water;
 
+import org.noear.water.utils.HostUtils;
+
 /**
  * Water 内部服务地址
  *
@@ -20,7 +22,7 @@ public class WaterAddress {
     }
 
     public static void setConfigApiUrl(String url) {
-        configApiUrl = url;
+        configApiUrl = HostUtils.adjust(url);
     }
 
     public static String getMessageApiUrl() {
@@ -28,7 +30,7 @@ public class WaterAddress {
     }
 
     public static void setMessageApiUrl(String url) {
-        messageApiUrl = url;
+        messageApiUrl = HostUtils.adjust(url);
     }
 
     public static String getLogApiUrl() {
@@ -36,7 +38,7 @@ public class WaterAddress {
     }
 
     public static void setLogApiUrl(String url) {
-        logApiUrl = url;
+        logApiUrl = HostUtils.adjust(url);
     }
 
     public static String getRegistryApiUrl() {
@@ -44,7 +46,7 @@ public class WaterAddress {
     }
 
     public static void setRegistryApiUrl(String url) {
-        registryApiUrl = url;
+        registryApiUrl = HostUtils.adjust(url);
     }
 
     public static String getTrackApiUrl() {
@@ -52,7 +54,7 @@ public class WaterAddress {
     }
 
     public static void setTrackApiUrl(String url) {
-        trackApiUrl = url;
+        trackApiUrl = HostUtils.adjust(url);
     }
 
     public static String getNoticeApiUrl() {
@@ -60,7 +62,7 @@ public class WaterAddress {
     }
 
     public static void setNoticeApiUrl(String url) {
-        noticeApiUrl = url;
+        noticeApiUrl = HostUtils.adjust(url);
     }
 
     public static String getWhitelistApiUrl() {
@@ -68,6 +70,6 @@ public class WaterAddress {
     }
 
     public static void setWhitelistApiUrl(String url) {
-        whitelistApiUrl = url;
+        whitelistApiUrl = HostUtils.adjust(url);
     }
 }

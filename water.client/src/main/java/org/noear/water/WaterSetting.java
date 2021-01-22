@@ -1,6 +1,7 @@
 package org.noear.water;
 
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.HostUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -52,16 +53,7 @@ public class WaterSetting {
         String host = System.getProperty(WW.water_host);
 
         if (TextUtils.isEmpty(host) == false) {
-
-            if (host.indexOf("://") < 0) {
-                host = "http://" + host;
-            }
-
-            if (host.endsWith("/")) {
-                _water_api_url = host.substring(0, host.length() - 2);
-            } else {
-                _water_api_url = host;
-            }
+            _water_api_url = HostUtils.adjust(host);
         }
 
         if (TextUtils.isEmpty(_water_api_url)) {
