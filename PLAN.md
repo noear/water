@@ -4,7 +4,7 @@
 * 日志器适配MangoDb、HBase、ES
 * 消息入队处理，改为重消息方案（更利于扩展派发能力）
 
-#### 2.0.11 规划::
+#### 2.0.12 规划::
 * 调整 water.client 及 water.client-solon-plugin
 * 尝试构建基于 solon.cloud 标准的接口：water-solon-plugin
 
