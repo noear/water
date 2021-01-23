@@ -41,7 +41,7 @@ public class LogModel {
             if(content.indexOf("Exception:") > 0 || content.indexOf("Error:") > 0){
                 return HtmlEncode.encode(content).replaceAll("\n","<br/>");
             }else {
-                return HtmlEncode.encode(content);
+                return HtmlEncode.encode(content).replaceAll("\n\n","<br/>");
             }
         }
     }
