@@ -140,6 +140,8 @@ public class LogApi {
 
         log.trace_id = trace_id;
         log.from = WaterClient.localServiceHost();
+        log.thread = Thread.currentThread().getName();
+
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();
 
