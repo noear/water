@@ -22,8 +22,8 @@ public class LogModel {
     public int log_date;
     public Date log_fulltime;
 
-    public String levelHtml(){
-        return Level.of(level).name();
+    public String levelHtml() {
+        return "<span class='level" + level + "'>[" + Level.of(level).name() + "]</span>";
     }
 
     public String summaryHtml() {
