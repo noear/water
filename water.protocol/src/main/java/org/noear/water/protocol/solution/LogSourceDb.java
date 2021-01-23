@@ -48,7 +48,7 @@ public class LogSourceDb implements LogSource {
                 .andIf(log_date > 0, "log_date = ?", log_date)
                 .andIf(log_id > 0, "log_id <= ?", log_id)
                 .andIf(level > 0, "level=?", level)
-                .orderBy("log_fulltime desc")
+                .orderBy("log_fulltime desc, log_id desc")
                 .limit(size)
                 .select("*")
                 .getList(LogModel.class);
