@@ -1,6 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.water.WW;
+import org.noear.water.WaterClient;
 import org.noear.water.utils.HttpUtils;
 
 import java.io.ByteArrayInputStream;
@@ -35,7 +36,9 @@ public class CallUtils {
             }
         }
 
-        return HttpUtils.http(url);
+        return HttpUtils.http(url)
+                .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
+                .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
     }
 
     public  String post(String path, Map<String, String> data, String trace_id) throws IOException {
