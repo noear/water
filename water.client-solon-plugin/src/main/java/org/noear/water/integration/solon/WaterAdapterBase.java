@@ -70,10 +70,12 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
             }
         }
 
+        String code_location = Solon.cfg().sourceLocation().getPath();
+
         if (service_port > 0) {
-            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(),  is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(), code_location, is_unstable());
         } else {
-            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(),  is_unstable());
+            WaterClient.Registry.register(this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(), code_location, is_unstable());
         }
     }
 

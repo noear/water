@@ -49,7 +49,7 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
      * */
     @Override
     public boolean is_unstable() {
-        return Solon.cfg().isDriftMode();
+        return Solon.cfg().isDriftMode() || Solon.cfg().isFilesMode();
     }
 
     public WaterAdapter() {
