@@ -1,9 +1,9 @@
-server.port: 7111
+server.port: 7181
 
 
 water:
-  host: "http://water2"
+  host: "water"
   service:
     name: "testapi"
     secretKey: "0zJt0J88TkIvqYgC"
-    host: "http://139.196.28.6:7111/"
+    host: "http://8.136.190.8:7181/"
