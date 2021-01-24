@@ -164,7 +164,7 @@ public class MessageApi {
 
         String txt = callUtils.post("/msg/send/", params);
 
-        System.out.println("MessageApi::/msg/send/:" + txt);
+        //System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
         if (data.get("code").getInt() == 1) {
