@@ -56,7 +56,7 @@ public class MessageApi {
         params.put("topic", topics_str);
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receive_url);
-        params.put("receive_way", receive_way + "");
+        params.put("receive_way", receive_way + ""); //接收方式（0,1异步等待；2异步不等待,状态设为已完成；3异步不等,状态设为处理中）
         params.put("access_key", access_key);
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
