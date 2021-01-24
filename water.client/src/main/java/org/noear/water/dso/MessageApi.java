@@ -48,10 +48,12 @@ public class MessageApi {
      * @param topics          主题..
      */
     public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receive_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+        String topics_str = String.join(",", topics);
+
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);
         params.put("note", subscriber_note);
-        params.put("topic", String.join(",", topics));
+        params.put("topic", topics_str);
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receive_url);
         params.put("receive_way", receive_way + "");
@@ -61,7 +63,7 @@ public class MessageApi {
 
         String txt = callUtils.post("/msg/subscribe/", params);
 
-        System.out.println("MessageApi::/msg/subscribe/:" + txt);
+        System.out.println("MessageApi::/msg/subscribe/:" + topics_str +"("+receive_url+"}:" + txt);
 
         return ONode.loadStr(txt).get("code").getInt() == 1;
     }
