@@ -61,7 +61,7 @@ public final class MsgController implements IJob {
     private void distributeDo(String msg_id_str) throws Exception {
         String lk_msg_id_do = msg_id_str + "_do";
 
-        if(ProtocolHub.messageLock.lock(lk_msg_id_do) == false){
+        if (ProtocolHub.messageLock.lock(lk_msg_id_do) == false) {
             return;
         }
 
@@ -73,7 +73,6 @@ public final class MsgController implements IJob {
         if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
             return;
         }
-
 
 
         long ntime = DisttimeUtils.currTime();
@@ -216,38 +215,12 @@ public final class MsgController implements IJob {
 
 
         try {
-            if (dist.receive_way == 0) {
-                //3.2.0.进行异步http分发
-                HttpUtils.http(dist.receive_url)
-                        .header(WW.http_header_trace,msg.trace_id)
-                        .data(params).postAsync((isOk, resp, ex) -> {
-
-                    dist._duration = new Timespan(dist._start_time).milliseconds();
-
-                    if (isOk) {
-                        String rst = resp.body().string();
-
-                        boolean isOk2 = "OK".equals(rst);
-
-                        if (isOk2) {
-                            LogUtil.writeForMsg(msg, dist, rst);
-                        }else{
-                            LogUtil.writeForMsgByError(msg, dist, rst);
-                        }
-
-                        callback.run(tag, dist, isOk2);
-                    } else {
-                        LogUtil.writeForMsgByError(msg, dist, "http error");
-
-                        callback.run(tag, dist, false);
-                    }
-                });
-            }
-
             if (dist.receive_way == 2) {
+                //::2
+                //
                 //3.2.2.进行异步http分发 //不等待 //状态设为已完成
                 HttpUtils.http(dist.receive_url)
-                        .header(WW.http_header_trace,msg.trace_id)
+                        .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
@@ -260,7 +233,7 @@ public final class MsgController implements IJob {
 
                         if (isOk2 == false) {
                             LogUtil.writeForMsg(msg, dist, rst);
-                        }else{
+                        } else {
                             LogUtil.writeForMsgByError(msg, dist, rst);
                         }
                     } else {
@@ -269,12 +242,12 @@ public final class MsgController implements IJob {
                 });
 
                 callback.run(tag, dist, true);
-            }
-
-            if (dist.receive_way == 3) {
+            } else if (dist.receive_way == 3) {
+                //::3
+                //
                 //3.2.3.进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
                 HttpUtils.http(dist.receive_url)
-                        .header(WW.http_header_trace,msg.trace_id)
+                        .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
@@ -298,6 +271,34 @@ public final class MsgController implements IJob {
                 //推后一小时，可手工再恢复
                 long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
                 DbWaterMsgApi.setMessageState(msg.msg_id, 1, ntime);
+            } else {
+                //::0,1
+                //
+                //3.2.0.进行异步http分发
+                HttpUtils.http(dist.receive_url)
+                        .header(WW.http_header_trace, msg.trace_id)
+                        .data(params).postAsync((isOk, resp, ex) -> {
+
+                    dist._duration = new Timespan(dist._start_time).milliseconds();
+
+                    if (isOk) {
+                        String rst = resp.body().string();
+
+                        boolean isOk2 = "OK".equals(rst);
+
+                        if (isOk2) {
+                            LogUtil.writeForMsg(msg, dist, rst);
+                        } else {
+                            LogUtil.writeForMsgByError(msg, dist, rst);
+                        }
+
+                        callback.run(tag, dist, isOk2);
+                    } else {
+                        LogUtil.writeForMsgByError(msg, dist, "http error");
+
+                        callback.run(tag, dist, false);
+                    }
+                });
             }
 
         } catch (Exception ex) {
