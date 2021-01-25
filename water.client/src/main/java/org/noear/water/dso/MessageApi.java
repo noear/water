@@ -18,9 +18,9 @@ import java.util.Map;
  * @since 2.0
  * */
 public class MessageApi {
-    protected final CallUtils callUtils;
+    protected final ApiCaller apiCaller;
     public MessageApi(){
-        callUtils = new CallUtils(WaterAddress.getMessageApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getMessageApiUrl());
     }
 
 
@@ -61,7 +61,7 @@ public class MessageApi {
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
-        String txt = callUtils.post("/msg/subscribe/", params);
+        String txt = apiCaller.post("/msg/subscribe/", params);
 
         System.out.println("MessageApi::/msg/subscribe/:" + topics_str +"("+receive_url+"}:" + txt);
 
@@ -81,7 +81,7 @@ public class MessageApi {
         params.put("subscriber_key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
-        String txt = callUtils.post("/msg/unsubscribe/", params);
+        String txt = apiCaller.post("/msg/unsubscribe/", params);
 
         System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
 
@@ -162,7 +162,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = callUtils.post("/msg/send/", params);
+        String txt = apiCaller.post("/msg/send/", params);
 
         //System.out.println("MessageApi::/msg/send/:" + txt);
 
@@ -221,7 +221,7 @@ public class MessageApi {
             params.put("plan_time", planTime2);
         }
 
-        String txt = callUtils.post("/msg/send/", params);
+        String txt = apiCaller.post("/msg/send/", params);
 
         System.out.println("MessageApi::/msg/send/:" + txt);
 
@@ -251,7 +251,7 @@ public class MessageApi {
             params.put("subscriber_key", subscriber_key);
         }
 
-        String txt = callUtils.post("/msg/cancel/", params);
+        String txt = apiCaller.post("/msg/cancel/", params);
 
         System.out.println("MessageApi::/msg/cancel/:" + txt);
 
@@ -277,7 +277,7 @@ public class MessageApi {
         }
 
 
-        String txt = callUtils.post("/msg/succeed/", params);
+        String txt = apiCaller.post("/msg/succeed/", params);
 
         System.out.println("MessageApi::/msg/succeed/:" + txt);
 

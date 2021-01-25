@@ -19,9 +19,9 @@ import java.util.Map;
  * @since 2.0
  * */
 public class TrackApi {
-    protected final CallUtils callUtils;
+    protected final ApiCaller apiCaller;
     public TrackApi(){
-        callUtils = new CallUtils(WaterAddress.getTrackApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getTrackApiUrl());
     }
 
     //db:5
@@ -85,7 +85,7 @@ public class TrackApi {
         params.put("interval",timespan + "");
 
         try {
-            callUtils.post("/sev/track/api/", params);
+            apiCaller.post("/sev/track/api/", params);
         } catch (Exception ex) {
 
         }
@@ -157,7 +157,7 @@ public class TrackApi {
         }
 
         try {
-            callUtils.post("/sev/track/sql/", params, trace_id);
+            apiCaller.post("/sev/track/sql/", params, trace_id);
         } catch (Exception ex) {
 
         }

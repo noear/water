@@ -14,9 +14,9 @@ import java.util.Map;
  * @since 2.0
  * */
 public class NoticeApi {
-    protected final CallUtils callUtils;
+    protected final ApiCaller apiCaller;
     public NoticeApi(){
-        callUtils = new CallUtils(WaterAddress.getNoticeApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getNoticeApiUrl());
     }
 
     /**
@@ -30,7 +30,7 @@ public class NoticeApi {
         params.put("msg", msg);
 
         try {
-            String txt = callUtils.post("/run/push/", params);
+            String txt = apiCaller.post("/run/push/", params);
 
             System.out.println("NoticeApi::/run/push/:" + txt);
 

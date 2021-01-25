@@ -14,9 +14,9 @@ import java.util.Map;
  * @author noear
  * @since 2.0
  * */
-public class CallUtils {
+public class ApiCaller {
     private String server;
-    public CallUtils(String server){
+    public ApiCaller(String server){
         this.server = server;
     }
 

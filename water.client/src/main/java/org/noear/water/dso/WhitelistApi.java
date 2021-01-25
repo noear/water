@@ -14,9 +14,9 @@ import java.util.Map;
  * @since 2.0
  * */
 public class WhitelistApi {
-    protected final CallUtils callUtils;
+    protected final ApiCaller apiCaller;
     public WhitelistApi(){
-        callUtils = new CallUtils(WaterAddress.getWhitelistApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getWhitelistApiUrl());
     }
 
     /**
@@ -50,7 +50,7 @@ public class WhitelistApi {
         params.put("type", type);
         params.put("value", value);
 
-        return callUtils.post("/run/whitelist/check/", params);
+        return apiCaller.post("/run/whitelist/check/", params);
     }
 
     private boolean checkDo(String tags, String type, String value) {

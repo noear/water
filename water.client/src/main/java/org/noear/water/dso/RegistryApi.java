@@ -3,15 +3,12 @@ package org.noear.water.dso;
 import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
-import org.noear.water.model.ConfigSetM;
 import org.noear.water.model.DiscoverM;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * 注册服务（使用 CallCfgUtil）
@@ -20,9 +17,9 @@ import java.util.function.Consumer;
  * @since 2.0
  * */
 public class RegistryApi {
-    protected final CallUtils callUtils;
+    protected final ApiCaller apiCaller;
     public RegistryApi(){
-        callUtils = new CallUtils(WaterAddress.getRegistryApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getRegistryApiUrl());
     }
 
     private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();
@@ -73,7 +70,7 @@ public class RegistryApi {
         params.put("check_type", check_type + "");
 
         try {
-            callUtils.post("/sev/reg/", params);
+            apiCaller.post("/sev/reg/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -89,7 +86,7 @@ public class RegistryApi {
         params.put("meta", meta);
 
         try {
-            callUtils.post("/sev/unreg/", params);
+            apiCaller.post("/sev/unreg/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -106,7 +103,7 @@ public class RegistryApi {
         params.put("enabled", (enabled ? "1" : "0"));
 
         try {
-            callUtils.post("/sev/set/", params);
+            apiCaller.post("/sev/set/", params);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -135,7 +132,7 @@ public class RegistryApi {
 
         try {
 
-            String json = callUtils.post("/sev/discover/", params);
+            String json = apiCaller.post("/sev/discover/", params);
             ONode rst = ONode.loadStr(json);
 
             if (rst.get("code").getInt() != 1) {
