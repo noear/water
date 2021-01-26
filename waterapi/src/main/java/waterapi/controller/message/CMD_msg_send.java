@@ -34,18 +34,14 @@ public class CMD_msg_send extends UapiBase {
      * @param plan_time 分发时间(yyyy-MM-dd HH:mm:ss)
      * @param tags      查询标签
      */
-    @NotEmpty({"key", "topic", "message"})
+    @NotEmpty({"topic", "message"})
     @Mapping("/msg/send/")
     public Result cmd_exec(Context ctx, String key, String topic, String message, String plan_time, String tags) throws Exception {
 
         //如果不需要修改，检查是否已存在
         //
-        if (TextUtils.isNotEmpty(key)) {
-            if (DbWaterMsgApi.hasMessage(key)) {
-                return Result.succeed();
-            }
-        } else {
-            key = IDUtils.buildGuid();
+        if (DbWaterMsgApi.hasMessage(key)) {
+            return Result.succeed();
         }
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);

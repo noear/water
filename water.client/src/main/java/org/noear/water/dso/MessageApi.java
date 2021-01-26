@@ -142,20 +142,19 @@ public class MessageApi {
      * @param planTime 计划通知时间
      */
     public boolean sendMessageAndTags(String msg_key, String topic, String message, Date planTime, String tags) throws Exception {
-        if (TextUtils.isEmpty(msg_key)) {
-            msg_key = IDUtils.guid();
-        }
-
-        if (tags == null) {
-            tags = "";
-        }
 
         Map<String, String> params = new HashMap<>();
-        params.put("key", msg_key);
-        params.put("tags", tags);
+
         params.put("topic", topic);
         params.put("message", message);
 
+        if (msg_key != null) {
+            params.put("key", msg_key);
+        }
+
+        if (tags != null) {
+            params.put("tags", tags);
+        }
 
         if (planTime != null) {
             String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");

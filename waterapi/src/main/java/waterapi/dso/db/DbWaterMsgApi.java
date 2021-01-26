@@ -97,10 +97,14 @@ public final class DbWaterMsgApi {
 
     //检查是否已有消息（key）
     public static boolean hasMessage(String key) throws SQLException {
-        return db().table("water_msg_message")
-                .where("msg_key=?", key)
-                .caching(CacheUtils.data)
-                .exists();
+        if (TextUtils.isEmpty(key)) {
+            return false;
+        } else {
+            return db().table("water_msg_message")
+                    .where("msg_key=?", key)
+                    .caching(CacheUtils.data)
+                    .exists();
+        }
     }
 
     //取消消息（key）
