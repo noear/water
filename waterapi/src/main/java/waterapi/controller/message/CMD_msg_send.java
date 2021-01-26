@@ -8,7 +8,9 @@ import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import org.noear.water.utils.DisttimeUtils;
+import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
+import waterapi.dso.IDUtils;
 import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
 
@@ -38,8 +40,12 @@ public class CMD_msg_send extends UapiBase {
 
         //如果不需要修改，检查是否已存在
         //
-        if (DbWaterMsgApi.hasMessage(key)) {
-            return Result.succeed();
+        if (TextUtils.isNotEmpty(key)) {
+            if (DbWaterMsgApi.hasMessage(key)) {
+                return Result.succeed();
+            }
+        } else {
+            key = IDUtils.buildGuid();
         }
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
