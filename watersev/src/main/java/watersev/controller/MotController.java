@@ -3,6 +3,8 @@ package watersev.controller;
 import org.noear.snack.ONode;
 import org.noear.snack.core.Constants;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.ContextEmpty;
+import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -49,17 +51,25 @@ public final class MotController implements IJob {
                 continue;
             }
 
-            try {
-                doExec(task);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                LogUtil.write(this,task.monitor_id+"", task.name, ex.getMessage());
-                LogUtil.error(this, task.monitor_id+"", task.name, ex);
-            }
+            doExec(task);
         }
     }
 
-    private  void doExec(MonitorModel task) throws SQLException {
+    private  void doExec(MonitorModel task) {
+        try {
+            ContextUtil.currentSet(new ContextEmpty());
+
+            runTask(task);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+            LogUtil.write(this, task.monitor_id + "", task.name, ex.getMessage());
+            LogUtil.error(this, task.monitor_id + "", task.name, ex);
+        } finally {
+            ContextUtil.currentRemove();
+        }
+    }
+
+    private  void runTask(MonitorModel task) throws SQLException {
         if(TextUtils.isEmpty(task.source_query) || task.source_query.indexOf("::")<0) {
             return;
         }

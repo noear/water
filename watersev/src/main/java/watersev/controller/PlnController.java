@@ -1,6 +1,8 @@
 package watersev.controller;
 
 import org.noear.solon.annotation.Component;
+import org.noear.solon.core.handle.ContextEmpty;
+import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.integration.solon.WaterAdapter;
@@ -67,20 +69,25 @@ public class PlnController implements IJob {
     }
 
     private void doExec(PaasFileModel task) {
+
         try {
+            ContextUtil.currentSet(new ContextEmpty());
+
             runTask(task);
         } catch (Exception ex) {
             ex.printStackTrace();
 
             try {
                 DbWaterPaasApi.setPlanState(task, 8, "error");
-            } catch (Exception ex2) {
+            } catch (Throwable ex2) {
                 ex2.printStackTrace();
             }
 
-            LogUtil.planError(this, task,  ex);
+            LogUtil.planError(this, task, ex);
 
             AlarmUtil.tryAlarm(task);
+        } finally {
+            ContextUtil.currentRemove();
         }
     }
 
