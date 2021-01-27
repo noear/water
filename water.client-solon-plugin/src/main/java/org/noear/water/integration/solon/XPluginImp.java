@@ -25,8 +25,6 @@ public class XPluginImp implements Plugin {
 
     @Override
     public void start(SolonApp app) {
-        XmlSqlLoader.tryLoad();
-
         Bridge.upstreamFactorySet(new WaterUpstreamFactoryImp());
 
         //尝试注册
