@@ -33,7 +33,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client-solon-plugin</artifactId>
-    <version>2.0.15</version>
+    <version>2.0.16</version>
 </dependency>
 ```
 
