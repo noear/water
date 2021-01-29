@@ -27,6 +27,7 @@ import java.util.List;
 @Whitelist
 @Controller
 public class CMD_cfg_get extends UapiBase {
+
     @NotEmpty("tag")
     @Mapping("/cfg/get/")
     public Result cmd_exec(Context ctx, String tag) throws Throwable {
@@ -35,13 +36,7 @@ public class CMD_cfg_get extends UapiBase {
         if (TextUtils.isEmpty(tag) == false) {
             List<ConfigModel> list = DbWaterCfgApi.getConfigByTag(tag);
 
-            Date def_time = new Date();
-
             for (ConfigModel m1 : list) {
-                if (m1.update_fulltime == null) {
-                    m1.update_fulltime = def_time;
-                }
-
                 ONode n = nList.getNew(m1.key);
                 n.set("key", m1.key);
                 n.set("value", m1.value);

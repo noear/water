@@ -34,6 +34,7 @@ public class ConfigModel implements IBinder {
         edit_mode = s.get("edit_mode").value("");
         is_editable = s.get("is_editable").value(false);
         is_enabled = s.get("is_enabled").intValue(0) > 0;
+        update_fulltime = s.get("update_fulltime").value(null);
     }
 
     @Override
