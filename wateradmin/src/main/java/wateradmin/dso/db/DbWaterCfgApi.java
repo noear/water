@@ -292,12 +292,13 @@ public class DbWaterCfgApi {
                 .set("key", key.trim())
                 .set("type", type)
                 .set("edit_mode", edit_mode)
+                .set("update_fulltime", "$NOW()").usingExpr(true)
                 .set("value", value.trim());
 
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;
 
-            WaterClient.Notice.updateConfig(tag,key);
+            WaterClient.Notice.updateConfig(tag, key);
 
             return isOk;
         } else {
