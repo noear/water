@@ -34,7 +34,7 @@ public final class SevController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 4;
+        return 1000 * 5;
     }
 
     private boolean _init = false;
