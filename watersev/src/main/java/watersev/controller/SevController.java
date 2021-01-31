@@ -135,19 +135,20 @@ public final class SevController implements IJob {
             }
         }
 
-        if (url.startsWith("http")) {
+        if (url.startsWith("http://")) {
             check_type0_http(sev, url);
         }
 
-        if (url.startsWith("tcp")) {
+        if (url.startsWith("tcp://")) {
             check_type0_tcp(sev, url);
         }
     }
 
     private void check_type0_tcp(ServiceModel sev, String url) {
-        URI uri = URI.create(url);
 
         try {
+            URI uri = URI.create(url);
+
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
             SocketAddress socketAddress = new InetSocketAddress(uri.getHost(), uri.getPort());
@@ -158,14 +159,14 @@ public final class SevController implements IJob {
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             if (sev.is_unstable && sev.check_error_num >= 2) {
                 //
                 // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
                 //
                 DbWaterRegApi.delService(sev.service_id);
             } else {
-                DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
+                DbWaterRegApi.udpService0(sev.service_id, 1, "0");
                 LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
             }
         }
@@ -218,9 +219,6 @@ public final class SevController implements IJob {
         }
     }
 
-    private void check_type0_onerror(){
-
-    }
 
     //通知负载更新
     private void gatewayNotice(ServiceModel sev) {
