@@ -150,11 +150,11 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
      * 初始化Weed监听事件
      * */
     protected void initWeed() {
-        Class<?> clz = Utils.loadClass(WW.clz_BcfClient);
+        Class<?> bcfClz = Utils.loadClass(WW.clz_BcfClient);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean  isWeedStyle2= "text2".equals(Solon.cfg().get("water.weed.log.style"));
 
-        if (clz == null) {
+        if (bcfClz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
                 if(isDebugMode){
