@@ -9,6 +9,7 @@ import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.WaterSetting;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
@@ -107,7 +108,7 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                 //
                 int gzip = Solon.cfg().getInt(WW.cfg_water_log_gzip, -1);
                 if (gzip > -1) {
-                    WaterLogger.setGzip(gzip == 1);
+                    WaterSetting.water_logger_gzip(gzip == 1);
                 }
 
                 int level = Solon.cfg().getInt(WW.cfg_water_log_level, -1);
