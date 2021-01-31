@@ -15,6 +15,11 @@ import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
 import watersev.utils.HttpUtilEx;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -122,7 +127,7 @@ public final class SevController implements IJob {
 
 
         String url = sev.check_url;
-        if (url.startsWith("http://") == false) {
+        if (url.indexOf("://") < 0) {
             if (sev.address.indexOf("://") > 0) {
                 url = sev.address + sev.check_url;
             } else {
@@ -130,10 +135,43 @@ public final class SevController implements IJob {
             }
         }
 
-        if (url.startsWith("http") == false) {
-            return;
+        if (url.startsWith("http")) {
+            check_type0_http(sev, url);
         }
 
+        if (url.startsWith("tcp")) {
+            check_type0_tcp(sev, url);
+        }
+    }
+
+    private void check_type0_tcp(ServiceModel sev, String url) {
+        URI uri = URI.create(url);
+
+        try {
+            DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
+
+            SocketAddress socketAddress = new InetSocketAddress(uri.getHost(), uri.getPort());
+            Socket socket = new Socket();
+
+
+            socket.connect(socketAddress);
+
+            DbWaterRegApi.udpService0(sev.service_id, 0, "");
+
+        } catch (Exception ex) {
+            if (sev.is_unstable && sev.check_error_num >= 2) {
+                //
+                // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
+                //
+                DbWaterRegApi.delService(sev.service_id);
+            } else {
+                DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
+                LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
+            }
+        }
+    }
+
+    private void check_type0_http(ServiceModel sev, String url) {
         try {
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
@@ -178,6 +216,10 @@ public final class SevController implements IJob {
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
             LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
         }
+    }
+
+    private void check_type0_onerror(){
+
     }
 
     //通知负载更新
