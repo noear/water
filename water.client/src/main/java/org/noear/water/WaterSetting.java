@@ -25,6 +25,15 @@ public class WaterSetting {
     public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
     public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
+    private static boolean _water_logger_gzip = true;
+    public static boolean water_logger_gzip(){
+        return _water_logger_gzip;
+    }
+    public static void water_logger_gzip(boolean gzip){
+        _water_logger_gzip = gzip;
+    }
+
+
     private static String _water_logger_def = null;
     public static String water_logger_def(){
         return _water_logger_def;

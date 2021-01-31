@@ -8,7 +8,6 @@ import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
@@ -23,25 +22,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * 日志服务接口
  * */
 public class LogApi {
-    private Map<String, Logger> loggerMap = new ConcurrentHashMap<>();
 
     protected final ApiCaller apiCaller;
     public LogApi(){
         apiCaller = new ApiCaller(WaterAddress.getLogApiUrl());
     }
 
-    public Logger logger(String logger) {
-        Logger tmp = loggerMap.get(logger);
-        if (tmp == null) {
-            tmp = WaterLogger.get(logger);
-            Logger l = loggerMap.putIfAbsent(logger, tmp);
-            if (l != null) {
-                tmp = l;
-            }
-        }
-
-        return tmp;
-    }
 
     /**
      * 添加日志
@@ -107,13 +93,13 @@ public class LogApi {
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         String trace_id = WaterClient.waterTraceId();
 
-        if (async) {
-            WaterSetting.pools.submit(() -> {
-                appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
-            });
-        } else {
+//        if (async) {
+//            //WaterSetting.pools.submit(() -> {
+//                appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
+//            //});
+//        } else {
             appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
-        }
+//        }
     }
 
     private void appendDo(String logger, String trace_id,Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
@@ -187,7 +173,7 @@ public class LogApi {
         String json = ONode.serialize(list);
 
         try {
-            if (WaterLogger.isGzip()) {
+            if (WaterSetting.water_logger_gzip()) {
                 apiCaller.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_glog);
             } else {
                 Map<String,String> map = new HashMap<>();

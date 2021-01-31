@@ -1,8 +1,8 @@
 package org.slf4j.impl;
 
+import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
-import org.noear.water.log.WaterLogger;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
@@ -40,13 +40,12 @@ public enum Slf4jWaterLoggerFactory implements ILoggerFactory {
         return this.level;
     }
 
-    WaterLogger logger;
 
     public void write(String name, Level level, String content) {
-        if (logger == null) {
-            logger = new WaterLogger(WaterSetting.water_logger_def());
-        }
-
-        logger.slf4jWrite(level, name, content);
+        WaterClient.Log.append(WaterSetting.water_logger_def(),
+                level,
+                "slf4j",
+                null,
+                content);
     }
 }

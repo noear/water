@@ -1,6 +1,5 @@
 package org.noear.water.log;
 
-import org.noear.snack.core.exts.ClassWrap;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.dso.LogPipeline;
@@ -23,18 +22,9 @@ public class WaterLogger implements Logger {
     }
 
     private static volatile Level level = Level.TRACE;
-    private static volatile boolean gzip = true;
 
     public static void setLevel(Level level) {
         WaterLogger.level = level;
-    }
-
-    public static void setGzip(boolean gzip) {
-        WaterLogger.gzip = gzip;
-    }
-
-    public static boolean isGzip() {
-        return gzip;
     }
 
     public static void setInterval(long interval) {
