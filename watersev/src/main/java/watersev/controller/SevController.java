@@ -155,7 +155,7 @@ public final class SevController implements IJob {
             Socket socket = new Socket();
 
 
-            socket.connect(socketAddress);
+            socket.connect(socketAddress, 1000);
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
