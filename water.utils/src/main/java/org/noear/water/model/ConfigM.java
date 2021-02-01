@@ -5,6 +5,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
+import org.noear.water.utils.MongoX;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -138,6 +139,14 @@ public final class ConfigM {
         }
 
         return new RedisX(getProp(), db, maxTotaol);
+    }
+
+    public MongoX getMg(String db){
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        return new MongoX(getProp(), db);
     }
 
     /**
