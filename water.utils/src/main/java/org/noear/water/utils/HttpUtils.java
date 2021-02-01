@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 public class HttpUtils {
     private final static Fun0<Dispatcher> okhttp_dispatcher = () -> {
         Dispatcher temp = new Dispatcher();
-        temp.setMaxRequests(3000);
-        temp.setMaxRequestsPerHost(600);
+        temp.setMaxRequests(20000);
+        temp.setMaxRequestsPerHost(10000);
         return temp;
     };
 

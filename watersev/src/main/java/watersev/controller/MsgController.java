@@ -67,32 +67,35 @@ public final class MsgController implements IJob {
         }
 
         long msgID = Long.parseLong(msg_id_str);
-
-        MessageModel msg = DbWaterMsgApi.getMessage(msgID);
-        msg.lk_msg_id_do = lk_msg_id_do;
-
-        if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
-            return;
-        }
-
-
-        long ntime = DisttimeUtils.currTime();
-        if (msg.dist_nexttime > ntime) { //如果时间还没到
-            return;
-        }
+        MessageModel msg = null;
 
         try {
+            msg = DbWaterMsgApi.getMessage(msgID); //可能会出异常
+            msg.lk_msg_id_do = lk_msg_id_do;
+
+            if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
+                return;
+            }
+
+
+            long ntime = DisttimeUtils.currTime();
+            if (msg.dist_nexttime > ntime) { //如果时间还没到
+                return;
+            }
+
             //置为处理中
             DbWaterMsgApi.setMessageState(msgID, 1);
 
             distributeDo0(msg);
 
         } catch (Throwable ex) {
-            DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
+            if (msg != null) {
+                DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
-            LogUtil.writeForMsgByError(msg, ex);
+                LogUtil.writeForMsgByError(msg, ex);
+            }
 
-            //如果异常了，时和解锁（如果成功，在回调里解锁）
+            //如果异常了，及时解锁（如果成功，在回调里解锁）
             ProtocolHub.messageLock.unlock(lk_msg_id_do);
         }
     }
