@@ -4,12 +4,15 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -75,11 +78,79 @@ public class MongoX {
     }
 
 
-    public MongoCollection<Document> getCollection(String name) {
-        return database.getCollection(name);
+    public MongoCollection<Document> getCollection(String coll) {
+        return database.getCollection(coll);
     }
 
-    public <T> MongoCollection<T> getCollection(String name, Class<T> clz) {
-        return database.getCollection(name, clz);
+    public <T> MongoCollection<T> getCollection(String coll, Class<T> clz) {
+        return database.getCollection(coll, clz);
+    }
+
+    public void insertOne(String coll, Map<String, Object> data) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        collM.insertOne(new Document(data));
+    }
+
+    public void insertMany(String coll, List<Map<String, Object>> dataList) {
+        MongoCollection<Document> collM = getCollection(coll);
+        List<Document> list = new ArrayList<>();
+
+        for (Map data : dataList) {
+            list.add(new Document(data));
+        }
+
+        collM.insertMany(list);
+    }
+
+    public UpdateResult updateOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+
+        return collM.updateOne(new Document(filter), new Document(data));
+    }
+
+    public UpdateResult updateMany(String coll, Map<String, Object> filter, Map<String, Object> data) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        return collM.updateMany(new Document(filter), new Document(data));
+    }
+
+    public Map<String, Object> findOne(String coll, Map<String, Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        FindIterable<Document> listM = collM.find(new Document(filter));
+        listM.limit(1);
+
+        for (Document item : listM) {
+            return item;
+        }
+
+        return null;
+    }
+
+    public List<Map<String, Object>> findMany(String coll, Map<String, Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        FindIterable<Document> listM = collM.find(new Document(filter));
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (Document item : listM) {
+            list.add(item);
+        }
+
+        return list;
+    }
+
+    public void deleteOne(String coll, Map<String, Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        collM.deleteOne(new Document(filter));
+    }
+
+    public void deleteMany(String coll, Map<String, Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        collM.deleteMany(new Document(filter));
     }
 }
