@@ -67,7 +67,7 @@ public class LogSourceMongo implements LogSource {
         }
 
         if (level > 0) {
-            filter.put("level", log_date);
+            filter.put("level", level);
         }
 
         if (log_id > 0) {
