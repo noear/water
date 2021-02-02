@@ -37,16 +37,16 @@ public class CMD_sev_reg extends UapiBase {
             meta = ctx.param("note");
         }
 
+        if (meta == null) {
+            meta = "";
+        }
+
         String alarm_mobile = ctx.param("alarm_mobile", "");
 
         if (check_type == 0) {
             if (Utils.isEmpty(check_url)) {
                 throw UapiCodes.CODE_13("check_url");
             }
-        }
-
-        if (meta == null) {
-            meta = "";
         }
 
 

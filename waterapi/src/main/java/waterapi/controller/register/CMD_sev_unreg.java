@@ -11,7 +11,7 @@ import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.interceptor.Logging;
 
 /**
- * 服务注锁
+ * 服务注销
  *
  * @author noear
  * @since 2017.07
@@ -24,7 +24,7 @@ public class CMD_sev_unreg extends UapiBase {
 
     @NotEmpty({"service", "address"})
     @Mapping("/sev/unreg/")
-    protected Result cmd_exec(Context ctx, String service, String address, String meta) throws Exception {
+    public Result cmd_exec(Context ctx, String service, String address, String meta) throws Exception {
 
         if (meta == null) {
             meta = ctx.param("note"); //旧的

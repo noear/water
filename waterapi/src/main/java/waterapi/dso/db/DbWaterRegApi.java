@@ -84,7 +84,7 @@ public final class DbWaterRegApi {
         String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service")
-                .where("`key` = ?", key)
+                .whereEq("key", key)
                 .delete() > 0;
 
         //通知负载更新

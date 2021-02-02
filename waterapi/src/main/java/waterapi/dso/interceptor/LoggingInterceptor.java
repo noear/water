@@ -9,6 +9,10 @@ public class LoggingInterceptor implements Handler {
     public void handle(Context ctx) throws Throwable {
         //记录输入
         //
-        LogUtils.info("", ctx);
+        try {
+            LogUtils.info("", ctx);
+        } catch (Throwable ex) {
+
+        }
     }
 }
