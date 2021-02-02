@@ -9,6 +9,8 @@ import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogQuerierImp;
+import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import luffy.JtRun;
 import watersev.dso.JobRunnerEx;
@@ -39,6 +41,9 @@ public class WatersevApp {
             Config.tryInit();
 
             ProtocolHub.config = WaterClient.Config::get;
+
+            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
+            ProtocolHub.logQuerier = new LogQuerierImp();
 
             ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
             ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);

@@ -5,12 +5,16 @@ import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
+import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogQuerierImp;
+import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.utils.FromUtils;
 import org.noear.water.integration.solon.WaterAdapter;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
+import waterpaas.dso.DbWaterCfgApi;
 
 
 public class WaterpaasApp {
@@ -19,6 +23,13 @@ public class WaterpaasApp {
 
         SolonApp app = Solon.start(WaterpaasApp.class, args, (x) -> {
             Config.tryInit(x);
+
+            //设置接口
+            //
+            ProtocolHub.config = WaterClient.Config::get;
+
+            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
+            ProtocolHub.logQuerier = new LogQuerierImp();
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);

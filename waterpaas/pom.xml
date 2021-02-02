@@ -65,6 +65,11 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>water.protocol</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>water.client-solon-plugin</artifactId>
         </dependency>
 
@@ -103,6 +108,12 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

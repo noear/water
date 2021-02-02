@@ -17,7 +17,11 @@ public class Config {
     public static final ICacheServiceEx cache_file = new LocalCache();
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
 
+
+    public static final DbContext water = cfg(WW.water).getDb(true);
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
+
+    public static ConfigM water_log_store = cfg("water_log_store");
 
     public static String waterpaas_secretKey;
 
