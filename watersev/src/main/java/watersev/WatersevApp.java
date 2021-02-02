@@ -14,6 +14,7 @@ import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageLockRedis;
 import luffy.JtRun;
 import watersev.dso.JobRunnerEx;
+import watersev.dso.db.DbWaterCfgApi;
 
 /**
  * 可以按三个服务进行部署：
