@@ -8,7 +8,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
-import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.noear.solon.core.wrap.ClassWrap;
@@ -32,12 +31,12 @@ public class MongoX {
         List<ServerAddress> lists = new ArrayList<>();
         MongoClientOptions options = new MongoClientOptions.Builder().build();
 
-        String schema = props.getProperty("schema");
+        String server = props.getProperty("server");
+        String source = props.getProperty("source");
         String username = props.getProperty("username");
         String password = props.getProperty("password");
-        String servers = props.getProperty("servers");
 
-        String[] serverAry = servers.split(";");
+        String[] serverAry = server.split(";");
 
         for (String sev : serverAry) {
             if (TextUtils.isNotEmpty(sev)) {
@@ -46,7 +45,7 @@ public class MongoX {
         }
 
         if (TextUtils.isNotEmpty(username)) {
-            MongoCredential credential = MongoCredential.createCredential(username, schema, password.toCharArray());
+            MongoCredential credential = MongoCredential.createCredential(username, source, password.toCharArray());
             client = new MongoClient(lists, credential, options);
         } else {
             client = new MongoClient(lists, options);
@@ -108,24 +107,24 @@ public class MongoX {
         collM.insertMany(list);
     }
 
-    public UpdateResult updateOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
+    public long updateOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
 
-        return collM.updateOne(new Document(filter), new Document(data));
+        return collM.updateOne(new Document(filter), new Document(data)).getModifiedCount();
     }
 
-    public UpdateResult updateMany(String coll, Map<String, Object> filter, Map<String, Object> data) {
+    public long updateMany(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        return collM.updateMany(new Document(filter), new Document(data));
+        return collM.updateMany(new Document(filter), new Document(data)).getModifiedCount();
     }
 
 
-    public UpdateResult replaceOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
+    public long replaceOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        return collM.replaceOne(new Document(filter), new Document(data));
+        return collM.replaceOne(new Document(filter), new Document(data)).getModifiedCount();
     }
 
 

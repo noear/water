@@ -180,7 +180,7 @@
 
         window.tmls = {
             "database":"schema=\nurl=\nusername=\npassword=",
-            "mongodb":"schema=\nurl=\nusername=\npassword=",
+            "mongodb":"server=\nsource=\nusername=\npassword=",
             "memcached":"server=\nuser=\npassword=",
             "redis":"server=\nuser=\npassword=",
             "elasticsearch":"url=\nusername=\npassword=",
@@ -188,6 +188,7 @@
             "iaas_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
             "ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
             "water.queue":"queue.name=\nqueue.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
+            "water.logger":"logger.name=\nlogger.type=\nschema=\nurl=\npassword=\n#for rdb\nserver=\nsource=\n#for mongo",
         };
     </script>
 </head>
