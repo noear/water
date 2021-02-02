@@ -8,6 +8,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 
+
 public class Config {
     public static String web_title = "WATER";
 
@@ -17,6 +18,7 @@ public class Config {
     public static DbContext water_log = cfg(WW.water_log).getDb(true);
     public static DbContext water_msg = cfg(WW.water_msg).getDb(true);
     public static DbContext water_paas = cfg(WW.water_paas).getDb(true);
+    public static ConfigM water_log_store = cfg("water_log_store");
 
     //paas 根地址
     public static String paas_uri(){

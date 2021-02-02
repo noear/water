@@ -34,6 +34,7 @@ public class Config {
 
     public static String localHost;
 
+    public static ConfigM water_log_store;
 
 
     //================================
@@ -54,15 +55,16 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            int service_port = Solon.global().port();;
+            int service_port = Solon.global().port();
+            ;
             Properties prop = Solon.cfg().getProp("water.dataSource");
 
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
             water_log = cfg(WW.water_log).getDb(true);
 
-            ConfigModel cm = cfg(WW.water_redis);
-            ConfigModel cm2 = cfg(WW.water_redis_track);
+            ConfigM cm = cfg(WW.water_redis);
+            ConfigM cm2 = cfg(WW.water_redis_track);
 
             rd_ids = cm.getRd(1);
             rd_lock = cm.getRd(2);
@@ -77,7 +79,8 @@ public class Config {
             water_cache_header = cfg("water_cache_header")
                     .getString("WATER2_CACHE") + "_API2";
 
-            water_msg_queue = cfg("water_msg_queue").toConfigM();
+            water_log_store = cfg("water_log_store");
+            water_msg_queue = cfg("water_msg_queue");
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);
@@ -102,9 +105,10 @@ public class Config {
     //================================
     //
 
-    public static ConfigModel cfg(String key) {
+    public static ConfigM cfg(String key) {
         try {
-            return DbWaterCfgApi.getConfigNoCache(WW.water, key);
+            return DbWaterCfgApi.getConfigNoCache(WW.water, key)
+                    .toConfigM();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

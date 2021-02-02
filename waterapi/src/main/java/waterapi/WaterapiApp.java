@@ -14,7 +14,6 @@ import waterapi.dso.IDUtils;
 import waterapi.dso.LogUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
-import waterapi.dso.wrap.LogSourceDef;
 
 public class WaterapiApp {
 
@@ -42,7 +41,7 @@ public class WaterapiApp {
 
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
 
-				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
+				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 				ProtocolHub.logStorer = new LogStorerImp(IDUtils::buildLogID);
 				ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 				ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);

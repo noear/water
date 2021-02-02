@@ -14,33 +14,7 @@ import java.sql.SQLException;
  * 日志服务接口
  * */
 public final class DbWaterLogApi {
-    private static DbContext db() {
-        return Config.water;
-    }
 
-
-    public static DbContext loggerSource(String logger) throws SQLException {
-        LoggerModel cfg = DbWaterCfgApi.getLogger(logger);
-
-        return DbWaterCfgApi.getDbContext(cfg.source, Config.water_log);
-    }
-
-    //添加日志
-//    public static void addLog(String logger, String tag, String tag1, String tag2, String label, String content) throws SQLException {
-//
-//        DbContext db = loggerSource(logger);
-//
-//        db.table(logger).usingExpr(true)
-//                .set("log_id", IDUtil.buildLogID())
-//                .set("tag", tag)
-//                .set("tag1", tag1)
-//                .set("tag2", tag2)
-//                .set("label", label)
-//                .set("content", content)
-//                .set("log_date", "$DATE(NOW())")
-//                .set("log_fulltime", "$NOW()")
-//                .insert();
-//    }
 
     public static void addTrack(String service, String trace_id, String schema, long interval, String cmd_sql, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
 

@@ -10,17 +10,17 @@ import org.noear.water.utils.TextUtils;
 import java.util.Properties;
 
 public class ProtocolUtil {
-    public static MessageQueue createMessageQueue(ConfigM cfg){
+    public static MessageQueue createMessageQueue(ConfigM cfg) {
         Properties prop = cfg.getProp();
 
-        String name = prop.getProperty("queue.name","").toLowerCase();
-        String type = prop.getProperty("queue.type","").toLowerCase();
+        String name = prop.getProperty("queue.name", "").toLowerCase();
+        String type = prop.getProperty("queue.type", "").toLowerCase();
 
-        if(TextUtils.isEmpty(type) || TextUtils.isEmpty(type)){
+        if (TextUtils.isEmpty(type) || TextUtils.isEmpty(type)) {
             throw new RuntimeException("ProtocolHub::There was an error in the input configuration");
         }
 
-        if("redis".equals(type)){
+        if ("redis".equals(type)) {
             //server
             //user
             //password
@@ -28,7 +28,7 @@ public class ProtocolUtil {
             return new MessageQueueRedis(name, new RedisX(prop));
         }
 
-        if("rabbitmq".equals(type)){
+        if ("rabbitmq".equals(type)) {
             //server
             //user
             //password
@@ -36,7 +36,7 @@ public class ProtocolUtil {
             return new MessageQueueRabbitMQ(name, new RabbitMQX(prop));
         }
 
-        if("rocketmq".equals(type)){
+        if ("rocketmq".equals(type)) {
             //server
             return new MessageQueueRocketMQ(name, prop);
         }
@@ -44,12 +44,12 @@ public class ProtocolUtil {
         throw new RuntimeException("ProtocolHub::There was an error in the input configuration");
     }
 
-    public static LogSource createLogSource(ConfigM cfg){
+    public static LogSource createLogSource(ConfigM cfg) {
         if (cfg == null || TextUtils.isEmpty(cfg.value)) {
             return null;
         }
 
         //String type = cfg.getProp().getProperty(WW.type_logger);
-        return new LogSourceRdb(cfg.getDb(true));
+        return new LogSourceProxy(cfg);
     }
 }

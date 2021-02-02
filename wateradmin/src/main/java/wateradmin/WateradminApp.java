@@ -9,7 +9,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import wateradmin.dso.db.DbWaterCfgApi;
-import wateradmin.dso.wrap.LogSourceDef;
+import wateradmin.dso.wrap.LogSourceWrap;
 import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
@@ -28,7 +28,7 @@ public class WateradminApp {
             //
             ProtocolHub.config = WaterClient.Config::get;
 
-            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(new LogSourceDef(), DbWaterCfgApi::getLogger);
+            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
             ProtocolHub.logQuerier = new LogQuerierImp();
 
             ProtocolHub.monitoring = new MonitoringAliyun();

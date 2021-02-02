@@ -17,8 +17,8 @@ public class LogSourceFactoryImp implements LogSourceFactory {
 
     private Map<String, LogSource> _logMap = new HashMap<>();
 
-    public LogSourceFactoryImp(LogSource def, Fun1<String, LoggerMeta> loggerGetter) {
-        _def = def;
+    public LogSourceFactoryImp(ConfigM def, Fun1<String, LoggerMeta> loggerGetter) {
+        _def = new LogSourceProxy(def);
         _loggerGetter = loggerGetter;
     }
 
