@@ -68,6 +68,11 @@
             <artifactId>water.client-solon-plugin</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+        </dependency>
+
 
         <!-- **************** -->
         <dependency>
