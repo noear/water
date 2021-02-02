@@ -7,8 +7,11 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
+import org.noear.solon.core.wrap.ClassWrap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,13 +122,11 @@ public class MongoX {
     }
 
 
-
     public UpdateResult replaceOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
         MongoCollection<Document> collM = getCollection(coll);
 
         return collM.replaceOne(new Document(filter), new Document(data));
     }
-
 
 
     public Map<String, Object> findOne(String coll, Map<String, Object> filter) {
@@ -154,15 +155,33 @@ public class MongoX {
         return list;
     }
 
-    public void deleteOne(String coll, Map<String, Object> filter) {
+    public DeleteResult deleteOne(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        collM.deleteOne(new Document(filter));
+        return collM.deleteOne(new Document(filter));
     }
 
-    public void deleteMany(String coll, Map<String, Object> filter) {
+    public DeleteResult deleteMany(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        collM.deleteMany(new Document(filter));
+        return collM.deleteMany(new Document(filter));
+    }
+
+    /**
+     * 创建索引
+     * */
+    public String createIndex(String coll, Map<String, Object> keys, Map<String, Object> options) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        IndexOptions optionsM = ClassWrap.get(IndexOptions.class).newBy((k) -> {
+            Object tmp = options.get(k);
+            if (tmp == null) {
+                return null;
+            } else {
+                return tmp.toString();
+            }
+        });
+
+        return collM.createIndex(new Document(keys), optionsM);
     }
 }

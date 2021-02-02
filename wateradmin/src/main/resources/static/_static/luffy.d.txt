@@ -835,13 +835,49 @@ interface RedisX{
     open1(callbackfn:(ru:RedisUsing)=>object):object;
 }
 
+interface MongoIndexOptions{
+    background:boolean;
+    unique:boolean;
+    name:string;
+    sparse:boolean;
+    expireAfterSeconds:bigint;
+    version:number;
+    defaultLanguage:string;
+    languageOverridea:string;
+    textVersion:number;
+    sphereVersion:number;
+    bits:number;
+    min:number;
+    max:number;
+    bucketSize:number;
+}
+
+interface MongoX{
+    insertOne(coll:string, data:Map<string,object>):void;
+    insertMany(coll:string, data:Array<Map<string,object>>):void;
+
+    updateOne(coll:string, filter:Map<string,object>, data:Map<string,object>):object;
+    updateMany(coll:string, filter:Map<string,object>, data:Array<Map<string,object>>):object;
+
+    replaceOne(coll:string, filter:Map<string,object>, data:Map<string,object>):object;
+
+    findOne(coll:string, filter:Map<string,object>):JMap<string, object>;
+    findMany(coll:string, filter:Map<string,object>):JList<JMap<string, object>>;
+
+    deleteOne(coll:string, data:Map<string,object>):object;
+    deleteMany(coll:string, data:Array<Map<string,object>>):object;
+
+    createIndex(coll:string, keys:Map<string,object>, options:MongoIndexOptions):string;
+}
+
 interface water{
     client:WaterClient;
     proxy:WaterProxy;
 
     cfg(tagKey:string):AConfigM;
     db(tagKey:string):DbContext;
-    rd(tagKey:string):RedisX;
+    rd(tagKey:string, db:number):RedisX;
+    mg(tagKey:string, db:string):MongoX;
 
     updateCache(tags:string):void;
 
