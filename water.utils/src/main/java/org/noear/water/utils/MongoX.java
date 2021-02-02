@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
+ * 此包装，更适合在PaaS里使用
+ *
  * @author noear 2021/2/1 created
  */
 public class MongoX {
@@ -115,6 +117,16 @@ public class MongoX {
 
         return collM.updateMany(new Document(filter), new Document(data));
     }
+
+
+
+    public UpdateResult replaceOne(String coll, Map<String, Object> filter, Map<String, Object> data) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        return collM.replaceOne(new Document(filter), new Document(data));
+    }
+
+
 
     public Map<String, Object> findOne(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
