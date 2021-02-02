@@ -50,6 +50,6 @@ public class ProtocolUtil {
         }
 
         //String type = cfg.getProp().getProperty(WW.type_logger);
-        return new LogSourceDb(cfg.getDb(true));
+        return new LogSourceRdb(cfg.getDb(true));
     }
 }

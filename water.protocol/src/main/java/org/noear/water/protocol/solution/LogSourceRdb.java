@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LogSourceDb implements LogSource {
+public class LogSourceRdb implements LogSource {
     DbContext _db;
 
-    public LogSourceDb(DbContext db) {
+    public LogSourceRdb(DbContext db) {
         _db = db;
     }
 

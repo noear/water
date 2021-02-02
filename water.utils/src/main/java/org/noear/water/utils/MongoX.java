@@ -142,10 +142,15 @@ public class MongoX {
         return null;
     }
 
-    public List<Map<String, Object>> findMany(String coll, Map<String, Object> filter) {
+    public List<Map<String, Object>> findMany(String coll, Map<String, Object> filter, Map<String, Object> sort) {
         MongoCollection<Document> collM = getCollection(coll);
 
         FindIterable<Document> listM = collM.find(new Document(filter));
+
+        if (sort != null && sort.size() > 0) {
+            listM.sort(new Document(sort));
+        }
+
         List<Map<String, Object>> list = new ArrayList<>();
 
         for (Document item : listM) {
@@ -155,16 +160,16 @@ public class MongoX {
         return list;
     }
 
-    public DeleteResult deleteOne(String coll, Map<String, Object> filter) {
+    public void deleteOne(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        return collM.deleteOne(new Document(filter));
+        collM.deleteOne(new Document(filter));
     }
 
-    public DeleteResult deleteMany(String coll, Map<String, Object> filter) {
+    public void deleteMany(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
 
-        return collM.deleteMany(new Document(filter));
+        collM.deleteMany(new Document(filter));
     }
 
     /**
