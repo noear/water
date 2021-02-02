@@ -9,7 +9,6 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import wateradmin.dso.db.DbWaterCfgApi;
-import wateradmin.dso.wrap.LogSourceWrap;
 import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
