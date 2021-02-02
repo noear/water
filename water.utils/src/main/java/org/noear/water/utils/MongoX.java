@@ -8,7 +8,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.noear.solon.core.wrap.ClassWrap;
 
@@ -169,6 +168,16 @@ public class MongoX {
         MongoCollection<Document> collM = getCollection(coll);
 
         collM.deleteMany(new Document(filter));
+    }
+
+    public long count(String coll,Map<String,Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        if (filter == null || filter.size() == 0) {
+            return collM.countDocuments();
+        } else {
+            return collM.countDocuments(new Document(filter));
+        }
     }
 
     /**

@@ -8,7 +8,6 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.MongoX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DataItem;
-import org.noear.weed.DbTableQuery;
 import org.noear.weed.wrap.ClassWrap;
 
 import java.util.*;
@@ -164,6 +163,21 @@ public class LogSourceMongo implements LogSource {
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public long stat(String logger, Integer level, Integer log_date) throws Exception {
+        Map<String, Object> filter = new LinkedHashMap<>();
+
+        if (level != null) {
+            filter.put("level", level);
+        }
+
+        if (log_date != null) {
+            filter.put("log_date", log_date);
+        }
+
+        return mongoX.count(logger, filter);
     }
 
     @Override

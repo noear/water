@@ -36,6 +36,11 @@ public class LogSourceProxy implements LogSource {
     }
 
     @Override
+    public long stat(String logger, Integer level, Integer log_date) throws Exception {
+        return real.stat(logger, level, log_date);
+    }
+
+    @Override
     public void clear(String logger, int keep_days) {
         real.clear(logger, keep_days);
     }
