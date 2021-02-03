@@ -81,7 +81,7 @@ public class LogSourceMongo implements LogSource {
         orderBy.put("log_id", -1);
 
 
-        List<Map<String, Object>> list0 = mongoX.findMany(logger, filter, orderBy);
+        List<Map<String, Object>> list0 = mongoX.findTop(logger, filter, orderBy, size);
         List<LogModel> list = new ArrayList<>();
 
         for (Map<String, Object> map : list0) {
