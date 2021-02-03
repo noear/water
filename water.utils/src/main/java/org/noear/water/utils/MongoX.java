@@ -211,6 +211,16 @@ public class MongoX {
         MongoCollection<Document> collM = getCollection(coll);
 
         if (filter == null || filter.size() == 0) {
+            return collM.count();
+        } else {
+            return collM.count(new Document(filter));
+        }
+    }
+
+    public long countDocuments(String coll,Map<String,Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        if (filter == null || filter.size() == 0) {
             return collM.countDocuments();
         } else {
             return collM.countDocuments(new Document(filter));
