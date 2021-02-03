@@ -1,9 +1,13 @@
 package waterapi.dso;
 
-
+import org.noear.solon.core.event.EventBus;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.EventPipeline;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 写入时，先写到队列
@@ -18,8 +22,11 @@ public class LogPipelineLocal extends EventPipeline<LogEvent> {
     }
 
     private LogPipelineLocal() {
-        super((list) -> {
-            ProtocolHub.logStorer.writeAll(list);
-        });
+        super();
+    }
+
+    @Override
+    protected void handler(List<LogEvent> logEvents) {
+        ProtocolHub.logStorer.writeAll(logEvents);
     }
 }

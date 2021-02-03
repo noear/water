@@ -14,28 +14,24 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author noear
  * @since 2.0
  * */
-public class EventPipeline<Event> implements TaskUtils.ITask {
+public abstract class EventPipeline<Event> implements TaskUtils.ITask {
     private long interval = 500;
     private long interval_min = 100;
 
     private int packetSize = 100; //必须大于100
     private int packetSize_min = 100; //必须大于100
 
-    private Act1<List<Event>> handler; //不要用Act1Ex
-
-    public EventPipeline(Act1<List<Event>> handler) {
-        this.handler = handler;
-
+    public EventPipeline() {
         TaskUtils.run(this);
     }
 
-    public EventPipeline(long interval,int packetSize, Act1<List<Event>> handler) {
-        this.handler = handler;
-
+    public EventPipeline(long interval,int packetSize) {
         setInterval(interval);
         setPacketSize(packetSize);
         TaskUtils.run(this);
     }
+
+    protected abstract void handler(List<Event> events);
 
     //
     //
@@ -86,7 +82,7 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
             collectDo(list);
 
             if (list.size() > 0) {
-                handler.run(list);
+                handler(list);
             } else {
                 break;
             }

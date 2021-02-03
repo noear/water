@@ -4,6 +4,8 @@ import org.noear.water.WaterClient;
 import org.noear.water.log.LogEvent;
 import org.noear.water.utils.EventPipeline;
 
+import java.util.List;
+
 /**
  * 写入时，先写到队列
  * 提交时，每次提交100条；消费完后暂停1秒
@@ -19,8 +21,11 @@ public class LogPipeline extends EventPipeline<LogEvent> {
     }
 
     private LogPipeline() {
-        super((list) -> {
-            WaterClient.Log.appendAll(list, true);
-        });
+        super();
+    }
+
+    @Override
+    protected void handler(List<LogEvent> logEvents) {
+        WaterClient.Log.appendAll(logEvents, true);
     }
 }

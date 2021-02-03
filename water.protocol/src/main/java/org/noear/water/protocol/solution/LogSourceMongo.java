@@ -93,76 +93,68 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
-        try {
-            Datetime datetime = null;
-            if (log_fulltime == null) {
-                datetime = new Datetime();
-            } else {
-                datetime = new Datetime(log_fulltime);
-            }
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception{
 
-            Map<String, Object> data = new LinkedHashMap<>();
-            data.put("log_id", log_id);
-            data.put("trace_id", trace_id);
-            data.put("level", level.code);
-            data.put("tag", tag);
-            data.put("tag1", tag1);
-            data.put("tag2", tag2);
-            data.put("tag3", tag3);
-            data.put("summary", summary);
-            data.put("content", content);
-            data.put("from", from);
-
-            data.put("log_date", datetime.getDate());
-            data.put("log_fulltime", datetime.getFulltime());
-
-            mongoX.insertOne(logger, data);
-
-        } catch (Throwable ex) {
-            ex.printStackTrace();
+        Datetime datetime = null;
+        if (log_fulltime == null) {
+            datetime = new Datetime();
+        } else {
+            datetime = new Datetime(log_fulltime);
         }
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("log_id", log_id);
+        data.put("trace_id", trace_id);
+        data.put("level", level.code);
+        data.put("tag", tag);
+        data.put("tag1", tag1);
+        data.put("tag2", tag2);
+        data.put("tag3", tag3);
+        data.put("summary", summary);
+        data.put("content", content);
+        data.put("from", from);
+
+        data.put("log_date", datetime.getDate());
+        data.put("log_fulltime", datetime.getFulltime());
+
+        mongoX.insertOne(logger, data);
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) {
+    public void writeAll(String logger, List<LogEvent> list) throws Exception {
         if (list.size() == 0) {
             return;
         }
 
-        try {
-            List<Map<String, Object>> dataList = new ArrayList<>();
+        List<Map<String, Object>> dataList = new ArrayList<>();
 
-            for (LogEvent event : list) {
-                Datetime datetime = null;
-                if (event.log_fulltime == null) {
-                    datetime = new Datetime();
-                } else {
-                    datetime = new Datetime(event.log_fulltime);
-                }
-
-                Map<String, Object> data = new LinkedHashMap<>();
-                data.put("log_id", event.log_id);
-                data.put("trace_id", event.trace_id);
-                data.put("level", event.level);
-                data.put("tag", event.tag);
-                data.put("tag1", event.tag1);
-                data.put("tag2", event.tag2);
-                data.put("tag3", event.tag3);
-                data.put("summary", event.summary);
-                data.put("content", event.content);
-                data.put("from", event.from);
-
-                data.put("log_date", datetime.getDate());
-                data.put("log_fulltime", datetime.getFulltime());
-
-                dataList.add(data);
+        for (LogEvent event : list) {
+            Datetime datetime = null;
+            if (event.log_fulltime == null) {
+                datetime = new Datetime();
+            } else {
+                datetime = new Datetime(event.log_fulltime);
             }
 
-            mongoX.insertMany(logger, dataList);
-        } catch (Throwable ex) {
-            ex.printStackTrace();
+            Map<String, Object> data = new LinkedHashMap<>();
+            data.put("log_id", event.log_id);
+            data.put("trace_id", event.trace_id);
+            data.put("level", event.level);
+            data.put("tag", event.tag);
+            data.put("tag1", event.tag1);
+            data.put("tag2", event.tag2);
+            data.put("tag3", event.tag3);
+            data.put("summary", event.summary);
+            data.put("content", event.content);
+            data.put("from", event.from);
+
+            data.put("log_date", datetime.getDate());
+            data.put("log_fulltime", datetime.getFulltime());
+
+            dataList.add(data);
         }
+
+        mongoX.insertMany(logger, dataList);
     }
 
     @Override

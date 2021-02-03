@@ -26,12 +26,12 @@ public class LogSourceProxy implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception {
         real.write(log_id, logger, trace_id, level, tag, tag1, tag2, tag3, summary, content, from, log_fulltime);
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) {
+    public void writeAll(String logger, List<LogEvent> list) throws Exception {
         real.writeAll(logger, list);
     }
 

@@ -55,60 +55,51 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) {
-        try {
-            DbTableQuery qr = _db.table(logger).usingExpr(true)
-                    .set("log_id", log_id)
-                    .set("trace_id",trace_id)
-                    .set("level", level.code)
-                    .setDf("tag", tag, "")
-                    .setDf("tag1", tag1, "")
-                    .setDf("tag2", tag2, "")
-                    .setDf("tag3", tag3, "")
-                    .setDf("summary", summary, "")
-                    .setDf("content", content, "")
-                    .setDf("from", from, "");
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception{
 
-            if (log_fulltime == null) {
-                qr.set("log_date", "$DATE(NOW())")
-                        .set("log_fulltime", "$NOW()")
-                        .insert();
-            }else{
-                qr.set("log_date", new Datetime(log_fulltime).getDate())
-                        .set("log_fulltime", log_fulltime)
-                        .insert();
-            }
+        DbTableQuery qr = _db.table(logger).usingExpr(true)
+                .set("log_id", log_id)
+                .set("trace_id", trace_id)
+                .set("level", level.code)
+                .setDf("tag", tag, "")
+                .setDf("tag1", tag1, "")
+                .setDf("tag2", tag2, "")
+                .setDf("tag3", tag3, "")
+                .setDf("summary", summary, "")
+                .setDf("content", content, "")
+                .setDf("from", from, "");
 
-
-        } catch (Throwable ex) {
-            ex.printStackTrace();
+        if (log_fulltime == null) {
+            qr.set("log_date", "$DATE(NOW())")
+                    .set("log_fulltime", "$NOW()")
+                    .insert();
+        } else {
+            qr.set("log_date", new Datetime(log_fulltime).getDate())
+                    .set("log_fulltime", log_fulltime)
+                    .insert();
         }
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) {
+    public void writeAll(String logger, List<LogEvent> list) throws Exception {
         if (list.size() == 0) {
             return;
         }
 
-        try {
-            _db.table(logger).insertList(list, (log, item) -> {
-                item.set("log_id", log.log_id)
-                        .set("trace_id", log.trace_id)
-                        .set("level", log.level)
-                        .setDf("tag", log.tag, "")
-                        .setDf("tag1", log.tag1, "")
-                        .setDf("tag2", log.tag2, "")
-                        .setDf("tag3", log.tag3, "")
-                        .setDf("summary", log.summary, "")
-                        .setDf("content", log.content, "")
-                        .setDf("from", log.from, "")
-                        .setDf("log_date", log.log_date, "$DATE(NOW())")
-                        .setDf("log_fulltime", log.log_fulltime, "$NOW()");
-            });
-        } catch (Throwable ex) {
-            ex.printStackTrace();
-        }
+        _db.table(logger).insertList(list, (log, item) -> {
+            item.set("log_id", log.log_id)
+                    .set("trace_id", log.trace_id)
+                    .set("level", log.level)
+                    .setDf("tag", log.tag, "")
+                    .setDf("tag1", log.tag1, "")
+                    .setDf("tag2", log.tag2, "")
+                    .setDf("tag3", log.tag3, "")
+                    .setDf("summary", log.summary, "")
+                    .setDf("content", log.content, "")
+                    .setDf("from", log.from, "")
+                    .setDf("log_date", log.log_date, "$DATE(NOW())")
+                    .setDf("log_fulltime", log.log_fulltime, "$NOW()");
+        });
     }
 
     @Override
