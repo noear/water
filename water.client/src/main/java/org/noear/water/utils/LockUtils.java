@@ -52,6 +52,11 @@ public class LockUtils {
         return _redis_uni.open1((ru) -> ru.key(key2).exists());
     }
 
+    public static String getLockValue(String group, String key) {
+        String key2 = group + ".lk." + key;
+        return _redis_uni.open1((ru) -> ru.key(key2).get());
+    }
+
 
     /**
      * 解锁 group_key
