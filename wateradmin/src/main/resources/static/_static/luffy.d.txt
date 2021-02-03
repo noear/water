@@ -862,6 +862,8 @@ interface MongoX{
     replaceOne(coll:string, filter:Map<string,object>, data:Map<string,object>):object;
 
     findOne(coll:string, filter:Map<string,object>):JMap<string, object>;
+    findTop(coll:string, filter:Map<string,object>, top:number):JList<JMap<string, object>>;
+    findPage(coll:string, filter:Map<string,object>, start:number, size:number):JList<JMap<string, object>>;
     findMany(coll:string, filter:Map<string,object>):JList<JMap<string, object>>;
 
     deleteOne(coll:string, data:Map<string,object>):object;

@@ -64,7 +64,7 @@ public class LoggerController extends BaseController {
         }
 
         LoggerModel logger = DbWaterCfgApi.getLogger(logger_id);
-        List<ConfigModel> configs = DbWaterCfgApi.getDbConfigs();
+        List<ConfigModel> configs = DbWaterCfgApi.getLogStoreConfigs();
         List<String> option_sources = new ArrayList<>();
         for (ConfigModel config : configs) {
             option_sources.add(config.tag + "/" + config.key);

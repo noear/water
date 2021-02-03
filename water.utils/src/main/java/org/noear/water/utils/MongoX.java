@@ -155,36 +155,23 @@ public class MongoX {
     }
 
     public List<Map<String, Object>> findTop(String coll, Map<String, Object> filter, Map<String, Object> sort, int top) {
-        FindIterable<Document> listM = find(coll, filter);
-
-        if (top > 0) {
-            listM.limit(top);
-        }
-
-        if (sort != null && sort.size() > 0) {
-            listM.sort(new Document(sort));
-        }
-
-        List<Map<String, Object>> list = new ArrayList<>();
-
-        for (Document item : listM) {
-            list.add(item);
-        }
-
-        return list;
+        return findPage(coll, filter, sort, 0, top);
     }
 
     /**
-     * @param pageIndex 从0页开始
+     * @param start 起始位
+     * @param size 数量
      * */
-    public List<Map<String, Object>> findPage(String coll, Map<String, Object> filter, Map<String, Object> sort, int pageSize, int pageIndex) {
+    public List<Map<String, Object>> findPage(String coll, Map<String, Object> filter, Map<String, Object> sort, int start, int size) {
         FindIterable<Document> listM = find(coll, filter);
 
-        if (pageIndex > 0) {
-            listM.skip(pageSize * pageIndex);
+        if (start > 0) {
+            listM.skip(start);
         }
 
-        listM.limit(pageSize);
+        if (size > 0) {
+            listM.limit(size);
+        }
 
         if (sort != null && sort.size() > 0) {
             listM.sort(new Document(sort));
