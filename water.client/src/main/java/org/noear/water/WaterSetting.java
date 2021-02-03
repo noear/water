@@ -61,6 +61,10 @@ public class WaterSetting {
 
         String host = System.getProperty(WW.water_host);
 
+        if(TextUtils.isEmpty(host)){
+            host = System.getProperty("solon.cloud.water.server");
+        }
+
         if (TextUtils.isEmpty(host) == false) {
             _water_api_url = HostUtils.adjust(host);
         }
