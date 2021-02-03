@@ -128,9 +128,7 @@ public class MongoX {
 
 
     public Map<String, Object> findOne(String coll, Map<String, Object> filter) {
-        MongoCollection<Document> collM = getCollection(coll);
-
-        FindIterable<Document> listM = collM.find(new Document(filter));
+        FindIterable<Document> listM = find(coll, filter);
         listM.limit(1);
 
         for (Document item : listM) {
@@ -141,9 +139,7 @@ public class MongoX {
     }
 
     public List<Map<String, Object>> findMany(String coll, Map<String, Object> filter, Map<String, Object> sort) {
-        MongoCollection<Document> collM = getCollection(coll);
-
-        FindIterable<Document> listM = collM.find(new Document(filter));
+        FindIterable<Document> listM = find(coll, filter);
 
         if (sort != null && sort.size() > 0) {
             listM.sort(new Document(sort));
@@ -157,6 +153,61 @@ public class MongoX {
 
         return list;
     }
+
+    public List<Map<String, Object>> findTop(String coll, Map<String, Object> filter, Map<String, Object> sort, int top) {
+        FindIterable<Document> listM = find(coll, filter);
+
+        if (top > 0) {
+            listM.limit(top);
+        }
+
+        if (sort != null && sort.size() > 0) {
+            listM.sort(new Document(sort));
+        }
+
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (Document item : listM) {
+            list.add(item);
+        }
+
+        return list;
+    }
+
+    /**
+     * @param pageIndex 从0页开始
+     * */
+    public List<Map<String, Object>> findPage(String coll, Map<String, Object> filter, Map<String, Object> sort, int pageSize, int pageIndex) {
+        FindIterable<Document> listM = find(coll, filter);
+
+        if (pageIndex > 0) {
+            listM.skip(pageSize * pageIndex);
+        }
+
+        listM.limit(pageSize);
+
+        if (sort != null && sort.size() > 0) {
+            listM.sort(new Document(sort));
+        }
+
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (Document item : listM) {
+            list.add(item);
+        }
+
+        return list;
+    }
+
+
+
+    public FindIterable<Document> find(String coll, Map<String, Object> filter) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        return collM.find(new Document(filter));
+    }
+
+
 
     public void deleteOne(String coll, Map<String, Object> filter) {
         MongoCollection<Document> collM = getCollection(coll);
