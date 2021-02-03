@@ -80,7 +80,6 @@ public class MongoX {
         return new ServerAddress(host, port);
     }
 
-
     public MongoCollection<Document> getCollection(String coll) {
         return database.getCollection(coll);
     }
@@ -234,5 +233,11 @@ public class MongoX {
         });
 
         return collM.createIndex(new Document(keys), optionsM);
+    }
+
+    public String createIndex(String coll, Map<String, Object> keys) {
+        MongoCollection<Document> collM = getCollection(coll);
+
+        return collM.createIndex(new Document(keys));
     }
 }

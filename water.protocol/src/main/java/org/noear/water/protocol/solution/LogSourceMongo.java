@@ -182,6 +182,8 @@ public class LogSourceMongo implements LogSource {
 
     @Override
     public void clear(String logger, int keep_days) {
+        initIndex(logger);
+
         int date = Datetime.Now().addDay(-keep_days).getDate();
         try {
             Map<String, Object> filter = new LinkedHashMap<>();
@@ -194,5 +196,52 @@ public class LogSourceMongo implements LogSource {
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void initIndex(String logger){
+        Map<String, Object> index = null;
+        Map<String, Object> options = new HashMap<>();
+        options.put("background", true);
+
+        index = new HashMap<>();
+        index.put("level", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("log_date", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("log_id", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("log_fulltime", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("tag", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("tag1", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("tag2", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("tag3", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("trace_id", -1);
+        mongoX.createIndex(logger, index, options);
+
+        index = new HashMap<>();
+        index.put("log_fulltime", -1);
+        index.put("log_id", -1);
+        mongoX.createIndex(logger, index, options);
     }
 }
