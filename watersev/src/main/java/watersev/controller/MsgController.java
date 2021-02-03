@@ -2,8 +2,11 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
+import org.noear.solon.core.handle.ContextEmpty;
+import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
+import org.noear.water.WaterSetting;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.*;
 import watersev.Config;
@@ -56,6 +59,8 @@ public final class MsgController implements IJob {
             distributeDo(msg_id_str);
         } catch (Throwable ex) {
             EventBus.push(ex);
+        } finally {
+            ContextUtil.currentRemove();
         }
     }
 
@@ -82,6 +87,10 @@ public final class MsgController implements IJob {
             if (msg.dist_nexttime > ntime) { //如果时间还没到
                 return;
             }
+
+            //事务相关性设定
+            ContextUtil.currentSet(new ContextEmpty());
+            ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
 
             //置为处理中
             DbWaterMsgApi.setMessageState(msgID, 1);
