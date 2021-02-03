@@ -6,8 +6,6 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.EventPipeline;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 写入时，先写到队列
@@ -27,6 +25,10 @@ public class LogPipelineLocal extends EventPipeline<LogEvent> {
 
     @Override
     protected void handler(List<LogEvent> logEvents) {
-        ProtocolHub.logStorer.writeAll(logEvents);
+        try {
+            ProtocolHub.logStorer.writeAll(logEvents);
+        } catch (Throwable ex) {
+            EventBus.pushAsyn(ex);
+        }
     }
 }
