@@ -177,7 +177,11 @@ public class LogSourceMongo implements LogSource {
             filter.put("log_date", log_date);
         }
 
-        return mongoX.count(logger, filter);
+        if (filter.size() > 0) {
+            return mongoX.countDocuments(logger, filter);
+        } else {
+            return mongoX.count(logger);
+        }
     }
 
     @Override

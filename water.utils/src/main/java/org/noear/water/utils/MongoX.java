@@ -207,14 +207,9 @@ public class MongoX {
         collM.deleteMany(new Document(filter));
     }
 
-    public long count(String coll,Map<String,Object> filter) {
+    public long count(String coll) {
         MongoCollection<Document> collM = getCollection(coll);
-
-        if (filter == null || filter.size() == 0) {
-            return collM.count();
-        } else {
-            return collM.count(new Document(filter));
-        }
+        return collM.estimatedDocumentCount();
     }
 
     public long countDocuments(String coll,Map<String,Object> filter) {
