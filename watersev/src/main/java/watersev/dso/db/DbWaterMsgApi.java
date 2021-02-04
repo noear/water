@@ -1,7 +1,6 @@
 package watersev.dso.db;
 
 import org.noear.water.protocol.model.MessageState;
-import org.noear.water.utils.CacheUtils;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
@@ -199,17 +198,18 @@ public class DbWaterMsgApi {
 
     //添加派发任务
     public static void addDistributionNoLock(MessageModel msg, SubscriberModel subs) throws SQLException {
-//        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
+        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
 
         //尝试2秒的锁
-//        if (LockUtils.tryLock("watersev", lock_key, 2)) {
+        if (LockUtils.tryLock("watersev", lock_key, 2)) {
 
-//            boolean isExists = db().table("water_msg_distribution")
-//                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
-//                    .hint("/*TDDL:MASTER*/")
-//                    .selectExists();
-//
-//            if (isExists == false) {
+            //过滤时间还要用一下
+            boolean isExists = db().table("water_msg_distribution")
+                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
+                    .hint("/*TDDL:MASTER*/")
+                    .selectExists();
+
+            if (isExists == false) {
                 db().table("water_msg_distribution").usingExpr(true)
                         .set("msg_id", msg.msg_id)
                         .set("msg_key", msg.msg_key)
@@ -223,8 +223,8 @@ public class DbWaterMsgApi {
                         .set("log_date", "$DATE(NOW())")
                         .set("log_fulltime", "$NOW()")
                         .insert();
-//            }
-//        }
+            }
+        }
     }
 
     //根据消息获取派发任务
