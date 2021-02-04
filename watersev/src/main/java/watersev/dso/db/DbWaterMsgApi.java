@@ -34,6 +34,65 @@ public class DbWaterMsgApi {
         return m;
     }
 
+    //根据主题获取订阅者
+    public static Map<Integer, SubscriberModel> getSubscriberListByTopic(int topicID) throws SQLException {
+        Map<Integer, SubscriberModel> map = new HashMap<>();
+
+        List<SubscriberModel> list = db().table("water_msg_subscriber")
+                .where("topic_id=? AND is_enabled=1", topicID)
+                .selectList("*", SubscriberModel.class);
+
+        list.forEach(m -> {
+            map.put(m.subscriber_id, m);
+        });
+
+        return map;
+    }
+
+    public static List<SubscriberModel> getSubscriberList() throws SQLException {
+        List<SubscriberModel> list = db().table("water_msg_subscriber")
+                .where("is_enabled=1")
+                .selectList("*", SubscriberModel.class);
+
+        return list;
+    }
+
+    public static void delSubscriber(int subscriber_id) {
+        if (subscriber_id > 0) {
+            try {
+                db().table("water_msg_subscriber")
+                        .where("subscriber_id = ?", subscriber_id)
+                        .delete();
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void setSubscriberState(int subscriber_id, int check_state) {
+        if (subscriber_id > 0) {
+            try {
+                db().table("water_msg_subscriber").usingExpr(true)
+                        .set("check_last_state", check_state)
+                        .build((tb) -> {
+                            if (check_state == 200)
+                                tb.set("check_error_num", 0);
+                            else
+                                tb.set("check_error_num", "$check_error_num+1");
+                        })
+                        .whereEq("subscriber_id", subscriber_id)
+                        .update();
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+
     //获取待派发的消息列表
     public static List<Long> getMessageList(int rows, long ntime) throws SQLException {
         return db().table("water_msg_message")
@@ -118,59 +177,6 @@ public class DbWaterMsgApi {
         }
     }
 
-    //根据主题获取订阅者
-    public static Map<Integer, SubscriberModel> getSubscriberListByTopic(int topicID) throws SQLException {
-        Map<Integer, SubscriberModel> map = new HashMap<>();
-
-        List<SubscriberModel> list = db().table("water_msg_subscriber")
-                .where("topic_id=? AND is_enabled=1", topicID)
-                .selectList("*", SubscriberModel.class);
-
-        list.forEach(m -> {
-            map.put(m.subscriber_id, m);
-        });
-
-        return map;
-    }
-
-    public static List<SubscriberModel> getSubscriberList() throws SQLException {
-        List<SubscriberModel> list = db().table("water_msg_subscriber")
-                .where("is_enabled=1")
-                .selectList("*", SubscriberModel.class);
-
-        return list;
-    }
-
-    public static void delSubscriber(int subscriber_id) {
-        if (subscriber_id > 0) {
-            try {
-                db().table("water_msg_subscriber")
-                        .where("subscriber_id = ?", subscriber_id)
-                        .delete();
-            } catch (Throwable ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public static void setSubscriberState(int subscriber_id, int check_state) {
-        if (subscriber_id > 0) {
-            try {
-                db().table("water_msg_subscriber").usingExpr(true)
-                        .set("check_last_state", check_state)
-                        .build((tb) -> {
-                            if (check_state == 200)
-                                tb.set("check_error_num", 0);
-                            else
-                                tb.set("check_error_num", "$check_error_num+1");
-                        })
-                        .whereEq("subscriber_id", subscriber_id)
-                        .update();
-            } catch (Throwable ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 
     //添加派发任务
     public static void addDistribution(MessageModel msg, SubscriberModel subs) throws SQLException {
