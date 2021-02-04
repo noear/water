@@ -8,6 +8,7 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterSetting;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.MessageState;
 import org.noear.water.utils.*;
 import watersev.Config;
 import watersev.dso.AlarmUtil;
@@ -93,13 +94,13 @@ public final class MsgController implements IJob {
             ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
 
             //置为处理中
-            DbWaterMsgApi.setMessageState(msgID, 1);
+            DbWaterMsgApi.setMessageState(msgID, MessageState.processed);//1);
 
             distributeDo0(msg);
 
         } catch (Throwable ex) {
             if (msg != null) {
-                DbWaterMsgApi.setMessageRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
+                DbWaterMsgApi.setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
                 LogUtil.writeForMsgByError(msg, ex);
             }
@@ -116,7 +117,7 @@ public final class MsgController implements IJob {
 
         //1.2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg.msg_id, -2);
+            DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.notarget);//-2);
             return;
         }
 
@@ -140,7 +141,7 @@ public final class MsgController implements IJob {
 
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg.msg_id, 2);
+            DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.completed);//2);
             return;
         }
 
@@ -164,11 +165,11 @@ public final class MsgController implements IJob {
             //
             tag.count += 1;
             if (isOk) {
-                if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 2)) {
+                if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, MessageState.completed)) {//2
                     tag.value += 1;
                 }
             } else {
-                DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, 1);
+                DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, MessageState.processed);//1);
             }
 
             //4.返回派发结果
@@ -177,7 +178,7 @@ public final class MsgController implements IJob {
                 ProtocolHub.messageLock.unlock(tag.msg.lk_msg_id_do);
 
                 if (tag.value == tag.total) {
-                    DbWaterMsgApi.setMessageState(dist.msg_id, 2);
+                    DbWaterMsgApi.setMessageState(dist.msg_id, MessageState.completed);//2);
 
                     if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
@@ -186,12 +187,12 @@ public final class MsgController implements IJob {
 
                 } else {
                     if (tag.msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                        DbWaterMsgApi.setMessageRepet(tag.msg, 3);
+                        DbWaterMsgApi.setMessageRepet(tag.msg, MessageState.excessive);//3);
 
 //                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag.msg, false, dist);
                     } else {
-                        DbWaterMsgApi.setMessageRepet(tag.msg, 0);
+                        DbWaterMsgApi.setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                         if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
@@ -283,7 +284,7 @@ public final class MsgController implements IJob {
 
                 //推后一小时，可手工再恢复
                 long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
-                DbWaterMsgApi.setMessageState(msg.msg_id, 1, ntime);
+                DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.processed, ntime);//1
             } else {
                 //::0,1
                 //

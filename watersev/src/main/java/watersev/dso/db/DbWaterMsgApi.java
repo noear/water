@@ -1,5 +1,6 @@
 package watersev.dso.db;
 
+import org.noear.water.protocol.model.MessageState;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
@@ -28,7 +29,7 @@ public class DbWaterMsgApi {
     public static TopicModel getTopic(int topic_id) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_id=?", topic_id)
-                .caching(Config.cache_data)
+                .caching(Config.cache_data).usingCache(60)
                 .selectItem("*", TopicModel.class);
 
         return m;
@@ -40,6 +41,7 @@ public class DbWaterMsgApi {
 
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("topic_id=? AND is_enabled=1", topicID)
+                .caching(Config.cache_data).usingCache(60)
                 .selectList("*", SubscriberModel.class);
 
         list.forEach(m -> {
@@ -52,6 +54,7 @@ public class DbWaterMsgApi {
     public static List<SubscriberModel> getSubscriberList() throws SQLException {
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("is_enabled=1")
+                .caching(Config.cache_data).usingCache(60)
                 .selectList("*", SubscriberModel.class);
 
         return list;
@@ -94,18 +97,18 @@ public class DbWaterMsgApi {
     //////////////////////////////////////////////////////////////////////////////////
 
     //获取待派发的消息列表
-    public static List<Long> getMessageList(int rows, long ntime) throws SQLException {
+    public static List<Long> getMessageList(int rows, long dist_nexttime) throws SQLException {
         return db().table("water_msg_message")
-                .where("state=0 AND dist_nexttime<?", ntime)
+                .where("state=0 AND dist_nexttime<?", dist_nexttime)
                 .orderBy("msg_id ASC")
                 .limit(rows)
                 .selectArray("msg_id");
     }
 
     //获取某一条消息
-    public static MessageModel getMessage(long msgID) throws SQLException {
+    public static MessageModel getMessage(long msg_id) throws SQLException {
         MessageModel m = db().table("water_msg_message")
-                .where("msg_id=? AND state=0", msgID)
+                .where("msg_id=? AND state=0", msg_id)
                 .selectItem("*", MessageModel.class);
 
         if (m.state != 0) {
@@ -120,48 +123,48 @@ public class DbWaterMsgApi {
      *
      * @param state -2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数
      * */
-    public static boolean setMessageState(long msgID, int state) {
-        return setMessageState(msgID, state, 0);
+    public static boolean setMessageState(long msg_id, MessageState state) {
+        return setMessageState(msg_id, state, 0);
     }
 
     //设置消息状态
-    public static boolean setMessageState(long msgID, int state, long nexttime) {
+    public static boolean setMessageState(long msg_id, MessageState state, long dist_nexttime) {
         try {
             db().table("water_msg_message")
                     .set("state", state)
                     .build(tb -> {
-                        if (state == 0) {
+                        if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
                             tb.set("dist_nexttime", ntime);
                             //可以检查处理中时间是否过长了？可手动恢复状态
                         }
 
-                        if (nexttime > 0) {
-                            tb.set("dist_nexttime", nexttime);
+                        if (dist_nexttime > 0) {
+                            tb.set("dist_nexttime", dist_nexttime);
                         }
                     })
-                    .where("msg_id=? AND (state=0 OR state=1)", msgID)
+                    .where("msg_id=? AND (state=0 OR state=1)", msg_id)
                     .update();
 
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            LogUtil.error("msg", "setMessageState", msgID + "", ex);
+            LogUtil.error("msg", "setMessageState", msg_id + "", ex);
 
             return false;
         }
     }
 
     //设置消息重试状态（过几秒后再派发）
-    public static boolean setMessageRepet(MessageModel msg, int state) {
+    public static boolean setMessageRepet(MessageModel msg, MessageState state) {
         try {
             msg.dist_count += 1;
 
             long ntime = DisttimeUtils.nextTime(msg.dist_count);
 
             db().table("water_msg_message").usingExpr(true)
-                    .set("state", state)
+                    .set("state", state.code)
                     .set("dist_nexttime", ntime)
                     .set("dist_count", "$dist_count+1")
                     .where("msg_id=? AND (state=0 OR state=1)", msg.msg_id)
@@ -209,18 +212,18 @@ public class DbWaterMsgApi {
     }
 
     //根据消息获取派发任务
-    public static List<DistributionModel> getDistributionListByMsg(long msgID) throws SQLException {
+    public static List<DistributionModel> getDistributionListByMsg(long msg_id) throws SQLException {
         return db().table("water_msg_distribution")
-                .where("msg_id=? AND (state=0 OR state=1)", msgID)
+                .where("msg_id=? AND (state=0 OR state=1)", msg_id)
                 .hint("/*TDDL:MASTER*/")
                 .selectList("*", DistributionModel.class);
     }
 
     //设置派发状态（成功与否）
-    public static boolean setDistributionState(long msg_id, DistributionModel dist, int state) {
+    public static boolean setDistributionState(long msg_id, DistributionModel dist, MessageState state) {
         try {
             db().table("water_msg_distribution")
-                    .set("state", state)
+                    .set("state", state.code)
                     .set("duration", dist._duration)
                     .where("msg_id=? and subscriber_id=? and state<>2", msg_id, dist.subscriber_id)
                     .update();
