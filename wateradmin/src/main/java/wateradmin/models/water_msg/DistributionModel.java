@@ -18,7 +18,7 @@ public class DistributionModel implements IBinder
     public String alarm_sign;
     public String receive_url;
     public int receive_way;
-    public String access_key;
+    public String receive_key;
     public int is_sync;
     public int duration;
     public int state;
@@ -36,7 +36,7 @@ public class DistributionModel implements IBinder
         alarm_sign = s.get("alarm_sign").value(null);
         receive_url = s.get("receive_url").value(null);
         receive_way = s.get("receive_way").value(0);
-        access_key = s.get("access_key").value(null);
+        receive_key = s.get("receive_key").value(null);
         is_sync = s.get("is_sync").value(0);
         duration = s.get("duration").value(0);
         state = s.get("state").value(0);

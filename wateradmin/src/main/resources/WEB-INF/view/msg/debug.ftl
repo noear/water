@@ -19,7 +19,7 @@
                 var topic_name = $('#topic_name').val();
                 var dist_count = $('#dist_count').val();
                 var content = $('#content').val();
-                var access_key = $('#access_key').val();
+                var receive_key = $('#receive_key').val();
                 var url = $('#url').val();
                 if(isNaN(id)||id<0){
                     top.layer.msg("输入大于等于0的消息ID");
@@ -37,11 +37,11 @@
                     top.layer.msg("输入大于等于0的累计派发次数");
                     return;
                 }
-                if (access_key == null || access_key == "" || access_key == undefined) {
-                    top.layer.msg("access_key不能为空");
+                if (!receive_key) {
+                    top.layer.msg("receive_key不能为空");
                     return;
                 }
-                if (url == null || url == "" || url == undefined) {
+                if (!url) {
                     top.layer.msg("订阅地址不能为空");
                     return;
                 }
@@ -50,7 +50,7 @@
                 $.ajax({
                     type:"POST",
                     url:"/msg/debug/ajax/getSign",
-                    data:{"id":id,"msg_key":msg_key,"topic_name":topic_name,"dist_count":dist_count,"content":content,"access_key":access_key},
+                    data:{"id":id,"msg_key":msg_key,"topic_name":topic_name,"dist_count":dist_count,"content":content,"receive_key":receive_key},
                     success:function(data){
                         $("#msgForm").attr("action", url);
                         $('#id').val(id);
@@ -106,7 +106,7 @@
                     </tr>
                     <tr>
                         <th>签名密钥</th>
-                        <td><input type="text" id="access_key" value="${sub.access_key!}"/></td>
+                        <td><input type="text" id="receive_key" value="${sub.receive_key!}"/></td>
                     </tr>
                     <tr>
                         <th>接收地址</th>

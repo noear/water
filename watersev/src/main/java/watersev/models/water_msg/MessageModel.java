@@ -14,6 +14,7 @@ public class MessageModel implements IBinder {
     public int topic_id;
     public String topic_name;
     public String content;
+    public boolean dist_routed;
     public int dist_count;
     public long dist_nexttime;
 
@@ -38,6 +39,8 @@ public class MessageModel implements IBinder {
         tags = s.get("tags").value("");
 
         state = s.get("state").value(0);
+
+        dist_routed = s.get("dist_routed").value(false);
         dist_count = s.get("dist_count").value(0);
         dist_nexttime = s.get("dist_nexttime").value(0L);
     }

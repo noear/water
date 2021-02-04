@@ -50,13 +50,13 @@ public final class MsgController implements IJob {
             }
 
             //改用线程池处理
-            Config.pools.execute(() -> distribute(msg_id_str));
+            Config.pools.execute(() -> exchange(msg_id_str));
         });
     }
 
-    private void distribute(String msg_id_str) {
+    private void exchange(String msg_id_str) {
         try {
-            distributeDo(msg_id_str);
+            exchangeDo(msg_id_str);
         } catch (Throwable ex) {
             EventBus.push(ex);
         } finally {
@@ -64,7 +64,7 @@ public final class MsgController implements IJob {
         }
     }
 
-    private void distributeDo(String msg_id_str) throws Exception {
+    private void exchangeDo(String msg_id_str) throws Exception {
         String lk_msg_id_do = msg_id_str + "_do";
 
         if (ProtocolHub.messageLock.lock(lk_msg_id_do) == false) {
@@ -76,17 +76,18 @@ public final class MsgController implements IJob {
 
         try {
             msg = DbWaterMsgApi.getMessageCando(msgID); //可能会出异常
-            msg.lk_msg_id_do = lk_msg_id_do;
 
             if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
                 return;
             }
 
-
             long ntime = DisttimeUtils.currTime();
             if (msg.dist_nexttime > ntime) { //如果时间还没到
                 return;
             }
+
+            //记录锁key
+            msg.lk_msg_id_do = lk_msg_id_do;
 
             //事务相关性设定
             ContextUtil.currentSet(new ContextEmpty());
@@ -95,7 +96,7 @@ public final class MsgController implements IJob {
             //置为处理中
             DbWaterMsgApi.setMessageState(msgID, MessageState.processed);//1);
 
-            distributeDo0(msg);
+            routing(msg);
 
         } catch (Throwable ex) {
             if (msg != null) {
@@ -110,7 +111,7 @@ public final class MsgController implements IJob {
     }
 
 
-    private void distributeDo0(MessageModel msg) throws SQLException {
+    private void routing(MessageModel msg) throws SQLException {
         //1.取出订阅者
         Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
 
@@ -121,8 +122,12 @@ public final class MsgController implements IJob {
         }
 
         //2.尝试建立分发关系
-        for (SubscriberModel m : subsList.values()) {
-            DbWaterMsgApi.addDistribution(msg, m);
+        if(msg.dist_routed == false) {
+            for (SubscriberModel m : subsList.values()) {
+                DbWaterMsgApi.addDistributionNoLock(msg, m);
+            }
+
+            DbWaterMsgApi.setMessageRouteState(msg,true);
         }
 
         //3.获出待分发任务
@@ -211,7 +216,7 @@ public final class MsgController implements IJob {
         sb.append(msg.msg_key).append("#");
         sb.append(msg.topic_name).append("#");
         sb.append(msg.content).append("#");
-        sb.append(dist.access_key);
+        sb.append(dist.receive_key);
 
         String sgin = EncryptUtils.md5(sb.toString());
 

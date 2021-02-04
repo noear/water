@@ -1,6 +1,7 @@
 package watersev.dso.db;
 
 import org.noear.water.protocol.model.MessageState;
+import org.noear.water.utils.CacheUtils;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
@@ -118,6 +119,21 @@ public class DbWaterMsgApi {
         }
     }
 
+    public static void setMessageRouteState(MessageModel msg, boolean dist_routed) {
+        try {
+            db().table("water_msg_message")
+                    .set("dist_routed", dist_routed)
+                    .where("msg_id=?", msg.msg_id)
+                    .update();
+
+            msg.dist_routed = dist_routed;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+            LogUtil.error("msg", "setMessageRouteState", msg.msg_id + "", ex);
+        }
+    }
+
     /**
      * 设置消息状态
      *
@@ -182,18 +198,18 @@ public class DbWaterMsgApi {
 
 
     //添加派发任务
-    public static void addDistribution(MessageModel msg, SubscriberModel subs) throws SQLException {
-        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
+    public static void addDistributionNoLock(MessageModel msg, SubscriberModel subs) throws SQLException {
+//        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
 
         //尝试2秒的锁
-        if (LockUtils.tryLock("watersev", lock_key, 2)) {
+//        if (LockUtils.tryLock("watersev", lock_key, 2)) {
 
-            boolean isExists = db().table("water_msg_distribution")
-                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
-                    .hint("/*TDDL:MASTER*/")
-                    .selectExists();
-
-            if (isExists == false) {
+//            boolean isExists = db().table("water_msg_distribution")
+//                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
+//                    .hint("/*TDDL:MASTER*/")
+//                    .selectExists();
+//
+//            if (isExists == false) {
                 db().table("water_msg_distribution").usingExpr(true)
                         .set("msg_id", msg.msg_id)
                         .set("msg_key", msg.msg_key)
@@ -202,13 +218,13 @@ public class DbWaterMsgApi {
                         .set("alarm_mobile", subs.alarm_mobile)
                         .set("alarm_sign", subs.alarm_sign)
                         .set("receive_url", subs.receive_url)
-                        .set("access_key", subs.access_key)
+                        .set("receive_key", subs.receive_key)
                         .set("receive_way", subs.receive_way)
                         .set("log_date", "$DATE(NOW())")
                         .set("log_fulltime", "$NOW()")
                         .insert();
-            }
-        }
+//            }
+//        }
     }
 
     //根据消息获取派发任务
@@ -216,6 +232,7 @@ public class DbWaterMsgApi {
         return db().table("water_msg_distribution")
                 .where("msg_id=? AND (state=0 OR state=1)", msg_id)
                 .hint("/*TDDL:MASTER*/")
+                .caching(Config.cache_data).usingCache(60)
                 .selectList("*", DistributionModel.class);
     }
 

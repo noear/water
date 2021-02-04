@@ -20,7 +20,7 @@ public class DistributionModel implements IBinder {
 
     public String receive_url;
     public int    receive_way;
-    public String access_key;
+    public String receive_key;
 
     //分发状态（-1忽略；0开始；1失败；2成功；）
     public int state;
@@ -42,7 +42,7 @@ public class DistributionModel implements IBinder {
         alarm_sign   = s.get("alarm_sign").value("");
 
         receive_url = s.get("receive_url").value("");
-        access_key = s.get("access_key").value("");
+        receive_key = s.get("receive_key").value("");
 
         receive_way = s.get("receive_way").value(0);
         state = s.get("state").value(0);

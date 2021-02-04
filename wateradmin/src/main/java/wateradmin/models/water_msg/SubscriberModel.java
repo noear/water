@@ -21,7 +21,7 @@ public class SubscriberModel implements IBinder
     public String topic_name;
     public String receive_url;
     public int receive_way;
-    public String access_key;
+    public String receive_key;
     public int is_sync;
     public Date log_fulltime;
     public int is_enabled;
@@ -40,7 +40,7 @@ public class SubscriberModel implements IBinder
         topic_name = s.get("topic_name").value(null);
         receive_url = s.get("receive_url").value(null);
         receive_way = s.get("receive_way").value(0);
-        access_key = s.get("access_key").value(null);
+        receive_key = s.get("receive_key").value(null);
         is_sync = s.get("is_sync").value(0);
         log_fulltime = s.get("log_fulltime").value(null);
         is_enabled = s.get("is_enabled").value(0);

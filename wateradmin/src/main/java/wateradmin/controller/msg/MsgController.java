@@ -1,6 +1,5 @@
 package wateradmin.controller.msg;
 
-import org.noear.snack.ONode;
 import org.noear.water.WaterClient;
 
 import org.noear.solon.annotation.Controller;
@@ -48,7 +47,7 @@ public class MsgController extends BaseController {
         sb.append(msg_key).append("#");
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
-        sb.append(sub.access_key);
+        sb.append(sub.receive_key);
         String sgin = EncryptUtils.md5(sb.toString());
 
         HashMap<String, Object> map = new HashMap<>();
@@ -109,13 +108,13 @@ public class MsgController extends BaseController {
 
     //后端加密
     @Mapping("/msg/debug/ajax/getSign")
-    public HashMap<String,String> getSign(Long id,String msg_key,String topic_name,String content,String access_key){
+    public HashMap<String,String> getSign(Long id,String msg_key,String topic_name,String content,String receive_key){
         StringBuilder sb = new StringBuilder(200);
         sb.append(id).append("#");
         sb.append(msg_key).append("#");
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
-        sb.append(access_key);
+        sb.append(receive_key);
         String sign = EncryptUtils.md5(sb.toString());
         String message = Base64Utils.encode(content);
         HashMap<String, String> resp = new HashMap<>();

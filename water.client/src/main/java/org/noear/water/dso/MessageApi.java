@@ -30,10 +30,10 @@ public class MessageApi {
      * @param subscriber_key 订阅者key
      * @param receive_url    接收地址
      * @param receive_way    接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
-     * @param access_key     接收访问密钥
+     * @param receive_key    接收密钥，签名用
      */
-    public boolean subscribeTopic(String subscriber_key, String receive_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
-        return subscribeTopic(subscriber_key, "", receive_url, access_key, alarm_mobile, receive_way, is_unstable, topics);
+    public boolean subscribeTopic(String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+        return subscribeTopic(subscriber_key, "", receive_url, receive_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
     /**
@@ -43,11 +43,11 @@ public class MessageApi {
      * @param subscriber_note 订阅者简介
      * @param receive_url     接收地址
      * @param receive_way     接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
-     * @param access_key      接收访问密钥
+     * @param receive_key     接收密钥
      * @param alarm_mobile    报警手机号
      * @param topics          主题..
      */
-    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receive_url, String access_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         String topics_str = String.join(",", topics);
 
         Map<String, String> params = new HashMap<>();
@@ -57,7 +57,8 @@ public class MessageApi {
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receive_url);
         params.put("receive_way", receive_way + ""); //接收方式（0,1异步等待；2异步不等待,状态设为已完成；3异步不等,状态设为处理中）
-        params.put("access_key", access_key);
+        params.put("receive_key", receive_key);
+        params.put("access_key", receive_key); //**此字段名将弃用。by 2021-02
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
@@ -286,7 +287,7 @@ public class MessageApi {
     /**
      * 检测消息签名
      */
-    public boolean checkMessage(MessageM msg, String access_key) {
+    public boolean checkMessage(MessageM msg, String receive_key) {
 
         if (msg.id < 1) {
             return false;
@@ -297,7 +298,7 @@ public class MessageApi {
         sb.append(msg.key).append("#");
         sb.append(msg.topic).append("#");
         sb.append(msg.message).append("#");
-        sb.append(access_key);
+        sb.append(receive_key);
 
         String sgin_slf = EncryptUtils.md5(sb.toString());
 

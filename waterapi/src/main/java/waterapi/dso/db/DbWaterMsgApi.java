@@ -7,8 +7,6 @@ import org.noear.weed.*;
 import waterapi.dso.IDUtils;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
-import waterapi.models.MessageModel;
-import waterapi.models.SubscriberModel;
 import waterapi.models.TopicModel;
 
 import java.sql.SQLException;
@@ -39,15 +37,6 @@ public final class DbWaterMsgApi {
         return m;
     }
 
-    //检查是否有订阅者(key,topic)
-    public static boolean hasSubscriber(String key, String topic) throws SQLException {
-        TopicModel m = getTopicID(topic);
-
-        return db().table("water_msg_subscriber")
-                .where("subscriber_key=?", key)
-                .and("topic_id=?", m.topic_id)
-                .selectExists();
-    }
 
     //删除订阅者
     public static boolean removeSubscriber(String key, String topic) throws SQLException {
@@ -59,38 +48,30 @@ public final class DbWaterMsgApi {
     }
 
     //添加订阅者
-    public static long addSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way, boolean is_unstable) throws SQLException {
+    public static long addSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws SQLException {
         TopicModel m = getTopicID(topic);
 
-        return db().table("water_msg_subscriber").usingExpr(true)
+
+        DbTableQuery tq = db().table("water_msg_subscriber").usingExpr(true)
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("subscriber_key", key)
                 .set("subscriber_note", note)
-                .set("topic_id", m.topic_id)
-                .set("topic_name", topic)
                 .set("receive_url", receive_url)
-                .set("access_key", access_key)
+                .set("receive_key", receive_key)//后面要改掉
                 .set("receive_way", receive_way)
-                .set("log_fulltime", "$NOW()")
-                .insert();
-    }
+                .set("log_fulltime", "$NOW()");
 
-    //更新订阅者信息
-    public static long udpSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way, boolean is_unstable) throws SQLException {
-        TopicModel m = getTopicID(topic);
-
-        return db().table("water_msg_subscriber").usingExpr(true)
-                .set("alarm_mobile", alarm_mobile)
-                .set("is_unstable", (is_unstable ? 1 : 0))
-                .set("receive_url", receive_url)
-                .set("access_key", access_key)
-                .set("subscriber_note", note)
-                .set("receive_way", receive_way)
-                .set("log_fulltime", "$NOW()")
-                .whereEq("subscriber_key", key)
-                .andEq("topic_id", m.topic_id)
-                .update();
+        if (db().table("water_msg_subscriber")
+                .where("subscriber_key=?", key).and("topic_id=?", m.topic_id)
+                .selectExists()) {
+            return tq.whereEq("subscriber_key", key)
+                    .andEq("topic_id", m.topic_id)
+                    .update();
+        } else {
+            return tq.set("topic_id", m.topic_id)
+                    .set("topic_name", topic).insert();
+        }
     }
 
 

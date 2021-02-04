@@ -16,7 +16,7 @@ public class SubscriberModel implements IBinder {
     public int topic_id;
     public String receive_url;
     public int    receive_way;
-    public String access_key;
+    public String receive_key;
 
 
     @Override
@@ -29,7 +29,7 @@ public class SubscriberModel implements IBinder {
 
         topic_id = s.get("topic_id").value(0);
         receive_url = s.get("receive_url").value("");
-        access_key = s.get("access_key").value("");
+        receive_key = s.get("receive_key").value("");
         receive_way = s.get("receive_way").value(0);
     }
 
