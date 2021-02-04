@@ -142,12 +142,12 @@ public class DbWaterMsgApi {
      *
      * @param state -2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数
      */
-    public static boolean setMessageState(long msg_id, MessageState state) {
-        return setMessageState(msg_id, state, 0);
+    public static boolean setMessageState(MessageModel msg, MessageState state) {
+        return setMessageState(msg, state, 0);
     }
 
     //设置消息状态
-    public static boolean setMessageState(long msg_id, MessageState state, long dist_nexttime) {
+    public static boolean setMessageState(MessageModel msg, MessageState state, long dist_nexttime) {
         try {
             db().table("water_msg_message")
                     .set("state", state.code)
@@ -162,14 +162,14 @@ public class DbWaterMsgApi {
                             tb.set("dist_nexttime", dist_nexttime);
                         }
                     })
-                    .where("msg_id=? AND (state=0 OR state=1)", msg_id)
+                    .where("msg_id=? AND (state=0 OR state=1)", msg.msg_id)
                     .update();
 
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            log_msg.error("", msg_id + "", "setMessageState", msg_id + "", ex);
+            log_msg.error(msg.topic_name, msg.msg_id + "", "setMessageState",  "", ex);
 
             return false;
         }
@@ -193,7 +193,7 @@ public class DbWaterMsgApi {
         } catch (SQLException ex) {
             ex.printStackTrace();
 
-            log_msg.error("", msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
+            log_msg.error(msg.topic_name, msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
 
             return false;
         }
@@ -241,18 +241,18 @@ public class DbWaterMsgApi {
     }
 
     //设置派发状态（成功与否）
-    public static boolean setDistributionState(long msg_id, DistributionModel dist, MessageState state) {
+    public static boolean setDistributionState(MessageModel msg, DistributionModel dist, MessageState state) {
         try {
             db().table("water_msg_distribution")
                     .set("state", state.code)
                     .set("duration", dist._duration)
-                    .where("msg_id=? and subscriber_id=? and state<>2", msg_id, dist.subscriber_id)
+                    .where("msg_id=? and subscriber_id=? and state<>2", msg.msg_id, dist.subscriber_id)
                     .update();
 
             return true;
         } catch (Throwable ex) {
 
-            log_msg.error("", msg_id + "", "setDistributionState", "", ex);
+            log_msg.error(msg.topic_name, msg.msg_id + "", "setDistributionState", "", ex);
 
             return false;
         }

@@ -94,7 +94,7 @@ public final class MsgController implements IJob {
             ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
 
             //置为处理中
-            DbWaterMsgApi.setMessageState(msgID, MessageState.processed);//1);
+            DbWaterMsgApi.setMessageState(msg, MessageState.processed);//1);
 
             routing(msg);
 
@@ -117,7 +117,7 @@ public final class MsgController implements IJob {
 
         //1.2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.notarget);//-2);
+            DbWaterMsgApi.setMessageState(msg, MessageState.notarget);//-2);
             return;
         }
 
@@ -145,7 +145,7 @@ public final class MsgController implements IJob {
 
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.completed);//2);
+            DbWaterMsgApi.setMessageState(msg, MessageState.completed);//2);
             return;
         }
 
@@ -169,11 +169,11 @@ public final class MsgController implements IJob {
             //
             tag.count += 1;
             if (isOk) {
-                if (DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, MessageState.completed)) {//2
+                if (DbWaterMsgApi.setDistributionState(tag.msg, dist, MessageState.completed)) {//2
                     tag.value += 1;
                 }
             } else {
-                DbWaterMsgApi.setDistributionState(tag.msg.msg_id, dist, MessageState.processed);//1);
+                DbWaterMsgApi.setDistributionState(tag.msg, dist, MessageState.processed);//1);
             }
 
             //4.返回派发结果
@@ -182,7 +182,7 @@ public final class MsgController implements IJob {
                 ProtocolHub.messageLock.unlock(tag.msg.lk_msg_id_do);
 
                 if (tag.value == tag.total) {
-                    DbWaterMsgApi.setMessageState(dist.msg_id, MessageState.completed);//2);
+                    DbWaterMsgApi.setMessageState(tag.msg, MessageState.completed);//2);
 
                     if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
@@ -288,7 +288,7 @@ public final class MsgController implements IJob {
 
                 //推后一小时，可手工再恢复
                 long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
-                DbWaterMsgApi.setMessageState(msg.msg_id, MessageState.processed, ntime);//1
+                DbWaterMsgApi.setMessageState(msg, MessageState.processed, ntime);//1
             } else {
                 //::0,1
                 //
