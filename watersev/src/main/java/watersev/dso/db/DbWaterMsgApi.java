@@ -131,7 +131,7 @@ public class DbWaterMsgApi {
     public static boolean setMessageState(long msg_id, MessageState state, long dist_nexttime) {
         try {
             db().table("water_msg_message")
-                    .set("state", state)
+                    .set("state", state.code)
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
