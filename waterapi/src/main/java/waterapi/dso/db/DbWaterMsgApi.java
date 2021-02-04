@@ -93,6 +93,24 @@ public final class DbWaterMsgApi {
                 .update();
     }
 
+
+
+    public static void addMessageToQueue(long msg_id) throws Exception {
+        if (Config.rd_msg == null) {
+            return;
+        }
+
+        String msg_id_str = msg_id + "";
+
+        if (ProtocolHub.messageLock.lock(msg_id_str)) {
+            ProtocolHub.messageQueue.push(msg_id_str);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
     //检查是否已有消息（key）
     public static boolean hasMessage(String key) throws SQLException {
         if (TextUtils.isEmpty(key)) {
@@ -183,43 +201,5 @@ public final class DbWaterMsgApi {
         }
 
         return msg_id;
-    }
-
-    public static void addMessageToQueue(long msg_id) throws Exception {
-        if (Config.rd_msg == null) {
-            return;
-        }
-
-        String msg_id_str = msg_id + "";
-
-        if (ProtocolHub.messageLock.lock(msg_id_str)) {
-            ProtocolHub.messageQueue.push(msg_id_str);
-        }
-    }
-
-    public static MessageModel getMessage(String msg_key) throws SQLException {
-        if (TextUtils.isEmpty(msg_key)) {
-            return new MessageModel();
-        } else {
-            return Config.water_msg.table("water_msg_message")
-                    .where("msg_key=?", msg_key)
-                    .caching(CacheUtils.data).usingCache(60)
-                    .selectItem("*", MessageModel.class);
-        }
-    }
-
-    public static SubscriberModel getSubscriber1ByTopic(int topicID) throws SQLException {
-        return db().table("water_msg_subscriber")
-                .whereEq("topic_id", topicID)
-                .limit(1)
-                .selectItem("*", SubscriberModel.class);
-    }
-
-    public static SubscriberModel getSubscriber(int topicID, String subscriber_key) throws SQLException {
-        return db().table("water_msg_subscriber")
-                .whereEq("topic_id", topicID).andEq("subscriber_key", subscriber_key)
-                .limit(1)
-                .caching(CacheUtils.data).usingCache(60)
-                .selectItem("*", SubscriberModel.class);
     }
 }

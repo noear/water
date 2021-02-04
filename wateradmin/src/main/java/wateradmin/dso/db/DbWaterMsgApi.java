@@ -21,79 +21,12 @@ public class DbWaterMsgApi {
         return Config.water_msg;
     }
 
-    //获取消息列表
-    public static List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
-        List<MessageModel> list = new ArrayList<>();
-        if (dist_count == 0 && topic_id == 0) {
-            return list;
-        } else {
-            return db().table("water_msg_message").build((tb) -> {
-                tb.where("state=0");
-                if (dist_count > 0) {
-                    tb.and("dist_count>=?", dist_count);
-                } else {
-                    tb.and("topic_id=?", topic_id);
-                }
-            }).orderBy("msg_id ASC").limit(50).select("*").getList(new MessageModel());
-        }
-    }
-
-    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException {
-        DbTableQuery qr = db().table("water_msg_message");
-
-        if (_m == 0) {
-            qr.whereEq("state", 0).and("dist_count>=3");
-        } else if (_m == 1) {
-            qr.where("state=0");
-        } else if (_m == 2) {
-            qr.where("state=1");
-        } else if (_m == 3) {
-            qr.where("state>1");
-        } else {
-            qr.where("state<0");
-        }
-
-        if (key != null) {
-            key = key.trim();
-
-            if (key.startsWith("*")) {
-                qr.andEq("trace_id", key.substring(1).trim());
-            } else if (key.startsWith("@")) {
-                qr.andLk("tags", key.substring(1).trim() + "%");
-            } else {
-                if (StringUtils.isNumeric(key)) {
-                    qr.andEq("msg_id", Integer.parseInt(key));
-                } else {
-                    qr.andEq("topic_name", key);
-                }
-            }
-        }
-
-        return qr.orderBy("msg_id DESC").limit(50).select("*").getList(new MessageModel());
-    }
-
-    public static List<MessageModel> getMessageByWaitList() throws SQLException {
-        return db().table("water_msg_message").build((tb) -> {
-            tb.where("state=1");
-        }).orderBy("msg_id ASC").limit(50).select("*").getList(new MessageModel());
-    }
-
-    //派发功能
-    public static boolean msgDistribute(List<Object> ids) throws SQLException {
-        return db().table("water_msg_message")
-                .whereIn("msg_id", ids).andNeq("state", 2)
-                .set("state", 0)
-                .set("dist_nexttime", 0)
-                .update() > 0;
-
-    }
 
     //获取主题ID（没有则创建一个）
     public static TopicModel getTopicID(String topic) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_name=?", topic)
-                .select("*")
-                .getItem(new TopicModel());
+                .selectItem("*", TopicModel.class);
 
         if (m.topic_id == 0) {
             m.topic_id = (int) (db().table("water_msg_topic")
@@ -104,58 +37,14 @@ public class DbWaterMsgApi {
         return m;
     }
 
-    public static MessageModel getMessageByKey(String msg_key) throws SQLException {
 
-        if (TextUtils.isEmpty(msg_key)) {
-            return new MessageModel();
-        }
-
-
-        return db().table("water_msg_message")
-                .build((tb) -> {
-                    if (IDUtil.isNumeric(msg_key)) {
-                        tb.where("msg_id = ?", Long.parseLong(msg_key));
-                    } else {
-                        tb.where("msg_key = ?", msg_key);
-                    }
-                })
-                .select("*")
-                .getItem(new MessageModel());
-    }
 
     public static SubscriberModel getSubscriber(int topic_id) throws SQLException {
         return db().table("water_msg_subscriber")
                 .where("topic_id = ?", topic_id)
-                .select("*")
-                .getItem(new SubscriberModel());
+                .selectItem("*", SubscriberModel.class);
     }
 
-    public static MessageModel getMessageById(long msg_id) throws SQLException {
-        return db().table("water_msg_message")
-                .where("msg_id = ?", msg_id)
-                .limit(1)
-                .select("*")
-                .getItem(new MessageModel());
-    }
-
-    //肖除一个状态的消息 //不包括0,2
-    public static int deleteMsg(int state) throws SQLException {
-        if (state == 0 || state == 1) {
-            return -1;
-        }
-
-        int date = Datetime.Now().addDay(-3).getDate();
-
-        db().table("#d")
-                .from("water_msg_distribution d,water_msg_message m")
-                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
-                .delete();
-
-
-        return db().table("water_msg_message")
-                .where("log_date<=? AND state=?", date, state)
-                .delete();
-    }
 
     //查询订阅列表(全部列表以及查询功能)
     public static List<SubscriberModel> getSubscriberList(String topic_name, int is_enabled) throws SQLException {
@@ -167,8 +56,7 @@ public class DbWaterMsgApi {
                     }
                 })
                 .orderBy("topic_name asc")
-                .select("*")
-                .getList(new SubscriberModel());
+                .selectList("*", SubscriberModel.class);
     }
 
     public static List<TopicModel> getTopicList(String topic_name, String sort) throws SQLException {
@@ -191,8 +79,7 @@ public class DbWaterMsgApi {
                         tb.orderBy("stat_msg_day_num DESC,topic_name ASC");
                     }
 
-                }).select("*")
-                .getList(new TopicModel());
+                }).selectList("*", TopicModel.class);
     }
 
 
@@ -210,8 +97,7 @@ public class DbWaterMsgApi {
     public static TopicModel getTopicByID(int topic_id) throws SQLException {
         return db().table("water_msg_topic")
                 .where("topic_id = ?", topic_id)
-                .select("*")
-                .getItem(new TopicModel());
+                .selectItem("*", TopicModel.class);
     }
 
     public static boolean updateTopic(String topic_name, int topic_id, int max_msg_num, int max_distribution_num, int max_concurrency_num, int alarm_model) throws SQLException {
@@ -256,21 +142,137 @@ public class DbWaterMsgApi {
                 .update() > 0;
     }
 
-    //获得异常消息的dist_id和subscriber_id。
-    public static List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException {
-        return db().table("water_msg_distribution")
-                .whereIn("msg_id", ids)
-                .select("dist_id,subscriber_id")
-                .getList(new DistributionModel());
-    }
-
     //根据查询到的subscriber_id查询订阅者url。
     public static SubscriberModel repairSubs2(int subscriber_id) throws SQLException {
         return db().table("water_msg_subscriber")
                 .where("subscriber_id = ?", subscriber_id)
-                .select("receive_url")
-                .getItem(new SubscriberModel());
+                .selectItem("receive_url", SubscriberModel.class);
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    public static MessageModel getMessageByKey(String msg_key) throws SQLException {
+        if (TextUtils.isEmpty(msg_key)) {
+            return new MessageModel();
+        }
+
+        return db().table("water_msg_message")
+                .build((tb) -> {
+                    if (IDUtil.isNumeric(msg_key)) {
+                        tb.where("msg_id = ?", Long.parseLong(msg_key));
+                    } else {
+                        tb.where("msg_key = ?", msg_key);
+                    }
+                })
+                .selectItem("*", MessageModel.class);
+    }
+
+    //获取消息列表
+    public static List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
+        List<MessageModel> list = new ArrayList<>();
+        if (dist_count == 0 && topic_id == 0) {
+            return list;
+        } else {
+            return db().table("water_msg_message").build((tb) -> {
+                tb.where("state=0");
+                if (dist_count > 0) {
+                    tb.and("dist_count>=?", dist_count);
+                } else {
+                    tb.and("topic_id=?", topic_id);
+                }
+            }).orderBy("msg_id ASC").limit(50)
+                    .selectList("*", MessageModel.class);
+        }
+    }
+
+    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException {
+        DbTableQuery qr = db().table("water_msg_message");
+
+        if (_m == 0) {
+            qr.whereEq("state", 0).and("dist_count>=3");
+        } else if (_m == 1) {
+            qr.where("state=0");
+        } else if (_m == 2) {
+            qr.where("state=1");
+        } else if (_m == 3) {
+            qr.where("state>1");
+        } else {
+            qr.where("state<0");
+        }
+
+        if (key != null) {
+            key = key.trim();
+
+            if (key.startsWith("*")) {
+                qr.andEq("trace_id", key.substring(1).trim());
+            } else if (key.startsWith("@")) {
+                qr.andLk("tags", key.substring(1).trim() + "%");
+            } else {
+                if (StringUtils.isNumeric(key)) {
+                    qr.andEq("msg_id", Integer.parseInt(key));
+                } else {
+                    qr.andEq("topic_name", key);
+                }
+            }
+        }
+
+        return qr.orderBy("msg_id DESC").limit(50)
+                .selectList("*", MessageModel.class);
+    }
+
+    public static List<MessageModel> getMessageByWaitList() throws SQLException {
+        return db().table("water_msg_message").build((tb) -> {
+            tb.where("state=1");
+        }).orderBy("msg_id ASC").limit(50)
+                .selectList("*", MessageModel.class);
+    }
+
+    //派发功能
+    public static boolean msgDistribute(List<Object> ids) throws SQLException {
+        return db().table("water_msg_message")
+                .whereIn("msg_id", ids).andNeq("state", 2)
+                .set("state", 0)
+                .set("dist_nexttime", 0)
+                .update() > 0;
+
+    }
+
+    public static MessageModel getMessageById(long msg_id) throws SQLException {
+        return db().table("water_msg_message")
+                .where("msg_id = ?", msg_id)
+                .limit(1)
+                .selectItem("*", MessageModel.class);
+    }
+
+    //肖除一个状态的消息 //不包括0,2
+    public static int deleteMsg(int state) throws SQLException {
+        if (state == 0 || state == 1) {
+            return -1;
+        }
+
+        int date = Datetime.Now().addDay(-3).getDate();
+
+        db().table("#d")
+                .from("water_msg_distribution d,water_msg_message m")
+                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
+                .delete();
+
+
+        return db().table("water_msg_message")
+                .where("log_date<=? AND state=?", date, state)
+                .delete();
+    }
+
+    //获得异常消息的dist_id和subscriber_id。
+    public static List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException {
+        return db().table("water_msg_distribution")
+                .whereIn("msg_id", ids)
+                .selectList("dist_id,subscriber_id", DistributionModel.class);
+    }
+
 
     //更新distribution中url
     public static boolean repairSubs3(long dist_id, String receive_url) throws SQLException {
