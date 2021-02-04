@@ -124,28 +124,16 @@ public final class DbWaterMsgApi {
     //取消消息派发（key+subscriber_key）
     public static void cancelMsgDistribution(String msg_key, String subscriber_key) throws SQLException {
 
-        MessageModel msg = getMessage(msg_key);
-        if (msg.msg_id == 0)
-            return;
-
-        SubscriberModel subs = getSubscriber(msg.topic_id, subscriber_key);
-
         db().table("water_msg_distribution").set("state", -1)
-                .where("msg_id=? AND subscriber_id=?", msg.msg_id, subs.subscriber_id)
+                .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
                 .update();
     }
 
 
     //消费消息派发（key+subscriber_key）（设为成功）
     public static void succeedMsgDistribution(String msg_key, String subscriber_key) throws SQLException {
-        MessageModel msg = getMessage(msg_key);
-        if (msg.msg_id == 0)
-            return;
-
-        SubscriberModel subs = getSubscriber(msg.topic_id, subscriber_key);
-
         db().table("water_msg_distribution").set("state", 2)
-                .where("msg_id=? AND subscriber_id=?", msg.msg_id, subs.subscriber_id)
+                .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
                 .update();
     }
 

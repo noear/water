@@ -122,7 +122,7 @@ public final class MsgController implements IJob {
 
         //2.尝试建立分发关系
         for (SubscriberModel m : subsList.values()) {
-            DbWaterMsgApi.addDistribution(msg.msg_id, m);
+            DbWaterMsgApi.addDistribution(msg, m);
         }
 
         //3.获出待分发任务

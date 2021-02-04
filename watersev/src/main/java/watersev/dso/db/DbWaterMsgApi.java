@@ -178,21 +178,23 @@ public class DbWaterMsgApi {
     }
 
     //添加派发任务
-    public static void addDistribution(long msgID, SubscriberModel subs) throws SQLException {
-        String lock_key = "distribution_" + msgID + "_" + subs.subscriber_id;
+    public static void addDistribution(MessageModel msg, SubscriberModel subs) throws SQLException {
+        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
 
         //尝试2秒的锁
         if (LockUtils.tryLock("watersev", lock_key, 2)) {
 
             boolean isExists = db().table("water_msg_distribution")
-                    .where("msg_id=?", msgID).and("subscriber_id=?", subs.subscriber_id)
+                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
                     .hint("/*TDDL:MASTER*/")
                     .exists();
 
             if (isExists == false) {
                 db().table("water_msg_distribution").usingExpr(true)
-                        .set("msg_id", msgID)
+                        .set("msg_id", msg.msg_id)
+                        .set("msg_key", msg.msg_key)
                         .set("subscriber_id", subs.subscriber_id)
+                        .set("subscriber_key",subs.subscriber_key)
                         .set("alarm_mobile", subs.alarm_mobile)
                         .set("alarm_sign", subs.alarm_sign)
                         .set("receive_url", subs.receive_url)

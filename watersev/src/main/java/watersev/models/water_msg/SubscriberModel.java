@@ -8,6 +8,8 @@ import org.noear.weed.IBinder;
  */
 public class SubscriberModel implements IBinder {
     public int subscriber_id;
+    public String subscriber_key;
+
     public String subscriber_note;
     public String alarm_mobile;
     public String alarm_sign;
@@ -26,6 +28,8 @@ public class SubscriberModel implements IBinder {
     @Override
     public void bind(GetHandlerEx s) {
         subscriber_id = s.get("subscriber_id").value(0);
+        subscriber_key = s.get("subscriber_key").value("");
+
         subscriber_note = s.get("subscriber_note").value("");
 
         alarm_mobile= s.get("alarm_mobile").value("");
