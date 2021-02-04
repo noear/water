@@ -1,11 +1,12 @@
 package watersev.dso.db;
 
+import org.noear.water.log.Logger;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.model.MessageState;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
 import watersev.Config;
-import watersev.dso.LogUtil;
 import watersev.models.water_msg.DistributionModel;
 import watersev.models.water_msg.MessageModel;
 import watersev.models.water_msg.SubscriberModel;
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by noear on 2017/7/18.
  */
 public class DbWaterMsgApi {
+    private static Logger log_msg = WaterLogger.get("water_log_msg");
 
     public static DbContext db() {
         return Config.water_msg;
@@ -29,7 +31,7 @@ public class DbWaterMsgApi {
     public static TopicModel getTopic(int topic_id) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_id=?", topic_id)
-                .caching(Config.cache_data).usingCache(60)
+                .caching(Config.cache_data)
                 .selectItem("*", TopicModel.class);
 
         return m;
@@ -51,10 +53,10 @@ public class DbWaterMsgApi {
         return map;
     }
 
-    public static List<SubscriberModel> getSubscriberList() throws SQLException {
+    public static List<SubscriberModel> getSubscriberListNoCache() throws SQLException {
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("is_enabled=1")
-                .caching(Config.cache_data).usingCache(60)
+                .caching(Config.cache_data)
                 .selectList("*", SubscriberModel.class);
 
         return list;
@@ -67,7 +69,8 @@ public class DbWaterMsgApi {
                         .where("subscriber_id = ?", subscriber_id)
                         .delete();
             } catch (Throwable ex) {
-                ex.printStackTrace();
+                //EventBus.pushAsyn(ex);
+                log_msg.error("delSubscriber", "", ex);
             }
         }
     }
@@ -86,7 +89,8 @@ public class DbWaterMsgApi {
                         .whereEq("subscriber_id", subscriber_id)
                         .update();
             } catch (Throwable ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
+                log_msg.error("setSubscriberState", subscriber_id + "", ex);
             }
         }
     }
@@ -106,7 +110,7 @@ public class DbWaterMsgApi {
     }
 
     //获取某一条消息
-    public static MessageModel getMessageCando(long msg_id) throws SQLException {
+    public static MessageModel getMessageOfPending(long msg_id) throws SQLException {
         MessageModel m = db().table("water_msg_message")
                 .where("msg_id=? AND state=0", msg_id)
                 .selectItem("*", MessageModel.class);
@@ -127,9 +131,9 @@ public class DbWaterMsgApi {
 
             msg.dist_routed = dist_routed;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
-            LogUtil.error("msg", "setMessageRouteState", msg.msg_id + "", ex);
+            log_msg.error("", msg.msg_id + "", "setMessageRouteState", msg.msg_id + "", ex);
         }
     }
 
@@ -137,7 +141,7 @@ public class DbWaterMsgApi {
      * 设置消息状态
      *
      * @param state -2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数
-     * */
+     */
     public static boolean setMessageState(long msg_id, MessageState state) {
         return setMessageState(msg_id, state, 0);
     }
@@ -165,7 +169,7 @@ public class DbWaterMsgApi {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            LogUtil.error("msg", "setMessageState", msg_id + "", ex);
+            log_msg.error("", msg_id + "", "setMessageState", msg_id + "", ex);
 
             return false;
         }
@@ -189,7 +193,7 @@ public class DbWaterMsgApi {
         } catch (SQLException ex) {
             ex.printStackTrace();
 
-            LogUtil.error("msg", "setMessageRepet", msg.msg_id + "", ex);
+            log_msg.error("", msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
 
             return false;
         }
@@ -214,7 +218,7 @@ public class DbWaterMsgApi {
                         .set("msg_id", msg.msg_id)
                         .set("msg_key", msg.msg_key)
                         .set("subscriber_id", subs.subscriber_id)
-                        .set("subscriber_key",subs.subscriber_key)
+                        .set("subscriber_key", subs.subscriber_key)
                         .set("alarm_mobile", subs.alarm_mobile)
                         .set("alarm_sign", subs.alarm_sign)
                         .set("receive_url", subs.receive_url)
@@ -246,10 +250,9 @@ public class DbWaterMsgApi {
                     .update();
 
             return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Throwable ex) {
 
-            LogUtil.error("msg", "setDistributionState", msg_id + "", ex);
+            log_msg.error("", msg_id + "", "setDistributionState", "", ex);
 
             return false;
         }

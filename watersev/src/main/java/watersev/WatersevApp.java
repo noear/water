@@ -6,6 +6,7 @@ import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
 import org.noear.water.WaterClient;
+import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.solution.HeiheiImp;
 import org.noear.water.protocol.ProtocolHub;
@@ -55,6 +56,8 @@ public class WatersevApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+        }).onError((ex) -> {
+            WaterClient.Log.append("water_log_sev", Level.ERROR,"global", "", ex);
         });
 
         JtRun.xfunInit();

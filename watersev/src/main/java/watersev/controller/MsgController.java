@@ -75,7 +75,7 @@ public final class MsgController implements IJob {
         MessageModel msg = null;
 
         try {
-            msg = DbWaterMsgApi.getMessageCando(msgID); //可能会出异常
+            msg = DbWaterMsgApi.getMessageOfPending(msgID); //可能会出异常
 
             if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
                 return;

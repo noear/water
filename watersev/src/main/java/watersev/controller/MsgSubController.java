@@ -35,7 +35,7 @@ public final class MsgSubController implements IJob {
         }
 
         //取出待处理的服务
-        List<SubscriberModel> list = DbWaterMsgApi.getSubscriberList();
+        List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
 
         for (SubscriberModel sev : list) {
             check(sev);
