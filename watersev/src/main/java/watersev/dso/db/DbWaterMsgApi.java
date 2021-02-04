@@ -106,7 +106,7 @@ public class DbWaterMsgApi {
     }
 
     //获取某一条消息
-    public static MessageModel getMessage(long msg_id) throws SQLException {
+    public static MessageModel getMessageCando(long msg_id) throws SQLException {
         MessageModel m = db().table("water_msg_message")
                 .where("msg_id=? AND state=0", msg_id)
                 .selectItem("*", MessageModel.class);
