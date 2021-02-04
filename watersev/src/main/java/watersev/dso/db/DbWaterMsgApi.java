@@ -28,9 +28,8 @@ public class DbWaterMsgApi {
     public static TopicModel getTopic(int topic_id) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_id=?", topic_id)
-                .select("*")
                 .caching(Config.cache_data)
-                .getItem(new TopicModel());
+                .selectItem("*", TopicModel.class);
 
         return m;
     }
@@ -41,16 +40,14 @@ public class DbWaterMsgApi {
                 .where("state=0 AND dist_nexttime<?", ntime)
                 .orderBy("msg_id ASC")
                 .limit(rows)
-                .select("msg_id")
-                .getArray("msg_id");
+                .selectArray("msg_id");
     }
 
     //获取某一条消息
     public static MessageModel getMessage(long msgID) throws SQLException {
         MessageModel m = db().table("water_msg_message")
                 .where("msg_id=? AND state=0", msgID)
-                .select("*")
-                .getItem(new MessageModel());
+                .selectItem("*", MessageModel.class);
 
         if (m.state != 0) {
             return null;
@@ -127,8 +124,7 @@ public class DbWaterMsgApi {
 
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("topic_id=? AND is_enabled=1", topicID)
-                .select("*")
-                .getList(new SubscriberModel());
+                .selectList("*", SubscriberModel.class);
 
         list.forEach(m -> {
             map.put(m.subscriber_id, m);
@@ -140,8 +136,7 @@ public class DbWaterMsgApi {
     public static List<SubscriberModel> getSubscriberList() throws SQLException {
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("is_enabled=1")
-                .select("*")
-                .getList(new SubscriberModel());
+                .selectList("*", SubscriberModel.class);
 
         return list;
     }
@@ -187,7 +182,7 @@ public class DbWaterMsgApi {
             boolean isExists = db().table("water_msg_distribution")
                     .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
                     .hint("/*TDDL:MASTER*/")
-                    .exists();
+                    .selectExists();
 
             if (isExists == false) {
                 db().table("water_msg_distribution").usingExpr(true)
@@ -212,8 +207,7 @@ public class DbWaterMsgApi {
         return db().table("water_msg_distribution")
                 .where("msg_id=? AND (state=0 OR state=1)", msgID)
                 .hint("/*TDDL:MASTER*/")
-                .select("*")
-                .getList(new DistributionModel());
+                .selectList("*", DistributionModel.class);
     }
 
     //设置派发状态（成功与否）

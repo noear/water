@@ -27,9 +27,8 @@ public final class DbWaterMsgApi {
     public static TopicModel getTopicID(String topic) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_name=?", topic)
-                .select("*")
                 .caching(CacheUtils.data)
-                .getItem(new TopicModel());
+                .selectItem("*", TopicModel.class);
 
         if (m.topic_id == 0) {
             m.topic_id = (int) (db().table("water_msg_topic")
@@ -47,17 +46,16 @@ public final class DbWaterMsgApi {
         return db().table("water_msg_subscriber")
                 .where("subscriber_key=?", key)
                 .and("topic_id=?", m.topic_id)
-                .exists();
+                .selectExists();
     }
 
     //删除订阅者
     public static boolean removeSubscriber(String key, String topic) throws SQLException {
         TopicModel m = getTopicID(topic);
 
-        return
-                db().table("water_msg_subscriber")
-                        .where("subscriber_key=?", key).and("topic_id=?", m.topic_id)
-                        .delete() > 0;
+        return db().table("water_msg_subscriber")
+                .where("subscriber_key=?", key).and("topic_id=?", m.topic_id)
+                .delete() > 0;
     }
 
     //添加订阅者
@@ -82,17 +80,17 @@ public final class DbWaterMsgApi {
     public static long udpSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String access_key, int receive_way, boolean is_unstable) throws SQLException {
         TopicModel m = getTopicID(topic);
 
-        return
-                db().table("water_msg_subscriber").usingExpr(true)
-                        .set("alarm_mobile", alarm_mobile)
-                        .set("is_unstable",(is_unstable?1:0))
-                        .set("receive_url", receive_url)
-                        .set("access_key", access_key)
-                        .set("subscriber_note", note)
-                        .set("receive_way", receive_way)
-                        .set("log_fulltime", "$NOW()")
-                        .whereEq("subscriber_key", key).andEq("topic_id", m.topic_id)
-                        .update();
+        return db().table("water_msg_subscriber").usingExpr(true)
+                .set("alarm_mobile", alarm_mobile)
+                .set("is_unstable", (is_unstable ? 1 : 0))
+                .set("receive_url", receive_url)
+                .set("access_key", access_key)
+                .set("subscriber_note", note)
+                .set("receive_way", receive_way)
+                .set("log_fulltime", "$NOW()")
+                .whereEq("subscriber_key", key)
+                .andEq("topic_id", m.topic_id)
+                .update();
     }
 
     //检查是否已有消息（key）
@@ -103,7 +101,7 @@ public final class DbWaterMsgApi {
             return db().table("water_msg_message")
                     .where("msg_key=?", key)
                     .caching(CacheUtils.data)
-                    .exists();
+                    .selectExists();
         }
     }
 
@@ -111,14 +109,16 @@ public final class DbWaterMsgApi {
     public static void cancelMessage(String msg_key) throws SQLException {
         db().table("water_msg_message")
                 .set("state", -1)
-                .where("msg_key=?", msg_key).update();
+                .where("msg_key=?", msg_key)
+                .update();
     }
 
     //消费消息（key）（设为成功）
     public static void succeedMessage(String msg_key) throws SQLException {
         db().table("water_msg_message")
                 .set("state", 2)
-                .where("msg_key=?", msg_key).update();
+                .where("msg_key=?", msg_key)
+                .update();
     }
 
     //取消消息派发（key+subscriber_key）
@@ -138,10 +138,11 @@ public final class DbWaterMsgApi {
     }
 
     public static long addMessage(String topic, String content) throws Exception {
-        return addMessage(null,null,null,topic,content,null);
+        return addMessage(null, null, null, topic, content, null);
     }
+
     //添加消息
-    public static long addMessage(String key, String trace_id,String tags, String topic, String content, Date plan_time) throws Exception {
+    public static long addMessage(String key, String trace_id, String tags, String topic, String content, Date plan_time) throws Exception {
         TopicModel m = getTopicID(topic);
 
         if (TextUtils.isEmpty(key)) {
@@ -152,7 +153,7 @@ public final class DbWaterMsgApi {
         if (m.max_msg_num > 0) {
             long num = db().table("water_msg_message")
                     .where("topic_id=? AND (state=0 OR state=1)", m.topic_id)
-                    .count();
+                    .selectCount();
 
             if (num >= m.max_msg_num) {
                 return 1;
@@ -202,9 +203,8 @@ public final class DbWaterMsgApi {
         } else {
             return Config.water_msg.table("water_msg_message")
                     .where("msg_key=?", msg_key)
-                    .select("*")
                     .caching(CacheUtils.data).usingCache(60)
-                    .getItem(new MessageModel());
+                    .selectItem("*", MessageModel.class);
         }
     }
 
@@ -212,16 +212,14 @@ public final class DbWaterMsgApi {
         return db().table("water_msg_subscriber")
                 .whereEq("topic_id", topicID)
                 .limit(1)
-                .select("*")
-                .getItem(new SubscriberModel());
+                .selectItem("*", SubscriberModel.class);
     }
 
     public static SubscriberModel getSubscriber(int topicID, String subscriber_key) throws SQLException {
         return db().table("water_msg_subscriber")
                 .whereEq("topic_id", topicID).andEq("subscriber_key", subscriber_key)
                 .limit(1)
-                .select("*")
                 .caching(CacheUtils.data).usingCache(60)
-                .getItem(new SubscriberModel());
+                .selectItem("*", SubscriberModel.class);
     }
 }
