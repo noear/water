@@ -38,7 +38,7 @@ public class WaterapiApp {
 				Config.tryInit();
 
 				ProtocolHub.config = DbWaterCfgApi::getConfigM;
-				ProtocolHub.idBuilder = IDUtils::getID;
+				ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
 				ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 

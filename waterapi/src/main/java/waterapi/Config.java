@@ -28,6 +28,8 @@ public class Config {
     public static RedisX rd_msg;   //db:3
     public static RedisX rd_track; //db:5
 
+    public static ConfigM water_redis = cfg(WW.water_redis);
+
     public static String water_cache_header;
 
     public static ConfigM water_msg_queue;

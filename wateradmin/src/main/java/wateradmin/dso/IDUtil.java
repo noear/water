@@ -42,11 +42,11 @@ public class IDUtil {
         return true;
     }
 
-    public static long getID(String tag) throws Exception {
+    public static long getID(String tag)  {
         return buildID(tag, 1);
     }
 
-    private static long buildID(String tag, long startIndex) throws Exception {
+    private static long buildID(String tag, long startIndex)  {
         return IDUtils.newID("ID", tag) + startIndex;
     }
 }

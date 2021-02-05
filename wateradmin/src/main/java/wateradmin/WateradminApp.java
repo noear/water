@@ -6,8 +6,11 @@ import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.IdBuilderImp;
 import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
+import org.noear.water.utils.IDUtils;
+import wateradmin.dso.IDUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.MonitoringAliyun;
 
@@ -26,9 +29,10 @@ public class WateradminApp {
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;
+            ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.logQuerier = new LogQuerierImp();
+
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         }).onError((ex) -> {

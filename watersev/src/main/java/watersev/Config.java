@@ -26,6 +26,8 @@ public class Config {
     public static RedisX rd_msg = cfg(WW.water_redis).getRd(3);
     public static RedisX rd_count = cfg(WW.water_redis).getRd(6);
 
+    public static ConfigM water_redis = cfg(WW.water_redis);
+
     public static ConfigM water_msg_queue = cfg("water_msg_queue");
     public static ConfigM water_log_store = cfg("water_log_store");
 

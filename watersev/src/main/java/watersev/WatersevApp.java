@@ -8,11 +8,8 @@ import org.noear.luffy.dso.*;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
-import org.noear.water.protocol.solution.HeiheiImp;
+import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.solution.LogQuerierImp;
-import org.noear.water.protocol.solution.LogSourceFactoryImp;
-import org.noear.water.protocol.solution.MessageLockRedis;
 import luffy.JtRun;
 import watersev.dso.IDUtil;
 import watersev.dso.JobRunnerEx;
@@ -44,7 +41,7 @@ public class WatersevApp {
             Config.tryInit();
 
             ProtocolHub.config = WaterClient.Config::get;
-            ProtocolHub.idBuilder = IDUtil::getID;
+            ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 

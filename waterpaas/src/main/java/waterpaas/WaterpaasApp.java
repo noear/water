@@ -6,6 +6,7 @@ import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.IdBuilderImp;
 import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.utils.FromUtils;
@@ -27,9 +28,8 @@ public class WaterpaasApp {
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;
-
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.logQuerier = new LogQuerierImp();
+
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);
