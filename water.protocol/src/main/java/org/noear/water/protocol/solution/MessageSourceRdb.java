@@ -83,12 +83,12 @@ public class MessageSourceRdb implements MessageSource {
                 .update();
     }
 
-    public long addMessage(String topic, String content) throws Exception {
-        return addMessage(null, null, null, topic, content, null);
+    public long addMessage(int topic_id, String topic_name, String content) throws Exception {
+        return addMessage(null, null, null, topic_id, topic_name, content, null);
     }
 
     //添加消息
-    public long addMessage(String msg_key, String trace_id, String tags, String topic, String content, Date plan_time) throws Exception {
+    public long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time) throws Exception {
         long msg_id = ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
@@ -108,8 +108,8 @@ public class MessageSourceRdb implements MessageSource {
                 .set("msg_key", msg_key)
                 .set("tags", tags)
                 .set("trace_id", trace_id)
-                .set("topic_id", 0)
-                .set("topic_name", topic)
+                .set("topic_id", topic_id)
+                .set("topic_name", topic_name)
                 .set("content", content)
                 .set("plan_time", plan_time)
                 .set("log_date", "$DATE(NOW())")

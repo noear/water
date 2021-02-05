@@ -17,7 +17,7 @@ public final class DbWaterMsgApi {
     }
 
     //获取主题ID（没有则创建一个）
-    public static TopicModel getTopicID(String topic) throws SQLException {
+    public static TopicModel getTopicById(String topic) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
                 .where("topic_name=?", topic)
                 .caching(CacheUtils.data)
@@ -35,7 +35,7 @@ public final class DbWaterMsgApi {
 
     //删除订阅者
     public static boolean removeSubscriber(String key, String topic) throws SQLException {
-        TopicModel m = getTopicID(topic);
+        TopicModel m = getTopicById(topic);
 
         return db().table("water_msg_subscriber")
                 .where("subscriber_key=?", key).and("topic_id=?", m.topic_id)
@@ -44,7 +44,7 @@ public final class DbWaterMsgApi {
 
     //添加订阅者
     public static long addSubscriber(String key, String note, String alarm_mobile, String topic, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws SQLException {
-        TopicModel m = getTopicID(topic);
+        TopicModel m = getTopicById(topic);
 
 
         DbTableQuery tq = db().table("water_msg_subscriber").usingExpr(true)

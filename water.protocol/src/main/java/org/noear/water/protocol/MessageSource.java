@@ -19,8 +19,8 @@ public interface MessageSource {
     void succeedMessage(String msg_key) throws SQLException;
     void cancelMsgDistribution(String msg_key, String subscriber_key) throws SQLException;
     void succeedMsgDistribution(String msg_key, String subscriber_key) throws SQLException;
-    long addMessage(String topic, String content) throws Exception;
-    long addMessage(String msg_key, String trace_id, String tags, String topic, String content, Date plan_time) throws Exception;
+    long addMessage(int topic_id, String topic_name, String content) throws Exception;
+    long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time) throws Exception;
 
 
     //for sev

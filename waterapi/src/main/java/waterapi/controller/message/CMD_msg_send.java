@@ -11,7 +11,9 @@ import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.DisttimeUtils;
 import waterapi.controller.UapiBase;
+import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
+import waterapi.models.TopicModel;
 
 import java.util.Date;
 
@@ -46,11 +48,13 @@ public class CMD_msg_send extends UapiBase {
         Date plan_time2 = DisttimeUtils.parse(plan_time);
         String trace_id = ctx.header(WW.http_header_trace);
 
-        if(Utils.isEmpty(trace_id)){
+        if (Utils.isEmpty(trace_id)) {
             trace_id = Utils.guid();
         }
 
-        if (ProtocolHub.messageSource().addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
+        TopicModel topicModel = DbWaterMsgApi.getTopicById(topic);
+
+        if (ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2) > 0) {
             return Result.succeed();
         } else {
             return Result.failure();
