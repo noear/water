@@ -89,23 +89,23 @@ public class MsgController extends BaseController {
 
 
     //消息清理
-    @Mapping("/msg/clean")
-    public ModelAndView clean(){
-        return view("msg/msg_clean");
-    }
+//    @Mapping("/msg/clean")
+//    public ModelAndView clean(){
+//        return view("msg/msg_clean");
+//    }
 
-    //执行消息清理
-    @Mapping("/msg/clean/ajax/submitClean")
-    public ViewModel submitClean(Integer state) throws SQLException{
-        boolean is_admin = Session.current().getIsAdmin()>0;
-        if (is_admin == false) {
-            return viewModel.code(0,"没有权限！");
-        }
-        else {
-            int i = ProtocolHub.messageSource().deleteMsg(state);
-            return viewModel.code(1,"成功清理" + i + "消息！");
-        }
-    }
+//    //执行消息清理
+//    @Mapping("/msg/clean/ajax/submitClean")
+//    public ViewModel submitClean(Integer state) throws SQLException{
+//        boolean is_admin = Session.current().getIsAdmin()>0;
+//        if (is_admin == false) {
+//            return viewModel.code(0,"没有权限！");
+//        }
+//        else {
+//            int i = ProtocolHub.messageSource().deleteMsg(state);
+//            return viewModel.code(1,"成功清理" + i + "消息！");
+//        }
+//    }
 
     //后端加密
     @Mapping("/msg/debug/ajax/getSign")

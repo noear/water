@@ -52,7 +52,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //取消消息（key）
-    public void cancelMessage(String msg_key) throws SQLException {
+    public void setMessageAsCancel(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", -1)
                 .where("msg_key=?", msg_key)
@@ -60,7 +60,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //消费消息（key）（设为成功）
-    public void succeedMessage(String msg_key) throws SQLException {
+    public void setMessageAsSucceed(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", 2)
                 .where("msg_key=?", msg_key)
@@ -68,7 +68,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //取消消息派发（key+subscriber_key）
-    public void cancelMsgDistribution(String msg_key, String subscriber_key) throws SQLException {
+    public void setDistributionAsCancel(String msg_key, String subscriber_key) throws SQLException {
 
         _db.table("water_msg_distribution").set("state", -1)
                 .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
@@ -77,7 +77,7 @@ public class MessageSourceRdb implements MessageSource {
 
 
     //消费消息派发（key+subscriber_key）（设为成功）
-    public void succeedMsgDistribution(String msg_key, String subscriber_key) throws SQLException {
+    public void setDistributionAsSucceed(String msg_key, String subscriber_key) throws SQLException {
         _db.table("water_msg_distribution").set("state", 2)
                 .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
                 .update();
@@ -369,7 +369,7 @@ public class MessageSourceRdb implements MessageSource {
 
 
     //派发功能
-    public  boolean msgDistribute(List<Object> ids) throws SQLException {
+    public  boolean setMessageAsPending(List<Object> ids) throws SQLException {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
@@ -405,7 +405,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //获得异常消息的dist_id和subscriber_id。
-    public  List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException {
+    public  List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException {
         return _db.table("water_msg_distribution")
                 .whereIn("msg_id", ids)
                 .selectList("dist_id,subscriber_id", DistributionModel.class);
@@ -413,7 +413,7 @@ public class MessageSourceRdb implements MessageSource {
 
 
     //更新distribution中url
-    public  boolean repairSubs3(long dist_id, String receive_url) throws SQLException {
+    public  boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws SQLException {
         return _db.table("water_msg_distribution")
                 .where("dist_id = ?", dist_id)
                 .set("receive_url", receive_url)
@@ -421,7 +421,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //取消派发
-    public  boolean cancelSend(List<Object> ids) throws SQLException {
+    public  boolean setMessageAsCancel(List<Object> ids) throws SQLException {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids)
                 .set("state", -1)

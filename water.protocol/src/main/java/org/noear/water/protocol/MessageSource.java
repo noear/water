@@ -13,17 +13,21 @@ import java.util.List;
  * @author noear 2021/2/1 created
  */
 public interface MessageSource {
+    //
     //for api
+    //
     boolean hasMessage(String msg_key) throws SQLException;
-    void cancelMessage(String msg_key) throws SQLException;
-    void succeedMessage(String msg_key) throws SQLException;
-    void cancelMsgDistribution(String msg_key, String subscriber_key) throws SQLException;
-    void succeedMsgDistribution(String msg_key, String subscriber_key) throws SQLException;
+    void setMessageAsCancel(String msg_key) throws SQLException;
+    void setMessageAsSucceed(String msg_key) throws SQLException;
+    void setDistributionAsCancel(String msg_key, String subscriber_key) throws SQLException;
+    void setDistributionAsSucceed(String msg_key, String subscriber_key) throws SQLException;
     long addMessage(int topic_id, String topic_name, String content) throws Exception;
     long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time) throws Exception;
 
 
+    //
     //for sev
+    //
     List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException;
     MessageModel getMessageOfPending(long msg_id) throws SQLException;
     void setMessageRouteState(MessageModel msg, boolean dist_routed);
@@ -36,14 +40,29 @@ public interface MessageSource {
     boolean setDistributionState(MessageModel msg, DistributionModel dist, MessageState state);
 
 
+    //
     //for admin
+    //
     MessageModel getMessageByKey(String msg_key) throws SQLException;
+    MessageModel getMessageById(long msg_id) throws SQLException;
     List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException;
     List<MessageModel> getMessageList(int _m, String key) throws SQLException;
-    boolean msgDistribute(List<Object> ids) throws SQLException;
-    MessageModel getMessageById(long msg_id) throws SQLException;
-    int deleteMsg(int state) throws SQLException;
-    List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException;
-    boolean repairSubs3(long dist_id, String receive_url) throws SQLException;
-    boolean cancelSend(List<Object> ids) throws SQLException;
+//    int deleteMsg(int state) throws SQLException;
+    /**
+     * 获取派发记录
+     * */
+    List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException;
+    /**
+     * 修复派发的订阅地址
+     * */
+    boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws SQLException;
+
+    /**
+     * 设置消息为预备状态
+     * */
+    boolean setMessageAsPending(List<Object> ids) throws SQLException;
+    /**
+     * 设置消息为取消状态
+     * */
+    boolean setMessageAsCancel(List<Object> ids) throws SQLException;
 }

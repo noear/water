@@ -42,7 +42,7 @@ public class ListController extends BaseController {
     public ViewModel distribute(String ids) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            boolean result = ProtocolHub.messageSource().msgDistribute(idList(ids));
+            boolean result = ProtocolHub.messageSource().setMessageAsPending(idList(ids));
             if (result) {
                 viewModel.code(1, "派发成功！");
             } else {
@@ -62,7 +62,7 @@ public class ListController extends BaseController {
         int is_admin = Session.current().getIsAdmin();
 
         if (is_admin == 1) {
-            boolean result = ProtocolHub.messageSource().cancelSend(idList(ids));
+            boolean result = ProtocolHub.messageSource().setMessageAsCancel(idList(ids));
 
             if (result) {
                 viewModel.code(1, "取消成功");
@@ -83,7 +83,7 @@ public class ListController extends BaseController {
         if (is_admin == 1) {
             boolean error = false;
 
-            List<DistributionModel> list = ProtocolHub.messageSource().repairSubs1(idList(ids));
+            List<DistributionModel> list = ProtocolHub.messageSource().getDistributionListByMsgIds(idList(ids));
             if (!list.isEmpty()) {
                 for (DistributionModel dis : list) {
                     //查询subscriber的url
@@ -91,7 +91,7 @@ public class ListController extends BaseController {
                     boolean result = false;
                     if (subs.subscriber_id > 0) {
                         //更新distribution的url
-                        result = ProtocolHub.messageSource().repairSubs3(dis.dist_id, subs.receive_url);
+                        result = ProtocolHub.messageSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
                     }
 
                     if (!result) {
