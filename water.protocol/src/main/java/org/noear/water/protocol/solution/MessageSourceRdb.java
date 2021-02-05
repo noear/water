@@ -119,7 +119,7 @@ public class MessageSourceRdb implements MessageSource {
             }
         }).insert();
 
-        if (plan_time != null) {
+        if (plan_time == null) {
             addMessageToQueue(msg_id);
         }
 
