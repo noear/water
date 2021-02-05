@@ -5,10 +5,10 @@ package wateradmin.controller.msg;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.protocol.model.message.SubscriberModel;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterMsgApi;
-import wateradmin.models.water_msg.SubscriberModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
