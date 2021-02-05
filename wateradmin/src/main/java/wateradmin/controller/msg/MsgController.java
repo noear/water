@@ -29,7 +29,7 @@ public class MsgController extends BaseController {
 
     //消息调试
     @Mapping("/msg/debug")
-    public ModelAndView debug(String key) throws SQLException {
+    public ModelAndView debug(String key) throws Exception {
         MessageModel msg = ProtocolHub.messageSource().getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         viewModel.put("key",key);

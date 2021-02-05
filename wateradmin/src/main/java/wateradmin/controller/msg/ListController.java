@@ -24,7 +24,7 @@ public class ListController extends BaseController {
 
     //消息异常记录
     @Mapping("/msg/list")
-    public ModelAndView list(Context ctx, String key) throws SQLException {
+    public ModelAndView list(Context ctx, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
 
         List<MessageModel> list = ProtocolHub.messageSource().getMessageList(_m, key);
@@ -39,7 +39,7 @@ public class ListController extends BaseController {
 
     //派发功能ajax
     @Mapping("/msg/ajax/distribute")
-    public ViewModel distribute(String ids) throws SQLException {
+    public ViewModel distribute(String ids) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
             boolean result = ProtocolHub.messageSource().setMessageAsPending(idList(ids));
@@ -57,7 +57,7 @@ public class ListController extends BaseController {
 
     //取消派发
     @Mapping("/msg/ajax/cancelSend")
-    public ViewModel cancelSend(String ids) throws SQLException{
+    public ViewModel cancelSend(String ids) throws Exception{
 
         int is_admin = Session.current().getIsAdmin();
 
@@ -78,7 +78,7 @@ public class ListController extends BaseController {
 
     //异常记录中 修复订阅功能的ajax
     @Mapping("/msg/ajax/repair")
-    public ViewModel repairSubs(String ids) throws SQLException {
+    public ViewModel repairSubs(String ids) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
             boolean error = false;
