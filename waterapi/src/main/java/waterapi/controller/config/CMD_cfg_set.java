@@ -1,5 +1,6 @@
 package waterapi.controller.config;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
@@ -11,10 +12,8 @@ import org.noear.water.protocol.ProtocolHub;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
-import waterapi.dso.IDUtils;
 import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbWaterCfgApi;
-import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
 import waterapi.models.ConfigModel;
 
@@ -55,7 +54,7 @@ public class CMD_cfg_set extends UapiBase {
         //发消息通知
         if (isOk) {
             String trace_id = ctx.header(WW.http_header_trace);
-            ProtocolHub.messageSource().addMessage(IDUtils.buildGuid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
+            ProtocolHub.messageSource().addMessage(Utils.guid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
         }
 
         return Result.succeed();

@@ -1,12 +1,11 @@
 package waterapi.dso.db;
 
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import waterapi.dso.IDUtils;
 import waterapi.Config;
-import waterapi.models.LoggerModel;
 
 import java.sql.SQLException;
 
@@ -62,9 +61,10 @@ public final class DbWaterLogApi {
 
         Datetime now = Datetime.Now();
 
+        long log_id = ProtocolHub.idBuilder.getLogId(logger);
 
         db.table(logger).usingExpr(true)
-                .set("log_id", IDUtils.buildLogID())
+                .set("log_id", log_id)
                 .set("service", service)
                 .set("trace_id", trace_id)
                 .set("schema", schema)
