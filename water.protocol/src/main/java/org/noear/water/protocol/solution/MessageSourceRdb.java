@@ -29,11 +29,12 @@ public class MessageSourceRdb implements MessageSource {
     DbContext _db;
     ICacheServiceEx _cache;
     IdBuilder _idBuilder;
-    Logger log_msg;
+    Logger _logMsg;
 
-    public MessageSourceRdb(DbContext db, ICacheServiceEx cache) {
+    public MessageSourceRdb(DbContext db, ICacheServiceEx cache, Logger log) {
         _db = db;
         _cache = cache;
+        _logMsg = log;
     }
 
     /////////
@@ -170,7 +171,7 @@ public class MessageSourceRdb implements MessageSource {
         } catch (Exception ex) {
             //ex.printStackTrace();
 
-            log_msg.error("", msg.msg_id + "", "setMessageRouteState", msg.msg_id + "", ex);
+            _logMsg.error("", msg.msg_id + "", "setMessageRouteState", msg.msg_id + "", ex);
         }
     }
 
@@ -206,7 +207,7 @@ public class MessageSourceRdb implements MessageSource {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            log_msg.error(msg.topic_name, msg.msg_id + "", "setMessageState", "", ex);
+            _logMsg.error(msg.topic_name, msg.msg_id + "", "setMessageState", "", ex);
 
             return false;
         }
@@ -230,7 +231,7 @@ public class MessageSourceRdb implements MessageSource {
         } catch (SQLException ex) {
             ex.printStackTrace();
 
-            log_msg.error(msg.topic_name, msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
+            _logMsg.error(msg.topic_name, msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
 
             return false;
         }
@@ -289,7 +290,7 @@ public class MessageSourceRdb implements MessageSource {
             return true;
         } catch (Throwable ex) {
 
-            log_msg.error(msg.topic_name, msg.msg_id + "", "setDistributionState", "", ex);
+            _logMsg.error(msg.topic_name, msg.msg_id + "", "setDistributionState", "", ex);
 
             return false;
         }

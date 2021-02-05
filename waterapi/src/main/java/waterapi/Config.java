@@ -28,7 +28,7 @@ public class Config {
     public static RedisX rd_msg;   //db:3
     public static RedisX rd_track; //db:5
 
-    public static ConfigM water_redis = cfg(WW.water_redis);
+    public static ConfigM water_redis;
 
     public static String water_cache_header;
 
@@ -65,15 +65,15 @@ public class Config {
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
             water_log = cfg(WW.water_log).getDb(true);
+            water_redis = cfg(WW.water_redis);
 
-            ConfigM cm = cfg(WW.water_redis);
             ConfigM cm2 = cfg(WW.water_redis_track);
 
-            rd_ids = cm.getRd(1);
-            rd_lock = cm.getRd(2);
-            rd_msg = cm.getRd(3);
+            rd_ids = water_redis.getRd(1);
+            rd_lock = water_redis.getRd(2);
+            rd_msg = water_redis.getRd(3);
             if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
-                rd_track = cm.getRd(5);
+                rd_track = water_redis.getRd(5);
             } else {
                 rd_track = cm2.getRd(5);
             }
@@ -115,7 +115,7 @@ public class Config {
             return DbWaterCfgApi.getConfigNoCache(WW.water, key)
                     .toConfigM();
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException("Config loading error: " + key, ex);
         }
     }
 

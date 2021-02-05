@@ -30,6 +30,7 @@ public class Config {
 
     public static ConfigM water_msg_queue = cfg(WW.water_msg_queue);
     public static ConfigM water_log_store = cfg(WW.water_log_store);
+    public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 
     //目前的运行环境（生产环境，预生产环境，测试环境）
     public static String alarm_sign() {

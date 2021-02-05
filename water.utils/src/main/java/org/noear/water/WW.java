@@ -36,8 +36,10 @@ public class WW {
 
     public static final String water_log = "water_log";
     public static final String water_log_store = "water_log_store";
+
     public static final String water_log_upstream = "water_log_upstream";
     public static final String water_log_api = "water_log_api";
+    public static final String water_log_msg = "water_log_msg";
 
     public static final String water = "water";
     public static final String waterapi = "waterapi";

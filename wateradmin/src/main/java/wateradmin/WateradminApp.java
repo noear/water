@@ -3,6 +3,7 @@ package wateradmin;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
@@ -34,7 +35,7 @@ public class WateradminApp {
             ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data);
+            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data, new WaterLogger(WW.water_log_msg));
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         }).onError((ex) -> {

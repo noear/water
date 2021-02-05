@@ -5,12 +5,14 @@ import org.noear.solon.core.NvMap;
 import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
+import org.noear.water.utils.CallUtils;
 import watersev.dso.JobRunnerEx;
 import watersev.dso.db.DbWaterCfgApi;
 
@@ -43,7 +45,7 @@ public class WatersevApp {
             ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-
+            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data, new WaterLogger(WW.water_log_msg));
 
             ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
             ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
