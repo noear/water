@@ -1,5 +1,6 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.solon.Utils;
 import org.noear.water.protocol.IdBuilder;
 import org.noear.water.protocol.MessageSource;
 import org.noear.water.protocol.ProtocolHub;
@@ -77,11 +78,23 @@ public class MessageSourceRdb implements MessageSource {
     public long addMessage(String msg_key, String trace_id, String tags, String topic, String content, Date plan_time) throws Exception {
         long msg_id = _idBuilder.getMsgId();
 
+        if (Utils.isEmpty(msg_key)) {
+            msg_key = Utils.guid();
+        }
+
+        if (Utils.isEmpty(trace_id)) {
+            trace_id = Utils.guid();
+        }
+
+        if (tags == null) {
+            tags = "";
+        }
+
         _db.table("water_msg_message").usingExpr(true)
                 .set("msg_id", msg_id)
                 .set("msg_key", msg_key)
-                .setDf("tags", tags, "")
-                .setIf(TextUtils.isNotEmpty(trace_id), "trace_id", trace_id)
+                .set("tags", tags)
+                .set("trace_id", trace_id)
                 .set("topic_id", 0)
                 .set("topic_name", topic)
                 .set("content", content)
@@ -93,7 +106,7 @@ public class MessageSourceRdb implements MessageSource {
             }
         }).insert();
 
-        if(plan_time != null){
+        if (plan_time != null) {
             addMessageToQueue(msg_id);
         }
 
