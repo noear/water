@@ -1,5 +1,6 @@
 package org.noear.water.protocol.model.message;
 
+import lombok.Getter;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 
@@ -8,6 +9,7 @@ import java.util.Date;
 /**
  * Created by noear on 2017/7/18.
  */
+@Getter
 public class DistributionModel implements IBinder {
     public long dist_id;
     public long msg_id;
@@ -24,6 +26,9 @@ public class DistributionModel implements IBinder {
 
     //分发状态（-1忽略；0开始；1失败；2成功；）
     public int state;
+
+    public int log_date;
+    public Date log_fulltime;
 
     public Date _start_time;
     //派发处理的花费时间
@@ -46,6 +51,9 @@ public class DistributionModel implements IBinder {
 
         receive_way = s.get("receive_way").value(0);
         state = s.get("state").value(0);
+
+        log_date = s.get("log_date").value(0);
+        log_fulltime = s.get("log_fulltime").value(null);
     }
 
     @Override

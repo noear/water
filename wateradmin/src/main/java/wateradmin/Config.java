@@ -20,6 +20,7 @@ public class Config {
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
     public static ConfigM water_log_store = cfg("water_log_store");
+    public static ConfigM water_msg_store = cfg("water_msg_store");
 
     public static ConfigM water_redis = cfg(WW.water_redis);
 

@@ -5,6 +5,9 @@ import org.noear.water.WaterClient;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.message.MessageModel;
+import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
@@ -12,8 +15,6 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.viewModels.ViewModel;
-import wateradmin.models.water_msg.MessageModel;
-import wateradmin.models.water_msg.SubscriberModel;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class MsgController extends BaseController {
     //消息调试
     @Mapping("/msg/debug")
     public ModelAndView debug(String key) throws SQLException {
-        MessageModel msg = DbWaterMsgApi.getMessageByKey(key);
+        MessageModel msg = ProtocolHub.messageSource().getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
         viewModel.put("key",key);
         viewModel.put("msg",msg);
@@ -40,7 +41,7 @@ public class MsgController extends BaseController {
     //提交消息调试
     @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
-        MessageModel msg = DbWaterMsgApi.getMessageById(id);
+        MessageModel msg = ProtocolHub.messageSource().getMessageById(id);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
         StringBuilder sb = new StringBuilder(200);
         sb.append(id).append("#");
@@ -101,7 +102,7 @@ public class MsgController extends BaseController {
             return viewModel.code(0,"没有权限！");
         }
         else {
-            int i = DbWaterMsgApi.deleteMsg(state);
+            int i = ProtocolHub.messageSource().deleteMsg(state);
             return viewModel.code(1,"成功清理" + i + "消息！");
         }
     }

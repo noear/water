@@ -1,15 +1,11 @@
 package wateradmin.dso.db;
 
-import org.noear.water.utils.Datetime;
+import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.StringUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
-import wateradmin.dso.IDUtil;
-import wateradmin.models.water_msg.DistributionModel;
-import wateradmin.models.water_msg.MessageModel;
-import wateradmin.models.water_msg.SubscriberModel;
 import wateradmin.models.water_msg.TopicModel;
 
 import java.sql.SQLException;
@@ -154,139 +150,133 @@ public class DbWaterMsgApi {
     ///////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-    public static MessageModel getMessageByKey(String msg_key) throws SQLException {
-        if (TextUtils.isEmpty(msg_key)) {
-            return new MessageModel();
-        }
-
-        return db().table("water_msg_message")
-                .build((tb) -> {
-                    if (IDUtil.isNumeric(msg_key)) {
-                        tb.where("msg_id = ?", Long.parseLong(msg_key));
-                    } else {
-                        tb.where("msg_key = ?", msg_key);
-                    }
-                })
-                .selectItem("*", MessageModel.class);
-    }
-
-    //获取消息列表
-    public static List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
-        List<MessageModel> list = new ArrayList<>();
-        if (dist_count == 0 && topic_id == 0) {
-            return list;
-        } else {
-            return db().table("water_msg_message").build((tb) -> {
-                tb.where("state=0");
-                if (dist_count > 0) {
-                    tb.and("dist_count>=?", dist_count);
-                } else {
-                    tb.and("topic_id=?", topic_id);
-                }
-            }).orderBy("msg_id ASC").limit(50)
-                    .selectList("*", MessageModel.class);
-        }
-    }
-
-    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException {
-        DbTableQuery qr = db().table("water_msg_message");
-
-        if (_m == 0) {
-            qr.whereEq("state", 0).and("dist_count>=3");
-        } else if (_m == 1) {
-            qr.where("state=0");
-        } else if (_m == 2) {
-            qr.where("state=1");
-        } else if (_m == 3) {
-            qr.where("state>1");
-        } else {
-            qr.where("state<0");
-        }
-
-        if (key != null) {
-            key = key.trim();
-
-            if (key.startsWith("*")) {
-                qr.andEq("trace_id", key.substring(1).trim());
-            } else if (key.startsWith("@")) {
-                qr.andLk("tags", key.substring(1).trim() + "%");
-            } else {
-                if (StringUtils.isNumeric(key)) {
-                    qr.andEq("msg_id", Integer.parseInt(key));
-                } else {
-                    qr.andEq("topic_name", key);
-                }
-            }
-        }
-
-        return qr.orderBy("msg_id DESC").limit(50)
-                .selectList("*", MessageModel.class);
-    }
-
-    public static List<MessageModel> getMessageByWaitList() throws SQLException {
-        return db().table("water_msg_message").build((tb) -> {
-            tb.where("state=1");
-        }).orderBy("msg_id ASC").limit(50)
-                .selectList("*", MessageModel.class);
-    }
-
-    //派发功能
-    public static boolean msgDistribute(List<Object> ids) throws SQLException {
-        return db().table("water_msg_message")
-                .whereIn("msg_id", ids).andNeq("state", 2)
-                .set("state", 0)
-                .set("dist_nexttime", 0)
-                .update() > 0;
-
-    }
-
-    public static MessageModel getMessageById(long msg_id) throws SQLException {
-        return db().table("water_msg_message")
-                .where("msg_id = ?", msg_id)
-                .limit(1)
-                .selectItem("*", MessageModel.class);
-    }
-
-    //肖除一个状态的消息 //不包括0,2
-    public static int deleteMsg(int state) throws SQLException {
-        if (state == 0 || state == 1) {
-            return -1;
-        }
-
-        int date = Datetime.Now().addDay(-3).getDate();
-
-        db().table("#d")
-                .from("water_msg_distribution d,water_msg_message m")
-                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
-                .delete();
-
-
-        return db().table("water_msg_message")
-                .where("log_date<=? AND state=?", date, state)
-                .delete();
-    }
-
-    //获得异常消息的dist_id和subscriber_id。
-    public static List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException {
-        return db().table("water_msg_distribution")
-                .whereIn("msg_id", ids)
-                .selectList("dist_id,subscriber_id", DistributionModel.class);
-    }
-
-
-    //更新distribution中url
-    public static boolean repairSubs3(long dist_id, String receive_url) throws SQLException {
-        return db().table("water_msg_distribution")
-                .where("dist_id = ?", dist_id)
-                .set("receive_url", receive_url)
-                .update() > 0;
-    }
-
-    //取消派发
-    public static boolean cancelSend(List<Object> ids) throws SQLException {
-        return db().table("water_msg_message")
-                .whereIn("msg_id", ids)
-                .set("state", -1)
-                .update() > 0;
-    }
+//    public static MessageModel getMessageByKey(String msg_key) throws SQLException {
+//        if (TextUtils.isEmpty(msg_key)) {
+//            return new MessageModel();
+//        }
+//
+//        return db().table("water_msg_message")
+//                .build((tb) -> {
+//                    if (IDUtil.isNumeric(msg_key)) {
+//                        tb.where("msg_id = ?", Long.parseLong(msg_key));
+//                    } else {
+//                        tb.where("msg_key = ?", msg_key);
+//                    }
+//                })
+//                .selectItem("*", MessageModel.class);
+//    }
+//
+//    //获取消息列表
+//    public static List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
+//        List<MessageModel> list = new ArrayList<>();
+//        if (dist_count == 0 && topic_id == 0) {
+//            return list;
+//        } else {
+//            return db().table("water_msg_message").build((tb) -> {
+//                tb.where("state=0");
+//                if (dist_count > 0) {
+//                    tb.and("dist_count>=?", dist_count);
+//                } else {
+//                    tb.and("topic_id=?", topic_id);
+//                }
+//            }).orderBy("msg_id ASC").limit(50)
+//                    .selectList("*", MessageModel.class);
+//        }
+//    }
+//
+//    public static List<MessageModel> getMessageList(int _m, String key) throws SQLException {
+//        DbTableQuery qr = db().table("water_msg_message");
+//
+//        if (_m == 0) {
+//            qr.whereEq("state", 0).and("dist_count>=3");
+//        } else if (_m == 1) {
+//            qr.where("state=0");
+//        } else if (_m == 2) {
+//            qr.where("state=1");
+//        } else if (_m == 3) {
+//            qr.where("state>1");
+//        } else {
+//            qr.where("state<0");
+//        }
+//
+//        if (key != null) {
+//            key = key.trim();
+//
+//            if (key.startsWith("*")) {
+//                qr.andEq("trace_id", key.substring(1).trim());
+//            } else if (key.startsWith("@")) {
+//                qr.andLk("tags", key.substring(1).trim() + "%");
+//            } else {
+//                if (StringUtils.isNumeric(key)) {
+//                    qr.andEq("msg_id", Integer.parseInt(key));
+//                } else {
+//                    qr.andEq("topic_name", key);
+//                }
+//            }
+//        }
+//
+//        return qr.orderBy("msg_id DESC").limit(50)
+//                .selectList("*", MessageModel.class);
+//    }
+//
+//
+//    //派发功能
+//    public static boolean msgDistribute(List<Object> ids) throws SQLException {
+//        return db().table("water_msg_message")
+//                .whereIn("msg_id", ids).andNeq("state", 2)
+//                .set("state", 0)
+//                .set("dist_nexttime", 0)
+//                .update() > 0;
+//
+//    }
+//
+//    public static MessageModel getMessageById(long msg_id) throws SQLException {
+//        return db().table("water_msg_message")
+//                .where("msg_id = ?", msg_id)
+//                .limit(1)
+//                .selectItem("*", MessageModel.class);
+//    }
+//
+//    //肖除一个状态的消息 //不包括0,2
+//    public static int deleteMsg(int state) throws SQLException {
+//        if (state == 0 || state == 1) {
+//            return -1;
+//        }
+//
+//        int date = Datetime.Now().addDay(-3).getDate();
+//
+//        db().table("#d")
+//                .from("water_msg_distribution d,water_msg_message m")
+//                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
+//                .delete();
+//
+//
+//        return db().table("water_msg_message")
+//                .where("log_date<=? AND state=?", date, state)
+//                .delete();
+//    }
+//
+//    //获得异常消息的dist_id和subscriber_id。
+//    public static List<DistributionModel> repairSubs1(List<Object> ids) throws SQLException {
+//        return db().table("water_msg_distribution")
+//                .whereIn("msg_id", ids)
+//                .selectList("dist_id,subscriber_id", DistributionModel.class);
+//    }
+//
+//
+//    //更新distribution中url
+//    public static boolean repairSubs3(long dist_id, String receive_url) throws SQLException {
+//        return db().table("water_msg_distribution")
+//                .where("dist_id = ?", dist_id)
+//                .set("receive_url", receive_url)
+//                .update() > 0;
+//    }
+//
+//    //取消派发
+//    public static boolean cancelSend(List<Object> ids) throws SQLException {
+//        return db().table("water_msg_message")
+//                .whereIn("msg_id", ids)
+//                .set("state", -1)
+//                .update() > 0;
+//    }
 }
