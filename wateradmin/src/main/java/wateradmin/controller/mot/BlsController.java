@@ -3,7 +3,7 @@ package wateradmin.controller.mot;
 import com.aliyuncs.exceptions.ClientException;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.model.ETimeType;
+import org.noear.water.protocol.model.monitor.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
@@ -14,7 +14,7 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.monitor.ELineModel;
 import wateradmin.models.water.ServerTrackBlsModel;
 import wateradmin.models.aliyun.BlsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;

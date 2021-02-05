@@ -3,7 +3,7 @@ package org.noear.water.protocol.solution;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
-import org.noear.water.protocol.model.LogModel;
+import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;

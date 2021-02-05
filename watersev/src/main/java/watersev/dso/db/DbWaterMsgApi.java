@@ -2,9 +2,8 @@ package watersev.dso.db;
 
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
-import org.noear.water.protocol.model.MessageState;
+import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.DisttimeUtils;
-import org.noear.water.utils.LockUtils;
 import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water_msg.DistributionModel;

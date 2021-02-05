@@ -2,8 +2,8 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.protocol.LogQuerier;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.model.LogModel;
-import org.noear.water.protocol.model.LoggerMeta;
+import org.noear.water.protocol.model.log.LogModel;
+import org.noear.water.protocol.model.log.LoggerMeta;
 
 import java.util.List;
 

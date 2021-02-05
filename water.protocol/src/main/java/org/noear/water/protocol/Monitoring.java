@@ -1,7 +1,7 @@
 package org.noear.water.protocol;
 
-import org.noear.water.protocol.model.ELineModel;
-import org.noear.water.protocol.model.ETimeType;
+import org.noear.water.protocol.model.monitor.ELineModel;
+import org.noear.water.protocol.model.monitor.ETimeType;
 
 import java.util.List;
 

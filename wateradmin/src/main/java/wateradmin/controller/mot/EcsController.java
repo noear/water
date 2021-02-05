@@ -3,7 +3,7 @@ package wateradmin.controller.mot;
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.model.ETimeType;
+import org.noear.water.protocol.model.monitor.ETimeType;
 import org.noear.water.utils.TextUtils;
 
 
@@ -14,17 +14,12 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
-import org.noear.water.protocol.model.EChartModel;
-import org.noear.water.protocol.model.ELineModel;
+import org.noear.water.protocol.model.monitor.ELineModel;
 import wateradmin.models.water.ServerTrackEcsModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller

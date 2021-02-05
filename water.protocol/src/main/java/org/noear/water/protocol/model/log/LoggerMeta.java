@@ -1,4 +1,4 @@
-package org.noear.water.protocol.model;
+package org.noear.water.protocol.model.log;
 
 
 public interface LoggerMeta {

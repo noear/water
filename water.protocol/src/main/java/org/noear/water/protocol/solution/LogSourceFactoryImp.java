@@ -2,7 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.*;
-import org.noear.water.protocol.model.LoggerMeta;
+import org.noear.water.protocol.model.log.LoggerMeta;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 

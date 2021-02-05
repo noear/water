@@ -2,9 +2,9 @@ package wateradmin.dso.wrap;
 
 import org.noear.water.protocol.Monitoring;
 import org.noear.water.protocol.MonitorType;
-import org.noear.water.protocol.model.EChartModel;
-import org.noear.water.protocol.model.ELineModel;
-import org.noear.water.protocol.model.ETimeType;
+import org.noear.water.protocol.model.monitor.EChartModel;
+import org.noear.water.protocol.model.monitor.ELineModel;
+import org.noear.water.protocol.model.monitor.ETimeType;
 import org.noear.water.utils.TextUtils;
 import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.wrap.aliyun.AliyunCmsUtil;

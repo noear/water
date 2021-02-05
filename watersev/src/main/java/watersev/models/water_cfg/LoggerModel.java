@@ -1,7 +1,7 @@
 package watersev.models.water_cfg;
 
 import lombok.Getter;
-import org.noear.water.protocol.model.LoggerMeta;
+import org.noear.water.protocol.model.log.LoggerMeta;
 
 /**
  * @author noear 2021/2/2 created

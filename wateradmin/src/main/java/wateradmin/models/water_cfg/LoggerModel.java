@@ -1,7 +1,7 @@
 package wateradmin.models.water_cfg;
 
 import lombok.Getter;
-import org.noear.water.protocol.model.LoggerMeta;
+import org.noear.water.protocol.model.log.LoggerMeta;
 
 @Getter
 public class LoggerModel implements LoggerMeta

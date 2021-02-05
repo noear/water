@@ -1,4 +1,4 @@
-package org.noear.water.protocol.model;
+package org.noear.water.protocol.model.monitor;
 
 public enum ETimeType {
     hour1(0),

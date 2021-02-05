@@ -1,4 +1,4 @@
-package org.noear.water.protocol.model;
+package org.noear.water.protocol.model.message;
 
 /**
  * state -2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数

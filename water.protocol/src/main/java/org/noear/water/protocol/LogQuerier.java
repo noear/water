@@ -1,6 +1,6 @@
 package org.noear.water.protocol;
 
-import org.noear.water.protocol.model.LogModel;
+import org.noear.water.protocol.model.log.LogModel;
 
 import java.util.List;
 
