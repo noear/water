@@ -1,5 +1,6 @@
 package waterapi.controller.message;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
@@ -46,6 +47,10 @@ public class CMD_msg_send extends UapiBase {
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
         String trace_id = ctx.header(WW.http_header_trace);
+
+        if(Utils.isEmpty(trace_id)){
+            trace_id = Utils.guid();
+        }
 
         if (DbWaterMsgApi.addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
             return Result.succeed();
