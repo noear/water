@@ -18,7 +18,8 @@ public class MsgZanController implements IJob {
         return "zan";
     }
 
-    int _interval = 500;
+    int _interval_def = 500;
+    int _interval = 100;
 
     @Override
     public int getInterval() {
@@ -36,7 +37,7 @@ public class MsgZanController implements IJob {
         List<Long> msgList = DbWaterMsgApi.getMessageList(200, ntime);
 
         if (msgList.size() > 0) {
-            _interval = 500;
+            _interval = _interval_def;
 
             for (Long msg_id : msgList) {
                 String msg_id_str = msg_id + "";

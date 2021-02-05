@@ -54,6 +54,14 @@ public final class MsgController implements IJob {
         });
     }
 
+    public void unlock(String key){
+        ProtocolHub.messageLock.unlock(key);
+    }
+
+    public boolean lock(String key){
+        return ProtocolHub.messageLock.lock(key);
+    }
+
     private void exchange(String msg_id_str) {
         try {
             exchangeDo(msg_id_str);
@@ -67,7 +75,7 @@ public final class MsgController implements IJob {
     private void exchangeDo(String msg_id_str) throws Exception {
         String lk_msg_id_do = msg_id_str + "_do";
 
-        if (ProtocolHub.messageLock.lock(lk_msg_id_do) == false) {
+        if (lock(lk_msg_id_do) == false) {
             return;
         }
 
@@ -78,11 +86,13 @@ public final class MsgController implements IJob {
             msg = DbWaterMsgApi.getMessageOfPending(msgID); //可能会出异常
 
             if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
+                unlock(lk_msg_id_do);
                 return;
             }
 
             long ntime = DisttimeUtils.currTime();
             if (msg.dist_nexttime > ntime) { //如果时间还没到
+                unlock(lk_msg_id_do);
                 return;
             }
 
@@ -106,7 +116,7 @@ public final class MsgController implements IJob {
             }
 
             //如果异常了，及时解锁（如果成功，在回调里解锁）
-            ProtocolHub.messageLock.unlock(lk_msg_id_do);
+            unlock(lk_msg_id_do);
         }
     }
 
@@ -118,6 +128,7 @@ public final class MsgController implements IJob {
         //1.2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
             DbWaterMsgApi.setMessageState(msg, MessageState.notarget);//-2);
+            unlock(msg.lk_msg_id_do);
             return;
         }
 
@@ -146,6 +157,7 @@ public final class MsgController implements IJob {
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
             DbWaterMsgApi.setMessageState(msg, MessageState.completed);//2);
+            unlock(msg.lk_msg_id_do);
             return;
         }
 
