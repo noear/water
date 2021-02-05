@@ -4,9 +4,9 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
+import org.noear.water.protocol.model.message.DistributionModel;
+import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.utils.TextUtils;
-import watersev.models.water_msg.DistributionModel;
-import watersev.models.water_msg.MessageModel;
 
 public class LogUtil {
     private static Logger log_msg =  WaterLogger.get("water_log_msg");

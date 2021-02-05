@@ -7,16 +7,16 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.message.DistributionModel;
+import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
+import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.*;
 import watersev.Config;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
-import watersev.models.water_msg.DistributionModel;
-import watersev.models.water_msg.MessageModel;
-import watersev.models.water_msg.SubscriberModel;
 import watersev.utils.ext.Act3;
 
 import java.sql.SQLException;
@@ -83,7 +83,7 @@ public final class MsgController implements IJob {
         MessageModel msg = null;
 
         try {
-            msg = DbWaterMsgApi.getMessageOfPending(msgID); //可能会出异常
+            msg = ProtocolHub.messageSource().getMessageOfPending(msgID); //可能会出异常
 
             if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
                 unlock(lk_msg_id_do);
@@ -104,13 +104,13 @@ public final class MsgController implements IJob {
             ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
 
             //置为处理中
-            DbWaterMsgApi.setMessageState(msg, MessageState.processed);//1);
+            ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);//1);
 
             routing(msg);
 
         } catch (Throwable ex) {
             if (msg != null) {
-                DbWaterMsgApi.setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
+                ProtocolHub.messageSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
                 LogUtil.writeForMsgByError(msg, ex);
             }
@@ -127,7 +127,7 @@ public final class MsgController implements IJob {
 
         //1.2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg, MessageState.notarget);//-2);
+            ProtocolHub.messageSource().setMessageState(msg, MessageState.notarget);//-2);
             unlock(msg.lk_msg_id_do);
             return;
         }
@@ -135,15 +135,15 @@ public final class MsgController implements IJob {
         //2.尝试建立分发关系
         if(msg.dist_routed == false) {
             for (SubscriberModel m : subsList.values()) {
-                DbWaterMsgApi.addDistributionNoLock(msg, m);
+                ProtocolHub.messageSource().addDistributionNoLock(msg, m);
             }
 
-            DbWaterMsgApi.setMessageRouteState(msg,true);
+            ProtocolHub.messageSource().setMessageRouteState(msg,true);
         }
 
         //3.获出待分发任务
         List<DistributionModel> distList = new ArrayList<>();
-        List<DistributionModel> distList_tmp = DbWaterMsgApi.getDistributionListByMsg(msg.msg_id);
+        List<DistributionModel> distList_tmp = ProtocolHub.messageSource().getDistributionListByMsg(msg.msg_id);
 
         //3.1.过滤可能已不存在的订阅者
         for (DistributionModel d : distList_tmp) { //可能会有什么意外，会产生重复数据
@@ -156,7 +156,7 @@ public final class MsgController implements IJob {
 
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
-            DbWaterMsgApi.setMessageState(msg, MessageState.completed);//2);
+            ProtocolHub.messageSource().setMessageState(msg, MessageState.completed);//2);
             unlock(msg.lk_msg_id_do);
             return;
         }
@@ -181,11 +181,11 @@ public final class MsgController implements IJob {
             //
             tag.count += 1;
             if (isOk) {
-                if (DbWaterMsgApi.setDistributionState(tag.msg, dist, MessageState.completed)) {//2
+                if (ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
                     tag.value += 1;
                 }
             } else {
-                DbWaterMsgApi.setDistributionState(tag.msg, dist, MessageState.processed);//1);
+                ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
             }
 
             //4.返回派发结果
@@ -194,7 +194,7 @@ public final class MsgController implements IJob {
                 ProtocolHub.messageLock.unlock(tag.msg.lk_msg_id_do);
 
                 if (tag.value == tag.total) {
-                    DbWaterMsgApi.setMessageState(tag.msg, MessageState.completed);//2);
+                    ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
 
                     if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
@@ -202,13 +202,13 @@ public final class MsgController implements IJob {
                     }
 
                 } else {
-                    if (tag.msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                        DbWaterMsgApi.setMessageRepet(tag.msg, MessageState.excessive);//3);
+                    if (tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
+                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.excessive);//3);
 
 //                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag.msg, false, dist);
                     } else {
-                        DbWaterMsgApi.setMessageRepet(tag.msg, MessageState.undefined);//0);
+                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                         if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
@@ -300,7 +300,7 @@ public final class MsgController implements IJob {
 
                 //推后一小时，可手工再恢复
                 long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
-                DbWaterMsgApi.setMessageState(msg, MessageState.processed, ntime);//1
+                ProtocolHub.messageSource().setMessageState(msg, MessageState.processed, ntime);//1
             } else {
                 //::0,1
                 //

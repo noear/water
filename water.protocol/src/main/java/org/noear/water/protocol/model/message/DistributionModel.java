@@ -1,4 +1,4 @@
-package watersev.models.water_msg;
+package org.noear.water.protocol.model.message;
 
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;

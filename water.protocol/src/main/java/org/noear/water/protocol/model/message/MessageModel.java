@@ -1,8 +1,7 @@
-package watersev.models.water_msg;
+package org.noear.water.protocol.model.message;
 
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
-import watersev.dso.db.DbWaterMsgApi;
 
 /**
  * Created by noear on 2017/7/18.
@@ -50,26 +49,29 @@ public class MessageModel implements IBinder {
         return new MessageModel();
     }
 
-    private  TopicModel _topic;
-    public TopicModel topic(){
-        if(_topic==null) {
-            try {
-                _topic = DbWaterMsgApi.getTopic(topic_id);
-            }catch (Exception ex){
-                ex.printStackTrace();
-                _topic = new TopicModel();
-            }
-        }
 
-        return _topic;
-    }
 
-    private int _max_dist_num=-1;
-    public boolean isDistributionEnd() {
-        if (_max_dist_num < 0) {
-            _max_dist_num = topic().max_distribution_num;
-        }
 
-        return (_max_dist_num > 0 && dist_count >= _max_dist_num);
-    }
+//    private  TopicModel _topic;
+//    public TopicModel topic(){
+//        if(_topic==null) {
+//            try {
+//                _topic = DbWaterMsgApi.getTopic(topic_id);
+//            }catch (Exception ex){
+//                ex.printStackTrace();
+//                _topic = new TopicModel();
+//            }
+//        }
+//
+//        return _topic;
+//    }
+//
+//    private int _max_dist_num=-1;
+//    public boolean isDistributionEnd() {
+//        if (_max_dist_num < 0) {
+//            _max_dist_num = topic().max_distribution_num;
+//        }
+//
+//        return (_max_dist_num > 0 && dist_count >= _max_dist_num);
+//    }
 }

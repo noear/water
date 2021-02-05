@@ -27,4 +27,5 @@ public class TopicModel implements IBinder {
     public IBinder clone() {
         return new TopicModel();
     }
+
 }

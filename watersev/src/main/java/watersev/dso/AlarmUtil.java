@@ -1,12 +1,12 @@
 package watersev.dso;
 
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.utils.TextUtils;
 import watersev.Config;
 import watersev.dso.db.DbWaterCfgApi;
+import watersev.models.StateTag;
 import watersev.models.water.*;
-import watersev.models.water_msg.DistributionModel;
-import watersev.models.water_msg.MessageModel;
 import watersev.models.water_paas.PaasFileModel;
 import watersev.models.water_reg.ServiceModel;
 
@@ -15,24 +15,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmUtil {
-    public static void tryAlarm(MessageModel msg, boolean isOk, DistributionModel task) {
+    public static void tryAlarm(StateTag tag, boolean isOk, DistributionModel task) {
         try {
             StringBuilder sb = new StringBuilder();
 
-            if (msg.topic().alarm_model == 1) {
+            if (tag.topic().alarm_model == 1) {
                 return;
             }
 
             if (isOk) {
-                sb.append("恢复：消息=").append(msg.topic_name).append("，").append("#")
-                        .append(msg.msg_id);
+                sb.append("恢复：消息=").append(tag.msg.topic_name).append("，").append("#")
+                        .append(tag.msg.msg_id);
             } else {
-                if(msg.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                    sb.append("提示：消息=").append(msg.topic_name).append("，").append("#")
-                            .append(msg.msg_id).append("结束（已派").append(msg.dist_count).append("次）");
+                if(tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
+                    sb.append("提示：消息=").append(tag.msg.topic_name).append("，").append("#")
+                            .append(tag.msg.msg_id).append("结束（已派").append(tag.msg.dist_count).append("次）");
                 }else {
-                    sb.append("报警：消息=").append(msg.topic_name).append("，").append("#")
-                            .append(msg.msg_id).append("已派发").append(msg.dist_count).append("次失败");
+                    sb.append("报警：消息=").append(tag.msg.topic_name).append("，").append("#")
+                            .append(tag.msg.msg_id).append("已派发").append(tag.msg.dist_count).append("次失败");
                 }
             }
 
