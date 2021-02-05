@@ -82,10 +82,10 @@ public class Config {
             water_cache_header = cfg("water_cache_header")
                     .getString("WATER2_CACHE") + "_API2";
 
-            water_log_store = cfg("water_log_store");
-            water_msg_store = cfg("water_msg_store");
+            water_log_store = cfg(WW.water_log_store);
+            water_msg_store = cfg(WW.water_msg_store);
 
-            water_msg_queue = cfg("water_msg_queue");
+            water_msg_queue = cfg(WW.water_msg_queue);
 
             try {
                 localHost = LocalUtils.getLocalAddr(service_port);

@@ -35,6 +35,7 @@ public class WW {
 
 
     public static final String water_log = "water_log";
+    public static final String water_log_store = "water_log_store";
     public static final String water_log_upstream = "water_log_upstream";
     public static final String water_log_api = "water_log_api";
 
@@ -47,6 +48,9 @@ public class WW {
     public static final String water_cache = "water_cache";
 
     public static final String water_msg = "water_msg";
+    public static final String water_msg_store = "water_msg_store";
+    public static final String water_msg_queue = "water_msg_queue";
+
     public static final String water_paas = "water_paas";
 
     public static final String water_session = "water_session";
