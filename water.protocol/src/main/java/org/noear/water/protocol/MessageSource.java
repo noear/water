@@ -24,7 +24,7 @@ public interface MessageSource {
 
 
     //for sev
-    List<Long> getMessageList(int rows, long dist_nexttime) throws SQLException;
+    List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException;
     MessageModel getMessageOfPending(long msg_id) throws SQLException;
     void setMessageRouteState(MessageModel msg, boolean dist_routed);
     boolean setMessageState(MessageModel msg, MessageState state);

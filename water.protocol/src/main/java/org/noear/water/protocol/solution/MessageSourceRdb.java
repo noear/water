@@ -138,7 +138,7 @@ public class MessageSourceRdb implements MessageSource {
     // for water sev
 
     //获取待派发的消息列表
-    public List<Long> getMessageList(int rows, long dist_nexttime) throws SQLException {
+    public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException {
         return _db.table("water_msg_message")
                 .where("state=0 AND dist_nexttime<?", dist_nexttime)
                 .orderBy("msg_id ASC")
