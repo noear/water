@@ -21,7 +21,7 @@ public final class StateTag {
     public TopicModel topic() {
         if (_topic == null) {
             try {
-                _topic = DbWaterMsgApi.getTopic(msg.topic_id);
+                _topic = DbWaterMsgApi.getTopic(msg.topic_name);
             } catch (Exception ex) {
                 ex.printStackTrace();
                 _topic = new TopicModel();

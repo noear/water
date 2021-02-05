@@ -31,7 +31,7 @@ public class MsgController extends BaseController {
     @Mapping("/msg/debug")
     public ModelAndView debug(String key) throws SQLException {
         MessageModel msg = ProtocolHub.messageSource().getMessageByKey(key);
-        SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
+        SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         viewModel.put("key",key);
         viewModel.put("msg",msg);
         viewModel.put("sub",sub);
@@ -42,7 +42,7 @@ public class MsgController extends BaseController {
     @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
         MessageModel msg = ProtocolHub.messageSource().getMessageById(id);
-        SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_id);
+        SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         StringBuilder sb = new StringBuilder(200);
         sb.append(id).append("#");
         sb.append(msg_key).append("#");

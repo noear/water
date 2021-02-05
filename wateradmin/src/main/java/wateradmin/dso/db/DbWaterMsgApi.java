@@ -35,9 +35,9 @@ public class DbWaterMsgApi {
 
 
 
-    public static SubscriberModel getSubscriber(int topic_id) throws SQLException {
+    public static SubscriberModel getSubscriber(String topic) throws SQLException {
         return db().table("water_msg_subscriber")
-                .where("topic_id = ?", topic_id)
+                .where("topic_name = ?", topic)
                 .selectItem("*", SubscriberModel.class);
     }
 

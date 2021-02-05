@@ -23,9 +23,9 @@ public class DbWaterMsgApi {
     }
 
     //获取主题
-    public static TopicModel getTopic(int topic_id) throws SQLException {
+    public static TopicModel getTopic(String topic) throws SQLException {
         TopicModel m = db().table("water_msg_topic")
-                .where("topic_id=?", topic_id)
+                .where("topic_name=?", topic)
                 .caching(Config.cache_data)
                 .selectItem("*", TopicModel.class);
 
@@ -33,11 +33,11 @@ public class DbWaterMsgApi {
     }
 
     //根据主题获取订阅者
-    public static Map<Integer, SubscriberModel> getSubscriberListByTopic(int topicID) throws SQLException {
+    public static Map<Integer, SubscriberModel> getSubscriberListByTopic(String topic_name) throws SQLException {
         Map<Integer, SubscriberModel> map = new HashMap<>();
 
         List<SubscriberModel> list = db().table("water_msg_subscriber")
-                .where("topic_id=? AND is_enabled=1", topicID)
+                .where("topic_name=? AND is_enabled=1", topic_name)
                 .caching(Config.cache_data).usingCache(60)
                 .selectList("*", SubscriberModel.class);
 

@@ -123,7 +123,7 @@ public final class MsgController implements IJob {
 
     private void routing(MessageModel msg) throws SQLException {
         //1.取出订阅者
-        Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_id);
+        Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 
         //1.2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
