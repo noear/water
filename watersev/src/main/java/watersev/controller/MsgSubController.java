@@ -2,10 +2,10 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.db.DbWaterMsgApi;
-import watersev.models.water_msg.SubscriberModel;
 import watersev.utils.HttpUtilEx;
 
 import java.util.List;

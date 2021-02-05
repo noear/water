@@ -34,7 +34,7 @@ public class MsgZanController implements IJob {
         }
 
         long ntime = System.currentTimeMillis();
-        List<Long> msgList = DbWaterMsgApi.getMessageList(200, ntime);
+        List<Long> msgList = ProtocolHub.messageSource().getMessageList(200, ntime);
 
         if (msgList.size() > 0) {
             _interval = _interval_def;

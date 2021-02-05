@@ -198,7 +198,7 @@ public final class MsgController implements IJob {
 
                     if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
-                        AlarmUtil.tryAlarm(tag.msg, true, dist);
+                        AlarmUtil.tryAlarm(tag, true, dist);
                     }
 
                 } else {
@@ -206,13 +206,13 @@ public final class MsgController implements IJob {
                         ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.excessive);//3);
 
 //                    System.out.print("发送短信报警---\r\n");
-                        AlarmUtil.tryAlarm(tag.msg, false, dist);
+                        AlarmUtil.tryAlarm(tag, false, dist);
                     } else {
                         ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                         if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
-                            AlarmUtil.tryAlarm(tag.msg, false, dist);
+                            AlarmUtil.tryAlarm(tag, false, dist);
                         }
                     }
                 }
