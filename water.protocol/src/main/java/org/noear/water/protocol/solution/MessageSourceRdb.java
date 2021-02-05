@@ -28,7 +28,6 @@ import java.util.List;
 public class MessageSourceRdb implements MessageSource {
     DbContext _db;
     ICacheServiceEx _cache;
-    IdBuilder _idBuilder;
     Logger _logMsg;
 
     public MessageSourceRdb(DbContext db, ICacheServiceEx cache, Logger log) {
@@ -90,7 +89,7 @@ public class MessageSourceRdb implements MessageSource {
 
     //添加消息
     public long addMessage(String msg_key, String trace_id, String tags, String topic, String content, Date plan_time) throws Exception {
-        long msg_id = _idBuilder.getMsgId();
+        long msg_id = ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
             msg_key = Utils.guid();
