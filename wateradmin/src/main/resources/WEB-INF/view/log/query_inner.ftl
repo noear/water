@@ -58,7 +58,7 @@
     <div id="content">
         <#list list as log>
             <div class="break">
-                <span>${log.log_fulltime?string("yyyy-MM-dd'T'HH:mm:ss.zzz'Z'")}</span>
+                <span>${log.log_fulltime?string("yyyy-MM-dd HH:mm:ss.fff")}</span>
                 <span>:</span>
                 <span>${log.log_id}-${log.levelHtml()} *${log.trace_id!} #${log.tag!}@${log.tag1!}@${log.tag2!}@${log.tag3!}#${log.from!}</span>
             </div>
