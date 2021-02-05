@@ -5,9 +5,9 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
 
 /**
@@ -32,9 +32,9 @@ public class CMD_msg_cancel extends UapiBase {
         //如果不需要修改，检查是否已存在
         //
         if (TextUtils.isEmpty(subscriber_key)) {
-            DbWaterMsgApi.cancelMessage(key);
+            ProtocolHub.messageSource().cancelMessage(key);
         } else {
-            DbWaterMsgApi.cancelMsgDistribution(key, subscriber_key);
+            ProtocolHub.messageSource().cancelMsgDistribution(key, subscriber_key);
         }
 
         return Result.succeed();

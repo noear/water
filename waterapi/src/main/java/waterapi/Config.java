@@ -35,6 +35,7 @@ public class Config {
     public static String localHost;
 
     public static ConfigM water_log_store;
+    public static ConfigM water_msg_store;
 
 
     //================================
@@ -80,6 +81,8 @@ public class Config {
                     .getString("WATER2_CACHE") + "_API2";
 
             water_log_store = cfg("water_log_store");
+            water_msg_store = cfg("water_msg_store");
+
             water_msg_queue = cfg("water_msg_queue");
 
             try {

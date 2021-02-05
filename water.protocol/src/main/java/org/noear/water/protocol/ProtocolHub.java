@@ -2,6 +2,8 @@ package org.noear.water.protocol;
 
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
+import org.noear.water.protocol.solution.LogQuerierImp;
+import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.ProtocolUtil;
 
 import java.util.HashMap;
@@ -14,9 +16,16 @@ public final class ProtocolHub {
     //必填
     public static Config config;
 
+    public static IdBuilder idBuilder;
+
     public static LogSourceFactory logSourceFactory;
-    public static LogQuerier logQuerier;
-    public static LogStorer logStorer;
+    public static final LogQuerier logQuerier = new LogQuerierImp();
+    public static final LogStorer logStorer = new LogStorerImp();
+
+    public static MessageSourceFactory messageSourceFactory;
+    public static MessageSource messageSource(){
+        return messageSourceFactory.getSource();
+    }
 
     public static MessageLock messageLock;
     public static MessageQueue messageQueue;

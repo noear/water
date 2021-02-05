@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterMsgApi;
@@ -31,9 +32,9 @@ public class CMD_msg_succeed extends UapiBase {
     protected Result cmd_exec(String key, String subscriber_key) throws Exception {
 
         if (TextUtils.isEmpty(subscriber_key)) {
-            DbWaterMsgApi.succeedMessage(key);
+            ProtocolHub.messageSource().succeedMessage(key);
         } else {
-            DbWaterMsgApi.succeedMsgDistribution(key, subscriber_key);
+            ProtocolHub.messageSource().succeedMsgDistribution(key, subscriber_key);
         }
 
         return Result.succeed();

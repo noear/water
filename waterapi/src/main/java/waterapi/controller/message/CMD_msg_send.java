@@ -8,6 +8,7 @@ import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
@@ -41,7 +42,7 @@ public class CMD_msg_send extends UapiBase {
 
         //如果不需要修改，检查是否已存在
         //
-        if (DbWaterMsgApi.hasMessage(key)) {
+        if (ProtocolHub.messageSource().hasMessage(key)) {
             return Result.succeed();
         }
 
@@ -52,7 +53,7 @@ public class CMD_msg_send extends UapiBase {
             trace_id = Utils.guid();
         }
 
-        if (DbWaterMsgApi.addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
+        if (ProtocolHub.messageSource().addMessage(key, trace_id, tags, topic, message, plan_time2) > 0) {
             return Result.succeed();
         } else {
             return Result.failure();

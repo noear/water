@@ -7,6 +7,7 @@ import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
+import org.noear.water.protocol.ProtocolHub;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
@@ -54,7 +55,7 @@ public class CMD_cfg_set extends UapiBase {
         //发消息通知
         if (isOk) {
             String trace_id = ctx.header(WW.http_header_trace);
-            DbWaterMsgApi.addMessage(IDUtils.buildGuid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
+            ProtocolHub.messageSource().addMessage(IDUtils.buildGuid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null);
         }
 
         return Result.succeed();
