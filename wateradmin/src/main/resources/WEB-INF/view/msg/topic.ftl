@@ -29,7 +29,6 @@
         <table>
             <thead>
             <tr>
-                <td width="70">主题ID</td>
                 <td class="left" sort="">主题名称</td>
                 <td width="120" sort="stat_msg_day_num">近日<br/>消息数量</td>
                 <td width="120">最大<br/>消息数量</td>
@@ -44,8 +43,7 @@
             <tbody id="tbody" >
             <#list list as m>
                 <tr>
-                    <td>${m.topic_id}</td>
-                    <td style="text-align: left">${m.topic_name}</td>
+                    <td class="left">${m.topic_name}</td>
                     <td>${m.stat_msg_day_num!0}</td>
                     <td>${m.max_msg_num}</td>
                     <td>${m.max_distribution_num}</td>

@@ -124,7 +124,6 @@
             <thead>
                 <tr>
                     <td width="20"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                    <td width="70px">主题ID</td>
                     <td class="left">主题名称</td>
                     <td class="left">订阅者的接收地址</td>
                     <td class="left" width="120px">接收方式</td>
@@ -135,7 +134,6 @@
             <#list list as sub>
                 <tr class="${sub.trClass()}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${sub.subscriber_id}" /><a></a></label></checkbox></td>
-                    <td>${sub.topic_id}</td>
                     <td class="left break">${sub.topic_name}</td>
                     <td class="left break">${sub.receive_url}
                         <#if (sub.subscriber_note!) != ''>

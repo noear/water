@@ -86,7 +86,7 @@
                 <table>
                     <tr>
                         <th>消息ID</th>
-                        <td><input type="text" id="msg_id" value="${msg.msg_id}"/></td>
+                        <td><input type="text" id="msg_id" value="${msg.msg_id!}"/></td>
                     </tr>
                     <tr>
                         <th>消息key</th>
