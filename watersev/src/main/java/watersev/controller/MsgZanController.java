@@ -19,7 +19,7 @@ public class MsgZanController implements IJob {
     }
 
     int _interval_def = 500;
-    int _interval = 100;
+    int _interval = 500;
 
     @Override
     public int getInterval() {
