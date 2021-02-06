@@ -150,7 +150,7 @@ public class MessageSourceRdb implements MessageSource {
     //获取某一条消息
     public MessageModel getMessageOfPending(long msg_id) throws SQLException {
         MessageModel m = _db.table("water_msg_message")
-                .whereEq("msg_id", msg_id).and("state", 0)
+                .whereEq("msg_id", msg_id).andEq("state", 0)
                 .selectItem("*", MessageModel.class);
 
         if (m.state != 0) {
