@@ -35,13 +35,13 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        //保持队里只有1000数量
-        if (ProtocolHub.messageQueue.count() > 1000) {
+        //保持队里只有2000数量
+        if (ProtocolHub.messageQueue.count() > 2000) {
             return;
         }
 
         long ntime = System.currentTimeMillis();
-        List<MessageModel> msgList = ProtocolHub.messageSource().getMessageListOfPending(200, ntime);
+        List<MessageModel> msgList = ProtocolHub.messageSource().getMessageListOfPending(1000, ntime);
 
         for (MessageModel msg : msgList) {
             exchange(msg);
