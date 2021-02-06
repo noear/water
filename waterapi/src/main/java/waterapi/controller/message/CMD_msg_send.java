@@ -39,12 +39,6 @@ public class CMD_msg_send extends UapiBase {
     @Mapping("/msg/send/")
     public Result cmd_exec(Context ctx, String key, String topic, String message, String plan_time, String tags) throws Exception {
 
-        //如果不需要修改，检查是否已存在
-        //
-        if (ProtocolHub.messageSource().hasMessage(key)) {
-            return Result.succeed();
-        }
-
         Date plan_time2 = DisttimeUtils.parse(plan_time);
         String trace_id = ctx.header(WW.http_header_trace);
 
