@@ -234,33 +234,29 @@ public class MessageSourceRdb implements MessageSource {
 
     //添加派发任务
     public void addDistributionNoLock(MessageModel msg, SubscriberModel subs) throws SQLException {
-//        String lock_key = "distribution_" + msg.msg_id + "_" + subs.subscriber_id;
 
-        //尝试2秒的锁
-//        if (LockUtils.tryLock("watersev", lock_key, 2)) {
 
-        //过滤时间还要用一下
-//            boolean isExists = db().table("water_msg_distribution")
-//                    .where("msg_id=?", msg.msg_id).and("subscriber_id=?", subs.subscriber_id)
-//                    .hint("/*TDDL:MASTER*/")
-//                    .selectExists();
-//
-//            if (isExists == false) {
-        _db.table("water_msg_distribution").usingExpr(true)
-                .set("msg_id", msg.msg_id)
-                .set("msg_key", msg.msg_key)
-                .set("subscriber_id", subs.subscriber_id)
-                .set("subscriber_key", subs.subscriber_key)
-                .set("alarm_mobile", subs.alarm_mobile)
-                .set("alarm_sign", subs.alarm_sign)
-                .set("receive_url", subs.receive_url)
-                .set("receive_key", subs.receive_key)
-                .set("receive_way", subs.receive_way)
-                .set("log_date", "$DATE(NOW())")
-                .set("log_fulltime", "$NOW()")
-                .insert();
-//            }
-//        }
+        boolean isExists = _db.table("water_msg_distribution")
+                .whereEq("msg_id", msg.msg_id)
+                .andEq("subscriber_id", subs.subscriber_id)
+                .hint("/*TDDL:MASTER*/")
+                .selectExists();
+
+        if (isExists == false) {
+            _db.table("water_msg_distribution").usingExpr(true)
+                    .set("msg_id", msg.msg_id)
+                    .set("msg_key", msg.msg_key)
+                    .set("subscriber_id", subs.subscriber_id)
+                    .set("subscriber_key", subs.subscriber_key)
+                    .set("alarm_mobile", subs.alarm_mobile)
+                    .set("alarm_sign", subs.alarm_sign)
+                    .set("receive_url", subs.receive_url)
+                    .set("receive_key", subs.receive_key)
+                    .set("receive_way", subs.receive_way)
+                    .set("log_date", "$DATE(NOW())")
+                    .set("log_fulltime", "$NOW()")
+                    .insert();
+        }
     }
 
     //根据消息获取派发任务

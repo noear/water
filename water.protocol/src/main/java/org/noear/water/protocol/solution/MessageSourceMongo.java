@@ -245,28 +245,34 @@ public class MessageSourceMongo implements MessageSource {
     //添加派发任务
     public void addDistributionNoLock(MessageModel msg, SubscriberModel subs) throws Exception {
 
-        Datetime datetime = new Datetime();
-        long dist_id = ProtocolHub.idBuilder.getId("water_msg_distribution");
+        boolean isExists = _db.table("water_msg_distribution")
+                .whereEq("msg_id", msg.msg_id)
+                .andEq("subscriber_id", subs.subscriber_id)
+                .selectExists();
 
-        _db.table("water_msg_distribution")
-                .set("dist_id", dist_id)
-                .set("msg_id", msg.msg_id)
-                .set("msg_key", msg.msg_key)
-                .set("subscriber_id", subs.subscriber_id)
-                .set("subscriber_key", subs.subscriber_key)
-                .set("alarm_mobile", subs.alarm_mobile)
-                .set("alarm_sign", subs.alarm_sign)
-                .set("receive_url", subs.receive_url)
-                .set("receive_key", subs.receive_key)
-                .set("receive_way", subs.receive_way)
-                .set("receive_check","")
-                .set("duration",0)
-                .set("state",0)
-                .set("log_date", datetime.getDate())
-                .set("log_fulltime", datetime.getFulltime())
-                .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", subs.subscriber_id)
-                .replace();
+        if (isExists == false) {
+            Datetime datetime = new Datetime();
+            long dist_id = ProtocolHub.idBuilder.getId("water_msg_distribution");
 
+            _db.table("water_msg_distribution")
+                    .set("dist_id", dist_id)
+                    .set("msg_id", msg.msg_id)
+                    .set("msg_key", msg.msg_key)
+                    .set("subscriber_id", subs.subscriber_id)
+                    .set("subscriber_key", subs.subscriber_key)
+                    .set("alarm_mobile", subs.alarm_mobile)
+                    .set("alarm_sign", subs.alarm_sign)
+                    .set("receive_url", subs.receive_url)
+                    .set("receive_key", subs.receive_key)
+                    .set("receive_way", subs.receive_way)
+                    .set("receive_check", "")
+                    .set("duration", 0)
+                    .set("state", 0)
+                    .set("log_date", datetime.getDate())
+                    .set("log_fulltime", datetime.getFulltime())
+                    .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", subs.subscriber_id)
+                    .insert();
+        }
     }
 
     //根据消息获取派发任务
