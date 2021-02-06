@@ -2,8 +2,6 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
-import org.noear.solon.core.handle.ContextEmpty;
-import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
@@ -69,7 +67,11 @@ public final class MsgDistributionController implements IJob {
     }
 
     private void distributeDo(MessageModel msg) throws Exception {
-        if (msg == null || msg.state > MessageState.processed.code) { //如果找不到消息，或正在处理中
+        if (msg == null) { //如果找不到消息，或正在处理中
+            return;
+        }
+
+        if(msg.state > MessageState.processed.code){
             return;
         }
 

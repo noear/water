@@ -53,7 +53,7 @@ public class MessageModel implements IBinder {
 
         dist_routed = s.get("dist_routed").value(false);
         dist_count = s.get("dist_count").value(0);
-        dist_nexttime = s.get("dist_nexttime").value(0L);
+        dist_nexttime = s.get("dist_nexttime").longValue(0L);
 
         log_date = s.get("log_date").value(0);
         log_fulltime = s.get("log_fulltime").value(null);

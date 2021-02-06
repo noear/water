@@ -29,7 +29,7 @@ public interface MessageSource {
     //for sev
     //
     List<MessageModel> getMessageListOfPending(int rows, long dist_nexttime) throws Exception;
-    MessageModel getMessageOfPending(long msg_id) throws Exception;
+    MessageModel getMessageById(long msg_id) throws Exception;
     void setMessageRouteState(MessageModel msg, boolean dist_routed);
     boolean setMessageState(MessageModel msg, MessageState state);
     boolean setMessageState(MessageModel msg, MessageState state, long dist_nexttime);
@@ -44,7 +44,6 @@ public interface MessageSource {
     //for admin
     //
     MessageModel getMessageByKey(String msg_key) throws Exception;
-    MessageModel getMessageById(long msg_id) throws Exception;
     List<MessageModel> getMessageList(int dist_count, int topic_id) throws Exception;
     List<MessageModel> getMessageList(int _m, String key) throws Exception;
 //    int deleteMsg(int state) throws Exception;

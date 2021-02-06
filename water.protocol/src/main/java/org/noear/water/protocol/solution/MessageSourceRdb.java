@@ -141,19 +141,6 @@ public class MessageSourceRdb implements MessageSource {
                 .selectList("*", MessageModel.class);
     }
 
-    //获取某一条消息
-    public MessageModel getMessageOfPending(long msg_id) throws SQLException {
-        MessageModel m = _db.table("water_msg_message")
-                .whereEq("msg_id", msg_id).andEq("state", 0)
-                .selectItem("*", MessageModel.class);
-
-        if (m.state != 0) {
-            return null;
-        } else {
-            return m;
-        }
-    }
-
     public void setMessageRouteState(MessageModel msg, boolean dist_routed) {
         try {
             _db.table("water_msg_message")
