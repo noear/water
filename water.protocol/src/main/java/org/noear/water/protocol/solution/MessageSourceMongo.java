@@ -157,7 +157,7 @@ public class MessageSourceMongo implements MessageSource {
     //获取待派发的消息列表
     public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws Exception {
         return _db.table("water_msg_message")
-                .whereEq("state",0).andLt("dist_nexttime", dist_nexttime)
+                .whereLt("dist_nexttime", dist_nexttime).andEq("state", 0)
                 .orderByAsc("msg_id")
                 .limit(rows)
                 .selectArray("msg_id");
@@ -343,12 +343,13 @@ public class MessageSourceMongo implements MessageSource {
             return list;
         } else {
             return _db.table("water_msg_message").build((tb) -> {
-                tb.whereEq("state", 0);
                 if (dist_count > 0) {
-                    tb.andGte("dist_count", dist_count);
+                    tb.whereGte("dist_count", dist_count);
                 } else {
-                    tb.andEq("topic_id", topic_id);
+                    tb.whereEq("topic_id", topic_id);
                 }
+
+                tb.andEq("state", 0);
             }).orderByAsc("msg_id").limit(50)
                     .selectList(MessageModel.class);
         }
@@ -375,7 +376,7 @@ public class MessageSourceMongo implements MessageSource {
             if (key.startsWith("*")) {
                 qr.andEq("trace_id", key.substring(1).trim());
             } else if (key.startsWith("@")) {
-                qr.andLk("tags", key.substring(1).trim() + "%");
+                qr.andLk("tags", "^" + key.substring(1).trim());
             } else {
                 if (StringUtils.isNumeric(key)) {
                     qr.andEq("msg_id", Integer.parseInt(key));
