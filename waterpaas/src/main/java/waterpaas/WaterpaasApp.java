@@ -4,11 +4,14 @@ import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.handle.MethodType;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.IdBuilderImp;
 import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
+import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.water.utils.FromUtils;
 import org.noear.water.integration.solon.WaterAdapter;
 import org.noear.water.utils.Timecount;
@@ -28,7 +31,11 @@ public class WaterpaasApp {
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;
+            ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
+
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
+
+            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data, new WaterLogger(WW.water_log_msg));
 
 
             x.sharedAdd("cache", Config.cache_data);
