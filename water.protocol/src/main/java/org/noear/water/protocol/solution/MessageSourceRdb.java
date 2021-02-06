@@ -9,6 +9,7 @@ import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
@@ -103,7 +104,14 @@ public class MessageSourceRdb implements MessageSource {
             tags = "";
         }
 
-        _db.table("water_msg_message").usingExpr(true)
+        long dist_nexttime = 0;
+        if (plan_time != null) {
+            dist_nexttime = DisttimeUtils.distTime(plan_time);
+        }
+
+        Datetime datetime = new Datetime();
+
+        _db.table("water_msg_message")
                 .set("msg_id", msg_id)
                 .set("msg_key", msg_key)
                 .set("tags", tags)
@@ -112,16 +120,15 @@ public class MessageSourceRdb implements MessageSource {
                 .set("topic_name", topic_name)
                 .set("content", content)
                 .set("plan_time", plan_time)
-                .set("log_date", "$DATE(NOW())")
-                .set("log_fulltime", "$NOW()").build((tb) -> {
-            if (plan_time != null) {
-                tb.set("dist_nexttime", DisttimeUtils.distTime(plan_time));
-            }
-        }).insert();
+                .set("log_date", datetime.getDate())
+                .set("log_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getFulltime())
+                .set("dist_nexttime", dist_nexttime)
+                .insert();
 
-        if (plan_time == null) {
-            addMessageToQueue(msg_id);
-        }
+//        if (plan_time == null) {
+//            addMessageToQueue(msg_id);
+//        }
 
         return msg_id;
     }

@@ -136,9 +136,9 @@ public class MessageSourceMongo implements MessageSource {
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
 
-        if (plan_time == null) {
-            addMessageToQueue(msg_id);
-        }
+//        if (plan_time == null) {
+//            addMessageToQueue(msg_id);
+//        }
 
         return msg_id;
     }
