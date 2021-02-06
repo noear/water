@@ -48,9 +48,9 @@ public class MsgExchangeController implements IJob {
         List<MessageModel> msgList = ProtocolHub.messageSource().getMessageListOfPending(1000, ntime);
 
         for (MessageModel msg : msgList) {
-            executor.submit(() -> {
+            //executor.submit(() -> {
                 exchange(msg);
-            });
+            //});
         }
 
         if (msgList.size() > 0) {
@@ -118,9 +118,9 @@ public class MsgExchangeController implements IJob {
 
         String msg_id_str = String.valueOf(msg.msg_id);
 
-        if (ProtocolHub.messageLock.lock(msg_id_str)) {
-            ProtocolHub.messageQueue.push(msg_id_str);
-        }
+        //if (ProtocolHub.messageLock.lock(msg_id_str)) {
+        ProtocolHub.messageQueue.push(msg_id_str);
+        //}
 
         //置为处理中
         ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);//1);
