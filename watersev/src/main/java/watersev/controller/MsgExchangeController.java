@@ -45,7 +45,8 @@ public class MsgExchangeController implements IJob {
 //        }
 
         long ntime = System.currentTimeMillis();
-        List<MessageModel> msgList = ProtocolHub.messageSource().getMessageListOfPending(1000, ntime);
+        List<MessageModel> msgList = ProtocolHub.messageSource()
+                .getMessageListOfPending(2000, ntime);
 
         msgList.parallelStream().forEachOrdered((msg)->{
             exchange(msg);
