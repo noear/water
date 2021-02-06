@@ -14,12 +14,16 @@ import watersev.dso.db.DbWaterMsgApi;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 消息交换机（路由并入队）
  * */
 @Component
 public class MsgExchangeController implements IJob {
+    private final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
     @Override
     public String getName() {
         return "zan";
@@ -44,7 +48,9 @@ public class MsgExchangeController implements IJob {
         List<MessageModel> msgList = ProtocolHub.messageSource().getMessageListOfPending(1000, ntime);
 
         for (MessageModel msg : msgList) {
-            exchange(msg);
+            executor.submit(() -> {
+                exchange(msg);
+            });
         }
 
         if (msgList.size() > 0) {
