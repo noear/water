@@ -9,7 +9,6 @@ import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
@@ -89,7 +88,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //添加消息
-    public long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time) throws Exception {
+    public long addMessage(String msg_key, String trace_id, String tags, int topic_id, String topic_name, String content, Date plan_time) throws Exception {
         long msg_id = ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
@@ -141,7 +140,7 @@ public class MessageSourceRdb implements MessageSource {
     //获取待派发的消息列表
     public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException {
         return _db.table("water_msg_message")
-                .whereEq("state",0).andLt("dist_nexttime", dist_nexttime)
+                .whereEq("state", 0).andLt("dist_nexttime", dist_nexttime)
                 .orderByAsc("msg_id")
                 .limit(rows)
                 .selectArray("msg_id");
@@ -299,7 +298,7 @@ public class MessageSourceRdb implements MessageSource {
     /////////
     // for admin
 
-    public  MessageModel getMessageByKey(String msg_key) throws SQLException {
+    public MessageModel getMessageByKey(String msg_key) throws SQLException {
         if (TextUtils.isEmpty(msg_key)) {
             return new MessageModel();
         }
@@ -324,7 +323,7 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //获取消息列表
-    public  List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
+    public List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
         List<MessageModel> list = new ArrayList<>();
 
         if (dist_count == 0 && topic_id == 0) {
@@ -342,11 +341,11 @@ public class MessageSourceRdb implements MessageSource {
         }
     }
 
-    public  List<MessageModel> getMessageList(int _m, String key) throws SQLException {
+    public List<MessageModel> getMessageList(int _m, String key) throws SQLException {
         DbTableQuery qr = _db.table("water_msg_message");
 
         if (_m == 0) {
-            qr.whereEq("state", 0).andGte("dist_count",2);
+            qr.whereEq("state", 0).andGte("dist_count", 2);
         } else if (_m == 1) {
             qr.whereEq("state", 0);
         } else if (_m == 2) {
@@ -379,7 +378,7 @@ public class MessageSourceRdb implements MessageSource {
 
 
     //派发功能
-    public  boolean setMessageAsPending(List<Object> ids) throws SQLException {
+    public boolean setMessageAsPending(List<Object> ids) throws SQLException {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
@@ -409,7 +408,7 @@ public class MessageSourceRdb implements MessageSource {
 //    }
 
     //获得异常消息的dist_id和subscriber_id。
-    public  List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException {
+    public List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException {
         return _db.table("water_msg_distribution")
                 .whereIn("msg_id", ids)
                 .selectList("dist_id,subscriber_id", DistributionModel.class);
@@ -417,7 +416,7 @@ public class MessageSourceRdb implements MessageSource {
 
 
     //更新distribution中url
-    public  boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws SQLException {
+    public boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws SQLException {
         return _db.table("water_msg_distribution")
                 .whereEq("dist_id", dist_id)
                 .set("receive_url", receive_url)
@@ -425,10 +424,35 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     //取消派发
-    public  boolean setMessageAsCancel(List<Object> ids) throws SQLException {
+    public boolean setMessageAsCancel(List<Object> ids) throws SQLException {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids)
                 .set("state", -1)
                 .update() > 0;
+    }
+
+    @Override
+    public void clear(int keep_days) {
+
+    }
+
+    @Override
+    public long reset(int seconds) throws SQLException {
+        if (seconds < 10) {
+            seconds = 30;
+        }
+
+        long currTime = System.currentTimeMillis();
+        long timeOuts = 1000 * seconds; //30s
+        long refTime = currTime - timeOuts;
+
+        if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
+            return _db.table("water_msg_message")
+                    .set("state", 0)
+                    .whereEq("state", 1).andLt("dist_nexttime", refTime)
+                    .update();
+        } else {
+            return 0;
+        }
     }
 }

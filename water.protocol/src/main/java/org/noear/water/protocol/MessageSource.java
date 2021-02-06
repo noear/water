@@ -5,6 +5,7 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -64,4 +65,9 @@ public interface MessageSource {
      * 设置消息为取消状态
      * */
     boolean setMessageAsCancel(List<Object> ids) throws Exception;
+
+
+    void clear(int keep_days);
+
+    long reset(int seconds) throws Exception;
 }

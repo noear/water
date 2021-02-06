@@ -1,5 +1,6 @@
 package org.noear.water.protocol.solution;
 
+import com.mongodb.client.model.IndexOptions;
 import org.noear.solon.Utils;
 import org.noear.water.log.Logger;
 import org.noear.water.protocol.IdBuilder;
@@ -17,6 +18,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -420,5 +422,55 @@ public class MessageSourceMongo implements MessageSource {
                 .whereIn("msg_id", ids)
                 .set("state", -1)
                 .update() > 0;
+    }
+
+    private void initIndex(){
+        IndexOptions indexOptions = new IndexOptions();
+        indexOptions.background(true);
+        indexOptions.unique(true);
+
+        _db.table("water_msg_message").orderByDesc("msg_key").createIndex(indexOptions);
+        _db.table("water_msg_message").orderByDesc("msg_id").createIndex(indexOptions);
+        _db.table("water_msg_message").orderByDesc("topic_id").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("state").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("dist_count").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("log_date").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("dist_nexttime").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("topic_name").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("tags").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("trace_id").createIndex(true);
+
+
+        _db.table("water_msg_distribution").orderByDesc("dist_id").createIndex(indexOptions);
+        _db.table("water_msg_distribution").orderByDesc("log_date").createIndex(true);
+        _db.table("water_msg_distribution").orderByDesc("msg_id").createIndex(true);
+        _db.table("water_msg_distribution").orderByDesc("msg_key").createIndex(true);
+    }
+
+    @Override
+    public void clear(int keep_days) {
+
+    }
+
+    @Override
+    public long reset(int seconds) throws SQLException {
+        if (seconds < 10) {
+            seconds = 30;
+        }
+
+        initIndex();
+
+        long currTime = System.currentTimeMillis();
+        long timeOuts = 1000 * seconds; //30s
+        long refTime = currTime - timeOuts;
+
+        if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
+            return _db.table("water_msg_message")
+                    .set("state", 0)
+                    .whereEq("state", 1).andLt("dist_nexttime", refTime)
+                    .update();
+        } else {
+            return 0;
+        }
     }
 }
