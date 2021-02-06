@@ -66,7 +66,7 @@ public interface MessageSource {
     boolean setMessageAsCancel(List<Object> ids) throws Exception;
 
 
-    void clear(int keep_days);
+    void clear(int lteDate) throws Exception;
 
     long reset(int seconds) throws Exception;
 }

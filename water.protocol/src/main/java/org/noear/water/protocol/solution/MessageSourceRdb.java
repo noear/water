@@ -412,8 +412,15 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     @Override
-    public void clear(int keep_days) {
+    public void clear(int lteDate) throws Exception {
+        _db.exe("DELETE d FROM water_msg_distribution d,water_msg_message m  WHERE d.msg_id = m.msg_id AND m.log_date<=? and m.state=2", lteDate);
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",2).delete();
 
+        _db.exe("DELETE d FROM water_msg_distribution d,water_msg_message m  WHERE d.msg_id = m.msg_id AND m.log_date<=? and m.state=3", lteDate);
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",3).delete();
+
+        _db.exe("DELETE d FROM water_msg_distribution d,water_msg_message m WHERE d.msg_id = m.msg_id AND m.log_date<=? and m.state<0", lteDate);
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andLt("state",0).delete();
     }
 
     @Override

@@ -427,13 +427,19 @@ public class MessageSourceMongo implements MessageSource {
 
         _db.table("water_msg_distribution").orderByDesc("dist_id").createIndex(indexOptions);
         _db.table("water_msg_distribution").orderByDesc("log_date").createIndex(true);
+        _db.table("water_msg_distribution").orderByDesc("state").createIndex(true);
         _db.table("water_msg_distribution").orderByDesc("msg_id").createIndex(true);
         _db.table("water_msg_distribution").orderByDesc("msg_key").createIndex(true);
     }
 
     @Override
-    public void clear(int keep_days) {
+    public void clear(int lteDate) throws Exception {
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",2).delete();
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",3).delete();
+        _db.table("water_msg_message").whereLte("log_date",lteDate).andLt("state",0).delete();
 
+        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("state",2).delete();
+        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("state",-1).delete();
     }
 
     @Override
