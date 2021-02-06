@@ -115,5 +115,8 @@ public class MsgExchangeController implements IJob {
         if (ProtocolHub.messageLock.lock(msg_id_str)) {
             ProtocolHub.messageQueue.push(msg_id_str);
         }
+
+        //置为处理中
+        ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);//1);
     }
 }

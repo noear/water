@@ -28,7 +28,7 @@ import java.util.*;
  * 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
  * */
 @Component
-public final class MsgController implements IJob {
+public final class MsgDistributionController implements IJob {
 
     @Override
     public String getName() {
@@ -55,41 +55,26 @@ public final class MsgController implements IJob {
 
     private void distribute(String msg_id_str) {
         try {
-            distributeDo(msg_id_str);
+            //转为ID
+            long msgID = Long.parseLong(msg_id_str);
+
+            //可能会出异常
+            MessageModel msg = ProtocolHub.messageSource().getMessageOfPending(msgID);
+
+            //派发
+            distributeDo(msg);
         } catch (Throwable ex) {
             EventBus.push(ex);
-        } finally {
-            ContextUtil.currentRemove();
         }
     }
 
-    private void distributeDo(String msg_id_str) throws Exception {
-        String lk_msg_id_do = msg_id_str + "_do";
-
-        long msgID = Long.parseLong(msg_id_str);
-        MessageModel msg = null;
+    private void distributeDo(MessageModel msg) throws Exception {
+        if (msg == null || msg.state > MessageState.processed.code) { //如果找不到消息，或正在处理中
+            return;
+        }
 
         try {
-            msg = ProtocolHub.messageSource().getMessageOfPending(msgID); //可能会出异常
 
-            if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
-                return;
-            }
-
-            long ntime = DisttimeUtils.currTime();
-            if (msg.dist_nexttime > ntime) { //如果时间还没到
-                return;
-            }
-
-            //记录锁key
-            msg.lk_msg_id_do = lk_msg_id_do;
-
-            //事务相关性设定
-            ContextUtil.currentSet(new ContextEmpty());
-            ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
-
-            //置为处理中
-            ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);//1);
 
             distributeDo0(msg);
 
@@ -156,8 +141,6 @@ public final class MsgController implements IJob {
             //4.返回派发结果
             if (tag.count == tag.total) {
                 //处理完了后，解锁
-                ProtocolHub.messageLock.unlock(tag.msg.lk_msg_id_do);
-
                 if (tag.value == tag.total) {
                     ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
 

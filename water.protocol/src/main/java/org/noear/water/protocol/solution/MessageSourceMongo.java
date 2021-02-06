@@ -50,7 +50,7 @@ public class MessageSourceMongo implements MessageSource {
         } else {
             return _db.table("water_msg_message")
                     .whereEq("msg_key", msg_key)
-                    //.caching(_cache)
+                    .caching(_cache)
                     .selectExists();
         }
     }
@@ -136,19 +136,7 @@ public class MessageSourceMongo implements MessageSource {
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
 
-//        if (plan_time == null) {
-//            addMessageToQueue(msg_id);
-//        }
-
         return msg_id;
-    }
-
-    public void addMessageToQueue(long msg_id) throws Exception {
-        String msg_id_str = msg_id + "";
-
-        if (ProtocolHub.messageLock.lock(msg_id_str)) {
-            ProtocolHub.messageQueue.push(msg_id_str);
-        }
     }
 
     //////
@@ -285,8 +273,7 @@ public class MessageSourceMongo implements MessageSource {
     public List<DistributionModel> getDistributionListByMsg(long msg_id) throws Exception {
         return _db.table("water_msg_distribution")
                 .whereEq("msg_id", msg_id).andIn("state", Arrays.asList(0, 1))
-                //.hint("/*TDDL:MASTER*/")
-                //.caching(_cache).usingCache(60)
+                .caching(_cache).usingCache(60)
                 .selectList(DistributionModel.class);
     }
 

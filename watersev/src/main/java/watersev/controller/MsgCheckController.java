@@ -14,7 +14,7 @@ import java.util.List;
  * 消息订阅检查（已支持 is_unstable）
  */
 @Component
-public final class MsgSubController implements IJob {
+public final class MsgCheckController implements IJob {
     @Override
     public String getName() {
         return "sub";

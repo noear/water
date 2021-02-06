@@ -126,19 +126,7 @@ public class MessageSourceRdb implements MessageSource {
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
 
-//        if (plan_time == null) {
-//            addMessageToQueue(msg_id);
-//        }
-
         return msg_id;
-    }
-
-    public void addMessageToQueue(long msg_id) throws Exception {
-        String msg_id_str = msg_id + "";
-
-        if (ProtocolHub.messageLock.lock(msg_id_str)) {
-            ProtocolHub.messageQueue.push(msg_id_str);
-        }
     }
 
     //////
