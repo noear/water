@@ -13,7 +13,11 @@ public class MessageSourceFactoryImp implements MessageSourceFactory {
     MessageSource source;
 
     public MessageSourceFactoryImp(ConfigM cfg, ICacheServiceEx cache, Logger log) {
-        source = new MessageSourceRdb(cfg.getDb(true), cache, log);
+        if (cfg.value.indexOf("=mongodb") > 0) {
+            source = new MessageSourceMongo(cfg.getMg("water_message"), cache, log);
+        } else {
+            source = new MessageSourceRdb(cfg.getDb(true), cache, log);
+        }
     }
 
     @Override

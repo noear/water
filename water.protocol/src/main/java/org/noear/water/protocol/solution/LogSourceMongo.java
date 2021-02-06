@@ -5,10 +5,9 @@ import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
-import org.noear.water.utils.MongoX;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DataItem;
-import org.noear.weed.wrap.ClassWrap;
+import org.noear.weed.mongo.MgContext;
+import org.noear.weed.mongo.MgTableQuery;
 
 import java.util.*;
 
@@ -16,10 +15,10 @@ import java.util.*;
  * @author noear 2021/2/2 created
  */
 public class LogSourceMongo implements LogSource {
-    MongoX mongoX;
+    MgContext _db;
 
-    public LogSourceMongo(MongoX mongoX) {
-        this.mongoX = mongoX;
+    public LogSourceMongo(MgContext db) {
+        _db = db;
     }
 
     @Override
@@ -28,68 +27,45 @@ public class LogSourceMongo implements LogSource {
             return new ArrayList<>();
         }
 
-        if (log_date == null) {
-            log_date = 0;
-        }
+        MgTableQuery tb = _db.table(logger);
 
-        if (log_id == null) {
-            log_id = 0L;
-        }
-
-        if (level == null) {
-            level = 0;
-        }
-
-        Map<String, Object> filter = new LinkedHashMap<>();
+        tb.whereTrue();
 
         if (TextUtils.isNotEmpty(trace_id)) {
-            filter.put("trace_id", trace_id);
+            tb.andEq("trace_id", trace_id);
         }
 
         if (TextUtils.isNotEmpty(tag)) {
-            filter.put("tag", tag);
+            tb.andEq("tag", tag);
         }
 
         if (TextUtils.isNotEmpty(tag1)) {
-            filter.put("tag1", tag1);
+            tb.andEq("tag1", tag1);
         }
 
         if (TextUtils.isNotEmpty(tag2)) {
-            filter.put("tag2", tag2);
+            tb.andEq("tag2", tag2);
         }
 
         if (TextUtils.isNotEmpty(tag3)) {
-            filter.put("tag3", tag3);
+            tb.andEq("tag3", tag3);
         }
 
-        if (log_date > 0) {
-            filter.put("log_date", log_date);
+        if (log_date != null && log_date > 0) {
+            tb.andEq("log_date", log_date);
         }
 
-        if (level > 0) {
-            filter.put("level", level);
+        if (level != null && level > 0) {
+            tb.andEq("level", level);
         }
 
-        if (log_id > 0) {
-            Map<String, Object> tmp = new HashMap<>();
-            tmp.put("$lte", log_id);
-            filter.put("log_id", tmp);
+        if (log_id != null && log_id > 0) {
+            tb.andLte("log_id", log_id);
         }
 
-        Map<String, Object> orderBy = new LinkedHashMap<>();
-        orderBy.put("log_fulltime", -1);
-        orderBy.put("log_id", -1);
-
-
-        List<Map<String, Object>> list0 = mongoX.findTop(logger, filter, orderBy, size);
-        List<LogModel> list = new ArrayList<>();
-
-        for (Map<String, Object> map : list0) {
-            LogModel item = ClassWrap.get(LogModel.class).toEntity(new DataItem().setMap(map));
-            list.add(item);
-        }
-
-        return list;
+        return tb.orderByDesc("log_fulltime")
+                .andByDesc("log_id")
+                .selectList(LogModel.class);
     }
 
     @Override
@@ -102,22 +78,23 @@ public class LogSourceMongo implements LogSource {
             datetime = new Datetime(log_fulltime);
         }
 
-        Map<String, Object> data = new LinkedHashMap<>();
-        data.put("log_id", log_id);
-        data.put("trace_id", trace_id);
-        data.put("level", level.code);
-        data.put("tag", tag);
-        data.put("tag1", tag1);
-        data.put("tag2", tag2);
-        data.put("tag3", tag3);
-        data.put("summary", summary);
-        data.put("content", content);
-        data.put("from", from);
+        MgTableQuery tb = _db.table(logger);
 
-        data.put("log_date", datetime.getDate());
-        data.put("log_fulltime", datetime.getFulltime());
+        tb.set("log_id", log_id);
+        tb.set("trace_id", trace_id);
+        tb.set("level", level.code);
+        tb.set("tag", tag);
+        tb.set("tag1", tag1);
+        tb.set("tag2", tag2);
+        tb.set("tag3", tag3);
+        tb.set("summary", summary);
+        tb.set("content", content);
+        tb.set("from", from);
 
-        mongoX.insertOne(logger, data);
+        tb.set("log_date", datetime.getDate());
+        tb.set("log_fulltime", datetime.getFulltime());
+
+        tb.insert();
     }
 
     @Override
@@ -154,26 +131,24 @@ public class LogSourceMongo implements LogSource {
             dataList.add(data);
         }
 
-        mongoX.insertMany(logger, dataList);
+        _db.table(logger).insertList(dataList);
     }
 
     @Override
     public long stat(String logger, Integer level, Integer log_date) throws Exception {
-        Map<String, Object> filter = new LinkedHashMap<>();
+        MgTableQuery tb = _db.table(logger);
+
+        tb.whereTrue();
 
         if (level != null) {
-            filter.put("level", level);
+            tb.andEq("level", level);
         }
 
         if (log_date != null) {
-            filter.put("log_date", log_date);
+            tb.andEq("log_date", log_date);
         }
 
-        if (filter.size() > 0) {
-            return mongoX.countDocuments(logger, filter);
-        } else {
-            return mongoX.count(logger);
-        }
+        return tb.selectCount();
     }
 
     @Override
@@ -182,62 +157,27 @@ public class LogSourceMongo implements LogSource {
 
         int date = Datetime.Now().addDay(-keep_days).getDate();
         try {
-            Map<String, Object> filter = new LinkedHashMap<>();
-
-            Map<String, Object> tmp = new LinkedHashMap<>();
-            tmp.put("$lte", date);
-            filter.put("log_date", tmp);
-
-            mongoX.deleteMany(logger, filter);
+            _db.table(logger).whereEq("log_date", date).delete();
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
 
     private void initIndex(String logger){
-        Map<String, Object> index = null;
-        Map<String, Object> options = new HashMap<>();
-        options.put("background", true);
+        _db.table(logger).orderByDesc("level").createIndex(true);
 
-        index = new HashMap<>();
-        index.put("level", -1);
-        mongoX.createIndex(logger, index, options);
+        _db.table(logger).orderByDesc("log_date").createIndex(true);
+        _db.table(logger).orderByDesc("log_id").createIndex(true);
+        _db.table(logger).orderByDesc("log_fulltime").createIndex(true);
 
-        index = new HashMap<>();
-        index.put("log_date", -1);
-        mongoX.createIndex(logger, index, options);
+        _db.table(logger).orderByDesc("tag").createIndex(true);
+        _db.table(logger).orderByDesc("tag1").createIndex(true);
+        _db.table(logger).orderByDesc("tag2").createIndex(true);
+        _db.table(logger).orderByDesc("tag3").createIndex(true);
 
-        index = new HashMap<>();
-        index.put("log_id", -1);
-        mongoX.createIndex(logger, index, options);
+        _db.table(logger).orderByDesc("trace_id").createIndex(true);
 
-        index = new HashMap<>();
-        index.put("log_fulltime", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("tag", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("tag1", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("tag2", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("tag3", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("trace_id", -1);
-        mongoX.createIndex(logger, index, options);
-
-        index = new HashMap<>();
-        index.put("log_fulltime", -1);
-        index.put("log_id", -1);
-        mongoX.createIndex(logger, index, options);
+        _db.table(logger).orderByDesc("log_fulltime").andByDesc("log_id")
+                .createIndex(true);
     }
 }

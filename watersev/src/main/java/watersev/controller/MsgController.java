@@ -121,7 +121,7 @@ public final class MsgController implements IJob {
     }
 
 
-    private void routing(MessageModel msg) throws SQLException {
+    private void routing(MessageModel msg) throws Exception {
         //1.取出订阅者
         Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 

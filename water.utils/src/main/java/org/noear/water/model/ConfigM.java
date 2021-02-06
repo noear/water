@@ -5,7 +5,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
-import org.noear.water.utils.MongoX;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -14,6 +13,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.SecondCache;
 import org.noear.weed.cache.memcached.MemCache;
+import org.noear.weed.mongo.MgContext;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -141,12 +141,12 @@ public final class ConfigM {
         return new RedisX(getProp(), db, maxTotaol);
     }
 
-    public MongoX getMg(String db){
+    public MgContext getMg(String db){
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        return new MongoX(getProp(), db);
+        return new MgContext(getProp(), db);
     }
 
     /**

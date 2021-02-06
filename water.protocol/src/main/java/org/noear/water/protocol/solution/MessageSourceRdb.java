@@ -19,6 +19,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class MessageSourceRdb implements MessageSource {
             return false;
         } else {
             return _db.table("water_msg_message")
-                    .where("msg_key=?", msg_key)
+                    .whereEq("msg_key", msg_key)
                     .caching(_cache)
                     .selectExists();
         }
@@ -55,7 +56,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsCancel(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", -1)
-                .where("msg_key=?", msg_key)
+                .whereEq("msg_key", msg_key)
                 .update();
     }
 
@@ -63,7 +64,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsSucceed(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", 2)
-                .where("msg_key=?", msg_key)
+                .whereEq("msg_key", msg_key)
                 .update();
     }
 
@@ -71,7 +72,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setDistributionAsCancel(String msg_key, String subscriber_key) throws SQLException {
 
         _db.table("water_msg_distribution").set("state", -1)
-                .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
+                .whereEq("msg_key", msg_key).andEq("subscriber_key", subscriber_key)
                 .update();
     }
 
@@ -79,7 +80,7 @@ public class MessageSourceRdb implements MessageSource {
     //消费消息派发（key+subscriber_key）（设为成功）
     public void setDistributionAsSucceed(String msg_key, String subscriber_key) throws SQLException {
         _db.table("water_msg_distribution").set("state", 2)
-                .where("msg_key=? AND subscriber_key=?", msg_key, subscriber_key)
+                .whereEq("msg_key", msg_key).andEq("subscriber_key", subscriber_key)
                 .update();
     }
 
@@ -140,8 +141,8 @@ public class MessageSourceRdb implements MessageSource {
     //获取待派发的消息列表
     public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException {
         return _db.table("water_msg_message")
-                .where("state=0 AND dist_nexttime<?", dist_nexttime)
-                .orderBy("msg_id ASC")
+                .whereEq("state",0).andLt("dist_nexttime", dist_nexttime)
+                .orderByAsc("msg_id")
                 .limit(rows)
                 .selectArray("msg_id");
     }
@@ -149,7 +150,7 @@ public class MessageSourceRdb implements MessageSource {
     //获取某一条消息
     public MessageModel getMessageOfPending(long msg_id) throws SQLException {
         MessageModel m = _db.table("water_msg_message")
-                .where("msg_id=? AND state=0", msg_id)
+                .whereEq("msg_id", msg_id).and("state", 0)
                 .selectItem("*", MessageModel.class);
 
         if (m.state != 0) {
@@ -163,7 +164,7 @@ public class MessageSourceRdb implements MessageSource {
         try {
             _db.table("water_msg_message")
                     .set("dist_routed", dist_routed)
-                    .where("msg_id=?", msg.msg_id)
+                    .whereEq("msg_id", msg.msg_id)
                     .update();
 
             msg.dist_routed = dist_routed;
@@ -199,7 +200,7 @@ public class MessageSourceRdb implements MessageSource {
                             tb.set("dist_nexttime", dist_nexttime);
                         }
                     })
-                    .where("msg_id=? AND (state=0 OR state=1)", msg.msg_id)
+                    .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
                     .update();
 
             return true;
@@ -222,8 +223,8 @@ public class MessageSourceRdb implements MessageSource {
             _db.table("water_msg_message").usingExpr(true)
                     .set("state", state.code)
                     .set("dist_nexttime", ntime)
-                    .set("dist_count", "$dist_count+1")
-                    .where("msg_id=? AND (state=0 OR state=1)", msg.msg_id)
+                    .setInc("dist_count", 1)
+                    .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
                     .update();
 
             return true;
@@ -271,7 +272,7 @@ public class MessageSourceRdb implements MessageSource {
     //根据消息获取派发任务
     public List<DistributionModel> getDistributionListByMsg(long msg_id) throws SQLException {
         return _db.table("water_msg_distribution")
-                .where("msg_id=? AND (state=0 OR state=1)", msg_id)
+                .whereEq("msg_id", msg_id).andIn("state", Arrays.asList(0, 1))
                 .hint("/*TDDL:MASTER*/")
                 .caching(_cache).usingCache(60)
                 .selectList("*", DistributionModel.class);
@@ -283,7 +284,7 @@ public class MessageSourceRdb implements MessageSource {
             _db.table("water_msg_distribution")
                     .set("state", state.code)
                     .set("duration", dist._duration)
-                    .where("msg_id=? and subscriber_id=? and state<>2", msg.msg_id, dist.subscriber_id)
+                    .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", dist.subscriber_id).andNeq("state", 2)
                     .update();
 
             return true;
@@ -306,28 +307,37 @@ public class MessageSourceRdb implements MessageSource {
         return _db.table("water_msg_message")
                 .build((tb) -> {
                     if (IdBuilder.isNumeric(msg_key)) {
-                        tb.where("msg_id = ?", Long.parseLong(msg_key));
+                        tb.whereEq("msg_id", Long.parseLong(msg_key));
                     } else {
-                        tb.where("msg_key = ?", msg_key);
+                        tb.whereEq("msg_key", msg_key);
                     }
                 })
+                .selectItem("*", MessageModel.class);
+    }
+
+
+    public MessageModel getMessageById(long msg_id) throws SQLException {
+        return _db.table("water_msg_message")
+                .whereEq("msg_id", msg_id)
+                .limit(1)
                 .selectItem("*", MessageModel.class);
     }
 
     //获取消息列表
     public  List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
         List<MessageModel> list = new ArrayList<>();
+
         if (dist_count == 0 && topic_id == 0) {
             return list;
         } else {
             return _db.table("water_msg_message").build((tb) -> {
-                tb.where("state=0");
+                tb.whereEq("state", 0);
                 if (dist_count > 0) {
-                    tb.and("dist_count>=?", dist_count);
+                    tb.andGte("dist_count", dist_count);
                 } else {
-                    tb.and("topic_id=?", topic_id);
+                    tb.andEq("topic_id", topic_id);
                 }
-            }).orderBy("msg_id ASC").limit(50)
+            }).orderByAsc("msg_id").limit(50)
                     .selectList("*", MessageModel.class);
         }
     }
@@ -336,15 +346,15 @@ public class MessageSourceRdb implements MessageSource {
         DbTableQuery qr = _db.table("water_msg_message");
 
         if (_m == 0) {
-            qr.whereEq("state", 0).and("dist_count>=3");
+            qr.whereEq("state", 0).andGte("dist_count",2);
         } else if (_m == 1) {
-            qr.where("state=0");
+            qr.whereEq("state", 0);
         } else if (_m == 2) {
-            qr.where("state=1");
+            qr.whereEq("state", 1);
         } else if (_m == 3) {
-            qr.where("state>1");
+            qr.whereGt("state", 1);
         } else {
-            qr.where("state<0");
+            qr.whereLt("state", 0);
         }
 
         if (key != null) {
@@ -363,7 +373,7 @@ public class MessageSourceRdb implements MessageSource {
             }
         }
 
-        return qr.orderBy("msg_id DESC").limit(50)
+        return qr.orderByDesc("msg_id").limit(50)
                 .selectList("*", MessageModel.class);
     }
 
@@ -378,31 +388,25 @@ public class MessageSourceRdb implements MessageSource {
 
     }
 
-    public MessageModel getMessageById(long msg_id) throws SQLException {
-        return _db.table("water_msg_message")
-                .where("msg_id = ?", msg_id)
-                .limit(1)
-                .selectItem("*", MessageModel.class);
-    }
 
     //肖除一个状态的消息 //不包括0,2
-    public int deleteMsg(int state) throws SQLException {
-        if (state == 0 || state == 1) {
-            return -1;
-        }
-
-        int date = Datetime.Now().addDay(-3).getDate();
-
-        _db.table("#d")
-                .from("water_msg_distribution d,water_msg_message m")
-                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
-                .delete();
-
-
-        return _db.table("water_msg_message")
-                .where("log_date<=? AND state=?", date, state)
-                .delete();
-    }
+//    public int deleteMsg(int state) throws SQLException {
+//        if (state == 0 || state == 1) {
+//            return -1;
+//        }
+//
+//        int date = Datetime.Now().addDay(-3).getDate();
+//
+//        _db.table("#d")
+//                .from("water_msg_distribution d,water_msg_message m")
+//                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
+//                .delete();
+//
+//
+//        return _db.table("water_msg_message")
+//                .where("log_date<=? AND state=?", date, state)
+//                .delete();
+//    }
 
     //获得异常消息的dist_id和subscriber_id。
     public  List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException {
@@ -415,7 +419,7 @@ public class MessageSourceRdb implements MessageSource {
     //更新distribution中url
     public  boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws SQLException {
         return _db.table("water_msg_distribution")
-                .where("dist_id = ?", dist_id)
+                .whereEq("dist_id", dist_id)
                 .set("receive_url", receive_url)
                 .update() > 0;
     }

@@ -21,7 +21,7 @@ public class Msg2Controller extends BaseController {
 
     //消息异常记录
     @Mapping("/msg")
-    public ModelAndView warm() throws SQLException {
+    public ModelAndView warm() throws Exception {
         int topic_id = 0;
         String t = "";
         int dist_count = 0;
