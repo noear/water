@@ -340,13 +340,15 @@ public class MessageSourceMongo implements MessageSource {
         MgTableQuery qr = _db.table("water_msg_message");
 
         if (_m == 0) {
-            qr.whereEq("state", 0).andGte("dist_count", 2);
+            qr.whereEq("state", MessageState.undefined.code).andGte("dist_count", 2);
         } else if (_m == 1) {
-            qr.whereEq("state", 0);
+            qr.whereEq("state", MessageState.undefined.code);
         } else if (_m == 2) {
-            qr.whereEq("state", 1);
+            qr.whereEq("state", MessageState.processed.code);
         } else if (_m == 3) {
-            qr.whereIn("state", Arrays.asList(2,3));
+            qr.whereIn("state", Arrays.asList(
+                    MessageState.completed.code,
+                    MessageState.excessive.code));
         } else {
             qr.whereLt("state", 0);
         }
