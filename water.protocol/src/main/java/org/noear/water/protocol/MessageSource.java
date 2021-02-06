@@ -28,7 +28,7 @@ public interface MessageSource {
     //
     //for sev
     //
-    List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws Exception;
+    List<MessageModel> getMessageListOfPending(int rows, long dist_nexttime) throws Exception;
     MessageModel getMessageOfPending(long msg_id) throws Exception;
     void setMessageRouteState(MessageModel msg, boolean dist_routed);
     boolean setMessageState(MessageModel msg, MessageState state);

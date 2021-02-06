@@ -145,12 +145,12 @@ public class MessageSourceRdb implements MessageSource {
     // for water sev
 
     //获取待派发的消息列表
-    public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException {
+    public List<MessageModel> getMessageListOfPending(int rows, long dist_nexttime) throws SQLException {
         return _db.table("water_msg_message")
                 .whereEq("state", 0).andLt("dist_nexttime", dist_nexttime)
                 .orderByAsc("msg_id")
                 .limit(rows)
-                .selectArray("msg_id");
+                .selectList("*", MessageModel.class);
     }
 
     //获取某一条消息

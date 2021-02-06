@@ -155,12 +155,12 @@ public class MessageSourceMongo implements MessageSource {
     // for water sev
 
     //获取待派发的消息列表
-    public List<Long> getMessageListOfPending(int rows, long dist_nexttime) throws Exception {
+    public List<MessageModel> getMessageListOfPending(int rows, long dist_nexttime) throws Exception {
         return _db.table("water_msg_message")
                 .whereLt("dist_nexttime", dist_nexttime).andEq("state", 0)
                 .orderByAsc("msg_id")
                 .limit(rows)
-                .selectArray("msg_id");
+                .selectList(MessageModel.class);
     }
 
     //获取某一条消息

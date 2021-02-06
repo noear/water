@@ -100,7 +100,7 @@ public class MessageQueueRabbitMQ implements MessageQueue {
     }
 
     @Override
-    public void pollGet(Act1<String> callback) {
+    public void pollGet(java.util.function.Consumer<String> callback) {
         _rabbitX.open0(channel -> {
             while (true) {
                 GetResponse rep = channel.basicGet(rabbit_queueName, true);
@@ -109,7 +109,7 @@ public class MessageQueueRabbitMQ implements MessageQueue {
                     break;
                 }
 
-                callback.run(new String(rep.getBody()));
+                callback.accept(new String(rep.getBody()));
             }
         });
     }

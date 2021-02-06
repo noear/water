@@ -2,7 +2,8 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.RedisX;
-import org.noear.water.utils.ext.Act1;
+
+import java.util.function.Consumer;
 
 /**
  * 基于 Redis 适配队列
@@ -29,7 +30,7 @@ public class MessageQueueRedis implements MessageQueue {
     }
 
     @Override
-    public void pollGet(Act1<String> callback) {
+    public void pollGet(Consumer<String> callback) {
         _redisX.open0((rs) -> {
             while (true) {
                 String msg = rs.key(_queue_name).listPop();
@@ -38,7 +39,7 @@ public class MessageQueueRedis implements MessageQueue {
                     break;
                 }
 
-                callback.run(msg);
+                callback.accept(msg);
             }
         });
     }

@@ -11,6 +11,7 @@ import org.noear.water.utils.ext.Act1;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
 
 
 /**
@@ -132,7 +133,7 @@ public class MessageQueueRocketMQ implements MessageQueue {
     }
 
     @Override
-    public void pollGet(Act1<String> callback) {
+    public void pollGet(Consumer<String> callback) {
         initConsumer();
 
         try {
@@ -148,7 +149,7 @@ public class MessageQueueRocketMQ implements MessageQueue {
                 consumer.commitSync();
 
                 //返回消息
-                callback.run(new String(msgs.get(0).getBody()));
+                callback.accept(new String(msgs.get(0).getBody()));
             }
 
         } catch (Exception ex) {

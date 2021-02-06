@@ -19,7 +19,6 @@ import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
 import watersev.utils.ext.Act3;
 
-import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -50,21 +49,13 @@ public final class MsgController implements IJob {
             }
 
             //改用线程池处理
-            Config.pools.execute(() -> exchange(msg_id_str));
+            Config.pools.execute(() -> distribute(msg_id_str));
         });
     }
 
-    public void unlock(String key){
-        ProtocolHub.messageLock.unlock(key);
-    }
-
-    public boolean lock(String key){
-        return ProtocolHub.messageLock.lock(key);
-    }
-
-    private void exchange(String msg_id_str) {
+    private void distribute(String msg_id_str) {
         try {
-            exchangeDo(msg_id_str);
+            distributeDo(msg_id_str);
         } catch (Throwable ex) {
             EventBus.push(ex);
         } finally {
@@ -72,12 +63,8 @@ public final class MsgController implements IJob {
         }
     }
 
-    private void exchangeDo(String msg_id_str) throws Exception {
+    private void distributeDo(String msg_id_str) throws Exception {
         String lk_msg_id_do = msg_id_str + "_do";
-
-        if (lock(lk_msg_id_do) == false) {
-            return;
-        }
 
         long msgID = Long.parseLong(msg_id_str);
         MessageModel msg = null;
@@ -86,13 +73,11 @@ public final class MsgController implements IJob {
             msg = ProtocolHub.messageSource().getMessageOfPending(msgID); //可能会出异常
 
             if (msg == null || msg.state == 1) { //如果找不到消息，或正在处理中
-                unlock(lk_msg_id_do);
                 return;
             }
 
             long ntime = DisttimeUtils.currTime();
             if (msg.dist_nexttime > ntime) { //如果时间还没到
-                unlock(lk_msg_id_do);
                 return;
             }
 
@@ -106,7 +91,7 @@ public final class MsgController implements IJob {
             //置为处理中
             ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);//1);
 
-            routing(msg);
+            distributeDo0(msg);
 
         } catch (Throwable ex) {
             if (msg != null) {
@@ -114,32 +99,13 @@ public final class MsgController implements IJob {
 
                 LogUtil.writeForMsgByError(msg, ex);
             }
-
-            //如果异常了，及时解锁（如果成功，在回调里解锁）
-            unlock(lk_msg_id_do);
         }
     }
 
 
-    private void routing(MessageModel msg) throws Exception {
+    private void distributeDo0(MessageModel msg) throws Exception {
         //1.取出订阅者
         Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
-
-        //1.2.如果没有订阅者，就收工
-        if (subsList.size() == 0) {
-            ProtocolHub.messageSource().setMessageState(msg, MessageState.notarget);//-2);
-            unlock(msg.lk_msg_id_do);
-            return;
-        }
-
-        //2.尝试建立分发关系
-        if(msg.dist_routed == false) {
-            for (SubscriberModel m : subsList.values()) {
-                ProtocolHub.messageSource().addDistributionNoLock(msg, m);
-            }
-
-            ProtocolHub.messageSource().setMessageRouteState(msg,true);
-        }
 
         //3.获出待分发任务
         List<DistributionModel> distList = new ArrayList<>();
@@ -157,7 +123,6 @@ public final class MsgController implements IJob {
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
             ProtocolHub.messageSource().setMessageState(msg, MessageState.completed);//2);
-            unlock(msg.lk_msg_id_do);
             return;
         }
 
