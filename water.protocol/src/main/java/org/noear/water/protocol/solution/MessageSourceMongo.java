@@ -346,7 +346,7 @@ public class MessageSourceMongo implements MessageSource {
         } else if (_m == 2) {
             qr.whereEq("state", 1);
         } else if (_m == 3) {
-            qr.whereGt("state", 1);
+            qr.whereIn("state", Arrays.asList(2,3));
         } else {
             qr.whereLt("state", 0);
         }
