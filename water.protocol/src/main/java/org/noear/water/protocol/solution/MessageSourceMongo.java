@@ -107,21 +107,32 @@ public class MessageSourceMongo implements MessageSource {
 
         Datetime datetime = new Datetime();
 
+        long dist_nexttime = 0;
+        if (plan_time != null) {
+            dist_nexttime = DisttimeUtils.distTime(plan_time);
+        }
+
         _db.table("water_msg_message")
+                .set("_id", msg_id)
                 .set("msg_id", msg_id)
                 .set("msg_key", msg_key)
-                .set("tags", tags)
                 .set("trace_id", trace_id)
+                .set("tags", tags)
                 .set("topic_id", topic_id)
                 .set("topic_name", topic_name)
                 .set("content", content)
+                .set("receive_url", "")
+                .set("receive_check", "")
+                .set("dist_routed", false)
+                .set("dist_count", 0)
+                .set("dist_nexttime", 0L)
                 .set("plan_time", plan_time)
+                .set("state",0)
                 .set("log_date", datetime.getDate())
-                .set("log_fulltime", datetime.getFulltime()).build((tb) -> {
-            if (plan_time != null) {
-                tb.set("dist_nexttime", DisttimeUtils.distTime(plan_time));
-            }
-        }).insert();
+                .set("log_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getFulltime())
+                .set("dist_nexttime", dist_nexttime)
+                .insert();
 
         if (plan_time == null) {
             addMessageToQueue(msg_id);
@@ -245,9 +256,10 @@ public class MessageSourceMongo implements MessageSource {
     public void addDistributionNoLock(MessageModel msg, SubscriberModel subs) throws Exception {
 
         Datetime datetime = new Datetime();
+        long dist_id = ProtocolHub.idBuilder.getId("water_msg_distribution");
 
         _db.table("water_msg_distribution")
-                .set("_id", msg.msg_id)
+                .set("dist_id", dist_id)
                 .set("msg_id", msg.msg_id)
                 .set("msg_key", msg.msg_key)
                 .set("subscriber_id", subs.subscriber_id)
@@ -257,9 +269,12 @@ public class MessageSourceMongo implements MessageSource {
                 .set("receive_url", subs.receive_url)
                 .set("receive_key", subs.receive_key)
                 .set("receive_way", subs.receive_way)
+                .set("receive_check","")
+                .set("duration",0)
+                .set("state",0)
                 .set("log_date", datetime.getDate())
                 .set("log_fulltime", datetime.getFulltime())
-                .whereEq("msg_id", msg.msg_id)
+                .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", subs.subscriber_id)
                 .replace();
 
     }
