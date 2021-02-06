@@ -57,7 +57,7 @@ public final class MsgDistributionController implements IJob {
             long msgID = Long.parseLong(msg_id_str);
 
             //可能会出异常
-            MessageModel msg = ProtocolHub.messageSource().getMessageOfPending(msgID);
+            MessageModel msg = ProtocolHub.messageSource().getMessageById(msgID);
 
             //派发
             distributeDo(msg);
@@ -71,15 +71,13 @@ public final class MsgDistributionController implements IJob {
             return;
         }
 
-        if(msg.state > MessageState.processed.code){
+        if(msg.state > MessageState.processed.code ||
+                msg.state < MessageState.undefined.code){
             return;
         }
 
         try {
-
-
             distributeDo0(msg);
-
         } catch (Throwable ex) {
             if (msg != null) {
                 ProtocolHub.messageSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
