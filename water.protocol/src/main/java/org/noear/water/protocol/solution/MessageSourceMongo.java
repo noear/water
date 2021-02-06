@@ -369,7 +369,7 @@ public class MessageSourceMongo implements MessageSource {
             }
         }
 
-        return qr.orderByDesc("msg_id").limit(50)
+        return qr.orderByDesc("_id").limit(50)
                 .selectList(MessageModel.class);
     }
 

@@ -104,12 +104,12 @@ public class MessageSourceRdb implements MessageSource {
             tags = "";
         }
 
+        Datetime datetime = new Datetime();
+
         long dist_nexttime = 0;
         if (plan_time != null) {
             dist_nexttime = DisttimeUtils.distTime(plan_time);
         }
-
-        Datetime datetime = new Datetime();
 
         _db.table("water_msg_message")
                 .set("msg_id", msg_id)
