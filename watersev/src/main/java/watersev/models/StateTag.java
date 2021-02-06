@@ -5,15 +5,22 @@ import org.noear.water.protocol.model.message.MessageModel;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.water_msg.TopicModel;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by noear on 2017/7/18.
  */
 public final class StateTag {
-    public MessageModel msg;
+    public final MessageModel msg;
 
-    public int total = 0;//总数
-    public int count = 0;//计数
-    public int value = 0;//有效计数
+    public final int total;//总数
+    public final AtomicInteger count = new AtomicInteger(0);//计数
+    public final AtomicInteger value = new AtomicInteger(0);//有效计数
+
+    public StateTag(MessageModel msg, int total){
+        this.msg = msg;
+        this.total = total;
+    }
 
 
     private TopicModel _topic;

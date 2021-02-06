@@ -2,6 +2,8 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
+import org.noear.solon.core.handle.ContextEmpty;
+import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
@@ -20,7 +22,7 @@ import watersev.utils.ext.Act3;
 import java.util.*;
 
 /**
- * 消息派发
+ * 消息派发机
  *
  * 订阅类型（0,1异步等待 ; 2异步不等待并设为成功 ; 3异步不待等并设为处理中 ;）
  * 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
@@ -42,7 +44,6 @@ public final class MsgDistributionController implements IJob {
     public void exec() throws Exception {
         ProtocolHub.messageQueue.pollGet(msg_id_str -> {
             if (TextUtils.isEmpty(msg_id_str)) {
-                //说明没有了
                 return;
             }
 
@@ -59,31 +60,31 @@ public final class MsgDistributionController implements IJob {
             //可能会出异常
             MessageModel msg = ProtocolHub.messageSource().getMessageById(msgID);
 
+            //如果找不到消息，则退出
+            if (msg == null) {
+                return;
+            }
+
+            //已成功或已取消费
+            if (msg.state > MessageState.processed.code ||
+                    msg.state < MessageState.undefined.code) {
+                return;
+            }
+
             //派发
             distributeDo(msg);
         } catch (Throwable ex) {
-            EventBus.push(ex);
+            EventBus.pushAsyn(ex);
         }
     }
 
     private void distributeDo(MessageModel msg) throws Exception {
-        if (msg == null) { //如果找不到消息，或正在处理中
-            return;
-        }
-
-        if(msg.state > MessageState.processed.code ||
-                msg.state < MessageState.undefined.code){
-            return;
-        }
-
         try {
             distributeDo0(msg);
         } catch (Throwable ex) {
-            if (msg != null) {
-                ProtocolHub.messageSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
+            ProtocolHub.messageSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
-                LogUtil.writeForMsgByError(msg, ex);
-            }
+            LogUtil.writeForMsgByError(msg, ex);
         }
     }
 
@@ -113,35 +114,40 @@ public final class MsgDistributionController implements IJob {
 
         //4.开始派发
         //
-        StateTag state = new StateTag();
-        state.msg = msg;
-        state.total = distList.size();
+        StateTag state = new StateTag(msg, distList.size());
 
-        for (DistributionModel m : distList) {
-            m._start_time = new Date();
+        try {
+            ContextUtil.currentSet(new ContextEmpty());
+            ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
 
-            distributeMessage(state, msg, m, distributeMessage_callback);
+            for (DistributionModel m : distList) {
+                m._start_time = new Date();
+
+                distributeMessage(state, msg, m, distributeMessage_callback);
+            }
+        } finally {
+            ContextUtil.currentRemove();
         }
     }
 
     private Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
-        synchronized (tag.msg.msg_id) {
+        //synchronized (tag.msg.msg_id) {
             //
             //锁一下，确保计数的线程安全
             //
-            tag.count += 1;
+            tag.count.incrementAndGet();
             if (isOk) {
                 if (ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
-                    tag.value += 1;
+                    tag.value.incrementAndGet();
                 }
             } else {
                 ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
             }
 
             //4.返回派发结果
-            if (tag.count == tag.total) {
+            if (tag.count.get() == tag.total) {
                 //处理完了后，解锁
-                if (tag.value == tag.total) {
+                if (tag.value.get() == tag.total) {
                     ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
 
                     if (tag.msg.dist_count >= 3) {
@@ -164,7 +170,7 @@ public final class MsgDistributionController implements IJob {
                         }
                     }
                 }
-            }
+            //}
         }
     };
 
