@@ -172,11 +172,13 @@ interface DbAccess extends IQuery{
 }
 
 interface DbTableQuery extends IQuery{
-    build(callbackfn:(tb:DbTableQuery)=>void):void;
+    build(callbackfn:(tb:DbTableQuery)=>void):DbTableQuery;
 
     begin():DbTableQuery;
     begin(code:string, args:object[]):DbTableQuery;
     end():DbTableQuery;
+
+    whereTrue():DbTableQuery;
 
     where():DbTableQuery;
     where(code:string, args:object[]):DbTableQuery;
@@ -263,14 +265,6 @@ interface DbTableQuery extends IQuery{
     cacheTag(tag:string):DbTableQuery;
 
 
-
-
-    exists():boolean;
-    count():number;
-    count(code:string):number;
-
-    select(columns:string):IQuery;
-
     insert():number;
     insertBy(conditionFields:string):number;
     insertList(valuesList:JList<DataItem>):void;
@@ -282,7 +276,26 @@ interface DbTableQuery extends IQuery{
     delete():number;
 
 
+    exists():boolean;
+    count():number;
+    count(code:string):number;
 
+    select(columns:string):IQuery;
+
+    selectExists():boolean;
+    selectCount():number;
+    selectCount(code:string):number;
+
+    selectValue(column:string):object;
+    selectValue(column:string, def:object):object;
+
+    selectItem(columns:string, clz:object):object;
+    selectList(columns:string, clz:object):JList<object>;
+
+    selectMap(columns:string):Map<string,object>;
+    selectMapList(columns:string):JList<Map<string,object>>;
+
+    selectArray(column:string):JList<object>;
 }
 
 interface DbQuery extends DbAccess{
@@ -872,6 +885,101 @@ interface MongoX{
     createIndex(coll:string, keys:Map<string,object>, options:MongoIndexOptions):string;
 }
 
+interface MgTableQuery{
+    build(callbackfn:(tb:MgTableQuery)=>void):MgTableQuery;
+
+    whereTrue():MgTableQuery;
+
+    whereMap(map:Map<string,object>):MgTableQuery;
+    whereEq(field:string, val:object):MgTableQuery;
+    whereNeq(field:string, val:object):MgTableQuery;
+    whereLt(field:string, val:object):MgTableQuery;
+    whereLte(field:string, val:object):MgTableQuery;
+    whereGt(field:string, val:object):MgTableQuery;
+    whereGte(field:string, val:object):MgTableQuery;
+    whereLk(field:string, val:object):MgTableQuery;
+    whereNlk(field:string, val:object):MgTableQuery;
+    whereBtw(field:string, start:object, end:object):MgTableQuery;
+    whereNbtw(field:string, start:object, end:object):MgTableQuery;
+    whereIn(field:string, ary:JList<object>):MgTableQuery;
+    whereNin(field:string, ary:JList<object>):MgTableQuery;
+    whereMod(field:string, base:number, val:number):MgTableQuery;
+    whereNmod(field:string, base:number, val:number):MgTableQuery;
+    whereAll(field:string, ary:JList<object>):MgTableQuery;
+    whereSize(field:string, size:number):MgTableQuery;
+    whereExists(field:string, exists:boolean):MgTableQuery;
+
+    andEq(field:string, val:object):MgTableQuery;
+    andNeq(field:string, val:object):MgTableQuery;
+    andLt(field:string, val:object):MgTableQuery;
+    andLte(field:string, val:object):MgTableQuery;
+    andGt(field:string, val:object):MgTableQuery;
+    andGte(field:string, val:object):MgTableQuery;
+    andLk(field:string, val:object):MgTableQuery;
+    andNlk(field:string, val:object):MgTableQuery;
+    andBtw(field:string, start:object, end:object):MgTableQuery;
+    andNbtw(field:string, start:object, end:object):MgTableQuery;
+    andIn(field:string, ary:JList<object>):MgTableQuery;
+    andNin(field:string, ary:JList<object>):MgTableQuery;
+    andMod(field:string, base:number, val:number):MgTableQuery;
+    andNmod(field:string, base:number, val:number):MgTableQuery;
+    andAll(field:string, ary:JList<object>):MgTableQuery;
+    andSize(field:string, size:number):MgTableQuery;
+    andExists(field:string, exists:boolean):MgTableQuery;
+
+    set(field:string, val:object):MgTableQuery;
+    setMap(map:Map<string,object>):MgTableQuery;
+    setInc(field:string, val:number):MgTableQuery;
+
+    orderByAsc(field:string):MgTableQuery;
+    orderByDesc(field:string):MgTableQuery;
+    andByAsc(field:string):MgTableQuery;
+    andByDesc(field:string):MgTableQuery;
+
+
+    limit(size:number):MgTableQuery;
+    limit(start:number, size:number):MgTableQuery;
+
+
+
+    caching(service:ICacheService):MgTableQuery;
+    usingCache(isCache:boolean):MgTableQuery;
+    usingCache(seconds:number):MgTableQuery;
+    cacheTag(tag:string):MgTableQuery;
+
+    insert():void;
+    insert(map:Map<string,object>):void;
+    insertList(dataList:JList<Map<string,object>>):void;
+
+    update():number;
+    replace():number;
+
+    delete():number;
+
+
+    selectList(clz:Object):JList<Object>;
+    selectItem(clz:Object):Object;
+
+    selectMapList():JList<Map<string,object>>;
+    selectMap():Map<string,object>;
+
+    selectArray():JList<Object>;
+
+    selectCount():number;
+
+    selectExists():boolean;
+
+    createIndex(background:boolean):string;
+    createIndex(options:Map<string,object>):string;
+
+    createIndex(options:MongoIndexOptions):string;
+}
+
+interface MgContext{
+    table(table:string):MgTableQuery;
+    mongo():MongoX;
+}
+
 interface water{
     client:WaterClient;
     proxy:WaterProxy;
@@ -879,7 +987,7 @@ interface water{
     cfg(tagKey:string):AConfigM;
     db(tagKey:string):DbContext;
     rd(tagKey:string, db:number):RedisX;
-    mg(tagKey:string, db:string):MongoX;
+    mg(tagKey:string, db:string):MgContext;
 
     updateCache(tags:string):void;
 
