@@ -23,7 +23,6 @@ public class FooterTag implements TemplateDirectiveModel {
 
             sb.append("<footer>");
             sb.append("<p>");
-            sb.append("众马科技 浙ICP备16027614号");
             sb.append("</p>");
             sb.append("</footer>");
 
