@@ -27,7 +27,8 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.sessionstate.redis</artifactId>
+            <artifactId>solon.extend.sessionstate.jwt</artifactId>
+            <version>${solon.ver}</version>
         </dependency>
 
         <dependency>
