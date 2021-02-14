@@ -66,7 +66,8 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/subscribe/:" + topics_str +"("+receive_url+"}:" + txt);
 
-        return ONode.loadStr(txt).get("code").getInt() == 1;
+        int code = ONode.loadStr(txt).get("code").getInt();
+        return code == 1 || code == 200;
     }
 
     /**
@@ -86,7 +87,8 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
 
-        return ONode.loadStr(txt).get("code").getInt() == 1;
+        int code = ONode.loadStr(txt).get("code").getInt();
+        return code == 1 || code == 200;
     }
 
     /**
@@ -167,7 +169,9 @@ public class MessageApi {
         //System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
-        if (data.get("code").getInt() == 1) {
+        int code = data.get("code").getInt();
+
+        if (code == 1 || code == 200) {
             return true;
         } else {
             throw new RuntimeException("消息发送失败:" + data.toJson());
@@ -226,7 +230,9 @@ public class MessageApi {
         System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
-        if (data.get("code").getInt() == 1) {
+        int code = data.get("code").getInt();
+
+        if (code == 1 || code == 200) {
             return true;
         } else {
             throw new RuntimeException("消息发送失败:" + data.toJson());
@@ -255,7 +261,8 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/cancel/:" + txt);
 
-        return ONode.loadStr(txt).get("code").getInt() == 1;
+        int code = ONode.loadStr(txt).get("code").getInt();
+        return code == 1 || code == 200;
     }
 
     /**
@@ -281,7 +288,8 @@ public class MessageApi {
 
         System.out.println("MessageApi::/msg/succeed/:" + txt);
 
-        return ONode.loadStr(txt).get("code").getInt() == 1;
+        int code = ONode.loadStr(txt).get("code").getInt();
+        return code == 1 || code == 200;
     }
 
     /**

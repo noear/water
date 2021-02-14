@@ -134,8 +134,9 @@ public class RegistryApi {
 
             String json = apiCaller.post("/sev/discover/", params);
             ONode rst = ONode.loadStr(json);
+            int code = rst.get("code").getInt();
 
-            if (rst.get("code").getInt() != 1) {
+            if (code != 1 && code != 200) {
                 return null;
             }
 

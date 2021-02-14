@@ -49,7 +49,7 @@ public class ConfigSetM {
     public void load(ONode node) {
         int code = node.get("code").getInt();
 
-        if (code == 1) {
+        if (code == 1 || code == 200) {
             node.get("data").forEach((k, v) -> {
                 ConfigM val = new ConfigM(
                         v.get("key").getString(),
