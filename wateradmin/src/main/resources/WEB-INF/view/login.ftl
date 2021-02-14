@@ -39,11 +39,6 @@
       if (window.event.keyCode == 13)
         checkClick();
     }
-
-    if(window.top != window.self){
-      window.top.location = window.self.location;
-    }
-
   </script>
 </head>
 <body onkeydown="checkKey()">
