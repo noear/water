@@ -77,10 +77,10 @@ public class LeftmenuTag implements TemplateDirectiveModel {
             return;
         }
 
-        //此处改过，xyj，201811(uadmin)
+        //此处改过，noear，201811(uadmin)
         String newUrl = BcfUtil.buildBcfUnipath(res);
 
-        //此处改过，xyj，20180831
+        //此处改过，noear，20180831
         if(cPath.indexOf(res.uri_path)>=0)
         {
             sb.append("<a class='sel' href='" + newUrl + "'>");

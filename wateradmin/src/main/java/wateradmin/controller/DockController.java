@@ -37,7 +37,7 @@ public class DockController extends BaseController {
         return view("dock");
     }
 
-    //此处改过，xyj，201811(uadmin) //增加内部url支持
+    //此处改过，noear，201811(uadmin) //增加内部url支持
     @Mapping("/**/@*") //视图 返回
     public ModelAndView dock2(Context ctx) {
         String uri = ctx.path();

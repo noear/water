@@ -70,7 +70,7 @@ public class LoginController extends BaseController {
 
             Session.current().loadModel(user);
 
-            //新方案 //xyj,20181120,(uadmin)
+            //新方案 //noear,20181120,(uadmin)
             BcfResourceModel res = BcfClient.getUserFirstResource(user.puid);
             String def_url = null;
 
