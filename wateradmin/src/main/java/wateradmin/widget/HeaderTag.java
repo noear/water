@@ -31,7 +31,7 @@ public class HeaderTag implements TemplateDirectiveModel {
     }
 
     private void build(Environment env) throws Exception{
-        //当前视图path //此处改过，xyj，20180831
+        //当前视图path //此处改过，noear，20180831
         Context context = Context.current();
         String cPath = context.path();
 
@@ -86,7 +86,7 @@ public class HeaderTag implements TemplateDirectiveModel {
 
     private void buildItem(StringBuffer sb,String title,BcfResourceModel res,String cPath,String pack) {
 
-        //此处改过，xyj，201811(uadmin)
+        //此处改过，noear，201811(uadmin)
         String newUrl = BcfUtil.buildBcfUnipath(res);
 
         if(cPath.indexOf(pack)==0)

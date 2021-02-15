@@ -51,7 +51,7 @@ public class PagebarTag implements TemplateDirectiveModel {
         if (pageIndex < 1)
             pageIndex = 1;
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<pagebar class='mar10-t'>");
 
         sb.append("<left>");

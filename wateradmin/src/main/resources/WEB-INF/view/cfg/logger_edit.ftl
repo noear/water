@@ -99,7 +99,6 @@
     <form>
         <table>
             <tr>
-            <tr>
                 <th>tag*</th>
                 <td><input type="text" id="tag" autofocus value="${tag_name!}"/></td>
             </tr>

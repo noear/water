@@ -34,7 +34,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    public void build(Environment env,Map map) throws Exception {
+    public void build(Environment env, Map map) throws Exception {
         MapExt mapExt = new MapExt(map);
 
         pack = mapExt.get("pack");
@@ -50,7 +50,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
             sb.append("<toolmenu>");
             sb.append("<tabbar>");
 
-            forPack(request,gPack.pgid, sb, cPath);
+            forPack(request, gPack.pgid, sb, cPath);
 
             sb.append("</tabbar>");
             sb.append("</toolmenu>");
@@ -63,22 +63,19 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         List<BcfResourceModel> list = BcfClient.getUserResourcesByPack(Session.current().getPUID(), packID);
 
         for (BcfResourceModel r : list) {
-            buildItem(request,sb, r.cn_name, r.uri_path, cPath);
+            buildItem(request, sb, r.cn_name, r.uri_path, cPath);
         }
     }
 
-    private void buildItem(Context request,StringBuffer sb,String title,String url,String cPath) {
-        String url2 = url + "?"+request.uri().getQuery();
+    private void buildItem(Context request, StringBuffer sb, String title, String url, String cPath) {
+        String url2 = url + "?" + request.uri().getQuery();
 
-        if(cPath.indexOf(url)>0)
-        {
-            sb.append("<button onclick=\"location='"+url2+"'\" class='sel'>");
+        if (cPath.indexOf(url) > 0) {
+            sb.append("<button onclick=\"location='" + url2 + "'\" class='sel'>");
             sb.append(title);
             sb.append("</button>");
-        }
-        else
-        {
-            sb.append("<button onclick=\"location='"+url2+"'\">");
+        } else {
+            sb.append("<button onclick=\"location='" + url2 + "'\">");
             sb.append(title);
             sb.append("</button>");
         }

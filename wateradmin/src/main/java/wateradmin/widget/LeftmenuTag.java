@@ -33,7 +33,7 @@ public class LeftmenuTag implements TemplateDirectiveModel {
     public void build(Environment env) throws Exception {
 
         Context context = Context.current();
-        //当前视图path //此处改过，xyj，20180831
+        //当前视图path //此处改过，noear，20180831
         String cPath = context.path();
         StringBuffer sb = new StringBuffer();
 

@@ -21,16 +21,16 @@ public class StateSelectorTag implements TemplateDirectiveModel {
         }
     }
 
-    public void build(Environment env,Map map) throws Exception {
+    public void build(Environment env, Map map) throws Exception {
 
         MapExt mapExt = new MapExt(map);
 
         clientID = mapExt.get("clientID");
         forPage = mapExt.getBool("forPage", true);
         onSelect = mapExt.get("onSelect");
-        state = mapExt.getInt("state",0);
+        state = mapExt.getInt("state", 0);
         items = mapExt.get("items");
-        stateKey = mapExt.get("stateKey","_state");
+        stateKey = mapExt.get("stateKey", "_state");
 
         StringBuilder sb = new StringBuilder();
 
@@ -64,13 +64,14 @@ public class StateSelectorTag implements TemplateDirectiveModel {
 
 
     //--------
-    private String clientID="";
-    private boolean forPage=true;
+    private String clientID = "";
+    private boolean forPage = true;
     private String onSelect = "";
 
     private String stateKey = "_state";
 
     private int state = -1;//按自然顺序，0,1,2,3,4
+
     public int getState() {
 
         String key = clientID + stateKey;
@@ -88,24 +89,22 @@ public class StateSelectorTag implements TemplateDirectiveModel {
     private String items;
 
     private int getInt(String key) {
-        return Context.current().paramAsInt(key,-1);
+        return Context.current().paramAsInt(key, -1);
     }
 
-    protected String buildHtml()
-    {
-        if (items == null || items.length()==0)
+    protected String buildHtml() {
+        if (items == null || items.length() == 0)
             return "";
 
 
         StringBuilder sb = new StringBuilder();
 
         int idx = 0;
-        for (String item : items.split(","))
-        {
+        for (String item : items.split(",")) {
             if (idx == getState())
-                sb.append("<span class='stateItem selected' onclick='"+clientID+"_onStateSelect("+idx+",this)'>"+item+"</span>");
+                sb.append("<span class='stateItem selected' onclick='" + clientID + "_onStateSelect(" + idx + ",this)'>" + item + "</span>");
             else
-                sb.append("<span class='stateItem' onclick='"+clientID+"_onStateSelect("+idx+",this)'>"+item+"</span>");
+                sb.append("<span class='stateItem' onclick='" + clientID + "_onStateSelect(" + idx + ",this)'>" + item + "</span>");
 
             idx++;
         }
