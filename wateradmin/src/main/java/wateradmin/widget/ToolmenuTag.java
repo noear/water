@@ -10,6 +10,7 @@ import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
 import wateradmin.dso.Session;
 
@@ -35,7 +36,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
     }
 
     public void build(Environment env, Map map) throws Exception {
-        MapExt mapExt = new MapExt(map);
+        NvMap mapExt = new NvMap(map);
 
         pack = mapExt.get("pack");
 

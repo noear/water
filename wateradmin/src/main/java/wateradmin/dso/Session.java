@@ -3,6 +3,7 @@ package wateradmin.dso;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfSessionBase;
 import org.noear.bcf.models.BcfUserModel;
+import org.noear.solon.Solon;
 import wateradmin.Config;
 
 public final class Session extends BcfSessionBase {
@@ -14,7 +15,7 @@ public final class Session extends BcfSessionBase {
 
     @Override
     public String service() {
-        return Config.water_service_name;
+        return Solon.cfg().appName();
     }
 
     //////////////////////////////////

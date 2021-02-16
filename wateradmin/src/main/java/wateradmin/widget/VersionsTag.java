@@ -5,6 +5,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import org.noear.solon.core.NvMap;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
@@ -41,7 +42,7 @@ public class VersionsTag implements TemplateDirectiveModel {
         body.render(sw);
         script = sw.toString();
 
-        MapExt mapExt = new MapExt(map);
+        NvMap mapExt = new NvMap(map);
         table = mapExt.get("table");
         keyName = mapExt.get("keyName");
         keyValue = mapExt.get("keyValue");

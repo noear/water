@@ -5,6 +5,11 @@ server.session.timeout: 7200
 
 bcf.root: "water_admin"
 
+solon.app:
+  name: "wateradmin"
+  title: "WATER"
+  group: "water"
+
 waterpaas.secretKey: "0zJt0J88TkIvqYgC"
 
 water:

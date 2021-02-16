@@ -2,6 +2,7 @@ package wateradmin.widget;
 
 import freemarker.core.Environment;
 import freemarker.template.*;
+import org.noear.solon.core.NvMap;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
@@ -23,14 +24,14 @@ public class StateSelectorTag implements TemplateDirectiveModel {
 
     public void build(Environment env, Map map) throws Exception {
 
-        MapExt mapExt = new MapExt(map);
+        NvMap mapExt = new NvMap(map);
 
         clientID = mapExt.get("clientID");
         forPage = mapExt.getBool("forPage", true);
         onSelect = mapExt.get("onSelect");
         state = mapExt.getInt("state", 0);
         items = mapExt.get("items");
-        stateKey = mapExt.get("stateKey", "_state");
+        stateKey = mapExt.getOrDefault("stateKey", "_state");
 
         StringBuilder sb = new StringBuilder();
 

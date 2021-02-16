@@ -5,6 +5,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import org.noear.solon.core.NvMap;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
 import wateradmin.dso.EnumUtil;
@@ -30,7 +31,7 @@ public class EnumTag implements TemplateDirectiveModel {
     }
 
     private void build(Environment env, Map map){
-        MapExt mapExt = new MapExt(map);
+        NvMap mapExt = new NvMap(map);
         group = mapExt.get("group");
         style = mapExt.get("style");
         id =  mapExt.get("id");

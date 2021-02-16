@@ -8,12 +8,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 
-
 public class Config {
-    public static String web_title = "WATER";
-
-    public static String water_service_name = "wateradmin";
-
     public static final DbContext water = cfg(WW.water).getDb(true);
     public static final DbContext water_log = cfg(WW.water_log).getDb(true);
     public static final DbContext water_msg = cfg(WW.water_msg).getDb(true);

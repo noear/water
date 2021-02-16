@@ -9,6 +9,7 @@ import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfUtil;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
+import org.noear.solon.Solon;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
@@ -53,7 +54,7 @@ public class HeaderTag implements TemplateDirectiveModel {
         sb.append("<header>");
 
         sb.append("<label>"); //new
-        sb.append(Config.web_title);
+        sb.append(Solon.cfg().appTitle());
         sb.append("</label>\n");//new
 
 
