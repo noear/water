@@ -3,8 +3,6 @@ solon.extend: wateradmin_ext
 server.port: 9373
 server.session.timeout: 7200
 
-bcf.root: "water_admin"
-
 solon.app:
   name: "wateradmin"
   title: "WATER"
