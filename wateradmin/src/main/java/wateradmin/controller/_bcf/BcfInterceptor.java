@@ -27,11 +27,6 @@ public class BcfInterceptor extends BcfInterceptorBase {
             return;
         }
 
-        if(Solon.cfg().isDebugMode() && getPUID() == 0){
-            BcfUserModel um = BcfClient.login(1);
-            Session.current().loadModel(um);
-        }
-
         if (ctx.uri().getHost().indexOf("localhost") < 0) {
 
             if(Solon.cfg().isWhiteMode()) {
