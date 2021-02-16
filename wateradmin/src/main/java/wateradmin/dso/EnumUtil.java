@@ -17,9 +17,10 @@ public class EnumUtil {
             EnumModel m = new EnumModel();
             m.value = k.toString();
             m.title = v.toString();
+            m.enum_id = Integer.parseInt(m.value);
             enumList.add(m);
         });
-        enumList.sort(Comparator.comparing(m -> m.value));
+        enumList.sort(Comparator.comparing(m -> m.enum_id));
 
         return enumList;
     }
