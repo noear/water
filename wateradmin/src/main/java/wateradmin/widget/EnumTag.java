@@ -32,11 +32,11 @@ public class EnumTag implements TemplateDirectiveModel {
 
     private void build(Environment env, Map map){
         NvMap mapExt = new NvMap(map);
-        group = mapExt.get("group");
-        style = mapExt.get("style");
-        id =  mapExt.get("id");
-        name =  mapExt.get("name");
-        value =  mapExt.get("value");
+        group = mapExt.getOrDefault("group","");
+        style = mapExt.getOrDefault("style","");
+        id =  mapExt.getOrDefault("id","");
+        name =  mapExt.getOrDefault("name","");
+        value =  mapExt.getOrDefault("value","");
 
         if (TextUtils.isEmpty(group) == false) {
             try {

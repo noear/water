@@ -38,7 +38,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
     public void build(Environment env, Map map) throws Exception {
         NvMap mapExt = new NvMap(map);
 
-        pack = mapExt.get("pack");
+        pack = mapExt.getOrDefault("pack","");
 
         Context request = Context.current();
         //当前视图path

@@ -26,11 +26,11 @@ public class StateSelectorTag implements TemplateDirectiveModel {
 
         NvMap mapExt = new NvMap(map);
 
-        clientID = mapExt.get("clientID");
+        clientID = mapExt.getOrDefault("clientID","");
         forPage = mapExt.getBool("forPage", true);
-        onSelect = mapExt.get("onSelect");
+        onSelect = mapExt.getOrDefault("onSelect","");
         state = mapExt.getInt("state", 0);
-        items = mapExt.get("items");
+        items = mapExt.getOrDefault("items","");
         stateKey = mapExt.getOrDefault("stateKey", "_state");
 
         StringBuilder sb = new StringBuilder();

@@ -43,9 +43,9 @@ public class VersionsTag implements TemplateDirectiveModel {
         script = sw.toString();
 
         NvMap mapExt = new NvMap(map);
-        table = mapExt.get("table");
-        keyName = mapExt.get("keyName");
-        keyValue = mapExt.get("keyValue");
+        table = mapExt.getOrDefault("table","");
+        keyName = mapExt.getOrDefault("keyName","");
+        keyValue = mapExt.getOrDefault("keyValue","");
 
         if (TextUtils.isEmpty(table) == false && TextUtils.isEmpty(keyName) == false && TextUtils.isEmpty(keyValue) == false) {
             String tagHtml = buildHtml();
