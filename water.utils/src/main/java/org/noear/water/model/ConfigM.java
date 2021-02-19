@@ -141,6 +141,21 @@ public final class ConfigM {
         return new RedisX(getProp(), db, maxTotaol);
     }
 
+    public MgContext getMg() {
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        PropertiesM prop = getProp();
+        String db = prop.getProperty("db");
+
+        if(TextUtils.isEmpty(db)){
+            throw new IllegalArgumentException("Missing db configuration");
+        }
+
+        return new MgContext(prop, db);
+    }
+
     public MgContext getMg(String db){
         if (TextUtils.isEmpty(value)) {
             return null;
