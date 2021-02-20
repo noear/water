@@ -59,7 +59,15 @@ public class LogUtil {
     }
 
     public static void writeForMsgByError(MessageModel msg, Throwable ex) {
-        log_msg.error(msg.topic_name, msg.msg_id + "", "", ex);
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(msg.msg_id)
+                .append("#").append(msg.dist_count)
+                .append("#").append(msg.topic_name).append("=").append(msg.content);
+
+        String summary =  sb.toString();
+
+        log_msg.error(msg.topic_name, msg.msg_id + "", sb.toString(), ex);
     }
 
     //==========================================================

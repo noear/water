@@ -162,7 +162,7 @@ public final class MsgDistributionController implements IJob {
 //                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag, false, dist);
                     } else {
-                        ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.undefined);//0);
+                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                         if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
