@@ -55,7 +55,13 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception{
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception {
+        Datetime datetime = null;
+        if (log_fulltime == null) {
+            datetime = new Datetime();
+        } else {
+            datetime = new Datetime(log_fulltime);
+        }
 
         DbTableQuery qr = _db.table(logger).usingExpr(true)
                 .set("log_id", log_id)
@@ -69,15 +75,10 @@ public class LogSourceRdb implements LogSource {
                 .setDf("content", content, "")
                 .setDf("from", from, "");
 
-        if (log_fulltime == null) {
-            qr.set("log_date", "$DATE(NOW())")
-                    .set("log_fulltime", "$NOW()")
-                    .insert();
-        } else {
-            qr.set("log_date", new Datetime(log_fulltime).getDate())
-                    .set("log_fulltime", log_fulltime)
-                    .insert();
-        }
+
+        qr.set("log_date", datetime.getDate())
+                .set("log_fulltime", datetime.getFulltime().getTime())
+                .insert();
     }
 
     @Override
@@ -86,19 +87,26 @@ public class LogSourceRdb implements LogSource {
             return;
         }
 
-        _db.table(logger).insertList(list, (log, item) -> {
-            item.set("log_id", log.log_id)
-                    .set("trace_id", log.trace_id)
-                    .set("level", log.level)
-                    .setDf("tag", log.tag, "")
-                    .setDf("tag1", log.tag1, "")
-                    .setDf("tag2", log.tag2, "")
-                    .setDf("tag3", log.tag3, "")
-                    .setDf("summary", log.summary, "")
-                    .setDf("content", log.content, "")
-                    .setDf("from", log.from, "")
-                    .setDf("log_date", log.log_date, "$DATE(NOW())")
-                    .setDf("log_fulltime", log.log_fulltime, "$NOW()");
+        _db.table(logger).insertList(list, (event, item) -> {
+            Datetime datetime = null;
+            if (event.log_fulltime == null) {
+                datetime = new Datetime();
+            } else {
+                datetime = new Datetime(event.log_fulltime);
+            }
+
+            item.set("log_id", event.log_id)
+                    .set("trace_id", event.trace_id)
+                    .set("level", event.level)
+                    .setDf("tag", event.tag, "")
+                    .setDf("tag1", event.tag1, "")
+                    .setDf("tag2", event.tag2, "")
+                    .setDf("tag3", event.tag3, "")
+                    .setDf("summary", event.summary, "")
+                    .setDf("content", event.content, "")
+                    .setDf("from", event.from, "")
+                    .set("log_date", datetime.getDate())
+                    .set("log_fulltime", datetime.getFulltime().getTime());
         });
     }
 

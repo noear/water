@@ -126,7 +126,7 @@ public class LogSourceMongo implements LogSource {
             data.put("from", event.from);
 
             data.put("log_date", datetime.getDate());
-            data.put("log_fulltime", datetime.getFulltime());
+            data.put("log_fulltime", datetime.getFulltime().getTime());
 
             dataList.add(data);
         }
