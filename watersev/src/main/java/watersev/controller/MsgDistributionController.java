@@ -157,12 +157,12 @@ public final class MsgDistributionController implements IJob {
 
                 } else {
                     if (tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.excessive);//3);
+                        ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.excessive);//3);
 
 //                    System.out.print("发送短信报警---\r\n");
                         AlarmUtil.tryAlarm(tag, false, dist);
                     } else {
-                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
+                        ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.undefined);//0);
 
                         if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");

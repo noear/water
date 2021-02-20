@@ -215,7 +215,7 @@ public class MessageSourceMongo implements MessageSource {
             _db.table("water_msg_message")
                     .set("state", state.code)
                     .set("dist_nexttime", ntime)
-                    .setInc("dist_count", 1)
+                    .set("dist_count", msg.dist_count)
                     .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0,1))
                     .update();
 

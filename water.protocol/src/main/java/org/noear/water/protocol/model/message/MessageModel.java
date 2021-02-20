@@ -115,28 +115,4 @@ public class MessageModel implements IBinder {
 
         return (hours / 24) + "d";
     }
-
-
-//    private  TopicModel _topic;
-//    public TopicModel topic(){
-//        if(_topic==null) {
-//            try {
-//                _topic = DbWaterMsgApi.getTopic(topic_id);
-//            }catch (Exception ex){
-//                ex.printStackTrace();
-//                _topic = new TopicModel();
-//            }
-//        }
-//
-//        return _topic;
-//    }
-//
-//    private int _max_dist_num=-1;
-//    public boolean isDistributionEnd() {
-//        if (_max_dist_num < 0) {
-//            _max_dist_num = topic().max_distribution_num;
-//        }
-//
-//        return (_max_dist_num > 0 && dist_count >= _max_dist_num);
-//    }
 }

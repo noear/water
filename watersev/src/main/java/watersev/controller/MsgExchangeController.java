@@ -73,7 +73,7 @@ public class MsgExchangeController implements IJob {
             routing(msg);
         } catch (Throwable ex) {
             ProtocolHub.messageSource()
-                    .setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
+                    .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
         }
