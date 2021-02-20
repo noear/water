@@ -34,6 +34,10 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        if(ProtocolHub.messageQueue.count() > 2000){
+            return;
+        }
+
         long dist_nexttime = System.currentTimeMillis();
         List<MessageModel> msgList = ProtocolHub.messageSource()
                 .getMessageListOfPending(1000, dist_nexttime);
