@@ -20,9 +20,9 @@
     <style>
         body > header agroup{font-size: 16px;}
 
-        .level5{color: #ff0000;}
+        .level5{color:red;}
         .level4{color:orange;}
-        .level3{color:green;}
+        .level2{color:blue;}
     </style>
 </head>
 <body>
