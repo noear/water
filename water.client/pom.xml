@@ -14,7 +14,6 @@
     <artifactId>water.client</artifactId>
     <packaging>jar</packaging>
 
-
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
