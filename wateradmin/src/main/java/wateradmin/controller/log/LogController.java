@@ -95,7 +95,7 @@ public class LogController extends BaseController {
             try {
                 long timestamp = 0;
                 if(TextUtils.isNotEmpty(log_fulltime)) {
-                    timestamp = Datetime.parse(log_fulltime, "yyyy-MM-dd HH:mm:ss").getTicks();
+                    timestamp = Datetime.parse(log_fulltime, "yyyy-MM-dd HH:mm:ss.sss").getTicks();
                 }
 
                 list = ProtocolHub.logQuerier.query(logger, trace_id, level, 50, tag, tag1, tag2, tag3, timestamp);
