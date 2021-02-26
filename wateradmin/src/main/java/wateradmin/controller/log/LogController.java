@@ -109,6 +109,7 @@ public class LogController extends BaseController {
             viewModel.put("logger", "");
         }
 
+        viewModel.put("log_fulltime",log_fulltime);
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);
