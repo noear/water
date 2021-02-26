@@ -40,7 +40,7 @@
                     </#list>
                 </select>&nbsp;&nbsp;
                 标签：<input type="text" class="w250"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3 or *TraceId" id="tagx"/>&nbsp;&nbsp;
-                时间：<input type="text"  name="log_fulltime" placeholder="yyyyMMddHHMMss" id="log_date" class="w120"/>&nbsp;&nbsp;
+                时间：<input type="text"  name="log_fulltime" placeholder="yyyy-MM-dd HH:MM:ss" id="log_date" class="w120"/>&nbsp;&nbsp;
 
                 <button type="submit">查询</button>
                 <script>
