@@ -40,8 +40,8 @@
                     </#list>
                 </select>&nbsp;&nbsp;
                 标签：<input type="text" class="w250"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3 or *TraceId" id="tagx"/>&nbsp;&nbsp;
-                时间：<input type="text"  name="log_date" placeholder="yyyyMMdd" id="log_date" class="w70"/>&nbsp;&nbsp;
-                ID：<input type="text"  name="log_id" placeholder="" id="log_id" class="w70"/>&nbsp;&nbsp;
+                时间：<input type="text"  name="log_fulltime" placeholder="yyyyMMddHHMMss" id="log_date" class="w100"/>&nbsp;&nbsp;
+
                 <button type="submit">查询</button>
                 <script>
                     <#if log??>
@@ -61,7 +61,7 @@
             <div class="break">
                 <span>${log.log_fulltime?string("yyyy-MM-dd HH:mm:ss.SSS")}</span>
                 <span>:</span>
-                <span>${log.log_id}-${log.levelHtml()} *${log.trace_id!} #${log.tag!}@${log.tag1!}@${log.tag2!}@${log.tag3!}#${log.from!}</span>
+                <span>${log.levelHtml()} *${log.trace_id!} #${log.tag!}@${log.tag1!}@${log.tag2!}@${log.tag3!}#${log.from!}</span>
             </div>
             <div class="break">
                 <#if log.summary??>

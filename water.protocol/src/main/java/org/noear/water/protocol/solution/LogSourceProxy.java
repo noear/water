@@ -21,8 +21,8 @@ public class LogSourceProxy implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
-        return real.query(logger, trace_id, level, size, tag, tag1, tag2, tag3, log_date, log_id);
+    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
+        return real.query(logger, trace_id, level, size, tag, tag1, tag2, tag3, timestamp);
     }
 
     @Override

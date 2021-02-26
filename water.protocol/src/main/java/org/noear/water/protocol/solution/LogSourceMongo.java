@@ -22,7 +22,7 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
+    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -51,16 +51,12 @@ public class LogSourceMongo implements LogSource {
             tb.andEq("tag3", tag3);
         }
 
-        if (log_date != null && log_date > 0) {
-            tb.andEq("log_date", log_date);
-        }
-
         if (level != null && level > 0) {
             tb.andEq("level", level);
         }
 
-        if (log_id != null && log_id > 0) {
-            tb.andLte("log_id", log_id);
+        if (timestamp > 0) {
+            tb.andLte("log_fulltime", timestamp);
         }
 
         return tb.orderByDesc("log_fulltime")

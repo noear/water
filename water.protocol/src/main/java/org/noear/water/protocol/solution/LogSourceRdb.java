@@ -21,17 +21,9 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, Integer log_date, Long log_id) throws Exception {
+    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
-        }
-
-        if (log_date == null) {
-            log_date = 0;
-        }
-
-        if (log_id == null) {
-            log_id = 0L;
         }
 
         if (level == null) {
@@ -45,13 +37,11 @@ public class LogSourceRdb implements LogSource {
                 .andIf(TextUtils.isNotEmpty(tag1), "tag1 = ?", tag1)
                 .andIf(TextUtils.isNotEmpty(tag2), "tag2 = ?", tag2)
                 .andIf(TextUtils.isNotEmpty(tag3), "tag3 = ?", tag3)
-                .andIf(log_date > 0, "log_date = ?", log_date)
-                .andIf(log_id > 0, "log_id <= ?", log_id)
+                .andIf(timestamp > 0, "log_fulltime <= ?", timestamp)
                 .andIf(level > 0, "level=?", level)
                 .orderBy("log_fulltime desc, log_id desc")
                 .limit(size)
-                .select("*")
-                .getList(LogModel.class);
+                .selectList("*", LogModel.class);
     }
 
     @Override

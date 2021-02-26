@@ -2,6 +2,7 @@ package wateradmin.controller.log;
 
 import org.noear.solon.core.handle.Context;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 
 import org.noear.solon.annotation.Controller;
@@ -35,7 +36,7 @@ public class LogController extends BaseController {
     }
 
     @Mapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, Integer log_date, Long log_id, Integer level, Context ctx) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, String log_fulltime, Integer level, Context ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
@@ -92,7 +93,12 @@ public class LogController extends BaseController {
             LoggerModel log = DbWaterCfgApi.getLogger(logger);
 
             try {
-                list = ProtocolHub.logQuerier.query(logger, trace_id, level, 50, tag, tag1, tag2, tag3, log_date, log_id);
+                long timestamp = 0;
+                if(TextUtils.isNotEmpty(log_fulltime)) {
+                    timestamp = Datetime.parse(log_fulltime, "yyyyMMddHHmmss").getTicks();
+                }
+
+                list = ProtocolHub.logQuerier.query(logger, trace_id, level, 50, tag, tag1, tag2, tag3, timestamp);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
