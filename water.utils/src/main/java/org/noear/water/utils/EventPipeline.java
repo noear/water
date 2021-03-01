@@ -9,17 +9,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 写入时，先写到队列
- * 提交时，每次提交100条；消费完后暂停1秒
+ * 提交时，每次提交100条；消费完后暂停0.1秒
  *
  * @author noear
  * @since 2.0
  * */
 public abstract class EventPipeline<Event> implements TaskUtils.ITask {
-    private long interval = 500;
+    private long interval = 500; //必须大于等于100
     private long interval_min = 100;
 
-    private int packetSize = 100; //必须大于100
-    private int packetSize_min = 100; //必须大于100
+    private int packetSize = 100; //必须大于等于100
+    private int packetSize_min = 100;
 
     public EventPipeline() {
         TaskUtils.run(this);
