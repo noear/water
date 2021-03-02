@@ -38,7 +38,7 @@
         <!--        <module>demo/water-demo-rpc-service-impl</module>-->
 
 
-        <module>demo/water-test</module>
-        <module>demo/water-test-springboot</module>
+<!--        <module>demo/water-test</module>-->
+<!--        <module>demo/water-test-springboot</module>-->
     </modules>
 </project>
