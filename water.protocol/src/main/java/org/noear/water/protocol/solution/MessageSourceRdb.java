@@ -58,12 +58,22 @@ public class MessageSourceRdb implements MessageSource {
                 .set("state", -1)
                 .whereEq("msg_key", msg_key)
                 .update();
+
+        _db.table("water_msg_distribution")
+                .set("msg_state", -1)
+                .whereEq("msg_key", msg_key)
+                .update();
     }
 
     //消费消息（key）（设为成功）
     public void setMessageAsSucceed(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", 2)
+                .whereEq("msg_key", msg_key)
+                .update();
+
+        _db.table("water_msg_distribution")
+                .set("msg_state", 2)
                 .whereEq("msg_key", msg_key)
                 .update();
     }
@@ -182,6 +192,11 @@ public class MessageSourceRdb implements MessageSource {
                         }
                     })
                     .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
+                    .update();
+
+            _db.table("water_msg_distribution")
+                    .set("msg_state", state.code)
+                    .whereEq("msg_id", msg.msg_id)
                     .update();
 
             return true;

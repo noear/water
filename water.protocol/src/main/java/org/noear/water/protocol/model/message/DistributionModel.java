@@ -27,6 +27,9 @@ public class DistributionModel implements IBinder {
     //分发状态（-1忽略；0开始；1失败；2成功；）
     public int state;
 
+    //消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+    public int msg_state;
+
     public int log_date;
     public Date log_fulltime;
 
@@ -51,6 +54,7 @@ public class DistributionModel implements IBinder {
 
         receive_way = s.get("receive_way").value(0);
         state = s.get("state").value(0);
+        msg_state = s.get("msg_state").value(0);
 
         log_date = s.get("log_date").value(0);
         log_fulltime = s.get("log_fulltime").value(null);

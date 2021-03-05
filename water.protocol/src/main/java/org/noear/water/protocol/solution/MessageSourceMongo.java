@@ -61,12 +61,22 @@ public class MessageSourceMongo implements MessageSource {
                 .set("state", -1)
                 .whereEq("msg_key", msg_key)
                 .update();
+
+        _db.table("water_msg_distribution")
+                .set("msg_state", -1)
+                .whereEq("msg_key", msg_key)
+                .update();
     }
 
     //消费消息（key）（设为成功）
     public void setMessageAsSucceed(String msg_key) throws Exception {
         _db.table("water_msg_message")
                 .set("state", 2)
+                .whereEq("msg_key", msg_key)
+                .update();
+
+        _db.table("water_msg_distribution")
+                .set("msg_state", 2)
                 .whereEq("msg_key", msg_key)
                 .update();
     }
@@ -195,6 +205,11 @@ public class MessageSourceMongo implements MessageSource {
                     .whereEq("msg_id",msg.msg_id).andGte("state", 0).andLte("state",1)
                     .update();
 
+            _db.table("water_msg_distribution")
+                    .set("msg_state", state.code)
+                    .whereEq("msg_id", msg.msg_id)
+                    .update();
+
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -256,6 +271,7 @@ public class MessageSourceMongo implements MessageSource {
                     .set("receive_check", "")
                     .set("duration", 0)
                     .set("state", 0)
+                    .set("msg_state", 0)
                     .set("log_date", datetime.getDate())
                     .set("log_fulltime", datetime.getFulltime())
                     .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", subs.subscriber_id)
@@ -430,6 +446,7 @@ public class MessageSourceMongo implements MessageSource {
         _db.table("water_msg_distribution").orderByDesc("state").createIndex(true);
         _db.table("water_msg_distribution").orderByDesc("msg_id").createIndex(true);
         _db.table("water_msg_distribution").orderByDesc("msg_key").createIndex(true);
+        _db.table("water_msg_distribution").orderByDesc("msg_state").createIndex(true);
     }
 
     @Override

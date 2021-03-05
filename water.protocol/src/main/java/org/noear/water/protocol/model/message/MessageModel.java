@@ -27,7 +27,7 @@ public class MessageModel implements IBinder {
     public int dist_count;
     public long dist_nexttime;
 
-    //状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+    //消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
     public int state;
 
     //public String lk_msg_id_do;
