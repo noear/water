@@ -49,7 +49,7 @@ public class LogSqlModel implements IBinder
         note = s.get("note").value(null);
         log_date = s.get("log_date").value(0);
         log_hour = s.get("log_hour").value(0);
-        log_fulltime = s.get("log_fulltime").value(null);
+        log_fulltime = s.get("log_fulltime").dateValue(null);
 
         tag = s.get("tag").stringValue("");
     }

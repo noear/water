@@ -42,8 +42,8 @@ public class LogRequestModel implements IBinder {
         evaluation_json = s.get("evaluation_json").value(null);
         session_json = s.get("session_json").value(null);
         note_json = s.get("note_json").value(null);
-        start_fulltime = s.get("start_fulltime").value(null);
-        end_fulltime = s.get("end_fulltime").value(null);
+        start_fulltime = s.get("start_fulltime").dateValue(null);
+        end_fulltime = s.get("end_fulltime").dateValue(null);
         timespan = s.get("timespan").value(0L);
         state = s.get("state").value(0);
         callback = s.get("callback").value(null);
