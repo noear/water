@@ -109,5 +109,7 @@ public class MsgExchangeController implements IJob {
 
         //5.状态改为处理中
         ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);
+
+        LogUtil.writeForMsg(msg,"exchange completed");
     }
 }

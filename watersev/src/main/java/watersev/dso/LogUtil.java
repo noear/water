@@ -36,6 +36,18 @@ public class LogUtil {
         }
     }
 
+    public static void writeForMsg(MessageModel msg, String content) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(msg.msg_id)
+                .append("#").append(msg.dist_count)
+                .append("#").append(msg.topic_name).append("=").append(msg.content);
+
+        String summary = sb.toString();
+
+        log_msg.info(msg.topic_name, msg.msg_id + "", summary, content);
+    }
+
     public static void writeForMsgByError(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {
             dist = new DistributionModel();

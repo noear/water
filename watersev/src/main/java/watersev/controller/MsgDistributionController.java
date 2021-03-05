@@ -135,7 +135,6 @@ public final class MsgDistributionController implements IJob {
             //
             //锁一下，确保计数的线程安全
             //
-            tag.count.incrementAndGet();
             if (isOk) {
                 if (ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
                     tag.value.incrementAndGet();
@@ -145,7 +144,7 @@ public final class MsgDistributionController implements IJob {
             }
 
             //4.返回派发结果
-            if (tag.count.get() == tag.total) {
+            if (tag.count.incrementAndGet() == tag.total) {
                 //处理完了后，解锁
                 if (tag.value.get() == tag.total) {
                     ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
