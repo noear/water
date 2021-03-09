@@ -95,14 +95,10 @@ public class MessageModel implements IBinder {
             return "*";
         }
 
-        if (dist_nexttime > c) {
-            return nexttimeDo(dist_nexttime, c);
+        if (state > 1 || state < 0) {
+            return "" + nexttimeDo(dist_nexttime, last_fulltime.getTime());
         } else {
-            if (state > 1 || state < 0) {
-                return "-" + nexttimeDo(last_fulltime.getTime(), dist_nexttime);
-            } else {
-                return "-" + nexttimeDo(c, dist_nexttime);
-            }
+            return "" + nexttimeDo(dist_nexttime, c);
         }
     }
 
