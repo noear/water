@@ -52,7 +52,7 @@ public class CMD_msg_send extends UapiBase {
 
         if (msg_id > 0) {
             //非定时消息，直接转队列
-            if (plan_time2 != null) {
+            if (plan_time2 == null) {
                 ProtocolHub.messageQueue.push(String.valueOf(msg_id));
             }
 
