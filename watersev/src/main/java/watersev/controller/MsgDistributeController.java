@@ -73,14 +73,14 @@ public final class MsgDistributeController implements IJob {
                 return;
             }
 
-            //路由
-            if(routingDo(msg) == false){
-                return;
-            }
-
             //设置处理状态
             if(msg.state != MessageState.processed.code){
                 ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);
+            }
+
+            //路由
+            if(routingDo(msg) == false){
+                return;
             }
 
             //派发
