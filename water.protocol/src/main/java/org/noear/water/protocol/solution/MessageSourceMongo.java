@@ -334,7 +334,7 @@ public class MessageSourceMongo implements MessageSource {
     @Override
     public MessageModel getMessageById(long msg_id) throws Exception {
         return _db.table("water_msg_message")
-                .whereEq("msg_id", msg_id)
+                .whereEq("_id", msg_id)
                 .limit(1)
                 .selectItem(MessageModel.class);
     }
