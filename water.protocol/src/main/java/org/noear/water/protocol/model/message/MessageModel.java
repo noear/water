@@ -91,14 +91,18 @@ public class MessageModel implements IBinder {
     }
 
     public String nexttime(long c) {
-        if (dist_nexttime == 0 || state > 1 || state < 0) {
+        if (dist_nexttime == 0) {
             return "*";
         }
 
         if (dist_nexttime > c) {
             return nexttimeDo(dist_nexttime, c);
         } else {
-            return "-" + nexttimeDo(c, dist_nexttime);
+            if (state > 1 || state < 0) {
+                return "-" + nexttimeDo(last_fulltime.getTime(), dist_nexttime);
+            } else {
+                return "-" + nexttimeDo(c, dist_nexttime);
+            }
         }
     }
 
