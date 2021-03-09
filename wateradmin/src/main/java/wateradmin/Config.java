@@ -31,7 +31,7 @@ public class Config {
 
     //是否使用标答检查器？
     public static boolean is_use_tag_checker() {
-        return "1".equals(cfg("is_use_tag_checker").getString());
+        return "1".equals(cfg("enable_tag_checker").getString());
     }
 
     public static String waterpaas_secretKey;
