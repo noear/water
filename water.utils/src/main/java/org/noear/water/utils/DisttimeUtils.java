@@ -15,7 +15,7 @@ public class DisttimeUtils {
         int second = 0;
 
         switch (dist_count){
-            case 0:second  = 2;break;//2秒
+            case 0:second  = 4;break;//4秒
             case 1:second  = second+10;break; //10秒
             case 2:second  = second+30;break; //30秒
             case 3:second  = second+60;break; //1分钟
