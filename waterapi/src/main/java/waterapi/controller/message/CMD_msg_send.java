@@ -48,7 +48,14 @@ public class CMD_msg_send extends UapiBase {
 
         TopicModel topicModel = DbWaterMsgApi.getTopicById(topic);
 
-        if (ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2) > 0) {
+        long msg_id = ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
+
+        if (msg_id > 0) {
+            //非定时消息，直接转队列
+            if (plan_time2 != null) {
+                ProtocolHub.messageQueue.push(String.valueOf(msg_id));
+            }
+
             return Result.succeed();
         } else {
             return Result.failure();

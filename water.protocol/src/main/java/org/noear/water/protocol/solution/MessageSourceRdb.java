@@ -95,11 +95,11 @@ public class MessageSourceRdb implements MessageSource {
     }
 
     public long addMessage(int topic_id, String topic_name, String content) throws Exception {
-        return addMessage(null, null, null, topic_id, topic_name, content, null);
+        return addMessage(null, null, null, topic_id, topic_name, content, null, false);
     }
 
     //添加消息
-    public long addMessage(String msg_key, String trace_id, String tags, int topic_id, String topic_name, String content, Date plan_time) throws Exception {
+    public long addMessage(String msg_key, String trace_id, String tags, int topic_id, String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception {
         long msg_id = ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
@@ -119,6 +119,8 @@ public class MessageSourceRdb implements MessageSource {
         long dist_nexttime = 0;
         if (plan_time != null) {
             dist_nexttime = DisttimeUtils.distTime(plan_time);
+        }else if(autoDelay){
+            dist_nexttime = DisttimeUtils.nextTime(0);
         }
 
         _db.table("water_msg_message")

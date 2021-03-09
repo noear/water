@@ -22,7 +22,7 @@ public interface MessageSource {
     void setDistributionAsCancel(String msg_key, String subscriber_key) throws Exception;
     void setDistributionAsSucceed(String msg_key, String subscriber_key) throws Exception;
     long addMessage(int topic_id, String topic_name, String content) throws Exception;
-    long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time) throws Exception;
+    long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception;
 
 
     //

@@ -58,7 +58,7 @@ public class CMD_cfg_set extends UapiBase {
             String trace_id = ctx.header(WW.http_header_trace);
 
             TopicModel topicModel = DbWaterMsgApi.getTopicById(WW.msg_uconfig_topic);
-            ProtocolHub.messageSource().addMessage(Utils.guid(), trace_id, Config.water_service_name, topicModel.topic_id,WW.msg_uconfig_topic, tag + "::" + key, null);
+            ProtocolHub.messageSource().addMessage(Utils.guid(), trace_id, Config.water_service_name, topicModel.topic_id, WW.msg_uconfig_topic, tag + "::" + key, null, false);
         }
 
         return Result.succeed();
