@@ -56,6 +56,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsCancel(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", -1)
+                .set("last_fulltime",new Date())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -69,6 +70,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsSucceed(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", 2)
+                .set("last_fulltime",new Date())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -81,7 +83,8 @@ public class MessageSourceRdb implements MessageSource {
     //取消消息派发（key+subscriber_key）
     public void setDistributionAsCancel(String msg_key, String subscriber_key) throws SQLException {
 
-        _db.table("water_msg_distribution").set("state", -1)
+        _db.table("water_msg_distribution")
+                .set("state", -1)
                 .whereEq("msg_key", msg_key).andEq("subscriber_key", subscriber_key)
                 .update();
     }
@@ -89,7 +92,8 @@ public class MessageSourceRdb implements MessageSource {
 
     //消费消息派发（key+subscriber_key）（设为成功）
     public void setDistributionAsSucceed(String msg_key, String subscriber_key) throws SQLException {
-        _db.table("water_msg_distribution").set("state", 2)
+        _db.table("water_msg_distribution")
+                .set("state", 2)
                 .whereEq("msg_key", msg_key).andEq("subscriber_key", subscriber_key)
                 .update();
     }
@@ -182,6 +186,7 @@ public class MessageSourceRdb implements MessageSource {
         try {
             _db.table("water_msg_message")
                     .set("state", state.code)
+                    .set("last_fulltime",new Date())
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
@@ -220,6 +225,7 @@ public class MessageSourceRdb implements MessageSource {
 
             _db.table("water_msg_message").usingExpr(true)
                     .set("state", state.code)
+                    .set("last_fulltime",new Date())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
                     .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
@@ -379,6 +385,7 @@ public class MessageSourceRdb implements MessageSource {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
+                .set("last_fulltime",new Date())
                 .set("dist_nexttime", 0)
                 .update() > 0;
 
@@ -425,6 +432,7 @@ public class MessageSourceRdb implements MessageSource {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids)
                 .set("state", -1)
+                .set("last_fulltime",new Date())
                 .update() > 0;
     }
 
@@ -454,6 +462,7 @@ public class MessageSourceRdb implements MessageSource {
         if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
             return _db.table("water_msg_message")
                     .set("state", 0)
+                    .set("last_fulltime",new Date())
                     .whereEq("state", 1).andLt("dist_nexttime", refTime)
                     .update();
         } else {
