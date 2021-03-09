@@ -15,7 +15,6 @@ public interface MessageSource {
     //
     //for api
     //
-    boolean hasMessage(String msg_key) throws Exception;
     void setMessageAsCancel(String msg_key) throws Exception;
     void setMessageAsSucceed(String msg_key) throws Exception;
     void setDistributionAsCancel(String msg_key, String subscriber_key) throws Exception;
