@@ -217,7 +217,6 @@ public final class MsgDistributeController implements IJob {
 
         //1.生成签名
         StringBuilder sb = new StringBuilder(200);
-        sb.append(msg.msg_id).append("#");
         sb.append(msg.msg_key).append("#");
         sb.append(msg.topic_name).append("#");
         sb.append(msg.content).append("#");
@@ -227,7 +226,6 @@ public final class MsgDistributeController implements IJob {
 
         //2.组装分源的数据
         Map<String, String> params = new HashMap<>();
-        params.put("id", msg.msg_id + "");
         params.put("key", msg.msg_key);
         params.put("topic", msg.topic_name);
         params.put("times", msg.dist_count + "");
