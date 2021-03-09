@@ -5,7 +5,6 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
