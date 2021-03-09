@@ -18,7 +18,7 @@ public class MessageModel implements IBinder {
 
     public String tags;
 
-//    public int topic_id;
+    //    public int topic_id;
     public String topic_name;
 
     public String content;
@@ -72,20 +72,26 @@ public class MessageModel implements IBinder {
 
     /**
      * 状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
-     * */
-    public String stateStr(){
-        switch (state){
-            case -2:return "-2 无派发对象";
-            case -1:return "-1 忽略";
-            case 1:return "1 处理中";
-            case 2:return "2 已成功";
-            case 3:return "3 派发超数";
-            default:return "0 未处理";
+     */
+    public String stateStr() {
+        switch (state) {
+            case -2:
+                return "-2 无派发对象";
+            case -1:
+                return "-1 忽略";
+            case 1:
+                return "1 处理中";
+            case 2:
+                return "2 已成功";
+            case 3:
+                return "3 派发超数";
+            default:
+                return "0 未处理";
         }
     }
 
     public String nexttime(long c) {
-        if(dist_nexttime == 0){
+        if (dist_nexttime == 0 || state > 1 || state < 0) {
             return "*";
         }
 
