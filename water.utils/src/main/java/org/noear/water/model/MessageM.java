@@ -5,10 +5,7 @@ import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
 
-import java.util.function.Function;
-
 public class MessageM {
-    public long id;
     public int times;
     public String trace_id;
     public String key;
@@ -17,8 +14,6 @@ public class MessageM {
     public String sgin;
     public String tags;
 
-
-
     public MessageM(Fun1<String,String> args) {
         this.key = args.run("key");
 
@@ -26,8 +21,6 @@ public class MessageM {
             return;
         }
 
-
-        this.id = Long.parseLong(args.run("id"));
         this.topic = args.run("topic");
         String _times = args.run("times");
         if(TextUtils.isEmpty(_times)==false){
@@ -44,7 +37,6 @@ public class MessageM {
     public String toJson(){
         ONode d = new ONode();
 
-        d.set("id",id);
         d.set("key",key);
         d.set("topic",topic);
         d.set("trace_id",trace_id);

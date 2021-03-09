@@ -297,12 +297,11 @@ public class MessageApi {
      */
     public boolean checkMessage(MessageM msg, String receive_key) {
 
-        if (msg.id < 1) {
+        if (TextUtils.isEmpty(msg.topic)) {
             return false;
         }
 
         StringBuilder sb = new StringBuilder(200);
-        sb.append(msg.id).append("#");
         sb.append(msg.key).append("#");
         sb.append(msg.topic).append("#");
         sb.append(msg.message).append("#");
