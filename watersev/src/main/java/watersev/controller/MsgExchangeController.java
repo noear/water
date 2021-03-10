@@ -21,8 +21,8 @@ public class MsgExchangeController implements IJob {
         return "zan";
     }
 
-    int _interval_def = 100;
-    int _interval = 100;
+    int _interval_def = 10;
+    int _interval = 10;
 
     @Override
     public int getInterval() {
