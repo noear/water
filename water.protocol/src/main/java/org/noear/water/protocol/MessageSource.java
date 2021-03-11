@@ -5,6 +5,7 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -67,4 +68,6 @@ public interface MessageSource {
     void clear(int lteDate) throws Exception;
 
     long reset(int seconds) throws Exception;
+
+    long stat(int date, int topic_id) throws SQLException;
 }

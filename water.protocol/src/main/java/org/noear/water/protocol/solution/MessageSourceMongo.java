@@ -493,4 +493,15 @@ public class MessageSourceMongo implements MessageSource {
             return 0;
         }
     }
+
+    @Override
+    public long stat(int date, int topic_id) throws SQLException {
+        return _db.table("water_msg_message")
+                .whereEq("log_date", date)
+                .build(tb -> {
+                    if (topic_id > 0) {
+                        tb.andEq("topic_id", topic_id);
+                    }
+                }).selectCount();
+    }
 }

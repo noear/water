@@ -56,7 +56,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsCancel(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", -1)
-                .set("last_fulltime",new Date())
+                .set("last_fulltime", new Date())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -70,7 +70,7 @@ public class MessageSourceRdb implements MessageSource {
     public void setMessageAsSucceed(String msg_key) throws SQLException {
         _db.table("water_msg_message")
                 .set("state", 2)
-                .set("last_fulltime",new Date())
+                .set("last_fulltime", new Date())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -123,7 +123,7 @@ public class MessageSourceRdb implements MessageSource {
         long dist_nexttime = 0;
         if (plan_time != null) {
             dist_nexttime = DisttimeUtils.distTime(plan_time);
-        }else if(autoDelay){
+        } else if (autoDelay) {
             dist_nexttime = DisttimeUtils.nextTime(0);
         }
 
@@ -186,7 +186,7 @@ public class MessageSourceRdb implements MessageSource {
         try {
             _db.table("water_msg_message")
                     .set("state", state.code)
-                    .set("last_fulltime",new Date())
+                    .set("last_fulltime", new Date())
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
@@ -225,7 +225,7 @@ public class MessageSourceRdb implements MessageSource {
 
             _db.table("water_msg_message").usingExpr(true)
                     .set("state", state.code)
-                    .set("last_fulltime",new Date())
+                    .set("last_fulltime", new Date())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
                     .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
@@ -385,7 +385,7 @@ public class MessageSourceRdb implements MessageSource {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
-                .set("last_fulltime",new Date())
+                .set("last_fulltime", new Date())
                 .set("dist_nexttime", 0)
                 .update() > 0;
 
@@ -432,21 +432,21 @@ public class MessageSourceRdb implements MessageSource {
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids)
                 .set("state", -1)
-                .set("last_fulltime",new Date())
+                .set("last_fulltime", new Date())
                 .update() > 0;
     }
 
     @Override
     public void clear(int lteDate) throws Exception {
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",2).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",3).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",-1).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",-2).delete();
+        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", 2).delete();
+        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", 3).delete();
+        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", -1).delete();
+        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", -2).delete();
 
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",2).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",3).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",-1).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",-2).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 2).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 3).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", -1).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", -2).delete();
     }
 
     @Override
@@ -462,11 +462,22 @@ public class MessageSourceRdb implements MessageSource {
         if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
             return _db.table("water_msg_message")
                     .set("state", 0)
-                    .set("last_fulltime",new Date())
+                    .set("last_fulltime", new Date())
                     .whereEq("state", 1).andLt("dist_nexttime", refTime)
                     .update();
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public long stat(int date, int topic_id) throws SQLException {
+        return _db.table("water_msg_message")
+                .whereEq("log_date", date)
+                .build(tb -> {
+                    if (topic_id > 0) {
+                        tb.andEq("topic_id", topic_id);
+                    }
+                }).selectCount();
     }
 }
