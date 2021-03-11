@@ -25,8 +25,8 @@ public class MsgExchangeController implements IJob {
         return "zan";
     }
 
-    int _interval_def = 10;
-    int _interval = 10;
+    int _interval_def = 100;
+    int _interval = 100;
 
     @Override
     public int getInterval() {
@@ -49,7 +49,7 @@ public class MsgExchangeController implements IJob {
 
         long dist_nexttime = System.currentTimeMillis();
         List<MessageModel> msgList = ProtocolHub.messageSource()
-                .getMessageListOfPending(10000, dist_nexttime);
+                .getMessageListOfPending(1000, dist_nexttime);
 
         for (MessageModel msg : msgList) {
             executor.submit(() -> {
