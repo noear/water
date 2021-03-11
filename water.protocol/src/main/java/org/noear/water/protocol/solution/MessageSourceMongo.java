@@ -161,7 +161,7 @@ public class MessageSourceMongo implements MessageSource {
     public List<MessageModel> getMessageListOfPending(int rows, long dist_nexttime) throws Exception {
         return _db.table("water_msg_message")
                 .whereLt("dist_nexttime", dist_nexttime).andEq("state", 0)
-                .orderByAsc("msg_id")
+                .orderByAsc("_id")
                 .limit(rows)
                 .selectList(MessageModel.class);
     }
@@ -171,7 +171,7 @@ public class MessageSourceMongo implements MessageSource {
         try {
             _db.table("water_msg_message")
                     .set("dist_routed", dist_routed)
-                    .whereEq("msg_id", msg.msg_id)
+                    .whereEq("_id", msg.msg_id)
                     .update();
 
             msg.dist_routed = dist_routed;
@@ -208,7 +208,7 @@ public class MessageSourceMongo implements MessageSource {
                             tb.set("dist_nexttime", dist_nexttime);
                         }
                     })
-                    .whereEq("msg_id",msg.msg_id).andGte("state", 0).andLte("state",1)
+                    .whereEq("_id",msg.msg_id).andGte("state", 0).andLte("state",1)
                     .update();
 
             _db.table("water_msg_distribution")
@@ -238,7 +238,7 @@ public class MessageSourceMongo implements MessageSource {
                     .set("last_fulltime",new Date())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
-                    .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0,1))
+                    .whereEq("_id", msg.msg_id).andIn("state", Arrays.asList(0,1))
                     .update();
 
             return true;
@@ -400,7 +400,7 @@ public class MessageSourceMongo implements MessageSource {
     //派发功能
     public  boolean setMessageAsPending(List<Object> ids) throws Exception {
         return _db.table("water_msg_message")
-                .whereIn("msg_id", ids).andNeq("state", 2)
+                .whereIn("_id", ids).andNeq("state", 2)
                 .set("state", 0)
                 .set("last_fulltime",new Date())
                 .set("dist_nexttime", 0)
@@ -427,7 +427,7 @@ public class MessageSourceMongo implements MessageSource {
     //取消派发
     public  boolean setMessageAsCancel(List<Object> ids) throws Exception {
         return _db.table("water_msg_message")
-                .whereIn("msg_id", ids)
+                .whereIn("_id", ids)
                 .set("state", -1)
                 .set("last_fulltime",new Date())
                 .update() > 0;

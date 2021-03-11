@@ -39,13 +39,13 @@ public class MsgExchangeController implements IJob {
     }
 
     private boolean execDo() throws Exception{
-        if (ProtocolHub.messageQueue.count() > 2000) {
+        if (ProtocolHub.messageQueue.count() > 20000) {
             return false;
         }
 
         long dist_nexttime = System.currentTimeMillis();
         List<MessageModel> msgList = ProtocolHub.messageSource()
-                .getMessageListOfPending(1000, dist_nexttime);
+                .getMessageListOfPending(10000, dist_nexttime);
 
         msgList.parallelStream().forEachOrdered((msg) -> {
             exchange(msg);
