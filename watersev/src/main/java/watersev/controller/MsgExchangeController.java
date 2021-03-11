@@ -64,7 +64,7 @@ public class MsgExchangeController implements IJob {
             });
         }
 
-        //等待执行完成
+        //等待执行完成，再到下一轮
         countDownLatch.await();
 
         if (msgList.size() > 0) {
