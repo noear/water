@@ -60,7 +60,7 @@ public class MessageModel implements IBinder {
         last_fulltime = s.get("last_fulltime").value(null);
 
         if (last_fulltime == null) {
-            last_fulltime = log_fulltime;
+            last_fulltime = new Date();
         }
     }
 
