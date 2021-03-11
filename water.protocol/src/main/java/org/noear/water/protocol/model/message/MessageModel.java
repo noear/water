@@ -92,7 +92,7 @@ public class MessageModel implements IBinder {
 
     public String nexttime(long c) {
         if (dist_nexttime == 0) {
-            return "*";
+            return "" + nexttimeDo(log_fulltime.getTime(), last_fulltime.getTime());
         }
 
         if (state > 1 || state < 0) {
