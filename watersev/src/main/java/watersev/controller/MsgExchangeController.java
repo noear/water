@@ -31,8 +31,16 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        while (true) {
+            if (execDo() == false) {
+                break;
+            }
+        }
+    }
+
+    private boolean execDo() throws Exception{
         if (ProtocolHub.messageQueue.count() > 2000) {
-            return;
+            return false;
         }
 
         long dist_nexttime = System.currentTimeMillis();
@@ -45,6 +53,7 @@ public class MsgExchangeController implements IJob {
 
         if (msgList.size() > 0) {
             _interval = _interval_def;
+            return true;
         } else {
             int hour = Datetime.Now().getHours();
 
@@ -53,6 +62,8 @@ public class MsgExchangeController implements IJob {
             } else {
                 _interval = 500;
             }
+
+            return false;
         }
     }
 
