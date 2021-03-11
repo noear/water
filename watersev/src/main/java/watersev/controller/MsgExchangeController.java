@@ -10,12 +10,16 @@ import org.noear.water.utils.DisttimeUtils;
 import watersev.dso.LogUtil;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 消息转发器（从持久层转入队列）
  * */
 @Component
 public class MsgExchangeController implements IJob {
+    static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+
     @Override
     public String getName() {
         return "zan";
@@ -38,7 +42,7 @@ public class MsgExchangeController implements IJob {
         }
     }
 
-    private boolean execDo() throws Exception{
+    private boolean execDo() throws Exception {
         if (ProtocolHub.messageQueue.count() > 20000) {
             return false;
         }
@@ -47,9 +51,11 @@ public class MsgExchangeController implements IJob {
         List<MessageModel> msgList = ProtocolHub.messageSource()
                 .getMessageListOfPending(10000, dist_nexttime);
 
-        msgList.parallelStream().forEachOrdered((msg) -> {
-            exchange(msg);
-        });
+        for (MessageModel msg : msgList) {
+            executor.submit(() -> {
+                exchange(msg);
+            });
+        }
 
         if (msgList.size() > 0) {
             _interval = _interval_def;
