@@ -514,11 +514,11 @@ public class MessageSourceMongo implements MessageSource {
 
             FindIterable<Document> cursor = _db.mongo().find("water_msg_message", filter);
 
-            List<Map<String, Object>> dataPage = new ArrayList<>(1000);
+            List<Map<String, Object>> dataPage = new ArrayList<>(2000);
             for (Document item : cursor) {
                 dataPage.add(item);
 
-                if (dataPage.size() == 1000) {
+                if (dataPage.size() == 2000) {
                     //满1000就插一次
                     _db.mongo().insertMany("water_msg_message_all", dataPage);
                     dataPage.clear();
