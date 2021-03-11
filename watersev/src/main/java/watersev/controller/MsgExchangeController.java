@@ -10,6 +10,7 @@ import org.noear.water.utils.DisttimeUtils;
 import watersev.dso.LogUtil;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,18 +45,27 @@ public class MsgExchangeController implements IJob {
 
     private boolean execDo() throws Exception {
         if (ProtocolHub.messageQueue.count() > 20000) {
+            //
+            //防止派发机出问题时，队列不会暴掉
+            //
             return false;
         }
 
         long dist_nexttime = System.currentTimeMillis();
         List<MessageModel> msgList = ProtocolHub.messageSource()
-                .getMessageListOfPending(1000, dist_nexttime);
+                .getMessageListOfPending(5000, dist_nexttime);
+
+        CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
 
         for (MessageModel msg : msgList) {
             executor.submit(() -> {
                 exchange(msg);
+                countDownLatch.countDown();
             });
         }
+
+        //等待执行完成
+        countDownLatch.await();
 
         if (msgList.size() > 0) {
             _interval = _interval_def;
