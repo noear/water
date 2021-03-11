@@ -5,7 +5,6 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -65,9 +64,23 @@ public interface MessageSource {
     boolean setMessageAsCancel(List<Object> ids) throws Exception;
 
 
+    /**
+     * 清理
+     * */
     void clear(int lteDate) throws Exception;
 
+    /**
+     * 重置状态
+     * */
     long reset(int seconds) throws Exception;
 
-    long stat(int date, int topic_id) throws SQLException;
+    /**
+     * 统计
+     * */
+    long stat(int date, int topic_id) throws Exception;
+
+    /**
+     * 持久化（将热数据转为冷数据）
+     * */
+    void persistence(int hotDate, int coldDate) throws Exception;
 }

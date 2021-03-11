@@ -1,6 +1,8 @@
 package org.noear.water.protocol.solution;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
+import org.bson.Document;
 import org.noear.solon.Utils;
 import org.noear.water.log.Logger;
 import org.noear.water.protocol.IdBuilder;
@@ -19,10 +21,7 @@ import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author noear 2021/2/5 created
@@ -503,5 +502,42 @@ public class MessageSourceMongo implements MessageSource {
                         tb.andEq("topic_id", topic_id);
                     }
                 }).selectCount();
+    }
+
+    @Override
+    public void persistence(int hotDate, int coldDate) throws Exception {
+//转移数据（长久保存）
+        //
+        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
+            Map<String, Object> filter = new LinkedHashMap<>();
+            filter.put("log_date", hotDate);
+
+            FindIterable<Document> cursor = _db.mongo().find("water_msg_message", filter);
+
+            List<Map<String, Object>> dataPage = new ArrayList<>(1000);
+            for (Document item : cursor) {
+                dataPage.add(item);
+
+                if (dataPage.size() == 1000) {
+                    //满1000就插一次
+                    _db.mongo().insertMany("water_msg_message_all", dataPage);
+                    dataPage.clear();
+                }
+            }
+            //处理没满1000的
+            if (dataPage.size() > 0) {
+                _db.mongo().insertMany("water_msg_message_all", dataPage);
+                dataPage.clear();
+            }
+
+//            _db.exe("INSERT INTO water_msg_message_all " +
+//                    "SELECT * FROM water_msg_message WHERE log_date = ?", hotDate);
+        }
+
+        //清理统计
+        _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
+
+        //清理持久化
+        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
     }
 }

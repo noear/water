@@ -480,4 +480,20 @@ public class MessageSourceRdb implements MessageSource {
                     }
                 }).selectCount();
     }
+
+    @Override
+    public void persistence(int hotDate, int coldDate) throws Exception {
+        //转移数据（长久保存）
+        //
+        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
+            _db.exe("INSERT INTO water_msg_message_all " +
+                    "SELECT * FROM water_msg_message WHERE log_date = ?", hotDate);
+        }
+
+        //清理统计
+        _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
+
+        //清理持久化
+        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
+    }
 }
