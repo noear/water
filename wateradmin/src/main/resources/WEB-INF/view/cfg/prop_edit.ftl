@@ -109,7 +109,9 @@
                         {name: "user",value: "user", meta: "",type: "local",score: 1000},
                         {name: "name",value: "name", meta: "",type: "local",score: 1000},
                         {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
-                        {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000}
+                        {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000},
+                        {name: "regionId",value: "regionId", meta: "",type: "local",score: 1000},
+                        {name: "endpoint",value: "endpoint", meta: "",type: "local",score: 1000}
                     ]);
             }
         });
@@ -180,15 +182,14 @@
 
         window.tmls = {
             "database":"schema=\nurl=\nusername=\npassword=",
-            "mongodb":"server=\nsource=\nusername=\npassword=",
+            "mongodb":"url=",
             "memcached":"server=\nuser=\npassword=",
             "redis":"server=\nuser=\npassword=",
             "elasticsearch":"url=\nusername=\npassword=",
-            "aliyun_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
-            "iaas_ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
-            "ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
+            "iaas.ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
             "water.queue":"queue.name=\nqueue.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
-            "water.logger":"logger.name=\nlogger.type=\nschema=\nurl=\npassword=\n#for rdb\nserver=\nsource=\n#for mongo",
+            "water.block":"block.name=\nblock.type=\nschema=\nurl=\npassword=\nusername=",
+            "water.logger":"logger.name=\nlogger.type=\nschema=\nurl=\npassword=\nusername=",
         };
     </script>
 </head>
