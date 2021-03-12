@@ -13,8 +13,8 @@ public class ProtocolUtil {
     public static MessageQueue createMessageQueue(ConfigM cfg) {
         Properties prop = cfg.getProp();
 
-        String name = prop.getProperty("queue.name", "").toLowerCase();
-        String type = prop.getProperty("queue.type", "").toLowerCase();
+        String name = prop.getProperty("store.name", "").toLowerCase();
+        String type = prop.getProperty("store.type", "").toLowerCase();
 
         if (TextUtils.isEmpty(type) || TextUtils.isEmpty(type)) {
             throw new RuntimeException("ProtocolHub::There was an error in the input configuration");

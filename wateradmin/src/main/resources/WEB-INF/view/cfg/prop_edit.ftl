@@ -187,9 +187,9 @@
             "redis":"server=\nuser=\npassword=",
             "elasticsearch":"url=\nusername=\npassword=",
             "iaas.ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
-            "water.queue":"queue.name=\nqueue.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
-            "water.block":"block.name=\nblock.type=\nschema=\nurl=\npassword=\nusername=",
-            "water.logger":"logger.name=\nlogger.type=\nschema=\nurl=\npassword=\nusername=",
+            "water.queue":"store.name=\nstore.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
+            "water.block":"store.name=\nstore.type=\nschema=\nurl=\npassword=\nusername=",
+            "water.logger":"store.name=\nstore.type=\nschema=\nurl=\npassword=\nusername=",
         };
     </script>
 </head>

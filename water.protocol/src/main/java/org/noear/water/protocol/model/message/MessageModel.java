@@ -18,7 +18,6 @@ public class MessageModel implements IBinder {
 
     public String tags;
 
-    //    public int topic_id;
     public String topic_name;
 
     public String content;
@@ -43,7 +42,6 @@ public class MessageModel implements IBinder {
 
         trace_id = s.get("trace_id").value("");
 
-//        topic_id = s.get("topic_id").value(0);
         topic_name = s.get("topic_name").value("");
 
         content = s.get("content").value("");
