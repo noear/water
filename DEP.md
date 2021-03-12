@@ -8,6 +8,7 @@
 * redis：做为分布式锁、ID生成器、数据临时队列用
 * mongodb：做为消息持久化用（也可以使用 mysql8）
 * jdk11：做为运行时用
+* nginx：做为反向代理使用
   
 > 建议使用 centos7+ 部署；生产环境最少 4台服务器（接口服务*2、管理服务*1、消息派发*1）；开发环境1台即可；
 
@@ -75,7 +76,7 @@ water_bcf/bcf.yml
 * waterpaas             #PaaS 接口运行服务
 * watersev              #所有后台服务
 
-### 4、被充说明
+### 4、补充说明
 
 * water 的访问控制，基于ip安全名单实理。但部署时，不便于白名单添加。可以通过启动参数关掉：
 
@@ -84,3 +85,9 @@ water_bcf/bcf.yml
 * water 管理抬台初始密码
 
 > bcf1234
+
+* 使用 nginx 为 waterapi、wateradmin、waterpaas、waterraas 服务添加域解析支持
+
+> 其中 waterapi，必须增加 water 域解析支持
+
+* 在每以使用 water 服务器上，添加 water 域的 host 记录
