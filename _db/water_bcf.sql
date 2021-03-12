@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 12/03/2021 16:59:35
+ Date: 12/03/2021 17:20:46
 */
 
 SET NAMES utf8mb4;
@@ -113,6 +113,10 @@ INSERT INTO `bcf_group` VALUES (239, 229, 4, 'panda_operate', '运营管理相�
 INSERT INTO `bcf_group` VALUES (275, 50, 4, '', '文章管理', '/article/', '/article/', 0, 0, '', 0, 1, 1, '2019-09-25 12:53:27', '2020-04-01 15:48:15');
 INSERT INTO `bcf_group` VALUES (283, 55, 4, '', '日志查询', '', '/log/', 0, 0, '', 1, 0, 1, '2019-11-11 18:15:22', '2019-12-10 16:21:26');
 INSERT INTO `bcf_group` VALUES (320, 14, 1, '', '运维', '', NULL, 0, 0, '', 0, 0, 1, '2021-01-08 09:25:54', '2021-03-12 16:52:24');
+INSERT INTO `bcf_group` VALUES (321, 14, 1, '', '开发', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:19:51', '2021-03-12 17:19:51');
+INSERT INTO `bcf_group` VALUES (322, 14, 1, '', '测试', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:19:59', '2021-03-12 17:19:59');
+INSERT INTO `bcf_group` VALUES (323, 14, 1, '', '产品', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:20:08', '2021-03-12 17:20:08');
+INSERT INTO `bcf_group` VALUES (324, 14, 1, '', '运营', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:20:17', '2021-03-12 17:20:17');
 
 -- ----------------------------
 -- Table structure for bcf_opsx
@@ -129,6 +133,7 @@ CREATE TABLE `bcf_opsx`  (
 -- ----------------------------
 -- Records of bcf_opsx
 -- ----------------------------
+INSERT INTO `bcf_opsx` VALUES (7, 1, 'S', '');
 
 -- ----------------------------
 -- Table structure for bcf_resource
@@ -7120,7 +7125,7 @@ CREATE TABLE `bcf_user`  (
 -- ----------------------------
 -- Records of bcf_user
 -- ----------------------------
-INSERT INTO `bcf_user` VALUES (1, 'admin', 0, 0, '管理员', '', '', NULL, '', NULL, 0, 1, '2021-03-12 16:55:03', '2021-03-12 16:58:18', 'E23CFB5E87F3502DD134DED814843C579EA54894', 0);
+INSERT INTO `bcf_user` VALUES (1, 'admin', 0, 0, '管理员', '', '', NULL, '', NULL, 0, 1, '2021-03-12 16:55:03', '2021-03-12 17:20:33', '5950C3DDB200464B1446D203585F88A8CD655F7A', 0);
 
 -- ----------------------------
 -- Table structure for bcf_user_linked
