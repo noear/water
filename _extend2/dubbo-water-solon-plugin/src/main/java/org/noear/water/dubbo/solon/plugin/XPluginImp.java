@@ -1,6 +1,5 @@
 package org.noear.water.dubbo.solon.plugin;
 
-import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.Plugin;
 
