@@ -24,7 +24,7 @@
 
 ### 2、进入数据库修改相关链接配置
 
-进入 water 库 water_cfg_properties 表，修改相关配置：
+1. 进入 water 库 water_cfg_properties 表，修改相关配置（复制出值，在外部编辑器里修改，再替换掉）：
 
 ```yaml
 water/water             #water 数据库的链接配置
@@ -44,7 +44,9 @@ water/water_paas        #water_paas 数据库的链接配置
 water_bcf/bcf.yml       #修改掉 memcached 链接配置 和 water_bcf 数据库连接配置
 ```
 
-### 3、部署服务（参考bin目录下的jar文件）
+2. 进入 bin 目录 waterapi_ext/_db.properties 文件，修改 water 数据库的链接配置
+
+### 3、部署服务（参考bin目录下的jar文件；建议配置成System Service进行控制）
 
 #### （一）生产环境建议方案
 **服务器2台（2c4g）**
@@ -112,7 +114,7 @@ java -jar watersev.jar --server.port=9372
 
 ### 4、补充说明
 
-* water 的访问控制，基于ip安全名单实理。但部署时，不便于白名单添加。可以通过启动参数关掉：
+* water 的访问控制，基于ip安全名单实现。但部署时，不便于白名单添加。可以通过启动参数关闭：
 
 > --white=0
 
@@ -122,6 +124,6 @@ java -jar watersev.jar --server.port=9372
 
 * 使用 nginx 为 waterapi、wateradmin、waterpaas、waterraas 服务添加域解析支持
 
-> 其中 waterapi，必须增加 water 域解析支持
+> 其中 waterapi，必须增加 water 域解析支持（建议仅限内网访问）
 
-* 在每以使用 water 服务器上，添加 water 域的 host 记录
+* 在使用 water 的服务器上，添加 water 域的 host 记录
