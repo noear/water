@@ -39,7 +39,7 @@ water/water_msg_store   #mongodb 链接配置，用作消息持久化（也可�
 water/water_log         #water_log 数据库的链接配置
 water/water_log_store   #water_log 数据库的链接配置（后期可以换成别的链接）
 
-water/water_redis       #reids 链接配置，用作分布式锁、ID生成器
+water/water_redis       #reids 链接配置，用作分布式锁、ID生成(生产环境不要与water_msg_queue同实例)
 water/water_cache       #memcached 链接配置，用作缓存
 
 water/water_paas        #water_paas 数据库的链接配置
@@ -133,7 +133,7 @@ water/raas_uri  #修改为waterraas服务的http协议地址
 
 修改完成后，重启wateradmin服务（之后，就可以在wateradmin上调试paas和raas服务）。
 
-### 6、补充说明
+### 附：补充说明
 
 * water 的访问控制，基于ip安全名单实现。但部署时，不便于白名单添加。可以通过启动参数关闭：
 
@@ -148,3 +148,54 @@ water/raas_uri  #修改为waterraas服务的http协议地址
 > 建议生产环境仅限内网访问
 
 * 在使用 water 的服务器上，添加 water 域的 host 记录
+
+* 开发环境，且单机部署时，可以加这一批host记录
+
+```yaml
+127.0.0.1 water 
+127.0.0.1 memcached.water.io memcached.dev.io 
+127.0.0.1 redis.water.io redis.dev.io
+127.0.0.1 mongo.dev.io
+127.0.0.1 mysql.water.io mysql.dev.io
+```
+
+* 在linux下建议用配置成service，由 systemctl 命令管理（以waterapi、wateradmin为例）
+
+```ini
+#
+#add file: /etc/systemd/system/waterapi.service
+[Unit]
+Description=waterapi
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /data/sss/water/waterapi.jar --white=0
+SuccessExitStatus=143
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+#
+#add file: /etc/systemd/system/waterapi.service
+[Unit]
+Description=wateradmin
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /data/sss/water/wateradmin.jar --white=0
+SuccessExitStatus=143
+SuccessExitStatus=143
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+
+# 操控命令部分参考：
+# systemctl restart waterapi  #重启服务
+# systemctl enable waterapi   #启用服务（系统重启时，自动启动该服务）
+# systemctl start waterapi    #启动服务
+# systemctl stop waterapi     #停止服务
+```
