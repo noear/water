@@ -24,9 +24,12 @@
 
 ### 2、进入数据库修改相关链接配置
 
-1. 进入 water 库 water_cfg_properties 表，修改相关配置（复制出值，在外部编辑器里修改，再替换掉）：
+1. 进入 water 库 water_cfg_properties 表，修改相关配置值（复制到外部编辑器修改，改完再替换回去）：
 
 ```yaml
+#a) 以下配置描述格式为：tag/key，对应数据表的tag字段和key字段
+#b) 里面的值比较复杂，所以需要复制到外部编辑器修改；注意不要破坏格式
+
 water/water             #water 数据库的链接配置
 
 water/water_msg         #water_msg 数据库的链接配置
@@ -119,7 +122,18 @@ java -jar waterpaas.jar --server.port=9376
 java -jar watersev.jar --server.port=9372 
 ```
 
-### 5、补充说明
+### 5、后续配置修改
+
+成功进入wateradmin管理后台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
+
+```yaml
+water/paas_uri  #修改为waterpaas服务的http协议地址
+water/raas_uri  #修改为waterraas服务的http协议地址
+```
+
+修改完成后，重启wateradmin服务（之后，就可以在wateradmin上调试paas和raas服务）。
+
+### 6、补充说明
 
 * water 的访问控制，基于ip安全名单实现。但部署时，不便于白名单添加。可以通过启动参数关闭：
 
@@ -129,8 +143,8 @@ java -jar watersev.jar --server.port=9372
 
 > bcf1234
 
-* 使用 nginx 为 waterapi、wateradmin、waterpaas、waterraas 服务添加域解析支持
+* 使用 nginx 为 waterapi 服务添加 water 域 80 端口监听支持
 
-> 其中 waterapi，必须增加 water 域解析支持（建议仅限内网访问）
+> 建议生产环境仅限内网访问
 
 * 在使用 water 的服务器上，添加 water 域的 host 记录
