@@ -63,7 +63,10 @@ water_bcf/bcf.yml       #修改掉 memcached 链接配置 和 water_bcf 数据�
 
 ```
 #接口服务（--white=0，可关闭IP限制。全部配置结束后，去掉）
-java -jar waterapi.jar --server.port=9371 --white=0   
+#每台运行两个实例，共4个实例；外层配负载均衡
+
+java -jar waterapi.jar --server.port=9370 --white=0  
+java -jar waterapi.jar --server.port=9371 --white=0
 ```
 
 
