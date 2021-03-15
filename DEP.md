@@ -33,13 +33,13 @@
 water/water             #water 数据库的链接配置
 
 water/water_msg         #water_msg 数据库的链接配置
-water/water_msg_queue   #reids 链接配置，用作消息临时队列
-water/water_msg_store   #mongodb 链接配置，用作消息持久化（也可以用 mysql）
+water/water_msg_queue   #reids 链接配置，用作消息临时队列（建议独享实例）
+water/water_msg_store   #mongodb 或 mysql 链接配置，用作消息持久化（建议独享实例）
 
 water/water_log         #water_log 数据库的链接配置
 water/water_log_store   #water_log 数据库的链接配置（后期可以换成别的链接）
 
-water/water_redis       #reids 链接配置，用作分布式锁、ID生成(生产环境不要与water_msg_queue同实例)
+water/water_redis       #reids 链接配置，用作分布式锁、ID生成
 water/water_cache       #memcached 链接配置，用作缓存
 
 water/water_paas        #water_paas 数据库的链接配置
