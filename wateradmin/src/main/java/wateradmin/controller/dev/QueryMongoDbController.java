@@ -36,7 +36,7 @@ public class QueryMongoDbController extends BaseController {
     @Mapping(value = "ajax/do")
     public String query_do(String code) {
         String tmp = query_exec(code);
-        if (tmp != null && tmp.startsWith("{")) {
+        if (tmp != null && (tmp.startsWith("{") || tmp.startsWith("["))) {
             return JsonFormatTool.formatJson(tmp);
         } else {
             return tmp;
@@ -110,7 +110,7 @@ public class QueryMongoDbController extends BaseController {
 
             List<Document> list = mg.table(coll).whereMap(map).limit(50).selectMapList();
 
-            return ONode.serialize(list);
+            return ONode.stringify(list);
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,
