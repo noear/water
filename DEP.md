@@ -3,7 +3,7 @@
 
 ## 环境要求说明
 
-* mysql8：做为主库
+* mysql8：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
 * memcached：做为缓存使用
 * redis：做为分布式锁、ID生成器、数据临时队列用
 * mongodb：做为消息持久化用（也可以使用 mysql8）

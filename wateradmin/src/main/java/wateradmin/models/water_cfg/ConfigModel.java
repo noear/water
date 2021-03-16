@@ -3,6 +3,7 @@ package wateradmin.models.water_cfg;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import org.noear.snack.ONode;
+import org.noear.water.model.PropertiesM;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -10,6 +11,7 @@ import org.noear.weed.*;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.memcached.MemCache;
+import org.noear.weed.mongo.MgContext;
 import wateradmin.dso.ConfigType;
 
 import java.util.*;
@@ -165,6 +167,29 @@ public class ConfigModel
         }
 
         return db;
+    }
+
+    public MgContext getMg() {
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        Properties prop = getProp();
+        String db = prop.getProperty("db");
+
+        if(TextUtils.isEmpty(db)){
+            throw new IllegalArgumentException("Missing db configuration");
+        }
+
+        return new MgContext(prop, db);
+    }
+
+    public MgContext getMg(String db){
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        return new MgContext(getProp(), db);
     }
 
 }

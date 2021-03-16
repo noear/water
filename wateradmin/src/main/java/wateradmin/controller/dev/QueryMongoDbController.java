@@ -8,28 +8,28 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.weed.mongo.MgContext;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
-import wateradmin.dso.EsUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
-import wateradmin.utils.JsonFormatTool;
 import wateradmin.models.water_cfg.ConfigModel;
+import wateradmin.utils.JsonFormatTool;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 //非单例
 @Controller
-@Mapping("/dev/query_es")
-public class QueryEsController extends BaseController {
+@Mapping("/dev/query_mongo")
+public class QueryMongoDbController extends BaseController {
     @Mapping("")
     public ModelAndView query() throws SQLException {
-        List<ConfigModel> list = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.elasticsearch);
+        List<ConfigModel> list = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.mangodb);
 
         viewModel.put("cfgs", list);
 
-        return view("dev/query_es");
+        return view("dev/query_mongo");
     }
 
     @Mapping(value = "ajax/do")
@@ -54,7 +54,7 @@ public class QueryEsController extends BaseController {
 
         String[] ss = code.trim().split("\n");
 
-        if (ss.length < 3) {
+        if (ss.length < 2) {
             return node.val("请输入有效代码").toJson();
         }
 
@@ -66,20 +66,27 @@ public class QueryEsController extends BaseController {
             cfg_str = cfg_str.substring(1).trim();
         }
 
-        //2.检查 methon 和 path
+        //2.检查 method 和 dbAndColl
         String methodAndPath = ss[1].trim().replaceAll("\\s+", " ");
         String[] ss2 = methodAndPath.split(" ");
 
         if (ss2.length != 2) {
-            return node.val("请输入有效的Method和Path").toJson();
+            return node.val("请输入有效的Method和Db").toJson();
         }
 
         String method = ss2[0].trim().toUpperCase();
-        String path = ss2[1].trim();
+        String dbAndColl = ss2[1].trim();
 
-        if ((method.equals("GET") && path.endsWith("_search")) == false) {
+        if (method.equals("FIND") == false) {
             return node.val("只支持查询操作").toJson();
         }
+
+        if(TextUtils.isEmpty(dbAndColl) || dbAndColl.contains("/") == false){
+            return node.val("请输入Db和Coll").toJson();
+        }
+
+        String db = dbAndColl.split("/")[0].trim();
+        String coll = dbAndColl.split("/")[1].trim();
 
 
         //3.检查 json
@@ -93,9 +100,11 @@ public class QueryEsController extends BaseController {
         }
 
         try {
-            ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(cfg_str);
+            MgContext mg = DbWaterCfgApi.getConfigByTagName(cfg_str).getMg(db);
 
-            return EsUtil.search(cfg, method, path, json.toString());
+            Map<String,Object> map = ONode.deserialize(code);
+
+            return ONode.serialize(mg.table(coll).whereMap(map).selectMapList());
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,
