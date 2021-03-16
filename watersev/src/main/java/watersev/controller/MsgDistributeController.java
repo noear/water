@@ -31,6 +31,8 @@ import java.util.concurrent.Executors;
  * */
 @Component
 public final class MsgDistributeController implements IJob {
+    static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+
 
     @Override
     public String getName() {
@@ -50,7 +52,7 @@ public final class MsgDistributeController implements IJob {
             }
 
             //改用线程池处理
-            Config.pools.execute(() -> distribute(msg_id_str));
+            executor.execute(() -> distribute(msg_id_str));
         });
     }
 

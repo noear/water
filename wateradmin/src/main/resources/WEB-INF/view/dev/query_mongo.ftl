@@ -63,7 +63,7 @@
                 var code = window.editor.getValue();
 
                 var _load_idx = top.layer.load(2);
-                $.post("/dev/query_es/ajax/do",{code:code},function(rst){
+                $.post("/dev/query_mongo/ajax/do",{code:code},function(rst){
                     window.editor2.setValue(rst);
                     window.editor2.moveCursorTo(0, 0);
                     top.layer.close(_load_idx);

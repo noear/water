@@ -58,7 +58,7 @@ public class MsgExchangeController implements IJob {
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
 
         for (MessageModel msg : msgList) {
-            executor.submit(() -> {
+            executor.execute(() -> {
                 exchange(msg);
                 countDownLatch.countDown();
             });

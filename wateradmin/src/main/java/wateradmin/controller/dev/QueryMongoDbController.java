@@ -4,6 +4,7 @@ package wateradmin.controller.dev;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.http.util.TextUtils;
+import org.bson.Document;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -81,7 +82,7 @@ public class QueryMongoDbController extends BaseController {
             return node.val("只支持查询操作").toJson();
         }
 
-        if(TextUtils.isEmpty(dbAndColl) || dbAndColl.contains("/") == false){
+        if (TextUtils.isEmpty(dbAndColl) || dbAndColl.contains("/") == false) {
             return node.val("请输入Db和Coll").toJson();
         }
 
@@ -95,16 +96,21 @@ public class QueryMongoDbController extends BaseController {
             json.append(ss[i]);
         }
 
-        if( ONode.loadStr(json.toString()).isObject()==false){
+        if (ONode.loadStr(json.toString()).isObject() == false) {
             return node.val("请输入有效的Json代码").toJson();
         }
 
         try {
-            MgContext mg = DbWaterCfgApi.getConfigByTagName(cfg_str).getMg(db);
+            String tagAndKey = cfg_str.replace("#","").trim();
+            MgContext mg = DbWaterCfgApi.getConfigByTagName(tagAndKey).getMg(db);
+            int json_start = code.indexOf("{");
+            code = code.substring(json_start);
 
-            Map<String,Object> map = ONode.deserialize(code);
+            Map<String, Object> map = ONode.deserialize(code);
 
-            return ONode.serialize(mg.table(coll).whereMap(map).selectMapList());
+            List<Document> list = mg.table(coll).whereMap(map).limit(50).selectMapList();
+
+            return ONode.serialize(list);
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,
