@@ -51,7 +51,7 @@ public class LogUtils {
         }
     }
 
-    public static void warn(Context ctx, String tag2,String content) {
+    public static void warn(Context ctx, String tag2, String content) {
         try {
             String _from = FromUtils.getFromName(ctx);
 
@@ -73,7 +73,7 @@ public class LogUtils {
     }
 
     public static void error(Context ctx, Throwable ex) {
-        if(ctx == null){
+        if (ctx == null) {
             return;
         }
 
@@ -97,19 +97,16 @@ public class LogUtils {
         }
     }
 
-    public static void error(String tag, String tag1, String summary, Throwable ex) {
+    public static void error(Context ctx, String tag, String tag1, String summary, Throwable ex) {
         try {
-            String _from = FromUtils.getFromName(Context.current());
+            String _from = null;
+            if (ctx != null) {
+                _from = FromUtils.getFromName(ctx);
+            }
 
             logger.error(tag, tag1, null, _from, summary, ex);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
     }
-
-//    public static String getFullStackTrace(Throwable e) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        e.printStackTrace(new PrintStream(baos));
-//        return baos.toString();
-//    }
 }

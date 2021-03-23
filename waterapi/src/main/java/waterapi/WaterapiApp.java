@@ -33,9 +33,9 @@ public class WaterapiApp {
 		}).onError(err -> {
 			Context ctx = Context.current();
 			if (ctx == null) {
-				LogUtils.error("global", "", "", err);
+				LogUtils.error(ctx, "global", "", "", err);
 			} else {
-				LogUtils.error(ctx, err);
+				LogUtils.error(ctx, "global", ctx.path(), "", err);
 			}
 		});
 	}
