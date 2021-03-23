@@ -92,7 +92,7 @@ public class EncryptUtils {
     public static String aesEncrypt(String content, String password, String algorithm, String offset, String charset) {
         try {
             if (TextUtils.isEmpty(algorithm)) {
-                algorithm = "AES/ECB/PKCS5Padding";
+                algorithm = "AES/ECB/PKCS7Padding";
             }
 
             if (TextUtils.isEmpty(charset)) {
@@ -133,7 +133,7 @@ public class EncryptUtils {
     public static String aesDecrypt(String content, String password, String algorithm, String offset, String charset) {
         try {
             if (TextUtils.isEmpty(algorithm)) {
-                algorithm = "AES/ECB/PKCS5Padding";
+                algorithm = "AES/ECB/PKCS7Padding";
             }
 
             if (TextUtils.isEmpty(charset)) {

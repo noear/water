@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>water-parent</artifactId>
-        <version>2.0.21</version>
+        <version>2.0.22-m1</version>
     </parent>
 
     <artifactId>water-demo-rpc-service-impl</artifactId>
