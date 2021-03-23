@@ -291,7 +291,7 @@ public class WaterLogger implements Logger {
         log.summary = summary;
         log.content = content;
 
-        if(clz != null) {
+        if (clz != null) {
             if (TextUtils.isEmpty(summary)) {
                 log.summary = clz.getTypeName();
             }
@@ -309,6 +309,11 @@ public class WaterLogger implements Logger {
         log.log_fulltime = datetime.getFulltime();
 
         LogPipeline.singleton().add(log);
+
+
+        if (content instanceof Throwable) {
+            ((Throwable) content).printStackTrace();
+        }
 
         //WaterClient.Log.append(_name, level, tag, tag1, tag2, tag3, summary, content, true);
     }
