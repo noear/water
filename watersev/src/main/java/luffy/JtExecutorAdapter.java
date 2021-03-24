@@ -30,20 +30,24 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
-        if(data.containsKey("tag") == false){
+        if (file == null) {
+            Context ctx = Context.current();
+
+            if (ctx != null) {
+                file = ctx.attr("file");
+            }
+        }
+
+        if (data.containsKey("tag") == false) {
             data.put("tag", _defLogTag);
         }
 
-        if (data.containsKey("tag2") == false) {
-            if (file == null) {
-                Context ctx = Context.current();
-
-                if (ctx != null) {
-                    file = ctx.attr("file");
-                }
+        if (file != null) {
+            if (data.containsKey("tag1") == false) {
+                data.put("tag1", file.tag);
             }
 
-            if (file != null) {
+            if (data.containsKey("tag2") == false) {
                 data.put("tag2", file.path);
             }
         }
