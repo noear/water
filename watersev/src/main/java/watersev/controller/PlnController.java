@@ -71,7 +71,9 @@ public class PlnController implements IJob {
     private void doExec(PaasFileModel task) {
 
         try {
-            ContextUtil.currentSet(new ContextEmpty());
+            ContextEmpty ctx = new ContextEmpty();
+            ContextUtil.currentSet(ctx);
+            ctx.attr("file", task);
 
             runTask(task);
         } catch (Exception ex) {

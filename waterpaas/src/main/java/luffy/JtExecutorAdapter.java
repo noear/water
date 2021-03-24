@@ -3,6 +3,7 @@ package luffy;
 import org.noear.luffy.executor.IJtConfigAdapter;
 import org.noear.luffy.executor.IJtExecutorAdapter;
 import org.noear.luffy.model.AFileModel;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.model.ConfigM;
@@ -28,12 +29,22 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void log(AFileModel file, Map<String, Object> data) {
-        if(data.containsKey("tag") == false){
+        if (data.containsKey("tag") == false) {
             data.put("tag", _defLogTag);
         }
 
-        if (data.containsKey("tag2") == false && file != null) {
-            data.put("tag2", file.path);
+        if (data.containsKey("tag2") == false) {
+            if (file == null) {
+                Context ctx = Context.current();
+
+                if (ctx != null) {
+                    file = ctx.attr("file");
+                }
+            }
+
+            if (file != null) {
+                data.put("tag2", file.path);
+            }
         }
 
         WaterClient.Log.append(water_log_paas, Level.DEBUG, data);

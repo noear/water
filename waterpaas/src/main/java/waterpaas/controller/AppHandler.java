@@ -88,6 +88,7 @@ public class AppHandler implements Handler {
             return;
         }
 
+        ctx.attr("file", file);
         ctx.attr("file_tag", file.tag);
 
         //如果是静态
