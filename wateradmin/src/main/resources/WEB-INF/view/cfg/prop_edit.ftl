@@ -9,8 +9,8 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
-    <script src="//static.kdz6.cn/lib/ace/ace.js" ></script>
-    <script src="//static.kdz6.cn/lib/ace/ext-language_tools.js"></script>
+    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
+    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
         pre{border:1px solid #C9C9C9;}

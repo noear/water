@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" >
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js" ></script>
-    <script src="//static.kdz6.cn/lib/ace/ace.js" ></script>
-    <script src="//static.kdz6.cn/lib/ace/ext-language_tools.js"></script>
+    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
+    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
     <style>
         datagrid > div{height: calc(100vh - 92px)}
         datagrid td { text-align: left;}

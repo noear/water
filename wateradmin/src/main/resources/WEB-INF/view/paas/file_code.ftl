@@ -8,8 +8,8 @@
     <script src="${js}/base64.js" ></script>
     <script src="${js}/jtadmin.js?v=4"></script>
     <script src="${js}/layer.js"></script>
-    <script src="//static.kdz6.cn/lib/ace/ace.js" ></script>
-    <script src="//static.kdz6.cn/lib/ace/ext-language_tools.js"></script>
+    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
+    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
 
     <style>
         html,body{margin:0px;padding:0px;overflow:hidden;}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
-    <script src="https://static.kdz6.cn/lib/echarts.min.js" async="async"></script><!-- 起到缓存作用 -->
+    <script src="//mirror.noear.org/lib/echarts.min.js" async="async"></script><!-- 起到缓存作用 -->
     <script>
         $(function () {
             if (${serviceName!}) {

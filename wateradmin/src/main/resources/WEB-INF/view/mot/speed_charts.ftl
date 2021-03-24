@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
-    <script src="https://static.kdz6.cn/lib/echarts.min.js"></script>
+    <script src="//mirror.noear.org/lib/echarts.min.js"></script>
     <style>
         tbody td{text-align: left;}
         datagrid b{color: #8D8D8D;font-weight: normal}
