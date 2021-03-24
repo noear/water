@@ -73,7 +73,7 @@ public class PlnController implements IJob {
         try {
             ContextEmpty ctx = new ContextEmpty();
             ContextUtil.currentSet(ctx);
-            ctx.attr("file", task);
+            ctx.attrSet("file", task);
 
             runTask(task);
         } catch (Exception ex) {

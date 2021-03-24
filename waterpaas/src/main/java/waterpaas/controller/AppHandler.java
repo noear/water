@@ -88,8 +88,8 @@ public class AppHandler implements Handler {
             return;
         }
 
-        ctx.attr("file", file);
-        ctx.attr("file_tag", file.tag);
+        ctx.attrSet("file", file);
+        ctx.attrSet("file_tag", file.tag);
 
         //如果是静态
         if (file.is_staticize) {
