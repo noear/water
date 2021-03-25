@@ -20,10 +20,10 @@ public interface LogStorer {
     }
 
     default void write(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from) throws Exception {
-        write(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content, from, null);
+        write(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content, from, null, null, null);
     }
 
-    void write(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception;
+    void write(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception;
 
     void writeAll(List<LogEvent> list);
 }

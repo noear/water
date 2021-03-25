@@ -45,7 +45,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception {
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime ,String class_name, String thread_name) throws Exception {
         Datetime datetime = null;
         if (log_fulltime == null) {
             datetime = new Datetime();
@@ -68,6 +68,8 @@ public class LogSourceRdb implements LogSource {
 
         qr.set("log_date", datetime.getDate())
                 .set("log_fulltime", datetime.getFulltime().getTime())
+                .set("class_name", class_name)
+                .set("thread_name", thread_name)
                 .insert();
     }
 
@@ -95,6 +97,8 @@ public class LogSourceRdb implements LogSource {
                     .setDf("summary", event.summary, "")
                     .setDf("content", event.content, "")
                     .setDf("from", event.from, "")
+                    .set("class_name", event.class_name)
+                    .set("thread_name", event.thread_name)
                     .set("log_date", datetime.getDate())
                     .set("log_fulltime", datetime.getFulltime().getTime());
         });

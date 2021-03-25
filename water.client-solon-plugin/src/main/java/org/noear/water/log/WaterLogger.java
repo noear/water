@@ -303,7 +303,7 @@ public class WaterLogger implements Logger {
 
         log.trace_id = WaterClient.waterTraceId();
         log.from = WaterClient.localServiceHost();
-        log.thread = Thread.currentThread().getName();
+        log.thread_name = Thread.currentThread().getName();
 
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();

@@ -17,6 +17,8 @@ public class LogModel {
     public String tag2;
     public String tag3;
     public String summary;
+    public String class_name;
+    public String thread_name;
     public String content;
     public String from;
     public int log_date;

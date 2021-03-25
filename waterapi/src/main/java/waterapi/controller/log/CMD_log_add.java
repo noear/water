@@ -37,12 +37,15 @@ public class CMD_log_add extends UapiBase {
     @NotEmpty("logger")
     @Mapping("/log/add/")
     public Result cmd_exec(Context ctx, String logger, int level, String summary, String content,
-                            String from, String trace_id) throws Exception {
+                           String from, String trace_id) throws Exception {
 
         String tag = ctx.param("tag", "");
         String tag1 = ctx.param("tag1", "");
         String tag2 = ctx.param("tag2", "");
         String tag3 = ctx.param("tag3", "");
+
+        String class_name = ctx.param("class_name");
+        String thread_name = ctx.param("thread_name");
 
         String log_fulltime_str = ctx.param("log_fulltime");
         Date log_fulltime = null;
@@ -57,7 +60,7 @@ public class CMD_log_add extends UapiBase {
             }
         }
 
-        ProtocolHub.logStorer.write(logger, trace_id, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime);
+        ProtocolHub.logStorer.write(logger, trace_id, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime, class_name, thread_name);
 
         return Result.succeed();
     }

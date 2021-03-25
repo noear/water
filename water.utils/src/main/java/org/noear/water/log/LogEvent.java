@@ -13,7 +13,8 @@ public class LogEvent {
     public String tag3;
     public String summary;
     public Object content;
-    public String thread;
+    public String class_name;
+    public String thread_name;
     public String from;
     public int log_date;
     public Date log_fulltime;

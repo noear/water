@@ -65,7 +65,7 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime) throws Exception{
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception{
 
         Datetime datetime = null;
         if (log_fulltime == null) {
@@ -86,6 +86,9 @@ public class LogSourceMongo implements LogSource {
         tb.set("summary", summary);
         tb.set("content", content);
         tb.set("from", from);
+
+        tb.set("class_name", class_name);
+        tb.set("thread_name", thread_name);
 
         tb.set("log_date", datetime.getDate());
         tb.set("log_fulltime", datetime.getFulltime());
@@ -120,6 +123,9 @@ public class LogSourceMongo implements LogSource {
             data.put("summary", event.summary);
             data.put("content", event.content);
             data.put("from", event.from);
+
+            data.put("class_name", event.class_name);
+            data.put("thread_name", event.thread_name);
 
             data.put("log_date", datetime.getDate());
             data.put("log_fulltime", datetime.getFulltime().getTime());
