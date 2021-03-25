@@ -4,6 +4,7 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
+import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -68,7 +69,7 @@ public class LogSourceRdb implements LogSource {
 
         qr.set("log_date", datetime.getDate())
                 .set("log_fulltime", datetime.getFulltime().getTime())
-                .set("class_name", class_name)
+                .set("class_name", ClassUtils.shortName(class_name))
                 .set("thread_name", thread_name)
                 .insert();
     }
@@ -97,7 +98,7 @@ public class LogSourceRdb implements LogSource {
                     .setDf("summary", event.summary, "")
                     .setDf("content", event.content, "")
                     .setDf("from", event.from, "")
-                    .set("class_name", event.class_name)
+                    .set("class_name", ClassUtils.shortName(event.class_name))
                     .set("thread_name", event.thread_name)
                     .set("log_date", datetime.getDate())
                     .set("log_fulltime", datetime.getFulltime().getTime());

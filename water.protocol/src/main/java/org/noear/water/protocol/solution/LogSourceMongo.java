@@ -4,6 +4,7 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
+import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
@@ -87,7 +88,7 @@ public class LogSourceMongo implements LogSource {
         tb.set("content", content);
         tb.set("from", from);
 
-        tb.set("class_name", class_name);
+        tb.set("class_name", ClassUtils.shortName(class_name));
         tb.set("thread_name", thread_name);
 
         tb.set("log_date", datetime.getDate());
@@ -124,7 +125,7 @@ public class LogSourceMongo implements LogSource {
             data.put("content", event.content);
             data.put("from", event.from);
 
-            data.put("class_name", event.class_name);
+            data.put("class_name", ClassUtils.shortName(event.class_name));
             data.put("thread_name", event.thread_name);
 
             data.put("log_date", datetime.getDate());
