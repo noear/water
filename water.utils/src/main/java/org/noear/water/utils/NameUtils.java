@@ -3,8 +3,8 @@ package org.noear.water.utils;
 /**
  * @author noear 2021/3/25 created
  */
-public class ClassUtils {
-    public static String shortName(String className) {
+public class NameUtils {
+    public static String formatClassName(String className) {
         if (TextUtils.isEmpty(className)) {
             return className;
         }

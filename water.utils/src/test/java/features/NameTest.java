@@ -1,7 +1,7 @@
 package features;
 
 import org.junit.Test;
-import org.noear.water.utils.ClassUtils;
+import org.noear.water.utils.NameUtils;
 
 /**
  * @author noear 2021/3/25 created
@@ -9,8 +9,8 @@ import org.noear.water.utils.ClassUtils;
 public class NameTest {
     @Test
     public void test(){
-        System.out.println(ClassUtils.shortName("org.noear.water.utils.RandomUtils"));
-        System.out.println(ClassUtils.shortName("org.junit.Test"));
-        System.out.println(ClassUtils.shortName("org.noear.water.utils.ClassUtils"));
+        System.out.println(NameUtils.formatClassName("org.noear.water.utils.RandomUtils"));
+        System.out.println(NameUtils.formatClassName("org.junit.Test"));
+        System.out.println(NameUtils.formatClassName("org.noear.water.utils.ClassUtils"));
     }
 }
