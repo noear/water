@@ -59,15 +59,7 @@
     <div id="content">
         <#list list as log>
             <div class="break">
-                <span>${log.log_fulltime?string("yyyy-MM-dd HH:mm:ss.SSS")}</span>
-                <span>:</span>
-                <span>${log.levelHtml()} *${log.trace_id!} #${log.tag!}@${log.tag1!}@${log.tag2!}@${log.tag3!}#${log.from!}</span>
-            </div>
-            <div class="break">
-                <#if log.summary??>
-                    <div>${log.summaryHtml()}</div>
-                </#if>
-                <div>${log.contentHtml()}</div>
+                ${log.html()!}
             </div>
             <br>
         </#list>
