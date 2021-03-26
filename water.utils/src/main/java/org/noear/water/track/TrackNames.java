@@ -56,7 +56,7 @@ public class TrackNames {
 
     private void setDo(String nameMd5, String name) {
         _redisX.open0(ru -> {
-            ru.key(nameMd5).set(name).expire(60 * 60 * 24 * 365);//1年
+            ru.key(nameMd5).set(name).expire(60 * 60 * 24 * 30);//1月
         });
     }
 }
