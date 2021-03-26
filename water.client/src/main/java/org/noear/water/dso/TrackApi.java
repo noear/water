@@ -5,6 +5,7 @@ import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.track.TrackBuffer;
+import org.noear.water.track.TrackNames;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.Command;
@@ -26,11 +27,23 @@ public class TrackApi {
 
     //db:5
     public static RedisX rd_track;
+    public static RedisX rd_track_md5;
 
     static {
         rd_track = WaterSetting.redis_track_cfg().getRd(5);
+        rd_track_md5 = WaterSetting.redis_track_cfg().getRd(6);
         TrackBuffer.singleton().bind(rd_track);
+        TrackNames.singleton().bind(rd_track_md5);
     }
+
+    public String getNameMd5(String name){
+        return TrackNames.singleton().getNameMd5(name);
+    }
+
+    public String getName(String nameMd5){
+        return TrackNames.singleton().getName(nameMd5);
+    }
+
 
     /**
      * 跟踪请求性能
