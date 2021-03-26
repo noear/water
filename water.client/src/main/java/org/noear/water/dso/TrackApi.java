@@ -73,36 +73,10 @@ public class TrackApi {
         //
         // 改为直发Redis，节省代理
         //
-        TrackBuffer.singleton().append(service, tag, name, timespan, _node, _from);
-//        WaterConfig.pools.submit(() -> {
-//            TraceUtils.track(rd_track, service, tag, name, timespan, _node, _from);
-//            //trackDo(service, tag, name, timespan, _node, _from);
-//        });
+        String nameMd5 = getNameMd5(name);
+        TrackBuffer.singleton().append(service, tag, nameMd5, timespan, _node, _from);
     }
 
-
-    private void trackDo(String service, String tag, String name, long timespan, String _node, String _from) {
-        Map<String, String> params = new HashMap<>();
-        if (_node != null) {
-            params.put("_node", _node);
-        }
-
-        if (_from != null) {
-            params.put("_from", _from);
-        }
-
-        params.put("service", service);
-        params.put("tag", tag);
-        params.put("name", name);
-        params.put("timespan", timespan + ""); //**此字段名将弃用。by 2020-09
-        params.put("interval",timespan + "");
-
-        try {
-            apiCaller.post("/sev/track/api/", params);
-        } catch (Exception ex) {
-
-        }
-    }
 
     /**
      * 跟踪SQL命令性能
@@ -136,12 +110,9 @@ public class TrackApi {
     }
 
     private void track0Do(String service, String trace_id, Command cmd, long interval, String ua, String path, String operator, String operator_ip, String note) {
-
-
         Map<String, Object> map = cmd.paramMap();
 
         Map<String, String> params = new HashMap<>();
-
 
         params.put("service", service);
         params.put("schema", cmd.context.schema());
