@@ -5,11 +5,15 @@ import org.noear.water.utils.RedisX;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author noear 2021/3/26 created
  */
 public class TrackNames {
+    static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+
     private static TrackNames singleton = new TrackNames();
 
     public static TrackNames singleton() {
@@ -55,8 +59,14 @@ public class TrackNames {
     }
 
     private void setDo(String nameMd5, String name) {
-        _redisX.open0(ru -> {
-            ru.key(nameMd5).set(name).expire(60 * 60 * 24 * 30);//1月
+        executor.submit(() -> {
+            try {
+                _redisX.open0(ru -> {
+                    ru.key(nameMd5).set(name).expire(60 * 60 * 24 * 30);//1月
+                });
+            } catch (Throwable ex) {
+                ex.printStackTrace();
+            }
         });
     }
 }
