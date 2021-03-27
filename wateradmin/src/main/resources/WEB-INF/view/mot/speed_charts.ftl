@@ -44,7 +44,7 @@
     function chart1_select(type) {
         $.ajax({
             url:"/mot/speed/charts/ajax/reqtate",
-            data:{tag:'${tag}', name:'${name}', service:'${service}', type:type},
+            data:{tag:'${tag}', name_md5:'${name_md5}', service:'${service}', type:type},
             success:function(data){
                 chartsReqTate.setOption({
                     series: [
