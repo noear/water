@@ -67,7 +67,7 @@ public class SpeedController extends BaseController {
         return view("mot/speed_charts");
     }
     @Mapping("speed/charts/ajax/reqtate")
-    public ViewModel speedCharts_reqtate(String tag,String name,String service, Integer type) throws SQLException{
+    public ViewModel speedCharts_reqtate(String tag,String name_md5,String service, Integer type) throws SQLException{
         String valField = "total_num";
         if(type == null){type=0;}
         switch (type){
@@ -80,10 +80,11 @@ public class SpeedController extends BaseController {
             case 6:valField ="slowest"; break;
         }
 
-        Map<String,Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name, service, valField);
+        Map<String,Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
         viewModel.put("speedReqTate",speedReqTate);
         viewModel.put("tag",tag);
-        viewModel.put("name",name);
+        viewModel.put("name", WaterClient.Track.getName(name_md5));
+        viewModel.put("name_md5",name_md5);
         viewModel.put("service",service);
         return viewModel;
     }
