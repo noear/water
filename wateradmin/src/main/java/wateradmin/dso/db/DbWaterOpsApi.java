@@ -1,7 +1,5 @@
 package wateradmin.dso.db;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -353,14 +351,14 @@ public class DbWaterOpsApi {
     }
 
     //接口的三天的请求频率
-    public static JSONObject getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
+    public static Map<String,Object> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
         int date2 = now.addDay(-1).getDate();
 
 
-        JSONObject resp = new JSONObject();
+        Map<String,Object> resp = new LinkedHashMap<>();
         List<ServiceSpeedHourModel> threeDays = db().table("water_reg_service_speed_hour")
                                                     .where("tag = ?", tag)
                                                     .and("name_md5 = ?", name_md5)
@@ -391,7 +389,7 @@ public class DbWaterOpsApi {
         data.put("beforeday", list2);
 
         data.forEach((k, list) -> {
-            JSONArray array = new JSONArray();
+            List<Object> array = new ArrayList<>();
             for (int j = 0; j < 24; j++) {
                 if (list.containsKey(j)) {
                     array.add(list.get(j).val);
@@ -407,8 +405,8 @@ public class DbWaterOpsApi {
 
 
     //获取接口三十天响应速度情况
-    public static JSONObject getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
-        JSONObject resp = new JSONObject();
+    public static Map<String,Object> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
+        Map<String,Object> resp = new LinkedHashMap<>();
 
         List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
                                                .whereEq("tag", tag)
@@ -421,14 +419,15 @@ public class DbWaterOpsApi {
 
         Collections.sort(list, (o1, o2) -> (o1.log_date - o2.log_date));
 
-        JSONArray average = new JSONArray();
-        JSONArray fastest = new JSONArray();
-        JSONArray slowest = new JSONArray();
-        JSONArray total_num = new JSONArray();
-        JSONArray total_num_slow1 = new JSONArray();
-        JSONArray total_num_slow2 = new JSONArray();
-        JSONArray total_num_slow5 = new JSONArray();
-        JSONArray dates = new JSONArray();
+        List<Object> average = new ArrayList<>();
+        List<Object> fastest = new ArrayList<>();
+        List<Object> slowest = new ArrayList<>();
+        List<Object> total_num = new ArrayList<>();
+        List<Object> total_num_slow1 = new ArrayList<>();
+        List<Object> total_num_slow2 = new ArrayList<>();
+        List<Object> total_num_slow5 = new ArrayList<>();
+        List<Object> dates = new ArrayList<>();
+
         for (ServiceSpeedDateModel m : list) {
             average.add(m.average);
             fastest.add(m.fastest);

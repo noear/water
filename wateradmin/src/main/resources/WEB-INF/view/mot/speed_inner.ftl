@@ -1,3 +1,4 @@
+<#setting url_escaping_charset='utf-8'>
 <!DOCTYPE HTML>
 <html class="frm10">
 <head>
