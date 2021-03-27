@@ -12,6 +12,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.db.DbWaterOpsApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -46,10 +47,18 @@ public class SpeedController extends BaseController {
 
     //性能监控-列表
     @Mapping("speed/inner")
-    public ModelAndView speedList(String serviceName,String name, String sort) throws SQLException {
-        List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(serviceName,null,name, sort);
-        viewModel.put("speeds",speeds);
-        viewModel.put("serviceName",serviceName);
+    public ModelAndView speedList(String serviceName,String name, String sort, String tag) throws SQLException {
+        if(tag == null){
+            tag = "";
+        }
+
+        List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(serviceName, tag, name, sort);
+        List<TagCountsModel> tags = DbWaterOpsApi.getSpeedsServiceTags(serviceName);
+
+        viewModel.put("speeds", speeds);
+        viewModel.put("tags", tags);
+        viewModel.put("tag",tag);
+        viewModel.put("serviceName", serviceName);
         return view("mot/speed_inner");
     }
 

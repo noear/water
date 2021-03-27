@@ -13,11 +13,22 @@
 <body>
 <main>
 <toolbar>
+    <left>
         <form>
-            接口：<input type="text" class="w250" name="name" placeholder="分组:: 或 接口名" id="name"/>&nbsp;&nbsp;
-            <input type="text" name="serviceName" id="serviceName" value="${serviceName}" style="display: none"/>
+            接口：<input type="text" class="w250" name="name" placeholder="接口名" id="name"/>&nbsp;&nbsp;
+            <input type="hidden" name="serviceName" id="serviceName" value="${serviceName}" />
+            <input type="hidden" name="tag" value="${tag!}">
             <button type="submit">查询</button>&nbsp;&nbsp;
         </form>
+    </left>
+    <right>
+        <selector>
+            <a class="${(''=tag)?string('sel','')}" href="?serviceName=${serviceName}&tag=">all</a>
+            <#list tags as t>
+            <a class="${(t.tag=tag)?string('sel','')}" href="?serviceName=${serviceName}&tag=${t.tag}">${t.tag}(${t.counts})</a>
+            </#list>
+        </selector>
+    </right>
 </toolbar>
 <datagrid class="list">
     <table>

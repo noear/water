@@ -350,6 +350,14 @@ public class DbWaterOpsApi {
                    .getList(new ServiceSpeedModel());
     }
 
+    //获取接口名分组
+    public static List<TagCountsModel> getSpeedsServiceTags(String service) throws SQLException {
+        return db().table("water_reg_service_speed")
+                .where("service = ?", service)
+                .groupBy("tag")
+                .selectList("tag, count(*) counts", TagCountsModel.class);
+    }
+
     //接口的三天的请求频率
     public static Map<String,Object> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
         Datetime now = Datetime.Now();
