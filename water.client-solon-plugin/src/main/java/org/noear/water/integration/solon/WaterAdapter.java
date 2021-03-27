@@ -167,7 +167,9 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                 }
 
                 WaterClient.Track.track(service_name(), cmd, 1000);
-                WaterClient.Track.track(service_name() + "_sql", "sql", cmd.text, cmd.timespan());
+
+                String tag = "main";
+                WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
             });
         } else {
             //admin 项目
@@ -197,7 +199,7 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                     WaterClient.Track.track(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), IPUtils.getIP(context));
                 }
 
-                String tag = "sql";
+                String tag = "main";
                 if (cmd.text.contains("bcf_")) {
                     tag = "bcf";
                 }
