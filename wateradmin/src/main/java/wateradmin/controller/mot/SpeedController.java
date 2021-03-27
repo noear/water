@@ -52,13 +52,13 @@ public class SpeedController extends BaseController {
 
     //性能监控图标统计
     @Mapping("speed/charts")
-    public ModelAndView speedCharts(String tag,String name,String service) throws SQLException{
-        JSONObject speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name, service,"total_num");
-        JSONObject speeds = DbWaterOpsApi.getSpeedForMonth(tag, name, service);
+    public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException{
+        JSONObject speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service,"total_num");
+        JSONObject speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
         viewModel.put("speedReqTate",speedReqTate.toJSONString());
         viewModel.put("speeds",speeds.toJSONString());
         viewModel.put("tag",tag);
-        viewModel.put("name",name);
+        viewModel.put("name_md5",name_md5);
         viewModel.put("service",service);
         return view("mot/speed_charts");
     }

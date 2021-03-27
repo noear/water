@@ -14,6 +14,7 @@ public class ServiceSpeedHourModel implements IBinder
     public String service;
     public String tag;
     public String name;
+    public String name_md5;
     public long average;
     public long fastest;
     public long slowest;
@@ -34,6 +35,7 @@ public class ServiceSpeedHourModel implements IBinder
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
+        name_md5 = s.get("name").value(null);
         average = s.get("average").value(0L);
         fastest = s.get("fastest").value(0L);
         slowest = s.get("slowest").value(0L);

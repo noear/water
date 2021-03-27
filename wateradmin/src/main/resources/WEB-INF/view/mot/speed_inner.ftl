@@ -46,7 +46,7 @@
                 <td class="right">${m.total_num_slow2}</td>
                 <td class="right">${m.total_num_slow5}</td>
                 <td>${m.last_updatetime?string('dd HH:mm')}</td>
-                <td><a href="/mot/speed/charts?tag=${m.tag}&name=${m.name}&service=${m.service}" style="color:blue;cursor:pointer;">详情</a></td>
+                <td><a href="/mot/speed/charts?tag=${m.tag}&name_md5=${m.name_md5}&service=${m.service}" style="color:blue;cursor:pointer;">详情</a></td>
             </tr>
         </#list>
         </tbody>

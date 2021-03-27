@@ -353,7 +353,7 @@ public class DbWaterOpsApi {
     }
 
     //接口的三天的请求频率
-    public static JSONObject getSpeedForDate(String tag, String name, String service, String field) throws SQLException {
+    public static JSONObject getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
@@ -363,7 +363,7 @@ public class DbWaterOpsApi {
         JSONObject resp = new JSONObject();
         List<ServiceSpeedHourModel> threeDays = db().table("water_reg_service_speed_hour")
                                                     .where("tag = ?", tag)
-                                                    .and("name = ?", name)
+                                                    .and("name_md5 = ?", name_md5)
                                                     .and("service = ?", service)
                                                     .and("log_date>=?", date2)
                                                     .orderBy("log_date DESC")
@@ -405,68 +405,15 @@ public class DbWaterOpsApi {
         return resp;
     }
 
-    public static JSONObject getSpeedReqTate_bak(String tag, String name, String service, Integer type) throws SQLException {
-        JSONObject resp = new JSONObject();
-        List<ServiceSpeedHourModel> threeDays = db().table("water_reg_service_speed_hour")
-                                                    .where("tag = ?", tag)
-                                                    .and("name = ?", name)
-                                                    .and("service = ?", service)
-                                                    .groupBy("log_date")
-                                                    .orderBy("log_date desc")
-                                                    .limit(3)
-                                                    .select("log_date")
-                                                    .getList(new ServiceSpeedHourModel());
-
-        for (int i = 0; i < 3; i++) {
-            String key = "today";
-            if (i == 1) {
-                key = "yesterday";
-            } else if (i == 2) {
-                key = "beforeYesterday";
-            }
-
-            ServiceSpeedHourModel m = threeDays.get(i);
-            JSONArray array = new JSONArray();
-            try {
-                List<ServiceSpeedHourModel> list = db().table("water_reg_service_speed_hour")
-                                                       .where("tag = ?", tag)
-                                                       .and("name = ?", name)
-                                                       .and("service = ?", service)
-                                                       .and("log_date = ?", m.log_date)
-                                                       .select("total_num,log_hour")
-                                                       .getList(new ServiceSpeedHourModel());
-
-                Map<Integer, Long> counts = new HashMap<>();
-                for (ServiceSpeedHourModel m1 : list) {
-                    counts.put(m1.log_hour, m1.total_num);
-                }
-                for (int j = 0; j < 24; j++) {
-                    if (counts.get(j) == null) {
-                        array.add(0);
-                    } else {
-                        array.add(counts.get(j));
-                    }
-                }
-                resp.put(key, array);
-            } catch (Exception ex) {
-                for (int j = 0; j < 24; j++) {
-                    array.add(0);
-                }
-                resp.put(key, array);
-            }
-        }
-
-        return resp;
-    }
 
     //获取接口三十天响应速度情况
-    public static JSONObject getSpeedForMonth(String tag, String name, String service) throws SQLException {
+    public static JSONObject getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
         JSONObject resp = new JSONObject();
 
         List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
-                                               .where("tag = ?", tag)
-                                               .and("name = ?", name)
-                                               .and("service = ?", service)
+                                               .whereEq("tag", tag)
+                                               .andEq("name_md5", name_md5)
+                                               .andEq("service", service)
                                                .orderBy("log_date DESC")
                                                .limit(30)
                                                .select("*")
