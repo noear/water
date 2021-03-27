@@ -154,6 +154,7 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
         Class<?> bcfClz = Utils.loadClass(WW.clz_BcfClient);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
+        final boolean isTrackEnable = Solon.cfg().getBool("water.weed.track.enable", false);
 
         if (bcfClz == null) {
             //api项目
@@ -168,12 +169,14 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
 
                 WaterClient.Track.track(service_name(), cmd, 1000);
 
-//                String tag = cmd.context.schema();
-//                if (TextUtils.isEmpty(tag)) {
-//                    tag = "sql";
-//                }
-//
-//                WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                if(isTrackEnable) {
+                    String tag = cmd.context.schema();
+                    if (TextUtils.isEmpty(tag)) {
+                        tag = "sql";
+                    }
+
+                    WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                }
             });
         } else {
             //admin 项目
@@ -203,12 +206,14 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                     WaterClient.Track.track(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), IPUtils.getIP(context));
                 }
 
-//                String tag = cmd.context.schema();
-//                if (TextUtils.isEmpty(tag)) {
-//                    tag = "sql";
-//                }
-//
-//                WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                if(isTrackEnable) {
+                    String tag = cmd.context.schema();
+                    if (TextUtils.isEmpty(tag)) {
+                        tag = "sql";
+                    }
+
+                    WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                }
             });
         }
     }
