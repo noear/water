@@ -29,6 +29,10 @@ public class TrackNames {
     private Map<String, String> _nameSet = new LinkedHashMap<>();
 
     public String getNameMd5(String name) {
+        if (name.startsWith("{md5}")) {
+            return name;
+        }
+
         String nameMd5 = _nameSet.get(name);
         if (nameMd5 == null) {
             synchronized (name.intern()) {
