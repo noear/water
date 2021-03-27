@@ -153,15 +153,15 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
     protected void initWeed() {
         Class<?> bcfClz = Utils.loadClass(WW.clz_BcfClient);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
-        final boolean  isWeedStyle2= "text2".equals(Solon.cfg().get("water.weed.log.style"));
+        final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
 
         if (bcfClz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
-                if(isDebugMode){
-                    if(isWeedStyle2){
+                if (isDebugMode) {
+                    if (isWeedStyle2) {
                         System.out.println(cmd.toSqlString());
-                    }else {
+                    } else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                     }
                 }
@@ -172,10 +172,10 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
         } else {
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
-                if(isDebugMode){
-                    if(isWeedStyle2){
+                if (isDebugMode) {
+                    if (isWeedStyle2) {
                         System.out.println(cmd.text2());
-                    }else {
+                    } else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                     }
                 }
@@ -196,7 +196,13 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                 if (cmd.timespan() > 2000 || cmd.isLog > 0 || sqlUp.indexOf("INSERT INTO ") >= 0 || sqlUp.indexOf("UPDATE ") >= 0 || sqlUp.indexOf("DELETE ") >= 0 || sqlUp.indexOf(chkUp) >= 0) {
                     WaterClient.Track.track(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), IPUtils.getIP(context));
                 }
-                WaterClient.Track.track(service_name() + "_sql", "sql", cmd.text, cmd.timespan());
+
+                String tag = "sql";
+                if (cmd.text.contains("bcf_")) {
+                    tag = "bcf";
+                }
+
+                WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
             });
         }
     }

@@ -37,14 +37,14 @@
         <tbody id="tbody">
         <#list speeds as m>
             <tr ${m.isHighlight()?string("class='t4'","")}>
-                <td style="text-align: left;">${m.tag}::${m.name}</td>
-                <td style="text-align: right;">${m.average}</td>
-                <td style="text-align: right;" ${(m.fastest>1000)?string("class='t4'","")}>${m.fastest}</td>
-                <td style="text-align: right;" ${(m.slowest>1000)?string("class='t4'","")}>${m.slowest}</td>
-                <td style="text-align: right;">${m.total_num}</td>
-                <td style="text-align: right;">${m.total_num_slow1}</td>
-                <td style="text-align: right;">${m.total_num_slow2}</td>
-                <td style="text-align: right;">${m.total_num_slow5}</td>
+                <td class="left break">${m.tag}::${m.name}</td>
+                <td class="right">${m.average}</td>
+                <td class="right ${(m.fastest>1000)?string("t4","")}" >${m.fastest}</td>
+                <td class="right ${(m.slowest>1000)?string("t4","")}">${m.slowest}</td>
+                <td class="right">${m.total_num}</td>
+                <td class="right">${m.total_num_slow1}</td>
+                <td class="right">${m.total_num_slow2}</td>
+                <td class="right">${m.total_num_slow5}</td>
                 <td>${m.last_updatetime?string('dd HH:mm')}</td>
                 <td><a href="/mot/speed/charts?tag=${m.tag}&name=${m.name}&service=${m.service}" style="color:blue;cursor:pointer;">详情</a></td>
             </tr>
