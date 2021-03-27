@@ -32,7 +32,7 @@ public class ServiceSpeedDateModel implements IBinder
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
-        name_md5 = s.get("name").value(null);
+        name_md5 = s.get("name_md5").value(null);
         average = s.get("average").value(0L);
         fastest = s.get("fastest").value(0L);
         slowest = s.get("slowest").value(0L);
