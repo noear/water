@@ -81,7 +81,7 @@ public final class DbWaterLogApi {
                 .set("note", note)
                 .set("log_date", now.getDate())
                 .set("log_hour", now.getHours())
-                .set("log_fulltime", "$NOW()")
+                .set("log_fulltime", now.getFulltime().getTime())
                 .insert();
     }
 }
