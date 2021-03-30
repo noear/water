@@ -50,7 +50,9 @@ public class LogModel {
     public String html() {
         StringBuilder buf = new StringBuilder(500);
 
-        buf.append(levelHtml()).append(" ");
+        //头
+        buf.append("<span class='level" ).append(level).append("'>");
+        buf.append("[").append(Level.of(level).name()).append("] ");
         buf.append(new Datetime(log_fulltime).toString("yyyy-MM-dd HH:mm:ss.SSS")).append(" ");
 
         if (TextUtils.isNotEmpty(thread_name)) {
@@ -84,6 +86,9 @@ public class LogModel {
             buf.append("#").append(from);
         }
 
+        buf.append("</span>");
+
+        //内容
         buf.append(":<br/>");
 
         if (TextUtils.isNotEmpty(summary)) {
