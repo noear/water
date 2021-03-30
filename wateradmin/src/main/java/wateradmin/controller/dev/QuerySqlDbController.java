@@ -111,7 +111,7 @@ public class QuerySqlDbController extends BaseController {
            return "只支持业务库查询";
        }
 
-       DbContext dbContext =   DbWaterCfgApi.getConfigByTagName(db).getDb(true);
+       DbContext dbContext =   DbWaterCfgApi.getConfigByTagName(db).getDb();
 
        DataList list = dbContext.sql(sql).log(true).getDataList();
 
