@@ -549,74 +549,75 @@ CREATE TABLE `water_reg_service_runtime`  (
   INDEX `IX_key_times`(`key`, `log_date`, `log_hour`, `log_minute`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of water_reg_service_runtime
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for water_reg_service_speed
 -- ----------------------------
 DROP TABLE IF EXISTS `water_reg_service_speed`;
-CREATE TABLE `water_reg_service_speed`  (
-  `row_id` int NOT NULL AUTO_INCREMENT,
-  `service` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `average` bigint NOT NULL DEFAULT 0,
-  `average_ref` bigint NOT NULL DEFAULT 0 COMMENT '参考响应时间值 ',
-  `fastest` bigint NOT NULL DEFAULT 0,
-  `slowest` bigint NOT NULL DEFAULT 0,
-  `total_num` bigint NOT NULL DEFAULT 0,
-  `total_num_slow1` bigint NOT NULL DEFAULT 0,
-  `total_num_slow2` bigint NOT NULL DEFAULT 0,
-  `total_num_slow5` bigint NOT NULL DEFAULT 0,
+CREATE TABLE `water_reg_service_speed` (
+  `row_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `tag` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `name_md5` varchar(40) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `average` bigint(20) NOT NULL DEFAULT '0',
+  `average_ref` bigint(20) NOT NULL DEFAULT '0' COMMENT '参考响应时间值 ',
+  `fastest` bigint(20) NOT NULL DEFAULT '0',
+  `slowest` bigint(20) NOT NULL DEFAULT '0',
+  `total_num` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow1` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow2` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow5` bigint(20) NOT NULL DEFAULT '0',
   `last_updatetime` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`row_id`) USING BTREE,
-  UNIQUE INDEX `IX_key`(`service`, `tag`, `name`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'WATER-注册-服务性能记录表' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `IX_key` (`service`,`tag`,`name_md5`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='WATER-注册-服务性能记录表';
 
 -- ----------------------------
 -- Table structure for water_reg_service_speed_date
 -- ----------------------------
 DROP TABLE IF EXISTS `water_reg_service_speed_date`;
-CREATE TABLE `water_reg_service_speed_date`  (
-  `row_id` int NOT NULL AUTO_INCREMENT,
-  `service` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `average` bigint NOT NULL DEFAULT 0,
-  `fastest` bigint NOT NULL DEFAULT 0,
-  `slowest` bigint NOT NULL DEFAULT 0,
-  `total_num` bigint NOT NULL DEFAULT 0,
-  `total_num_slow1` bigint NOT NULL DEFAULT 0,
-  `total_num_slow2` bigint NOT NULL DEFAULT 0,
-  `total_num_slow5` bigint NOT NULL DEFAULT 0,
-  `log_date` int NOT NULL DEFAULT 0 COMMENT '记录时间',
+CREATE TABLE `water_reg_service_speed_date` (
+  `row_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `tag` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `name_md5` varchar(40) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `average` bigint(20) NOT NULL DEFAULT '0',
+  `fastest` bigint(20) NOT NULL DEFAULT '0',
+  `slowest` bigint(20) NOT NULL DEFAULT '0',
+  `total_num` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow1` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow2` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow5` bigint(20) NOT NULL DEFAULT '0',
+  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录时间',
   PRIMARY KEY (`row_id`) USING BTREE,
-  UNIQUE INDEX `IX_key`(`service`, `tag`, `name`, `log_date`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'WATER-注册-服务性能记录表-按日' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `IX_key` (`service`,`tag`,`name_md5`,`log_date`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='WATER-注册-服务性能记录表-按日';
 
 -- ----------------------------
 -- Table structure for water_reg_service_speed_hour
 -- ----------------------------
 DROP TABLE IF EXISTS `water_reg_service_speed_hour`;
-CREATE TABLE `water_reg_service_speed_hour`  (
-  `row_id` int NOT NULL AUTO_INCREMENT,
-  `service` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `average` bigint NOT NULL DEFAULT 0,
-  `fastest` bigint NOT NULL DEFAULT 0,
-  `slowest` bigint NOT NULL DEFAULT 0,
-  `total_num` bigint NOT NULL DEFAULT 0,
-  `total_num_slow1` bigint NOT NULL DEFAULT 0,
-  `total_num_slow2` bigint NOT NULL DEFAULT 0,
-  `total_num_slow5` bigint NOT NULL DEFAULT 0,
-  `log_date` int NOT NULL DEFAULT 0 COMMENT '记录日期',
-  `log_hour` int NOT NULL DEFAULT 0 COMMENT '记录小时',
+CREATE TABLE `water_reg_service_speed_hour` (
+  `row_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `tag` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name_md5` varchar(40) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `name` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `average` bigint(20) NOT NULL DEFAULT '0',
+  `fastest` bigint(20) NOT NULL DEFAULT '0',
+  `slowest` bigint(20) NOT NULL DEFAULT '0',
+  `total_num` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow1` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow2` bigint(20) NOT NULL DEFAULT '0',
+  `total_num_slow5` bigint(20) NOT NULL DEFAULT '0',
+  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期',
+  `log_hour` int(11) NOT NULL DEFAULT '0' COMMENT '记录小时',
   PRIMARY KEY (`row_id`) USING BTREE,
-  UNIQUE INDEX `IX_key`(`service`, `tag`, `name`, `log_date`, `log_hour`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'WATER-注册-服务性能记录表-按时' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `IX_key` (`service`,`tag`,`name_md5`,`log_date`,`log_hour`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='WATER-注册-服务性能记录表-按时';
+
 
 -- ----------------------------
 -- Table structure for water_tool_monitor
