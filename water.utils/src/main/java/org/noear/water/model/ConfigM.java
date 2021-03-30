@@ -279,7 +279,6 @@ public final class ConfigM {
             }
 
             return new DbDataSource(url, username, password);
-
         }
     }
 }

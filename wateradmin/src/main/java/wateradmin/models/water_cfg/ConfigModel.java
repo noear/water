@@ -3,7 +3,7 @@ package wateradmin.models.water_cfg;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import org.noear.snack.ONode;
-import org.noear.water.model.PropertiesM;
+import org.noear.solon.Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -14,6 +14,7 @@ import org.noear.weed.cache.memcached.MemCache;
 import org.noear.weed.mongo.MgContext;
 import wateradmin.dso.ConfigType;
 
+import javax.sql.DataSource;
 import java.util.*;
 
 @Getter
@@ -128,45 +129,55 @@ public class ConfigModel
     }
 
     public DbContext getDb(boolean pool) {
-        DbContext db = new DbContext();
         Properties prop = getProp();
         String url = prop.getProperty("url");
+
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
+        String schema = prop.getProperty("schema");
+
+
+        DbContext db = new DbContext();
+        db.schemaSet(schema);
+        db.dataSourceSet(getDs(pool));
+
+        return db;
+    }
+
+    public DataSource getDs(boolean pool) {
+        Properties prop = getProp();
+        String url = prop.getProperty("url");
+
+        if (TextUtils.isEmpty(url)) {
+            return null;
+        }
+
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+        String driverClassName = prop.getProperty("driverClassName");
 
         if (pool) {
             HikariDataSource source = new HikariDataSource();
 
-            String schema = prop.getProperty("schema");
-            String username = prop.getProperty("username");
-            String password = prop.getProperty("password");
-            String driverClassName = prop.getProperty("driverClassName");
-
-            if (TextUtils.isEmpty(url) == false) {
+            Utils.injectProperties(source, prop);
+            if(TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
             }
 
-            if (TextUtils.isEmpty(username) == false) {
-                source.setUsername(username);
-            }
-
-            if (TextUtils.isEmpty(password) == false) {
-                source.setPassword(password);
-            }
-
-            if (TextUtils.isEmpty(schema) == false) {
-                source.setSchema(schema);
-            }
-
-            if (TextUtils.isEmpty(driverClassName) == false) {
-                source.setDriverClassName(driverClassName);
-            }
-
-            db.dataSourceSet(source);
-            db.schemaSet(schema);
+            return source;
         } else {
-            db.propSet(getProp());
-        }
+            if (TextUtils.isNotEmpty(driverClassName)) {
+                try {
+                    Class.forName(driverClassName);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
 
-        return db;
+            return new DbDataSource(url, username, password);
+        }
     }
 
     public MgContext getMg() {
