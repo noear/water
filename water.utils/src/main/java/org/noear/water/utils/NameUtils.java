@@ -11,22 +11,16 @@ public class NameUtils {
 
         String[] ss = className.split("\\.");
 
-        if (ss.length < 5) {
-            return className;
-        } else {
-            StringBuilder sb = new StringBuilder(className.length());
-            for (int i = 0, len = ss.length; i < len; i++) {
-                if (i < 2) {
-                    sb.append(ss[i]).append(".");
-                } else if (i > (len - 3)) {
-                    sb.append(ss[i]).append(".");
-                } else {
-                    sb.append("*.");
-                }
+        StringBuilder sb = new StringBuilder(className.length());
+        for (int i = 0, len = ss.length; i < len; i++) {
+            if (i > (len - 2)) {
+                sb.append(ss[i]).append('.');
+            } else {
+                sb.append(ss[i].charAt(0)).append('.');
             }
-
-            sb.setLength(sb.length() - 1);
-            return sb.toString();
         }
+
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
     }
 }
