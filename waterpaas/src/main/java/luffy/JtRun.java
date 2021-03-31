@@ -51,11 +51,17 @@ public class JtRun {
     public static void exec(AFileModel file) throws Exception {
         initFuture.get();
 
-        Context ctx = ContextEmpty.create();
+        Context ctx = ContextUtil.current();
 
-        ContextUtil.currentSet(ctx);
-        ExecutorFactory.execOnly(file, ctx);
-        ContextUtil.currentRemove();
+        if (ctx == null) {
+            ctx = ContextEmpty.create();
+
+            ContextUtil.currentSet(ctx);
+            ExecutorFactory.execOnly(file, ctx);
+            ContextUtil.currentRemove();
+        } else {
+            ExecutorFactory.execOnly(file, ctx);
+        }
     }
 
     public static void xfunInit(){
