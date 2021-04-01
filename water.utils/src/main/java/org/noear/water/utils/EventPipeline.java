@@ -18,8 +18,8 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
     private long interval = 500; //必须大于等于100
     private long interval_min = 100;
 
-    private int packetSize = 100; //必须大于等于100
-    private int packetSize_min = 100;
+    private int packetSize = 150; //必须大于等于150
+    private int packetSize_min = 150;
 
     public EventPipeline() {
         TaskUtils.run(this);
