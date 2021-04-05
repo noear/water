@@ -151,23 +151,23 @@ public final class DbApi {
     */
 
     public static long logRequestAdd(String request_id,String scheme_tagname, String args_json,int policy,String callback) throws SQLException {
-        //long log_id = RcConfig.newLogID();
+        long log_id = RcConfig.newLogID();
 
         Datetime now = Datetime.Now();
 
-        return RcConfig.water_log().table("rubber_log_request")
+        RcConfig.water_log().table("rubber_log_request")
                 .set("request_id", request_id)
                 .set("scheme_tagname", scheme_tagname)
                 .set("args_json", args_json)
                 .set("start_fulltime", "$NOW()")
                 .set("start_date", now.getDate())
-                .set("log_date",now.getDate())
+                .set("log_date", now.getDate())
                 .set("policy", policy)
                 .set("callback", callback)
-                //.set("log_id", log_id)
+                .set("log_id", log_id)
                 .insert();
 
-        //return log_id;
+        return log_id;
     }
 
     public static void logRequestSetState(long log_id,int state) throws SQLException{
@@ -188,13 +188,13 @@ public final class DbApi {
 
         ONode note_json = new ONode();
         note_json.get("M")
-                .set("value",response.matcher.value)
-                .set("total",response.matcher.total);
+                .set("value", response.matcher.value)
+                .set("total", response.matcher.total);
 
         note_json.get("E")
-                .set("score",response.evaluation.score)
-                .set("advice",response.evaluation.advice)
-                .set("exception",response.evaluation.exception);
+                .set("score", response.evaluation.score)
+                .set("advice", response.evaluation.advice)
+                .set("exception", response.evaluation.exception);
 
         DbTableQuery tb = RcConfig.water_log().table("rubber_log_request")
                 .set("request_id", response.request.request_id)
@@ -208,17 +208,19 @@ public final class DbApi {
                 .set("end_fulltime", response.end_time)
                 .set("timespan", response.timespan())
                 .set("policy", response.request.policy)
-                .set("state",2);
+                .set("state", 2);
 
-        if(log_id>0){
-            tb.where("log_id=?",log_id).update();
-        }else{
+        if (log_id > 0) {
+            tb.where("log_id=?", log_id).update();
+        } else {
             Datetime time = new Datetime(response.start_time);
+            log_id = RcConfig.newLogID();
 
-            tb.set("log_date",new Datetime(response.start_time).getDate());
+            tb.set("log_date", new Datetime(response.start_time).getDate());
             tb.set("start_fulltime", response.start_time);
             tb.set("start_date", time.getDate());
             tb.set("log_date", time.getDate());
+            tb.set("log_id", log_id);
             tb.insert();
         }
     }
@@ -229,14 +231,13 @@ public final class DbApi {
                 .where("request_id=?",request_id)
                 .orderBy("log_id DESC")
                 .limit(1)
-                .select("*")
-                .getItem(new LogRequestModel());
+                .selectItem("*", LogRequestModel.class);
     }
 
     //======================
     //D-Block
     public static List<BlockModel> getBlockByTag(String tag) throws SQLException {
-        IQuery query = db().table("$.rubber_block")
+        IQuery query = db().table("rubber_block")
                 .where("tag=? AND is_enabled=1", tag)
                 .select("*");
 
@@ -251,7 +252,7 @@ public final class DbApi {
     }
 
     public static BlockModel getBlock(String tag, String name) throws SQLException {
-        IQuery query = db().table("$.rubber_block")
+        IQuery query = db().table("rubber_block")
                 .where("tag=? AND name=?", tag, name)
                 .select("*");
 
@@ -274,37 +275,4 @@ public final class DbApi {
 
         return model;
     }
-
-
-    //======================
-    //公共函数
-    public static List<PaasFunModel> getFunsByTag(String tag) throws SQLException {
-        IQuery query = db().table("$.paas_fun")
-                .where("tag=? AND is_enabled=1", tag)
-                .select("*");
-
-        if (RcConfig.is_debug == false) {
-            query.caching(RcConfig.inner_cache)
-                    .usingCache(60 * 5)
-                    .cacheTag("fun:" + tag + "/*");
-        }
-
-        return query.getList(new PaasFunModel());
-
-    }
-
-    public static PaasFunModel getFun(String tag, String name) throws SQLException {
-        IQuery query = db().table("$.paas_fun")
-                .where("tag=? AND fun_name=?", tag, name)
-                .select("*");
-
-        if (RcConfig.is_debug == false) {
-            query.caching(RcConfig.inner_cache)
-                    .usingCache(60 * 5)
-                    .cacheTag("fun:" + tag + "/" + name);
-        }
-
-        return query.getItem(new PaasFunModel());
-    }
-
 }
