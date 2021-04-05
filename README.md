@@ -32,7 +32,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.3.14</version>
+    <version>1.3.19</version>
 </dependency>
 ```
 
@@ -45,10 +45,10 @@ solon.app:
 solon.cloud.water:
   server: water                     #WATER服务地址
   config:
-    loadKey: "test.properties"      #默认加载的配置
+    load: "test.properties"      #默认加载的配置
   event:
-    hostname: "api.water.io"        #当前服务主机地址（一般设为外网地址；用于订阅业务消息用）
-    #hostname: "@water_admin_host"  #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
+    receive: "api.water.io"        #当前服务主机地址（一般设为外网地址；用于订阅业务消息用）
+    #receive: "@water_admin_host"  #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
   log:
     default: "water_log_admin"      #默认日志记录器
 ```
