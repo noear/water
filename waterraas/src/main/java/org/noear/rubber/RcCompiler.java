@@ -358,7 +358,7 @@ final class RcCompiler {
 
         sb.append("  this._$bind(c.args());");
         sb.append("  if(this._$init){");
-        sb.append("    var d = db2json(this._$init());");
+        sb.append("    var d = this._$init();");
         sb.append("    this._$bind(d);");
         sb.append("  };");
         sb.append("}");

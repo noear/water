@@ -41,7 +41,7 @@ public class EtlModel {
     public String buildJtSQLArgs(EtlContext context) throws Exception{
         setContextData(context);
 
-        return "db2json(JTAPI.getData('" + guid + "'))";
+        return "JTAPI.getData('" + guid + "')";
     }
 
     public static String serialize(DataItem dataItem){

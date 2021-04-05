@@ -142,7 +142,7 @@ this.MM_beast_user_state = function(c) {
 		build: function(args) {
 			this.bind(args);
 			if (this.init) {
-				var d = db2json(this.init(), 1);
+				var d = this.init();
 				this.bind(d);
 			};
 			return this;

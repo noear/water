@@ -39,7 +39,7 @@ this.MM_beauty_num_risk_model.prototype = {
         this._$mc = c;
         this._$bind(c.args());
         if (this._$init) {
-            var d = db2json(this._$init());
+            var d = this._$init();
             this._$bind(d);
         };
     }

@@ -278,7 +278,7 @@ public class EtlContext {
             try {
                 String tmp = jCode.substring(1);//第一位是：$符
                 if (jCode.indexOf("(m") > 0) {
-                    tmp = tmp.replace("(m", "(db2json(JTAPI.getData('" + guid + "'))");
+                    tmp = tmp.replace("(m", "JTAPI.getData('" + guid + "')");
                 }
                 return _jtSQL.eval(tmp); //可以(m,'yyyy');
             } finally {
