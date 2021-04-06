@@ -29,6 +29,10 @@ public class LogStorerImp implements LogStorer {
             if (log.log_id == 0) {
                 log.log_id = ProtocolHub.idBuilder.getLogId(log.logger);
             }
+
+            if((log.content instanceof String) == false){
+
+            }
         }
 
         Map<String, List<LogEvent>> map = list.stream().collect(Collectors.groupingBy(m -> m.logger));

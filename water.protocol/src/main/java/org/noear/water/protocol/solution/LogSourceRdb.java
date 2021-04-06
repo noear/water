@@ -1,5 +1,6 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.snack.ONode;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;

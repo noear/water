@@ -12,7 +12,7 @@ public class LogEvent {
     public String tag2;
     public String tag3;
     public String summary;
-    public Object content;
+    public String content;
     public String class_name;
     public String thread_name;
     public String from;

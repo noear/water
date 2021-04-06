@@ -8,10 +8,7 @@ import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.GzipUtils;
-import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
+import org.noear.water.utils.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -122,7 +119,7 @@ public class LogApi {
         log.tag2 = tag2;
         log.tag3 = tag3;
         log.summary = summary;
-        log.content = content;
+        log.content = LogHelper.contentAsString(content);
 
         log.trace_id = trace_id;
         log.from = WaterClient.localServiceHost();
@@ -134,22 +131,7 @@ public class LogApi {
         LogPipeline.singleton().add(log);
     }
 
-    private String content_str(Object content) {
-        if (content != null) {
-            if (content instanceof String) {
-                //处理字符串
-                return (String) content;
-            } else if (content instanceof Throwable) {
-                //处理异常
-                return ThrowableUtils.getString((Throwable) content);
-            } else {
-                //处理其它对象（进行json）
-                return ONode.load(content).toJson();
-            }
-        }
 
-        return null;
-    }
 
     public void appendAll(List<LogEvent> list, boolean async) {
         if (async) {
@@ -167,10 +149,10 @@ public class LogApi {
         }
 
         for (LogEvent log : list) {
-            log.content = content_str(log.content);
+            log.content = LogHelper.contentAsString(log.content);
         }
 
-        String json = ONode.stringify(list);
+        String json = ONode.serialize(list);
 
         try {
             if (WaterSetting.water_logger_gzip()) {

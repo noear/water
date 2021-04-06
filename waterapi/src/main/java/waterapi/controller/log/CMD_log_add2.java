@@ -53,7 +53,7 @@ public class CMD_log_add2 extends UapiBase {
             throw UapiCodes.CODE_13("list");
         }
 
-        List<LogEvent> list = ONode.deserialize(list_json);
+        List<LogEvent> list = ONode.load(list_json).toObjectList(LogEvent.class);
 
         ProtocolHub.logStorer.writeAll(list);
 

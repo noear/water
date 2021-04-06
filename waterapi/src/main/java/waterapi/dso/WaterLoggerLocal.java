@@ -6,6 +6,7 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.log.Logger;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.LogHelper;
 import org.noear.water.utils.TextUtils;
 import waterapi.Config;
 
@@ -222,7 +223,7 @@ public class WaterLoggerLocal implements Logger {
         log.tag2 = tag2;
         log.tag3 = tag3;
         log.summary = summary;
-        log.content = content;
+        log.content = LogHelper.contentAsString(content);
         log.from = Config.localHost;
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();

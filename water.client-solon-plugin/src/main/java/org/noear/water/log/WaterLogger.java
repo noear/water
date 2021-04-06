@@ -4,6 +4,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.dso.LogPipeline;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.LogHelper;
 import org.noear.water.utils.TextUtils;
 
 /**
@@ -289,7 +290,7 @@ public class WaterLogger implements Logger {
         log.tag2 = tag2;
         log.tag3 = tag3;
         log.summary = summary;
-        log.content = content;
+        log.content = LogHelper.contentAsString(content);
 
         if (clz != null) {
             if (TextUtils.isEmpty(summary)) {
