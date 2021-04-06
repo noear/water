@@ -148,10 +148,6 @@ public class LogApi {
             return;
         }
 
-        for (LogEvent log : list) {
-            log.content = LogHelper.contentAsString(log.content);
-        }
-
         String json = ONode.serialize(list);
 
         try {
