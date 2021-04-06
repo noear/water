@@ -38,7 +38,7 @@ public class LogStorerImp implements LogStorer {
                 ProtocolHub.logSourceFactory.getSource(kv.getKey())
                         .writeAll(kv.getKey(), kv.getValue());
             } catch (Throwable ex) {
-                EventBus.pushAsyn(ex);
+                EventBus.push(ex);
             }
         }
     }

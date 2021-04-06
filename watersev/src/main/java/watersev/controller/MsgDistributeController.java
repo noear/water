@@ -90,7 +90,7 @@ public final class MsgDistributeController implements IJob {
             //派发
             distributeDo(msg);
         } catch (Throwable ex) {
-            EventBus.pushAsyn(ex);
+            EventBus.push(ex);
         }
     }
 
