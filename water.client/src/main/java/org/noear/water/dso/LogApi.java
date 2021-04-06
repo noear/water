@@ -170,7 +170,7 @@ public class LogApi {
             log.content = content_str(log.content);
         }
 
-        String json = ONode.serialize(list);
+        String json = ONode.stringify(list);
 
         try {
             if (WaterSetting.water_logger_gzip()) {
