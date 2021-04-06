@@ -1,18 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : @test-mysql8
- Source Server Type    : MySQL
- Source Server Version : 80020
- Source Host           : 172.168.0.162:3306
- Source Schema         : water_bcf
-
- Target Server Type    : MySQL
- Target Server Version : 80020
- File Encoding         : 65001
-
- Date: 12/03/2021 17:20:46
-*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -21,16 +6,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for bcf_config
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_config`;
-CREATE TABLE `bcf_config`  (
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '值',
-  `note` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+CREATE TABLE `bcf_config` (
+  `name` varchar(50) NOT NULL COMMENT '名称',
+  `value` varchar(50) NOT NULL DEFAULT '' COMMENT '值',
+  `note` varchar(200) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-配置表（仅看看用）' ROW_FORMAT = Dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-配置表（仅看看用）';
 
 -- ----------------------------
 -- Records of bcf_config
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_config` VALUES ('BCF_Config.LK_OBJT', '1', NULL);
 INSERT INTO `bcf_config` VALUES ('BCF_Group.LK_OBJT', '2', NULL);
 INSERT INTO `bcf_config` VALUES ('BCF_Log.LK_OBJT', '3', NULL);
@@ -43,34 +29,36 @@ INSERT INTO `bcf_config` VALUES ('DEFINE.BCF_Dept=2.R_PGID', '1', 'Dept');
 INSERT INTO `bcf_config` VALUES ('DEFINE.BCF_Package=2.R_PGID', '4', 'Pack');
 INSERT INTO `bcf_config` VALUES ('DEFINE.BCF_Role=2.R_PGID', '2', 'Role');
 INSERT INTO `bcf_config` VALUES ('DEFINE.BCF_Unit=2.R_PGID', '3', 'Unit');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_group
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_group`;
-CREATE TABLE `bcf_group`  (
-  `pgid` int NOT NULL AUTO_INCREMENT COMMENT '组ID',
-  `p_pgid` int NOT NULL DEFAULT 0 COMMENT '组的父节点ID',
-  `r_pgid` int NOT NULL DEFAULT 0 COMMENT '组的根节点ID',
-  `pg_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组的手工编码',
-  `cn_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名称',
-  `en_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '英文名称',
-  `uri_path` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '连接地址',
-  `in_level` int NULL DEFAULT 0 COMMENT '级别',
-  `is_branch` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否为支线',
-  `tags` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标签',
-  `order_index` int NULL DEFAULT 0 COMMENT '排序',
-  `is_disabled` tinyint(1) NULL DEFAULT 0 COMMENT '是否禁用',
-  `is_visibled` tinyint(1) NULL DEFAULT 1 COMMENT '是否显示',
+CREATE TABLE `bcf_group` (
+  `pgid` int(11) NOT NULL AUTO_INCREMENT COMMENT '组ID',
+  `p_pgid` int(11) NOT NULL DEFAULT '0' COMMENT '组的父节点ID',
+  `r_pgid` int(11) NOT NULL DEFAULT '0' COMMENT '组的根节点ID',
+  `pg_code` varchar(50) DEFAULT NULL COMMENT '组的手工编码',
+  `cn_name` varchar(50) DEFAULT NULL COMMENT '中文名称',
+  `en_name` varchar(50) DEFAULT NULL COMMENT '英文名称',
+  `uri_path` varchar(100) DEFAULT NULL COMMENT '连接地址',
+  `in_level` int(11) DEFAULT '0' COMMENT '级别',
+  `is_branch` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否为支线',
+  `tags` varchar(50) DEFAULT NULL COMMENT '标签',
+  `order_index` int(11) DEFAULT '0' COMMENT '排序',
+  `is_disabled` tinyint(1) DEFAULT '0' COMMENT '是否禁用',
+  `is_visibled` tinyint(1) DEFAULT '1' COMMENT '是否显示',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `last_update` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`pgid`) USING BTREE,
-  INDEX `IX_p_pgid`(`p_pgid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 321 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-分组表' ROW_FORMAT = Dynamic;
+  KEY `IX_p_pgid` (`p_pgid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-分组表';
 
 -- ----------------------------
 -- Records of bcf_group
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_group` VALUES (1, 0, 0, '', 'Dept', '', NULL, 0, 0, '', 0, 0, 0, NULL, '2019-08-21 17:51:27');
 INSERT INTO `bcf_group` VALUES (2, 0, 0, '', 'Role', '', NULL, 0, 0, '', 0, 0, 0, NULL, '2018-10-23 11:55:32');
 INSERT INTO `bcf_group` VALUES (3, 0, 0, '', 'Unit', '', NULL, 0, 0, '', 0, 0, 0, NULL, '2011-07-17 10:28:59');
@@ -79,14 +67,12 @@ INSERT INTO `bcf_group` VALUES (12, 2, 2, '', '超级管理员', 'ChaoJingGuanLi
 INSERT INTO `bcf_group` VALUES (14, 1, 1, '', 'water', 'JiShuYanFaZhongXin', NULL, 0, 0, '', 0, 0, 1, '2017-06-29 17:50:11', '2021-03-12 16:49:12');
 INSERT INTO `bcf_group` VALUES (49, 4, 4, '', 'SPONGE平台', 'Sponge', '', 0, 0, '', 97, 0, 1, '2017-12-05 09:53:24', '2021-01-12 21:53:00');
 INSERT INTO `bcf_group` VALUES (50, 49, 4, 'spongeadmin', '管理后台', 'SPONGE', 'http://8.136.188.140:8182', 0, 1, '', 97, 0, 1, '2017-12-05 09:56:04', '2021-02-16 13:34:23');
-INSERT INTO `bcf_group` VALUES (51, 50, 4, 'jzgz', '价值跟踪', '/track/', '/track/', 0, 0, '', 0, 0, 1, '2017-12-05 10:00:50', '2017-12-06 18:11:34');
+INSERT INTO `bcf_group` VALUES (51, 50, 4, 'jzgz', '价值跟踪', '/track/', '/track/', 0, 0, '', 0, 0, 1, '2017-12-05 10:00:50', '2021-04-06 13:34:46');
 INSERT INTO `bcf_group` VALUES (54, 4, 4, '', 'WATER平台', '', '', 0, 0, '', 98, 0, 1, '2017-12-20 13:14:26', '2019-04-03 11:43:06');
 INSERT INTO `bcf_group` VALUES (55, 54, 4, 'wateradmin', '管理后台', 'WATER', 'http://8.136.188.140:9373', 0, 1, '', 999, 0, 1, '2017-12-20 13:15:14', '2021-02-18 17:44:06');
 INSERT INTO `bcf_group` VALUES (56, 55, 4, '', '日常工具', '', '/tool/', 0, 0, '', 0, 0, 1, '2017-12-20 13:16:05', '2020-09-08 19:37:51');
-INSERT INTO `bcf_group` VALUES (60, 50, 4, '', '用户中心', '/user/', '/user/', 0, 0, '', 2, 1, 1, '2018-01-16 11:20:53', '2019-04-03 11:59:35');
-INSERT INTO `bcf_group` VALUES (75, 50, 4, '', '应用控制', '/rock/', '/rock/', 0, 0, '', 0, 0, 1, '2018-01-23 13:20:42', '2018-01-26 14:42:45');
+INSERT INTO `bcf_group` VALUES (75, 50, 4, '', '应用控制', '/rock/', '/rock/', 0, 0, '', 0, 0, 1, '2018-01-23 13:20:42', '2021-04-06 13:38:25');
 INSERT INTO `bcf_group` VALUES (76, 49, 4, '', '权限级别', '', '', 0, 0, '', 0, 0, 1, '2018-02-09 10:51:49', '2019-06-10 15:08:19');
-INSERT INTO `bcf_group` VALUES (96, 60, 4, 'sponge_user_d', '用户详情', '', '', 0, 0, '', 0, 0, 1, '2018-03-29 11:05:34', '2019-03-07 11:47:28');
 INSERT INTO `bcf_group` VALUES (107, 4, 4, '', '数据资源', '', '', 0, 0, '', 99, 0, 1, '2018-05-18 09:54:09', '2019-07-31 13:51:11');
 INSERT INTO `bcf_group` VALUES (133, 55, 4, '', '消息总线', '', '/msg/', 0, 0, '', 2, 0, 1, '2018-06-04 09:56:13', '2020-09-08 19:40:36');
 INSERT INTO `bcf_group` VALUES (134, 55, 4, '', '服务监控', '', '/mot/', 0, 0, '', 3, 0, 1, '2018-06-04 09:56:33', '2018-06-04 12:37:12');
@@ -97,8 +83,6 @@ INSERT INTO `bcf_group` VALUES (138, 55, 4, '', 'Ops', '', '/ops/', 0, 0, '', 8,
 INSERT INTO `bcf_group` VALUES (139, 54, 4, '', '权限级别', '', '', 0, 0, '', 0, 0, 1, '2018-06-04 10:15:02', '2020-06-02 13:52:04');
 INSERT INTO `bcf_group` VALUES (140, 107, 4, 'tag', '标签组', '', '', 0, 0, '#name', 0, 0, 1, '2018-06-04 10:29:28', '2021-01-12 21:55:12');
 INSERT INTO `bcf_group` VALUES (146, 107, 4, 'service', '服务组', '', '', 0, 0, '#name', 0, 0, 1, '2018-06-04 14:35:35', '2018-11-01 11:50:02');
-INSERT INTO `bcf_group` VALUES (151, 60, 4, '', '内容控制', '', '', 0, 0, '', 0, 0, 1, '2018-07-20 11:51:41', '2018-09-24 15:06:31');
-INSERT INTO `bcf_group` VALUES (153, 50, 4, '', '推送中心', '', '/push/', 0, 0, '', 3, 1, 1, '2018-07-24 11:47:02', '2019-04-03 11:47:45');
 INSERT INTO `bcf_group` VALUES (195, 55, 4, '', 'Dev', '', '/dev/', 0, 0, '', 7, 0, 1, '2018-12-12 16:09:54', '2018-12-12 16:19:50');
 INSERT INTO `bcf_group` VALUES (201, 200, 4, '', '入库', '/enter/', '/enter/', 0, 0, '', 0, 0, 1, '2019-01-04 14:22:05', '2019-01-04 14:22:06');
 INSERT INTO `bcf_group` VALUES (204, 203, 4, '', '入库', '/store/', '/store/', 0, 0, '', 1, 0, 1, '2019-01-04 15:42:05', '2019-01-24 15:41:15');
@@ -106,61 +90,60 @@ INSERT INTO `bcf_group` VALUES (205, 203, 4, '', 'APP内上线', '/app/', '/app/
 INSERT INTO `bcf_group` VALUES (207, 203, 4, '', '审核', '/check/', '/check/', 0, 0, '', 6, 0, 1, '2019-01-04 16:10:40', '2019-01-17 16:33:35');
 INSERT INTO `bcf_group` VALUES (210, 205, 4, 'dobbin_home_card', '首页卡片配置项', 'ShouYeKaPianPeiZhiXiang', '', 0, 0, '', 0, 0, 1, '2019-01-24 15:42:06', '2019-01-31 16:41:34');
 INSERT INTO `bcf_group` VALUES (212, 211, 4, '', '渠道', '/channel/', '/channel/', 0, 0, '', 0, 0, 1, '2019-02-15 13:37:48', '2019-02-15 13:38:05');
-INSERT INTO `bcf_group` VALUES (229, 50, 4, '', '认证中心', '/auth/', '/auth/', 0, 0, '', 3, 1, 1, '2019-03-07 11:37:39', '2020-06-09 12:50:53');
-INSERT INTO `bcf_group` VALUES (230, 229, 4, 'panda_user_d', '用户详情', 'YongHuXiangQing', '', 0, 0, '', 0, 0, 1, '2019-03-07 11:46:42', '2019-03-22 15:11:02');
-INSERT INTO `bcf_group` VALUES (231, 229, 4, '', '内容控制', 'NeiRongKongZhi', '', 0, 0, '', 1, 0, 1, '2019-03-07 11:46:58', '2019-03-22 15:11:11');
-INSERT INTO `bcf_group` VALUES (239, 229, 4, 'panda_operate', '运营管理相关', 'YunYingGuanLiXiangGuan', '', 0, 0, '', 0, 0, 1, '2019-03-29 10:17:14', '2019-04-08 14:30:02');
-INSERT INTO `bcf_group` VALUES (275, 50, 4, '', '文章管理', '/article/', '/article/', 0, 0, '', 0, 1, 1, '2019-09-25 12:53:27', '2020-04-01 15:48:15');
 INSERT INTO `bcf_group` VALUES (283, 55, 4, '', '日志查询', '', '/log/', 0, 0, '', 1, 0, 1, '2019-11-11 18:15:22', '2019-12-10 16:21:26');
 INSERT INTO `bcf_group` VALUES (320, 14, 1, '', '运维', '', NULL, 0, 0, '', 0, 0, 1, '2021-01-08 09:25:54', '2021-03-12 16:52:24');
 INSERT INTO `bcf_group` VALUES (321, 14, 1, '', '开发', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:19:51', '2021-03-12 17:19:51');
 INSERT INTO `bcf_group` VALUES (322, 14, 1, '', '测试', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:19:59', '2021-03-12 17:19:59');
 INSERT INTO `bcf_group` VALUES (323, 14, 1, '', '产品', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:20:08', '2021-03-12 17:20:08');
 INSERT INTO `bcf_group` VALUES (324, 14, 1, '', '运营', '', NULL, 0, 0, '', 0, 0, 1, '2021-03-12 17:20:17', '2021-03-12 17:20:17');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_opsx
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_opsx`;
-CREATE TABLE `bcf_opsx`  (
-  `lk_objt` int NOT NULL DEFAULT 0 COMMENT '连接对象',
-  `lk_objt_id` int NOT NULL DEFAULT 0 COMMENT '连接对象ID',
-  `tags` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '标签',
-  `opsx` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT 'JSON值 ',
-  PRIMARY KEY (`lk_objt`, `lk_objt_id`, `tags`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-对象扩展表' ROW_FORMAT = Dynamic;
+CREATE TABLE `bcf_opsx` (
+  `lk_objt` int(11) NOT NULL DEFAULT '0' COMMENT '连接对象',
+  `lk_objt_id` int(11) NOT NULL DEFAULT '0' COMMENT '连接对象ID',
+  `tags` varchar(40) NOT NULL DEFAULT '' COMMENT '标签',
+  `opsx` varchar(2000) DEFAULT '0' COMMENT 'JSON值 ',
+  PRIMARY KEY (`lk_objt`,`lk_objt_id`,`tags`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-对象扩展表';
 
 -- ----------------------------
 -- Records of bcf_opsx
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_opsx` VALUES (7, 1, 'S', '');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_resource
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_resource`;
-CREATE TABLE `bcf_resource`  (
-  `rsid` int NOT NULL AUTO_INCREMENT,
-  `rs_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '资源手工代码',
-  `cn_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名称',
-  `en_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '英文名称',
-  `uri_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '连接地址',
-  `uri_target` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '连接目标',
-  `ico_path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标地址',
-  `order_index` int NULL DEFAULT 0 COMMENT '排序值',
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `tags` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标签',
-  `is_disabled` tinyint(1) NULL DEFAULT NULL COMMENT '是否禁用（默认否）',
+CREATE TABLE `bcf_resource` (
+  `rsid` int(11) NOT NULL AUTO_INCREMENT,
+  `rs_code` varchar(50) NOT NULL DEFAULT '' COMMENT '资源手工代码',
+  `cn_name` varchar(50) DEFAULT NULL COMMENT '中文名称',
+  `en_name` varchar(50) DEFAULT NULL COMMENT '英文名称',
+  `uri_path` varchar(200) NOT NULL DEFAULT '' COMMENT '连接地址',
+  `uri_target` varchar(50) DEFAULT NULL COMMENT '连接目标',
+  `ico_path` varchar(200) DEFAULT NULL COMMENT '图标地址',
+  `order_index` int(11) DEFAULT '0' COMMENT '排序值',
+  `note` varchar(255) DEFAULT NULL COMMENT '备注',
+  `tags` varchar(50) DEFAULT NULL COMMENT '标签',
+  `is_disabled` tinyint(1) DEFAULT NULL COMMENT '是否禁用（默认否）',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `last_update` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`rsid`) USING BTREE,
-  INDEX `IX_code`(`rs_code`) USING BTREE,
-  INDEX `IX_path`(`uri_path`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 975 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-资源表（一切皆为资源）' ROW_FORMAT = Dynamic;
+  KEY `IX_code` (`rs_code`) USING BTREE,
+  KEY `IX_path` (`uri_path`(191)) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=975 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-资源表（一切皆为资源）';
 
 -- ----------------------------
 -- Records of bcf_resource
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_resource` VALUES (1, '', '统计总览', 'TongJiZongLan', '', '', '', 0, '', '', 0, '2017-06-29 17:32:54', '2017-06-29 17:32:55');
 INSERT INTO `bcf_resource` VALUES (3, '', '用户总览', 'YongHuZongLan', '/user/index', '_self', '', 0, '', '', 0, '2017-06-29 17:35:54', '2018-10-19 10:02:39');
 INSERT INTO `bcf_resource` VALUES (4, '', '用户列表', 'YongHuLieBiao', '/user/list', '_self', '', 1, '', '', 0, '2017-06-29 17:36:10', '2018-11-07 17:17:55');
@@ -266,9 +249,7 @@ INSERT INTO `bcf_resource` VALUES (116, '', '资料补全', 'ZiLiaoBuQuan', '', 
 INSERT INTO `bcf_resource` VALUES (117, '', '开关设置', 'KaiGuanSheZhi', '/sys/switch', '_self', '', 0, '', '', 0, '2018-01-04 11:56:53', '2018-03-13 16:28:15');
 INSERT INTO `bcf_resource` VALUES (118, '', '频道名称', 'PinDaoMingCheng', '/operate/channelname', '', '', 0, '', '', 0, '2018-01-08 16:26:31', '2018-01-08 16:26:32');
 INSERT INTO `bcf_resource` VALUES (119, '', '银行管理', 'YinHangGuanLi', '/sys/bank', '_self', '', 0, '', '', 0, '2018-01-15 10:05:59', '2018-01-15 10:05:59');
-INSERT INTO `bcf_resource` VALUES (122, '', '用户查询', '', '/user/query', '', '', 0, '', '', 1, '2018-01-16 11:21:19', '2019-04-03 11:59:42');
 INSERT INTO `bcf_resource` VALUES (126, '', '办卡产品', 'BanKaChanPin', '/credit/card', '_self', '', 0, '', '', 0, '2018-01-19 10:13:05', '2018-01-24 15:51:33');
-INSERT INTO `bcf_resource` VALUES (127, '', '数据导入', '', '/user/import', '', '', 2, '', '', 1, '2018-01-19 16:12:36', '2019-03-07 11:36:11');
 INSERT INTO `bcf_resource` VALUES (128, '', '充值服务配置', 'ChongZhiFuWuPeiZhi', '/config/recharge', '', '', 0, '', '', 0, '2018-01-22 14:52:45', '2018-05-29 16:46:10');
 INSERT INTO `bcf_resource` VALUES (129, '', '其他配置', 'QiTaPeiZhi', '/config/other', '_self', '', 1, '', '', 0, '2018-01-22 14:54:11', '2018-05-29 16:47:38');
 INSERT INTO `bcf_resource` VALUES (130, '', '标签配置', 'BiaoQianPeiZhi', '/config/tag', '_self', '', 2, '', '', 0, '2018-01-22 14:54:39', '2018-05-29 16:46:50');
@@ -326,15 +307,10 @@ INSERT INTO `bcf_resource` VALUES (197, '', '二维码取现顺序', 'ErWeiMaQuX
 INSERT INTO `bcf_resource` VALUES (198, '', '交易失败引导', 'JiaoYiShiBaiYinDao', '/operate/trade_fail_guide', '_self', '', 0, '', '', 0, '2018-03-16 15:02:33', '2018-09-06 13:27:28');
 INSERT INTO `bcf_resource` VALUES (201, '', '积分派发', 'JiFenPaiFa', '/operate/points', '_self', '', 0, '', '', 0, '2018-03-23 11:26:17', '2018-04-13 13:55:47');
 INSERT INTO `bcf_resource` VALUES (202, '', '无意向列表', 'WuYiXiangLieBiao', '/show/ignore', '', '', 5, '', '', 0, '2018-03-27 10:01:14', '2018-09-26 18:02:44');
-INSERT INTO `bcf_resource` VALUES (203, '', '基本信息', '', '/user/query_baseInfo', '_self', '', 1, '', '', 0, '2018-03-29 11:06:00', '2019-03-07 17:41:36');
 INSERT INTO `bcf_resource` VALUES (204, '', '信用报告', '', '', '_self', '', 2, '', '', 0, '2018-03-29 11:06:05', '2018-03-29 14:37:19');
-INSERT INTO `bcf_resource` VALUES (205, '', '运营商', '', '/user/query_operator', '_self', '', 4, '', '', 0, '2018-03-29 11:06:15', '2019-03-07 17:35:23');
-INSERT INTO `bcf_resource` VALUES (206, '', '交易记录', '', '/user/query_trade', '_self', '', 5, '', '', 0, '2018-03-29 11:06:21', '2019-03-07 17:35:31');
 INSERT INTO `bcf_resource` VALUES (207, '', '芝麻信用', '', '/user/zm_score', '', '', 2, '', '', 0, '2018-03-29 15:01:11', '2018-03-29 15:13:04');
-INSERT INTO `bcf_resource` VALUES (208, '', '身份证信息', '', '/user/query_identification', '_self', '', 2, '', '', 0, '2018-03-29 15:01:55', '2019-03-07 17:35:09');
 INSERT INTO `bcf_resource` VALUES (209, '', '同盾信息', '', '/user/td_score', '_self', '', 5, '', '', 0, '2018-03-29 15:02:31', '2018-03-29 15:14:20');
 INSERT INTO `bcf_resource` VALUES (210, '', '邦盛信息', '', '/user/query_bs', '_self', '', 4, '', '', 0, '2018-03-29 15:04:39', '2018-03-29 15:13:55');
-INSERT INTO `bcf_resource` VALUES (211, '', '信用报告', '', '/user/query_credit', '_self', '', 3, '', '', 0, '2018-03-29 15:31:42', '2019-03-07 17:35:17');
 INSERT INTO `bcf_resource` VALUES (212, '', '银行卡更换', 'YinHangKaGengHuan', '/sys/changeCardIndex', '_self', '', 11, '', '', 0, '2018-04-03 10:15:56', '2018-08-29 11:04:59');
 INSERT INTO `bcf_resource` VALUES (213, 'beast_cj_cx_11', '块-取现记录', '', '', '_self', '', 1, '', '', 0, '2018-04-04 10:43:50', '2018-06-01 10:18:33');
 INSERT INTO `bcf_resource` VALUES (214, 'beast_cj_cx_12', '块-借贷记录', '', '', '_self', '', 2, '', '', 0, '2018-04-04 10:44:00', '2018-06-01 10:18:40');
@@ -470,12 +446,7 @@ INSERT INTO `bcf_resource` VALUES (379, '', '借条修改', 'JieTiaoXiuGai', '/r
 INSERT INTO `bcf_resource` VALUES (384, '', '渠道统计', 'QuDaoTongJi', '/stat/channel', '', '', 1, '', '', 0, '2018-07-09 16:00:24', '2018-10-18 15:00:51');
 INSERT INTO `bcf_resource` VALUES (385, '', '渠道统计', 'QuDaoTongJi', '/stat/channel', '', '', 1, '', '', 0, '2018-07-12 11:32:25', '2018-11-22 15:52:19');
 INSERT INTO `bcf_resource` VALUES (386, '', '计算资源', '', '/ops/server', '_self', '', 1, '', '', 0, '2018-07-17 18:01:58', '2020-07-03 17:15:16');
-INSERT INTO `bcf_resource` VALUES (391, 'sponge_user_content', '取消脱敏', '', '', '_self', '', 0, '', '', 0, '2018-07-20 11:52:13', '2019-03-07 11:50:33');
 INSERT INTO `bcf_resource` VALUES (392, '', '推送中心', '/push/', '', '/push/', '', 0, '', '', 0, '2018-07-24 11:10:28', '2018-07-24 11:10:29');
-INSERT INTO `bcf_resource` VALUES (397, '', '数据模型', '', '/push/model', '_self', '', 0, '', '', 0, '2018-07-24 11:47:50', '2018-08-30 09:35:00');
-INSERT INTO `bcf_resource` VALUES (398, '', '计算方案', '', '/push/scheme', '_self', '', 2, '', '', 0, '2018-07-24 11:48:02', '2018-07-24 16:40:12');
-INSERT INTO `bcf_resource` VALUES (399, '', '消息推送', '', '/push/msg', '_self', '', 4, '', '', 0, '2018-07-24 11:48:21', '2018-08-01 13:51:05');
-INSERT INTO `bcf_resource` VALUES (400, '', '短信推送', '', '/push/sms', '_self', '', 8, '', '', 0, '2018-07-24 11:48:32', '2018-08-01 13:51:59');
 INSERT INTO `bcf_resource` VALUES (401, '', 'VIP退款', 'VIPTUIKUAN', '/operate/vip_return', '_self', '', 0, '', '', 0, '2018-07-25 10:50:24', '2018-07-30 18:16:14');
 INSERT INTO `bcf_resource` VALUES (402, '', '充值服务配置', '', '/config/recharge', '', '', 0, '', '', 0, '2018-07-26 15:53:41', '2018-07-26 15:53:42');
 INSERT INTO `bcf_resource` VALUES (403, '', '其他配置', '', '/config/other', '', '', 1, '', '', 0, '2018-07-26 15:53:58', '2019-05-29 10:29:40');
@@ -485,13 +456,7 @@ INSERT INTO `bcf_resource` VALUES (406, '', '黑名单', '', '/config/black', ''
 INSERT INTO `bcf_resource` VALUES (407, '', '支付配置', 'ZhiFuPeiZhi', '/config/pay', '_self', '', 6, '', '', 0, '2018-07-26 15:55:27', '2018-10-31 11:00:42');
 INSERT INTO `bcf_resource` VALUES (408, '', '芝麻认证开关', 'ZhiMaRenZhengKaiGuan', '/config/zhima_auth', '_self', '', 8, '', '', 0, '2018-07-26 15:55:48', '2019-05-30 16:16:23');
 INSERT INTO `bcf_resource` VALUES (409, '', '借款广场置顶', 'JieKuanGuangChangZhiDing', '/config/top', '', '', 9, '', '', 0, '2018-07-26 15:58:30', '2018-09-04 10:58:29');
-INSERT INTO `bcf_resource` VALUES (410, '', '模板配置', '', '/push/template', '_self', '', 9, '', '', 0, '2018-07-26 17:27:09', '2018-08-01 13:52:59');
 INSERT INTO `bcf_resource` VALUES (411, '', '运营管理VIP借款导出', '', '/operate/vipreturn/export', '_self', '', 0, '', '', 0, '2018-07-30 15:46:30', '2018-07-30 15:46:30');
-INSERT INTO `bcf_resource` VALUES (412, '', '链接配置', '', '/push/link', '', '', 5, '', '', 0, '2018-08-01 11:29:46', '2018-08-01 13:51:26');
-INSERT INTO `bcf_resource` VALUES (413, '', '动作配置', '', '/push/action', '', '', 6, '', '', 0, '2018-08-01 11:30:13', '2018-08-01 13:51:31');
-INSERT INTO `bcf_resource` VALUES (414, '', '$', '', '', '', '', 3, '', '', 0, '2018-08-01 13:51:44', '2018-08-01 13:51:45');
-INSERT INTO `bcf_resource` VALUES (415, '', '$', '', '', '_self', '', 7, '', '', 0, '2018-08-01 13:51:58', '2018-08-01 13:51:58');
-INSERT INTO `bcf_resource` VALUES (416, '', '渠道配置', '', '/push/channel', '_self', '', 10, '', '', 0, '2018-08-01 13:52:45', '2018-08-01 13:52:45');
 INSERT INTO `bcf_resource` VALUES (417, 'beast_cj_cx_32', '限-其他后台借条记录', '', '', '', '', 32, '', '', 0, '2018-08-02 11:02:06', '2018-10-10 13:53:12');
 INSERT INTO `bcf_resource` VALUES (418, 'qianbao_cj_cx_32', '限-其他后台借条记录', '', '', '', '', 32, '', '', 0, '2018-08-03 10:24:22', '2019-05-23 14:14:36');
 INSERT INTO `bcf_resource` VALUES (419, '', '页面管理', '', '/loan/index', '_self', '', 0, '', '', 0, '2018-08-07 09:20:00', '2019-03-12 11:43:31');
@@ -680,15 +645,6 @@ INSERT INTO `bcf_resource` VALUES (659, '', '预付合作', '', '/cola_party_set
 INSERT INTO `bcf_resource` VALUES (660, '', '结算单', 'JieSuanDan', '/coffee_settle/settlement', '_self', '', 3, '', '', 0, '2019-03-01 11:21:11', '2019-04-03 11:49:53');
 INSERT INTO `bcf_resource` VALUES (661, '', '月结合作', 'YueJieHeZuo', '/coffee_settle/pay_month', '_self', '', 1, '', '', 0, '2019-03-01 11:23:30', '2019-04-25 10:58:09');
 INSERT INTO `bcf_resource` VALUES (662, '', '预付合作', 'YuFuHeZuo', '/coffee_settle/pay_advance', '_self', '', 2, '', '', 0, '2019-03-01 11:24:14', '2019-04-25 10:55:17');
-INSERT INTO `bcf_resource` VALUES (663, '', '认证查询', 'YongHuChaXun', '/auth/query', '', '', 1, '', '', 0, '2019-03-07 11:38:50', '2019-07-09 13:40:56');
-INSERT INTO `bcf_resource` VALUES (664, 'panda_user_content', '取消脱敏', '', '', '', '', 0, '', '', 0, '2019-03-07 11:50:18', '2019-04-10 14:34:36');
-INSERT INTO `bcf_resource` VALUES (665, '', '基本信息', '', '/auth/query_base', '_self', '', 0, '', '', 0, '2019-03-07 17:41:05', '2019-03-22 15:11:43');
-INSERT INTO `bcf_resource` VALUES (666, '', '身份证识别', '', '/auth/query_identification', '_self', '', 1, '', '', 0, '2019-03-07 17:42:16', '2019-07-10 09:42:55');
-INSERT INTO `bcf_resource` VALUES (667, '', '运营商', '', '/auth/query_operator', '_self', '', 2, '', '', 0, '2019-03-07 19:12:52', '2019-05-13 16:33:59');
-INSERT INTO `bcf_resource` VALUES (668, '', '淘宝数据', '', '/auth/query_taobao', '_self', '', 3, '', '', 0, '2019-03-07 19:13:39', '2019-03-22 15:12:31');
-INSERT INTO `bcf_resource` VALUES (669, '', '邮箱账单', '', '/auth/query_email', '_self', '', 4, '', '', 0, '2019-03-07 19:14:29', '2019-03-22 15:12:45');
-INSERT INTO `bcf_resource` VALUES (670, '', '公积金', '', '/auth/query_fund', '_self', '', 5, '', '', 0, '2019-03-07 19:14:56', '2019-03-22 15:12:58');
-INSERT INTO `bcf_resource` VALUES (671, '', '网银', '', '/auth/query_bank', '_self', '', 6, '', '', 0, '2019-03-07 19:16:25', '2019-03-22 15:30:39');
 INSERT INTO `bcf_resource` VALUES (672, '', '月结合作', '', '/cola_party_settle/pay_month', '_self', '', 1, '', '', 0, '2019-03-08 14:24:58', '2019-04-03 11:52:17');
 INSERT INTO `bcf_resource` VALUES (673, '', '平台用户', '', '/square/outside', '', '', 3, '', '', 0, '2019-03-11 08:13:00', '2019-03-11 15:15:20');
 INSERT INTO `bcf_resource` VALUES (674, '', '结算单', '', '/cola_party_settle/settle_sheet', '_self', '', 2, '', '', 0, '2019-03-11 11:08:32', '2019-04-03 11:52:29');
@@ -709,11 +665,6 @@ INSERT INTO `bcf_resource` VALUES (689, '', '支付宝收款', '', '/config/alip
 INSERT INTO `bcf_resource` VALUES (690, '', '微信收款', '', '/config/wechat', '_self', '', 3, 'http://admin.mustang.dev.zmapi.cn', '', 1, '2019-03-28 14:13:12', '2019-06-04 09:42:16');
 INSERT INTO `bcf_resource` VALUES (691, '', '云闪付收款', '', '/config/ums', '_self', '', 4, 'http://admin.mustang.dev.zmapi.cn', '', 1, '2019-03-28 14:14:06', '2019-06-04 09:42:21');
 INSERT INTO `bcf_resource` VALUES (692, '', '银行设置', '', '/config/bank/$mustangadmin', '', '', 5, 'http://admin.sponge.dev.zmapi.cn/auth/cardbin', '', 0, '2019-03-28 14:14:24', '2019-06-10 14:06:48');
-INSERT INTO `bcf_resource` VALUES (693, '', '卡bin管理', 'KaBinguanLi', '/auth/cardbin', '_self', '', 2, '', '', 0, '2019-03-29 09:55:26', '2019-07-08 10:40:10');
-INSERT INTO `bcf_resource` VALUES (694, '', '支行管理', 'ZhiHangGuanLi', '/auth/bankbranch', '_self', '', 3, '', '', 0, '2019-03-29 09:56:22', '2019-07-08 10:40:14');
-INSERT INTO `bcf_resource` VALUES (695, '', '运营管理', 'YunYingGuanLi', '/auth/operate_export', '_self', '', 4, '', '', 0, '2019-03-29 09:56:48', '2019-07-08 10:40:18');
-INSERT INTO `bcf_resource` VALUES (696, '', '认证数量导出', 'RenZhengShuLiangDaoChu', '/auth/operate_export', '_self', '', 0, '', '', 0, '2019-03-29 10:18:24', '2019-04-02 10:51:27');
-INSERT INTO `bcf_resource` VALUES (697, '', '信用报告流水', 'XinYongBaoGaoLiuShui', '/auth/order', '_self', '', 5, '', '', 0, '2019-04-28 10:43:43', '2019-07-08 10:40:22');
 INSERT INTO `bcf_resource` VALUES (698, 'mustang_no_censor', '不进行脱敏', '', '', '', '', 0, '', '', 0, '2019-04-28 13:53:22', '2019-04-28 14:18:08');
 INSERT INTO `bcf_resource` VALUES (699, 'mustang_user_detail_auth', '用户详情认证情况', '', '', '_self', '', 0, '', '', 0, '2019-04-28 13:53:47', '2019-05-07 13:51:11');
 INSERT INTO `bcf_resource` VALUES (700, 'mustang_user_detail_debit_card', '用户详情绑卡情况', '', '', '_self', '', 0, '', '', 0, '2019-04-28 13:54:05', '2019-07-15 19:33:55');
@@ -724,7 +675,6 @@ INSERT INTO `bcf_resource` VALUES (704, '6', '小快马', '', '', '', '', 2, '',
 INSERT INTO `bcf_resource` VALUES (705, '', '渠道统计', '', '/channel/stats', '', '', 0, '', '', 0, '2019-05-09 14:21:00', '2019-05-09 14:21:26');
 INSERT INTO `bcf_resource` VALUES (706, '', '用户统计', '', '/user/stats', '', '', 0, '', '', 0, '2019-05-10 13:54:00', '2019-05-10 13:54:01');
 INSERT INTO `bcf_resource` VALUES (707, '', '收款备注', '', '/market/pcomment', '', '', 0, '', '', 0, '2019-05-13 14:32:17', '2019-05-17 10:08:32');
-INSERT INTO `bcf_resource` VALUES (708, '', '交易信息', '', '/auth/query_card_list', '_self', '', 7, '', '', 0, '2019-05-13 16:33:57', '2019-07-10 09:44:16');
 INSERT INTO `bcf_resource` VALUES (709, '', '邀请奖励', '', '/market/invite', '', '', 0, '', '', 0, '2019-05-21 11:11:27', '2019-05-29 15:28:33');
 INSERT INTO `bcf_resource` VALUES (710, '', '数据快报', '', '/tool/report', '_self', '', 5, '', '', 0, '2019-05-21 15:02:22', '2020-09-08 19:39:55');
 INSERT INTO `bcf_resource` VALUES (711, 'hippo_cj_borrowers_0', '借条列表筛选栏', 'JieTiaoLieBiaoShaiXuanLan', '', '_self', '', 0, '', '', 0, '2019-05-23 13:59:13', '2019-05-23 14:03:03');
@@ -764,7 +714,6 @@ INSERT INTO `bcf_resource` VALUES (744, '', '在线放款记录', 'ZaiXianFangKu
 INSERT INTO `bcf_resource` VALUES (745, '', '余额对账', 'YuEDuiZhang', '/account/balance', '_self', '', 4, '', '', 0, '2019-05-23 14:51:08', '2019-05-23 14:51:19');
 INSERT INTO `bcf_resource` VALUES (746, '', '自动工具', '', '/sys/sysmanage', '', '', 0, '', '', 0, '2019-05-23 15:00:08', '2019-05-23 15:00:08');
 INSERT INTO `bcf_resource` VALUES (747, '', '放款设置', '', '/sys/loan', '', '', 1, '', '', 0, '2019-05-23 15:00:19', '2019-05-23 15:00:19');
-INSERT INTO `bcf_resource` VALUES (749, '', '黑名单管理', '', '/auth/blacklist', '_self', '', 6, '', '', 0, '2019-05-23 15:04:38', '2019-07-08 10:40:26');
 INSERT INTO `bcf_resource` VALUES (750, 'hippo_cj_online_template', '在线还款自动补借条', 'ZaiXianHuanKuanZiDongBuJieTiao', '', '', '', 0, '', '', 0, '2019-05-23 15:07:59', '2019-05-23 15:07:59');
 INSERT INTO `bcf_resource` VALUES (751, '6', 'LoanMaster', '', '', '', '', 1, '', '', 0, '2019-05-27 15:47:17', '2020-09-03 11:02:34');
 INSERT INTO `bcf_resource` VALUES (752, '8', '钱豹', '', '', '_self', '', 2, '', '', 0, '2019-05-27 15:48:14', '2020-06-02 14:23:46');
@@ -786,10 +735,6 @@ INSERT INTO `bcf_resource` VALUES (769, '', '权限级别', '', '', '_self', '',
 INSERT INTO `bcf_resource` VALUES (770, 'hippo_p_operator', '操作员', 'CaoZuoYuan', '', '', '', 0, '', '', 0, '2019-06-10 15:16:41', '2019-06-10 15:16:42');
 INSERT INTO `bcf_resource` VALUES (771, 'hippo_p_admin', '管理员', 'GuanLiYuan', '', '', '', 1, '', '', 0, '2019-06-10 15:17:44', '2019-06-10 15:17:48');
 INSERT INTO `bcf_resource` VALUES (772, '', '借款人还款提示卡', 'JieKuanRenHuanKuanTiShiKa', '/account/main', '', '', 5, '', '', 0, '2019-06-11 14:58:30', '2019-06-11 14:58:39');
-INSERT INTO `bcf_resource` VALUES (773, '', '用户列表', '', '/auth/list', '', '', 0, '', '', 0, '2019-06-14 16:16:49', '2019-07-09 13:40:59');
-INSERT INTO `bcf_resource` VALUES (774, '', '借贷信息', '', '/auth/query_loan', '_self', '', 8, '', '', 0, '2019-06-17 14:45:54', '2019-07-10 09:44:32');
-INSERT INTO `bcf_resource` VALUES (775, '', '卡宝*', '', '/auth/query_kabao', '_self', '', 9, '', '', 0, '2019-06-17 14:46:40', '2019-07-10 09:44:47');
-INSERT INTO `bcf_resource` VALUES (776, '', '收乎*', '', '/auth/query_shouhu', '_self', '', 10, '', '', 0, '2019-06-17 14:47:46', '2019-07-09 17:23:24');
 INSERT INTO `bcf_resource` VALUES (777, 'mustang_user_detail_risk', '用户详情风控情况', '', '', '_self', '', 0, '', '', 0, '2019-07-15 19:33:40', '2019-07-15 19:33:59');
 INSERT INTO `bcf_resource` VALUES (778, '', '广告配置', '', '\r\n/adsetting/list', '', '', 1, '', '', 0, '2019-07-17 16:22:56', '2019-07-17 16:56:55');
 INSERT INTO `bcf_resource` VALUES (779, '', '广告配置', '', '/operate/list', '', '', 0, '', '', 0, '2019-07-17 16:56:41', '2019-09-25 14:02:43');
@@ -820,7 +765,6 @@ INSERT INTO `bcf_resource` VALUES (811, '', '奖励金流水', '', '/operate/wit
 INSERT INTO `bcf_resource` VALUES (812, '', '支付开关', '', '/operate/pay_switch', '', '', 1, '', '', 0, '2019-09-17 14:43:53', '2019-09-25 14:04:31');
 INSERT INTO `bcf_resource` VALUES (813, '', '奖励配置', '', '/operate/vip_rate', '', '', 3, '', '', 0, '2019-09-17 14:44:10', '2019-09-25 14:04:48');
 INSERT INTO `bcf_resource` VALUES (815, '', '提现申请流水', '', '/operate/withdraw_record', '', '', 1, '', '', 0, '2019-09-17 16:51:19', '2019-09-25 14:05:43');
-INSERT INTO `bcf_resource` VALUES (816, '', '文章管理', '', '/article/art_list/$sponge', '_self', '', 0, 'https://w.dev.i1l1.cn/.admin/article/art_list.ftl?_L0n5=0F1C42E5D687ED4BA06D2F5DD34AFFAAB1FFB57B&{{cms_token}}', '', 1, '2019-09-25 12:54:05', '2020-04-01 15:48:21');
 INSERT INTO `bcf_resource` VALUES (817, '', '用户列表', 'YongHuLieBiao', '/user/list', '', '', 0, '', '', 0, '2019-10-18 10:23:03', '2019-11-14 10:25:36');
 INSERT INTO `bcf_resource` VALUES (819, '', '意见反馈', 'YiJianFanKui', '/user/suggest', '', '', 1, '', '', 0, '2019-10-22 10:13:19', '2019-11-14 10:25:47');
 INSERT INTO `bcf_resource` VALUES (820, '', '文章投诉', 'WenZhangTouSu', '/user/complaint', '', '', 2, '', '', 0, '2019-10-22 10:14:40', '2019-11-14 10:26:01');
@@ -943,23 +887,25 @@ INSERT INTO `bcf_resource` VALUES (967, '', 'API产品设置', '', '/apiproduct/
 INSERT INTO `bcf_resource` VALUES (968, '', '认证配置', '', '/setting/validatelist', '_self', '', 3, '', '', 0, '2020-09-28 13:51:30', '2020-09-28 13:51:30');
 INSERT INTO `bcf_resource` VALUES (973, '', 'demo', 'demo', '', '_self', '', 0, '', '', 0, '2021-02-18 14:10:48', '2021-02-18 14:24:13');
 INSERT INTO `bcf_resource` VALUES (974, '', '应用国际化', '', '/rock/api18n', '_self', '', 7, '', '', 0, '2021-02-23 22:50:26', '2021-02-23 22:50:45');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_resource_linked
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_resource_linked`;
-CREATE TABLE `bcf_resource_linked`  (
-  `rsid` int NOT NULL COMMENT '资源ID',
-  `lk_objt` int NOT NULL DEFAULT 0 COMMENT '连接对象',
-  `lk_objt_id` int NOT NULL DEFAULT 0 COMMENT '连接对象ID',
-  `lk_operate` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '连操操作符(+,-)',
-  `p_express` int UNSIGNED NULL DEFAULT 0 COMMENT '操作表达式(预留)',
-  PRIMARY KEY (`rsid`, `lk_objt`, `lk_objt_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-资源连接表' ROW_FORMAT = Dynamic;
+CREATE TABLE `bcf_resource_linked` (
+  `rsid` int(11) NOT NULL COMMENT '资源ID',
+  `lk_objt` int(11) NOT NULL DEFAULT '0' COMMENT '连接对象',
+  `lk_objt_id` int(11) NOT NULL DEFAULT '0' COMMENT '连接对象ID',
+  `lk_operate` char(1) DEFAULT NULL COMMENT '连操操作符(+,-)',
+  `p_express` int(10) unsigned DEFAULT '0' COMMENT '操作表达式(预留)',
+  PRIMARY KEY (`rsid`,`lk_objt`,`lk_objt_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-资源连接表';
 
 -- ----------------------------
 -- Records of bcf_resource_linked
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_resource_linked` VALUES (3, 7, 3, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (3, 7, 4, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (3, 7, 5, '+', 2);
@@ -2575,44 +2521,12 @@ INSERT INTO `bcf_resource_linked` VALUES (112, 7, 94, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (112, 7, 95, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (118, 7, 3, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (118, 7, 70, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 2, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 56, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 61, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 80, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 86, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 91, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (122, 7, 92, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 60, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (126, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 2, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 61, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (127, 7, 74, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (128, 7, 3, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (128, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (128, 7, 39, '+', 2);
@@ -3283,81 +3197,11 @@ INSERT INTO `bcf_resource_linked` VALUES (202, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (202, 7, 83, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (202, 7, 85, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (202, 7, 86, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 2, 96, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (203, 7, 86, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (204, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (204, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 2, 96, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (205, 7, 86, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 2, 96, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (206, 7, 86, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (207, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 2, 96, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (208, 7, 86, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (209, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (210, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 2, 96, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 57, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 58, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 62, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 83, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (211, 7, 86, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (212, 7, 65, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (212, 7, 70, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (212, 7, 73, '+', 2);
@@ -5164,73 +5008,6 @@ INSERT INTO `bcf_resource_linked` VALUES (386, 7, 77, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (386, 7, 82, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (386, 7, 85, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (386, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 2, 151, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (391, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (397, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (398, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (399, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (400, 7, 92, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (401, 7, 70, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (402, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (402, 7, 29, '+', 2);
@@ -5320,100 +5097,10 @@ INSERT INTO `bcf_resource_linked` VALUES (409, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (409, 7, 83, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (409, 7, 85, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (409, 7, 86, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (410, 7, 92, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (411, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (411, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (411, 7, 60, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (411, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (412, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (413, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (414, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (415, 7, 92, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 2, 153, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 35, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 39, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 40, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 60, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 72, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 74, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 75, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 76, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 77, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 82, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 85, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (416, 7, 92, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (417, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (417, 7, 83, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (418, 7, 39, '+', 2);
@@ -6439,33 +6126,6 @@ INSERT INTO `bcf_resource_linked` VALUES (662, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (662, 7, 84, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (662, 7, 86, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (662, 7, 93, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (663, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (663, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (663, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (663, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (664, 2, 231, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (664, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (665, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (665, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (665, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (666, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (666, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (666, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (667, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (667, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (667, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (668, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (668, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (668, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (669, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (669, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (669, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (670, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (670, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (670, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (671, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (671, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (671, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (672, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (672, 7, 84, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (672, 7, 86, '+', 2);
@@ -6496,26 +6156,6 @@ INSERT INTO `bcf_resource_linked` VALUES (689, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (690, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (691, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (692, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (693, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (693, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (693, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (693, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (693, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (694, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (694, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (694, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (694, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (695, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (695, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (695, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (695, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (696, 2, 239, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (696, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (696, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (697, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (697, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (697, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (697, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (699, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (701, 2, 12, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (701, 7, 41, '+', 2);
@@ -6527,9 +6167,6 @@ INSERT INTO `bcf_resource_linked` VALUES (705, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (706, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (707, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (707, 7, 71, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (708, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (708, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (708, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (709, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (709, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (710, 2, 56, '+', 2);
@@ -6570,11 +6207,6 @@ INSERT INTO `bcf_resource_linked` VALUES (744, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (745, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (746, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (747, 7, 29, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (749, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (749, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (749, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (749, 7, 29, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (749, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (751, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (751, 7, 84, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (752, 7, 35, '+', 2);
@@ -6664,22 +6296,6 @@ INSERT INTO `bcf_resource_linked` VALUES (766, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (768, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (771, 7, 29, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (772, 7, 29, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (773, 2, 12, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (773, 2, 229, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (773, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (773, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (774, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (774, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (774, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (774, 7, 68, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (775, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (775, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (775, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (775, 7, 68, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (776, 2, 230, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (776, 7, 6, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (776, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (776, 7, 68, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (777, 7, 71, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (778, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (778, 7, 59, '+', 2);
@@ -6694,9 +6310,6 @@ INSERT INTO `bcf_resource_linked` VALUES (783, 7, 84, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (800, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (801, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (801, 7, 59, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (816, 2, 275, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (816, 7, 41, '+', 2);
-INSERT INTO `bcf_resource_linked` VALUES (816, 7, 55, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (817, 7, 6, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (817, 7, 41, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (819, 7, 6, '+', 2);
@@ -7095,53 +6708,58 @@ INSERT INTO `bcf_resource_linked` VALUES (963, 7, 35, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (973, 2, 140, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (973, 7, 1, '+', 2);
 INSERT INTO `bcf_resource_linked` VALUES (974, 2, 75, '+', 2);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_user
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_user`;
-CREATE TABLE `bcf_user`  (
-  `puid` int NOT NULL AUTO_INCREMENT COMMENT '内部用户ID',
-  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户账号',
-  `out_objt` int NULL DEFAULT 0 COMMENT '外部关系对象',
-  `out_objt_id` bigint NULL DEFAULT 0 COMMENT '外部关系对象ID',
-  `cn_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名称',
-  `en_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '英文名称',
-  `pw_mail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码找回邮箱',
-  `token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `tags` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标签',
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `is_disabled` tinyint(1) NULL DEFAULT NULL COMMENT '是否禁用',
-  `is_visibled` tinyint(1) NULL DEFAULT NULL COMMENT '是否可见',
+CREATE TABLE `bcf_user` (
+  `puid` int(11) NOT NULL AUTO_INCREMENT COMMENT '内部用户ID',
+  `user_id` varchar(50) NOT NULL COMMENT '用户账号',
+  `out_objt` int(11) DEFAULT '0' COMMENT '外部关系对象',
+  `out_objt_id` bigint(20) DEFAULT '0' COMMENT '外部关系对象ID',
+  `cn_name` varchar(50) DEFAULT NULL COMMENT '中文名称',
+  `en_name` varchar(50) DEFAULT NULL COMMENT '英文名称',
+  `pw_mail` varchar(50) DEFAULT NULL COMMENT '密码找回邮箱',
+  `token` varchar(100) DEFAULT NULL,
+  `tags` varchar(50) DEFAULT NULL COMMENT '标签',
+  `note` varchar(255) DEFAULT NULL COMMENT '备注',
+  `is_disabled` tinyint(1) DEFAULT NULL COMMENT '是否禁用',
+  `is_visibled` tinyint(1) DEFAULT NULL COMMENT '是否可见',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `last_update` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
-  `pass_wd` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '账号密码',
-  `state` int NOT NULL DEFAULT 0 COMMENT '状态（预留）',
+  `pass_wd` varchar(50) DEFAULT NULL COMMENT '账号密码',
+  `state` int(11) NOT NULL DEFAULT '0' COMMENT '状态（预留）',
   PRIMARY KEY (`puid`) USING BTREE,
-  UNIQUE INDEX `IX_User_Id`(`user_id`) USING BTREE,
-  INDEX `IX_OUT_OBJT`(`out_objt`, `out_objt_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 127 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-用户表' ROW_FORMAT = Dynamic;
+  UNIQUE KEY `IX_User_Id` (`user_id`) USING BTREE,
+  KEY `IX_OUT_OBJT` (`out_objt`,`out_objt_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-用户表';
 
 -- ----------------------------
 -- Records of bcf_user
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_user` VALUES (1, 'admin', 0, 0, '管理员', '', '', NULL, '', NULL, 0, 1, '2021-03-12 16:55:03', '2021-03-12 17:20:33', '5950C3DDB200464B1446D203585F88A8CD655F7A', 0);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for bcf_user_linked
 -- ----------------------------
 DROP TABLE IF EXISTS `bcf_user_linked`;
-CREATE TABLE `bcf_user_linked`  (
-  `puid` int NOT NULL COMMENT '内部用户ID',
-  `lk_objt` int UNSIGNED NOT NULL COMMENT '连接对象',
-  `lk_objt_id` int NOT NULL COMMENT '连接对象ID',
-  `lk_operate` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '连接操作符（+,-）',
-  PRIMARY KEY (`puid`, `lk_objt`, `lk_objt_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'BCF-用户连接表' ROW_FORMAT = Dynamic;
+CREATE TABLE `bcf_user_linked` (
+  `puid` int(11) NOT NULL COMMENT '内部用户ID',
+  `lk_objt` int(10) unsigned NOT NULL COMMENT '连接对象',
+  `lk_objt_id` int(11) NOT NULL COMMENT '连接对象ID',
+  `lk_operate` char(1) DEFAULT NULL COMMENT '连接操作符（+,-）',
+  PRIMARY KEY (`puid`,`lk_objt`,`lk_objt_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='BCF-用户连接表';
 
 -- ----------------------------
 -- Records of bcf_user_linked
 -- ----------------------------
+BEGIN;
 INSERT INTO `bcf_user_linked` VALUES (1, 2, 12, '+');
+COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

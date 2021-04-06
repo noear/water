@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : @dev-mysql8
- Source Server Type    : MySQL
- Source Server Version : 80018
- Source Host           : 120.55.237.185:3306
- Source Schema         : water_log
-
- Target Server Type    : MySQL
- Target Server Version : 80018
- File Encoding         : 65001
-
- Date: 05/04/2021 12:41:03
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

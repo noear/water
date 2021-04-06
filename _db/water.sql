@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : @test-mysql8
- Source Server Type    : MySQL
- Source Server Version : 80020
- Source Host           : 172.168.0.162:3306
- Source Schema         : water
-
- Target Server Type    : MySQL
- Target Server Version : 80020
- File Encoding         : 65001
-
- Date: 12/03/2021 17:10:12
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -300,7 +284,7 @@ INSERT INTO `water_cfg_properties` VALUES (191, '_service', 'paasapi', 0, 'http:
 INSERT INTO `water_cfg_properties` VALUES (193, 'water', 'paas_cache_header', 0, 'PAAS_API_CACHE_DEV', 'properties', 1, 1, '2021-02-06 12:39:55');
 INSERT INTO `water_cfg_properties` VALUES (322, 'water', 'water_cache_header', 0, 'WATER2_API_DEV_CACHE', NULL, 1, 1, '2020-02-04 14:47:56');
 INSERT INTO `water_cfg_properties` VALUES (324, 'water', 'raas_uri', 0, 'http://raas.water.io', 'text', 1, 1, '2021-03-12 16:35:30');
-INSERT INTO `water_cfg_properties` VALUES (335, '_service', 'raasapi', 0, 'http://raas.dev.zmapi.cn/{fun}', NULL, 1, 1, '2020-04-13 14:25:53');
+INSERT INTO `water_cfg_properties` VALUES (335, '_service', 'raasapi', 0, 'http://raas.dev.xxx.cn/{fun}', NULL, 1, 1, '2020-04-13 14:25:53');
 INSERT INTO `water_cfg_properties` VALUES (369, 'water', 'enable_tag_checker', 0, '0', 'properties', 1, 1, '2021-03-12 17:06:57');
 INSERT INTO `water_cfg_properties` VALUES (370, 'water', 'water_paas', 10, 'schema=water_paas\nurl=jdbc:mysql://mysql.water.io:3306/water_paas?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\npassword=123456\nusername=root\njdbcUrl=${url}', 'properties', 1, 1, '2021-01-29 15:10:41');
 INSERT INTO `water_cfg_properties` VALUES (397, 'sponge', 'sponge_url', 0, 'http://8.136.188.140:8182/', 'properties', 1, 0, '2021-03-12 16:33:01');
@@ -311,8 +295,8 @@ INSERT INTO `water_cfg_properties` VALUES (773, '_system', 'env_type', 0, '0=测
 INSERT INTO `water_cfg_properties` VALUES (774, '_system', 'iaas_type', 0, '0=ECS\r\n1=LBS\r\n2=RDS\r\n3=Redis\r\n4=Memcached\r\n5=DRDS\r\n6=ECI\r\n7=NAS\r\n8=PolarDB', NULL, 0, 1, '2020-06-09 11:21:42');
 INSERT INTO `water_cfg_properties` VALUES (778, 'sponge', 'sponge_rock', 10, 'schema=sponge_rock\nurl=jdbc:mysql://mysql.water.io:3306/sponge_rock?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\npassword=123456\nusername=root\njdbcUrl=${url}', 'properties', 0, 1, '2021-01-29 15:11:20');
 INSERT INTO `water_cfg_properties` VALUES (780, '_demo', 'ali_oss_cfg', 0, 'host=https://img2.kdz6.cn\ndir=/cms/\nbucket=zm-51kb-estuary\nendpoint=oss-cn-shanghai-internal.aliyuncs.com\naccessKeyId=LTAIMsMV4LOUCUp6\naccessSecretKey=HNLziZiAXUKyO0VsXZLrrDcBCaCSNV', 'properties', 0, 1, '2021-02-05 13:27:08');
-INSERT INTO `water_cfg_properties` VALUES (783, '_demo', 'rock', 10, 'schema=rock\r\nurl=jdbc:mysql://mysql.dev.zmapi.cn:3306/rock?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\r\npassword=gXWTCL18\r\nusername=root', NULL, 0, 1, '2021-01-29 11:07:55');
-INSERT INTO `water_cfg_properties` VALUES (784, '_demo', 'test', 10, 'schema=test\r\nurl=jdbc:mysql://mysql.dev.zmapi.cn:3306/test?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\r\npassword=gXWTCL18\r\nusername=root', NULL, 0, 1, '2021-01-29 11:07:55');
+INSERT INTO `water_cfg_properties` VALUES (783, '_demo', 'rock', 10, 'schema=rock\r\nurl=jdbc:mysql://mysql.dev.xxx.cn:3306/rock?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\r\npassword=gXWTCL18\r\nusername=root', NULL, 0, 1, '2021-01-29 11:07:55');
+INSERT INTO `water_cfg_properties` VALUES (784, '_demo', 'test', 10, 'schema=test\r\nurl=jdbc:mysql://mysql.dev.xxx.cn:3306/test?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true\r\npassword=gXWTCL18\r\nusername=root', NULL, 0, 1, '2021-01-29 11:07:55');
 INSERT INTO `water_cfg_properties` VALUES (789, '_system', 'iaas_region', 0, 'cn-shanghai=cn-shanghai\r\ncn-hangzhou=cn-hangzhou', NULL, 0, 1, '2020-03-18 09:26:59');
 INSERT INTO `water_cfg_properties` VALUES (838, '_service', 'wateradmin', 0, 'http://admin.water.io/{fun}', 'properties', 0, 1, '2021-03-12 16:29:40');
 INSERT INTO `water_cfg_properties` VALUES (887, '_demo', 'test_yml', 0, 'server:\r\n  port: 9001\r\napp:\r\n  id: speech\r\nknowledge:\r\n  init:\r\n    knowledgeTitles:\r\n      - kdTitle: 听不清\r\n        keyWords: \"[你说什么，没听清，听不清楚，再说一遍]\"\r\n        question: \"[没听懂，听不清楚]\"\r\n      - kdTitle: 无应答\r\n        kdInfos:\r\n          - 你好\r\n          - hello\r\n          - hi', 'yaml', 0, 1, '2020-06-24 12:09:21');
