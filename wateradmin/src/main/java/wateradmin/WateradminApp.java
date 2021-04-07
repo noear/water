@@ -2,6 +2,7 @@ package wateradmin;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
+import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
@@ -23,9 +24,23 @@ public class WateradminApp {
         // http://139.224.74.31:9371/cfg/get/?tag=water
         //
 
+        NvMap argx = NvMap.from(args);
+
+        if(argx.getInt("setup") == 1){
+            setStart(argx);
+        }else{
+            runStart(argx);
+        }
+    }
+
+    private static void setStart(NvMap argx){
+
+    }
+
+    private static void runStart(NvMap argx){
         WaterLogger logger = new WaterLogger("water_log_admin");
 
-        Solon.start(WateradminApp.class, args, app -> {
+        Solon.start(WateradminApp.class, argx, app -> {
             Config.tryInit(app);
 
 
