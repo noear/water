@@ -104,7 +104,7 @@ public class CodeGenerationController extends BaseController {
                 continue;
             }
 
-            if (f.type.startsWith("int")||f.type.startsWith("tinyint")) {
+            if (f.type.startsWith("int") || f.type.startsWith("tinyint") || f.type.startsWith("smallint")) {
                 f.type = "int";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
