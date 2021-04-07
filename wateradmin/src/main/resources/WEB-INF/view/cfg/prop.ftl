@@ -26,6 +26,11 @@
     </script>
 </head>
 <body>
+<#if is_setup==1>
+<header>
+    <div class="center">Water configuration initialization ...</div>
+</header>
+</#if>
 <main>
     <middle>
         <tree id="tree">

@@ -127,7 +127,7 @@ left menu.style2 div{border: #111 1px solid;border-top: #111 1px solid;}
 
 fieldset{border:1px solid #c9c9c9; border-radius: 5px;}
 
-tree {background-color: #eaedf1; display: block; overflow: auto; height: 100vh; overflow-x: hidden; overflow-y: auto;}
+tree {background-color: #eaedf1; display: block; overflow: auto; height: 100%; overflow-x: hidden; overflow-y: auto;}
 tree ul{margin-bottom: 10px;}
 tree ul label{display: block; font-weight: bold; height: 40px; line-height: 40px; padding-left: 20px; overflow: hidden;}
 tree ul li{height: 40px; line-height: 40px; padding-left: 20px; overflow: hidden;}
