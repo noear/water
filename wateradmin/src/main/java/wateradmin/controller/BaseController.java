@@ -37,8 +37,17 @@ public abstract class BaseController {
         //当前用户信息(示例)
         viewModel.put("puid", Session.current().getPUID());
         viewModel.put("cn_name", Session.current().getUserName());
-        viewModel.put("is_admin", Session.current().getIsAdmin());
-        viewModel.put("is_operator", Session.current().getIsOperator());
+
+        viewModel.put("is_setup", Solon.cfg().isSetupMode()?1:0);
+
+        if(Solon.cfg().isSetupMode()){
+            //支持设置模式
+            viewModel.put("is_admin", 1);
+            viewModel.put("is_operator", 1);
+        }else {
+            viewModel.put("is_admin", Session.current().getIsAdmin());
+            viewModel.put("is_operator", Session.current().getIsOperator());
+        }
 
 
         viewModel.put("ref_url", Context.current().header("referer"));

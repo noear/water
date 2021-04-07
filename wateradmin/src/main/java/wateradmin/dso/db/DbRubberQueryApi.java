@@ -7,6 +7,7 @@ import wateradmin.models.water_rebber.BlockModel;
 import wateradmin.models.water_rebber.ModelFieldModel;
 import wateradmin.models.water_rebber.ModelModel;
 import wateradmin.models.water_rebber.SchemeModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class DbRubberQueryApi {
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     //代码片段查询

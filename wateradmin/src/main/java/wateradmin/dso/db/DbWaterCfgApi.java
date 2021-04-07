@@ -15,6 +15,7 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.LoggerModel;
 import wateradmin.models.water_cfg.WhitelistModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 public class DbWaterCfgApi {
 
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     public static List<LoggerModel> getLoggerByTag(String tag) throws Exception {

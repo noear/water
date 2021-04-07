@@ -106,11 +106,14 @@
         </form>
 
         <#if is_admin == 1>
-            <div><a class="w60"></a><file>
+            <div><a class="w60"></a>
+                <#if is_setup != 1>
+                <file>
                     <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
                 </file>
 
                 <button type='button' class="minor w80 mar10-l" onclick="exp('${tag_name!}')" >导出</button>
+                </#if>
 
                 <#if state==1>
                     <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>

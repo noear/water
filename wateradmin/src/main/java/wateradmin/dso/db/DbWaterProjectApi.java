@@ -5,13 +5,14 @@ import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_ops.ProjectModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class DbWaterProjectApi {
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     //获取项目标签

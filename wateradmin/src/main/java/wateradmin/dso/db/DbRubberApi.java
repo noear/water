@@ -19,6 +19,7 @@ import wateradmin.models.water_rebber.ModelModel;
 import wateradmin.models.water_rebber.SchemeModel;
 import wateradmin.models.water_rebber.SchemeRuleModel;
 import wateradmin.models.water_rebber.SchemeNodeDesignModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class DbRubberApi {
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     //获取模型tag

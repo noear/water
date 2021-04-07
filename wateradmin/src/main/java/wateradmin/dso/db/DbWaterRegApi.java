@@ -8,6 +8,7 @@ import wateradmin.Config;
 import wateradmin.dso.IDUtil;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class DbWaterRegApi {
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     //删除服务。

@@ -12,6 +12,7 @@ import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.Session;
 import wateradmin.models.water.VersionModel;
+import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class DbWaterVerApi {
     private static DbContext db() {
-        return Config.water;
+        return Setup.water;
     }
 
     /** 备份表的数据版本 */
