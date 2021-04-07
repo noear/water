@@ -4,6 +4,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
+import org.noear.water.WW;
+import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -18,7 +20,7 @@ import javax.sql.DataSource;
 import java.util.*;
 
 @Getter
-public class ConfigModel
+public class ConfigModel implements IBinder
 {
     public transient int row_id;
     public String tag;
@@ -27,6 +29,28 @@ public class ConfigModel
     public String value;
     public String edit_mode;
     public transient int is_enabled;
+
+
+
+    @Override
+    public void bind(GetHandlerEx s) {
+        row_id = s.get("row_id").value(0);
+        tag = s.get("tag").value("");
+        key = s.get("key").value("");
+        type = s.get("type").value(0);
+        value = s.get("value").value("");
+        edit_mode = s.get("edit_mode").value("");
+        is_enabled = s.get("is_enabled").value(0);
+
+        if (value.startsWith(WW.cfg_data_header)) {
+            value = Base64Utils.decode(value.substring(8));
+        }
+    }
+
+    @Override
+    public IBinder clone() {
+        return new ConfigModel();
+    }
 
 	public String type_str(){
 	    return ConfigType.getTitle(type);
@@ -202,5 +226,4 @@ public class ConfigModel
 
         return new MgContext(getProp(), db);
     }
-
 }

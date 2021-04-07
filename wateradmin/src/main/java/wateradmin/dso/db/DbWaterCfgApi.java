@@ -1,8 +1,10 @@
 package wateradmin.dso.db;
 
 import org.noear.snack.ONode;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.dso.WhitelistApi;
+import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -286,6 +288,10 @@ public class DbWaterCfgApi {
 
     //编辑更新config。
     public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
+
+        value = WW.cfg_data_header + Base64Utils.encode(value.trim());
+
+
         DbTableQuery db = db().table("water_cfg_properties")
                 .set("row_id", row_id)
                 .set("tag", tag.trim())
@@ -293,7 +299,7 @@ public class DbWaterCfgApi {
                 .set("type", type)
                 .set("edit_mode", edit_mode)
                 .set("update_fulltime", "$NOW()").usingExpr(true)
-                .set("value", value.trim());
+                .set("value", value);
 
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;

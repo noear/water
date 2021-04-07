@@ -3,7 +3,9 @@ package waterapi.models;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
+import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
@@ -35,6 +37,10 @@ public class ConfigModel implements IBinder {
         is_editable = s.get("is_editable").value(false);
         is_enabled = s.get("is_enabled").intValue(0) > 0;
         update_fulltime = s.get("update_fulltime").value(null);
+
+        if (value.startsWith(WW.cfg_data_header)) {
+            value = Base64Utils.decode(value.substring(8));
+        }
     }
 
     @Override
