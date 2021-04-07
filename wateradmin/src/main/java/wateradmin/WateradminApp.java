@@ -18,6 +18,7 @@ import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.water.utils.IDUtils;
 import org.noear.weed.DbContext;
+import wateradmin.controller.cfg.PropController;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.IDUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -50,9 +51,15 @@ public class WateradminApp {
 
         SolonApp app = Solon.start(Setup.class, argx, x -> {
             x.beanScan(EnumTag.class);
+            x.beanMake(PropController.class);
         });
 
         Props ps = app.cfg().getProp("water.dataSource");
+
+        if(ps.size() < 4){
+            throw new RuntimeException("[Water] Missing water. DataSource configuration");
+        }
+
         ps.setProperty("jdbcUrl", ps.getProperty("url"));
 
         DataSource ds = Utils.injectProperties(new HikariDataSource(), ps);

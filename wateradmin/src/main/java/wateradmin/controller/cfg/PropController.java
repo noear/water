@@ -1,7 +1,5 @@
-package wateradmin.setup;
+package wateradmin.controller.cfg;
 
-import org.noear.snack.ONode;
-import org.noear.snack.core.TypeRef;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
@@ -31,7 +29,11 @@ public class PropController extends BaseController {
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
-        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
+        if(Solon.cfg().isSetupMode()) {
+            BcfTagChecker.filterWaterTag(tags, m -> m.tag);
+        }else{
+            BcfTagChecker.filter(tags, m -> m.tag);
+        }
 
         tag_name = TagUtil.build(tag_name,tags);
 
