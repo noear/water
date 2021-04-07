@@ -25,10 +25,3 @@ water:
 #  level: 2
 #  interval: 1000
 #  packetSize: 100
-
-
-water.dataSource.schema: water
-water.dataSource.url: jdbc:mysql://mysql.water.io:3306/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
-water.dataSource.username: water
-water.dataSource.password: KHe85E4MYdeLBHSR
-water.dataSource.driverClassName: com.mysql.jdbc.Driver
