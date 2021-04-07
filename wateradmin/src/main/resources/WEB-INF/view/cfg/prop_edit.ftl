@@ -111,7 +111,8 @@
                         {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
                         {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000},
                         {name: "regionId",value: "regionId", meta: "",type: "local",score: 1000},
-                        {name: "endpoint",value: "endpoint", meta: "",type: "local",score: 1000}
+                        {name: "endpoint",value: "endpoint", meta: "",type: "local",score: 1000},
+                        {name: "bucket",value: "bucket", meta: "",type: "local",score: 1000}
                     ]);
             }
         });
@@ -180,17 +181,7 @@
             ctl_s_save_bind(document,save);
         });
 
-        window.tmls = {
-            "database":"schema=\nurl=\nusername=\npassword=",
-            "mongodb":"url=",
-            "memcached":"server=\nuser=\npassword=",
-            "redis":"server=\nuser=\npassword=",
-            "elasticsearch":"url=\nusername=\npassword=",
-            "iaas.ram":"regionId=\naccessKeyId=\naccessSecret=\nendpoint=",
-            "water.queue":"store.name=\nstore.type=\nserver=\nuser=\npassword=\n#for redis\ndb=\n#for rocketmq\nvirtualHost=",
-            "water.block":"store.name=\nstore.type=\nschema=\nurl=\npassword=\nusername=",
-            "water.logger":"store.name=\nstore.type=\nschema=\nurl=\npassword=\nusername=",
-        };
+        window.tmls = ${config_tml!'{}'};
     </script>
 </head>
 <body>

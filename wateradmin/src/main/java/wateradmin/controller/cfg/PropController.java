@@ -4,10 +4,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsondEntity;
-import org.noear.water.utils.JsondUtils;
+import org.noear.water.utils.*;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
@@ -62,19 +59,25 @@ public class PropController extends BaseController {
     //跳转编辑页面。
     @Mapping("edit")
     public ModelAndView editConfig(String tag_name, Integer row_id) throws SQLException {
-        if(row_id == null){
+        if (row_id == null) {
             row_id = 0;
         }
 
+        ConfigModel tml = DbWaterCfgApi.getConfigByTagName("_system", "config_tml");
         ConfigModel cfg = DbWaterCfgApi.getConfig(row_id);
 
-        if(cfg.row_id > 0){
+        if (cfg.row_id > 0) {
             tag_name = cfg.tag;
         }
 
-        viewModel.put("row_id",row_id);
-        viewModel.put("cfg",cfg);
-        viewModel.put("tag_name",tag_name);
+        if (TextUtils.isEmpty(tml.value)) {
+            tml.value = "{}";
+        }
+
+        viewModel.put("config_tml", tml.value);
+        viewModel.put("row_id", row_id);
+        viewModel.put("cfg", cfg);
+        viewModel.put("tag_name", tag_name);
         return view("cfg/prop_edit");
     }
 
