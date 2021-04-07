@@ -19,6 +19,8 @@ CREATE TABLE `rubber_actor`  (
 -- ----------------------------
 -- Records of rubber_actor
 -- ----------------------------
+INSERT INTO `rubber_actor` VALUES (19, 'water', 'test', 'test', '', '2021-04-05 16:20:21');
+
 
 -- ----------------------------
 -- Table structure for rubber_block
@@ -44,6 +46,8 @@ CREATE TABLE `rubber_block`  (
 -- ----------------------------
 -- Records of rubber_block
 -- ----------------------------
+INSERT INTO `rubber_block` VALUES (57, 'water', 'code_agent_ip', '代理IP库', '', 'water/water_redis', '12', 1, 1, '{ip:\'ip*\'}', 'if(!x){\n  throw new Error(\'参数不能为空\');\n}\n\nvar bkey = this.block_key;\nreturn this.$().open1(function(rs){\n   return rs.key(bkey).hashHas(x);\n});', '2021-04-05 16:18:38');
+
 
 -- ----------------------------
 -- Table structure for rubber_block_item
@@ -87,6 +91,8 @@ CREATE TABLE `rubber_model`  (
 -- ----------------------------
 -- Records of rubber_model
 -- ----------------------------
+INSERT INTO `rubber_model` VALUES (26, 'water', 'water_monitor_ecs', '监控模型', '', 6, 'return water.db(\'water/water\')\n     .table(\"water_ops_server_track_ecs\")\n     .whereEq(\"iaas_key\",this.iaas_key())\n     .selectMap(\"*\");', '{iaas_key:\'i-23adt35wk\'}', '2021-04-07 12:58:10');
+
 
 -- ----------------------------
 -- Table structure for rubber_model_field
@@ -108,6 +114,13 @@ CREATE TABLE `rubber_model_field`  (
 -- ----------------------------
 -- Records of rubber_model_field
 -- ----------------------------
+INSERT INTO `rubber_model_field` VALUES (453, 26, 'iaas_key', 'iaas_key', '', '', '2021-04-05 15:18:06', 1);
+INSERT INTO `rubber_model_field` VALUES (454, 26, 'cpu_usage', 'cpu_usage', '', '', '2021-04-05 15:17:06', 0);
+INSERT INTO `rubber_model_field` VALUES (457, 26, 'memory_usage', 'memory_usage', '', '', '2021-04-05 15:17:30', 0);
+INSERT INTO `rubber_model_field` VALUES (458, 26, 'disk_usage', 'disk_usage', '', '', '2021-04-05 15:17:39', 0);
+INSERT INTO `rubber_model_field` VALUES (459, 26, 'broadband_usage', 'broadband_usage', '', '', '2021-04-05 15:17:54', 0);
+INSERT INTO `rubber_model_field` VALUES (460, 26, 'tcp_num', 'tcp_num', '', '', '2021-04-05 15:18:00', 0);
+
 
 -- ----------------------------
 -- Table structure for rubber_scheme
@@ -136,6 +149,8 @@ CREATE TABLE `rubber_scheme`  (
 -- ----------------------------
 -- Records of rubber_scheme
 -- ----------------------------
+INSERT INTO `rubber_scheme` VALUES (82, 'water', 'water_test_ecs', 'water_test_ecs', 'water/water_monitor_ecs', 0, 'water/监控模型', '', '{iaas_key:\'i-23adt35wk\'}', '', 0, 3, 0, 1, '2021-04-05 15:21:19');
+
 
 -- ----------------------------
 -- Table structure for rubber_scheme_node
@@ -201,6 +216,10 @@ CREATE TABLE `rubber_scheme_rule`  (
 -- ----------------------------
 -- Records of rubber_scheme_rule
 -- ----------------------------
+INSERT INTO `rubber_scheme_rule` VALUES (275, 82, 'rule1', 1, 1, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"cpu_usage\"}}', 'cpu_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:26');
+INSERT INTO `rubber_scheme_rule` VALUES (276, 82, 'rule2', 2, 0, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"memory_usage\"}}', 'memory_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:32');
+INSERT INTO `rubber_scheme_rule` VALUES (277, 82, 'rule3', 3, 0, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"disk_usage\"}}', 'disk_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:19');
+
 
 -- ----------------------------
 -- Table structure for water_cfg_logger
