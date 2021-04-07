@@ -48,6 +48,8 @@
 
         <luffy.ver>1.0.3</luffy.ver>
 
+        <junit.ver>4.13.1</junit.ver>
+
         <dubbo.ver>2.7.6</dubbo.ver>
         <springboot.ver>2.0.4.RELEASE</springboot.ver>
     </properties>
