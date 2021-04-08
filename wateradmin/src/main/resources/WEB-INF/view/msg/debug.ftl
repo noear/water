@@ -112,10 +112,12 @@
                         <th>接收地址</th>
                         <td><input  class="longtxt" type="text" id="url" value="${sub.receive_url!}"/></td>
                     </tr>
+                    <#if is_operator == 1>
                     <tr>
                         <th></th>
                         <td><button type="button" onclick="debug()">测试</button></td>
                     </tr>
+                    </#if>
                 </table>
                 </form>
             </detail>

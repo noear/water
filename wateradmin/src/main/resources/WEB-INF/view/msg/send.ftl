@@ -63,10 +63,12 @@
                 <th>消息内容</th>
                 <td><textarea  class="longtxt" type="text" id="message" ></textarea></td>
             </tr>
+            <#if is_operator == 1>
             <tr>
                 <th></th>
                 <td><button type="button" onclick="dist()">发送</button></td>
             </tr>
+            </#if>
         </table>
         </form>
     </detail>

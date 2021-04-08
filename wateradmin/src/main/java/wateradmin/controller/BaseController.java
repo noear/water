@@ -45,8 +45,14 @@ public abstract class BaseController {
             viewModel.put("is_admin", 1);
             viewModel.put("is_operator", 1);
         }else {
-            viewModel.put("is_admin", Session.current().getIsAdmin());
-            viewModel.put("is_operator", Session.current().getIsOperator());
+            int is_admin = Session.current().getIsAdmin();
+            int is_operator = Session.current().getIsOperator();
+            if(is_admin==1){
+                is_operator=1;
+            }
+
+            viewModel.put("is_admin", is_admin);
+            viewModel.put("is_operator", is_operator);
         }
 
 
