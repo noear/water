@@ -33,11 +33,13 @@
             </form>
         </left>
         <right>
+            <#if is_admin == 1>
             <button onclick="exec_scheme()" style="width: auto;padding: 0 10px;" type="button" >请求计算</button>
             &nbsp;&nbsp;
             <button onclick="exec_query()" style="width: auto;padding: 0 10px;" type="button" >请求查询</button>
             &nbsp;&nbsp;
             <button onclick="exec_model()" style="width: auto;padding: 0 10px;" type="button" >请求模型</button>
+            </#if>
         </right>
     </toolbar>
     <datagrid>
