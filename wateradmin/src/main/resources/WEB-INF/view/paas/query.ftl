@@ -50,7 +50,11 @@
                     <td class="left" width="80">类型</td>
                     <td class="left" width="80">编辑模式</td>
                     <td colspan="2"></td>
-                    <td width="80"></td>
+                    <#if is_admin == 1>
+                        <td width="80"></td>
+                    <#else>
+                        <td width="40"></td>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,8 +75,10 @@
                         <td width="20"></td>
                         </td>
                         <td class="op">
+                            <#if is_admin == 1>
                             <a class="t2" href='./file/${m1.typeStr()}/edit?file_id=${m1.file_id}'>设置</a>
                             |
+                            </#if>
                             <a class="t2" href="${paas_uri}${m1.path!}" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
                         </td>
                     </tr>
