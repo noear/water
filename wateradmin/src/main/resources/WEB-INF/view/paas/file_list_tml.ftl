@@ -155,7 +155,11 @@
                     <td class="left" width="140">内容类型</td>
                     <td class="left" width="80">编辑模式</td>
                     <td width="20"></td>
-                    <td width="80"></td>
+                    <#if is_admin == 1>
+                        <td width="80"></td>
+                    <#else>
+                        <td width="40"></td>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody class="sel_from">
@@ -178,8 +182,10 @@
                         <td width="20">${m1.staticize()?string("静","")}</td>
                         </td>
                         <td class="op">
+                            <#if is_admin == 1>
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
+                            </#if>
                             <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" target="_blank">预览</a>
                         </td>
                     </tr>

@@ -170,7 +170,11 @@
                     <td width="160" class="left">最后执行（时长）</td>
                     <td width="50">状态</td>
                     <td width="50">次数</td>
-                    <td width="80"></td>
+                    <#if is_admin == 1>
+                        <td width="80"></td>
+                    <#else>
+                        <td width="40"></td>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody class="sel_from">
@@ -225,8 +229,10 @@
                             </#if>
                         </td>
                         <td class="op">
+                            <#if is_admin == 1>
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
+                            </#if>
                             <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
 
                         </td>
