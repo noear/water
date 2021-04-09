@@ -1,9 +1,0 @@
-server.port: 7181
-
-
-water:
-  host: "water"
-  service:
-    name: "testapi"
-    secretKey: "0zJt0J88TkIvqYgC"
-    host: "http://8.136.190.8:7181/"
