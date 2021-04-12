@@ -17,7 +17,7 @@
     section table input{height: 30px!important; width: 100%;}
     section table button{color: #000; height: 30px; width: 120px;}
 
-    main > p{margin: 10px;line-height: 30px;}
+    flex p{margin: 10px;line-height: 30px;}
   </style>
   <script type="text/javascript">
     function checkClick(){
@@ -39,11 +39,36 @@
       if (window.event.keyCode == 13)
         checkClick();
     }
+
+
+    //自动跳到合适的登录面
+    try {
+      if (window.top != window.self) {
+        let top_host = window.top.location.hostname;
+        let self_host = window.self.location.hostname;
+
+        if (top_host == self_host) {
+          window.top.location = window.self.location;
+        } else {
+          window.top.location.reload();
+        }
+      }
+    }catch (err){}
+
   </script>
 </head>
 <body onkeydown="checkKey()">
 <main>
-  <p>${title}</p>
+  <flex>
+    <left class="col-6">
+      <p>${title}</p>
+    </left>
+    <right class="col-6">
+      <p>
+        <a href="https://gitee.com/noear/water" target="_blank">gitee</a> | <a href="https://github.com/noear/water">github</a>
+      </p>
+    </right>
+  </flex>
   <br />
   <section>
     <form>
