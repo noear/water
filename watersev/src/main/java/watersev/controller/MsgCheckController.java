@@ -38,15 +38,8 @@ public final class MsgCheckController implements IJob {
 
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
-        Map<String, String> breaker = new LinkedHashMap<>();
 
         for (SubscriberModel sev : list) {
-            if (breaker.containsKey(sev.receive_url)) {
-                continue;
-            }
-
-            breaker.put(sev.receive_url, "1");
-
             check(sev);
         }
     }
