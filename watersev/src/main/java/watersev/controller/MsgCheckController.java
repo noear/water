@@ -8,7 +8,9 @@ import org.noear.water.utils.TextUtils;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.utils.HttpUtilEx;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消息订阅检查（已支持 is_unstable）
@@ -36,8 +38,15 @@ public final class MsgCheckController implements IJob {
 
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
+        Map<String, String> breaker = new LinkedHashMap<>();
 
         for (SubscriberModel sev : list) {
+            if (breaker.containsKey(sev.receive_url)) {
+                continue;
+            }
+
+            breaker.put(sev.receive_url, "1");
+
             check(sev);
         }
     }
