@@ -8,7 +8,8 @@
     <script src="${js}/base64.js" ></script>
     <script src="${js}/jtadmin.js?v=4"></script>
     <script src="${js}/layer.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js" ></script>
+    <script src="/monaco-editor/0.22.3/min/vs/loader.min.js"></script>
+<#--    <script src="//cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js" ></script>-->
 
     <style>
         html,body{margin:0px;padding:0px;overflow:hidden;}
@@ -59,7 +60,7 @@
     <script>
         var code64 = "${code64}";
 
-        require.config({ paths: { 'vs': '//cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+        require.config({ paths: { 'vs': '/monaco-editor/0.22.3/min/vs' }});
         require(['vs/editor/editor.main'], function() {
             $.get("/_static/luffy.d.txt?v=1",(rst)=>{
                 monaco.languages.typescript.javascriptDefaults.addExtraLib(rst);
