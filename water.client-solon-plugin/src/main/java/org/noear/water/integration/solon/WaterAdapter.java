@@ -193,9 +193,9 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                     return;
                 }
 
-                if (user_name() == null) {
-                    return;
-                }
+//                if (user_name() == null) {
+//                    return;
+//                }
 
                 Context context = Context.current();
 
