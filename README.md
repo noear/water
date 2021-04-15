@@ -23,6 +23,17 @@
 | org.noear:waterpaas | 构建：Water PaaS 服务，提供轻量级接口服务 |
 | org.noear:waterraas | 构建：Water RaaS 服务，提供轻量级规则计算服务 |
 
+
+
+### 控制台演示站
+
+地址： [http://water.noear.org/](http://water.noear.org/)
+
+账号：demo
+
+密码：demo
+
+
 ### (一) 使用
 
 #### 配置
@@ -129,24 +140,15 @@ public class TestConfigHandler implements CloudConfigHandler {
 
 ```
 
-### （二）演示
-
-地址： [http://water.noear.org/](http://water.noear.org/)
-
-账号：demo
-
-密码：demo
-
-
-### （三）代码示例
+### （二）代码示例
 
 [https://gitee.com/noear/water_demo](https://gitee.com/noear/water_demo)
 
-### （四）部署
+### （三）部署
 
 > 相关材料未准备好...
 
-### （五）架构说明
+### （四）架构说明
 
 > 相关材料未准备好...
 
