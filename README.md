@@ -39,7 +39,14 @@
 #### 配置
 * pom.xml / mevan 配置
 ```xml
-<!-- 暂时没有 springboot starter 版本 -->
+<!-- 客户端版本 -->
+<dependency>
+    <groupId>org.noear</groupId>
+    <artifactId>water.client</artifactId>
+    <version>2.0.25</version>
+</dependency>
+
+<!-- solon cloud 集成版本 -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
