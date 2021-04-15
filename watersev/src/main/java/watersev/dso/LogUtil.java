@@ -85,10 +85,13 @@ public class LogUtil {
     //==========================================================
     //
     //
+    public static void planInfo(IJob tag, AFileModel plan, long _times) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(plan.path)
+                .append("(").append(plan.plan_count).append("/").append(plan.plan_max)
+                .append(")执行成功 - ").append(_times).append("ms");
 
-    public static void planInfo(IJob tag, AFileModel plan) {
-        String content = plan.path + "(" + plan.plan_count + "/" + plan.plan_max + ")执行成功";
-        log_paas.info( "_plan", plan.tag, plan.path, "", "", content);
+        log_paas.info("_plan", plan.tag, plan.path, "", "", sb.toString());
     }
 
     public static void planError(IJob tag, AFileModel plan, Throwable content) {

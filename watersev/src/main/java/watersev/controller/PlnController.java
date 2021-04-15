@@ -172,20 +172,19 @@ public class PlnController implements IJob {
 
         //////////////////////////////////////////
 
-        //计时开始
+        //2.1.计时开始
         Timecount timecount = new Timecount().start();
 
-        //2.执行
-        do_runTask(task);
+        //2.2.执行
+        long _times = do_runTask(task, timecount);
 
-        //计时结束
-        long _times = timecount.stop().milliseconds();
+        //2.3.记录性能
         String _node = WaterAdapter.global().localHost();
 
         WaterClient.Track.track("waterplan", task.tag, task.path, _times, _node);
     }
 
-    private void do_runTask(PaasFileModel task) throws Exception {
+    private long do_runTask(PaasFileModel task, Timecount timecount) throws Exception {
         //开始执行::
         task.plan_last_time = new Date();
         DbWaterPaasApi.setPlanState(task, 2, "processing");
@@ -202,6 +201,10 @@ public class PlnController implements IJob {
         task.plan_count = (task.plan_count + 1) % 10000;
         DbWaterPaasApi.setPlanState(task, 9, "OK");
 
-        LogUtil.planInfo(this, task);
+        long _times = timecount.stop().milliseconds();
+
+        LogUtil.planInfo(this, task, _times);
+
+        return _times;
     }
 }
