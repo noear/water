@@ -199,7 +199,7 @@ public class PlnController implements IJob {
 
 
         //3.更新状态
-        task.plan_count = (task.plan_count + 1) % 1000;
+        task.plan_count = (task.plan_count + 1) % 10000;
         DbWaterPaasApi.setPlanState(task, 9, "OK");
 
         LogUtil.planInfo(this, task);
