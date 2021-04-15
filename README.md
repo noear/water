@@ -27,12 +27,7 @@
 
 ### 控制台演示站
 
-地址： [http://water.noear.org/](http://water.noear.org/)
-
-账号：demo
-
-密码：demo
-
+地址： [http://water.noear.org/](http://water.noear.org/)  （账号：demo ；密码：demo ）
 
 ### (一) 使用
 
