@@ -60,7 +60,7 @@ public class PlnController implements IJob {
 
         for (PaasFileModel task : list) {
             //加锁，以支持多节点处理
-            if (LockUtils.tryLock("waterplan", task.file_id + "")) {
+            if (LockUtils.tryLock("waterplan", task.file_id + "_job")) {
                 CallUtil.asynCall(() -> {
                     doExec(task);
                 });
