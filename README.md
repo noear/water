@@ -129,15 +129,24 @@ public class TestConfigHandler implements CloudConfigHandler {
 
 ```
 
-### （二）演示代码
+### （二）演示
+
+地址： [http://water.noear.org/](http://water.noear.org/)
+
+账号：demo
+
+密码：demo
+
+
+### （三）代码示例
 
 [https://gitee.com/noear/water_demo](https://gitee.com/noear/water_demo)
 
-### （三）部署
+### （四）部署
 
 > 相关材料未准备好...
 
-### （四）架构说明
+### （五）架构说明
 
 > 相关材料未准备好...
 

@@ -8,8 +8,7 @@
     <script src="${js}/base64.js" ></script>
     <script src="${js}/jtadmin.js?v=4"></script>
     <script src="${js}/layer.js"></script>
-    <script src="/monaco-editor/0.22.3/min/vs/loader.min.js"></script>
-<#--    <script src="//cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/loader.min.js" ></script>-->
+    <script src="//mirror.noear.org/lib/monaco-editor/0.22.3/min/vs/loader.min.js" ></script>
 
     <style>
         html,body{margin:0px;padding:0px;overflow:hidden;}
@@ -45,7 +44,7 @@
     <flex style="margin-top: 18px;">
         <left class="col-6">
             <#if is_admin = 1>
-            <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em>
+                <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em>
             </#if>
             <a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
         </left>
@@ -60,7 +59,7 @@
     <script>
         var code64 = "${code64}";
 
-        require.config({ paths: { 'vs': '/monaco-editor/0.22.3/min/vs' }});
+        require.config({ paths: { 'vs': '//mirror.noear.org/lib/monaco-editor/0.22.3/min/vs' }});
         require(['vs/editor/editor.main'], function() {
             $.get("/_static/luffy.d.txt?v=1",(rst)=>{
                 monaco.languages.typescript.javascriptDefaults.addExtraLib(rst);
