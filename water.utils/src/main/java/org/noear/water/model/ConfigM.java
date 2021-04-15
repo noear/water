@@ -16,6 +16,7 @@ import org.noear.weed.cache.memcached.MemCache;
 import org.noear.weed.mongo.MgContext;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -149,19 +150,37 @@ public final class ConfigM {
         PropertiesM prop = getProp();
         String db = prop.getProperty("db");
 
-        if(TextUtils.isEmpty(db)){
+        if (TextUtils.isEmpty(db)) {
             throw new IllegalArgumentException("Missing db configuration");
         }
 
-        return new MgContext(prop, db);
+        return getMgDo(prop, db);
     }
 
-    public MgContext getMg(String db){
+    public MgContext getMg(String db) {
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        return new MgContext(getProp(), db);
+        return getMgDo(getProp(), db);
+    }
+
+    private static Map<String, MgContext> _mgMap = new HashMap<>();
+    private MgContext getMgDo(Properties prop, String db) {
+        MgContext mg = _mgMap.get(value);
+
+        if (mg == null) {
+            synchronized (value.intern()) {
+                mg = _mgMap.get(value);
+
+                if (mg == null) {
+                    mg = new MgContext(prop, db);
+                    _mgMap.put(value, mg);
+                }
+            }
+        }
+
+        return mg;
     }
 
     /**
@@ -208,7 +227,7 @@ public final class ConfigM {
     /**
      * 获取 db:DbContext
      */
-    private static Map<String, DbContext> _dbMap = new ConcurrentHashMap<>();
+    private static Map<String, DbContext> _dbMap = new HashMap<>();
 
     public DbContext getDb() {
         return getDb(false);
@@ -220,12 +239,17 @@ public final class ConfigM {
         }
 
         DbContext db = _dbMap.get(value);
+
         if (db == null) {
-            db = getDbDo(pool);
-            DbContext l = _dbMap.putIfAbsent(value, db);
-            if (l != null) {
-                db = l;
+            synchronized (value.intern()) {
+                db = _dbMap.get(value);
+
+                if (db == null) {
+                    db = getDbDo(pool);
+                    _dbMap.put(value, db);
+                }
             }
+
         }
         return db;
     }
