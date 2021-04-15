@@ -506,7 +506,7 @@ public class MessageSourceMongo implements MessageSource {
 
     @Override
     public void persistence(int hotDate, int coldDate) throws Exception {
-//转移数据（长久保存）
+        //转移数据（长久保存）
         //
         if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
             Map<String, Object> filter = new LinkedHashMap<>();
