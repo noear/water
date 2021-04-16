@@ -197,7 +197,12 @@ public final class SevController implements IJob {
                         LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2 + "，" + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
-                            AlarmUtil.tryAlarm(sev, false, code);
+                            //报警，30秒一次
+                            //
+                            if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 30)) {
+                                AlarmUtil.tryAlarm(sev, false, code);
+                            }
+
                             if (sev.check_error_num == 2) {
                                 gatewayNotice(sev);
                             }
