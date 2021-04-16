@@ -15,7 +15,6 @@ import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
 import watersev.utils.HttpUtilEx;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -45,7 +44,7 @@ public final class SevController implements IJob {
     private boolean _init = false;
 
     @Override
-    public void exec() throws Exception {
+    public void exec() throws Throwable {
         //半夜不做事
         Datetime time = Datetime.Now();
         int hours = time.getHours();
