@@ -12,12 +12,6 @@
 
     </style>
 </head>
-<script>
-    function editTask(monitor_id) {
-        location.href="/tool/monitor/edit?monitor_id="+monitor_id;
-    }
-
-</script>
 <body>
 
         <toolbar>
@@ -44,8 +38,10 @@
                     <td width="70px" nowrap>监视标签</td>
                     <td width="110px">报警手机</td>
                     <td width="80px">报警次数</td>
-                    <#if is_admin = 1>
-                    <td width="40px">操作</td>
+                    <#if is_admin == 1>
+                        <td width="80"></td>
+                    <#else>
+                        <td width="40"></td>
                     </#if>
                 </tr>
                 </thead>
@@ -64,9 +60,13 @@
                     <td>${monitor.task_tag}</td>
                     <td style="word-wrap:break-word;word-break:break-all;">${monitor.alarm_mobile!}</td>
                     <td>${monitor.alarm_count}</td>
+
+                    <td>
                         <#if is_admin = 1>
-                        <td onclick="editTask('${monitor.monitor_id}')"><a style="color: blue;cursor: pointer">编辑</a></td>
+                        <a href="/tool/monitor/edit?monitor_id=${monitor.monitor_id}" class="t2" >编辑</a> |
                         </#if>
+                        <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=@${monitor.monitor_id}" target="_parent" class="t2">日志</a>
+                    </td>
                 </tr>
                 </#list>
                 </tbody>

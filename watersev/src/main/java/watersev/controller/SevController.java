@@ -3,7 +3,6 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
@@ -38,19 +37,13 @@ public final class SevController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 4;
+        return 1000 * 5;
     }
 
     private boolean _init = false;
 
     @Override
     public void exec() throws Throwable {
-        //半夜不做事
-        Datetime time = Datetime.Now();
-        int hours = time.getHours();
-        if (hours > 1 && hours < 6) {
-            return;
-        }
 
         if (_init == false) {
             _init = true;

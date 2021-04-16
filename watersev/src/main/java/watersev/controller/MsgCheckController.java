@@ -3,14 +3,11 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.model.message.SubscriberModel;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.utils.HttpUtilEx;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 消息订阅检查（已支持 is_unstable）
@@ -29,13 +26,6 @@ public final class MsgCheckController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        //半夜不做事
-        Datetime time = Datetime.Now();
-        int hours = time.getHours();
-        if (hours > 1 && hours < 6) {
-            return;
-        }
-
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
 

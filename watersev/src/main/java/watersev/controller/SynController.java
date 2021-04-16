@@ -4,7 +4,6 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
 import org.noear.weed.DataItem;
@@ -36,13 +35,6 @@ public final class SynController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        Datetime time = Datetime.Now();
-        int hours = time.getHours();
-
-        if (hours > 1 && hours < 6) { //半夜不做事
-            return;
-        }
-
         List<SynchronousModel> list = DbWaterApi.getSyncList();
 
         for (SynchronousModel task : list) {

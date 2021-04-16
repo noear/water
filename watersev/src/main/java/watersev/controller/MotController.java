@@ -37,13 +37,6 @@ public final class MotController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        Datetime time = Datetime.Now();
-        int hours = time.getHours();
-
-        if (hours > 22 || hours < 6) { //半夜不做事
-            return;
-        }
-
         List<MonitorModel> list = DbWaterApi.getMonitorList();
 
         for (MonitorModel task : list) {

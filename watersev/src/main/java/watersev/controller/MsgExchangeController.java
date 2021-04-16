@@ -5,7 +5,6 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.DisttimeUtils;
 import watersev.dso.LogUtil;
 
@@ -71,14 +70,7 @@ public class MsgExchangeController implements IJob {
             _interval = _interval_def;
             return true;
         } else {
-            int hour = Datetime.Now().getHours();
-
-            if (hour > 1 && hour < 6) {
-                _interval = 2000;
-            } else {
-                _interval = 500;
-            }
-
+            _interval = 500;
             return false;
         }
     }

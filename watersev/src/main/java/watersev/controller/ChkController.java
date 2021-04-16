@@ -4,7 +4,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.water.WaterClient;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LocalUtils;
 import org.noear.solon.extend.schedule.IJob;
 
@@ -28,13 +27,6 @@ public class ChkController implements IJob {
 
     @Override
     public void exec() {
-        Datetime time = Datetime.Now();
-        int hours = time.getHours();
-
-        if (hours > 1 && hours < 6) { //半夜不做事
-            return;
-        }
-
         if (_args == null) {
             _args = ONode.loadObj(Solon.cfg().argx());
         }
