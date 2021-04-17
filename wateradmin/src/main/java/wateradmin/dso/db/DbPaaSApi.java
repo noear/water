@@ -189,6 +189,7 @@ public class DbPaaSApi {
                 .set("update_fulltime", wm.update_fulltime)
                 .set("alarm_sign", wm.alarm_sign)
                 .set("alarm_mobile", wm.alarm_mobile)
+                .set("use_whitelist", wm.use_whitelist)
                 .insertBy("path");
     }
 

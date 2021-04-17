@@ -16,15 +16,13 @@ public class DbPaaSApi {
     public static AFileModel fileGet(String path) throws Exception {
         return db().table("paas_file")
                 .whereEq("path", path)
-                .select("*")
-                .getItem(AFileModel.class);
+                .selectItem("*", AFileModel.class);
     }
 
     public static AFileModel fileGet(int file_id) throws Exception {
         return db().table("paas_file")
                 .whereEq("file_id", file_id)
-                .select("*")
-                .getItem(AFileModel.class);
+                .selectItem("*", AFileModel.class);
     }
 
     public static List<AFileModel> fileGetPaths(String tag, String label, boolean isCache) throws Exception {

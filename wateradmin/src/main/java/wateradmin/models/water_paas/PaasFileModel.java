@@ -2,6 +2,7 @@ package wateradmin.models.water_paas;
 
 import lombok.Getter;
 import org.noear.water.track.TrackNames;
+import org.noear.water.utils.EncryptUtils;
 
 import java.util.Date;
 
@@ -32,6 +33,8 @@ public class PaasFileModel {
     public Date update_fulltime;
     public transient boolean _is_day_task;
 
+    public String use_whitelist;
+
     public String alarm_sign;
     public String alarm_mobile;
 
@@ -61,7 +64,7 @@ public class PaasFileModel {
 
     public String pathMd5() {
         if (pathMd5 == null) {
-            pathMd5 = TrackNames.singleton().getNameMd5(path);
+            pathMd5 = "%7Bmd5%7D" + EncryptUtils.md5(path);
         }
 
         return pathMd5;
