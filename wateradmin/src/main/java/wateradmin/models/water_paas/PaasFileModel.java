@@ -1,6 +1,7 @@
 package wateradmin.models.water_paas;
 
 import lombok.Getter;
+import org.noear.water.track.TrackNames;
 
 import java.util.Date;
 
@@ -44,15 +45,25 @@ public class PaasFileModel {
         }
     }
 
-    public boolean staticize(){
+    public boolean staticize() {
         return is_staticize;
     }
 
-    public boolean editable(){
+    public boolean editable() {
         return is_editable;
     }
 
-    public boolean disabled(){
+    public boolean disabled() {
         return is_disabled;
+    }
+
+    private String pathMd5;
+
+    public String pathMd5() {
+        if (pathMd5 == null) {
+            pathMd5 = TrackNames.singleton().getNameMd5(path);
+        }
+
+        return pathMd5;
     }
 }

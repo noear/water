@@ -173,7 +173,7 @@
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
                     <td class="op">
-                        <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=5&tagx=@${msg.msg_id}" class="t2">日志</a>
+                        <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=0&tagx=@${msg.msg_id}" class="t2">日志</a>
                     </td>
                 </tr>
             </#list>

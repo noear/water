@@ -156,7 +156,7 @@
                     <#if is_admin == 1>
                         <td width="120"></td>
                     <#else>
-                        <td width="40"></td>
+                        <td width="80"></td>
                     </#if>
                 </tr>
                 </thead>
@@ -180,11 +180,11 @@
                                 <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                                 |
                                 <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
-                                |
-                                <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
                             <#else>
                                 <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
                             </#if>
+                            |
+                            <a href="/mot/speed/charts?tag=${m1.tag}&name_md5=${m1.pathMd5()}&service=waterpaas" target="_parent" class="t2">监控</a>
                         </td>
                     </tr>
                 </#list>
