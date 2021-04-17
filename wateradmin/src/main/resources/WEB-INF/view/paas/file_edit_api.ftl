@@ -59,6 +59,11 @@
     <option value="markdown"></option>
     <option value="json"></option>
 </datalist>
+<datalist id="whitelist_list">
+    <#list  whitelist as m1>
+    <option value="${m1.tag}">${m1.tag}</option>
+    </#list>
+</datalist>
 
 <toolbar class="blockquote">
     <left class="ln30">
@@ -111,6 +116,9 @@
                 <td colspan="2">
                     <hr/>
                 </td>
+            </tr>
+            <tr>
+                <th>安全名单</th><td><input type="text" id="use_whitelist" list="whitelist_list" autocomplete="off" value="${m1.label!}"  /></td>
             </tr>
             <tr>
                 <th>标记</th><td><input type="text" id="label" list="label_list" autocomplete="off" value="${m1.label!}"  /></td>

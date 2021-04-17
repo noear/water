@@ -55,7 +55,7 @@ public class DbWaterCfgApi {
     }
 
     //获取白名单表tag
-    public static List<TagCountsModel> getWhitelistTags() throws Exception {
+    public static List<TagCountsModel> getWhitelistTags() throws SQLException {
         return db().table("water_cfg_whitelist")
                 .groupBy("tag")
                 .orderByAsc("tag")

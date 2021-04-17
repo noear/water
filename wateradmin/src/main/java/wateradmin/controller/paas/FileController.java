@@ -15,6 +15,7 @@ import wateradmin.dso.PaasUtils;
 import wateradmin.dso.Session;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbPaaSApi;
+import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_paas.PaasFileModel;
 import wateradmin.models.water_paas.PaasFileType;
@@ -131,9 +132,12 @@ public class FileController extends BaseController {
             file.tag = tag;
         }
 
+        List<TagCountsModel> whitelist = DbWaterCfgApi.getWhitelistTags();
+
         viewModel.put("id", file_id);
         viewModel.put("tag", tag);
         viewModel.put("m1", file);
+        viewModel.put("whitelist", whitelist);
         viewModel.put("ref_url", ctx.header("referer"));
 
         return view("paas/file_edit_" + type.name());
