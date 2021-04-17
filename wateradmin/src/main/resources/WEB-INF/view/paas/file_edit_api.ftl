@@ -118,7 +118,7 @@
                 </td>
             </tr>
             <tr>
-                <th>安全名单</th><td><input type="text" id="use_whitelist" list="whitelist_list" autocomplete="off" value="${m1.label!}"  /></td>
+                <th>安全名单</th><td><input type="text" id="use_whitelist" list="whitelist_list" autocomplete="off" value="${m1.use_whitelist!}"  /></td>
             </tr>
             <tr>
                 <th>标记</th><td><input type="text" id="label" list="label_list" autocomplete="off" value="${m1.label!}"  /></td>

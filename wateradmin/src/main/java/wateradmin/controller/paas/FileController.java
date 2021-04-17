@@ -150,6 +150,7 @@ public class FileController extends BaseController {
         data.set("link_to", ctx.param("link_to"));
         data.set("content_type", ctx.param("content_type"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
+        data.set("use_whitelist", ctx.param("use_whitelist"));
 
         int file_id = ctx.paramAsInt("id", 0);
 
