@@ -13,6 +13,7 @@ import watersev.dso.DbPaaSApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class JtRun {
     private static CompletableFuture<Integer> initFuture = new CompletableFuture<>();
@@ -24,6 +25,10 @@ public class JtRun {
             JtBridge.executorAdapterSet(jtAdapter);
             JtBridge.configAdapterSet(jtAdapter);
         }
+    }
+
+    public static void initAwait() throws InterruptedException, ExecutionException {
+        initFuture.get();
     }
 
     public static Object call(String path, Context ctx) throws Exception {

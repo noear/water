@@ -54,6 +54,8 @@ public class PlnController implements IJob {
             DbWaterPaasApi.resetPlanState();
         }
 
+        JtRun.initAwait();
+
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
         System.out.println("查到任务数：" + list.size());

@@ -19,9 +19,8 @@ public final class DbWaterPaasApi {
     //
     public static List<PaasFileModel> getPlanList() throws SQLException {
         return db().table("paas_file")
-                        .whereEq("file_type", 1).and("is_disabled=0")
-                        .select("*")
-                        .getList(new PaasFileModel());
+                .whereEq("file_type", 1).and("is_disabled=0")
+                .selectList("*", PaasFileModel.class);
     }
 
     public static void setPlanState(PaasFileModel plan, int state, String note) throws SQLException {
