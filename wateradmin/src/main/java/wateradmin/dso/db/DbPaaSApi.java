@@ -30,7 +30,7 @@ public class DbPaaSApi {
                 .getList(TagCountsModel.class);
     }
 
-    private static String list_sels = "file_id,tag,label,path,`rank`,note,is_staticize,is_editable,is_disabled,is_exclude,link_to,edit_mode,content_type,update_fulltime,plan_state,plan_begin_time,plan_last_time,plan_last_timespan,plan_interval,plan_max,plan_count";
+    private static String list_sels = "file_id,tag,label,path,`rank`,note,is_staticize,is_editable,is_disabled,is_exclude,link_to,edit_mode,content_type,update_fulltime,plan_state,plan_begin_time,plan_last_time,plan_last_timespan,plan_interval,plan_max,plan_count,use_whitelist";
 
     public static List<PaasFileModel> getFileList(String tag, PaasFileType type) throws SQLException {
         return getFileList(tag, type, false, null, 0);

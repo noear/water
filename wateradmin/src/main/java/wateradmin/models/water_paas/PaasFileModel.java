@@ -3,6 +3,7 @@ package wateradmin.models.water_paas;
 import lombok.Getter;
 import org.noear.water.track.TrackNames;
 import org.noear.water.utils.EncryptUtils;
+import org.noear.water.utils.TextUtils;
 
 import java.util.Date;
 
@@ -60,13 +61,15 @@ public class PaasFileModel {
         return is_disabled;
     }
 
-    private String pathMd5;
-
     public String pathMd5() {
-        if (pathMd5 == null) {
-            pathMd5 = "%7Bmd5%7D" + EncryptUtils.md5(path);
-        }
+        return "%7Bmd5%7D" + EncryptUtils.md5(path);
+    }
 
-        return pathMd5;
+    public String whitelistLabel() {
+        if (TextUtils.isEmpty(use_whitelist)) {
+            return "";
+        } else {
+            return "#" + use_whitelist;
+        }
     }
 }
