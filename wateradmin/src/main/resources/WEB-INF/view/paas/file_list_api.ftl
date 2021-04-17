@@ -162,7 +162,7 @@
                 </thead>
                 <tbody class="sel_from">
                 <#list mlist as m1>
-                    <tr title="${m1.content_type!}">
+                    <tr title="${m1.use_whitelist!}" about="${m1.content_type!}">
                         <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
                         <td class="left break"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}' target="_blank">${m1.path!}</a>
                             <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">只读</a>
