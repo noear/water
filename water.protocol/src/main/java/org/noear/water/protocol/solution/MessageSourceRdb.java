@@ -54,9 +54,12 @@ public class MessageSourceRdb implements MessageSource {
 
     //取消消息（key）
     public void setMessageAsCancel(String msg_key) throws SQLException {
+        Datetime datetime = Datetime.Now();
+
         _db.table("water_msg_message")
                 .set("state", -1)
-                .set("last_fulltime", new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -68,9 +71,12 @@ public class MessageSourceRdb implements MessageSource {
 
     //消费消息（key）（设为成功）
     public void setMessageAsSucceed(String msg_key) throws SQLException {
+        Datetime datetime = Datetime.Now();
+
         _db.table("water_msg_message")
                 .set("state", 2)
-                .set("last_fulltime", new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -119,6 +125,7 @@ public class MessageSourceRdb implements MessageSource {
         }
 
         Datetime datetime = new Datetime();
+        int date = datetime.getDate();
 
         long dist_nexttime = 0;
         if (plan_time != null) {
@@ -136,8 +143,9 @@ public class MessageSourceRdb implements MessageSource {
                 .set("topic_name", topic_name)
                 .set("content", content)
                 .set("plan_time", plan_time)
-                .set("log_date", datetime.getDate())
+                .set("log_date", date)
                 .set("log_fulltime", datetime.getFulltime())
+                .set("last_date", date)
                 .set("last_fulltime", datetime.getFulltime())
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
@@ -184,9 +192,12 @@ public class MessageSourceRdb implements MessageSource {
     //设置消息状态
     public boolean setMessageState(MessageModel msg, MessageState state, long dist_nexttime) {
         try {
+            Datetime datetime = Datetime.Now();
+
             _db.table("water_msg_message")
                     .set("state", state.code)
-                    .set("last_fulltime", new Date())
+                    .set("last_date", datetime.getDate())
+                    .set("last_fulltime", datetime.getFulltime())
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
@@ -222,9 +233,11 @@ public class MessageSourceRdb implements MessageSource {
             msg.dist_count += 1;
 
             long ntime = DisttimeUtils.nextTime(msg.dist_count);
+            Datetime datetime = Datetime.Now();
 
             _db.table("water_msg_message").usingExpr(true)
                     .set("state", state.code)
+                    .set("last_date", datetime.getDate())
                     .set("last_fulltime", new Date())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
@@ -382,10 +395,13 @@ public class MessageSourceRdb implements MessageSource {
 
     //派发功能
     public boolean setMessageAsPending(List<Object> ids) throws SQLException {
+        Datetime datetime = Datetime.Now();
+
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
-                .set("last_fulltime", new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .set("dist_nexttime", 0)
                 .update() > 0;
 
@@ -429,10 +445,13 @@ public class MessageSourceRdb implements MessageSource {
 
     //取消派发
     public boolean setMessageAsCancel(List<Object> ids) throws SQLException {
+        Datetime datetime = Datetime.Now();
+
         return _db.table("water_msg_message")
                 .whereIn("msg_id", ids)
                 .set("state", -1)
-                .set("last_fulltime", new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .update() > 0;
     }
 
@@ -460,9 +479,12 @@ public class MessageSourceRdb implements MessageSource {
         long refTime = currTime - timeOuts;
 
         if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
+            Datetime datetime = Datetime.Now();
+
             return _db.table("water_msg_message")
                     .set("state", 0)
-                    .set("last_fulltime", new Date())
+                    .set("last_date", datetime.getDate())
+                    .set("last_fulltime", datetime.getFulltime())
                     .whereEq("state", 1).andLt("dist_nexttime", refTime)
                     .update();
         } else {
@@ -485,15 +507,15 @@ public class MessageSourceRdb implements MessageSource {
     public void persistence(int hotDate, int coldDate) throws Exception {
         //转移数据（长久保存）
         //
-        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
+        if (_db.table("water_msg_message_all").whereEq("last_date", hotDate).selectExists() == false) {
             _db.exe("INSERT INTO water_msg_message_all " +
-                    "SELECT * FROM water_msg_message WHERE log_date = ?", hotDate);
+                    "SELECT * FROM water_msg_message WHERE last_date = ?", hotDate);
         }
 
         //清理统计
-        _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
+        _db.table("water_msg_message_ex_stat").whereLte("last_date", coldDate);
 
         //清理持久化
-        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
+        _db.table("water_msg_message_all").whereLte("last_date", coldDate);
     }
 }
