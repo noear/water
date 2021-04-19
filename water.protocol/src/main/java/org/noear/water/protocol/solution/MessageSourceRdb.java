@@ -457,10 +457,10 @@ public class MessageSourceRdb implements MessageSource {
 
     @Override
     public void clear(int lteDate) throws Exception {
-        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", 2).delete();
-        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", 3).delete();
-        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", -1).delete();
-        _db.table("water_msg_message").whereLte("log_date", lteDate).andEq("state", -2).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", 2).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", 3).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", -1).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", -2).delete();
 
         _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 2).delete();
         _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 3).delete();

@@ -56,9 +56,12 @@ public class MessageSourceMongo implements MessageSource {
 
     //取消消息（key）
     public void setMessageAsCancel(String msg_key) throws Exception {
+        Datetime datetime = Datetime.Now();
+
         _db.table("water_msg_message")
                 .set("state", -1)
-                .set("last_fulltime",new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -70,9 +73,12 @@ public class MessageSourceMongo implements MessageSource {
 
     //消费消息（key）（设为成功）
     public void setMessageAsSucceed(String msg_key) throws Exception {
+        Datetime datetime = Datetime.Now();
+
         _db.table("water_msg_message")
                 .set("state", 2)
-                .set("last_fulltime",new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -121,6 +127,7 @@ public class MessageSourceMongo implements MessageSource {
         }
 
         Datetime datetime = new Datetime();
+        int date = datetime.getDate();
 
         long dist_nexttime = 0;
         if (plan_time != null) {
@@ -144,8 +151,9 @@ public class MessageSourceMongo implements MessageSource {
                 .set("dist_count", 0)
                 .set("plan_time", plan_time)
                 .set("state",0)
-                .set("log_date", datetime.getDate())
+                .set("log_date", date)
                 .set("log_fulltime", datetime.getFulltime())
+                .set("last_date", date)
                 .set("last_fulltime", datetime.getFulltime())
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
@@ -193,9 +201,12 @@ public class MessageSourceMongo implements MessageSource {
     //设置消息状态
     public boolean setMessageState(MessageModel msg, MessageState state, long dist_nexttime) {
         try {
+            Datetime datetime = Datetime.Now();
+
             _db.table("water_msg_message")
                     .set("state", state.code)
-                    .set("last_fulltime",new Date())
+                    .set("last_date", datetime.getDate())
+                    .set("last_fulltime", datetime.getFulltime())
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
@@ -231,10 +242,12 @@ public class MessageSourceMongo implements MessageSource {
             msg.dist_count += 1;
 
             long ntime = DisttimeUtils.nextTime(msg.dist_count);
+            Datetime datetime = Datetime.Now();
 
             _db.table("water_msg_message")
                     .set("state", state.code)
-                    .set("last_fulltime",new Date())
+                    .set("last_date", datetime.getDate())
+                    .set("last_fulltime", datetime.getFulltime())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
                     .whereEq("_id", msg.msg_id).andIn("state", Arrays.asList(0,1))
@@ -398,10 +411,12 @@ public class MessageSourceMongo implements MessageSource {
 
     //派发功能
     public  boolean setMessageAsPending(List<Object> ids) throws Exception {
+        Datetime datetime = Datetime.Now();
         return _db.table("water_msg_message")
                 .whereIn("_id", ids).andNeq("state", 2)
                 .set("state", 0)
-                .set("last_fulltime",new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .set("dist_nexttime", 0)
                 .update() > 0;
 
@@ -425,10 +440,13 @@ public class MessageSourceMongo implements MessageSource {
 
     //取消派发
     public  boolean setMessageAsCancel(List<Object> ids) throws Exception {
+        Datetime datetime = Datetime.Now();
+
         return _db.table("water_msg_message")
                 .whereIn("_id", ids)
                 .set("state", -1)
-                .set("last_fulltime",new Date())
+                .set("last_date", datetime.getDate())
+                .set("last_fulltime", datetime.getFulltime())
                 .update() > 0;
     }
 
@@ -447,7 +465,9 @@ public class MessageSourceMongo implements MessageSource {
         _db.table("water_msg_message").orderByDesc("topic_name").createIndex(true);
         _db.table("water_msg_message").orderByDesc("tags").createIndex(true);
         _db.table("water_msg_message").orderByDesc("trace_id").createIndex(true);
+        _db.table("water_msg_message").orderByDesc("last_date").createIndex(true);
 
+        _db.table("water_msg_message_all").orderByDesc("last_date").createIndex(true);
 
         _db.table("water_msg_distribution").orderByDesc("dist_id").createIndex(indexOptions);
         _db.table("water_msg_distribution").orderByDesc("log_date").createIndex(true);
@@ -459,10 +479,10 @@ public class MessageSourceMongo implements MessageSource {
 
     @Override
     public void clear(int lteDate) throws Exception {
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",2).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",3).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",-1).delete();
-        _db.table("water_msg_message").whereLte("log_date",lteDate).andEq("state",-2).delete();
+        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",2).delete();
+        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",3).delete();
+        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",-1).delete();
+        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",-2).delete();
 
         _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",2).delete();
         _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",3).delete();
@@ -481,11 +501,13 @@ public class MessageSourceMongo implements MessageSource {
         long currTime = System.currentTimeMillis();
         long timeOuts = 1000 * seconds; //30s
         long refTime = currTime - timeOuts;
+        Datetime datetime = Datetime.Now();
 
         if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
             return _db.table("water_msg_message")
                     .set("state", 0)
-                    .set("last_fulltime",new Date())
+                    .set("last_date", datetime.getDate())
+                    .set("last_fulltime", datetime.getFulltime())
                     .whereEq("state", 1).andLt("dist_nexttime", refTime)
                     .update();
         } else {
@@ -508,9 +530,9 @@ public class MessageSourceMongo implements MessageSource {
     public void persistence(int hotDate, int coldDate) throws Exception {
         //转移数据（长久保存）
         //
-        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
+        if (_db.table("water_msg_message_all").whereEq("last_date", hotDate).selectExists() == false) {
             Map<String, Object> filter = new LinkedHashMap<>();
-            filter.put("log_date", hotDate);
+            filter.put("last_date", hotDate);
 
             FindIterable<Document> cursor = _db.mongo().find("water_msg_message", filter);
 
@@ -529,15 +551,13 @@ public class MessageSourceMongo implements MessageSource {
                 _db.mongo().insertMany("water_msg_message_all", dataPage);
                 dataPage.clear();
             }
-
-//            _db.exe("INSERT INTO water_msg_message_all " +
-//                    "SELECT * FROM water_msg_message WHERE log_date = ?", hotDate);
         }
+
+
+        //清理持久化
+        _db.table("water_msg_message_all").whereLte("last_date", coldDate);
 
         //清理统计
         _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
-
-        //清理持久化
-        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
     }
 }
