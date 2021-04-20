@@ -85,7 +85,11 @@
         <pre id="code" jt-ini >#tag/key
 FIND db/coll
 {
-  "field": 1
+  "query": {
+  	"field": 1
+  },
+  "sort": "",
+  "limit": 10
 }</pre>
     </left>
     <right>
