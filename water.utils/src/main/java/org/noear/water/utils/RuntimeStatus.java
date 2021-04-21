@@ -1,9 +1,6 @@
 package org.noear.water.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RuntimeStatus {
     public String name;
@@ -41,7 +38,7 @@ public class RuntimeStatus {
     //后台线程数
     public int threadDaemonCount;
 
-    public Map<String,Object> system = new HashMap<>();
+    public Map<String,Object> system = new LinkedHashMap<>();
 
     /**
      * java虚拟机允许开启的最大的内存
