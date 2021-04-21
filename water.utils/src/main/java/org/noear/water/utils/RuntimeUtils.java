@@ -1,7 +1,9 @@
 package org.noear.water.utils;
 
 import java.lang.management.*;
+import java.text.DecimalFormat;
 import java.util.*;
+import com.sun.management.OperatingSystemMXBean;
 
 public class RuntimeUtils {
     private static RuntimeStatus status = new RuntimeStatus();
@@ -10,16 +12,26 @@ public class RuntimeUtils {
     public static RuntimeStatus getStatus() {
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-        OperatingSystemMXBean systemMXBean = ManagementFactory.getOperatingSystemMXBean();
+        OperatingSystemMXBean systemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
 
         Runtime runtime = Runtime.getRuntime();
 
         status.memoryTotal = (byteToM(runtime.totalMemory()));
         status.memoryUsed = (byteToM(runtime.totalMemory() - runtime.freeMemory()));
 
+
+        // 总的物理内存
+        String memoryMax = new DecimalFormat("#.##")
+                .format(systemMXBean.getTotalPhysicalMemorySize() / 1024.0 / 1024 / 1024) + "G";
+        // 剩余的物理内存
+        String memoryUsed = new DecimalFormat("#.##")
+                .format(systemMXBean.getFreePhysicalMemorySize() / 1024.0 / 1024 / 1024) + "G";
+
         status.system.put("arch",systemMXBean.getArch());
         status.system.put("systemLoadAverage",systemMXBean.getSystemLoadAverage());
         status.system.put("availableProcessors",systemMXBean.getAvailableProcessors());
+        status.system.put("memoryMax",memoryMax);
+        status.system.put("memoryUsed",memoryUsed);
 
 
         List<Map<String,Object>> memoryPools = new ArrayList<>();
