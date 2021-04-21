@@ -104,12 +104,15 @@ public class CodeGenerationController extends BaseController {
                 continue;
             }
 
-            if (f.type.startsWith("int") || f.type.startsWith("tinyint") || f.type.startsWith("smallint")) {
+            if (f.type.equals("tinyint(1)")) {
+                f.type = "boolean";
+                f.def = "false";
+            } else if (f.type.startsWith("int") || f.type.startsWith("tinyint") || f.type.startsWith("smallint")) {
                 f.type = "int";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
                 f.type = "long";
-                f.def = "0l";
+                f.def = "0L";
             } else if (f.type.startsWith("float")) {
                 f.type = "float";
                 f.def = "0F";
@@ -119,11 +122,11 @@ public class CodeGenerationController extends BaseController {
             } else if (f.type.startsWith("decimal")) {
                 f.type = "BigDecimal";
                 f.def = "BigDecimal.ZERO";
-            } else if (f.type.startsWith("varchar") || f.type.startsWith("char") || f.type.startsWith("text") || f.type.startsWith("longtext") || f.type.startsWith("json")) {
-                f.type = "String";
-                f.def = "null";
             } else if (f.type.startsWith("datetime") || f.type.startsWith("date") || f.type.startsWith("time")) {
                 f.type = "Date";
+                f.def = "null";
+            } else {
+                f.type = "String";
                 f.def = "null";
             }
         }
