@@ -304,12 +304,12 @@ public class DbWaterCfgApi {
 
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;
-
             WaterClient.Notice.updateConfig(tag, key);
-
             return isOk;
         } else {
-            return db.insert() > 0;
+            boolean isOk = db.insert() > 0;
+            WaterClient.Notice.updateConfig(tag, key);
+            return isOk;
         }
     }
 
