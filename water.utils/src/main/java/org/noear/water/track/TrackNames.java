@@ -2,6 +2,7 @@ package org.noear.water.track;
 
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.RedisX;
+import org.noear.water.utils.TextUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,6 +30,10 @@ public class TrackNames {
     private Map<String, String> _nameSet = new LinkedHashMap<>();
 
     public String getNameMd5(String name) {
+        if(TextUtils.isEmpty(name)){
+            return "";
+        }
+
         if (name.startsWith("{md5}")) {
             return name;
         }
@@ -51,6 +56,10 @@ public class TrackNames {
     }
 
     public String getName(String nameMd5) {
+        if(TextUtils.isEmpty(nameMd5)){
+            return "";
+        }
+
         if (nameMd5.startsWith("{md5}") == false) {
             return nameMd5;
         }
