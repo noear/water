@@ -75,7 +75,7 @@ public class TrackNames {
         executor.submit(() -> {
             try {
                 _redisX.open0(ru -> {
-                    ru.key(nameMd5).set(name).expire(60 * 60 * 24 * 30);//1月
+                    ru.key(nameMd5).expire(60 * 60 * 24 * 30).set(name);//1月
                 });
             } catch (Throwable ex) {
                 ex.printStackTrace();
