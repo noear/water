@@ -36,7 +36,7 @@
                 <select id="logger" name="logger" onchange="queryForm();">
                     <option value="">选择服务日志</option>
                     <#list logs as m>
-                        <option value="${m.logger}">${m.logger} (${m.row_num})</option>
+                        <option value="${m.logger}">${m.logger} (${m.row_num_today})</option>
                     </#list>
                 </select>&nbsp;&nbsp;
                 标签：<input type="text" class="w250"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3 or *TraceId" id="tagx"/>&nbsp;&nbsp;
