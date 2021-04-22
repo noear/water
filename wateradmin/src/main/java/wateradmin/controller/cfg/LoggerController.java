@@ -95,6 +95,8 @@ public class LoggerController extends BaseController {
         }
 
         boolean result = DbWaterCfgApi.setLogger(logger_id, tag, logger, source, note, keep_days, is_alarm);
+
+
         if (result) {
             viewModel.code(1, "保存成功！");
         } else {
