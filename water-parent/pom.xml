@@ -18,6 +18,7 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <name>noear</name>
@@ -26,6 +27,7 @@
             <organizationUrl>http://www.noear.org</organizationUrl>
         </developer>
     </developers>
+
     <scm>
         <connection>scm:git:git@github.com:noear/water.git</connection>
         <developerConnection>scm:git:git@github.com:noear/water.git</developerConnection>
@@ -38,7 +40,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.3.24</solon.ver>
+        <solon.ver>1.3.25</solon.ver>
         <weed3.ver>3.3.7</weed3.ver>
         <snack3.ver>3.1.14</snack3.ver>
         <water.ver>2.0.26</water.ver>
