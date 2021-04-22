@@ -44,7 +44,6 @@ public class MsgController extends BaseController {
         MessageModel msg = ProtocolHub.messageSource().getMessageById(id);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         StringBuilder sb = new StringBuilder(200);
-        sb.append(id).append("#");
         sb.append(msg_key).append("#");
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
