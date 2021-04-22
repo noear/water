@@ -37,7 +37,9 @@ public class DbWaterMsgApi {
 
     public static SubscriberModel getSubscriber(String topic) throws SQLException {
         return db().table("water_msg_subscriber")
-                .where("topic_name = ?", topic)
+                .whereEq("topic_name", topic)
+                .andEq("is_enabled",1)
+                .limit(1)
                 .selectItem("*", SubscriberModel.class);
     }
 

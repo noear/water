@@ -42,12 +42,15 @@ public class MsgController extends BaseController {
     @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
         MessageModel msg = ProtocolHub.messageSource().getMessageById(id);
+
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         StringBuilder sb = new StringBuilder(200);
-        sb.append(msg_key).append("#");
-        sb.append(topic_name).append("#");
-        sb.append(content).append("#");
+
+        sb.append(msg.msg_key).append("#");
+        sb.append(msg.topic_name).append("#");
+        sb.append(msg.content).append("#");
         sb.append(sub.receive_key);
+
         String sgin = EncryptUtils.md5(sb.toString());
 
         HashMap<String, Object> map = new HashMap<>();
