@@ -22,7 +22,7 @@ import java.util.HashMap;
 @Controller
 public class MsgController extends BaseController {
     @Mapping("/msg")
-    public ModelAndView index(){
+    public ModelAndView index() {
         return view("msg/msg");
     }
 
@@ -32,58 +32,64 @@ public class MsgController extends BaseController {
     public ModelAndView debug(String key) throws Exception {
         MessageModel msg = ProtocolHub.messageSource().getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
-        viewModel.put("key",key);
-        viewModel.put("msg",msg);
-        viewModel.put("sub",sub);
+        viewModel.put("key", key);
+        viewModel.put("msg", msg);
+        viewModel.put("sub", sub);
         return view("msg/debug");
     }
 
     //提交消息调试
     @Mapping("/msg/debug/ajax/submitDebug")
-    public ViewModel submitDebug(Long id,String msg_key,String topic_name,Integer dist_count,String content,String url) throws Exception{
-        MessageModel msg = ProtocolHub.messageSource().getMessageById(id);
+    public ViewModel submitDebug(Long id, String msg_key, String topic_name, Integer dist_count, String content, String receive_key, String url) throws Exception {
+        if (dist_count == null) {
+            dist_count = 0;
+        }
 
-        SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         StringBuilder sb = new StringBuilder(200);
 
-        sb.append(msg.msg_key).append("#");
-        sb.append(msg.topic_name).append("#");
-        sb.append(msg.content).append("#");
-        sb.append(sub.receive_key);
+        sb.append(msg_key).append("#");
+        sb.append(topic_name).append("#");
+        sb.append(content).append("#");
+        sb.append(receive_key);
 
         String sgin = EncryptUtils.md5(sb.toString());
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("id",id);
-        map.put("key",msg.msg_key);
-        map.put("topic",msg.topic_name);
-        map.put("times",msg.dist_count);
-        map.put("message", Base64Utils.encode(msg.content));
-        map.put("sgin",sgin);
-        String result = HttpUtils.http(url).data(map).post();
+        map.put("id", id);
+        map.put("key", msg_key);
+        map.put("topic", topic_name);
+        map.put("times", dist_count);
+        map.put("message", Base64Utils.encode(content));
+        map.put("sgin", sgin);
 
-        return viewModel.code(1,result);
+        try {
+            String result = HttpUtils.http(url).data(map).post();
+
+            return viewModel.code(1, result);
+        } catch (Exception ex) {
+            return viewModel.code(1, ex.getMessage());
+        }
     }
 
     @Mapping("/msg/send")
-    public ModelAndView distribute(){
+    public ModelAndView distribute() {
 
         return view("msg/send");
     }
 
     @Mapping("/msg/send/ajax/dosend")
-    public ViewModel sendMessage(String topic, String message,String tags) throws Exception {
+    public ViewModel sendMessage(String topic, String message, String tags) throws Exception {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
             boolean isOk = WaterClient.Message.sendMessageAndTags(topic, message, tags);
 
             if (isOk) {
-                viewModel.code(1,"消息派发成功！");
+                viewModel.code(1, "消息派发成功！");
             } else {
-                viewModel.code(0,"消息发送失败!");
+                viewModel.code(0, "消息发送失败!");
             }
         } else {
-            viewModel.code(0,"没有权限！");
+            viewModel.code(0, "没有权限！");
         }
 
         return viewModel;
@@ -111,19 +117,21 @@ public class MsgController extends BaseController {
 
     //后端加密
     @Mapping("/msg/debug/ajax/getSign")
-    public HashMap<String,String> getSign(Long id,String msg_key,String topic_name,String content,String receive_key){
+    public HashMap<String, String> getSign(Long id, String msg_key, String topic_name, String content, String receive_key) {
         StringBuilder sb = new StringBuilder(200);
-        sb.append(id).append("#");
+
         sb.append(msg_key).append("#");
         sb.append(topic_name).append("#");
         sb.append(content).append("#");
         sb.append(receive_key);
+
         String sign = EncryptUtils.md5(sb.toString());
+
         String message = Base64Utils.encode(content);
         HashMap<String, String> resp = new HashMap<>();
-        resp.put("sign",sign);
-        resp.put("message",message);
+
+        resp.put("sign", sign);
+        resp.put("message", message);
         return resp;
     }
-
 }
