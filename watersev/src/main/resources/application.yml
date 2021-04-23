@@ -8,3 +8,7 @@ water:
   service:
     name: "watersev"
     secretKey: "0kqvJpJ3dsSGCPoH"
+
+solon.app:
+  name: "watersev"
+  group: "water"

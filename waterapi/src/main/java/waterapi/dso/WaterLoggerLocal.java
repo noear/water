@@ -1,5 +1,6 @@
 package waterapi.dso;
 
+import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.log.Level;
@@ -213,7 +214,7 @@ public class WaterLoggerLocal implements Logger {
         Context ctx = Context.current();
         LogEvent log = new LogEvent();
 
-        log.group = "water";
+        log.group = Solon.cfg().appGroup();
         log.logger = _name;
         if (ctx != null) {
             log.trace_id = ctx.header(WW.http_header_trace);

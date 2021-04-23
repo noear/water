@@ -9,3 +9,7 @@ water:
     name: "waterraas"
     host: "@water/raas_uri"
     secretKey: "qTYzsNjzCN9I44FB"
+
+solon.app:
+  name: "waterraas"
+  group: "water"

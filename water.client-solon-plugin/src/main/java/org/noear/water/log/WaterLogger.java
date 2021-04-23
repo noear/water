@@ -1,5 +1,6 @@
 package org.noear.water.log;
 
+import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.dso.LogPipeline;
@@ -283,7 +284,7 @@ public class WaterLogger implements Logger {
 
         LogEvent log = new LogEvent();
 
-        log.group = "water";
+        log.group = Solon.cfg().appGroup();
         log.logger = getName();
         log.level = level.code;
         log.tag = tag;

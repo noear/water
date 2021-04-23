@@ -9,3 +9,8 @@ water:
   service:
     name: "waterpaas"
     secretKey: "0zJt0J88TkIvqYgC"
+
+
+solon.app:
+  name: "waterpaas"
+  group: "water"
