@@ -31,7 +31,9 @@ public class LogStorerImp implements LogStorer {
                 log.log_id = ProtocolHub.idBuilder.getLogId(log.logger);
             }
 
-            TrackBuffer.singleton().append("waterlog", "log", log.logger, 1);
+            if (log.logger != null && log.logger.length() > 2) {
+                TrackBuffer.singleton().append("waterlog", log.logger.substring(0, 2), log.logger, 1);
+            }
         }
 
         Map<String, List<LogEvent>> map = list.stream().collect(Collectors.groupingBy(m -> m.logger));
