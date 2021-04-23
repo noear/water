@@ -40,13 +40,13 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.3.25</solon.ver>
+        <solon.ver>1.3.26</solon.ver>
         <weed3.ver>3.3.7</weed3.ver>
         <snack3.ver>3.1.14</snack3.ver>
         <water.ver>2.0.27</water.ver>
         <HikariCP.ver>4.0.3</HikariCP.ver>
 
-        <bcf.ver>2.0.15</bcf.ver>
+        <bcf.ver>2.0.16</bcf.ver>
 
         <luffy.ver>1.0.5</luffy.ver>
 

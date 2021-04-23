@@ -33,12 +33,6 @@ public class LogStorerImp implements LogStorer {
             }
 
             if (log.logger != null) {
-                if (TextUtils.isEmpty(log.group)) {
-                    if (log.logger.length() > 2) {
-                        log.group = log.logger.substring(0, 2);
-                    }
-                }
-
                 if (TextUtils.isEmpty(log.group) == false) {
                     TrackBuffer.singleton().append("waterlog", log.group, log.logger, 1);
                 }
