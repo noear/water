@@ -33,7 +33,7 @@ public final class MsgCheckController implements IJob {
         for (SubscriberModel sev : list) {
             //只检查IP的订阅（subs.subscriber_note 必不为空）
             //
-            if (TextUtils.isEmpty(sev.receive_url) || TextUtils.isEmpty(sev.subscriber_note)) {
+            if (TextUtils.isEmpty(sev.receive_url)) {
                 continue;
             }
 
