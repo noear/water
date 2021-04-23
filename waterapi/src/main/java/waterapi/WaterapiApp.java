@@ -19,6 +19,9 @@ public class WaterapiApp {
 
 			Config.tryInit();
 
+
+			TrackBuffer.singleton().bind(Config.rd_track);
+
 			ProtocolHub.config = DbWaterCfgApi::getConfigM;
 			ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
@@ -29,7 +32,6 @@ public class WaterapiApp {
 			ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 			ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 
-			TrackBuffer.singleton().bind(Config.rd_track);
 		}).onError(err -> {
 			Context ctx = Context.current();
 			if (ctx == null) {
