@@ -3,6 +3,7 @@ package org.noear.water.log;
 import java.util.Date;
 
 public class LogEvent {
+    public String group;
     public long log_id;
     public String logger;
     public String trace_id;

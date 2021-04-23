@@ -7,6 +7,7 @@ import org.noear.water.protocol.IdBuilder;
 import org.noear.water.protocol.LogStorer;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.track.TrackBuffer;
+import org.noear.water.utils.TextUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -31,8 +32,12 @@ public class LogStorerImp implements LogStorer {
                 log.log_id = ProtocolHub.idBuilder.getLogId(log.logger);
             }
 
-            if (log.logger != null && log.logger.length() > 2) {
-                TrackBuffer.singleton().append("waterlog", log.logger.substring(0, 2), log.logger, 1);
+            if (log.logger != null) {
+                if (TextUtils.isEmpty(log.group)) {
+                    log.group = log.logger.substring(0, 2);
+                }
+
+                TrackBuffer.singleton().append("waterlog", log.group, log.logger, 1);
             }
         }
 

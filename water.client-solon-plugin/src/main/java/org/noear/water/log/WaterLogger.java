@@ -283,6 +283,7 @@ public class WaterLogger implements Logger {
 
         LogEvent log = new LogEvent();
 
+        log.group = "water";
         log.logger = getName();
         log.level = level.code;
         log.tag = tag;

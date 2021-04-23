@@ -213,6 +213,7 @@ public class WaterLoggerLocal implements Logger {
         Context ctx = Context.current();
         LogEvent log = new LogEvent();
 
+        log.group = "water";
         log.logger = _name;
         if (ctx != null) {
             log.trace_id = ctx.header(WW.http_header_trace);
