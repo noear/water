@@ -9,6 +9,7 @@ import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.DisttimeUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterMsgApi;
@@ -47,6 +48,8 @@ public class CMD_msg_send extends UapiBase {
         }
 
         TopicModel topicModel = DbWaterMsgApi.getTopicById(topic);
+
+        TrackBuffer.singleton().append("watermsg", "topic", topic, 1);
 
         long msg_id = ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
 
