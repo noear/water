@@ -76,7 +76,7 @@ public class TrackBuffer implements TaskUtils.ITask {
     private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
         try {
             appendDo0(mSet, service, tag, name, timespan);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
