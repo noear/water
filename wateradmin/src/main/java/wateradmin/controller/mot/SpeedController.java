@@ -30,6 +30,8 @@ public class SpeedController extends BaseController {
     public ModelAndView speed(String serviceName) throws SQLException {
         List<ServiceSpeedModel> services = DbWaterOpsApi.getSpeedServices();
 
+        services.removeIf(m->m.service.startsWith("_"));
+
         BcfServiceChecker.filter(services, m -> m.service);
 
         if (TextUtils.isEmpty(serviceName) == false) {
@@ -54,6 +56,8 @@ public class SpeedController extends BaseController {
 
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(serviceName, tag, name, sort);
         List<TagCountsModel> tags = DbWaterOpsApi.getSpeedsServiceTags(serviceName);
+
+
 
         viewModel.put("speeds", speeds);
         viewModel.put("tags", tags);

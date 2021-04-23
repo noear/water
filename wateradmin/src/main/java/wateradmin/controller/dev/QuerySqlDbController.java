@@ -13,6 +13,7 @@ import wateradmin.dso.ConfigType;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.water_cfg.ConfigModel;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
@@ -156,11 +157,17 @@ public class QuerySqlDbController extends BaseController {
        sb.append("</tr></thead>");
        sb.append("<tbody>");
 
-       for(DataItem item : list.getRows()){
+       for(DataItem item : list.getRows()) {
            sb.append("<tr>");
-           for(String col : cols){
-               sb.append("<td>").append(item.get(col)).append("</td>");
+           for (String col : cols) {
+               Object val = item.get(col);
+               if (val instanceof BigDecimal) {
+                   sb.append("<td>").append(((BigDecimal) val).doubleValue()).append("</td>");
+               } else {
+                   sb.append("<td>").append(val).append("</td>");
+               }
            }
+
            sb.append("</tr>");
        }
 
