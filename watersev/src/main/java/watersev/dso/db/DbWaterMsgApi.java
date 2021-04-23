@@ -3,6 +3,7 @@ package watersev.dso.db;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.model.message.SubscriberModel;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water_msg.TopicModel;
@@ -70,8 +71,8 @@ public class DbWaterMsgApi {
         }
     }
 
-    public static void setSubscriberState(int subscriber_id, int check_state) {
-        if (subscriber_id > 0) {
+    public static void setSubscriberState(String receive_url, int check_state) {
+        if (TextUtils.isNotEmpty(receive_url)) {
             try {
                 db().table("water_msg_subscriber").usingExpr(true)
                         .set("check_last_state", check_state)
@@ -81,11 +82,11 @@ public class DbWaterMsgApi {
                             else
                                 tb.set("check_error_num", "$check_error_num+1");
                         })
-                        .whereEq("subscriber_id", subscriber_id)
+                        .whereEq("receive_url", receive_url)
                         .update();
             } catch (Throwable ex) {
                 //ex.printStackTrace();
-                log_msg.error("setSubscriberState", subscriber_id + "", ex);
+                log_msg.error("setSubscriberState", receive_url + "", ex);
             }
         }
     }
