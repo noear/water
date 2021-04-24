@@ -64,9 +64,8 @@
                 <tr>
                     <td width="220px" class="left">logger</td>
                     <td width="60px">保留<br/>天数</td>
-                    <td width="100px" class="right">行数</td>
-                    <td width="90px" class="right">今日<br/>记录数</td>
-                    <td width="80px" class="right">今日<br/>错误数</td>
+                    <td width="120px" class="right">今日<br/>记录数</td>
+                    <td width="120px" class="right">今日<br/>错误数</td>
                     <td>数据源</td>
                     <td width="60">启用<br/>报警</td>
                     <#if is_admin == 1>
@@ -79,7 +78,6 @@
                     <tr ${logger.isHighlight()?string("class='t4'","")}>
                         <td class="left"><a href="/log/query/inner?logger=${logger.logger}&tag_name=${logger.tag}" target="_parent">${logger.logger}</a></td>
                         <td class="center">${logger.keep_days}</td>
-                        <td class="right">${logger.row_num}</td>
                         <td class="right">${logger.row_num_today}</td>
                         <td class="right">${logger.row_num_today_error}</td>
 
