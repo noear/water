@@ -18,12 +18,12 @@
             <thead>
             <tr>
                 <td width="100px" sort="">tag</td>
-                <td width="250px" class="left">logger</td>
+                <td class="left">logger</td>
                 <td width="90px" sort="row_num">总数量</td>
                 <td width="90px" sort="row_num_today">今日数量</td>
                 <td width="90px" sort="row_num_yesterday">昨日数量</td>
                 <td width="90px" sort="row_num_beforeday">前日数量</td>
-                <td>备注</td>
+                <td width="50px"></td>
             </tr>
             </thead>
             <tbody id="tbody">
@@ -35,7 +35,9 @@
                 <td style='text-align: right;'>${m.row_num_today}</td>
                 <td style='text-align: right;'>${m.row_num_yesterday}</td>
                 <td style='text-align: right;'>${m.row_num_beforeday}</td>
-                <td style="text-align:left;word-wrap:break-word;word-break:break-all;!important;">${m.note!}</td>
+                <td class="op">
+                    <a href="/mot/speed/charts?tag=logger&name_md5=${m.logger_md5()}&service=waterlog">监控</a>
+                </td>
             </tr>
             </#list>
             </tbody>

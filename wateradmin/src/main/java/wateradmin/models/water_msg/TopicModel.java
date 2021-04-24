@@ -1,6 +1,7 @@
 package wateradmin.models.water_msg;
 
 import lombok.Getter;
+import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.*;
 
 /// <summary>
@@ -35,4 +36,8 @@ public class TopicModel implements IBinder
 	{
 		return new TopicModel();
 	}
+
+	public String topic_md5(){
+        return "%7Bmd5%7D" + EncryptUtils.md5(topic_name);
+    }
 }

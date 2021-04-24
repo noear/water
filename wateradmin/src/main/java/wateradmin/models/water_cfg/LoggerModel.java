@@ -2,6 +2,7 @@ package wateradmin.models.water_cfg;
 
 import lombok.Getter;
 import org.noear.water.protocol.model.log.LoggerMeta;
+import org.noear.water.utils.EncryptUtils;
 
 @Getter
 public class LoggerModel implements LoggerMeta
@@ -30,5 +31,9 @@ public class LoggerModel implements LoggerMeta
     @Override
     public int getKeepDays() {
         return keep_days;
+    }
+
+    public String logger_md5(){
+        return "%7Bmd5%7D" + EncryptUtils.md5(logger);
     }
 }
