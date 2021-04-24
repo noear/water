@@ -35,8 +35,8 @@
                 <td style='text-align: right;'>${m.row_num_today}</td>
                 <td style='text-align: right;'>${m.row_num_yesterday}</td>
                 <td style='text-align: right;'>${m.row_num_beforeday}</td>
-                <td class="op t2">
-                    <a href="/mot/speed/charts?tag=logger&name_md5=${m.logger_md5()}&service=waterlog">监控</a>
+                <td class="op">
+                    <a href="/mot/speed/charts?tag=logger&name_md5=${m.logger_md5()}&service=waterlog" class="t2">监控</a>
                 </td>
             </tr>
             </#list>
