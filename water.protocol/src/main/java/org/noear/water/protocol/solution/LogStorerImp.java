@@ -32,6 +32,26 @@ public class LogStorerImp implements LogStorer {
                 log.log_id = ProtocolHub.idBuilder.getLogId(log.logger);
             }
 
+            if (log.tag != null && log.tag.length() > 99) {
+                log.tag = log.tag.substring(0, 99);
+            }
+
+            if (log.tag1 != null && log.tag1.length() > 99) {
+                log.tag1 = log.tag1.substring(0, 99);
+            }
+
+            if (log.tag2 != null && log.tag2.length() > 99) {
+                log.tag2 = log.tag2.substring(0, 99);
+            }
+
+            if (log.tag3 != null && log.tag3.length() > 99) {
+                log.tag3 = log.tag3.substring(0, 99);
+            }
+
+            if (log.summary != null && log.summary.length() > 999) {
+                log.summary = log.summary.substring(0, 999);
+            }
+
             if (log.logger != null) {
                 TrackBuffer.singleton().append("waterlog", "logger", log.logger, 1);
             }
