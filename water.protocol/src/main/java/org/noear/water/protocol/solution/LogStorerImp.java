@@ -51,10 +51,6 @@ public class LogStorerImp implements LogStorer {
             if (log.summary != null && log.summary.length() > 999) {
                 log.summary = log.summary.substring(0, 999);
             }
-
-            if (log.logger != null) {
-                TrackBuffer.singleton().append("waterlog", "logger", log.logger, 1);
-            }
         }
 
         Map<String, List<LogEvent>> map = list.stream().collect(Collectors.groupingBy(m -> m.logger));
@@ -64,6 +60,10 @@ public class LogStorerImp implements LogStorer {
                 ProtocolHub.logSourceFactory.getSource(kv.getKey())
                         .writeAll(kv.getKey(), kv.getValue());
 
+                if (TextUtils.isNotEmpty(kv.getKey())) {
+                    TrackBuffer.singleton()
+                            .appendCount("waterlog", "logger", kv.getKey(), kv.getValue().size());
+                }
             } catch (Throwable ex) {
                 EventBus.push(ex);
             }

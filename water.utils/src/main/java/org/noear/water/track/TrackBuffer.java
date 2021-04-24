@@ -55,14 +55,14 @@ public class TrackBuffer implements TaskUtils.ITask {
      * 添加记录（记录性能（service/tag/name，三级 ,from _from,at _node））
      * */
     public void append(String service, String tag, String name, long timespan, String _node, String _from) {
-        appendDo(_mainSet, service, tag, name, timespan);
+        appendDo(_mainSet, service, tag, name, 1, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
-            appendDo(_serviceSet, "_service", service, _node, timespan);
+            appendDo(_serviceSet, "_service", service, _node, 1, timespan);
         }
 
         if (TextUtils.isEmpty(_from) == false) {
-            appendDo(_fromSet, "_from", service, _from, timespan);
+            appendDo(_fromSet, "_from", service, _from, 1, timespan);
         }
     }
 
@@ -70,19 +70,26 @@ public class TrackBuffer implements TaskUtils.ITask {
      * 添加记录（记录性能（service/tag/name，三级））
      * */
     public void append(String service, String tag, String name, long timespan) {
-        appendDo(_mainSet, service, tag, name, timespan);
+        appendDo(_mainSet, service, tag, name, 1, timespan);
     }
 
-    private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
+    /**
+     * 添加记数
+     * */
+    public void appendCount(String service, String tag, String name, int count) {
+        appendDo(_mainSet, service, tag, name, count, 1);
+    }
+
+    private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, int count, long timespan) {
         try {
-            appendDo0(mSet, service, tag, name, timespan);
+            appendDo0(mSet, service, tag, name, count, timespan);
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
     }
 
     //记录性能
-    private void appendDo0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan) {
+    private void appendDo0(Map<String, TrackEvent> mSet, String service, String tag, String name, int count, long timespan) {
         Datetime now = Datetime.Now();
 
         //1.提前构建各种key（为了性能采用 StringBuilder）
@@ -104,31 +111,31 @@ public class TrackBuffer implements TaskUtils.ITask {
         //average, slowest, fastest, total_num, total_time
 
         //记录当时数据
-        do_track_key(mSet, key_group, key_hour, timespan, TrackEvent.type_hour, key_minute, key_minute_bef);
+        do_track_key(mSet, key_group, key_hour, count, timespan, TrackEvent.type_hour, key_minute, key_minute_bef);
 
         //记录当日数据
-        do_track_key(mSet, key_group, key_date, timespan, TrackEvent.type_date, key_minute, key_minute_bef);
+        do_track_key(mSet, key_group, key_date, count, timespan, TrackEvent.type_date, key_minute, key_minute_bef);
     }
 
-    private void do_track_key(Map<String, TrackEvent> mSet, String group, String rdkey, long timespan, String type, String key_minute, String key_minute_bef) {
+    private void do_track_key(Map<String, TrackEvent> mSet, String group, String rdkey, int count, long timespan, String type, String key_minute, String key_minute_bef) {
         TrackEvent ru = getOrNew(mSet, group, rdkey);
         ru.type = type;
         ru.key_minute = key_minute;
         ru.key_minute_bef = key_minute_bef;
 
         ru.hashIncr("total_time", timespan); //没有必要了
-        ru.hashIncr("total_num", 1);
+        ru.hashIncr("total_num", count);
 
         if (timespan > 1000) {
-            ru.hashIncr("total_num_slow1", 1);
+            ru.hashIncr("total_num_slow1", count);
         }
 
         if (timespan > 2000) {
-            ru.hashIncr("total_num_slow2", 1);
+            ru.hashIncr("total_num_slow2", count);
         }
 
         if (timespan > 5000) {
-            ru.hashIncr("total_num_slow5", 1);
+            ru.hashIncr("total_num_slow5", count);
         }
 
         long slowest = ru.hashVal("slowest"); //ru.hashVal("slowest");

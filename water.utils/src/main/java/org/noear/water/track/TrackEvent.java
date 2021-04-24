@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.LongAdder;
 
 public class TrackEvent {
-    public static String type_date = "date";
-    public static String type_hour = "hour";
+    public static final String type_date = "date";
+    public static final String type_hour = "hour";
 
     private Map<String,LongAdder> _hash = new HashMap<>();
 
