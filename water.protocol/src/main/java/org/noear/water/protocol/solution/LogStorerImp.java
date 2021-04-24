@@ -65,7 +65,9 @@ public class LogStorerImp implements LogStorer {
                             .appendCount("waterlog", "logger", kv.getKey(), kv.getValue().size());
                 }
             } catch (Throwable ex) {
-                EventBus.push(ex);
+                if ("water_log_api".equals(kv.getKey()) == false) {
+                    EventBus.push(ex);
+                }
             }
         }
     }
