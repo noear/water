@@ -36,9 +36,9 @@
                 <td width="120">最大<br/>同时派发数</td>
                 <td width="100">报警模式</td>
                 <#if is_admin == 1>
-                    <td width="100">操作</td>
+                    <td width="100"></td>
                 <#else>
-                    <td width="50">操作</td>
+                    <td width="50"></td>
                 </#if>
             </tr>
             </thead>
@@ -63,7 +63,7 @@
                         <#if is_admin == 1>
                         <a href="/msg/topic/edit?topic_id=${m.topic_id}" class="t2">编辑</a> |
                         </#if>
-                        <a href="/mot/speed/charts?tag=topic&name_md5=${m.topic_md5()}&service=watermsg">监控</a>
+                        <a href="/mot/speed/charts?tag=topic&name_md5=${m.topic_md5()}&service=watermsg" class="t2">监控</a>
                     </td>
 
                 </tr>
