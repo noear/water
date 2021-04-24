@@ -342,7 +342,7 @@ public class DbWaterOpsApi {
                        }
 
                        if (TextUtils.isEmpty(sort)) {
-                           tb.orderBy("tag ASC");
+                           tb.orderBy("tag,name ASC");
                        } else {
                            tb.orderBy(sort + " DESC");
                        }
