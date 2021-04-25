@@ -3,17 +3,21 @@ package waterapi.dso.db;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
+import org.noear.water.utils.EventPipeline;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
+import waterapi.dso.TrackBcfPipelineLocal;
+import waterapi.dso.TrackSqlPipelineLocal;
+import waterapi.models.TrackEvent;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * 日志服务接口
  * */
 public final class DbWaterLogApi {
-
 
     public static void addTrack(String service, String trace_id, String schema, long interval, String cmd_sql, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
 
@@ -46,42 +50,65 @@ public final class DbWaterLogApi {
 
 
         if (TextUtils.isEmpty(path)) {
-            do_addTrack("water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack(TrackSqlPipelineLocal.singleton(), "water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
         } else {
-            do_addTrack("water_exam_log_bcf", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+            do_addTrack(TrackBcfPipelineLocal.singleton(), "water_exam_log_bcf", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
 
             if (interval >= 2000) {
-                do_addTrack("water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
+                do_addTrack(TrackSqlPipelineLocal.singleton(), "water_exam_log_sql", service, trace_id, schema, method, seconds, interval, cmd_sql, cmd_sql_md5, cmd_arg, operator, operator_ip, path, ua, note);
             }
         }
     }
 
-    private static void do_addTrack(String logger, String service, String trace_id, String schema, String method, int seconds, long interval, String cmd_sql, String cmd_sql_md5, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
-        DbContext db = Config.water_log;
+    private static void do_addTrack(EventPipeline<TrackEvent> pipeline, String logger, String service, String trace_id, String schema, String method, int seconds, long interval, String cmd_sql, String cmd_sql_md5, String cmd_arg, String operator, String operator_ip, String path, String ua, String note) throws SQLException {
+        TrackEvent event = new TrackEvent();
 
         Datetime now = Datetime.Now();
 
-        long log_id = ProtocolHub.idBuilder.getLogId(logger);
+        event.log_id = ProtocolHub.idBuilder.getLogId(logger);
+        event.service = service;
+        event.trace_id = trace_id;
+        event.schema = schema;
+        event.method = method;
+        event.cmd_sql = cmd_sql;
+        event.cmd_sql_md5 = cmd_sql_md5;
+        event.cmd_arg = cmd_arg;
+        event.seconds = seconds;
+        event.interval = interval;
+        event.operator = operator;
+        event.operator_ip = operator_ip;
+        event.path = path;
+        event.ua = ua;
+        event.note = note;
+        event.log_date = now.getDate();
+        event.log_hour = now.getHours();
+        event.log_fulltime = now.getFulltime().getTime();
 
-        db.table(logger).usingExpr(true)
-                .set("log_id", log_id)
-                .set("service", service)
-                .set("trace_id", trace_id)
-                .set("schema", schema)
-                .set("method", method)
-                .set("cmd_sql", cmd_sql)
-                .set("cmd_sql_md5", cmd_sql_md5)
-                .set("cmd_arg", cmd_arg)
-                .set("seconds", seconds)
-                .set("interval", interval)
-                .set("operator", operator)
-                .set("operator_ip", operator_ip)
-                .set("path", path)
-                .set("ua", ua)
-                .set("note", note)
-                .set("log_date", now.getDate())
-                .set("log_hour", now.getHours())
-                .set("log_fulltime", now.getFulltime().getTime())
-                .insert();
+        pipeline.add(event);
+    }
+
+    public static void addTrackAll(String logger, List<TrackEvent> eventList) throws SQLException {
+        Config.water_log.table(logger).usingExpr(false).usingNull(true)
+                .insertList(eventList, (d, m) -> {
+                    m.set("log_id", d.log_id)
+                            .set("service", d.service)
+                            .set("trace_id", d.trace_id)
+                            .set("schema", d.schema)
+                            .set("method", d.method)
+                            .set("cmd_sql", d.cmd_sql)
+                            .set("cmd_sql_md5", d.cmd_sql_md5)
+                            .set("cmd_arg", d.cmd_arg)
+                            .set("seconds", d.seconds)
+                            .set("interval", d.interval)
+                            .set("operator", d.operator)
+                            .set("operator_ip", d.operator_ip)
+                            .set("path", d.path)
+                            .set("ua", d.ua)
+                            .set("note", d.note)
+                            .set("log_date", d.log_date)
+                            .set("log_hour", d.log_hour)
+                            .set("log_fulltime", d.log_fulltime);
+                });
+
     }
 }
