@@ -155,6 +155,7 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
         final boolean isTrackEnable = Solon.cfg().getBool("water.weed.track.enable", false);
+        //final boolean isErrorLogEnable = Solon.cfg().getBool("water.weed.error.log.enable", true);
 
         if (bcfClz == null) {
             //api项目
@@ -192,10 +193,6 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
                 if (cmd.isLog < 0) {
                     return;
                 }
-
-//                if (user_name() == null) {
-//                    return;
-//                }
 
                 Context context = Context.current();
 

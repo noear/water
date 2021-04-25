@@ -1,5 +1,6 @@
 package waterapi;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.water.WW;
@@ -7,8 +8,10 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
+import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.DbUtils;
@@ -38,6 +41,8 @@ public class Config {
 
     public static ConfigM water_log_store;
     public static ConfigM water_msg_store;
+
+    private static WaterLoggerLocal log = new WaterLoggerLocal();
 
 
     //================================
@@ -103,7 +108,26 @@ public class Config {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            initWeedOnException();
         }
+    }
+
+    private static void initWeedOnException() {
+        //
+        // 有可能会造成列循环
+        //
+//        WeedConfig.onException((cmd, err) -> {
+//            if (cmd == null) {
+//                log.error(err);
+//            } else {
+//                StringBuilder sb = new StringBuilder();
+//                sb.append("::Sql= ").append(cmd.text).append("\n");
+//                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n");
+//                sb.append("::Error= ").append(ThrowableUtils.getString(err));
+//                log.error(sb.toString());
+//            }
+//        });
     }
 
 
