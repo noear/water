@@ -160,8 +160,8 @@ public class MessageApi {
         }
 
         if (planTime != null) {
-            String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
-            params.put("plan_time", planTime2);
+            //String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
+            params.put("plan_time", String.valueOf(planTime.getTime()));
         }
 
         String txt = apiCaller.post("/msg/send/", params);
@@ -221,8 +221,8 @@ public class MessageApi {
 
 
         if (planTime != null) {
-            String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
-            params.put("plan_time", planTime2);
+            //String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
+            params.put("plan_time", String.valueOf(planTime.getTime()));
         }
 
         String txt = apiCaller.post("/msg/send/", params);
