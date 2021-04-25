@@ -65,7 +65,7 @@ public class Config {
             _inited = true;
 
             int service_port = Solon.global().port();
-            ;
+
             Properties prop = Solon.cfg().getProp("water.dataSource");
 
             water = DbUtils.getDb(prop);
@@ -121,7 +121,7 @@ public class Config {
         WeedConfig.onException((cmd, err) -> {
             if (cmd != null) {
                 Context ctx = Context.current();
-                
+
                 if (ctx != null) {
                     //
                     //有可能会造成列循环；所以转给上下文特性

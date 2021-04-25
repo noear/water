@@ -81,14 +81,13 @@ public class LogUtils {
 
         try {
             Command cmd = ctx.attr("weed_cmd");
-
-
             String _from = FromUtils.getFromName(ctx);
 
             String tag = ctx.path();
-            String summary = ONode.stringify(ctx.paramMap());
 
             if (cmd == null) {
+                String summary = ONode.stringify(ctx.paramMap());
+
                 logger.error(tag, null, null, _from, summary, ex);
             } else {
                 StringBuilder sb = new StringBuilder();
@@ -96,7 +95,7 @@ public class LogUtils {
                 sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n");
                 sb.append("::Error= ").append(ThrowableUtils.getString(ex));
 
-                logger.error(tag, "", sb.toString());
+                logger.error(tag, null, null, _from, "", sb.toString());
             }
         } catch (Exception ee) {
             ee.printStackTrace();

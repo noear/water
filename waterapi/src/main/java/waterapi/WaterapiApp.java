@@ -1,6 +1,7 @@
 package waterapi;
 
 import org.noear.solon.Solon;
+import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
@@ -14,6 +15,16 @@ import waterapi.dso.db.DbWaterCfgApi;
 public class WaterapiApp {
 
 	public static void main(String[] args) {
+		EventBus.subscribe(Throwable.class, err -> {
+			Context ctx = Context.current();
+
+			if (ctx == null) {
+				LogUtils.error(ctx, "global", "", "", err);
+			} else {
+				LogUtils.error(ctx, err);
+			}
+		});
+
 		Solon.start(WaterapiApp.class, args, app -> {
 			app.enableStaticfiles(false);
 
@@ -32,14 +43,6 @@ public class WaterapiApp {
 			ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 			ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 
-		}).onError(err -> {
-			Context ctx = Context.current();
-
-			if (ctx == null) {
-				LogUtils.error(ctx, "global", "", "", err);
-			} else {
-				LogUtils.error(ctx, err);
-			}
 		});
 	}
 }
