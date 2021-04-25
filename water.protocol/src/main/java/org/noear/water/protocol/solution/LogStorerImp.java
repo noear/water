@@ -85,6 +85,11 @@ public class LogStorerImp implements LogStorer {
 
         for (Map.Entry<String, List<LogEvent>> kv : map.entrySet()) {
             try {
+                if (kv.getKey().contains(".")) {
+                    EventBus.push(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));
+                    continue;
+                }
+
                 ProtocolHub.logSourceFactory.getSource(kv.getKey())
                         .writeAll(kv.getKey(), kv.getValue());
 
