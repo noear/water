@@ -3,6 +3,7 @@ package waterapi;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
@@ -117,17 +118,18 @@ public class Config {
         //
         // 有可能会造成列循环
         //
-//        WeedConfig.onException((cmd, err) -> {
-//            if (cmd == null) {
-//                log.error(err);
-//            } else {
-//                StringBuilder sb = new StringBuilder();
-//                sb.append("::Sql= ").append(cmd.text).append("\n");
-//                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n");
-//                sb.append("::Error= ").append(ThrowableUtils.getString(err));
-//                log.error(sb.toString());
-//            }
-//        });
+        WeedConfig.onException((cmd, err) -> {
+            if (cmd != null) {
+                Context ctx = Context.current();
+                
+                if (ctx != null) {
+                    //
+                    //有可能会造成列循环；所以转给上下文特性
+                    //
+                    ctx.attrSet("weed_cmd", cmd);
+                }
+            }
+        });
     }
 
 

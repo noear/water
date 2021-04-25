@@ -6,6 +6,8 @@ import org.noear.water.WW;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.ThrowableUtils;
+import org.noear.weed.Command;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -78,20 +80,24 @@ public class LogUtils {
         }
 
         try {
+            Command cmd = ctx.attr("weed_cmd");
+
+
             String _from = FromUtils.getFromName(ctx);
 
-            Map<String, String> pnames = ctx.paramMap();
             String tag = ctx.path();
+            String summary = ONode.stringify(ctx.paramMap());
 
-            ONode label = new ONode();
+            if (cmd == null) {
+                logger.error(tag, null, null, _from, summary, ex);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                sb.append("::Sql= ").append(cmd.text).append("\n");
+                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n");
+                sb.append("::Error= ").append(ThrowableUtils.getString(ex));
 
-            if (pnames != null) {
-                pnames.forEach((k, v) -> {
-                    label.set(k, v);
-                });
+                logger.error(tag, "", sb.toString());
             }
-
-            logger.error(tag, null, null, _from, label.toJson(), ex);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
