@@ -162,7 +162,7 @@ public class QuerySqlDbController extends BaseController {
            for (String col : cols) {
                Object val = item.get(col);
                if (val instanceof BigDecimal) {
-                   sb.append("<td>").append(((BigDecimal) val).doubleValue()).append("</td>");
+                   sb.append("<td>").append(((BigDecimal) val).toPlainString()).append("</td>");
                } else {
                    sb.append("<td>").append(val).append("</td>");
                }
