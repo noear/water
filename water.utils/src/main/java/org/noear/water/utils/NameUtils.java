@@ -6,7 +6,7 @@ package org.noear.water.utils;
 public class NameUtils {
     public static String formatClassName(String className) {
         if (TextUtils.isEmpty(className)) {
-            return className;
+            return "";
         }
 
         String[] ss = className.split("\\.");

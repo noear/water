@@ -32,24 +32,52 @@ public class LogStorerImp implements LogStorer {
                 log.log_id = ProtocolHub.idBuilder.getLogId(log.logger);
             }
 
-            if (log.tag != null && log.tag.length() > 99) {
-                log.tag = log.tag.substring(0, 99);
+            if (log.trace_id == null) {
+                log.trace_id = "";
             }
 
-            if (log.tag1 != null && log.tag1.length() > 99) {
-                log.tag1 = log.tag1.substring(0, 99);
+            if (log.thread_name == null) {
+                log.thread_name = "";
             }
 
-            if (log.tag2 != null && log.tag2.length() > 99) {
-                log.tag2 = log.tag2.substring(0, 99);
+            if (log.tag == null) {
+                log.tag = "";
+            } else {
+                if (log.tag.length() > 99) {
+                    log.tag = log.tag.substring(0, 99);
+                }
             }
 
-            if (log.tag3 != null && log.tag3.length() > 99) {
-                log.tag3 = log.tag3.substring(0, 99);
+            if (log.tag1 == null) {
+                log.tag1 = "";
+            } else {
+                if (log.tag1.length() > 99) {
+                    log.tag1 = log.tag1.substring(0, 99);
+                }
             }
 
-            if (log.summary != null && log.summary.length() > 999) {
-                log.summary = log.summary.substring(0, 999);
+            if (log.tag2 == null) {
+                log.tag2 = "";
+            } else {
+                if (log.tag2.length() > 99) {
+                    log.tag2 = log.tag2.substring(0, 99);
+                }
+            }
+
+            if (log.tag3 == null) {
+                log.tag3 = "";
+            } else {
+                if (log.tag3.length() > 99) {
+                    log.tag3 = log.tag3.substring(0, 99);
+                }
+            }
+
+            if (log.summary == null) {
+                log.summary = "";
+            } else {
+                if (log.summary.length() > 999) {
+                    log.summary = log.summary.substring(0, 999);
+                }
             }
         }
 
@@ -67,7 +95,7 @@ public class LogStorerImp implements LogStorer {
             } catch (Throwable ex) {
                 if ("water_log_api".equals(kv.getKey())) {
                     ex.printStackTrace();
-                }else{
+                } else {
                     EventBus.push(ex);
                 }
             }
