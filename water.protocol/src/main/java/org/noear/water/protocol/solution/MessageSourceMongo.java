@@ -394,7 +394,7 @@ public class MessageSourceMongo implements MessageSource {
             if (key.startsWith("*")) {
                 qr.andEq("trace_id", key.substring(1).trim());
             } else if (key.startsWith("@")) {
-                qr.andLk("tags", "^" + key.substring(1).trim());
+                qr.andEq("tags", key.substring(1).trim());
             } else {
                 if (StringUtils.isNumeric(key)) {
                     qr.andEq("msg_id", Integer.parseInt(key));
