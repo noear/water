@@ -92,7 +92,7 @@ public class LogUtils {
             } else {
                 StringBuilder sb = new StringBuilder();
                 sb.append("::Sql= ").append(cmd.text).append("\n");
-                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n");
+                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n\n");
                 sb.append("::Error= ").append(ThrowableUtils.getString(ex));
 
                 logger.error(tag, null, null, _from, "", sb.toString());
