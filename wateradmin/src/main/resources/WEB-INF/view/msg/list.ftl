@@ -75,7 +75,7 @@
 
         //复制功能
         $(document).ready(function(){
-            var clipboard1 = new Clipboard('.a');
+            var clipboard1 = new Clipboard('.dct');
             clipboard1.on('success', function(e) {
                 top.layer.msg("复制成功，去粘贴吧");
             });
@@ -183,7 +183,7 @@
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
                     <td class="op">
-                        <a class="t2" style="cursor: pointer;" class="a" data-clipboard-text="${msg.trace_id!}" >复制</a>
+                        <a class="t2" style="cursor: pointer;" class="dct" data-clipboard-text="${msg.trace_id!}" >复制</a>
                     </td>
                     <td class="op">
                         <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=0&tagx=@${msg.msg_id}" class="t2">日志</a>
