@@ -79,7 +79,7 @@ public class QueryMongoDbController extends BaseController {
         String method = ss2[0].trim().toUpperCase();
         String dbAndColl = ss2[1].trim();
 
-        if (method.equals("FIND") == false) {
+        if (method.equals("FIND") == false && method.equals("COUNT") == false) {
             return node.val("只支持查询操作").toJson();
         }
 
@@ -118,22 +118,29 @@ public class QueryMongoDbController extends BaseController {
             MgTableQuery qr= mg.table(coll).whereMap(whereMap);
 
             //处理排序
-            if(TextUtils.isEmpty(sort) == false){
-                String[] sortAry = sort.trim().split(" ");
-                if(sortAry.length ==1){
-                    qr.orderByAsc(sortAry[0]);
-                }else{
-                    if("DESC".equals(sortAry[1])){
-                        qr.orderByDesc(sortAry[0]);
-                    }else{
+            if(method.equals("FIND")) {
+                if (TextUtils.isEmpty(sort) == false) {
+                    String[] sortAry = sort.trim().split(" ");
+                    if (sortAry.length == 1) {
                         qr.orderByAsc(sortAry[0]);
+                    } else {
+                        if ("DESC".equals(sortAry[1])) {
+                            qr.orderByDesc(sortAry[0]);
+                        } else {
+                            qr.orderByAsc(sortAry[0]);
+                        }
                     }
                 }
+
+                List<Document> list = qr.limit(limit).selectMapList();
+
+                return ONode.stringify(list);
+            }else{
+
+                return ONode.stringify(qr.selectCount());
             }
 
-            List<Document> list = qr.limit(limit).selectMapList();
 
-            return ONode.stringify(list);
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,
