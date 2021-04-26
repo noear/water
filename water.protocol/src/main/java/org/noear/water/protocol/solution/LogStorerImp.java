@@ -93,10 +93,11 @@ public class LogStorerImp implements LogStorer {
                 ProtocolHub.logSourceFactory.getSource(kv.getKey())
                         .writeAll(kv.getKey(), kv.getValue());
 
-                if (TextUtils.isNotEmpty(kv.getKey())) {
-                    TrackBuffer.singleton()
-                            .appendCount("waterlog", "logger", kv.getKey(), kv.getValue().size());
-                }
+                //track
+                int count5 = (int) kv.getValue().stream().filter(m -> m.level == 5).count();
+                TrackBuffer.singleton()
+                        .appendCount("waterlog", "logger", kv.getKey(), kv.getValue().size(), 0, 0, count5);
+
             } catch (Throwable ex) {
                 if ("water_log_api".equals(kv.getKey())) {
                     ex.printStackTrace();
