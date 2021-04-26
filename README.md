@@ -45,7 +45,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.3.20</version>
+    <version>1.3.27</version>
 </dependency>
 ```
 
