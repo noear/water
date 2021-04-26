@@ -230,12 +230,10 @@
                         </td>
                         <td class="op">
                             <#if is_admin == 1>
-                            <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
-                            |
+                            <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a> |
                             </#if>
+                            <a href="/mot/speed/charts?tag=${m1.tag}&name_md5=${m1.pathMd5()}&service=waterplan" class="t2">监控</a> |
                             <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
-                            |
-                            <a href="/mot/speed/charts?tag=${m1.tag}&name_md5=${m1.pathMd5()}&service=waterplan" target="_parent" class="t2">监控</a>
                         </td>
                     </tr>
                 </#list>
