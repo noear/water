@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
+    <script src="${js}/clipboard.min.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
         /* tooltip */
@@ -71,6 +72,14 @@
         function cancelSend() {
             act('cancelSend');
         }
+
+        //复制功能
+        $(document).ready(function(){
+            var clipboard1 = new Clipboard('.a');
+            clipboard1.on('success', function(e) {
+                top.layer.msg("复制成功，去粘贴吧");
+            });
+        });
 
         function search(){
             var key = $('#key').val();
@@ -155,6 +164,7 @@
                 <td width="60px">下次<br/>时间</td>
                 <td class="left" width="40px">已派<br/>次数</td>
                 <td class="left" width="120px">发起时间</td>
+                <td width="50px">跟踪<br/>标识</td>
                 <td width="50px">操作</td>
             </tr>
             </thead>
@@ -172,6 +182,9 @@
                     <td>${msg.nexttime(currTime)}</td>
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
+                    <td class="op">
+                        <a class="t2" style="cursor: pointer;" class="a" data-clipboard-text="${msg.trace_id!}" >复制</a>
+                    </td>
                     <td class="op">
                         <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=0&tagx=@${msg.msg_id}" class="t2">日志</a>
                     </td>
