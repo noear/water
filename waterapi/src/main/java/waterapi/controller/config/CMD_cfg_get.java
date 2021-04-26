@@ -7,6 +7,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
@@ -33,7 +34,7 @@ public class CMD_cfg_get extends UapiBase {
     public Result cmd_exec(Context ctx, String tag) throws Throwable {
         ONode nList = new ONode().asObject();
 
-        if (TextUtils.isEmpty(tag) == false) {
+        if (TextUtils.isNotEmpty(tag)) {
             List<ConfigModel> list = DbWaterCfgApi.getConfigByTag(tag);
 
             for (ConfigModel m1 : list) {
@@ -47,6 +48,9 @@ public class CMD_cfg_get extends UapiBase {
                     n.set("lastModified", m1.update_fulltime.getTime());
                 }
             }
+
+            //track
+            TrackBuffer.singleton().appendCount("watercfg", "tag", tag, 1);
         }
 
         if (ctx.param("v") == null) {

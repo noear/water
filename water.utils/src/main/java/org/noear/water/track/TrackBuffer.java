@@ -76,6 +76,10 @@ public class TrackBuffer implements TaskUtils.ITask {
     /**
      * 添加记数
      */
+    public void appendCount(String service, String tag, String name, int count) {
+        appendDo(_mainSet, service, tag, name, count, 0, 0, 0);
+    }
+
     public void appendCount(String service, String tag, String name, int count, int count1, int count2, int count5) {
         appendDo(_mainSet, service, tag, name, count, count1, count2, count5);
     }
