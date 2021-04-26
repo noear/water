@@ -470,6 +470,7 @@ public class MessageSourceMongo implements MessageSource {
         _db.table("water_msg_message_all").orderByDesc("trace_id").createIndex(true);
         _db.table("water_msg_message_all").orderByDesc("log_date").createIndex(true);
         _db.table("water_msg_message_all").orderByDesc("last_date").createIndex(true);
+        _db.table("water_msg_message_all").orderByDesc("topic_name").createIndex(true);
 
         _db.table("water_msg_distribution").orderByDesc("dist_id").createIndex(indexOptions);
         _db.table("water_msg_distribution").orderByDesc("log_date").createIndex(true);
