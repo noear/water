@@ -73,14 +73,6 @@
             act('cancelSend');
         }
 
-        //复制功能
-        $(document).ready(function(){
-            var clipboard1 = new Clipboard('.dct');
-            clipboard1.on('success', function(e) {
-                top.layer.msg("复制成功，去粘贴吧");
-            });
-        });
-
         function search(){
             var key = $('#key').val();
             if(key){
@@ -98,6 +90,12 @@
             $('#sel_all').change(function(){
                 var ckd= $(this).prop('checked');
                 $('[name=sel_id]').prop('checked',ckd);
+            });
+
+            //复制功能
+            let clipboard1 = new Clipboard('.dct');
+            clipboard1.on('success', function(e) {
+                top.layer.msg("复制成功，去粘贴吧");
             });
         });
 
@@ -183,7 +181,7 @@
                     <td>${msg.dist_count}</td>
                     <td class="left">${msg.log_fulltime?string('MM-dd HH:mm:ss')}</td>
                     <td class="op">
-                        <a class="t2" style="cursor: pointer;" class="dct" data-clipboard-text="${msg.trace_id!}" >复制</a>
+                        <a class="t2 dct" style="cursor: pointer;" data-clipboard-text="*${msg.trace_id!}" >复制</a>
                     </td>
                     <td class="op">
                         <a href="/log/query/inner?tag_name=water&logger=water_log_msg&level=0&tagx=@${msg.msg_id}" class="t2">日志</a>
