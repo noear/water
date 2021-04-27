@@ -57,7 +57,8 @@ public class LogUtil {
 
         sb.append(msg.msg_id)
                 .append("#").append(msg.dist_count)
-                .append("#").append(msg.topic_name).append("=").append(msg.content);
+                .append("#").append(msg.topic_name).append("=").append(msg.content)
+                .append("@").append(dist._duration).append("ms");
 
         String summary =  sb.toString();
 

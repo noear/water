@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ContextEmpty;
@@ -56,7 +57,6 @@ public final class MsgDistributeController implements IJob {
     }
 
 
-
     private void distribute(String msg_id_str) {
         try {
             //转为ID
@@ -77,12 +77,12 @@ public final class MsgDistributeController implements IJob {
             }
 
             //设置处理状态
-            if(msg.state != MessageState.processed.code){
+            if (msg.state != MessageState.processed.code) {
                 ProtocolHub.messageSource().setMessageState(msg, MessageState.processed);
             }
 
             //路由
-            if(routingDo(msg) == false){
+            if (routingDo(msg) == false) {
                 return;
             }
 
@@ -95,7 +95,7 @@ public final class MsgDistributeController implements IJob {
 
     /**
      * 路由
-     * */
+     */
     private boolean routingDo(MessageModel msg) throws Exception {
         //1.取出订阅者
         Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
@@ -120,7 +120,7 @@ public final class MsgDistributeController implements IJob {
 
     /**
      * 派发
-     * */
+     */
     private void distributeDo(MessageModel msg) throws Exception {
         try {
             distributeDo0(msg);
@@ -175,43 +175,43 @@ public final class MsgDistributeController implements IJob {
 
     private Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
         //synchronized (tag.msg.msg_id) {
-            //
-            //锁一下，确保计数的线程安全
-            //
-            if (isOk) {
-                if (ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
-                    tag.value.incrementAndGet();
-                }
-            } else {
-                ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
+        //
+        //锁一下，确保计数的线程安全
+        //
+        if (isOk) {
+            if (ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
+                tag.value.incrementAndGet();
             }
+        } else {
+            ProtocolHub.messageSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
+        }
 
-            //4.返回派发结果
-            if (tag.count.incrementAndGet() == tag.total) {
-                //处理完了后，解锁
-                if (tag.value.get() == tag.total) {
-                    ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
+        //4.返回派发结果
+        if (tag.count.incrementAndGet() == tag.total) {
+            //处理完了后，解锁
+            if (tag.value.get() == tag.total) {
+                ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.completed);//2);
+
+                if (tag.msg.dist_count >= 3) {
+//                    System.out.print("发送短信报警---\r\n");
+                    AlarmUtil.tryAlarm(tag, true, dist);
+                }
+
+            } else {
+                if (tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
+                    ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.excessive);//3);
+
+//                    System.out.print("发送短信报警---\r\n");
+                    AlarmUtil.tryAlarm(tag, false, dist);
+                } else {
+                    ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                     if (tag.msg.dist_count >= 3) {
-//                    System.out.print("发送短信报警---\r\n");
-                        AlarmUtil.tryAlarm(tag, true, dist);
-                    }
-
-                } else {
-                    if (tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                        ProtocolHub.messageSource().setMessageState(tag.msg, MessageState.excessive);//3);
-
-//                    System.out.print("发送短信报警---\r\n");
-                        AlarmUtil.tryAlarm(tag, false, dist);
-                    } else {
-                        ProtocolHub.messageSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
-
-                        if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
-                            AlarmUtil.tryAlarm(tag, false, dist);
-                        }
+                        AlarmUtil.tryAlarm(tag, false, dist);
                     }
                 }
+            }
             //}
         }
     };
@@ -261,7 +261,11 @@ public final class MsgDistributeController implements IJob {
                             LogUtil.writeForMsgByError(msg, dist, rst);
                         }
                     } else {
-                        LogUtil.writeForMsgByError(msg, dist, "http error");
+                        if (ex == null) {
+                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                        } else {
+                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
+                        }
                     }
                 });
 
@@ -288,7 +292,11 @@ public final class MsgDistributeController implements IJob {
                             LogUtil.writeForMsgByError(msg, dist, rst);
                         }
                     } else {
-                        LogUtil.writeForMsgByError(msg, dist, "http error");
+                        if (ex == null) {
+                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                        } else {
+                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
+                        }
                     }
                 });
 
@@ -318,7 +326,11 @@ public final class MsgDistributeController implements IJob {
 
                         callback.run(tag, dist, isOk2);
                     } else {
-                        LogUtil.writeForMsgByError(msg, dist, "http error");
+                        if (ex == null) {
+                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                        } else {
+                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
+                        }
 
                         callback.run(tag, dist, false);
                     }
