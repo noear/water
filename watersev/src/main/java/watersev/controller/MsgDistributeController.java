@@ -249,20 +249,31 @@ public final class MsgDistributeController implements IJob {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
+                    String text = null;
+                    int code = 0;
+
+                    if (resp != null) {
+                        code = resp.code();
+                        text = resp.body().string();
+                    }
+
                     if (isOk) {
-                        String rst = resp.body().string();
-
-                        boolean isOk2 = "OK".equals(rst);
-
+                        boolean isOk2 = "OK".equals(text);
 
                         if (isOk2 == false) {
-                            LogUtil.writeForMsg(msg, dist, rst);
+                            LogUtil.writeForMsg(msg, dist, text);
                         } else {
-                            LogUtil.writeForMsgByError(msg, dist, rst);
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         }
                     } else {
                         if (ex == null) {
-                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                            if (text == null) {
+                                text = "http error";
+                            } else {
+                                text = code + " - " + text;
+                            }
+
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         } else {
                             LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
                         }
@@ -280,20 +291,32 @@ public final class MsgDistributeController implements IJob {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
-                    if (isOk) {
-                        String rst = resp.body().string();
+                    String text = null;
+                    int code = 0;
 
-                        boolean isOk2 = "OK".equals(rst);
+                    if (resp != null) {
+                        code = resp.code();
+                        text = resp.body().string();
+                    }
+
+                    if (isOk) {
+                        boolean isOk2 = "OK".equals(text);
 
                         if (isOk2) {
-                            LogUtil.writeForMsg(msg, dist, rst);
+                            LogUtil.writeForMsg(msg, dist, text);
                         } else {
                             //同时在错误的书写器里，写入一条
-                            LogUtil.writeForMsgByError(msg, dist, rst);
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         }
                     } else {
                         if (ex == null) {
-                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                            if (text == null) {
+                                text = "http error";
+                            } else {
+                                text = code + " - " + text;
+                            }
+
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         } else {
                             LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
                         }
@@ -313,21 +336,34 @@ public final class MsgDistributeController implements IJob {
 
                     dist._duration = new Timespan(dist._start_time).milliseconds();
 
-                    if (isOk) {
-                        String rst = resp.body().string();
+                    String text = null;
+                    int code = 0;
 
-                        boolean isOk2 = "OK".equals(rst);
+                    if (resp != null) {
+                        code = resp.code();
+                        text = resp.body().string();
+                    }
+
+
+                    if (isOk) {
+                        boolean isOk2 = "OK".equals(text);
 
                         if (isOk2) {
-                            LogUtil.writeForMsg(msg, dist, rst);
+                            LogUtil.writeForMsg(msg, dist, text);
                         } else {
-                            LogUtil.writeForMsgByError(msg, dist, rst);
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         }
 
                         callback.run(tag, dist, isOk2);
                     } else {
                         if (ex == null) {
-                            LogUtil.writeForMsgByError(msg, dist, "http error");
+                            if (text == null) {
+                                text = "http error";
+                            } else {
+                                text = code + " - " + text;
+                            }
+
+                            LogUtil.writeForMsgByError(msg, dist, text);
                         } else {
                             LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
                         }
