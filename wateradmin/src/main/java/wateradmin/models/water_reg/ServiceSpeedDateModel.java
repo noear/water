@@ -8,9 +8,7 @@ import org.noear.weed.*;
 /// 
 /// </summary>
 @Getter
-public class ServiceSpeedDateModel implements IBinder
-{
-    public int row_id;
+public class ServiceSpeedDateModel implements IBinder {
     public String service;
     public String tag;
     public String name;
@@ -24,11 +22,9 @@ public class ServiceSpeedDateModel implements IBinder
     public long total_num_slow5;
     public int log_date;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
-        row_id = s.get("row_id").value(0);
+    public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
@@ -41,10 +37,9 @@ public class ServiceSpeedDateModel implements IBinder
         total_num_slow2 = s.get("total_num_slow2").value(0L);
         total_num_slow5 = s.get("total_num_slow5").value(0L);
         log_date = s.get("log_date").value(0);
-	}
-	
-	public IBinder clone()
-	{
-		return new ServiceSpeedDateModel();
-	}
+    }
+
+    public IBinder clone() {
+        return new ServiceSpeedDateModel();
+    }
 }

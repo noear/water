@@ -12,8 +12,7 @@ import java.util.Date;
 /// 
 /// </summary>
 @Getter
-public class ServerTrackEcsModel implements IBinder
-{
+public class ServerTrackEcsModel implements IBinder {
     public int server_id;
     public String tag;
     public String name;
@@ -30,10 +29,9 @@ public class ServerTrackEcsModel implements IBinder
     public String address_local;
     public Date last_updatetime;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
+    public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         server_id = s.get("server_id").value(0);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
@@ -52,15 +50,13 @@ public class ServerTrackEcsModel implements IBinder
         address_local = s.get("address_local").value(null);
 
         last_updatetime = s.get("last_updatetime").value(null);
-	}
-	
-	public IBinder clone()
-	{
-		return new ServerTrackEcsModel();
-	}
-
-    public String iaas_type_str(){
-        return IaasTypeUtils.iaas_type_str(iaas_type);
     }
 
+    public IBinder clone() {
+        return new ServerTrackEcsModel();
+    }
+
+    public String iaas_type_str() {
+        return IaasTypeUtils.iaas_type_str(iaas_type);
+    }
 }

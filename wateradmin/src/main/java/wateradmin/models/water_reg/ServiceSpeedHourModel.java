@@ -8,9 +8,7 @@ import org.noear.weed.*;
 /// 
 /// </summary>
 @Getter
-public class ServiceSpeedHourModel implements IBinder
-{
-    public int row_id;
+public class ServiceSpeedHourModel implements IBinder {
     public String service;
     public String tag;
     public String name;
@@ -27,11 +25,9 @@ public class ServiceSpeedHourModel implements IBinder
 
     public long val;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
-        row_id = s.get("row_id").value(0);
+    public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
@@ -47,10 +43,9 @@ public class ServiceSpeedHourModel implements IBinder
         log_hour = s.get("log_hour").value(0);
 
         val = s.get("val").value(0L);
-	}
-	
-	public IBinder clone()
-	{
-		return new ServiceSpeedHourModel();
-	}
+    }
+
+    public IBinder clone() {
+        return new ServiceSpeedHourModel();
+    }
 }
