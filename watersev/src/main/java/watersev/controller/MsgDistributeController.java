@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventBus;
@@ -13,6 +14,7 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.*;
+import org.noear.water.utils.ext.Act3Ex;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterMsgApi;
@@ -239,10 +241,7 @@ public final class MsgDistributeController implements IJob {
 
 
         try {
-            if (dist.receive_way == 2) {
-                //::2
-                //
-                //3.2.2.进行异步http分发 //不等待 //状态设为已完成
+            if (dist.receive_way == 2 || dist.receive_way == 3) {
                 HttpUtils.http(dist.receive_url)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
@@ -280,52 +279,17 @@ public final class MsgDistributeController implements IJob {
                     }
                 });
 
-                callback.run(tag, dist, true);
-            } else if (dist.receive_way == 3) {
-                //::3
-                //
-                //3.2.3.进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
-                HttpUtils.http(dist.receive_url)
-                        .header(WW.http_header_trace, msg.trace_id)
-                        .data(params).postAsync((isOk, resp, ex) -> {
+                //::2:: 进行异步http分发 //不等待 //状态设为已完成
+                if(dist.receive_way == 2) {
+                    callback.run(tag, dist, true);
+                }
 
-                    dist._duration = new Timespan(dist._start_time).milliseconds();
-
-                    String text = null;
-                    int code = 0;
-
-                    if (resp != null) {
-                        code = resp.code();
-                        text = resp.body().string();
-                    }
-
-                    if (isOk) {
-                        boolean isOk2 = "OK".equals(text);
-
-                        if (isOk2) {
-                            LogUtil.writeForMsg(msg, dist, text);
-                        } else {
-                            //同时在错误的书写器里，写入一条
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        }
-                    } else {
-                        if (ex == null) {
-                            if (text == null) {
-                                text = "http error";
-                            } else {
-                                text = code + " - " + text;
-                            }
-
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        } else {
-                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
-                        }
-                    }
-                });
-
-                //推后一小时，可手工再恢复
-                long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
-                ProtocolHub.messageSource().setMessageState(msg, MessageState.processed, ntime);//1
+                //::3:: 进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
+                if(dist.receive_way == 3){
+                    //推后一小时，可手工再恢复
+                    long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
+                    ProtocolHub.messageSource().setMessageState(msg, MessageState.processed, ntime);//1
+                }
             } else {
                 //::0,1
                 //
