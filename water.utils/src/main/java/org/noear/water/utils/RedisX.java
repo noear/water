@@ -23,58 +23,61 @@ import java.util.function.Function;
     private JedisPool _jedisPool;
 
     public RedisX(Properties prop) {
-        String server = prop.getProperty("server");
-        String user = prop.getProperty("user");
-        String password = prop.getProperty("password");
         String db = prop.getProperty("db");
-        String maxTotaol = prop.getProperty("maxTotaol");
 
         if (TextUtils.isEmpty(db)) {
             throw new RuntimeException("RedisX:Properties lacks the db parameter!");
         }
 
-        initDo(server,
-                user,
-                password,
-                Integer.parseInt(db),
-                (TextUtils.isEmpty(maxTotaol) ? 200 : Integer.parseInt(maxTotaol))
-        );
+        initDo(prop, Integer.parseInt(db), 0);
     }
 
     public RedisX(Properties prop, int db) {
-        String server = prop.getProperty("server");
-        String user = prop.getProperty("user");
-        String password = prop.getProperty("password");
-        String maxTotaol = prop.getProperty("maxTotaol");
-
-        initDo(server,
-                user,
-                password,
-                db,
-                (TextUtils.isEmpty(maxTotaol) ? 200 : Integer.parseInt(maxTotaol))
-        );
+        initDo(prop, db, 0);
     }
 
     public RedisX(Properties prop, int db, int maxTotaol) {
-        String server = prop.getProperty("server");
-        String user = prop.getProperty("user");
-        String password = prop.getProperty("password");
-
-        initDo(server,
-                user,
-                password,
-                db,
-                maxTotaol);
+        initDo(prop, db, maxTotaol);
     }
 
     public RedisX(String server, String user, String password, int db, int maxTotaol) {
-        initDo(server, user, password, db, maxTotaol);
+        initDo(server, user, password, db, maxTotaol, 0L);
     }
 
-    private void initDo(String server, String user, String password, int db, int maxTotaol) {
+    public RedisX(String server, String user, String password, int db, int maxTotaol, long maxWaitMillis) {
+        initDo(server, user, password, db, maxTotaol, maxWaitMillis);
+    }
+
+    private void initDo(Properties prop, int db, int maxTotaol) {
+        String server = prop.getProperty("server");
+        String user = prop.getProperty("user");
+        String password = prop.getProperty("password");
+        String maxWaitMillis = prop.getProperty("maxWaitMillis");
+        String maxTotaolStr = prop.getProperty("maxTotaol");
+
+        if (maxTotaol > 0) {
+            initDo(server,
+                    user,
+                    password,
+                    db,
+                    maxTotaol,
+                    (TextUtils.isEmpty(maxWaitMillis) ? 0L : Long.parseLong(maxWaitMillis))
+            );
+        } else {
+            initDo(server,
+                    user,
+                    password,
+                    db,
+                    (TextUtils.isEmpty(maxTotaolStr) ? 0 : Integer.parseInt(maxTotaolStr)),
+                    (TextUtils.isEmpty(maxWaitMillis) ? 0L : Long.parseLong(maxWaitMillis))
+            );
+        }
+    }
+
+    private void initDo(String server, String user, String password, int db, int maxTotaol, long maxWaitMillis) {
         JedisPoolConfig config = new JedisPoolConfig();
 
-        if (maxTotaol < 10) {
+        if (maxTotaol < 20) {
             maxTotaol = 200;
         }
 
@@ -83,8 +86,13 @@ import java.util.function.Function;
             maxIdle = 10;
         }
 
+        if(maxWaitMillis < 5000){
+            maxWaitMillis = 5000;
+        }
+
         config.setMaxTotal(maxTotaol);
         config.setMaxIdle(maxIdle);
+        config.setMaxWaitMillis(maxWaitMillis);
         config.setTestOnBorrow(false);
         config.setTestOnReturn(false);
 
