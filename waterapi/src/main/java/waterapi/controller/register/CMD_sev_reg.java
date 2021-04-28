@@ -56,7 +56,9 @@ public class CMD_sev_reg extends UapiBase {
 
         if (TextUtils.isNotEmpty(service) && TextUtils.isNotEmpty(address)) {
             //记录消费关系
-            DbWaterRegApi.logConsume(Solon.cfg().appName(), service, address);
+            if (address.contains(":")) {
+                DbWaterRegApi.logConsume(Solon.cfg().appName(), service, address);
+            }
         }
 
         return Result.succeed();
