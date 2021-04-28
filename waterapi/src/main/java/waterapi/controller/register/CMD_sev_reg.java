@@ -1,5 +1,6 @@
 package waterapi.controller.register;
 
+import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -50,7 +51,10 @@ public class CMD_sev_reg extends UapiBase {
         }
 
 
-        DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, code_location,is_unstable > 0);
+        DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, code_location, is_unstable > 0);
+
+        //记录消息关系
+        DbWaterRegApi.logConsume(Solon.cfg().appName(), service, service + "@" + address);
 
         return Result.succeed();
     }

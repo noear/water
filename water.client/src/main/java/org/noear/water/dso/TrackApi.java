@@ -141,7 +141,7 @@ public class TrackApi {
         }
 
         try {
-            apiCaller.post("/sev/track/sql/", params, trace_id);
+            apiCaller.post("/mot/track/sql/", params, trace_id);
         } catch (Exception ex) {
 
         }
