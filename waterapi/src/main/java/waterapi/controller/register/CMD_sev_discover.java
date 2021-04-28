@@ -38,8 +38,7 @@ public class CMD_sev_discover extends UapiBase {
     public Result cmd_exec(Context ctx, String service, String consumer, String consumer_address) throws Exception {
 
         if (TextUtils.isNotEmpty(consumer) && TextUtils.isNotEmpty(consumer_address)) {
-            //记录消费者
-            //
+            //记录消费关系
             DbWaterRegApi.logConsume(service, consumer, consumer_address);
         }
 

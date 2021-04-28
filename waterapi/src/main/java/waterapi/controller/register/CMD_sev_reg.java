@@ -8,6 +8,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
 import waterapi.dso.db.DbWaterRegApi;
@@ -53,8 +54,10 @@ public class CMD_sev_reg extends UapiBase {
 
         DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, code_location, is_unstable > 0);
 
-        //记录消息关系
-        DbWaterRegApi.logConsume(Solon.cfg().appName(), service, service + "@" + address);
+        if (TextUtils.isNotEmpty(service) && TextUtils.isNotEmpty(address)) {
+            //记录消费关系
+            DbWaterRegApi.logConsume(Solon.cfg().appName(), service, address);
+        }
 
         return Result.succeed();
     }
