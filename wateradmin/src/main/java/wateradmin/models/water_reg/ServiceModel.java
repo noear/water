@@ -2,6 +2,7 @@ package wateradmin.models.water_reg;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.Timespan;
 import org.noear.weed.*;
 import org.noear.water.utils.TextUtils;
@@ -14,8 +15,7 @@ import java.util.*;
 /// </summary>
 @Getter
 @Setter
-public class ServiceModel implements IBinder
-{
+public class ServiceModel implements IBinder {
     public int service_id;
     public String key;
     public String name;
@@ -34,21 +34,20 @@ public class ServiceModel implements IBinder
     public String check_last_note;
     public int is_enabled;
 
-    public boolean isAlarm(){
-        if(check_last_state==1)
+    public boolean isAlarm() {
+        if (check_last_state == 1)
             return true;
 
-        if(new Timespan(check_last_time).seconds()>=8){
+        if (new Timespan(check_last_time).seconds() >= 8) {
             return true;
         }
 
         return false;
     }
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
+    public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         service_id = s.get("service_id").value(0);
         key = s.get("key").value(null);
         name = s.get("name").value(null);
@@ -71,10 +70,13 @@ public class ServiceModel implements IBinder
                 port = address.substring(address.indexOf(":") + 1);
             }
         }
-	}
-	
-	public IBinder clone()
-	{
-		return new ServiceModel();
-	}
+    }
+
+    public IBinder clone() {
+        return new ServiceModel();
+    }
+
+    public String service_md5() {
+        return "%7Bmd5%7D" + EncryptUtils.md5(name + "@" + address);
+    }
 }
