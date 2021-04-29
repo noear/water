@@ -60,8 +60,8 @@ public class LogModel {
         }
 
         if (TextUtils.isNotEmpty(trace_id)) {
-            buf.append("<a href='#' onclick=\"queryTraceId('*")
-                    .append(trace_id).append("');\">[*")
+            buf.append("<a traceId='*")
+                    .append(trace_id).append("'>[*")
                     .append(trace_id).append("]</a>");
         }
 

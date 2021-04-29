@@ -17,9 +17,14 @@
             location.href = "/log/query/inner?tag_name=${tag_name}";
         }
 
-        function queryTraceId(traceId){
-            UrlQueryBy("tagx",traceId,'page');
-        }
+        $(function (){
+            $(".log a").click(function (){
+                let traceId = $(this).attr('traceId');
+                if(traceId){
+                    UrlQueryBy("tagx",traceId,'page');
+                }
+            });
+        });
     </script>
     <style>
         body > header agroup{font-size: 16px;}
@@ -28,6 +33,8 @@
         .level4,.level4 a{color:orange;}
         .level3,.level3 a{color:green;}
         .level2,.level2 a{color:blue;}
+
+        .log a{text-decoration:underline; cursor: default;}
     </style>
 </head>
 <body>
@@ -62,7 +69,7 @@
 
     <div id="content">
         <#list list as log>
-            <div class="break">
+            <div class="break log">
                 ${log.html()!}
             </div>
             <br>
