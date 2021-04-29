@@ -63,7 +63,7 @@ public class SpeedController extends BaseController {
         viewModel.put("tag", tag);
         viewModel.put("serviceName", serviceName);
 
-        if ("waterlog,waterchk,watercfg,watermsg".indexOf(tag) < 0) {
+        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(tag) < 0) {
             return view("mot/speed_inner");
         } else {
             return view("mot/speed_inner2");
@@ -73,6 +73,10 @@ public class SpeedController extends BaseController {
     //性能监控图标统计
     @Mapping("speed/charts")
     public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException {
+        if(service == null) {
+            service = "";
+        }
+
         Map<String, Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
         Map<String, Object> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
@@ -82,7 +86,7 @@ public class SpeedController extends BaseController {
         viewModel.put("name_md5", name_md5);
         viewModel.put("service", service);
 
-        if ("waterlog,waterchk,watercfg,watermsg".indexOf(tag) < 0) {
+        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(service) < 0) {
             return view("mot/speed_charts");
         } else {
             return view("mot/speed_charts2");

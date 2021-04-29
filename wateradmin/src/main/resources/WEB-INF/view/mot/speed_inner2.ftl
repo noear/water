@@ -37,8 +37,8 @@
             <td sort="" class="left">分组::接口</td>
             <td width="70px" sort="total_num">总计数</td>
             <td width="60px" sort="total_num_slow1">计数1</td>
-            <td width="50px" sort="total_num_slow2">计数2</td>
-            <td width="40px" sort="total_num_slow5">计数5</td>
+            <td width="60px" sort="total_num_slow2">计数2</td>
+            <td width="60px" sort="total_num_slow5">计数5</td>
             <td width="70px" sort="last_updatetime">更新时间</td>
             <td width="50px"></td>
         </tr>

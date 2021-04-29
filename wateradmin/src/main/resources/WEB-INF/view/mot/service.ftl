@@ -209,7 +209,7 @@
                         </#if>
                     </#if>
                     |
-                    <a href="/mot/speed/charts?tag=service&name_md5=${m.service_md5()}&service=waterchk" class="t2">监控</a>
+                    <a href="/mot/speed/charts?tag=service&name_md5=${m.service_md5()}&service=_waterchk" class="t2">监控</a>
                 </td>
                 </tr>
             </#list>

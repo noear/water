@@ -152,10 +152,10 @@ public final class SevController implements IJob {
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
-            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,0);
+            TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,0);
 
         } catch (Throwable ex) {
-            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+            TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,1);
 
             if (sev.is_unstable && sev.check_error_num >= 2) {
                 //
@@ -188,7 +188,7 @@ public final class SevController implements IJob {
                     DbWaterRegApi.udpService0(sev.service_id, 0, code + "");
 
 
-                    TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,0);
+                    TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,0);
 
                     if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                         AlarmUtil.tryAlarm(sev, true, code);
@@ -196,7 +196,7 @@ public final class SevController implements IJob {
                         gatewayNotice(sev);
                     }
                 } else {
-                    TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+                    TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,1);
 
                     //出错
                     if (sev.is_unstable && sev.check_error_num >= 2 && !isOk) {
@@ -223,7 +223,7 @@ public final class SevController implements IJob {
                 }
             });
         } catch (Throwable ex) { //出错
-            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+            TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
             LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);

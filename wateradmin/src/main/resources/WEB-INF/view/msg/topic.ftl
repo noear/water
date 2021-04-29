@@ -63,7 +63,7 @@
                         <#if is_admin == 1>
                         <a href="/msg/topic/edit?topic_id=${m.topic_id}" class="t2">编辑</a> |
                         </#if>
-                        <a href="/mot/speed/charts?tag=topic&name_md5=${m.topic_md5()}&service=watermsg" class="t2">监控</a>
+                        <a href="/mot/speed/charts?tag=topic&name_md5=${m.topic_md5()}&service=_watermsg" class="t2">监控</a>
                     </td>
 
                 </tr>

@@ -49,7 +49,7 @@ public class CMD_msg_send extends UapiBase {
 
         TopicModel topicModel = DbWaterMsgApi.getTopicById(topic);
 
-        TrackBuffer.singleton().append("watermsg", "topic", topic, 1);
+        TrackBuffer.singleton().append("_watermsg", "topic", topic, 1);
 
         long msg_id = ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
 

@@ -96,7 +96,7 @@ public class LogStorerImp implements LogStorer {
                 //track
                 int count5 = (int) kv.getValue().stream().filter(m -> m.level == 5).count();
                 TrackBuffer.singleton()
-                        .appendCount("waterlog", "logger", kv.getKey(), kv.getValue().size(), 0, 0, count5);
+                        .appendCount("_waterlog", "logger", kv.getKey(), kv.getValue().size(), 0, 0, count5);
 
             } catch (Throwable ex) {
                 if ("water_log_api".equals(kv.getKey())) {

@@ -40,7 +40,7 @@
                 <td class="right">${m.row_num_beforeday}</td>
                 <td class="right">${m.row_num_beforeday_error}</td>
                 <td class="op">
-                    <a href="/mot/speed/charts?tag=logger&name_md5=${m.logger_md5()}&service=waterlog" class="t2">监控</a>
+                    <a href="/mot/speed/charts?tag=logger&name_md5=${m.logger_md5()}&service=_waterlog" class="t2">监控</a>
                 </td>
             </tr>
             </#list>
