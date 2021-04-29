@@ -50,7 +50,7 @@ public class SpeedController extends BaseController {
     //性能监控-列表
     @Mapping("speed/inner")
     public ModelAndView speedList(String serviceName,String name, String sort, String tag) throws SQLException {
-        if(tag == null){
+        if (tag == null) {
             tag = "";
         }
 
@@ -58,27 +58,37 @@ public class SpeedController extends BaseController {
         List<TagCountsModel> tags = DbWaterOpsApi.getSpeedsServiceTags(serviceName);
 
 
-
         viewModel.put("speeds", speeds);
         viewModel.put("tags", tags);
-        viewModel.put("tag",tag);
+        viewModel.put("tag", tag);
         viewModel.put("serviceName", serviceName);
-        return view("mot/speed_inner");
+
+        if ("waterlog,waterchk,watercfg,watermsg".indexOf(tag) < 0) {
+            return view("mot/speed_inner");
+        } else {
+            return view("mot/speed_inner2");
+        }
     }
 
     //性能监控图标统计
     @Mapping("speed/charts")
-    public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException{
-        Map<String,Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service,"total_num");
-        Map<String,Object> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
+    public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException {
+        Map<String, Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
+        Map<String, Object> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
         viewModel.put("speeds", ONode.stringify(speeds));
-        viewModel.put("tag",tag);
+        viewModel.put("tag", tag);
         viewModel.put("name", WaterClient.Track.getName(name_md5));
-        viewModel.put("name_md5",name_md5);
-        viewModel.put("service",service);
-        return view("mot/speed_charts");
+        viewModel.put("name_md5", name_md5);
+        viewModel.put("service", service);
+
+        if ("waterlog,waterchk,watercfg,watermsg".indexOf(tag) < 0) {
+            return view("mot/speed_charts");
+        } else {
+            return view("mot/speed_charts2");
+        }
     }
+
     @Mapping("speed/charts/ajax/reqtate")
     public ViewModel speedCharts_reqtate(String tag,String name_md5,String service, Integer type) throws SQLException{
         String valField = "total_num";
