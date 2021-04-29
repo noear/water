@@ -3,8 +3,6 @@ package org.noear.water.utils;
 import org.noear.snack.ONode;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class JsondUtils {
     private static final String key = "j$6gxA^KJgBiOgco";
@@ -21,17 +19,25 @@ public class JsondUtils {
         String gzip = GzipUtils.gZip(json);
 
         //加密
-        return EncryptUtils.aesEncrypt(gzip, key);
+        try {
+            return EncryptUtils.aesEncrypt(gzip, key);
+        } catch (Exception ex) {
+            throw new IOException(ex);
+        }
     }
 
     public static JsondEntity decode(String jsonD) throws IOException {
-        //解密
-        String gzip = EncryptUtils.aesDecrypt(jsonD, key);
+        try {
+            //解密
+            String gzip = EncryptUtils.aesDecrypt(jsonD, key);
 
-        //解压
-        String json = GzipUtils.unGZip(gzip);
+            //解压
+            String json = GzipUtils.unGZip(gzip);
 
-        //反序列化
-        return ONode.deserialize(json, JsondEntity.class);
+            //反序列化
+            return ONode.deserialize(json, JsondEntity.class);
+        } catch (Exception ex) {
+            throw new IOException(ex);
+        }
     }
 }
