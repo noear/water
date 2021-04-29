@@ -129,7 +129,7 @@
             trigger: 'axis'
         },
         legend: {
-            data:['平均响应','最快响应','最慢响应','请求次数','1s+次数','2s+次数','5s+次数']
+            data:['总计数','计数1','计数2','计数5']
         },
         grid: {
             left: '3%',
@@ -156,38 +156,23 @@
         series: [
             {
                 type:'line',
-                name:'平均响应',
-                data:speeds_vm.average
-            },
-            {
-                type:'line',
-                name:'最快响应',
-                data:speeds_vm.fastest
-            },
-            {
-                type:'line',
-                name:'最慢响应',
-                data:speeds_vm.slowest
-            },
-            {
-                type:'line',
-                name:'请求次数',
+                name:'总计数',
                 data:speeds_vm.total_num
             }
             ,
             {
                 type:'line',
-                name:'1s+次数',
+                name:'计数1',
                 data:speeds_vm.total_num_slow1
             },
             {
                 type:'line',
-                name:'2s+次数',
+                name:'计数2',
                 data:speeds_vm.total_num_slow2
             },
             {
                 type:'line',
-                name:'5s+次数',
+                name:'计数5',
                 data:speeds_vm.total_num_slow5
             }
         ]
