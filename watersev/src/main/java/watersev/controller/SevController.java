@@ -3,6 +3,7 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
+import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
@@ -117,7 +118,6 @@ public final class SevController implements IJob {
             return;
         }
 
-
         String url = sev.check_url;
         if (url.indexOf("://") < 0) {
             if (sev.address.indexOf("://") > 0) {
@@ -137,6 +137,7 @@ public final class SevController implements IJob {
     }
 
     private void check_type0_tcp(ServiceModel sev, String url) {
+        String nameAndIp = sev.name +"@"+ sev.address;
 
         try {
             URI uri = URI.create(url);
@@ -151,7 +152,11 @@ public final class SevController implements IJob {
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
+            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,0);
+
         } catch (Throwable ex) {
+            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+
             if (sev.is_unstable && sev.check_error_num >= 2) {
                 //
                 // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
@@ -165,6 +170,8 @@ public final class SevController implements IJob {
     }
 
     private void check_type0_http(ServiceModel sev, String url) {
+        String nameAndIp = sev.name +"@"+ sev.address;
+
         try {
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
@@ -180,12 +187,17 @@ public final class SevController implements IJob {
                 if (code >= 200 && code < 400) { //正常
                     DbWaterRegApi.udpService0(sev.service_id, 0, code + "");
 
+
+                    TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,0);
+
                     if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                         AlarmUtil.tryAlarm(sev, true, code);
                         //通知给网关
                         gatewayNotice(sev);
                     }
                 } else {
+                    TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+
                     //出错
                     if (sev.is_unstable && sev.check_error_num >= 2 && !isOk) {
                         //
@@ -211,6 +223,8 @@ public final class SevController implements IJob {
                 }
             });
         } catch (Throwable ex) { //出错
+            TrackBuffer.singleton().appendCount("waterchk","service",nameAndIp,1,1);
+
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
             LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
         }
