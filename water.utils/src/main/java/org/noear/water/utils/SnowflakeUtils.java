@@ -1,5 +1,7 @@
 package org.noear.water.utils;
 
+import org.noear.solon.Solon;
+
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Random;
@@ -144,7 +146,11 @@ public class SnowflakeUtils {
      */
     public static int getDataId() {
         try {
-            return getHostId(Inet4Address.getLocalHost().getHostName(), DATA_MAX_NUM);
+            if (Solon.cfg().appName() != null) {
+                return getHostId(Solon.cfg().appGroup() + "::" + Solon.cfg().appName(), DATA_MAX_NUM);
+            } else {
+                return getHostId(Inet4Address.getLocalHost().getHostName(), DATA_MAX_NUM);
+            }
         } catch (UnknownHostException e) {
             return new Random().nextInt(DATA_RANDOM);
         }
