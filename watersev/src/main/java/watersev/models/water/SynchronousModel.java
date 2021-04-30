@@ -9,6 +9,7 @@ import java.util.Date;
 public class SynchronousModel implements IBinder {
     public int sync_id;
     public String key;
+    public String tag;
     public String name;
     public int type; //0,增量同步；1,更新同步；
     public int interval;
@@ -27,6 +28,7 @@ public class SynchronousModel implements IBinder {
     public void bind(GetHandlerEx s) {
         sync_id = s.get("sync_id").value(0);
         key = s.get("key").value("");
+        tag = s.get("tag").value("");
         name = s.get("name").value("");
         interval = s.get("interval").value(0);
         target = s.get("target").value(null);

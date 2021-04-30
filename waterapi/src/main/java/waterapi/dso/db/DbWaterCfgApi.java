@@ -117,6 +117,17 @@ public class DbWaterCfgApi {
                 .getArray(0);
     }
 
+    public static List<String> getAlarmMobiles(String tag) throws SQLException {
+        return Config.water.table("water_cfg_whitelist")
+                .whereEq("type", "mobile")
+                .andEq("tag", tag)
+                .andEq("is_enabled", 1)
+                .andNeq("value", "")
+                .select("value ")
+                .caching(CacheUtils.data)
+                .getArray(0);
+    }
+
     //获取IP白名单
     private static List<String> _whitelist = null;
     private static boolean _whitelist_ignore_client = false ;

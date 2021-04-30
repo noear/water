@@ -78,7 +78,7 @@ public class WaterRegistryLib {
             String meta = RegistryUtils.buildMeta(url);
             String address = url.getAddress();
 
-            WaterClient.Registry.register(service_key, address, meta, Solon.cfg().isDriftMode());
+            WaterClient.Registry.register(Solon.cfg().appGroup(), service_key, address, meta, Solon.cfg().isDriftMode());
         }
     }
 }

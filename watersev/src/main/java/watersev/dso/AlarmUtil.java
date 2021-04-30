@@ -15,41 +15,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmUtil {
-    public static void tryAlarm(StateTag tag, boolean isOk, DistributionModel task) {
+    public static void tryAlarm(StateTag stateTag, boolean isOk, DistributionModel task) {
         try {
             StringBuilder sb = new StringBuilder();
 
-            if (tag.topic().alarm_model == 1) {
+            if (stateTag.topic().alarm_model == 1) {
                 return;
             }
 
             if (isOk) {
-                sb.append("恢复：消息=").append(tag.msg.topic_name).append("，").append("#")
-                        .append(tag.msg.msg_id);
+                sb.append("恢复：消息=").append(stateTag.msg.topic_name).append("，").append("#")
+                        .append(stateTag.msg.msg_id);
             } else {
-                if(tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                    sb.append("提示：消息=").append(tag.msg.topic_name).append("，").append("#")
-                            .append(tag.msg.msg_id).append("结束（已派").append(tag.msg.dist_count).append("次）");
-                }else {
-                    sb.append("报警：消息=").append(tag.msg.topic_name).append("，").append("#")
-                            .append(tag.msg.msg_id).append("已派发").append(tag.msg.dist_count).append("次失败");
+                if (stateTag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
+                    sb.append("提示：消息=").append(stateTag.msg.topic_name).append("，").append("#")
+                            .append(stateTag.msg.msg_id).append("结束（已派").append(stateTag.msg.dist_count).append("次）");
+                } else {
+                    sb.append("报警：消息=").append(stateTag.msg.topic_name).append("，").append("#")
+                            .append(stateTag.msg.msg_id).append("已派发").append(stateTag.msg.dist_count).append("次失败");
                 }
             }
 
+            String tag = stateTag.msg.topic_name.split(".|_")[0];
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.alarm_mobile);
-            ProtocolHub.heihei.push("msg",alias, sb.toString());
+            List<String> alias = buildAlias(tag, task.alarm_mobile);
+            ProtocolHub.heihei.push("msg", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.error("AlarmUtil",null,"", ex);
+            LogUtil.error("AlarmUtil", null, "", ex);
         }
     }
 
     public static void tryAlarm(ServiceModel task, boolean isOk, int code) {
-        if(task.is_enabled == false){
+        if (task.is_enabled == false) {
             return;
         }
 
@@ -72,7 +73,7 @@ public class AlarmUtil {
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.alarm_mobile);
+            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
             ProtocolHub.heihei.push("sev", alias, sb.toString());
 
         } catch (Exception ex) {
@@ -85,39 +86,23 @@ public class AlarmUtil {
         try {
             StringBuilder sb = new StringBuilder();
 
-            if(isOk){
-                sb.append("提醒：同步成功=").append(task.name).append("@").append(max_id+"");
-            }else{
-                sb.append("提醒：同步失败=").append(task.name).append("@").append(max_id+"");
+            if (isOk) {
+                sb.append("提醒：同步成功=").append(task.name).append("@").append(max_id + "");
+            } else {
+                sb.append("提醒：同步失败=").append(task.name).append("@").append(max_id + "");
             }
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.alarm_mobile);
-            ProtocolHub.heihei.push("syn",alias, sb.toString());
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil",null,"",ex);
-        }
-    }
-
-    public static void tryNotice(String text, String alarm_mobile) {
-        try {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("通知：").append(text);
-
-            buildSign(sb, "");
-
-            List<String> alias = buildAlias(alarm_mobile);
-            ProtocolHub.heihei.push("alert", alias, sb.toString());
+            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
+            ProtocolHub.heihei.push("syn", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
             LogUtil.error("AlarmUtil", null, "", ex);
         }
     }
+
 
     public static void tryAlarm(PaasFileModel task) {
         try {
@@ -128,12 +113,12 @@ public class AlarmUtil {
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.alarm_mobile);
-            ProtocolHub.heihei.push("pln",alias, sb.toString());
+            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
+            ProtocolHub.heihei.push("pln", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.error("AlarmUtil",null,"", ex);
+            LogUtil.error("AlarmUtil", null, "", ex);
         }
     }
 
@@ -143,11 +128,11 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                if(task.type!=1) { //1=报喜, 不需要恢复
+                if (task.type != 1) { //1=报喜, 不需要恢复
                     sb.append("恢复正常：").append(task.name);
                 }
             } else {
-                String label = (task.type==1?"简报":"预警");
+                String label = (task.type == 1 ? "简报" : "预警");
 
                 sb.append(label);
 
@@ -158,18 +143,18 @@ public class AlarmUtil {
                 }
             }
 
-            if(sb.length()==0){
+            if (sb.length() == 0) {
                 return;
             }
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.alarm_mobile);
-            ProtocolHub.heihei.push("mot",alias, sb.toString());
+            List<String> alias = buildAlias(task.task_tag, task.alarm_mobile);
+            ProtocolHub.heihei.push("mot", alias, sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.error("AlarmUtil",null,"", ex);
+            LogUtil.error("AlarmUtil", null, "", ex);
         }
     }
 
@@ -189,25 +174,32 @@ public class AlarmUtil {
         }
     }
 
-    private static List<String> buildAlias(String alarm_mobile) throws SQLException{
+    private static List<String> buildAlias(String tag, String alarm_mobile) throws SQLException {
         List<String> alias = new ArrayList<>();
 
-        List<String> mobiles = DbWaterCfgApi.getAlarmMobiles();
 
         if (TextUtils.isEmpty(alarm_mobile) == false) {
-            for(String m : alarm_mobile.split(",")){
-                if(TextUtils.isEmpty(m)==false && alias.contains(m)==false) {
+            for (String m : alarm_mobile.split(",")) {
+                if (TextUtils.isEmpty(m) == false && alias.contains(m) == false) {
                     alias.add(m);
                 }
             }
         }
 
-        for (String m : mobiles) {
-            if(TextUtils.isEmpty(m)==false && alias.contains(m)==false) {
-                alias.add(m);
-            }
-        }
+        buildAliasByTag("@alarm", alias);
+        buildAliasByTag("@" + tag, alias);
 
         return alias;
+    }
+
+    private static void buildAliasByTag(String listTag, List<String> alias) throws SQLException {
+        if (listTag.startsWith("@") && listTag.length() > 2) {
+            List<String> mobiles = DbWaterCfgApi.getAlarmMobiles(listTag.replace("@", "_"));
+            for (String m : mobiles) {
+                if (TextUtils.isEmpty(m) == false && alias.contains(m) == false) {
+                    alias.add(m);
+                }
+            }
+        }
     }
 }

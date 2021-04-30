@@ -33,10 +33,12 @@ public class CMD_run_push extends UapiBase {
 
         List<String> list = new ArrayList<String>();
         for (String str : target.split(",")) {
-            if (str.equals("@alarm")) {
-                List<String> mobiles = DbWaterCfgApi.getAlarmMobiles();
+            if (str.startsWith("@")) {
+                if (str.length() > 2) {
+                    List<String> mobiles = DbWaterCfgApi.getAlarmMobiles(str.replace("@", "_"));
 
-                list.addAll(mobiles);
+                    list.addAll(mobiles);
+                }
             } else {
                 list.add(str);
             }

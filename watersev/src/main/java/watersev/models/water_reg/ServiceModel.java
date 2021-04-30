@@ -11,6 +11,7 @@ import java.util.Date;
 public class ServiceModel implements IBinder {
     public int service_id;
     public String key;
+    public String tag;
     public String name;
     public String address;
     public String note;
@@ -32,6 +33,7 @@ public class ServiceModel implements IBinder {
     public void bind(GetHandlerEx s) {
         service_id = s.get("service_id").value(0);
         key = s.get("key").value("");
+        tag = s.get("tag").value("");
         name = s.get("name").value(null);
         address = s.get("address").value("");
         note = s.get("note").value("");

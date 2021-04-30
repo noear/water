@@ -14,3 +14,9 @@ ALTER TABLE `water_reg_service_speed_date`
 
 ALTER TABLE `water_reg_service_speed_hour`
     MODIFY COLUMN `row_id` bigint(11) NOT NULL AUTO_INCREMENT FIRST;
+
+
+-- 2021.04.30
+ALTER TABLE `water_reg_service`
+    ADD COLUMN `tag` varchar(40) NOT NULL DEFAULT '' AFTER `key`,
+ADD INDEX `IX_tag`(`tag`) USING BTREE;

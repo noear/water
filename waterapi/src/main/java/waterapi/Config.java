@@ -100,7 +100,7 @@ public class Config {
                 //本地IP订阅
                 //
 
-                DbWaterRegApi.addService(water_service_name,
+                DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
                         localHost,
                         WW.path_run_check,
                         0,

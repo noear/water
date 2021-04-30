@@ -34,13 +34,17 @@ public class CMD_sev_reg extends UapiBase {
      */
     @NotEmpty({"service", "address"})
     @Mapping("/sev/reg/")
-    public Result cmd_exec(Context ctx, String service, String address, String meta, int is_unstable, String check_url, String code_location, int check_type) throws Exception {
+    public Result cmd_exec(Context ctx, String tag, String service, String address, String meta, int is_unstable, String check_url, String code_location, int check_type) throws Exception {
         if (meta == null) {
             meta = ctx.param("note");
         }
 
         if (meta == null) {
             meta = "";
+        }
+
+        if (tag == null) {
+            tag = "";
         }
 
         String alarm_mobile = ctx.param("alarm_mobile", "");
@@ -52,7 +56,7 @@ public class CMD_sev_reg extends UapiBase {
         }
 
 
-        DbWaterRegApi.addService(service, address, meta, alarm_mobile, check_url, check_type, code_location, is_unstable > 0);
+        DbWaterRegApi.addService(tag, service, address, meta, alarm_mobile, check_url, check_type, code_location, is_unstable > 0);
 
         if (TextUtils.isNotEmpty(service) && TextUtils.isNotEmpty(address)) {
             //记录消费关系

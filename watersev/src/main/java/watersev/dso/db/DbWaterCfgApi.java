@@ -24,6 +24,17 @@ public class DbWaterCfgApi {
                 .getArray(0);
     }
 
+    public static List<String> getAlarmMobiles(String tag) throws SQLException {
+        return db().table("water_cfg_whitelist")
+                .whereEq("tag", tag)
+                .andEq("type", "mobile")
+                .andEq("is_enabled",1)
+                .andNeq("value", "")
+                .select("value ")
+                .caching(Config.cache_data)
+                .getArray(0);
+    }
+
     public static boolean hasGateway(String name) {
         try {
             return db().table("water_cfg_properties")

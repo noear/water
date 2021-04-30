@@ -28,13 +28,17 @@ public final class DbWaterRegApi {
     }
 
     //添加服务（key）
-    public static void addService(String service, String address, String check_url, int check_type, String code_location, boolean is_unstable) throws SQLException {
-        addService(service, address, "", "", check_url, check_type, code_location,is_unstable);
+    public static void addService(String tag, String service, String address, String check_url, int check_type, String code_location, boolean is_unstable) throws SQLException {
+        addService(tag, service, address, "", "", check_url, check_type, code_location, is_unstable);
     }
 
-    public static void addService(String service, String address, String meta, String alarm_mobile, String check_url, int check_type, String code_location,boolean is_unstable) throws SQLException {
+    public static void addService(String tag, String service, String address, String meta, String alarm_mobile, String check_url, int check_type, String code_location,boolean is_unstable) throws SQLException {
         if (meta == null) {
             meta = "";
+        }
+
+        if(tag == null){
+            tag = "";
         }
 
         String key = serviceMd5(service, address, meta);
@@ -42,6 +46,7 @@ public final class DbWaterRegApi {
         boolean isOk = db().table("water_reg_service").usingExpr(true)
                 .set("note", meta)
                 .set("meta", meta)
+                .set("tag", tag)
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("check_url", check_url)
@@ -61,6 +66,7 @@ public final class DbWaterRegApi {
                     .set("address", address)
                     .set("note", meta)
                     .set("meta", meta)
+                    .set("tag", tag)
                     .set("alarm_mobile", alarm_mobile)
                     .set("is_unstable", (is_unstable ? 1 : 0))
                     .set("check_url", check_url)

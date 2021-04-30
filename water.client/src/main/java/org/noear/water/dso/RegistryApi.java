@@ -18,7 +18,8 @@ import java.util.Set;
  * */
 public class RegistryApi {
     protected final ApiCaller apiCaller;
-    public RegistryApi(){
+
+    public RegistryApi() {
         apiCaller = new ApiCaller(WaterAddress.getRegistryApiUrl());
     }
 
@@ -27,15 +28,15 @@ public class RegistryApi {
     /**
      * 注册（用于对接外部框架）
      */
-    public void register(String service, String address, String meta, boolean is_unstable) {
-        register(service, address, meta, "", 1, "", is_unstable);
+    public void register(String tag, String service, String address, String meta, boolean is_unstable) {
+        register(tag, service, address, meta, "", 1, "", is_unstable);
     }
 
     /**
      * 注册
      */
-    public void register(String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
-        register(service, address, check_url, 0, alarm_mobile, is_unstable);
+    public void register(String tag, String service, String address, String check_url, String alarm_mobile, boolean is_unstable) {
+        register(tag, service, address, check_url, 0, alarm_mobile, is_unstable);
     }
 
     /**
@@ -43,24 +44,25 @@ public class RegistryApi {
      *
      * @param check_type 0:通过check_url检查，1:自己定时签到
      */
-    public void register(String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
-        register(service, address, "", check_url, check_type, alarm_mobile, is_unstable);
+    public void register(String tag, String service, String address, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+        register(tag, service, address, "", check_url, check_type, alarm_mobile, is_unstable);
     }
 
-    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
+    public void register(String tag, String service, String address, String meta, String check_url, int check_type, String alarm_mobile, boolean is_unstable) {
         String code_location = WaterClient.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
-        register(service, address, meta, check_url, check_type, alarm_mobile, code_location, is_unstable);
+        register(tag, service, address, meta, check_url, check_type, alarm_mobile, code_location, is_unstable);
     }
 
     /**
      * 注册
      */
-    public void register(String service, String address, String meta, String check_url, int check_type, String alarm_mobile, String code_location, boolean is_unstable) {
+    public void register(String tag, String service, String address, String meta, String check_url, int check_type, String alarm_mobile, String code_location, boolean is_unstable) {
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
         params.put("meta", meta);
+        params.put("tag", tag);
         params.put("alarm_mobile", alarm_mobile);
         params.put("is_unstable", (is_unstable ? "1" : "0")); //用于兼容k8s的ip漂移
 
@@ -113,12 +115,12 @@ public class RegistryApi {
      * 发现
      */
     public DiscoverM discover(String service, String consumer, String consumer_address) {
-        return load0(service, consumer ,consumer_address);
+        return load0(service, consumer, consumer_address);
     }
 
     /**
      * 发现刷新
-     * */
+     */
     public void discoverFlush(String service, String consumer, String consumer_address) {
         DiscoverM d1 = load0(service, consumer, consumer_address);
         noticeTry(service, d1);
@@ -166,8 +168,7 @@ public class RegistryApi {
     }
 
 
-
-    private void noticeTry(String service, DiscoverM discover){
+    private void noticeTry(String service, DiscoverM discover) {
         Set<DiscoverHandler> tmp = _event.get(service);
 
         if (tmp != null) {
