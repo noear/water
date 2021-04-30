@@ -1,10 +1,7 @@
 package waterapi.dso.db;
 
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.EncryptUtils;
-import org.noear.water.utils.EventPipeline;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.TrackBcfPipelineLocal;
@@ -65,7 +62,7 @@ public final class DbWaterLogApi {
 
         Datetime now = Datetime.Now();
 
-        event.log_id = ProtocolHub.idBuilder.getLogId(logger);
+        event.log_id = SnowflakeUtils.genId(); //ProtocolHub.idBuilder.getLogId(logger);
         event.service = service;
         event.trace_id = trace_id;
         event.schema = schema;

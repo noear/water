@@ -5,6 +5,8 @@ import org.noear.solon.Solon;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author noear 2021/4/30 created
@@ -133,7 +135,7 @@ public class SnowflakeUtils {
     /**
      * 根据 host address 取余，发生异常就获取 0到31之间的随机数
      */
-    public static int getWorkId() {
+    protected static int getWorkId() {
         try {
             return getHostId(Inet4Address.getLocalHost().getHostAddress(), WORK_MAX_NUM);
         } catch (UnknownHostException e) {
@@ -144,7 +146,7 @@ public class SnowflakeUtils {
     /**
      * 根据 host name 取余，发生异常就获取 0到31之间的随机数
      */
-    public static int getDataId() {
+    protected static int getDataId() {
         try {
             if (Solon.cfg().appName() != null) {
                 return getHostId(Solon.cfg().appGroup() + "::" + Solon.cfg().appName(), DATA_MAX_NUM);
@@ -154,5 +156,18 @@ public class SnowflakeUtils {
         } catch (UnknownHostException e) {
             return new Random().nextInt(DATA_RANDOM);
         }
+    }
+
+    public static boolean isNumeric(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return false;
+        }
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
     }
 }
