@@ -3,11 +3,9 @@ package org.noear.water.protocol.solution;
 import org.noear.solon.core.event.EventBus;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
-import org.noear.water.protocol.IdBuilder;
 import org.noear.water.protocol.LogStorer;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.track.TrackBuffer;
-import org.noear.water.utils.TextUtils;
 
 import java.util.Date;
 import java.util.List;
