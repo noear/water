@@ -155,6 +155,7 @@ public class TrackBuffer implements TaskUtils.ITask {
             ru.hashVal("slowest"); //ru.hashVal("slowest");
             ru.hashVal("fastest"); //ru.hashVal("fastest");
         } else {
+            ru.hashIncr("total_time", timespan);
             ru.hashIncr("total_num", count);
 
             if (timespan > 1000) {

@@ -36,7 +36,7 @@ public class AlarmUtil {
                 }
             }
 
-            String tag = stateTag.msg.topic_name.split(".|_")[0];
+            String tag = stateTag.msg.topic_name.split("\\.|_")[0];
 
             buildSign(sb, task.alarm_sign);
 
