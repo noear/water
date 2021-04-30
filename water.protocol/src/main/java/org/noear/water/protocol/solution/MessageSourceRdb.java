@@ -9,10 +9,7 @@ import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.DisttimeUtils;
-import org.noear.water.utils.StringUtils;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -110,7 +107,7 @@ public class MessageSourceRdb implements MessageSource {
 
     //添加消息
     public long addMessage(String msg_key, String trace_id, String tags, int topic_id, String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception {
-        long msg_id = ProtocolHub.idBuilder.getMsgId();
+        long msg_id = SnowflakeUtils.genId();//ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
             msg_key = Utils.guid();
