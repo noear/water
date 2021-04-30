@@ -378,7 +378,7 @@ public class MessageSourceRdb implements MessageSource {
                 qr.andEq("tags", key.substring(1).trim());
             } else {
                 if (StringUtils.isNumeric(key)) {
-                    qr.andEq("msg_id", Integer.parseInt(key));
+                    qr.andEq("msg_id", Long.parseLong(key));
                 } else {
                     qr.andEq("topic_name", key);
                 }

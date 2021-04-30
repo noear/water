@@ -332,7 +332,7 @@ public class MessageSourceMongo implements MessageSource {
         return _db.table("water_msg_message")
                 .build((tb) -> {
                     if (IdBuilder.isNumeric(msg_key)) {
-                        tb.whereEq("msg_id", Long.parseLong(msg_key));
+                        tb.whereEq("_id", Long.parseLong(msg_key));
                     } else {
                         tb.whereEq("msg_key", msg_key);
                     }
@@ -363,7 +363,7 @@ public class MessageSourceMongo implements MessageSource {
                 }
 
                 tb.andEq("state", 0);
-            }).orderByAsc("msg_id").limit(50)
+            }).orderByAsc("_id").limit(50)
                     .selectList(MessageModel.class);
         }
     }
@@ -394,7 +394,7 @@ public class MessageSourceMongo implements MessageSource {
                 qr.andEq("tags", key.substring(1).trim());
             } else {
                 if (StringUtils.isNumeric(key)) {
-                    qr.andEq("msg_id", Integer.parseInt(key));
+                    qr.andEq("_id", Long.parseLong(key));
                 } else {
                     qr.andEq("topic_name", key);
                 }
