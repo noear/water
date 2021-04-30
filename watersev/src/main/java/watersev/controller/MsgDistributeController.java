@@ -14,13 +14,13 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.*;
-import org.noear.water.utils.ext.Act3Ex;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
 import watersev.utils.ext.Act3;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -175,6 +175,7 @@ public final class MsgDistributeController implements IJob {
         }
     }
 
+
     private Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
         //synchronized (tag.msg.msg_id) {
         //
@@ -245,47 +246,16 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(dist.receive_url)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-
-                    dist._duration = new Timespan(dist._start_time).milliseconds();
-
-                    String text = null;
-                    int code = 0;
-
-                    if (resp != null) {
-                        code = resp.code();
-                        text = resp.body().string();
-                    }
-
-                    if (isOk) {
-                        boolean isOk2 = "OK".equals(text);
-
-                        if (isOk2 == false) {
-                            LogUtil.writeForMsg(msg, dist, text);
-                        } else {
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        }
-                    } else {
-                        if (ex == null) {
-                            if (text == null) {
-                                text = "http error";
-                            } else {
-                                text = code + " - " + text;
-                            }
-
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        } else {
-                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
-                        }
-                    }
+                    distributeResultLog(msg, dist, isOk, resp, ex);
                 });
 
                 //::2:: 进行异步http分发 //不等待 //状态设为已完成
-                if(dist.receive_way == 2) {
+                if (dist.receive_way == 2) {
                     callback.run(tag, dist, true);
                 }
 
                 //::3:: 进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
-                if(dist.receive_way == 3){
+                if (dist.receive_way == 3) {
                     //推后一小时，可手工再恢复
                     long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
                     ProtocolHub.messageSource().setMessageState(msg, MessageState.processed, ntime);//1
@@ -297,43 +267,8 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(dist.receive_url)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-
-                    dist._duration = new Timespan(dist._start_time).milliseconds();
-
-                    String text = null;
-                    int code = 0;
-
-                    if (resp != null) {
-                        code = resp.code();
-                        text = resp.body().string();
-                    }
-
-
-                    if (isOk) {
-                        boolean isOk2 = "OK".equals(text);
-
-                        if (isOk2) {
-                            LogUtil.writeForMsg(msg, dist, text);
-                        } else {
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        }
-
-                        callback.run(tag, dist, isOk2);
-                    } else {
-                        if (ex == null) {
-                            if (text == null) {
-                                text = "http error";
-                            } else {
-                                text = code + " - " + text;
-                            }
-
-                            LogUtil.writeForMsgByError(msg, dist, text);
-                        } else {
-                            LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
-                        }
-
-                        callback.run(tag, dist, false);
-                    }
+                    boolean isOk2 = distributeResultLog(msg, dist, isOk, resp, ex);
+                    callback.run(tag, dist, isOk2);
                 });
             }
 
@@ -341,6 +276,52 @@ public final class MsgDistributeController implements IJob {
             LogUtil.writeForMsgByError(msg, dist, ex.getLocalizedMessage());
 
             callback.run(tag, dist, false);
+        }
+    }
+
+    private boolean distributeResultLog(MessageModel msg, DistributionModel dist, boolean isOk, Response resp, Exception ex) throws IOException {
+        dist._duration = new Timespan(dist._start_time).milliseconds();
+
+        String text = null;
+        int code = 0;
+
+        if (resp != null) {
+            code = resp.code();
+            text = resp.body().string();
+        }
+
+
+        try {
+            ContextUtil.currentSet(new ContextEmpty());
+            ContextUtil.current().headerSet(WW.http_header_trace, msg.trace_id);
+
+            if (isOk) {
+                boolean isOk2 = "OK".equals(text);
+
+                if (isOk2) {
+                    LogUtil.writeForMsg(msg, dist, text);
+                } else {
+                    LogUtil.writeForMsgByError(msg, dist, text);
+                }
+
+                return isOk2;
+            } else {
+                if (ex == null) {
+                    if (text == null) {
+                        text = "http error";
+                    } else {
+                        text = code + " - " + text;
+                    }
+
+                    LogUtil.writeForMsgByError(msg, dist, text);
+                } else {
+                    LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
+                }
+
+                return false;
+            }
+        } finally {
+            ContextUtil.currentRemove();
         }
     }
 }

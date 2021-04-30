@@ -63,7 +63,7 @@ public class SpeedController extends BaseController {
         viewModel.put("tag", tag);
         viewModel.put("serviceName", serviceName);
 
-        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(tag) < 0) {
+        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(serviceName) < 0) {
             return view("mot/speed_inner");
         } else {
             return view("mot/speed_inner2");
