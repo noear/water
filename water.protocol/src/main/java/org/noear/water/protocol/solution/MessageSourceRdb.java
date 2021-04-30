@@ -9,6 +9,7 @@ import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
+import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;

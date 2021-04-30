@@ -5,8 +5,8 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogStorer;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.track.TrackBuffer;
-import org.noear.water.utils.SnowflakeUtils;
 
 import java.util.Date;
 import java.util.List;

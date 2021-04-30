@@ -1,6 +1,7 @@
-package org.noear.water.utils;
+package org.noear.water.protocol.utils;
 
 import org.noear.solon.Solon;
+import org.noear.water.utils.TextUtils;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;

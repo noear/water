@@ -1,6 +1,7 @@
 package waterapi.dso.db;
 
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import waterapi.Config;
