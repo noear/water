@@ -5,8 +5,6 @@ import org.noear.solon.Solon;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author noear 2021/4/30 created
