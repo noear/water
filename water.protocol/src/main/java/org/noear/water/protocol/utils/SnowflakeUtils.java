@@ -31,9 +31,9 @@ public class SnowflakeUtils {
     private static final int SEQ_LEN = 12;
 
     /**
-     * 定义起始时间 2015-01-01 00:00:00
+     * 定义起始时间 2020-01-01 00:00:00
      */
-    private static final long START_TIME = 1420041600000L;
+    private static final long START_TIME = 1577808000000L;
     /**
      * 上次生成ID的时间截
      */

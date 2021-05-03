@@ -164,7 +164,7 @@ public final class SevController implements IJob {
                 DbWaterRegApi.delService(sev.service_id);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
-                LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
+                LogUtil.warn(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
             }
         }
     }
@@ -206,7 +206,7 @@ public final class SevController implements IJob {
                         DbWaterRegApi.delService(sev.service_id);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.error(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2 + "，" + hint);
+                        LogUtil.warn(getName(), sev.service_id + "", sev.name + "@" + sev.address, url2 + "，" + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
@@ -226,7 +226,7 @@ public final class SevController implements IJob {
             TrackBuffer.singleton().appendCount("_waterchk","service",nameAndIp,1,1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
-            LogUtil.error(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
+            LogUtil.warn(this, sev.service_id + "", sev.name + "@" + sev.address, ex);
         }
     }
 
