@@ -41,6 +41,6 @@ final class RcConfig {
 
 
     public static long newLogID(){
-       return IDUtils.newID("rubber", "log_id", 60 * 60 * 24 * 365) + 10000;
+       return IDUtils.snowflakeID(); //IDUtils.newID("rubber", "log_id", 60 * 60 * 24 * 365) + 10000;
     }
 }

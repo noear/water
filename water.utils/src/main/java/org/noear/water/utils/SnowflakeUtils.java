@@ -1,7 +1,6 @@
-package org.noear.water.protocol.utils;
+package org.noear.water.utils;
 
 import org.noear.solon.Solon;
-import org.noear.water.utils.TextUtils;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
@@ -157,18 +156,5 @@ public class SnowflakeUtils {
         } catch (UnknownHostException e) {
             return new Random().nextInt(DATA_RANDOM);
         }
-    }
-
-    public static boolean isNumeric(String str) {
-        if (TextUtils.isEmpty(str)) {
-            return false;
-        }
-
-        Pattern pattern = Pattern.compile("[0-9]*");
-        Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
     }
 }

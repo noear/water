@@ -17,6 +17,13 @@ public class IDUtils {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    /**
+     * 雪花ID
+     * */
+    public static long snowflakeID(){
+        return SnowflakeUtils.genId();
+    }
+
     public static long newID(String group, String key, int cacheTime) {
         return _redis_idx.open1((ru) -> ru.key(group).expire(cacheTime).hashIncr(key, 1l));
     }

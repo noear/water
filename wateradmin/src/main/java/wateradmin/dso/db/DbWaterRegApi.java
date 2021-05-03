@@ -1,11 +1,10 @@
 package wateradmin.dso.db;
 
 import org.noear.water.WaterClient;
+import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
-import wateradmin.Config;
-import wateradmin.dso.IDUtil;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.setup.Setup;
@@ -131,7 +130,7 @@ public class DbWaterRegApi {
 
 
         if (service_id == 0) {
-            String key = IDUtil.buildGuid();
+            String key = IDUtils.guid();
             query.set("check_last_time",new Date())
                     .set("key", key).insert();
         } else {

@@ -7,9 +7,9 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import org.noear.solon.core.NvMap;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
-import wateradmin.dso.IDUtil;
 import wateradmin.dso.db.DbWaterVerApi;
 import wateradmin.models.water.VersionModel;
 
@@ -62,7 +62,7 @@ public class VersionsTag implements TemplateDirectiveModel {
             return "";
         }
 
-        String fun = "_"+ IDUtil.buildGuid();
+        String fun = "_"+ IDUtils.guid();
 
         sb.append("<script>");
         sb.append("function ").append(fun).append("(m){ ");
