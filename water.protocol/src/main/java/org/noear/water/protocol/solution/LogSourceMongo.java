@@ -137,22 +137,22 @@ public class LogSourceMongo implements LogSource {
         _db.table(logger).insertList(dataList);
     }
 
-    @Override
-    public long stat(String logger, Integer level, Integer log_date) throws Exception {
-        MgTableQuery tb = _db.table(logger);
-
-        tb.whereTrue();
-
-        if (level != null) {
-            tb.andEq("level", level);
-        }
-
-        if (log_date != null) {
-            tb.andEq("log_date", log_date);
-        }
-
-        return tb.selectCount();
-    }
+//    @Override
+//    public long stat(String logger, Integer level, Integer log_date) throws Exception {
+//        MgTableQuery tb = _db.table(logger);
+//
+//        tb.whereTrue();
+//
+//        if (level != null) {
+//            tb.andEq("level", level);
+//        }
+//
+//        if (log_date != null) {
+//            tb.andEq("log_date", log_date);
+//        }
+//
+//        return tb.selectCount();
+//    }
 
     @Override
     public void clear(String logger, int keep_days) {

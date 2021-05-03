@@ -77,7 +77,7 @@ public interface MessageSource {
     /**
      * 统计
      * */
-    long stat(int date, int topic_id) throws Exception;
+    //long stat(int date, int topic_id) throws Exception;
 
     /**
      * 持久化（将热数据转为冷数据）

@@ -18,11 +18,11 @@ public class LogQuerierImp implements LogQuerier {
                 .query(logger, trace_id, level, size, tag, tag1, tag2, tag3, timestamp);
     }
 
-    @Override
-    public long stat(String logger, Integer level, Integer log_date) throws Exception {
-        return ProtocolHub.logSourceFactory.getSource(logger)
-                .stat(logger, level, log_date);
-    }
+//    @Override
+//    public long stat(String logger, Integer level, Integer log_date) throws Exception {
+//        return ProtocolHub.logSourceFactory.getSource(logger)
+//                .stat(logger, level, log_date);
+//    }
 
     @Override
     public void clear(String logger) {

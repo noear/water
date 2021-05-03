@@ -107,14 +107,14 @@ public class LogSourceRdb implements LogSource {
                 });
     }
 
-    @Override
-    public long stat(String logger, Integer level, Integer log_date) throws Exception {
-        return _db.table(logger)
-                .where("1=1")
-                .andIf(level != null, "level=?", level)
-                .andIf(log_date != null, "log_date=?", log_date)
-                .selectCount();
-    }
+//    @Override
+//    public long stat(String logger, Integer level, Integer log_date) throws Exception {
+//        return _db.table(logger)
+//                .where("1=1")
+//                .andIf(level != null, "level=?", level)
+//                .andIf(log_date != null, "log_date=?", log_date)
+//                .selectCount();
+//    }
 
     @Override
     public void clear(String logger, int keep_days) {
