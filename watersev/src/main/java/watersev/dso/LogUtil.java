@@ -95,10 +95,14 @@ public class LogUtil {
         log_paas.info("_plan", plan.tag, plan.path, "", "", sb.toString());
     }
 
-    public static void planError(IJob tag, AFileModel plan, Throwable content) {
-        log_paas.error("_plan", plan.tag, plan.path, "", "", content);
-    }
+    public static void planError(IJob tag, AFileModel plan, long _times,Throwable content) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(plan.path)
+                .append("(").append(plan.plan_count).append("/").append(plan.plan_max)
+                .append(")执行失败 - ").append(_times).append("ms");
 
+        log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content);
+    }
 
 
     public static void write(IJob tag, String tag1, String summary, String content) {

@@ -72,13 +72,18 @@ public class PlnController implements IJob {
 
     private void doExec(PaasFileModel task) {
 
+        //2.1.计时开始
+        Timecount timecount = new Timecount().start();
+
         try {
             ContextEmpty ctx = new ContextEmpty();
             ContextUtil.currentSet(ctx);
             ctx.attrSet("file", task);
 
-            runTask(task);
+            runTask(task, timecount);
         } catch (Exception ex) {
+            long _times = timecount.stop().milliseconds();
+
             ex.printStackTrace();
 
             try {
@@ -87,7 +92,8 @@ public class PlnController implements IJob {
                 ex2.printStackTrace();
             }
 
-            LogUtil.planError(this, task, ex);
+
+            LogUtil.planError(this, task, _times, ex);
 
             AlarmUtil.tryAlarm(task);
         } finally {
@@ -95,7 +101,7 @@ public class PlnController implements IJob {
         }
     }
 
-    private void runTask(PaasFileModel task) throws Exception {
+    private void runTask(PaasFileModel task, Timecount timecount) throws Exception {
 
 
         //1.1.检查次数
@@ -174,8 +180,6 @@ public class PlnController implements IJob {
 
         //////////////////////////////////////////
 
-        //2.1.计时开始
-        Timecount timecount = new Timecount().start();
 
         //2.2.执行
         long _times = do_runTask(task, timecount);
@@ -192,12 +196,7 @@ public class PlnController implements IJob {
         DbWaterPaasApi.setPlanState(task, 2, "processing");
 
         //2.执行
-        try {
-            JtRun.exec(task);
-        } catch (Exception ex) {
-            throw ex;
-        }
-
+        JtRun.exec(task);
 
         //3.更新状态
         task.plan_count = (task.plan_count + 1) % 10000;
