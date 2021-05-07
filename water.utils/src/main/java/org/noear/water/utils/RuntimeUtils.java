@@ -1,5 +1,6 @@
 package org.noear.water.utils;
 
+import java.io.File;
 import java.lang.management.*;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -24,14 +25,14 @@ public class RuntimeUtils {
         String memoryMax = new DecimalFormat("#.##")
                 .format(systemMXBean.getTotalPhysicalMemorySize() / 1024.0 / 1024 / 1024) + "G";
         // 剩余的物理内存
-        String memoryUsed = new DecimalFormat("#.##")
+        String memoryFree = new DecimalFormat("#.##")
                 .format(systemMXBean.getFreePhysicalMemorySize() / 1024.0 / 1024 / 1024) + "G";
 
         status.system.put("arch",systemMXBean.getArch());
-        status.system.put("systemLoadAverage",systemMXBean.getSystemLoadAverage());
+        status.system.put("systemCpuLoad",systemMXBean.getSystemCpuLoad());
         status.system.put("availableProcessors",systemMXBean.getAvailableProcessors());
         status.system.put("memoryMax",memoryMax);
-        status.system.put("memoryUsed",memoryUsed);
+        status.system.put("memoryFree",memoryFree);
 
 
         List<Map<String,Object>> memoryPools = new ArrayList<>();
