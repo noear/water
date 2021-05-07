@@ -112,9 +112,9 @@ public class LogSourceRdb implements LogSource {
         int date = Datetime.Now().addDay(-keep_days).getDate();
 
         if (limit_rows > 0) {
-            return _db.table(logger).whereEq("log_date=", date).limit(limit_rows).delete();
+            return _db.table(logger).whereEq("log_date", date).limit(limit_rows).delete();
         } else {
-            return _db.table(logger).whereEq("log_date=", date).delete();
+            return _db.table(logger).whereEq("log_date", date).delete();
         }
     }
 }
