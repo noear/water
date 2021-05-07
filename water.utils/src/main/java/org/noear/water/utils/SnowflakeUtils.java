@@ -135,8 +135,8 @@ public class SnowflakeUtils {
      */
     protected static int getWorkId() {
         try {
-            return getHostId(Inet4Address.getLocalHost().getHostAddress(), WORK_MAX_NUM);
-        } catch (UnknownHostException e) {
+            return getHostId(LocalUtils.getLocalAddr(Solon.cfg().serverPort()), WORK_MAX_NUM);
+        } catch (Exception e) {
             return new Random().nextInt(WORK_RANDOM);
         }
     }
