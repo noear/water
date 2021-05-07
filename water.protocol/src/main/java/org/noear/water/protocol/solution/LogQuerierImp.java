@@ -18,17 +18,17 @@ public class LogQuerierImp implements LogQuerier {
                 .query(logger, trace_id, level, size, tag, tag1, tag2, tag3, timestamp);
     }
 
-//    @Override
-//    public long stat(String logger, Integer level, Integer log_date) throws Exception {
-//        return ProtocolHub.logSourceFactory.getSource(logger)
-//                .stat(logger, level, log_date);
-//    }
-
     @Override
-    public void clear(String logger) {
+    public long clear(String logger) throws Exception {
         LoggerMeta mod = ProtocolHub.logSourceFactory.getLogger(logger);
 
-        ProtocolHub.logSourceFactory.getSource(logger)
+        return ProtocolHub.logSourceFactory.getSource(logger)
                 .clear(logger, mod.getKeepDays());
+    }
+
+    @Override
+    public long clear(String logger, int keep_days) throws Exception {
+        return ProtocolHub.logSourceFactory.getSource(logger)
+                .clear(logger, keep_days);
     }
 }

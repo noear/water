@@ -7,7 +7,7 @@ import java.util.List;
 public interface LogQuerier {
     List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception;
 
-    //long stat(String logger, Integer level, Integer log_date) throws Exception;
+    long clear(String logger) throws Exception;
 
-    void clear(String logger);
+    long clear(String logger, int keep_days) throws Exception;
 }

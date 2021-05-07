@@ -16,5 +16,5 @@ public interface LogSource {
 
     //long stat(String logger, Integer level, Integer log_date) throws Exception;
 
-    void clear(String logger, int keep_days);
+    long clear(String logger, int keep_days) throws Exception;
 }

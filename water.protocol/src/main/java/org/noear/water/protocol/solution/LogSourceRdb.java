@@ -47,7 +47,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime ,String class_name, String thread_name) throws Exception {
+    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception {
         Datetime datetime = null;
         if (log_fulltime == null) {
             datetime = new Datetime();
@@ -107,22 +107,9 @@ public class LogSourceRdb implements LogSource {
                 });
     }
 
-//    @Override
-//    public long stat(String logger, Integer level, Integer log_date) throws Exception {
-//        return _db.table(logger)
-//                .where("1=1")
-//                .andIf(level != null, "level=?", level)
-//                .andIf(log_date != null, "log_date=?", log_date)
-//                .selectCount();
-//    }
-
     @Override
-    public void clear(String logger, int keep_days) {
-        int date = Datetime.Now().addDay(- keep_days).getDate();
-        try {
-            _db.table(logger).where("log_date <= ?", date).delete();
-        }catch (Throwable ex){
-            ex.printStackTrace();
-        }
+    public long clear(String logger, int keep_days) throws Exception {
+        int date = Datetime.Now().addDay(-keep_days).getDate();
+        return _db.table(logger).whereEq("log_date=", date).delete();
     }
 }
