@@ -489,17 +489,6 @@ public class MessageSourceRdb implements MessageSource {
         }
     }
 
-//    @Override
-//    public long stat(int date, int topic_id) throws SQLException {
-//        return _db.table("water_msg_message")
-//                .whereEq("log_date", date)
-//                .build(tb -> {
-//                    if (topic_id > 0) {
-//                        tb.andEq("topic_id", topic_id);
-//                    }
-//                }).selectCount();
-//    }
-
     @Override
     public void persistence(int hotDate, int coldDate) throws Exception {
         //转移数据（长久保存）
