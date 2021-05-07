@@ -23,12 +23,12 @@ public class LogQuerierImp implements LogQuerier {
         LoggerMeta mod = ProtocolHub.logSourceFactory.getLogger(logger);
 
         return ProtocolHub.logSourceFactory.getSource(logger)
-                .clear(logger, mod.getKeepDays());
+                .clear(logger, mod.getKeepDays(), 0);
     }
 
     @Override
-    public long clear(String logger, int keep_days) throws Exception {
+    public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         return ProtocolHub.logSourceFactory.getSource(logger)
-                .clear(logger, keep_days);
+                .clear(logger, keep_days, limit_rows);
     }
 }

@@ -9,5 +9,5 @@ public interface LogQuerier {
 
     long clear(String logger) throws Exception;
 
-    long clear(String logger, int keep_days) throws Exception;
+    long clear(String logger, int keep_days, int limit_rows) throws Exception;
 }

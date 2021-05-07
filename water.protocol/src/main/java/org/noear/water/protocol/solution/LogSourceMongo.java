@@ -138,7 +138,7 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public long clear(String logger, int keep_days) throws Exception {
+    public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         initIndex(logger);
 
         int date = Datetime.Now().addDay(-keep_days).getDate();

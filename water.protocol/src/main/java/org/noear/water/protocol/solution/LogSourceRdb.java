@@ -108,8 +108,13 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public long clear(String logger, int keep_days) throws Exception {
+    public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         int date = Datetime.Now().addDay(-keep_days).getDate();
-        return _db.table(logger).whereEq("log_date=", date).delete();
+
+        if (limit_rows > 0) {
+            return _db.table(logger).whereEq("log_date=", date).limit(limit_rows).delete();
+        } else {
+            return _db.table(logger).whereEq("log_date=", date).delete();
+        }
     }
 }

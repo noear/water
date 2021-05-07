@@ -36,7 +36,7 @@ public class LogSourceProxy implements LogSource {
     }
 
     @Override
-    public long clear(String logger, int keep_days) throws Exception {
-        return real.clear(logger, keep_days);
+    public long clear(String logger, int keep_days, int limit_rows) throws Exception {
+        return real.clear(logger, keep_days, limit_rows);
     }
 }

@@ -14,7 +14,5 @@ public interface LogSource {
 
     void writeAll(String logger, List<LogEvent> list) throws Exception;
 
-    //long stat(String logger, Integer level, Integer log_date) throws Exception;
-
-    long clear(String logger, int keep_days) throws Exception;
+    long clear(String logger, int keep_days, int limit_rows) throws Exception;
 }
