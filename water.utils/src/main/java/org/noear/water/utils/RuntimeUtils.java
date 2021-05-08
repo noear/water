@@ -29,7 +29,7 @@ public class RuntimeUtils {
                 .format(systemMXBean.getFreePhysicalMemorySize() / 1024.0 / 1024 / 1024) + "G";
 
         status.system.put("arch",systemMXBean.getArch());
-        status.system.put("systemCpuLoad",systemMXBean.getSystemCpuLoad());
+        status.system.put("systemLoadAverage",systemMXBean.getSystemLoadAverage());
         status.system.put("availableProcessors",systemMXBean.getAvailableProcessors());
         status.system.put("memoryMax",memoryMax);
         status.system.put("memoryFree",memoryFree);
