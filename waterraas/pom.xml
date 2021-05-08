@@ -32,6 +32,21 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3.cache.memcached</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>luffy.base</artifactId>
             <version>${luffy.ver}</version>
         </dependency>
@@ -88,20 +103,7 @@
             <artifactId>commons-codec</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.memcached</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>snack3</artifactId>
-        </dependency>
 
     </dependencies>
 
