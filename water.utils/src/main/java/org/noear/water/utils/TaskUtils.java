@@ -3,6 +3,19 @@ package org.noear.water.utils;
 
 import org.noear.water.utils.ext.Act0Ex;
 
+import java.util.concurrent.Callable;
+
+/**
+ * <pre><code>
+ *     //直接运行
+ *     TaskUtils.run(1000, ()->{
+ *        //当前跑完，等1000再跑；一直往复
+ *     });
+ *
+ *     //接口实现运行
+ *     TaskUtils.rne(new TaskImp());
+ * </code></pre>
+ * */
 public class TaskUtils {
     public static void run(ITask task) {
         new Thread(() -> {
