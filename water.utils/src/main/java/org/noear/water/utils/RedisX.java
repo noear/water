@@ -77,6 +77,10 @@ import java.util.function.Function;
     private void initDo(String server, String user, String password, int db, int maxTotaol, long maxWaitMillis) {
         JedisPoolConfig config = new JedisPoolConfig();
 
+        if (db < 0) {
+            db = 0;
+        }
+
         if (maxTotaol < 20) {
             maxTotaol = 200;
         }
@@ -86,8 +90,8 @@ import java.util.function.Function;
             maxIdle = 10;
         }
 
-        if(maxWaitMillis < 5000){
-            maxWaitMillis = 5000;
+        if(maxWaitMillis < 3000){
+            maxWaitMillis = 3000;
         }
 
         config.setMaxTotal(maxTotaol);
