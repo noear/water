@@ -102,7 +102,7 @@ import java.util.function.Function;
             password = null;
         }
 
-        _jedisPool = new JedisPool(config, ss[0], Integer.parseInt(ss[1]), 200, password, db);
+        _jedisPool = new JedisPool(config, ss[0], Integer.parseInt(ss[1]), 3000, password, db);
     }
 
     private RedisUsing doOpen() {
