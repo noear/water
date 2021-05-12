@@ -85,9 +85,9 @@ import java.util.function.Function;
             maxTotaol = 200;
         }
 
-        int maxIdle = maxTotaol / 5;
-        if (maxIdle < 10) {
-            maxIdle = 10;
+        int maxIdle = maxTotaol / 100;
+        if (maxIdle < 5) {
+            maxIdle = 5;
         }
 
         if(maxWaitMillis < 3000){
