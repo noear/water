@@ -20,3 +20,8 @@ ALTER TABLE `water_reg_service_speed_hour`
 ALTER TABLE `water_reg_service`
     ADD COLUMN `tag` varchar(40) NOT NULL DEFAULT '' AFTER `key`,
 ADD INDEX `IX_tag`(`tag`) USING BTREE;
+
+
+-- 2021.05.13
+ALTER TABLE `water_cfg_whitelist`
+    ADD INDEX `IX_note`(`note`(40)) USING BTREE;
