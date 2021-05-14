@@ -1,18 +1,12 @@
 package wateradmin.dso;
 
-
-import org.apache.http.client.methods.*;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.apache.http.util.TextUtils;
+import org.noear.water.WW;
 import org.noear.water.utils.Base64Utils;
+import org.noear.water.utils.HttpUtils;
+import org.noear.water.utils.TextUtils;
 import wateradmin.models.water_cfg.ConfigModel;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.Properties;
 
 public class EsUtil {
@@ -38,51 +32,57 @@ public class EsUtil {
             }
         }
 
-        HttpBodyRequest request = new HttpBodyRequest(url, method.toUpperCase(), json);
+        //HttpBodyRequest request = new HttpBodyRequest(url, method.toUpperCase(), json);
+
+        HttpUtils httpUtils = HttpUtils.http(url).bodyTxt(json, WW.mime_json);
 
         if (TextUtils.isEmpty(username) == false) {
             String token = Base64Utils.encode(username + ":" + password);
             String auth = "Basic " + token;
 
-            request.addHeader("Authorization", auth);
+            httpUtils.header("Authorization", auth);
         }
 
-        return call(request);
+        if(method.equals("GET")){
+            method = "POST";
+        }
+
+        return httpUtils.exec2(method);
     }
 
-    private static String call(HttpBodyRequest request) throws IOException {
-        CloseableHttpClient client = HttpClients.createDefault();
+//    private static String call(HttpUtils request) throws IOException {
+//        CloseableHttpClient client = HttpClients.createDefault();
+//
+//        CloseableHttpResponse response = null;
+//
+//        try {
+//            response = client.execute(request);
+//
+//            return EntityUtils.toString(response.getEntity(), "utf-8");
+//        } finally {
+//            if (response != null) {
+//                response.close();
+//            }
+//
+//            if (client != null) {
+//                client.close();
+//            }
+//        }
+//    }
 
-        CloseableHttpResponse response = null;
-
-        try {
-            response = client.execute(request);
-
-            return EntityUtils.toString(response.getEntity(), "utf-8");
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-
-            if (client != null) {
-                client.close();
-            }
-        }
-    }
-
-    public static class HttpBodyRequest extends HttpEntityEnclosingRequestBase{
-
-        String method;
-        public HttpBodyRequest(String uri,String method, String body){
-            super();
-            this.method =  method;
-            setURI(URI.create(uri));
-            setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
-        }
-
-        @Override
-        public String getMethod() {
-            return method;
-        }
-    }
+//    public static class HttpBodyRequest extends HttpEntityEnclosingRequestBase{
+//
+//        String method;
+//        public HttpBodyRequest(String uri,String method, String body){
+//            super();
+//            this.method =  method;
+//            setURI(URI.create(uri));
+//            setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
+//        }
+//
+//        @Override
+//        public String getMethod() {
+//            return method;
+//        }
+//    }
 }

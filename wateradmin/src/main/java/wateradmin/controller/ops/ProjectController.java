@@ -1,10 +1,9 @@
 package wateradmin.controller.ops;
 
-
-import org.apache.http.util.TextUtils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterProjectApi;

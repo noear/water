@@ -3,12 +3,12 @@ package wateradmin.controller.dev;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import org.apache.http.util.TextUtils;
 import org.bson.Document;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 import wateradmin.controller.BaseController;
