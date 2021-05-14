@@ -5,9 +5,7 @@ import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.solon.Utils;
 import org.noear.water.log.Logger;
-import org.noear.water.protocol.IdBuilder;
 import org.noear.water.protocol.MessageSource;
-import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
@@ -272,7 +270,7 @@ public class MessageSourceMongo implements MessageSource {
 
         if (isExists == false) {
             Datetime datetime = new Datetime();
-            long dist_id = ProtocolHub.idBuilder.getId("water_msg_distribution");
+            long dist_id =  SnowflakeUtils.genId();//ProtocolHub.idBuilder.getId("water_msg_distribution");
 
             _db.table("water_msg_distribution")
                     .set("dist_id", dist_id)
@@ -332,7 +330,7 @@ public class MessageSourceMongo implements MessageSource {
 
         return _db.table("water_msg_message")
                 .build((tb) -> {
-                    if (IdBuilder.isNumeric(msg_key)) {
+                    if (StringUtils.isNumeric(msg_key)) {
                         tb.whereEq("_id", Long.parseLong(msg_key));
                     } else {
                         tb.whereEq("msg_key", msg_key);

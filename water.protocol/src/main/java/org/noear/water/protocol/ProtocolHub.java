@@ -16,8 +16,6 @@ public final class ProtocolHub {
     //必填
     public static Config config;
 
-    public static IdBuilder idBuilder = null;
-
     public static LogSourceFactory logSourceFactory;
     public static final LogQuerier logQuerier = new LogQuerierImp();
     public static final LogStorer logStorer = new LogStorerImp();

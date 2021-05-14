@@ -34,7 +34,6 @@ public class WaterapiApp {
 			TrackBuffer.singleton().bind(Config.rd_track);
 
 			ProtocolHub.config = DbWaterCfgApi::getConfigM;
-			ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
 			ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 

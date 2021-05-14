@@ -2,7 +2,6 @@ package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
 import org.noear.water.log.Logger;
-import org.noear.water.protocol.IdBuilder;
 import org.noear.water.protocol.MessageSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -316,7 +315,7 @@ public class MessageSourceRdb implements MessageSource {
 
         return _db.table("water_msg_message")
                 .build((tb) -> {
-                    if (IdBuilder.isNumeric(msg_key)) {
+                    if (StringUtils.isNumeric(msg_key)) {
                         tb.whereEq("msg_id", Long.parseLong(msg_key));
                     } else {
                         tb.whereEq("msg_key", msg_key);
