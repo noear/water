@@ -1,7 +1,5 @@
 package org.noear.water.utils;
 
-import org.apache.commons.lang3.CharEncoding;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,7 +20,7 @@ public class GzipUtils {
         try {
             bos = new ByteArrayOutputStream();
             gzip = new GZIPOutputStream(bos);
-            gzip.write(input.getBytes(CharEncoding.UTF_8));
+            gzip.write(input.getBytes(StandardCharsets.UTF_8));
             gzip.finish();
             gzip.close();
             bytes = bos.toByteArray();
@@ -64,7 +62,7 @@ public class GzipUtils {
             }
             bytes = bos.toByteArray();
 
-            out = new String(bytes, CharEncoding.UTF_8);
+            out = new String(bytes, StandardCharsets.UTF_8);
 
             gzip.close();
             bis.close();
