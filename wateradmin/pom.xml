@@ -63,11 +63,6 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>bcfclient</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
             <artifactId>bcfclient-solon-plugin</artifactId>
         </dependency>
 
@@ -134,35 +129,35 @@
             <artifactId>commons-codec</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>commons-logging</groupId>-->
+<!--            <artifactId>commons-logging</artifactId>-->
+<!--            <version>1.1.1</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.4.6</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents</groupId>-->
+<!--            <artifactId>httpcore</artifactId>-->
+<!--            <version>4.4.6</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.8</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents</groupId>-->
+<!--            <artifactId>httpclient</artifactId>-->
+<!--            <version>4.5.8</version>-->
+<!--        </dependency>-->
 
         <!-- Jenkins Api client -->
-        <dependency>
-            <groupId>com.offbytwo.jenkins</groupId>
-            <artifactId>jenkins-client</artifactId>
-            <version>0.3.8</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.offbytwo.jenkins</groupId>-->
+<!--            <artifactId>jenkins-client</artifactId>-->
+<!--            <version>0.3.8</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
