@@ -8,8 +8,6 @@ import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.solution.IdBuilderImp;
-import org.noear.water.protocol.solution.LogQuerierImp;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.water.utils.FromUtils;
@@ -31,7 +29,6 @@ public class WaterpaasApp {
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;
-            ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 
