@@ -2,7 +2,6 @@ package watersev;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.NvMap;
-import org.noear.solon.extend.schedule.JobFactory;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
 import org.noear.water.WW;
@@ -42,7 +41,6 @@ public class WatersevApp {
             Config.tryInit();
 
             ProtocolHub.config = WaterClient.Config::get;
-            ProtocolHub.idBuilder = new IdBuilderImp(Config.water_redis);
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 
