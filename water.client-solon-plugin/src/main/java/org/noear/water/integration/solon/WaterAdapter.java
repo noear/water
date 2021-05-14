@@ -75,6 +75,10 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
 
     @Override
     protected void onInit() {
+        if(Solon.cfg().isSetupMode()){
+            return;
+        }
+
         _router = new HashMap<>();
 
         //注册服务

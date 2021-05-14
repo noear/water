@@ -39,6 +39,10 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
     }
 
     protected void onInit() {
+        if(Solon.cfg().isSetupMode()){
+            return;
+        }
+
         registerService();
         messageSubscribe();
     }
