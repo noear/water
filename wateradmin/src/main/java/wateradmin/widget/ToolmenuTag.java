@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by noear on 14-9-10.
  */
-@Component("ftl:toolmenu")
+@Component("view:toolmenu")
 public class ToolmenuTag implements TemplateDirectiveModel {
     private String pack;
 

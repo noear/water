@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 
 
-@Component("ftl:footer")
+@Component("view:footer")
 public class FooterTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {

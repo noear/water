@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Component("ftl:leftmenu")
+@Component("view:leftmenu")
 public class LeftmenuTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {

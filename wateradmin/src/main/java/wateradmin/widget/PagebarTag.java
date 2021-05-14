@@ -12,7 +12,7 @@ import org.noear.solon.core.handle.Context;
 import java.io.IOException;
 import java.util.Map;
 
-@Component("ftl:pagebar")
+@Component("view:pagebar")
 public class PagebarTag implements TemplateDirectiveModel {
 
     private int pageIndex;

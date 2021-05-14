@@ -14,7 +14,7 @@ import wateradmin.models.water_cfg.EnumModel;
 import java.io.IOException;
 import java.util.*;
 
-@Component("ftl:enum")
+@Component("view:enum")
 public class EnumTag implements TemplateDirectiveModel {
     private String group;
     private String style; //select,checkbox,radio

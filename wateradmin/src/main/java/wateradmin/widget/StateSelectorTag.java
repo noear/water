@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 
 
-@Component("ftl:stateselector")
+@Component("view:stateselector")
 public class StateSelectorTag implements TemplateDirectiveModel {
     @Override
     public void execute(Environment env, Map map, TemplateModel[] templateModels, TemplateDirectiveBody body) throws TemplateException, IOException {

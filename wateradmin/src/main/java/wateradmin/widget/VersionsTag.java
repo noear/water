@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@Component("ftl:versions")
+@Component("view:versions")
 public class VersionsTag implements TemplateDirectiveModel {
 
     private String table;
