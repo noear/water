@@ -1,7 +1,6 @@
 package org.noear.water.utils;
 
 import org.noear.snack.ONode;
-import org.noear.solon.Utils;
 import org.noear.water.model.PropertiesM;
 import org.yaml.snakeyaml.Yaml;
 
@@ -13,7 +12,7 @@ public class ConfigUtils {
 
     public PropertiesM getProp(String text) {
         PropertiesM prop = new PropertiesM();
-        Properties tmp = Utils.buildProperties(text);
+        Properties tmp = PropUtils.build(text);
 
         if (tmp != null) {
             prop.putAll(tmp);

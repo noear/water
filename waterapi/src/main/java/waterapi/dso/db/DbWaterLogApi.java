@@ -1,6 +1,6 @@
 package waterapi.dso.db;
 
-import org.noear.water.utils.SnowflakeUtils;
+import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.*;
 import waterapi.Config;
 import waterapi.dso.TrackBcfPipelineLocal;

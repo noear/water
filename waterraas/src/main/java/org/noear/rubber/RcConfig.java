@@ -2,6 +2,7 @@ package org.noear.rubber;
 
 import org.noear.water.WaterClient;
 import org.noear.water.utils.IDUtils;
+import org.noear.water.utils.SnowflakeUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -41,6 +42,6 @@ final class RcConfig {
 
 
     public static long newLogID(){
-       return IDUtils.snowflakeID(); //IDUtils.newID("rubber", "log_id", 60 * 60 * 24 * 365) + 10000;
+       return SnowflakeUtils.genId(); //IDUtils.newID("rubber", "log_id", 60 * 60 * 24 * 365) + 10000;
     }
 }

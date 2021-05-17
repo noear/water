@@ -1,8 +1,8 @@
 package org.noear.water.model;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
-import org.noear.solon.Utils;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.RedisX;
@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class ConfigM {
     public final String key;
@@ -285,9 +284,7 @@ public final class ConfigM {
         String driverClassName = prop.getProperty("driverClassName");
 
         if (pool) {
-            HikariDataSource source = new HikariDataSource();
-
-            Utils.injectProperties(source, prop);
+            HikariDataSource source = new HikariDataSource(new HikariConfig(prop));
             if(TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
             }
