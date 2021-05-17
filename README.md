@@ -38,7 +38,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client</artifactId>
-    <version>2.0.33</version>
+    <version>2.0.34</version>
 </dependency>
 
 <!-- solon cloud 集成版本 -->
