@@ -18,6 +18,7 @@ import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,8 +120,13 @@ public class CodeGenerationController extends BaseController {
                 f.type = "int";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
-                f.type = "long";
-                f.def = "0L";
+                if(f.type.contains(" unsigned")){
+                    f.type = "BigInteger";
+                    f.def = "BigInteger.ZERO";
+                }else {
+                    f.type = "long";
+                    f.def = "0L";
+                }
             } else if (f.type.startsWith("float")) {
                 f.type = "float";
                 f.def = "0F";
