@@ -79,11 +79,11 @@
                 <version>${water.ver}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>water.client.slf4j</artifactId>
-                <version>${water.ver}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.noear</groupId>-->
+<!--                <artifactId>water.client.slf4j</artifactId>-->
+<!--                <version>${water.ver}</version>-->
+<!--            </dependency>-->
 
 
             <dependency>
@@ -503,7 +503,7 @@
         <module>../water.utils</module>
         <module>../water.protocol</module>
         <module>../water.client</module>
-        <module>../water.client.slf4j</module>
+<!--        <module>../water.client.slf4j</module>-->
         <module>../water.client-solon-plugin</module>
 
         <module>../_extend2/dubbo-water-solon-plugin</module>
