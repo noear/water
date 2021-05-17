@@ -1,10 +1,12 @@
 package org.noear.water.model;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
+import org.noear.snack.core.exts.ClassWrap;
+import org.noear.snack.core.exts.FieldWrap;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
+import org.noear.water.utils.ConvertUtil;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -284,8 +286,17 @@ public final class ConfigM {
         String driverClassName = prop.getProperty("driverClassName");
 
         if (pool) {
-            HikariDataSource source = new HikariDataSource(new HikariConfig(prop));
-            if(TextUtils.isNotEmpty(url)) {
+            HikariDataSource source = new HikariDataSource();
+
+            for (FieldWrap fw : ClassWrap.get(HikariDataSource.class).fieldAllWraps()) {
+                String valStr = prop.getProperty(fw.name());
+                if (TextUtils.isNotEmpty(valStr)) {
+                    Object val = ConvertUtil.to(fw.type, valStr);
+                    fw.setValue(source, val);
+                }
+            }
+
+            if (TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
             }
 
