@@ -92,7 +92,7 @@ public class CodeGenerationController extends BaseController {
 
         Map<String, Object> model = new HashMap<>();
 
-        List<FieldVoModel> fields = db.sql(buildSqlGetFields(tb)).getList(new FieldVoModel());
+        List<FieldVoModel> fields = db.sql(buildSqlGetFields(tb)).getList(FieldVoModel.class);
 
         for (FieldVoModel f : fields) {
 
@@ -107,7 +107,15 @@ public class CodeGenerationController extends BaseController {
             if (f.type.equals("tinyint(1)")) {
                 f.type = "boolean";
                 f.def = "false";
-            } else if (f.type.startsWith("int") || f.type.startsWith("tinyint") || f.type.startsWith("smallint")) {
+            } else if (f.type.startsWith("int")) {
+                if(f.type.contains(" unsigned")){
+                    f.type = "long";
+                    f.def = "0L";
+                }else {
+                    f.type = "int";
+                    f.def = "0";
+                }
+            } else if(f.type.startsWith("tinyint") || f.type.startsWith("smallint")){
                 f.type = "int";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
