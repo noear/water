@@ -109,24 +109,14 @@ public class CodeGenerationController extends BaseController {
                 f.type = "boolean";
                 f.def = "false";
             } else if (f.type.startsWith("int")) {
-                if(f.type.contains(" unsigned")){
-                    f.type = "long";
-                    f.def = "0L";
-                }else {
-                    f.type = "int";
-                    f.def = "0";
-                }
+                f.type = "int";
+                f.def = "0";
             } else if(f.type.startsWith("tinyint") || f.type.startsWith("smallint")){
                 f.type = "int";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
-                if(f.type.contains(" unsigned")){
-                    f.type = "BigInteger";
-                    f.def = "BigInteger.ZERO";
-                }else {
-                    f.type = "long";
-                    f.def = "0L";
-                }
+                f.type = "long";
+                f.def = "0L";
             } else if (f.type.startsWith("float")) {
                 f.type = "float";
                 f.def = "0F";
