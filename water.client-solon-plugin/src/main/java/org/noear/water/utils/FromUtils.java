@@ -1,9 +1,7 @@
-package waterpaas.dso;
+package org.noear.water.utils;
 
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.water.utils.IPUtils;
-import org.noear.water.utils.TextUtils;
 
 /**
  * 来源获取工具（用于链路跟踪）
