@@ -49,6 +49,7 @@
         <bcf.ver>2.0.17</bcf.ver>
 
         <luffy.ver>1.0.5</luffy.ver>
+        <snakeyaml.ver>1.26</snakeyaml.ver>
 
         <junit.ver>4.13.1</junit.ver>
 
@@ -261,7 +262,7 @@
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
-                <version>1.26</version>
+                <version>${snakeyaml.ver}</version>
             </dependency>
 
             <dependency>
