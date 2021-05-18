@@ -101,7 +101,7 @@
                     <a class="btn edit mar10-l" href="/cfg/whitelist/edit?tag_name=${tag_name!}">新增</a>
                 </#if>
             </form>
-            <#if is_admin == 1>
+            <#if is_admin == 1 && is_setup !=1 >
                 <div>
                     <a class="w60"></a><file>
                         <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
