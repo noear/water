@@ -12,10 +12,13 @@
     <style>
         header aside a{display:inline-block; height:100%; border-left:1px solid #444; padding:0 15px; margin-left:15px;}
     </style>
+    <script>
+
+    </script>
 </head>
 <body>
 <header>
-    <label>Water console setup mode ...</label>
+    <label>WATER</label>
     <nav>
         <a href="/cfg/prop" class="sel" target="dock">属性配置</a>
         <a href="/cfg/whitelist" target="dock">安全名单</a>
