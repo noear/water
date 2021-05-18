@@ -18,6 +18,7 @@ import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.weed.DbContext;
 import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
+import wateradmin.controller.cfg.WhitelistController;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.MonitoringAliyun;
@@ -65,6 +66,7 @@ public class WateradminApp {
         SolonApp app = Solon.start(Setup.class, argx, x -> {
             x.beanScan(EnumTag.class);
             x.beanMake(PropController.class);
+            x.beanMake(WhitelistController.class);
         });
 
         Props ps = app.cfg().getProp("water.dataSource");

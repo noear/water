@@ -2,6 +2,7 @@ package wateradmin.controller.cfg;
 
 import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
@@ -30,12 +31,14 @@ public class WhitelistController extends BaseController {
     public ModelAndView whitelist(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getWhitelistTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        if (Solon.cfg().isSetupMode() == false) {
+            BcfTagChecker.filter(tags, m -> m.tag);
+        }
 
-        tag_name = TagUtil.build(tag_name,tags);
+        tag_name = TagUtil.build(tag_name, tags);
 
-        viewModel.put("tag_name",tag_name);
-        viewModel.put("tags",tags);
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
         return view("cfg/whitelist");
     }
 
@@ -45,7 +48,9 @@ public class WhitelistController extends BaseController {
 
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByTag(tag_name, key, state);
 
-        BcfTagChecker.filter(list, m -> m.tag);
+        if (Solon.cfg().isSetupMode() == false) {
+            BcfTagChecker.filter(list, m -> m.tag);
+        }
 
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
