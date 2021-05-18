@@ -25,7 +25,7 @@
 </head>
 <body>
 <header>
-    <label>WATER</label>
+    <label style="background-color: #222;">WATER</label>
     <nav>
         <a href="/cfg/prop" class="sel" target="dock">属性配置</a>
         <a href="/cfg/whitelist" target="dock">安全名单</a>
