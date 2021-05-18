@@ -14,7 +14,7 @@ import wateradmin.viewModels.ViewModel;
  * Created by noear on 14-9-11.
  */
 @Singleton(false)
-public abstract class BaseController {
+public class BaseController {
     /*视图数据模型*/
     protected ViewModel viewModel = new ViewModel();
 

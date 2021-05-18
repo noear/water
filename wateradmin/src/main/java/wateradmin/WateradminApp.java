@@ -8,6 +8,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
@@ -15,6 +16,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.weed.DbContext;
+import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -40,10 +42,25 @@ public class WateradminApp {
     }
 
     private static void setStart(NvMap argx) {
+        {
+            String s = argx.get("s");
+            String u = argx.get("u");
+            String p = argx.get("p");
+
+            if (Utils.isNotEmpty(s) && Utils.isNotEmpty(u) && Utils.isNotEmpty(p)) {
+                System.setProperty("water.dataSource.schema", "water");
+                System.setProperty("water.dataSource.url", "jdbc:mysql://" + s + "/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+                System.setProperty("water.dataSource.username", u);
+                System.setProperty("water.dataSource.password", p);
+                System.setProperty("water.dataSource.driverClassName", "com.mysql.jdbc.Driver");
+            }
+        }
+
+
         System.err.println("[Water] setup mode start...");
 
         //添加扩展目录(直接使用 waterapi 的扩展目录)
-        argx.set("extend","waterapi_ext");
+        argx.set("extend", "waterapi_ext");
 
         SolonApp app = Solon.start(Setup.class, argx, x -> {
             x.beanScan(EnumTag.class);
@@ -52,7 +69,7 @@ public class WateradminApp {
 
         Props ps = app.cfg().getProp("water.dataSource");
 
-        if(ps.size() < 4){
+        if (ps.size() < 4) {
             throw new RuntimeException("[Water] Missing water. DataSource configuration");
         }
 
@@ -63,7 +80,9 @@ public class WateradminApp {
         Setup.water = new DbContext(ps.get("schema"), ds);
         Setup.water.initMetaData();
 
-        app.get("/", c -> c.redirect("/cfg/prop"));
+        app.get("/", c -> c.render(new BaseController().view("setup")));
+
+        System.out.println("[Water] setup open http://localhost:" + app.port() + "/");
     }
 
     private static void runStart(NvMap argx) {
