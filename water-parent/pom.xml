@@ -53,7 +53,6 @@
 
         <junit.ver>4.13.1</junit.ver>
 
-        <dubbo.ver>2.7.6</dubbo.ver>
         <springboot.ver>2.0.4.RELEASE</springboot.ver>
     </properties>
 
@@ -78,13 +77,6 @@
                 <artifactId>water.client</artifactId>
                 <version>${water.ver}</version>
             </dependency>
-
-<!--            <dependency>-->
-<!--                <groupId>org.noear</groupId>-->
-<!--                <artifactId>water.client.slf4j</artifactId>-->
-<!--                <version>${water.ver}</version>-->
-<!--            </dependency>-->
-
 
             <dependency>
                 <groupId>org.noear</groupId>
@@ -503,9 +495,6 @@
         <module>../water.utils</module>
         <module>../water.protocol</module>
         <module>../water.client</module>
-<!--        <module>../water.client.slf4j</module>-->
         <module>../water.client-solon-plugin</module>
-
-        <module>../_extend2/dubbo-water-solon-plugin</module>
     </modules>
 </project>
