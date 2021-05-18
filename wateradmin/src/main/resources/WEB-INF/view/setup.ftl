@@ -13,7 +13,14 @@
         header aside a{display:inline-block; height:100%; border-left:1px solid #444; padding:0 15px; margin-left:15px;}
     </style>
     <script>
-
+    $(function (){
+        $('nav a').each(function (){
+           $(this).click(function (){
+               $("a.sel").removeClass("sel");
+               $(this).addClass("sel");
+           });
+        });
+    });
     </script>
 </head>
 <body>

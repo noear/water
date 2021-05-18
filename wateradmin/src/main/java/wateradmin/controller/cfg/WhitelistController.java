@@ -83,7 +83,7 @@ public class WhitelistController extends BaseController {
     //保存ip白名单新增
     @Mapping("edit/ajax/save")
     public ViewModel saveWhitelistAdd(Integer row_id, String tag,String type, String value, String note) throws Exception {
-        if (Session.current().isAdmin() == false) {
+        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
@@ -104,7 +104,7 @@ public class WhitelistController extends BaseController {
     //删除IP白名单记录
     @Mapping("ajax/del")
     public ViewModel saveWhitelistDel(Integer row_id) throws Exception {
-        if (Session.current().isAdmin() == false) {
+        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
