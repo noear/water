@@ -11,6 +11,7 @@
     <script src="${js}/layer.js"></script>
     <style>
         header aside a{display:inline-block; height:100%; border-left:1px solid #444; padding:0 15px; margin-left:15px;}
+        header label{background-color: #222;}
     </style>
     <script>
     $(function (){
@@ -25,7 +26,7 @@
 </head>
 <body>
 <header>
-    <label style="background-color: #222;">WATER</label>
+    <label>WATER</label>
     <nav>
         <a href="/cfg/prop" class="sel" target="dock">属性配置</a>
         <a href="/cfg/whitelist" target="dock">安全名单</a>

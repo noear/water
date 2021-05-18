@@ -11,6 +11,7 @@
     <script src="${js}/layer.js"></script>
     <style>
         header aside a{display:inline-block; height:100%; border-left:1px solid #444; padding:0 15px; margin-left:15px;}
+        header label{background-color: #222;}
     </style>
 </head>
 <body>
