@@ -34,7 +34,7 @@
 * -u 为链接账号
 * -p 为链接密码
 
-> 例：运行 `java -jar wateradmin.jar -server.port=9373 -setup=1 -s=localhost:3306 -u=root -p=1234` ； 然后，打开 http://localhost:9373
+> 例：运行 `java -jar wateradmin.jar -server.port=9373 -setup=1 -s=localhost:3306 -u=root -p=1234` ； 然后，打开 http://localhost:9373 或打开对应的外网地址。
 
 #### 2、 进入属性配置模块，修改以下相关配置值：
 
