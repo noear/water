@@ -180,7 +180,7 @@ public class DbWaterCfgApi {
                     }
                 })
                 .caching(CacheUtils.data).usingCache(60)
-                .exists();
+                .selectExists();
 
     }
 
