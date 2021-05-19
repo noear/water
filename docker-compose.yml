@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  water:
+    image: openjdk:11.0.6-jdk
+    container_name: waterapi
+    command: java -jar /opt/waterapi.jar --server.port=9371
+    volumes:
+      - ./waterapi_ext:/opt/waterapi_ext
+      - ./waterapi.jar:/opt/waterapi.jar
+    ports:
+      - 9370:9370
+  wateradmin:
+    image: openjdk:11.0.6-jdk
+    container_name: wateradmin
+    command: java -jar /opt/wateradmin.jar --server.port=9373 ##如果要不限ip访问，添加参考：--white=0
+    volumes:
+      - ./wateradmin.jar:/opt/wateradmin.jar
+    ports:
+      - 9373:9373
+    links:
+      - water
+    depends_on:
+      - water
+  waterpaas:
+    image: openjdk:11.0.6-jdk
+    container_name: waterpaas
+    command: java -jar /opt/waterpaas.jar --server.port=9376
+    volumes:
+      - ./waterpaas.jar:/opt/waterpaas.jar
+    ports:
+      - 9376:9376
+    links:
+      - water
+    depends_on:
+      - water
+  # waterraas:  ##可选服务
+  #     image: openjdk:11.0.6-jdk
+  #     container_name: waterpaas
+  #     command: java -jar /opt/waterraas.jar --server.port=9374
+  #     volumes:
+  #       - ./waterraas.jar:/opt/waterraas.jar
+  #     ports:
+  #       - 9374:9374
+  #     links:
+  #       - water
+  #     depends_on:
+  #       - water
+  watersev:
+    image: openjdk:11.0.6-jdk
+    container_name: watersev
+    command: java -jar /opt/watersev.jar --server.port=9372
+    volumes:
+      - ./watersev.jar:/opt/watersev.jar
+    ports:
+      - 9372:9372
+    links:
+      - water
+    depends_on:
+      - water
+networks:
+  default:
+    external:
+      name: water-net
