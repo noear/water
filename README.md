@@ -148,7 +148,7 @@ public class TestConfigHandler implements CloudConfigHandler {
 
 ### （三）部署
 
-> 相关材料未准备好...
+参考《DEP.md》
 
 ### （四）架构说明
 
