@@ -8,9 +8,11 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
+import wateradmin.Config;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -102,45 +104,49 @@ public class QueryMongoDbController extends BaseController {
         }
 
         try {
-            String tagAndKey = cfg_str.replace("#","").trim();
-            MgContext mg = DbWaterCfgApi.getConfigByTagName(tagAndKey).getMg(db);
+            String tagAndKey = cfg_str.replace("#", "").trim();
+
             int json_start = code.indexOf("{");
             code = code.substring(json_start);
 
             ONode codeQ = ONode.load(code);
-            Map<String,Object> whereMap = codeQ.get("query").toObject(Map.class);
+            Map<String, Object> whereMap = codeQ.get("query").toObject(Map.class);
             int limit = codeQ.get("limit").getInt();
-            if(limit > 100){
+            if (limit > 100) {
                 limit = 100;
             }
             String sort = codeQ.get("sort").getString();
 
-            MgTableQuery qr= mg.table(coll).whereMap(whereMap);
+            ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tagAndKey);
 
-            //处理排序
-            if(method.equals("FIND")) {
-                if (TextUtils.isEmpty(sort) == false) {
-                    String[] sortAry = sort.trim().split(" ");
-                    if (sortAry.length == 1) {
-                        qr.orderByAsc(sortAry[0]);
-                    } else {
-                        if ("DESC".equals(sortAry[1])) {
-                            qr.orderByDesc(sortAry[0]);
-                        } else {
+            try (MgContext mg = cfg.getMg(db)) {
+
+                MgTableQuery qr = mg.table(coll).whereMap(whereMap);
+
+                //处理排序
+                if (method.equals("FIND")) {
+                    if (TextUtils.isEmpty(sort) == false) {
+                        String[] sortAry = sort.trim().split(" ");
+                        if (sortAry.length == 1) {
                             qr.orderByAsc(sortAry[0]);
+                        } else {
+                            if ("DESC".equals(sortAry[1])) {
+                                qr.orderByDesc(sortAry[0]);
+                            } else {
+                                qr.orderByAsc(sortAry[0]);
+                            }
                         }
                     }
+
+                    List<Document> list = qr.limit(limit).selectMapList();
+
+                    return ONode.stringify(list);
+
+                } else {
+
+                    return ONode.stringify(qr.selectCount());
                 }
-
-                List<Document> list = qr.limit(limit).selectMapList();
-
-                return ONode.stringify(list);
-            }else{
-
-                return ONode.stringify(qr.selectCount());
             }
-
-
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,
