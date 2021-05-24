@@ -5,8 +5,6 @@ import okhttp3.internal.Util;
 import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
-import org.noear.water.utils.ext.Act3Ex;
-import org.noear.water.utils.ext.Fun0;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,9 +17,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class HttpUtils {
-    private final static Fun0<Dispatcher> okhttp_dispatcher = () -> {
+    private final static Supplier<Dispatcher> okhttp_dispatcher = () -> {
         Dispatcher temp = new Dispatcher();
         temp.setMaxRequests(20000);
         temp.setMaxRequestsPerHost(10000);
@@ -32,7 +31,7 @@ public class HttpUtils {
             .connectTimeout(60 * 5, TimeUnit.SECONDS)
             .writeTimeout(60 * 5, TimeUnit.SECONDS)
             .readTimeout(60 * 5, TimeUnit.SECONDS)
-            .dispatcher(okhttp_dispatcher.run())
+            .dispatcher(okhttp_dispatcher.get())
             .build();
 
     public static HttpUtils http(String url) {
@@ -164,6 +163,11 @@ public class HttpUtils {
         }
 
         return this;
+    }
+
+    //@XNote("设置BODY txt及内容类型")
+    public HttpUtils bodyJson(String txt) {
+        return bodyTxt(txt, "application/json");
     }
 
     //@XNote("设置BODY raw")
@@ -475,5 +479,10 @@ public class HttpUtils {
         } catch (Throwable ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @FunctionalInterface
+    public static interface Act3Ex<T1,T2,T3> {
+        void run(T1 t1, T2 t2, T3 t3) throws Exception;
     }
 }
