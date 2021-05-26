@@ -19,6 +19,7 @@ public class WW {
     public static final String cfg_data_header = "#Data#: ";
 
 
+    public static final String path_run_job = "/run/job/";//for cloud job call
     public static final String path_run_status = "/run/status/";
     public static final String path_run_check = "/run/check/";
     public static final String path_run_stop = "/run/stop/";
