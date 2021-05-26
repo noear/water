@@ -24,6 +24,10 @@ public class JobApi {
      * @param jobs [name,]
      */
     public boolean register(String tag, String service, Map<String, String> jobs) throws IOException {
+        if(jobs == null || jobs.size() == 0){
+            return false;
+        }
+
         String jobs_str = ONode.stringify(jobs);
 
         Map<String, String> params = new HashMap<>();
