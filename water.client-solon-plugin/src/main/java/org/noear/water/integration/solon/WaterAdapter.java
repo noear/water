@@ -66,10 +66,11 @@ public abstract class WaterAdapter extends WaterAdapterBase implements Plugin {
         //Bean 初始化完成化再启动监听，免得过早被检测
         //
         Aop.context().beanOnloaded(()->{
-            app.all(service_status_path, this::handle);
-            app.all(service_check_path, this::handle);
-            app.all(service_stop_path, this::handle);
-            app.all(msg_receiver_path, this::handle);
+            app.all(WW.path_run_status, this::handle);
+            app.all(WW.path_run_check, this::handle);
+            app.all(WW.path_run_stop, this::handle);
+            app.all(WW.path_run_job, this::handle);
+            app.all(WW.path_msg_receiver, this::handle);
         });
     }
 

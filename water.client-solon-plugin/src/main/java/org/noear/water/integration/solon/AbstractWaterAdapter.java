@@ -37,15 +37,10 @@ public abstract class AbstractWaterAdapter {
         return null;
     }
 
-    //由子类附值
-    protected String service_status_path = null;
-    protected String service_check_path = null;
-    protected String service_stop_path = null;
-    protected String msg_receiver_path = null;
     protected int service_port = 0;
 
     private String msg_receiver_url_local() {
-        String temp = "http://" + getLocalAddress(service_port) + msg_receiver_path;
+        String temp = "http://" + getLocalAddress(service_port) + WW.path_msg_receiver;
         temp = temp.replace("//", "/").replace(":/", "://");
 
         return temp;
@@ -53,17 +48,17 @@ public abstract class AbstractWaterAdapter {
 
 
     protected void registerService() {
-        if (service_port > 0 && TextUtils.isEmpty(service_check_path) == false) {
+        if (service_port > 0 && TextUtils.isEmpty(WW.path_run_check) == false) {
             //::开始进行初始化
             String local_host = getLocalAddress(service_port);
 
             //1.注册到服务
-            WaterClient.Registry.register(service_name(), local_host, service_check_path, alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(service_name(), local_host, WW.path_run_check, alarm_mobile(), is_unstable());
         }
     }
 
     protected void messageSubscribe() {
-        if(TextUtils.isEmpty(msg_receiver_path) == false) {
+        if(TextUtils.isEmpty(WW.path_msg_receiver) == false) {
             //2.订阅内部消息
             try {
                 messageSubscribeTopicLocal(0, WW.msg_ucache_topic, WW.msg_uconfig_topic);

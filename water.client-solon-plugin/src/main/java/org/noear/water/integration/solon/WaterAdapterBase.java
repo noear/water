@@ -30,16 +30,11 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
         service_args = args;
         service_port = port;
 
-        service_status_path = WW.path_run_status;
-        service_check_path = WW.path_run_check;
-        service_stop_path = WW.path_run_stop;
-        msg_receiver_path = WW.path_msg_receiver;
-
         onInit();
     }
 
     protected void onInit() {
-        if(Solon.cfg().isSetupMode()){
+        if (Solon.cfg().isSetupMode()) {
             return;
         }
 
@@ -77,9 +72,9 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
         String code_location = Solon.cfg().sourceLocation().getPath();
 
         if (service_port > 0) {
-            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, this.service_check_path, 0, this.alarm_mobile(), code_location, is_unstable());
+            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, WW.path_run_check, 0, this.alarm_mobile(), code_location, is_unstable());
         } else {
-            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, this.service_check_path, 1, this.alarm_mobile(), code_location, is_unstable());
+            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, WW.path_run_check, 1, this.alarm_mobile(), code_location, is_unstable());
         }
     }
 
@@ -110,7 +105,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
     }
 
     //2.1.提供服务供查入口 //必须重写
-    public String serviceCheck(Context cxt)  {
+    public String serviceCheck(Context cxt) {
         String ups = cxt.param("upstream");
 
         if (TextUtils.isEmpty(ups) == false) {
@@ -159,10 +154,10 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
 
         String text = "";
         try {
-            if (service_check_path.equals(path)) {
+            if (WW.path_run_check.equals(path)) {
                 //run/check/
                 text = serviceCheck(ctx);
-            } else if (service_stop_path.equals(path)) {
+            } else if (WW.path_run_stop.equals(path)) {
                 //run/stop/
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
@@ -172,7 +167,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
                 } else {
                     text = (ip + ",not is whitelist!");
                 }
-            } else if(service_status_path.equals(path)){
+            } else if (WW.path_run_status.equals(path)) {
                 //run/status/
                 String ip = IPUtils.getIP(ctx);
                 if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
@@ -184,7 +179,9 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
                 } else {
                     text = (ip + ",not is whitelist!");
                 }
-            } else if (msg_receiver_path.equals(path)) {
+            } else if (WW.path_run_job.equals(path)) {
+                //run/job/ 暂不支持
+            } else if (WW.path_msg_receiver.equals(path)) {
                 //msg/receive
                 text = messageReceive(ctx);
             }
