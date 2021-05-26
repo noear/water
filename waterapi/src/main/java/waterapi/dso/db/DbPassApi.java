@@ -36,8 +36,6 @@ public class DbPassApi {
                 .set("plan_max", 0)
                 .set("create_fulltime", new Date())
                 .set("update_fulltime", new Date())
-                .set("alarm_sign", "")
-                .set("alarm_mobile", "")
                 .set("use_whitelist", "")
                 .insertBy("path");
     }
