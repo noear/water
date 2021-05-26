@@ -84,4 +84,9 @@ public final class WaterClient {
      * 白名单接口
      * */
     public final static WhitelistApi Whitelist = new WhitelistApi();
+
+    /**
+     * 任务接口
+     * */
+    public final static JobApi job = new JobApi();
 }

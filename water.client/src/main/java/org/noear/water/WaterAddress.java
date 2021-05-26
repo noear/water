@@ -16,6 +16,7 @@ public class WaterAddress {
     private static String trackApiUrl = WaterSetting.water_api_url();
     private static String noticeApiUrl = WaterSetting.water_api_url();
     private static String whitelistApiUrl = WaterSetting.water_api_url();
+    private static String jobApiUrl = WaterSetting.water_api_url();
 
     public static String getConfigApiUrl() {
         return configApiUrl;
@@ -71,5 +72,13 @@ public class WaterAddress {
 
     public static void setWhitelistApiUrl(String url) {
         whitelistApiUrl = HostUtils.adjust(url);
+    }
+
+    public static String getJobApiUrl() {
+        return jobApiUrl;
+    }
+
+    public static void setJobApiUrl(String url) {
+        jobApiUrl = HostUtils.adjust(url);
     }
 }
