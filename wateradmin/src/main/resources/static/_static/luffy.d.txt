@@ -815,6 +815,10 @@ interface WaterProxy{
     raas(type:string, tag:string, name:string, args:Map<string,object>):string;
 }
 
+interface WaterJob{
+    call(service:string, name:string):string;
+}
+
 interface WaterLogger{
 
 }
@@ -989,6 +993,8 @@ interface water{
     rd(tagKey:string, db:number):RedisX;
     mg(tagKey:string, db:string):MgContext;
 
+    job(service:string, name:string):string;
+
     updateCache(tags:string):void;
 
     call(service:string,fun:string,args:Map<string,object>):string;
@@ -1003,5 +1009,6 @@ interface water{
 declare var WaterClient: WaterClient;
 declare var WaterProxy: WaterProxy;
 declare var WaterLogger: WaterLogger;
+declare var WaterJob: WaterJob;
 
 declare var water: water;
