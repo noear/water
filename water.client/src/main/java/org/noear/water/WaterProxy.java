@@ -66,11 +66,6 @@ public class WaterProxy {
         }
     }
 
-    public final static String callJob(String service, String jobName) throws Exception{
-        return WaterLoadBalance.get(service).http(WW.path_run_job).data("name",jobName).post();
-    }
-
-
     /**
      * 调用RaaS
      */

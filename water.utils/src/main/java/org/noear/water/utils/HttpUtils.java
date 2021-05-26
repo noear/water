@@ -323,7 +323,7 @@ public class HttpUtils {
         if (code >= 200 && code <= 300) {
             return text;
         } else {
-            throw new RuntimeException(code + "错误：" + text);
+            throw new RuntimeException(code + " 错误：" + text);
         }
     }
 
