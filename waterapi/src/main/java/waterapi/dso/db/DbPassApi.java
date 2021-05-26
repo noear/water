@@ -18,20 +18,20 @@ public class DbPassApi {
     //批量导入
     public static void addJob(String tag, String service, String name, String description) throws SQLException {
 
-        String path = String.format("/%s/job_%s_%s",tag,service,name);
-        String code = String.format("return water.job('%s','%s')",service,name);
+        String path = String.format("/%s/_%s/_%s", tag, service, name);
+        String code = String.format("return water.job('%s','%s');", service, name);
 
         //只支持新增导入
         db().table("paas_file")
                 .set("file_type", 1)
                 .set("tag", tag)
-                .set("label","")
+                .set("label", "")
                 .set("note", description)
                 .set("path", path)
                 .set("edit_mode", "javascript")
                 .set("content", code)
-                .set("is_disabled",0)
-                .set("is_staticize",0)
+                .set("is_disabled", 0)
+                .set("is_staticize", 0)
                 .set("plan_interval", "1h")
                 .set("plan_max", 0)
                 .set("create_fulltime", new Date())
