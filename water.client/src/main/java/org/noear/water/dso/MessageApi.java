@@ -64,7 +64,7 @@ public class MessageApi {
 
         String txt = apiCaller.post("/msg/subscribe/", params);
 
-        System.out.println("MessageApi::/msg/subscribe/:" + topics_str +"("+receive_url+"}:" + txt);
+//        System.out.println("MessageApi::/msg/subscribe/:" + topics_str +"("+receive_url+"}:" + txt);
 
         int code = ONode.loadStr(txt).get("code").getInt();
         return code == 1 || code == 200;
@@ -85,7 +85,7 @@ public class MessageApi {
 
         String txt = apiCaller.post("/msg/unsubscribe/", params);
 
-        System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
+//        System.out.println("MessageApi::/msg/unsubscribe/:" + txt);
 
         int code = ONode.loadStr(txt).get("code").getInt();
         return code == 1 || code == 200;
@@ -227,7 +227,7 @@ public class MessageApi {
 
         String txt = apiCaller.post("/msg/send/", params);
 
-        System.out.println("MessageApi::/msg/send/:" + txt);
+//        System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
         int code = data.get("code").getInt();
@@ -259,7 +259,7 @@ public class MessageApi {
 
         String txt = apiCaller.post("/msg/cancel/", params);
 
-        System.out.println("MessageApi::/msg/cancel/:" + txt);
+//        System.out.println("MessageApi::/msg/cancel/:" + txt);
 
         int code = ONode.loadStr(txt).get("code").getInt();
         return code == 1 || code == 200;
@@ -286,7 +286,7 @@ public class MessageApi {
 
         String txt = apiCaller.post("/msg/succeed/", params);
 
-        System.out.println("MessageApi::/msg/succeed/:" + txt);
+//        System.out.println("MessageApi::/msg/succeed/:" + txt);
 
         int code = ONode.loadStr(txt).get("code").getInt();
         return code == 1 || code == 200;
