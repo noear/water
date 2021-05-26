@@ -18,7 +18,7 @@ public class DbPassApi {
     //批量导入
     public static void addJob(String tag, String service, String name, String description) throws SQLException {
 
-        String path = String.format("/%s/_%s/_%s", tag, service, name);
+        String path = String.format("/%s/_%s/_%s", tag, service, name).replace("-","_");
         String code = String.format("return water.job('%s','%s');", service, name);
 
         //只支持新增导入
