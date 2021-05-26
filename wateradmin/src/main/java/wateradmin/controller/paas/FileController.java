@@ -1,7 +1,5 @@
 package wateradmin.controller.paas;
 
-import org.noear.snack.ONode;
-import org.noear.snack.core.TypeRef;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;

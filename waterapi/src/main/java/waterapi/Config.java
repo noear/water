@@ -26,6 +26,7 @@ public class Config {
     public static DbContext water;
     public static DbContext water_msg;
     public static DbContext water_log;
+    public static DbContext water_paas;
 
     public static RedisX rd_ids;   //db:1
     public static RedisX rd_lock;  //db:2
@@ -71,6 +72,7 @@ public class Config {
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
             water_log = cfg(WW.water_log).getDb(true);
+            water_paas = cfg(WW.water_paas).getDb(true);
             water_redis = cfg(WW.water_redis);
 
             ConfigM cm2 = cfg(WW.water_redis_track);
