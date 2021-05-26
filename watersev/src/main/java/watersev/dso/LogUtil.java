@@ -6,6 +6,7 @@ import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
+import org.noear.water.utils.HttpResultException;
 import org.noear.water.utils.TextUtils;
 
 public class LogUtil {
@@ -101,7 +102,11 @@ public class LogUtil {
                 .append("(").append(plan.plan_count).append("/").append(plan.plan_max)
                 .append(")执行失败 - ").append(_times).append("ms");
 
-        log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content);
+        if (content instanceof HttpResultException) {
+            log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content.getMessage());
+        } else {
+            log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content);
+        }
     }
 
 
