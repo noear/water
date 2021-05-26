@@ -42,7 +42,7 @@ public class CMD_job_register extends UapiBase {
                     .append(service).append(":").append(kv.getKey())
                     .toString();
 
-            CacheUtils.data.getBy(60 * 2, cacheKey, (cu) -> {
+            CacheUtils.data.getBy(60, cacheKey, (cu) -> {
                 DbPassApi.addJob(tag, service, kv.getKey(), kv.getValue());
                 return "";
             });
