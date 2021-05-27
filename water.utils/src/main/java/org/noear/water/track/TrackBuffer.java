@@ -1,5 +1,6 @@
 package org.noear.water.track;
 
+import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TaskUtils;
@@ -58,13 +59,25 @@ public class TrackBuffer implements TaskUtils.ITask {
         appendDo(_mainSet, service, tag, name, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
-            appendDo(_serviceSet, "_service", service, _node, timespan);
+            appendNode(service, _node, timespan);
+            //appendDo(_serviceSet, WW.track_service, service, _node, timespan);
         }
 
         if (TextUtils.isEmpty(_from) == false) {
-            appendDo(_fromSet, "_from", service, _from, timespan);
+            appendFrom(service, _from, timespan);
+            //appendDo(_fromSet, WW.track_from, service, _from, timespan);
         }
     }
+
+    public void appendNode(String service, String _node, long timespan) {
+        appendDo(_serviceSet, WW.track_service, service, _node, timespan);
+    }
+
+    public void appendFrom(String service, String _from, long timespan) {
+        appendDo(_fromSet, WW.track_from, service, _from, timespan);
+    }
+
+
 
     /**
      * 添加记录（记录性能（service/tag/name，三级））

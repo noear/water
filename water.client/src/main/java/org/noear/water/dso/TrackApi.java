@@ -49,12 +49,22 @@ public class TrackApi {
      * 跟踪请求性能
      */
     public void track(String service, String tag, String name, long timespan) {
-        track(service, tag, name, timespan, null, null);
+        String nameMd5 = getNameMd5(name);
+        TrackBuffer.singleton().append(service, tag, nameMd5, timespan);
+    }
+
+    public void trackNode(String service, String _node, long timespan) {
+        TrackBuffer.singleton().appendNode(service, _node, timespan);
+    }
+
+    public void trackFrom(String service, String _from, long timespan){
+        TrackBuffer.singleton().appendFrom(service, _from, timespan);
     }
 
     /**
      * 跟踪请求性能
      */
+    @Deprecated
     public void track(String service, String tag, String name, long timespan, String _node) {
         track(service, tag, name, timespan, _node, null);
     }
@@ -69,6 +79,7 @@ public class TrackApi {
      * @param _node    节点
      * @param _from    来自哪里
      */
+    @Deprecated
     public void track(String service, String tag, String name, long timespan, String _node, String _from) {
         //
         // 改为直发Redis，节省代理
