@@ -58,10 +58,10 @@ solon.app:
 solon.cloud.water:
   server: water                     #WATER服务地址
   config:
-    load: "test.properties"      #默认加载的配置
+    load: "test.properties"         #默认加载的配置
   event:
-    receive: "api.water.io"        #当前服务主机地址（一般设为外网地址；用于订阅业务消息用）
-    #receive: "@water_admin_host"  #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
+    receive: "api.water.io"         #当前服务主机地址（一般设为外网地址；用于订阅业务消息用）
+    #receive: "@water_admin_host"   #如果域名会变，可通过配置指定（@开头，表示从water配置服务获取）
   log:
     default: "water_log_admin"      #默认日志记录器
 ```
