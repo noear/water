@@ -140,6 +140,15 @@ public class TestConfigHandler implements CloudConfigHandler {
     }
 }
 
+//分布式任务
+@CloudJob("water_test_jost")
+public class TestJobHandler implements Handler {
+    @Override
+    public void handler(Context ctx) {
+
+    }
+}
+
 
 ```
 
