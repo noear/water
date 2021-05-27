@@ -82,11 +82,8 @@ public class DemoApp{
           if (timecount == null || c.status() == 404) {
               return;
           }
-  
-          String node = WaterAdapter.global().localHost();
-          long times = timecount.stop().milliseconds();
-  
-          WaterClient.Track.track("water-demo", "path", c.path(), times, node);
+
+          CloudClient.metric().addMeter("path", c.pathNew(), timecount.stop().milliseconds(), false);
       });
   }
 }
