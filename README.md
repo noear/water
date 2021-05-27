@@ -190,6 +190,7 @@ public class TestJobHandler implements Handler {
 <img src="https://gitee.com/noear/water/raw/master/preview/d5.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/d6.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/d7.png" height="300"/>
+<img src="https://gitee.com/noear/water/raw/master/preview/d7x.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/d8.png" height="300"/>
 
 * 配置管理
