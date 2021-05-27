@@ -96,7 +96,7 @@ class demo{
     DbContext waterDb;
 
     @NamiClient            //RPC服务发现的功能（注解模式）
-    RockRpc rock;
+    RockService rockService;
    
     @Mapping("/")
     public void test(){
@@ -112,7 +112,7 @@ class demo{
         CloudClient.event().publish(new Event("test.order.start", "{\"order_id\":1}")); //（非注解模式）
 
         //Rpc发现服务：调用Rpc接口
-        AppModel app = rock.getAppById(12);
+        AppModel app = rockService.getAppById(12);
     }
 }
 
