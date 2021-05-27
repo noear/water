@@ -97,11 +97,11 @@ public class DbsController extends BaseController {
         }
 
         if (type == 2) {
-            return ProtocolHub.monitoring.query(MonitorType.RDS, instanceId, ETimeType.of(dataType), dataType);
+            return ProtocolHub.monitoring.query(MonitorType.RDS, instanceId, ETimeType.of(dateType), dataType);
         } else if (type == 3) {
-            return ProtocolHub.monitoring.query(MonitorType.Redis, instanceId, ETimeType.of(dataType), dataType);
+            return ProtocolHub.monitoring.query(MonitorType.Redis, instanceId, ETimeType.of(dateType), dataType);
         } else if (type == 4) {
-            return ProtocolHub.monitoring.query(MonitorType.Memcached, instanceId, ETimeType.of(dataType), dataType);
+            return ProtocolHub.monitoring.query(MonitorType.Memcached, instanceId, ETimeType.of(dateType), dataType);
         } else {
             return null;
         }

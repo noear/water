@@ -72,7 +72,7 @@ public class EcsController extends BaseController {
             dateType = 0;
         }
 
-        return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, ETimeType.of(dataType), dataType);
+        return ProtocolHub.monitoring.query(MonitorType.ECS, instanceId, ETimeType.of(dateType), dataType);
     }
 
     @Mapping("track/ajax/pull")

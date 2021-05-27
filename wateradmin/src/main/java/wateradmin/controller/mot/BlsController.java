@@ -76,7 +76,7 @@ public class BlsController extends BaseController {
             dateType = 0;
         }
 
-        return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, ETimeType.of(dataType), dataType);
+        return ProtocolHub.monitoring.query(MonitorType.LBS, instanceId, ETimeType.of(dateType), dataType);
     }
 
     @Mapping("track/ajax/pull")
