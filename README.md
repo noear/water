@@ -15,7 +15,7 @@
 | 组件 | 说明 |
 | --- | --- |
 | org.noear:water.client | 框架：Water 客户端 |
-| org.noear:water-solon-plugin | 框架：Water 客户端 for solon |
+| org.noear:water-solon-plugin | 框架：Water 客户端 for solon（也可用于 Spring Boot 项目） |
 | | |
 | org.noear:waterapi | 构建：Water 服务端 |
 | org.noear:watersev | 构建：Water 后台服务（消息派发；定时任务；服务检测...） |
