@@ -112,9 +112,6 @@ class demo{
 
         //消息服务：发送消息
         CloudClient.event().publish(new Event("test.order.start", "{\"order_id\":1}")); //（非注解模式）
-    
-        //PaaS服务：调用PaaS接口
-        WaterProxy.paas("water/test", null);
 
         //Rpc发现服务：调用Rpc接口
         AppModel app = rock.getAppById(12);
