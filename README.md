@@ -82,8 +82,9 @@ public class DemoApp{
           if (timecount == null || c.status() == 404) {
               return;
           }
-
-          CloudClient.metric().addMeter("path", c.pathNew(), timecount.stop().milliseconds(), false);
+          
+          long milliseconds = timecount.stop().milliseconds();
+          CloudClient.metric().addMeter("path", c.pathNew(), milliseconds, false);
       });
   }
 }
