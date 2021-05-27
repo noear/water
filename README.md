@@ -140,7 +140,7 @@ public class TestConfigHandler implements CloudConfigHandler {
 public class TestJobHandler implements Handler {
     @Override
     public void handler(Context ctx) {
-
+        //处理任务...
     }
 }
 
