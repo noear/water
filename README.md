@@ -92,7 +92,7 @@ public class DemoApp{
 @Slf4j
 @Controller
 class demo{
-    @CloudConfig(value="water", autoRefreshed=true)  //配置服务的功能（注解模式）
+    @CloudConfig(value = "water", autoRefreshed = true)  //配置服务的功能（注解模式）
     DbContext waterDb;
 
     @NamiClient            //RPC服务发现的功能（注解模式）
