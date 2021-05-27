@@ -15,7 +15,7 @@ import java.util.Map;
  * @since 2.0
  * */
 public class WaterProxy {
-    private static String paas_uri;
+    private static String faas_uri;
     private static String raas_uri;
 
     private static ConfigM get0(String service) {
@@ -88,18 +88,30 @@ public class WaterProxy {
 
 
     /**
-     * 调用PaaS
+     * 调用FaaS
      */
-    public final static String paas(String path, Map<String, Object> args) throws IOException {
-        if (paas_uri == null) {
-            paas_uri = WaterClient.Config.get("water", "paas_uri").value;
+    public final static String faas(String path) throws IOException {
+        return faas(path, null);
+    }
+
+    public final static String faas(String path, Map<String, Object> args) throws IOException {
+        if (faas_uri == null) {
+            faas_uri = WaterClient.Config.get("water", "paas_uri").value;
         }
 
         if (args == null) {
-            return http(paas_uri + path).get();
+            return http(faas_uri + path).get();
         } else {
-            return http(paas_uri + path).data(args).post();
+            return http(faas_uri + path).data(args).post();
         }
+    }
+
+    /**
+     * 更名为FaaS
+     * */
+    @Deprecated
+    public final static String paas(String path, Map<String, Object> args) throws IOException {
+        return faas(path, args);
     }
 
     private static HttpUtils http(String url) {
