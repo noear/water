@@ -45,7 +45,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.5</version>
 </dependency>
 ```
 
@@ -73,10 +73,10 @@ public class DemoApp{
       Solon app = Solon.start(args);
 
       //监控服务：之：添加接口性能记录
-      app.before("**",XMethod.HTTP,-1,(c)->{
+      app.before((c)->{
           c.attrSet("_timecount", new Timecount().start());
       });
-      app.after("**", XMethod.HTTP,(c)->{
+      app.after((c)->{
           Timecount timecount = c.attr("_timecount", null);
   
           if (timecount == null || c.status() == 404) {
@@ -94,7 +94,7 @@ public class DemoApp{
 @Slf4j
 @Controller
 class demo{
-    @CloudConfig("water")  //配置服务的功能（注解模式）
+    @CloudConfig(value="water", autoRefreshed=true)  //配置服务的功能（注解模式）
     DbContext waterDb;
 
     @NamiClient            //RPC服务发现的功能（注解模式）
@@ -127,6 +127,7 @@ public class msg_updatecache implements CloudEventHandler {
     @Override
     public boolean handler(Event event) throws Exception {
         //处理消息...
+        return true;
     }
 }
 
