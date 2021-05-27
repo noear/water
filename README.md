@@ -56,7 +56,7 @@ solon.app:
   group: "water"
 
 solon.cloud.water:
-  server: "water"                     #WATER服务地址
+  server: "water"                   #WATER服务地址
   config:
     load: "test.properties"         #默认加载的配置
   event:
