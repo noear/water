@@ -41,7 +41,7 @@
     <version>2.1.2</version>
 </dependency>
 
-<!-- solon cloud 集成版本 -->
+<!-- solon cloud 集成版本 （也可用于 Spring Boot 项目） -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
