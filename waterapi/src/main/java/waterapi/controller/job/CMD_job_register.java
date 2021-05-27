@@ -1,13 +1,14 @@
 package waterapi.controller.job;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.solon.extend.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
-import waterapi.dso.CacheUtils;
+import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbPassApi;
 import waterapi.dso.interceptor.Logging;
 
@@ -32,21 +33,15 @@ public class CMD_job_register extends UapiBase {
             return Result.failure();
         }
 
-        Map<String, String> jobMap = ONode.deserialize(jobs, Map.class);
-        StringBuilder buf = new StringBuilder(200);
+        if (LockUtils.tryLock(Solon.cfg().appName(), ("job_register_" + tag + "_" + service), 30)) {
+            Map<String, String> jobMap = ONode.deserialize(jobs, Map.class);
+            StringBuilder buf = new StringBuilder(200);
 
-        for (Map.Entry<String, String> kv : jobMap.entrySet()) {
-            buf.setLength(0);
-            String cacheKey = buf.append("job.register:")
-                    .append(tag).append(":")
-                    .append(service).append(":").append(kv.getKey())
-                    .toString();
+            for (Map.Entry<String, String> kv : jobMap.entrySet()) {
+                buf.setLength(0);
 
-            CacheUtils.data.getBy(60, cacheKey, (cu) -> {
                 DbPassApi.addJob(tag, service, kv.getKey(), kv.getValue());
-                return "";
-            });
-
+            }
         }
 
         return Result.succeed();
