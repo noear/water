@@ -127,7 +127,6 @@
                     <td class="left">主题名称</td>
                     <td class="left">订阅者的接收地址</td>
                     <td class="left" width="120px">接收方式</td>
-                    <td class="left" width="100px">订阅时间</td>
                 </tr>
             </thead>
             <tbody id="tbody">
@@ -145,7 +144,6 @@
                         <#if sub.receive_way==1>HTTP同步等待</#if>
                         <#if sub.receive_way==2>HTTP异步不等待</#if>
                     </td>
-                    <td class="left">${(sub.log_fulltime?string('yyyy-MM-dd'))!}</td>
                 </tr>
             </#list>
             </tbody>

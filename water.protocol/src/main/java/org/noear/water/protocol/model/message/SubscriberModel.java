@@ -17,7 +17,6 @@ public class SubscriberModel implements IBinder {
     public String alarm_mobile;
     public String alarm_sign;
 
-//    public int topic_id;
     public String topic_name;
 
     public String receive_url;
@@ -40,7 +39,6 @@ public class SubscriberModel implements IBinder {
         alarm_mobile= s.get("alarm_mobile").value("");
         alarm_sign   = s.get("alarm_sign").value("");
 
-//        topic_id = s.get("topic_id").value(0);
         topic_name = s.get("topic_name").value("");
 
         receive_url = s.get("receive_url").value("");

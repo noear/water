@@ -77,7 +77,7 @@
     <main>
             <toolbar>
                     <form>
-                        ID/key：<input type="text" name="key" value="${key!}" style="width: 275px;"/>&nbsp;&nbsp;&nbsp;
+                        ID/key：<input type="text" name="key" value="${key!}" style="width: 350px;"/>&nbsp;&nbsp;&nbsp;
                         <button type="submit">查询</button>
                     </form>
             </toolbar>
@@ -115,7 +115,7 @@
                     <#if is_operator == 1>
                     <tr>
                         <th></th>
-                        <td><button type="button" onclick="debug()">测试</button></td>
+                        <td><button type="button" onclick="debug()">调试</button></td>
                     </tr>
                     </#if>
                 </table>
