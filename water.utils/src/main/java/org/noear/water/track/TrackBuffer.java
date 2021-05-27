@@ -76,15 +76,15 @@ public class TrackBuffer implements TaskUtils.ITask {
     /**
      * 添加记数
      */
-    public void appendCount(String service, String tag, String name, int count) {
+    public void appendCount(String service, String tag, String name, long count) {
         appendDo(_mainSet, service, tag, name, count, 0, 0, 0);
     }
 
-    public void appendCount(String service, String tag, String name, int count, int count5) {
+    public void appendCount(String service, String tag, String name, long count, long count5) {
         appendDo(_mainSet, service, tag, name, count, 0, 0, count5);
     }
 
-    public void appendCount(String service, String tag, String name, int count, int count1, int count2, int count5) {
+    public void appendCount(String service, String tag, String name, long count, long count1, long count2, long count5) {
         appendDo(_mainSet, service, tag, name, count, count1, count2, count5);
     }
 
@@ -96,7 +96,7 @@ public class TrackBuffer implements TaskUtils.ITask {
         }
     }
 
-    private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, int count, int count1, int count2, int count5) {
+    private void appendDo(Map<String, TrackEvent> mSet, String service, String tag, String name, long count, long count1, long count2, long count5) {
         try {
             appendDo0(mSet, service, tag, name, -1, count, count1, count2, count5);
         } catch (Throwable ex) {
@@ -105,7 +105,7 @@ public class TrackBuffer implements TaskUtils.ITask {
     }
 
     //记录性能
-    private void appendDo0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan, int count, int count1, int count2, int count5) {
+    private void appendDo0(Map<String, TrackEvent> mSet, String service, String tag, String name, long timespan, long count, long count1, long count2, long count5) {
         Datetime now = Datetime.Now();
 
         //1.提前构建各种key（为了性能采用 StringBuilder）
@@ -133,7 +133,7 @@ public class TrackBuffer implements TaskUtils.ITask {
         do_track_key(mSet, key_group, key_date, timespan, TrackEvent.type_date, key_minute, key_minute_bef, count, count1, count2, count5);
     }
 
-    private void do_track_key(Map<String, TrackEvent> mSet, String group, String rdkey, long timespan, String type, String key_minute, String key_minute_bef, int count, int count1, int count2, int count5) {
+    private void do_track_key(Map<String, TrackEvent> mSet, String group, String rdkey, long timespan, String type, String key_minute, String key_minute_bef, long count, long count1, long count2, long count5) {
         TrackEvent ru = getOrNew(mSet, group, rdkey);
         ru.type = type;
         ru.key_minute = key_minute;
