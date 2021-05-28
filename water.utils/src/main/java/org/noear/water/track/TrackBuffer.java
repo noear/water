@@ -56,7 +56,7 @@ public class TrackBuffer implements TaskUtils.ITask {
      * 添加记录（记录性能（service/tag/name，三级 ,from _from,at _node））
      */
     public void append(String service, String tag, String name, long timespan, String _node, String _from) {
-        appendDo(_mainSet, service, tag, name, timespan);
+        append(service, tag, name, timespan);
 
         if (TextUtils.isEmpty(_node) == false) {
             appendNode(service, _node, timespan);

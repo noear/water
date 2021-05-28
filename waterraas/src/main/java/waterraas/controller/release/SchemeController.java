@@ -59,7 +59,8 @@ public class SchemeController implements Handler {
             }
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan, WaterClient.localServiceHost());
+            WaterClient.Track.track(Config.water_service_name, "scheme", scheme, timespan);
+            WaterClient.Track.trackNode(Config.water_service_name, WaterClient.localServiceHost(), timespan);
 
         } catch (Exception ex) {
             ONode data = new ONode();

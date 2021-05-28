@@ -67,11 +67,14 @@ public class WaterpaasApp {
             if (timecount != null && c.status() != 404) {
                 String tag = c.attr("file_tag", "paas");
 
+                String service = Solon.cfg().appName();
                 long _times = timecount.stop().milliseconds();
-                String _node = WaterAdapter.global().localHost();
+                String _node = WaterClient.localServiceHost();
                 String _from = FromUtils.getFrom(c);
 
-                WaterClient.Track.track(WaterAdapter.global().service_name(), tag, c.path(), _times, _node, _from);
+                WaterClient.Track.track(service, tag, c.path(), _times);
+                WaterClient.Track.trackNode(service, _node, _times);
+                WaterClient.Track.trackFrom(service, _from, _times);
             }
         });
     }

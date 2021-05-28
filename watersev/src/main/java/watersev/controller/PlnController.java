@@ -185,9 +185,8 @@ public class PlnController implements IJob {
         long _times = do_runTask(task, timecount);
 
         //2.3.记录性能
-        String _node = WaterAdapter.global().localHost();
-
-        WaterClient.Track.track("waterplan", task.tag, task.path, _times, _node);
+        WaterClient.Track.track("waterplan", task.tag, task.path, _times);
+        WaterClient.Track.trackNode("waterplan", WaterClient.localServiceHost(), _times);
     }
 
     private long do_runTask(PaasFileModel task, Timecount timecount) throws Exception {

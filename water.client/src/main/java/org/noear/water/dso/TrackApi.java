@@ -54,20 +54,24 @@ public class TrackApi {
     }
 
     public void trackNode(String service, String _node, long timespan) {
-        TrackBuffer.singleton().appendNode(service, _node, timespan);
+        if(TextUtils.isNotEmpty(_node)) {
+            TrackBuffer.singleton().appendNode(service, _node, timespan);
+        }
     }
 
-    public void trackFrom(String service, String _from, long timespan){
-        TrackBuffer.singleton().appendFrom(service, _from, timespan);
+    public void trackFrom(String service, String _from, long timespan) {
+        if (TextUtils.isNotEmpty(_from)) {
+            TrackBuffer.singleton().appendFrom(service, _from, timespan);
+        }
     }
 
     /**
      * 跟踪请求性能
      */
-    @Deprecated
-    public void track(String service, String tag, String name, long timespan, String _node) {
-        track(service, tag, name, timespan, _node, null);
-    }
+//    @Deprecated
+//    public void track(String service, String tag, String name, long timespan, String _node) {
+//        track(service, tag, name, timespan, _node, null);
+//    }
 
     /**
      * 跟踪请求性能
@@ -79,14 +83,14 @@ public class TrackApi {
      * @param _node    节点
      * @param _from    来自哪里
      */
-    @Deprecated
-    public void track(String service, String tag, String name, long timespan, String _node, String _from) {
-        //
-        // 改为直发Redis，节省代理
-        //
-        String nameMd5 = getNameMd5(name);
-        TrackBuffer.singleton().append(service, tag, nameMd5, timespan, _node, _from);
-    }
+//    @Deprecated
+//    public void track(String service, String tag, String name, long timespan, String _node, String _from) {
+//        //
+//        // 改为直发Redis，节省代理
+//        //
+//        String nameMd5 = getNameMd5(name);
+//        TrackBuffer.singleton().append(service, tag, nameMd5, timespan, _node, _from);
+//    }
 
 
     /**

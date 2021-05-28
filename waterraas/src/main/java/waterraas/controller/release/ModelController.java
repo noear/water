@@ -3,6 +3,7 @@ package waterraas.controller.release;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.RubberException;
 import org.noear.snack.ONode;
+import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.WaterClient;
@@ -16,7 +17,7 @@ public class ModelController implements Handler {
     @Override
     public void handle(Context context) throws Exception {
         String model = context.param("model");
-        if(model == null) {
+        if (model == null) {
             model = context.path().substring(3); //通过路径传入
         }
 
@@ -29,19 +30,20 @@ public class ModelController implements Handler {
             return;
         }
 
-        try{
+        try {
             Timecount timecount = new Timecount().start();
 
-            run(context,model,args_str);
+            run(context, model, args_str);
 
             long timespan = timecount.stop().milliseconds();
-            WaterClient.Track.track(Config.water_service_name, "model", model, timespan, WaterClient.localServiceHost());
-        }catch (Exception ex){
+
+            WaterClient.Track.track(Config.water_service_name, "model", model, timespan);
+            WaterClient.Track.trackNode(Config.water_service_name, WaterClient.localServiceHost(), timespan);
+        } catch (Exception ex) {
             ONode data = new ONode();
             data.set("code", 0).set("msg", ex.getMessage());
             LogUtil.logModelError(model, args_str, ex);
         }
-
     }
 
     private void run(Context context, String model,String args_str) throws Exception{
