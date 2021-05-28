@@ -69,7 +69,7 @@ public class WaterpaasApp {
 
                 String service = Solon.cfg().appName();
                 long _times = timecount.stop().milliseconds();
-                String _node = WaterClient.localServiceHost();
+                String _node = WaterClient.localHost();
                 String _from = FromUtils.getFrom(c);
 
                 WaterClient.Track.track(service, tag, c.path(), _times);
