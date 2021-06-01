@@ -83,7 +83,7 @@
             </tr>
             <tr>
                 <th>路径</th>
-                <td><input type="text" class="longtxt" id="path" value="${m1.path!('/'+tag)}" required jt-alert="请输入路径"/>*
+                <td><input type="text" class="longtxt" id="path" value="${m1.path!('/'+tag+'/')}" required jt-alert="请输入路径"/>*
                     <n-l>例：/{tag}/xxx 或 /{tag}_xxx/xxx</n-l>
                 </td>
             </tr>

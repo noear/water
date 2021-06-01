@@ -318,6 +318,12 @@ public class FileController extends BaseController {
         PaasFileType fileType = PaasFileType.valueOf(type);
 
         for (PaasFileModel m : list) {
+            //支持跨tag导（路径自动改为新tag开头）
+            if (m.path.indexOf(tag) < 0) {
+                int start = m.path.indexOf("/", 2);
+                m.path = "/" + tag + m.path.substring(start);
+            }
+
             //订阅在先
             if (fileType == PaasFileType.api) {
                 PaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
