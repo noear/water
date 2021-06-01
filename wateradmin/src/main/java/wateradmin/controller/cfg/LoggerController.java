@@ -94,7 +94,7 @@ public class LoggerController extends BaseController {
             is_alarm = 0;
         }
 
-        boolean result = DbWaterCfgApi.setLogger(logger_id, tag, logger, source, note, keep_days, is_alarm);
+        boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
 
 
         if (result) {

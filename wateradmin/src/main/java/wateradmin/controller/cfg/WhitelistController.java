@@ -87,7 +87,7 @@ public class WhitelistController extends BaseController {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setWhitelist(row_id, tag, type, value, note);
+        boolean result = DbWaterCfgApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note);
         if (result) {
             DbWaterCfgApi.reloadWhitelist();
 

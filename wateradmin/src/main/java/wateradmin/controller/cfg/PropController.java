@@ -88,7 +88,7 @@ public class PropController extends BaseController {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setConfig(row_id, tag, key, type, value, edit_mode);
+        boolean result = DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
 
         if (result) {
             viewModel.code(1, "保存成功");
