@@ -1,12 +1,16 @@
 package wateradmin;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
+import org.noear.solon.annotation.Configuration;
+import org.noear.solon.extend.auth.AuthUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
+import wateradmin.dso.auth.AuthProcessorImpl;
 import wateradmin.setup.Setup;
 
 public class Config {
@@ -61,6 +65,16 @@ public class Config {
                 Solon.cfg().put(k, v);
             }
         });
+
+        //适配认证框架
+        AuthUtil.adapter()
+                .loginUrl("/login")
+                .addRule(r -> r.include("**").verifyIp().failure((c, t) -> c.output(", not")))
+                .addRule(r -> r.exclude("/login**").verifyPath())
+                .processor(new AuthProcessorImpl())
+                .failure((ctx, rst) -> {
+                    ctx.outputAsJson(new ONode().set("code", 403).set("msg", "没有权限").toJson());
+                });
     }
 
     //================================

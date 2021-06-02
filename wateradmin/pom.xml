@@ -24,9 +24,16 @@
             <artifactId>solon-web</artifactId>
             <version>${solon.ver}</version>
         </dependency>
+
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.extend.sessionstate.jwt</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.extend.auth</artifactId>
             <version>${solon.ver}</version>
         </dependency>
 
@@ -122,41 +129,10 @@
             <version>1.0.0</version>
         </dependency>
 
-
-<!--        <dependency>-->
-<!--            <groupId>commons-codec</groupId>-->
-<!--            <artifactId>commons-codec</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>commons-logging</groupId>-->
-<!--            <artifactId>commons-logging</artifactId>-->
-<!--            <version>1.1.1</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpcore</artifactId>-->
-<!--            <version>4.4.6</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpclient</artifactId>-->
-<!--            <version>4.5.8</version>-->
-<!--        </dependency>-->
-
-        <!-- Jenkins Api client -->
-<!--        <dependency>-->
-<!--            <groupId>com.offbytwo.jenkins</groupId>-->
-<!--            <artifactId>jenkins-client</artifactId>-->
-<!--            <version>0.3.8</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
