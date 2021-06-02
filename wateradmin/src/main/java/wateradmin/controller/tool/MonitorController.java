@@ -1,5 +1,6 @@
 package wateradmin.controller.tool;
 
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 
 
@@ -9,6 +10,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -91,6 +93,7 @@ public class MonitorController extends BaseController {
     }
 
 
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("monitor/edit/ajax/save")
     public ViewModel save(Integer monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_sign, String alarm_exp, Integer is_enabled) throws SQLException {
@@ -98,16 +101,11 @@ public class MonitorController extends BaseController {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
         }
 
-        int is_admin = Session.current().getIsAdmin();
-        if (is_admin == 1) {
-            boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, type, source_query, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
-            if (result) {
-                viewModel.code(1, "保存成功!");
-            } else {
-                viewModel.code(0, "保存失败!");
-            }
+        boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, type, source_query, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
+        if (result) {
+            viewModel.code(1, "保存成功!");
         } else {
-            viewModel.code(0, "没有权限!");
+            viewModel.code(0, "保存失败!");
         }
 
         return viewModel;

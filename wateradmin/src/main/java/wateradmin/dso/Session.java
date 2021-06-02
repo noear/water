@@ -31,12 +31,15 @@ public final class Session extends BcfSessionBase {
         setUserId(user.user_id);
         setUserName(user.cn_name);
 
-        boolean is_admin = BcfClient.hasResourceByUser(user.puid, "water_p_admin");
-        boolean is_operator = BcfClient.hasResourceByUser(user.puid, "water_p_operator");
+        boolean is_admin = BcfClient.hasResourceByUser(user.puid, SessionRoles.role_admin);
+        boolean is_operator = BcfClient.hasResourceByUser(user.puid, SessionRoles.role_operator);
 
         if (is_admin) {
             is_operator = true;
         }
+
+        set(SessionRoles.role_admin, is_admin ? 1 : 0);
+        set(SessionRoles.role_operator, is_operator ? 1 : 0);
 
         setIsAdmin(is_admin ? 1 : 0);
         setIsOperator(is_operator ? 1 : 0);

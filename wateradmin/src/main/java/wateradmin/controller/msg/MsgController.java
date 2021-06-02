@@ -1,5 +1,6 @@
 package wateradmin.controller.msg;
 
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.WaterClient;
 
 import org.noear.solon.annotation.Controller;
@@ -13,6 +14,7 @@ import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.viewModels.ViewModel;
 
@@ -77,19 +79,15 @@ public class MsgController extends BaseController {
         return view("msg/send");
     }
 
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/send/ajax/dosend")
     public ViewModel sendMessage(String topic, String message, String tags) throws Exception {
-        int is_admin = Session.current().getIsAdmin();
-        if (is_admin == 1) {
-            boolean isOk = WaterClient.Message.sendMessageAndTags(topic, message, tags);
+        boolean isOk = WaterClient.Message.sendMessageAndTags(topic, message, tags);
 
-            if (isOk) {
-                viewModel.code(1, "消息派发成功！");
-            } else {
-                viewModel.code(0, "消息发送失败!");
-            }
+        if (isOk) {
+            viewModel.code(1, "消息派发成功！");
         } else {
-            viewModel.code(0, "没有权限！");
+            viewModel.code(0, "消息发送失败!");
         }
 
         return viewModel;

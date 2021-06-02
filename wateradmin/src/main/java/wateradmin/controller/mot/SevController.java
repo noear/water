@@ -3,10 +3,12 @@ package wateradmin.controller.mot;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.viewModels.ViewModel;
@@ -105,12 +107,13 @@ public class SevController extends BaseController {
     }
 
     //删除服务
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/service/ajax/deleteService")
     public ViewModel deleteServiceById(Integer service_id) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin()>0;
-        if (is_admin == false) {
-            return viewModel.code(0,"没有权限！");
-        }
+//        boolean is_admin = Session.current().getIsAdmin()>0;
+//        if (is_admin == false) {
+//            return viewModel.code(0,"没有权限！");
+//        }
 
         boolean result = DbWaterRegApi.deleteServiceById(service_id);
         if (result){
@@ -123,12 +126,13 @@ public class SevController extends BaseController {
     }
 
     //启用 | 禁用 服务
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/service/ajax/disable")
     public ViewModel disable(Integer service_id,Integer is_enabled) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin()>0;
-        if (is_admin == false) {
-            return viewModel.code(0,"没有权限！");
-        }
+//        boolean is_admin = Session.current().getIsAdmin()>0;
+//        if (is_admin == false) {
+//            return viewModel.code(0,"没有权限！");
+//        }
 
         boolean result = DbWaterRegApi.disableService(service_id,is_enabled);
         if (result){
@@ -153,19 +157,16 @@ public class SevController extends BaseController {
 
         return view("mot/service_edit");
     }
+
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/service/edit/ajax/save")
     public ViewModel service_edit_ajax_save(Integer service_id,String name,String address,String note,Integer check_type,String check_url) throws SQLException {
-        int is_admin = Session.current().getIsAdmin();
+        boolean result = DbWaterRegApi.udpService(service_id, name, address, note, check_type, check_url);
 
-        if(is_admin==1) {
-            boolean result = DbWaterRegApi.udpService(service_id,name,address,note,check_type,check_url);
-            if (result) {
-                viewModel.code(1,"保存成功！");
-            } else {
-                viewModel.code(0,"保存失败！");
-            }
-        }else{
-            viewModel.code(0,"没有权限！");
+        if (result) {
+            viewModel.code(1, "保存成功！");
+        } else {
+            viewModel.code(0, "保存失败！");
         }
 
         return viewModel;

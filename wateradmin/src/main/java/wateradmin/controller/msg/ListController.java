@@ -4,6 +4,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -11,6 +12,7 @@ import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.DisttimeUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.viewModels.ViewModel;
 
@@ -38,77 +40,64 @@ public class ListController extends BaseController {
     }
 
     //派发功能ajax
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/distribute")
     public ViewModel distribute(String ids) throws Exception {
-        int is_admin = Session.current().getIsAdmin();
-        if (is_admin == 1) {
-            boolean result = ProtocolHub.messageSource().setMessageAsPending(idList(ids));
-            if (result) {
-                viewModel.code(1, "派发成功！");
-            } else {
-                viewModel.code(0, "派发失败！");
-            }
+        boolean result = ProtocolHub.messageSource().setMessageAsPending(idList(ids));
+
+        if (result) {
+            viewModel.code(1, "派发成功！");
         } else {
-            viewModel.code(0, "没有权限！");
+            viewModel.code(0, "派发失败！");
         }
 
         return viewModel;
     }
 
     //取消派发
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/cancelSend")
-    public ViewModel cancelSend(String ids) throws Exception{
+    public ViewModel cancelSend(String ids) throws Exception {
+        boolean result = ProtocolHub.messageSource().setMessageAsCancel(idList(ids));
 
-        int is_admin = Session.current().getIsAdmin();
-
-        if (is_admin == 1) {
-            boolean result = ProtocolHub.messageSource().setMessageAsCancel(idList(ids));
-
-            if (result) {
-                viewModel.code(1, "取消成功");
-            }  else {
-                viewModel.code(0, "取消失败");
-            }
+        if (result) {
+            viewModel.code(1, "取消成功");
         } else {
-            viewModel.code(0, "没有权限！");
+            viewModel.code(0, "取消失败");
         }
 
         return viewModel;
     }
 
     //异常记录中 修复订阅功能的ajax
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/repair")
     public ViewModel repairSubs(String ids) throws Exception {
-        int is_admin = Session.current().getIsAdmin();
-        if (is_admin == 1) {
-            boolean error = false;
+        boolean error = false;
 
-            List<DistributionModel> list = ProtocolHub.messageSource().getDistributionListByMsgIds(idList(ids));
-            if (!list.isEmpty()) {
-                for (DistributionModel dis : list) {
-                    //查询subscriber的url
-                    SubscriberModel subs = DbWaterMsgApi.repairSubs2(dis.subscriber_id);
-                    boolean result = false;
-                    if (subs.subscriber_id > 0) {
-                        //更新distribution的url
-                        result = ProtocolHub.messageSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
-                    }
-
-                    if (!result) {
-                        error = true;
-                    }
+        List<DistributionModel> list = ProtocolHub.messageSource().getDistributionListByMsgIds(idList(ids));
+        if (!list.isEmpty()) {
+            for (DistributionModel dis : list) {
+                //查询subscriber的url
+                SubscriberModel subs = DbWaterMsgApi.repairSubs2(dis.subscriber_id);
+                boolean result = false;
+                if (subs.subscriber_id > 0) {
+                    //更新distribution的url
+                    result = ProtocolHub.messageSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
                 }
-            } else {
-                error = true;
-            }
 
-            if (error == false) {
-                viewModel.code(1, "修复成功！");
-            } else {
-                viewModel.code(0, "修复失败！");
+                if (!result) {
+                    error = true;
+                }
             }
         } else {
-            viewModel.code(0, "没有权限！");
+            error = true;
+        }
+
+        if (error == false) {
+            viewModel.code(1, "修复成功！");
+        } else {
+            viewModel.code(0, "修复失败！");
         }
 
         return viewModel;

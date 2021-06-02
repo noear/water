@@ -3,9 +3,11 @@ package wateradmin.controller.ops;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterProjectApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_ops.ProjectModel;
@@ -65,13 +67,9 @@ public class ProjectController extends BaseController {
         return view("ops/project_edit");
     }
 
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/project/edit/ajax/save")
     public ViewModel saveEdit(Integer project_id, String tag, String name, String git_url, String note,Integer type, String developer) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin()>0;
-        if (is_admin == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         if(project_id == null){
             project_id = 0;
         }

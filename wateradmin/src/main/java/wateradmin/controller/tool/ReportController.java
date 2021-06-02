@@ -1,6 +1,7 @@
 package wateradmin.controller.tool;
 
 import com.alibaba.fastjson.JSONObject;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DataItem;
@@ -15,6 +16,7 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.JtRunner;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -56,11 +58,9 @@ public class ReportController extends BaseController {
 
     @Mapping("report_inner")
     public ModelAndView reportInner(String tag_name) throws SQLException{
-        boolean is_admin = Session.current().getIsAdmin()>0;
         List<ReportModel> tags = DbWaterApi.reportGetListByTag(tag_name);
 
         viewModel.put("reports",tags);
-        viewModel.put("is_admin",is_admin);
         return view("tool/report_inner");
     }
 

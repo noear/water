@@ -1,5 +1,6 @@
 package wateradmin.controller.ops;
 
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 
 
@@ -8,6 +9,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.water_ops.ServerModel;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -57,13 +59,11 @@ public class ServerController extends BaseController {
     }
 
     //禁用 启用服务
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/disable")
     public ViewModel disable(Integer server_id, Integer is_enabled) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin() > 0;
-        if (is_admin == false) {
-            return viewModel.code(0, "没有权限！");
-        }
         boolean result = DbWaterOpsApi.disableServer(server_id, is_enabled);
+
         if (result) {
             viewModel.code(1, "操作成功！");
         } else {
@@ -74,14 +74,11 @@ public class ServerController extends BaseController {
     }
 
     //删除 服务
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/delete")
     public ViewModel delete(Integer server_id) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin() > 0;
-        if (is_admin == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         boolean result = DbWaterOpsApi.deleteServer(server_id);
+
         if (result) {
             viewModel.code(1, "操作成功！");
         } else {
@@ -113,14 +110,9 @@ public class ServerController extends BaseController {
     }
 
     //保存编辑
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/edit/ajax/save")
     public ViewModel serverEditSave(Integer server_id, String tag, String name, String address, String address_local, Integer iaas_type, String iaas_key,  String iaas_account, String hosts_local, String note, Integer is_enabled, Integer env_type) throws SQLException {
-        boolean is_admin = Session.current().getIsAdmin() > 0;
-
-        if (is_admin == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         boolean result = DbWaterOpsApi.updateServer(server_id, tag, name, address, address_local, iaas_type, iaas_key,  iaas_account, hosts_local, note, is_enabled, env_type);
 
         if (result) {
