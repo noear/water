@@ -5,6 +5,7 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.*;
 
 
@@ -14,6 +15,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -106,6 +108,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型保存编辑
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/edit/ajax/save")
     public JSONObject editSave(Integer model_id, String tag, String name, String name_display, String init_expr, String debug_args, String related_db) throws SQLException {
         JSONObject resp = new JSONObject();
@@ -123,6 +126,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型删除
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/edit/ajax/del")
     public ViewModel modelDel(Integer model_id) throws SQLException {
         boolean result = DbRubberApi.delModel(model_id);
@@ -177,6 +181,7 @@ public class ModelController extends BaseController {
 
 
     //数据模型字段保存编辑
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/field/edit/ajax/save")
     public JSONObject fieldEditSave(Integer model_id, Integer field_id, String name, String name_display,
                                     String expr, String note, Integer is_pk) throws SQLException {
@@ -195,6 +200,7 @@ public class ModelController extends BaseController {
     }
 
     //删除模型字段
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/field/del/ajax/save")
     public JSONObject fieldDelSave(Integer field_id, Integer model_id) throws SQLException {
         JSONObject resp = new JSONObject();
@@ -212,6 +218,7 @@ public class ModelController extends BaseController {
     }
 
     //数据模型字段另存为
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/edit/ajax/saveAs")
     public ViewModel modelEditSaveAs(String tag, Integer model_id, String name, String name_display, String debug_args, String init_expr, String related_db) throws SQLException {
         boolean result = DbRubberApi.saveAsModel(tag, model_id, name, name_display, debug_args, init_expr, related_db);
@@ -227,6 +234,7 @@ public class ModelController extends BaseController {
 
 
     //批量导出
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<ModelModel> tmpList = DbRubberApi.getModelByIds(ids);
@@ -251,6 +259,7 @@ public class ModelController extends BaseController {
 
 
     //批量导入
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {

@@ -5,6 +5,7 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
@@ -16,6 +17,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -113,6 +115,7 @@ public class BlockController extends BaseController {
     }
 
     //保存数据块编辑
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/edit/ajax/save")
     public ViewModel editSave(Integer block_id, String tag, String name, String name_display, String related_db, String related_tb,
                               String struct, String app_expr, Integer is_editable, String note) throws SQLException{
@@ -128,6 +131,7 @@ public class BlockController extends BaseController {
         return viewModel;
     }
 
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/edit/ajax/del")
     public ViewModel del(Integer block_id) throws SQLException{
         if (Session.current().isAdmin() == false) {
@@ -163,6 +167,7 @@ public class BlockController extends BaseController {
     }
 
     //d-block item编辑保存
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/item/edit/ajax/save")
     public ViewModel itemEditSave(Integer block_id,String item_key,String data) throws SQLException {
 
@@ -177,6 +182,7 @@ public class BlockController extends BaseController {
 
 
     //批量导出
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<BlockModel> list = DbRubberApi.getBlockByIds(ids);
@@ -191,6 +197,7 @@ public class BlockController extends BaseController {
 
 
     //批量导入
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {

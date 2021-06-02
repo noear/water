@@ -6,7 +6,9 @@ import com.alibaba.fastjson.JSONObject;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.water_rebber.CountModel;
 import wateradmin.models.water_rebber.LogRequestModel;
@@ -41,6 +43,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_inner");
     }
 
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("reqrecord/exec/scheme")
     public ModelAndView reqrecord_exec_scheme() throws Exception{
 
@@ -49,6 +52,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_exec_scheme");
     }
 
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("reqrecord/exec/query")
     public ModelAndView reqrecord_exec_query() throws Exception{
 
@@ -57,6 +61,7 @@ public class ReqRecordController extends BaseController {
         return view("rubber/reqrecord_exec_query");
     }
 
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("reqrecord/exec/model")
     public ModelAndView reqrecord_exec_model() throws Exception{
 

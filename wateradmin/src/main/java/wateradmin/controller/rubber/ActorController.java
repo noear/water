@@ -2,6 +2,7 @@ package wateradmin.controller.rubber;
 
 
 import com.alibaba.fastjson.JSONObject;
+import org.noear.solon.extend.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 
 
@@ -10,6 +11,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_rebber.ActorModel;
@@ -81,6 +83,7 @@ public class ActorController extends BaseController {
 
 
     //参与人员保存编辑
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("actor/edit/ajax/save")
     public JSONObject editSave(Integer actor_id, String tag, String name, String name_display, String note) throws SQLException{
         JSONObject resp = new JSONObject();
@@ -101,6 +104,7 @@ public class ActorController extends BaseController {
     }
 
     //参与人员删除
+    @AuthRoles(SessionRoles.role_operator)
     @Mapping("actor/edit/ajax/del")
     public ViewModel editDel(Integer actor_id) throws SQLException{
         boolean result = DbRubberApi.delActor(actor_id);
