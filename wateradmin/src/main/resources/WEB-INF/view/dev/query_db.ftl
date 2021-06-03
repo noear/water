@@ -12,7 +12,7 @@
     <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
     <style>
         datagrid > div{height: calc(100vh - 92px)}
-        datagrid td { text-align: left;}
+        datagrid tbody td { text-align: left;}
         datagrid, pre{ border: 1px solid #C9C9C9; margin: 0px; padding: 0px;}
 
         #btn_query{position: absolute; z-index: 2; top: 27px; right: 20px; border: none;background: transparent; color:green;outline: none;}

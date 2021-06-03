@@ -7,15 +7,12 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <style>
-        tabbar button{
-            cursor: pointer;
-        }
-        toolbar cell button{
-            cursor: pointer;
-        }
-        toolbar cell input{
-            margin-right: 5px;
-        }
+        tabbar button{cursor: pointer;}
+
+        toolbar cell button{cursor: pointer;}
+        toolbar cell input{ margin-right: 5px;}
+
+        datagrid tbody td {text-align: left;}
     </style>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
