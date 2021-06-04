@@ -63,17 +63,21 @@ public class SpeedController extends BaseController {
         viewModel.put("tag", tag);
         viewModel.put("serviceName", serviceName);
 
-        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(serviceName) < 0) {
+        if ("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".indexOf(serviceName) < 0) {
             return view("mot/speed_inner");
         } else {
-            return view("mot/speed_inner2");
+            if ("_watersrt".equals(serviceName)) {
+                return view("mot/speed_inner3");
+            } else {
+                return view("mot/speed_inner2");
+            }
         }
     }
 
     //性能监控图标统计
     @Mapping("speed/charts")
     public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException {
-        if(service == null) {
+        if (service == null) {
             service = "";
         }
 
@@ -86,10 +90,14 @@ public class SpeedController extends BaseController {
         viewModel.put("name_md5", name_md5);
         viewModel.put("service", service);
 
-        if ("_waterlog,_waterchk,_watermsg,watercfg".indexOf(service) < 0) {
+        if ("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".indexOf(service) < 0) {
             return view("mot/speed_charts");
         } else {
-            return view("mot/speed_charts2");
+            if ("_watersrt".equals(service)) {
+                return view("mot/speed_charts3");
+            } else {
+                return view("mot/speed_charts2");
+            }
         }
     }
 
