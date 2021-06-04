@@ -144,6 +144,10 @@ public class LogUtil {
         log_sev.warn(tag.getName(), tag1, summary, content);
     }
 
+    public static void warn(IJob tag, String tag1, String tag2,String summary, Throwable content) {
+        log_sev.warn(tag.getName(), tag1, tag2, summary, content);
+    }
+
     public static void warn(String tag, String tag1, String summary, Throwable content) {
         log_sev.warn(tag, tag1, summary, content);
     }
