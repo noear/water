@@ -9,7 +9,9 @@
         <td width="60px">最后检<br/>查状态</td>
         <td width="60px">最后检<br/>查备注</td>
         <#if is_admin == 1>
-            <td width="90px">操作</td>
+            <td width="170px">操作</td>
+        <#else>
+            <td width="80px">操作</td>
         </#if>
     </tr>
     </thead>
@@ -70,6 +72,10 @@
                 <#if m.is_enabled == 0>
                     <a class="t2" onclick="disableService('${m.service_id}',1)">启用</a>
                 </#if>
+                |
+                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sev@${m.service_id}" class="t2">日志</a>
+                |
+                <a href="/mot/speed/charts?tag=service&name_md5=${m.service_md5()}&service=_waterchk" class="t2">监控</a>
             </td>
         </#if>
         </tr>
