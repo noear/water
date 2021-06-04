@@ -209,7 +209,7 @@
                         </#if>
                     </#if>
                     |
-                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sev@${m.service_id}" class="t2">日志</a>
+                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sev@${m.address}" class="t2">日志</a>
                     |
                     <a href="/mot/speed/charts?tag=service&name_md5=${m.service_md5()}&service=_watersrt" class="t2">监控</a>
                 </td>
