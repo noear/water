@@ -6,7 +6,7 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
-    <script src="//www.layuicdn.com/layDate-v5.0.9/laydate.js"></script>
+    <script src="${js}/laydate/laydate.js"></script>
     <script>
         window.postReview = function(vm){
             if(vm.path.startsWith("/" + vm.tag) == false){
