@@ -9,13 +9,9 @@ import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterProps;
 import org.noear.water.WaterSetting;
-import org.noear.water.annotation.Water;
-import org.noear.water.annotation.WaterConfig;
 import org.noear.water.annotation.WaterMessage;
-import org.noear.water.dso.ConfigHandler;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.xml.XmlSqlLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,8 +58,6 @@ public class XPluginImp implements Plugin {
             }
         }
 
-        //添加Water注入支持
-        Aop.context().beanInjectorAdd(Water.class, WaterBeanInjector.instance);
 
         //添加WaterMessage注解支持
         Aop.context().beanBuilderAdd(WaterMessage.class, (clz, wrap, anno) -> {
@@ -76,28 +70,9 @@ public class XPluginImp implements Plugin {
             }
         });
 
-        //添加WaterConfig注解支持
-        Aop.context().beanBuilderAdd(WaterConfig.class, (clz, wrap, anno) -> {
-            if (ConfigHandler.class.isAssignableFrom(clz)) {
-                String tag = anno.value();
-
-                if (TextUtils.isEmpty(tag) == false) {
-                    WaterClient.Config.subscribe(tag, wrap.raw());
-                }
-            }
-        });
-
         //尝试加载消息订阅提交
         Aop.context().beanOnloaded(() -> {
             if (WaterAdapter.global() != null) {
-//                Aop.context().beanForeach((k, v) -> {  //交由：WaterMessage 处理了
-//                    if (k.startsWith("msg:") && MessageHandler.class.isAssignableFrom(v.clz())) {
-//                        String topic = k.split(":")[1];
-//
-//                        _router.put(topic, v.raw());
-//                    }
-//                });
-
                 if (_router.size() > 0) {
                     WaterAdapter.global().router().putAll(_router);
                     WaterAdapter.global().messageSubscribeHandler();

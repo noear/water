@@ -1,8 +1,5 @@
 package org.noear.water.integration.solon;
 
-import org.noear.nami.Nami;
-import org.noear.nami.annotation.NamiClient;
-import org.noear.solon.Solon;
 import org.noear.solon.core.LoadBalance;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
@@ -246,48 +243,5 @@ public class WaterUpstream implements LoadBalance {
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 
-    }
-
-    //
-    // for rpc client
-    //
-    public static <T> T client(Class<?> clz) {
-        NamiClient c_meta = clz.getAnnotation(NamiClient.class);
-
-        if (c_meta == null) {
-            throw new RuntimeException("No @NamiClient annotation");
-        }
-
-        String c_sev = c_meta.name();
-        if (TextUtils.isEmpty(c_sev)) {
-            throw new RuntimeException("NamiClient no name");
-        }
-
-        LoadBalance upstream = null;
-        if (Solon.cfg().isDebugMode()) {
-            //增加debug模式支持
-            String url = System.getProperty("water.remoting-debug." + c_sev);
-            if (url != null) {
-                upstream = () -> url;
-            }
-        }
-
-        if (upstream == null) {
-            upstream = WaterUpstream.get(c_sev);
-        }
-
-        return client(clz, upstream);
-    }
-
-    public static <T> T client(Class<?> clz, LoadBalance upstream) {
-        return Nami.builder()
-                .filterAdd(inv -> {
-                    inv.headers.put(WW.http_header_trace, WaterClient.waterTraceId());
-                    inv.headers.put(WW.http_header_from, WaterClient.localServiceHost());
-
-                    return inv.invoke();
-                })
-                .upstream(upstream::getServer)
-                .create(clz);
     }
 }
