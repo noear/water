@@ -54,7 +54,6 @@ public class XPluginImp implements Plugin {
                         Solon.cfg().put(k, v);
                     }
                 });
-
             }
         }
 
@@ -82,7 +81,6 @@ public class XPluginImp implements Plugin {
         });
 
         //改为upstream模式，可跳过nginx代理
-
         WaterSetting.water_trace_id_supplier(() -> {
             Context ctx = Context.current();
             if (ctx == null) {
