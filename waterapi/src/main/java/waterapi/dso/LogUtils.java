@@ -3,14 +3,10 @@ package waterapi.dso;
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.water.log.Level;
-import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.Command;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.Map;
 
 /**
@@ -33,21 +29,13 @@ public class LogUtils {
 
             String _from = FromUtils.getFromName(ctx);
 
-
-            Map<String, String> pnames = ctx.paramMap();
-
-            ONode args = new ONode();
-            if (pnames != null) {
-                pnames.forEach((k, v) -> {
-                    args.set(k, v);
-                });
-            }
+            String content = ONode.stringify(ctx.paramMap());
 
             if (TextUtils.isEmpty(summary)) {
                 summary = FromUtils.getFrom(ctx);
             }
 
-            logger.info(tag, null, null, _from, summary, args.toJson());
+            logger.info(tag, null, null, _from, summary, content);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
