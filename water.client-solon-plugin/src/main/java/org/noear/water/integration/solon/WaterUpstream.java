@@ -281,9 +281,11 @@ public class WaterUpstream implements LoadBalance {
 
     public static <T> T client(Class<?> clz, LoadBalance upstream) {
         return Nami.builder()
-                .filterAdd((cfg, m, url, h, a) -> {
-                    h.put(WW.http_header_trace, WaterClient.waterTraceId());
-                    h.put(WW.http_header_from, WaterClient.localServiceHost());
+                .filterAdd(inv -> {
+                    inv.headers.put(WW.http_header_trace, WaterClient.waterTraceId());
+                    inv.headers.put(WW.http_header_from, WaterClient.localServiceHost());
+
+                    return inv.invoke();
                 })
                 .upstream(upstream::getServer)
                 .create(clz);
