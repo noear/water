@@ -160,13 +160,10 @@ public class MessageApi {
         }
 
         if (planTime != null) {
-            //String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
             params.put("plan_time", String.valueOf(planTime.getTime()));
         }
 
         String txt = apiCaller.post("/msg/send/", params);
-
-        //System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
         int code = data.get("code").getInt();
@@ -221,13 +218,10 @@ public class MessageApi {
 
 
         if (planTime != null) {
-            //String planTime2 = new Datetime(planTime).toString("yyyy-MM-dd HH:mm:ss");
             params.put("plan_time", String.valueOf(planTime.getTime()));
         }
 
         String txt = apiCaller.post("/msg/send/", params);
-
-//        System.out.println("MessageApi::/msg/send/:" + txt);
 
         ONode data = ONode.loadStr(txt);
         int code = data.get("code").getInt();
