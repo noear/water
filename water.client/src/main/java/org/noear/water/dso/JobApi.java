@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 任务服务接口
+ * 分布式任务服务接口
+ *
+ * @author noear
+ * @since 2.0
  */
 public class JobApi {
     protected final ApiCaller apiCaller;

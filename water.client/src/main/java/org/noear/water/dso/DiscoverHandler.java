@@ -3,7 +3,10 @@ package org.noear.water.dso;
 import org.noear.water.model.DiscoverM;
 
 /**
- * @author noear 2021/1/18 created
+ * 发现处理
+ *
+ * @author noear
+ * @since 2.0
  */
 @FunctionalInterface
 public interface DiscoverHandler {

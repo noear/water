@@ -66,34 +66,6 @@ public class TrackApi {
     }
 
     /**
-     * 跟踪请求性能
-     */
-//    @Deprecated
-//    public void track(String service, String tag, String name, long timespan, String _node) {
-//        track(service, tag, name, timespan, _node, null);
-//    }
-
-    /**
-     * 跟踪请求性能
-     *
-     * @param service  服务名
-     * @param tag      标签
-     * @param name     请求名称
-     * @param timespan 消耗时间
-     * @param _node    节点
-     * @param _from    来自哪里
-     */
-//    @Deprecated
-//    public void track(String service, String tag, String name, long timespan, String _node, String _from) {
-//        //
-//        // 改为直发Redis，节省代理
-//        //
-//        String nameMd5 = getNameMd5(name);
-//        TrackBuffer.singleton().append(service, tag, nameMd5, timespan, _node, _from);
-//    }
-
-
-    /**
      * 跟踪SQL命令性能
      */
     public void track(String service, Command cmd, long thresholdValue) {

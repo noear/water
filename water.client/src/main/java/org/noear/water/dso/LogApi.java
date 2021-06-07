@@ -7,21 +7,23 @@ import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
-import org.noear.water.log.Logger;
 import org.noear.water.utils.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 日志服务接口
+ *
+ * @author noear
+ * @since 2.0
  * */
 public class LogApi {
 
     protected final ApiCaller apiCaller;
-    public LogApi(){
+
+    public LogApi() {
         apiCaller = new ApiCaller(WaterAddress.getLogApiUrl());
     }
 
@@ -90,16 +92,10 @@ public class LogApi {
     public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
         String trace_id = WaterClient.waterTraceId();
 
-//        if (async) {
-//            //WaterSetting.pools.submit(() -> {
-//                appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
-//            //});
-//        } else {
-            appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
-//        }
+        appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
     }
 
-    private void appendDo(String logger, String trace_id,Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
+    private void appendDo(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }
@@ -132,7 +128,6 @@ public class LogApi {
     }
 
 
-
     public void appendAll(List<LogEvent> list, boolean async) {
         if (async) {
             WaterSetting.pools.submit(() -> {
@@ -154,10 +149,10 @@ public class LogApi {
             if (WaterSetting.water_logger_gzip()) {
                 apiCaller.postBody("/log/add2/", GzipUtils.gZip(json), WW.mime_glog);
             } else {
-                Map<String,String> map = new HashMap<>();
-                map.put("list",json);
+                Map<String, String> map = new HashMap<>();
+                map.put("list", json);
 
-                apiCaller.post("/log/add2/",map);
+                apiCaller.post("/log/add2/", map);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
