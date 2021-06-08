@@ -1,5 +1,6 @@
 package org.noear.water;
 
+import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.HttpUtils;
 import org.noear.weed.cache.CacheUsing;
@@ -97,7 +98,26 @@ public class WaterProxy {
                 .header(WW.http_header_from, WaterClient.localServiceHost());
     }
 
-    public static WaterLogger logger(String name) {
-        return new WaterLogger(name);
+    /**
+     * 给FaaS用
+     * */
+    public static void logTrace(String logger, Map<String, Object> map) {
+        WaterClient.Log.append(logger, Level.TRACE, map);
+    }
+
+    public static void logDebug(String logger, Map<String, Object> map) {
+        WaterClient.Log.append(logger, Level.DEBUG, map);
+    }
+
+    public static void logInfo(String logger, Map<String, Object> map) {
+        WaterClient.Log.append(logger, Level.INFO, map);
+    }
+
+    public static void logWarn(String logger, Map<String, Object> map) {
+        WaterClient.Log.append(logger, Level.WARN, map);
+    }
+
+    public static void logError(String logger, Map<String, Object> map) {
+        WaterClient.Log.append(logger, Level.ERROR, map);
     }
 }
