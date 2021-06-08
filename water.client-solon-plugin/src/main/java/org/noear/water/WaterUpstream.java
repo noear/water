@@ -242,16 +242,4 @@ public class WaterUpstream implements LoadBalance {
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 
     }
-
-    public static String call(String service, String path) throws Exception {
-        return call(service, path, null);
-    }
-
-    public static String call(String service, String path, Map<String, String> args) throws Exception {
-        if (args == null || args.size() == 0) {
-            return WaterUpstream.get(service).http(path).get();
-        } else {
-            return WaterUpstream.get(service).http(path).data(args).post();
-        }
-    }
 }
