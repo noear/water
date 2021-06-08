@@ -997,7 +997,7 @@ interface water{
 
     updateCache(tags:string):void;
 
-    call(service:string,fun:string,args:Map<string,object>):string;
+    call(service:string,path:string,args:Map<string,object>):string;
     paas(path:string,args:Map<string,object>):string;
     raas(path:string,args:Map<string,object>):string;
 
