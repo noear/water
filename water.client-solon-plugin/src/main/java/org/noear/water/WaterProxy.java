@@ -32,6 +32,10 @@ public class WaterProxy {
      * 调用_service接口，并尝试缓存控制
      */
     public static String call(String service, String path, Map<String, Object> args) throws Exception {
+        if (path.startsWith("/") == false) {
+            path = "/" + path;
+        }
+
         if (args == null || args.size() == 0) {
             return WaterUpstream.get(service).http(path).get();
         } else {
