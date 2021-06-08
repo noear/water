@@ -1,5 +1,6 @@
 package org.noear.water;
 
+import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.HttpUtils;
 import org.noear.weed.cache.CacheUsing;
 
@@ -15,7 +16,7 @@ public class WaterProxy {
     static final String SERVICE_WATER_PAAS = "waterpaas";
     static final String SERVICE_WATER_RAAS = "waterraas";
 
-    public static String job(String service, String name) throws Exception{
+    public static String job(String service, String name) throws Exception {
         return WaterUpstream.get(service).http(WW.path_run_job).data("name", name).post();
     }
 
@@ -94,5 +95,9 @@ public class WaterProxy {
         return HttpUtils.http(url)
                 .header(WW.http_header_trace, WaterClient.waterTraceId())
                 .header(WW.http_header_from, WaterClient.localServiceHost());
+    }
+
+    public static WaterLogger logger(String name) {
+        return new WaterLogger(name);
     }
 }
