@@ -244,10 +244,14 @@ public class WaterUpstream implements LoadBalance {
     }
 
     public static String call(String service, String path) throws Exception {
-        return WaterUpstream.get(service).http(path).get();
+        return call(service, path, null);
     }
 
     public static String call(String service, String path, Map<String, String> data) throws Exception {
-        return WaterUpstream.get(service).http(path).data(data).post();
+        if (data == null || data.size() == 0) {
+            return WaterUpstream.get(service).http(path).get();
+        } else {
+            return WaterUpstream.get(service).http(path).data(data).post();
+        }
     }
 }
