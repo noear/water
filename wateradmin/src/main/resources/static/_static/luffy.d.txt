@@ -819,6 +819,11 @@ interface WaterJob{
     call(service:string, name:string):string;
 }
 
+interface WaterUpstream{
+    call(service:string, path:string):string;
+    call(service:string, path:string, args:Map<string,object>):string;
+}
+
 interface WaterLogger{
 
 }
@@ -1010,5 +1015,6 @@ declare var WaterClient: WaterClient;
 declare var WaterProxy: WaterProxy;
 declare var WaterLogger: WaterLogger;
 declare var WaterJob: WaterJob;
+declare var WaterUpstream: WaterUpstream;
 
 declare var water: water;
