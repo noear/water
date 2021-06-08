@@ -1,7 +1,5 @@
 package org.noear.water;
 
-import org.noear.water.integration.solon.WaterUpstream;
-
 /**
  * @author noear 2021/5/26 created
  */

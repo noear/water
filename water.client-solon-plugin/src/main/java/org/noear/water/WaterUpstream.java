@@ -1,8 +1,6 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
 import org.noear.solon.core.LoadBalance;
-import org.noear.water.WaterClient;
-import org.noear.water.WW;
 import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
@@ -243,5 +241,13 @@ public class WaterUpstream implements LoadBalance {
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
 
+    }
+
+    public static String call(String service, String path) throws Exception {
+        return WaterUpstream.get(service).http(path).get();
+    }
+
+    public static String call(String service, String path, Map<String, String> data) throws Exception {
+        return WaterUpstream.get(service).http(path).data(data).post();
     }
 }

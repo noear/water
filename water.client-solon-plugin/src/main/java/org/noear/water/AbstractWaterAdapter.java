@@ -1,4 +1,4 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
 import org.noear.water.WW;
 import org.noear.water.WaterClient;

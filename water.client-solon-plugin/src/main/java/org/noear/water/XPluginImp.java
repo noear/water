@@ -1,14 +1,10 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.core.*;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WW;
-import org.noear.water.WaterClient;
-import org.noear.water.WaterProps;
-import org.noear.water.WaterSetting;
 import org.noear.water.annotation.WaterMessage;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.utils.TextUtils;

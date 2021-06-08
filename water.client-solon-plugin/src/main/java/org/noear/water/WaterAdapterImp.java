@@ -1,7 +1,5 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
-import org.noear.water.WaterClient;
-import org.noear.water.WaterProps;
 import org.noear.water.utils.TextUtils;
 
 public class WaterAdapterImp extends WaterAdapter {

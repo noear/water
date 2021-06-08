@@ -1,4 +1,4 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
@@ -7,9 +7,6 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.Aop;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WaterClient;
-import org.noear.water.WW;
-import org.noear.water.WaterSetting;
 import org.noear.water.dso.MessageHandler;
 import org.noear.water.log.Level;
 import org.noear.water.log.WaterLogger;

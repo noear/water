@@ -10,7 +10,6 @@ import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
-import org.noear.water.integration.solon.WaterAdapter;
 import org.noear.water.utils.FromUtils;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;

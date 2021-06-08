@@ -1,4 +1,4 @@
-package org.noear.water.integration.solon;
+package org.noear.water;
 
 import org.noear.solon.core.LoadBalance;
 

@@ -5,7 +5,6 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
-import org.noear.water.integration.solon.WaterAdapter;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
