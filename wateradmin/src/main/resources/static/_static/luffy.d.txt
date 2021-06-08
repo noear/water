@@ -809,23 +809,22 @@ interface WaterClient{
 }
 
 interface WaterProxy{
-    call(service:string, fun:string, args:Map<string,object>):string;
-    paas(path:string, args:Map<string,object>):string;
-    raas(path:string, args:Map<string,object>):string;
-    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
-}
+    job(service:string, name:string):string;
 
-interface WaterJob{
-    call(service:string, name:string):string;
-}
-
-interface WaterUpstream{
     call(service:string, path:string):string;
     call(service:string, path:string, args:Map<string,object>):string;
-}
 
-interface WaterLogger{
+    faas(path:string):string;
+    faas(path:string, args:Map<string,object>):string;
 
+    raas(path:string, args:Map<string,object>):string;
+    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
 }
 
 interface RedisUsing{
@@ -1003,18 +1002,21 @@ interface water{
     updateCache(tags:string):void;
 
     call(service:string,path:string,args:Map<string,object>):string;
-    paas(path:string,args:Map<string,object>):string;
+    faas(path:string,args:Map<string,object>):string;
     raas(path:string,args:Map<string,object>):string;
 
     heihei(target:string,msg:string):string;
 
     sendMessage(topic:string,message:string):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
 }
 
 declare var WaterClient: WaterClient;
 declare var WaterProxy: WaterProxy;
-declare var WaterLogger: WaterLogger;
-declare var WaterJob: WaterJob;
-declare var WaterUpstream: WaterUpstream;
 
 declare var water: water;
