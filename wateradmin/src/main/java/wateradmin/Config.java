@@ -4,7 +4,9 @@ import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.annotation.Configuration;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.extend.auth.AuthUtil;
+import org.noear.solon.extend.validation.ValidatorManager;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -75,6 +77,13 @@ public class Config {
                 .failure((ctx, rst) -> {
                     ctx.outputAsJson(new ONode().set("code", 403).set("msg", "没有权限").toJson());
                 });
+
+        ValidatorManager.global().onFailure((ctx, ano, result, message) -> {
+            ctx.setHandled(true);
+            ctx.setRendered(true);
+            ctx.output(new ONode().set("code", result.getCode()).set("msg", result.getDescription()).toJson());
+            return true;
+        });
     }
 
     //================================

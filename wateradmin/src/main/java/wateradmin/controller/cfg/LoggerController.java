@@ -2,7 +2,10 @@ package wateradmin.controller.cfg;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.annotation.Note;
+import org.noear.solon.annotation.Param;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.extend.validation.annotation.NotNull;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -84,14 +87,11 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
+    @NotNull({"tag","logger"})
     @Mapping("logger/edit/ajax/save")
-    public  ViewModel saveLogger(Integer logger_id,String tag,String logger,String source,String note,int keep_days, Integer is_alarm) throws SQLException {
+    public  ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws SQLException {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
-        }
-
-        if(is_alarm == null){
-            is_alarm = 0;
         }
 
         boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
@@ -107,6 +107,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
+    @NotNull("logger_id")
     @Mapping("logger/edit/ajax/del")
     public  ViewModel delLogger(Integer logger_id) throws SQLException {
         if (Session.current().isAdmin() == false) {
