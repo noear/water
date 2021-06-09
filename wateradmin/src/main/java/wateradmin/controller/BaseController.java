@@ -10,6 +10,7 @@ import wateradmin.Config;
 import wateradmin.dso.Session;
 import wateradmin.viewModels.ViewModel;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 
@@ -58,8 +59,7 @@ public class BaseController {
             viewModel.put("is_operator", is_operator);
         }
 
-
-        viewModel.put("currenttime", "(" + LocalDateTime.now().toString() + ")");
+        viewModel.put("currenttime", "(" + Instant.now().toString() + ")");
         viewModel.put("ref_url", Context.current().header("referer"));
         viewModel.put("paas_uri", Config.paas_uri());
         viewModel.put("raas_uri", Config.raas_uri());
