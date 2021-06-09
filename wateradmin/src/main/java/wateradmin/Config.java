@@ -81,7 +81,7 @@ public class Config {
         ValidatorManager.global().onFailure((ctx, ano, result, message) -> {
             ctx.setHandled(true);
             ctx.setRendered(true);
-            ctx.output(new ONode().set("code", result.getCode()).set("msg", result.getDescription()).toJson());
+            ctx.outputAsJson(new ONode().set("code", result.getCode()).set("msg", result.getDescription()).toJson());
             return true;
         });
     }
