@@ -3,6 +3,8 @@ package wateradmin.controller.cfg;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.extend.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
@@ -139,6 +141,7 @@ public class GatewayController extends BaseController {
 
     }
 
+    @NotEmpty("sev_key")
     @Mapping("ajax/save")
     public ViewModel save(String ori_key, String sev_key, String url, String policy, int is_enabled) {
 
@@ -160,6 +163,7 @@ public class GatewayController extends BaseController {
 
     }
 
+    @NotZero("service_id")
     @Mapping("ajax/enabled")
     public ViewModel sev_enabled(int service_id, int is_enabled) {
 
@@ -176,5 +180,4 @@ public class GatewayController extends BaseController {
         return viewModel;
 
     }
-
 }

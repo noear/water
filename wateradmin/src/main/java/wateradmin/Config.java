@@ -3,18 +3,13 @@ package wateradmin;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
-import org.noear.solon.annotation.Configuration;
-import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.extend.auth.AuthUtil;
-import org.noear.solon.extend.validation.ValidatorFailureHandlerImp;
-import org.noear.solon.extend.validation.ValidatorManager;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import wateradmin.dso.auth.AuthProcessorImpl;
-import wateradmin.dso.valid.ValidatorFailureHandlerImpl;
 import wateradmin.setup.Setup;
 
 public class Config {
@@ -79,8 +74,6 @@ public class Config {
                 .failure((ctx, rst) -> {
                     ctx.outputAsJson(new ONode().set("code", 403).set("msg", "没有权限").toJson());
                 });
-
-        ValidatorManager.global().onFailure(new ValidatorFailureHandlerImpl());
     }
 
     //================================
