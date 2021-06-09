@@ -6,6 +6,7 @@ import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.extend.validation.annotation.Valid;
+import org.noear.water.utils.Datetime;
 import wateradmin.Config;
 import wateradmin.dso.Session;
 import wateradmin.viewModels.ViewModel;
@@ -59,7 +60,8 @@ public class BaseController {
             viewModel.put("is_operator", is_operator);
         }
 
-        viewModel.put("currenttime", "(" + Instant.now().toString() + ")");
+
+        viewModel.put("currenttime", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)"));
         viewModel.put("ref_url", Context.current().header("referer"));
         viewModel.put("paas_uri", Config.paas_uri());
         viewModel.put("raas_uri", Config.raas_uri());
