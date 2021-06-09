@@ -1,6 +1,7 @@
 package wateradmin.controller.msg;
 
 import org.noear.solon.extend.auth.annotation.AuthRoles;
+import org.noear.solon.extend.validation.annotation.NotEmpty;
 import org.noear.water.WaterClient;
 
 import org.noear.solon.annotation.Controller;
@@ -41,6 +42,7 @@ public class MsgController extends BaseController {
     }
 
     //提交消息调试
+    @NotEmpty({"msg_key","topic_name","receive_key"})
     @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id, String msg_key, String topic_name, Integer dist_count, String content, String receive_key, String url) throws Exception {
         if (dist_count == null) {
@@ -79,6 +81,7 @@ public class MsgController extends BaseController {
         return view("msg/send");
     }
 
+    @NotEmpty({"message","topic"})
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/send/ajax/dosend")
     public ViewModel sendMessage(String topic, String message, String tags) throws Exception {
@@ -93,29 +96,9 @@ public class MsgController extends BaseController {
         return viewModel;
     }
 
-
-    //消息清理
-//    @Mapping("/msg/clean")
-//    public ModelAndView clean(){
-//        return view("msg/msg_clean");
-//    }
-
-//    //执行消息清理
-//    @Mapping("/msg/clean/ajax/submitClean")
-//    public ViewModel submitClean(Integer state) throws SQLException{
-//        boolean is_admin = Session.current().getIsAdmin()>0;
-//        if (is_admin == false) {
-//            return viewModel.code(0,"没有权限！");
-//        }
-//        else {
-//            int i = ProtocolHub.messageSource().deleteMsg(state);
-//            return viewModel.code(1,"成功清理" + i + "消息！");
-//        }
-//    }
-
     //后端加密
     @Mapping("/msg/debug/ajax/getSign")
-    public HashMap<String, String> getSign(Long id, String msg_key, String topic_name, String content, String receive_key) {
+    public HashMap<String, String> getSign(String msg_key, String topic_name, String content, String receive_key) {
         StringBuilder sb = new StringBuilder(200);
 
         sb.append(msg_key).append("#");
