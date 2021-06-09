@@ -10,6 +10,8 @@ import wateradmin.Config;
 import wateradmin.dso.Session;
 import wateradmin.viewModels.ViewModel;
 
+import java.time.LocalDateTime;
+
 
 /**
  * Created by noear on 14-9-11.
@@ -24,8 +26,7 @@ public class BaseController {
     * @return 输出一个视图（自动放置viewModel）
     * @param viewName 视图名字(内部uri)
     * */
-    public ModelAndView view(String viewName)
-    {
+    public ModelAndView view(String viewName) {
         //设置必要参数
         viewModel.put("root", "");
 
@@ -40,17 +41,17 @@ public class BaseController {
         viewModel.put("puid", Session.current().getPUID());
         viewModel.put("cn_name", Session.current().getUserName());
 
-        viewModel.put("is_setup", Solon.cfg().isSetupMode()?1:0);
+        viewModel.put("is_setup", Solon.cfg().isSetupMode() ? 1 : 0);
 
-        if(Solon.cfg().isSetupMode()){
+        if (Solon.cfg().isSetupMode()) {
             //支持设置模式
             viewModel.put("is_admin", 1);
             viewModel.put("is_operator", 1);
-        }else {
+        } else {
             int is_admin = Session.current().getIsAdmin();
             int is_operator = Session.current().getIsOperator();
-            if(is_admin==1){
-                is_operator=1;
+            if (is_admin == 1) {
+                is_operator = 1;
             }
 
             viewModel.put("is_admin", is_admin);
@@ -58,11 +59,12 @@ public class BaseController {
         }
 
 
+        viewModel.put("currenttime", "(" + LocalDateTime.now().toString() + ")");
         viewModel.put("ref_url", Context.current().header("referer"));
-        viewModel.put("paas_uri",Config.paas_uri());
-        viewModel.put("raas_uri",Config.raas_uri());
+        viewModel.put("paas_uri", Config.paas_uri());
+        viewModel.put("raas_uri", Config.raas_uri());
 
-        return viewModel.view(viewName+".ftl");
+        return viewModel.view(viewName + ".ftl");
     }
 
     /*
