@@ -1,10 +1,13 @@
 package wateradmin.controller.paas;
 
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
+import org.noear.water.WaterClient;
+import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
 import wateradmin.controller.BaseController;
@@ -25,6 +28,7 @@ import java.util.List;
 @Controller
 @Mapping("/paas/file")
 public class FileController extends BaseController {
+    static WaterLogger paasLog = new WaterLogger("water_log_paas");
 
     @Mapping("api/home")
     public ModelAndView nav_api(String tag_name, String key) throws SQLException {
@@ -159,9 +163,7 @@ public class FileController extends BaseController {
 
         PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
 
-        Object tmp = ajax_save(ctx, data, PaasFileType.api);
-
-        return tmp;
+        return ajax_save(ctx, data, PaasFileType.api);
     }
 
     @Mapping("pln/ajax/save")
@@ -171,6 +173,11 @@ public class FileController extends BaseController {
         data.set("plan_begin_time", ctx.param("plan_begin_time"));
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
+
+        String tag1 = ctx.param("tag", "");
+        String tag2 = ctx.param("path", "");
+
+        paasLog.warn("_plan", tag1, tag2, "", "New setting: " + ONode.stringify(ctx.paramMap()));
 
         return ajax_save(ctx, data, PaasFileType.pln);
     }
