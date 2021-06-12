@@ -3,8 +3,8 @@ package waterapi.dso.validation;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.annotation.Whitelist;
-import org.noear.solon.extend.validation.annotation.WhitelistValidator;
+import org.noear.solon.validation.annotation.Whitelist;
+import org.noear.solon.validation.annotation.WhitelistValidator;
 import waterapi.dso.IPUtils;
 import waterapi.dso.db.DbWaterCfgApi;
 

@@ -3,7 +3,7 @@ package waterapi.controller.run;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.utils.RuntimeStatus;
 import org.noear.water.utils.RuntimeUtils;
 import waterapi.Config;

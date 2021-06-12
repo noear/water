@@ -1,6 +1,6 @@
 package wateradmin.controller.tool;
 
-import org.noear.solon.extend.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 
 

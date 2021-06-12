@@ -1,7 +1,7 @@
 package wateradmin.controller.msg;
 
-import org.noear.solon.extend.auth.annotation.AuthRoles;
-import org.noear.solon.extend.validation.annotation.NotEmpty;
+import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.WaterClient;
 
 import org.noear.solon.annotation.Controller;

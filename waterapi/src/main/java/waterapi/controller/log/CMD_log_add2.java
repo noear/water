@@ -6,7 +6,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.ProtocolHub;

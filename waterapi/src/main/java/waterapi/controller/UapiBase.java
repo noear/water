@@ -4,7 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Render;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.annotation.Valid;
+import org.noear.solon.validation.annotation.Valid;
 
 @Valid
 public class UapiBase implements Render {

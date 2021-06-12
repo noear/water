@@ -5,7 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.extend.validation.annotation.Valid;
+import org.noear.solon.validation.annotation.Valid;
 import org.noear.water.utils.Datetime;
 import wateradmin.Config;
 import wateradmin.dso.Session;

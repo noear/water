@@ -5,7 +5,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.extend.validation.annotation.Whitelist;
+import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;

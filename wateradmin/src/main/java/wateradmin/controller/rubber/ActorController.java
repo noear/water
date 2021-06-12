@@ -2,7 +2,7 @@ package wateradmin.controller.rubber;
 
 
 import com.alibaba.fastjson.JSONObject;
-import org.noear.solon.extend.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 
 

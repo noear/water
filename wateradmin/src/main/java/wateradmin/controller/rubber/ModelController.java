@@ -5,7 +5,7 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.solon.extend.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.*;
 
 

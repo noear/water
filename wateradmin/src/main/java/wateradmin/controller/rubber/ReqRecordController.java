@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.extend.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthRoles;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
