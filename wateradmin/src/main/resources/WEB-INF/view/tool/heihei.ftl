@@ -58,9 +58,9 @@
                 <tr>
                     <th></th>
                     <td>
-                        <#if is_admin == 1>
+                        <@hasRole name="is_admin">
                             <button type="button" onclick="debug()">发送</button>
-                        </#if>
+                        </@hasRole>
                     </td>
                 </tr>
             </table>

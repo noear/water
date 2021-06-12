@@ -4,6 +4,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Note;
 import org.noear.solon.annotation.Param;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotNull;
@@ -11,6 +12,7 @@ import org.noear.solon.validation.annotation.NotZero;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.dso.TagUtil;
@@ -90,6 +92,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
+    @AuthRoles(SessionRoles.role_admin)
     @NotEmpty({"tag", "logger"})
     @Mapping("logger/edit/ajax/save")
     public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws SQLException {
@@ -110,6 +113,7 @@ public class LoggerController extends BaseController {
     }
 
     //日志配置ajax 保存功能。
+    @AuthRoles(SessionRoles.role_admin)
     @NotZero("logger_id")
     @Mapping("logger/edit/ajax/del")
     public ViewModel delLogger(Integer logger_id) throws SQLException {

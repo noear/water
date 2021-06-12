@@ -1,6 +1,5 @@
 package waterapi;
 
-import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
@@ -9,14 +8,12 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.DbUtils;
-import waterapi.models.ConfigModel;
 
 import java.util.Properties;
 

@@ -5,6 +5,7 @@ import org.noear.snack.core.TypeRef;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
@@ -12,6 +13,7 @@ import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.dso.TagUtil;
@@ -81,6 +83,7 @@ public class WhitelistController extends BaseController {
     }
 
     //保存ip白名单新增
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("edit/ajax/save")
     public ViewModel saveWhitelistAdd(Integer row_id, String tag,String type, String value, String note) throws Exception {
         if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
@@ -102,6 +105,7 @@ public class WhitelistController extends BaseController {
 
 
     //删除IP白名单记录
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("ajax/del")
     public ViewModel saveWhitelistDel(Integer row_id) throws Exception {
         if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
