@@ -58,9 +58,9 @@
                 <tr>
                     <th></th>
                     <td>
-                        <@hasRole name="is_admin">
+                        <@authRole name="water_p_admin">
                             <button type="button" onclick="debug()">发送</button>
-                        </@hasRole>
+                        </@authRole>
                     </td>
                 </tr>
             </table>
