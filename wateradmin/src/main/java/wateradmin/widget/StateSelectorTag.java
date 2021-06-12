@@ -23,7 +23,6 @@ public class StateSelectorTag implements TemplateDirectiveModel {
     }
 
     public void build(Environment env, Map map) throws Exception {
-
         NvMap mapExt = new NvMap(map);
 
         clientID = mapExt.getOrDefault("clientID","");
