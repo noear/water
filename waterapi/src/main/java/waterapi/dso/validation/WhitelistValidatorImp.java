@@ -11,8 +11,9 @@ import waterapi.dso.db.DbWaterCfgApi;
 import java.sql.SQLException;
 
 public class WhitelistValidatorImp extends WhitelistValidator {
+
     @Override
-    public Result validate(Context ctx, Whitelist anno, String name, StringBuilder tmp) {
+    public Result validateOfContext(Context ctx, Whitelist anno, String name, StringBuilder tmp) {
         if (Solon.cfg().isWhiteMode()) {
             String ip = IPUtils.getIP(ctx);
 
