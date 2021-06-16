@@ -101,6 +101,7 @@ public class DbPaaSApi {
         return db().table("paas_file").usingExpr(true)
                 .set("plan_last_time","$NULL")
                 .set("plan_last_timespan",0)
+                .set("plan_state",0)
                 .whereIn("file_id", list)
                 .update();
     }
@@ -181,7 +182,6 @@ public class DbPaaSApi {
                 .set("edit_mode", wm.edit_mode)
                 .set("content_type", wm.content_type)
                 .set("content", wm.content)
-                .set("plan_state", wm.plan_state)
                 .set("plan_begin_time", wm.plan_begin_time)
                 .set("plan_interval", wm.plan_interval)
                 .set("plan_max", wm.plan_max)
