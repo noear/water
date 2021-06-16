@@ -180,6 +180,7 @@
                         <imageTag>${project.version}</imageTag>
                         <imageTag>latest</imageTag>
                     </imageTags>
+                    <pushImageTag>true</pushImageTag>
                     <!--镜像的FROM，使用java官方镜像-->
                     <baseImage>adoptopenjdk/openjdk11</baseImage>
                     <!--该镜像的容器启动后，直接运行spring boot工程-->
