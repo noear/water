@@ -175,6 +175,9 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <volumes>
+                        <volume>/waterraas_ext</volume>
+                    </volumes>
                 </configuration>
             </plugin>
         </plugins>

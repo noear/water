@@ -192,6 +192,9 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+                    <volumes>
+                        <volume>/waterpaas_ext</volume>
+                    </volumes>
                 </configuration>
             </plugin>
         </plugins>
