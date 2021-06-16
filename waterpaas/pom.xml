@@ -175,6 +175,7 @@
                 <configuration>
                     <!--镜像名，这里用工程名-->
                     <imageName>${project.artifactId}</imageName>
+                    <newName>water/${project.artifactId}</newName>
                     <!--TAG,这里用工程版本号-->
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
