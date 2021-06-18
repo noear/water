@@ -9,7 +9,6 @@
     <script src="${js}/lib.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-
     </style>
 </head>
 <body>
@@ -21,7 +20,7 @@
                     <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
                     <button type="submit">查询</button>
                     <#if is_admin = 1>
-                        <button onclick="editTask(0);" type="button" class="edit mar10-l" >新增</button>
+                        <a href="/tool/monitor/edit?monitor_id=0" class="btn edit mar10-l" >新增</a>
                     </#if>
                 </form>
             </left>
