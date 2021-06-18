@@ -171,6 +171,7 @@ public class FileController extends BaseController {
         DataItem data = new DataItem();
 
         data.set("plan_begin_time", ctx.param("plan_begin_time"));
+        data.set("plan_last_time", ctx.param("plan_last_time"));
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
 
