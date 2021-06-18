@@ -68,7 +68,7 @@ public class MonitorController extends BaseController {
 
     @Mapping("monitor/edit")
     public ModelAndView editMonitor(String tag,Integer monitor_id) throws SQLException {
-        if(monitor_id == null){
+        if (monitor_id == null) {
             monitor_id = 0;
         }
 
@@ -77,19 +77,23 @@ public class MonitorController extends BaseController {
         MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);
 
         List<String> option_sources = new ArrayList<>();
-        for(ConfigModel config : cfgs){
-            option_sources.add(config.tag+"/"+config.key);
+        for (ConfigModel config : cfgs) {
+            option_sources.add(config.tag + "/" + config.key);
         }
 
-        if(cfgs == null){
+        if (cfgs == null) {
             cfgs = new ArrayList<>();
         }
 
-        viewModel.put("cfgs",cfgs);
-        viewModel.put("option_sources",option_sources);
+        viewModel.put("cfgs", cfgs);
+        viewModel.put("option_sources", option_sources);
 
-        viewModel.put("monitor",monitor);
-        return view("tool/monitor_edit");
+        viewModel.put("monitor", monitor);
+        if (Session.current().isAdmin()) {
+            return view("tool/monitor_edit");
+        } else {
+            return view("tool/monitor_view");
+        }
     }
 
 
