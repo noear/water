@@ -122,6 +122,14 @@
             <tr>
                 <th>任务执行次数</th><td><input type="text" id="plan_max" value="${m1.plan_max!0}"/><span class="t5">（0为不限次数）</span></td>
             </tr>
+            <tr>
+                <th>最后执行时间</th><td><input type="text" id="plan_last_time"
+                                          value="${(m1.plan_last_time?string("yyyy-MM-dd HH:mm:ss"))!}"
+                                          jt-laydate="datetime"
+                                          placeholder="yyyy-MM-dd HH:mm:ss"
+                                          autocomplete="off"/>
+                </td>
+            </tr>
             </tbody>
         </table>
     </form>
