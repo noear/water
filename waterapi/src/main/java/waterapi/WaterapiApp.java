@@ -25,8 +25,10 @@ public class WaterapiApp {
 					}
 				})
 				.start(WaterapiApp.class, args, app -> {
-					app.enableStaticfiles(false);
+					//加载环境变量(支持弹性容器设置的环境)
 					app.cfg().loadEnv("water.");
+
+					app.enableStaticfiles(false);
 
 					Config.tryInit();
 
