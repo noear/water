@@ -16,7 +16,7 @@ import waterapi.utils.PreheatUtils;
 public class WaterapiApp {
 
 	public static void main(String[] args) {
-		SolonApp app = new SolonBuilder()
+		new SolonBuilder()
 				.onError(err -> {
 					Context ctx = Context.current();
 

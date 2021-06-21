@@ -26,7 +26,7 @@ public final class PreheatUtils {
         try {
             HttpUtils http = HttpUtils.http("http://localhost:" + Solon.global().port() + path);
             handling.accept(http);
-            System.out.println(path + " : preheat succeeded");
+            System.out.println("[Preheat] " + path + " : preheat succeeded");
         } catch (Throwable e) {
             e.printStackTrace();
         }
