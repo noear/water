@@ -8,7 +8,6 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
@@ -36,6 +35,7 @@ public class WateradminApp {
         NvMap argx = NvMap.from(args);
 
         //支持环境控制
+        //
         String waterSetup = System.getenv("water.setup");
         if (waterSetup != null) {
             argx.set("setup", waterSetup);
@@ -49,7 +49,12 @@ public class WateradminApp {
     }
 
     private static void setStart(NvMap argx) {
-        {
+        if (System.getenv("water.dataSource.schema") != null) {
+            System.setProperty("water.dataSource.schema", System.getenv("water.dataSource.schema"));
+            System.setProperty("water.dataSource.url", System.getenv("water.dataSource.url"));
+            System.setProperty("water.dataSource.username", System.getenv("water.dataSource.username"));
+            System.setProperty("water.dataSource.password", System.getenv("water.dataSource.password"));
+        } else {
             String s = argx.get("s");
             String u = argx.get("u");
             String p = argx.get("p");
@@ -59,9 +64,11 @@ public class WateradminApp {
                 System.setProperty("water.dataSource.url", "jdbc:mysql://" + s + "/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
                 System.setProperty("water.dataSource.username", u);
                 System.setProperty("water.dataSource.password", p);
-                System.setProperty("water.dataSource.driverClassName", "com.mysql.jdbc.Driver");
             }
         }
+
+
+        System.setProperty("water.dataSource.driverClassName", "com.mysql.jdbc.Driver");
 
 
         System.err.println("[Water] setup mode start...");
