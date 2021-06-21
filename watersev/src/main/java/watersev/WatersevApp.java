@@ -1,6 +1,7 @@
 package watersev;
 
 import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
@@ -12,6 +13,7 @@ import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
 import org.noear.water.utils.CallUtils;
+import org.noear.water.utils.TextUtils;
 import watersev.dso.JobRunnerEx;
 import watersev.dso.db.DbWaterCfgApi;
 
@@ -30,8 +32,18 @@ public class WatersevApp {
         //是否有端口
         boolean has_server_port = xMap.containsKey("server.port");
 
+        //支持环境变量取sss值（方便k8s控制）
+        String sss = System.getenv("water.sss");
 
-        JobRunner.global = new JobRunnerEx(xMap.get("sss"));
+        if (xMap.containsKey("sss")) {
+            sss = xMap.get("sss");
+        }
+
+        if(TextUtils.isNotEmpty(sss)) {
+            xMap.put("sss", sss);
+        }
+
+        JobRunner.global = new JobRunnerEx(sss);
         JtRun.init();
 
         Solon.start(WatersevApp.class, xMap, (x) -> {
@@ -56,7 +68,7 @@ public class WatersevApp {
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
         }).onError((ex) -> {
-            WaterClient.Log.append("water_log_sev", Level.ERROR,"global", "", ex);
+            WaterClient.Log.append("water_log_sev", Level.ERROR, "global", "", ex);
         });
 
         JtRun.xfunInit();
