@@ -65,6 +65,18 @@ public class Config {
             int service_port = Solon.global().port();
 
             Properties prop = Solon.cfg().getProp("water.dataSource");
+            if (prop.size() == 0) {
+                if (System.getenv("water.dataSource.schema") != null) {
+                    prop.put("schema", System.getenv("water.dataSource.schema"));
+                    prop.put("url", System.getenv("water.dataSource.url"));
+                    prop.put("username", System.getenv("water.dataSource.password"));
+                    prop.put("password", System.getenv("water.dataSource.password"));
+                }
+            }
+            if (prop.size() > 0) {
+                prop.put("driverClassName", "com.mysql.jdbc.Driver");
+            }
+
 
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
