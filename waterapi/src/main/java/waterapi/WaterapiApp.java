@@ -27,6 +27,7 @@ public class WaterapiApp {
 
 		Solon.start(WaterapiApp.class, args, app -> {
 			app.enableStaticfiles(false);
+			app.cfg().loadEnv("water.");
 
 			Config.tryInit();
 

@@ -49,37 +49,32 @@ public class WateradminApp {
     }
 
     private static void setStart(NvMap argx) {
-        if (System.getenv("water.dataSource.schema") != null) {
-            System.setProperty("water.dataSource.schema", System.getenv("water.dataSource.schema"));
-            System.setProperty("water.dataSource.url", System.getenv("water.dataSource.url"));
-            System.setProperty("water.dataSource.username", System.getenv("water.dataSource.username"));
-            System.setProperty("water.dataSource.password", System.getenv("water.dataSource.password"));
-        } else {
-            String s = argx.get("s");
-            String u = argx.get("u");
-            String p = argx.get("p");
-
-            if (Utils.isNotEmpty(s) && Utils.isNotEmpty(u) && Utils.isNotEmpty(p)) {
-                System.setProperty("water.dataSource.schema", "water");
-                System.setProperty("water.dataSource.url", "jdbc:mysql://" + s + "/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
-                System.setProperty("water.dataSource.username", u);
-                System.setProperty("water.dataSource.password", p);
-            }
-        }
-
-        System.setProperty("water.dataSource.driverClassName", "com.mysql.jdbc.Driver");
-
-
         System.err.println("[Water] setup mode start...");
 
         //添加扩展目录(直接使用 waterapi 的扩展目录)
         argx.set("extend", "waterapi_ext");
 
         SolonApp app = Solon.start(Setup.class, argx, x -> {
+            //加载环境变量(支持弹性容器设置的环境)
+            x.cfg().loadEnv("water.");
+
+            String s = argx.get("s");
+            String u = argx.get("u");
+            String p = argx.get("p");
+
+            if (Utils.isNotEmpty(s) && Utils.isNotEmpty(u) && Utils.isNotEmpty(p)) {
+                System.setProperty(WW.cfg_water_ds_schema, "water");
+                System.setProperty(WW.cfg_water_ds_url, "jdbc:mysql://" + s + "/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+                System.setProperty(WW.cfg_water_ds_username, u);
+                System.setProperty(WW.cfg_water_ds_password, p);
+            }
+
             x.beanScan(EnumTag.class);
             x.beanMake(PropController.class);
             x.beanMake(WhitelistController.class);
         });
+
+        System.setProperty(WW.cfg_water_ds_driverClassName, "com.mysql.jdbc.Driver");
 
         Props ps = app.cfg().getProp("water.dataSource");
 

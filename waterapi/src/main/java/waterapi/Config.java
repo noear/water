@@ -41,8 +41,6 @@ public class Config {
     public static ConfigM water_log_store;
     public static ConfigM water_msg_store;
 
-    private static WaterLoggerLocal log = new WaterLoggerLocal();
-
 
     //================================
     //
@@ -66,19 +64,9 @@ public class Config {
 
             Properties prop = Solon.cfg().getProp("water.dataSource");
 
-            if (prop.size() == 0) {
-                if (System.getenv("water.dataSource.schema") != null) {
-                    prop.put("schema", System.getenv("water.dataSource.schema"));
-                    prop.put("url", System.getenv("water.dataSource.url"));
-                    prop.put("username", System.getenv("water.dataSource.username"));
-                    prop.put("password", System.getenv("water.dataSource.password"));
-                }
-            }
-
             if (prop.size() > 0) {
                 prop.put("driverClassName", "com.mysql.jdbc.Driver");
             }
-
 
             water = DbUtils.getDb(prop);
             water_msg = cfg(WW.water_msg).getDb(true);
@@ -96,7 +84,6 @@ public class Config {
             } else {
                 rd_track = cm2.getRd(5);
             }
-
 
             water_cache_header = cfg("water_cache_header")
                     .getString("WATER2_CACHE") + "_API2";

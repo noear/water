@@ -16,6 +16,15 @@ public class WW {
     public static final String cfg_water_log_interval = "water.log.pipeline.interval";
     public static final String cfg_water_log_packetSize = "water.log.pipeline.packetSize";
 
+    public static final String cfg_water_ds_schema = "water.dataSource.schema";
+    public static final String cfg_water_ds_url = "water.dataSource.url";
+    public static final String cfg_water_ds_username = "water.dataSource.username";
+    public static final String cfg_water_ds_password = "water.dataSource.password";
+    public static final String cfg_water_ds_driverClassName = "water.dataSource.driverClassName";
+
+    public static final String cfg_water_sss = "water.sss";
+    public static final String cfg_water_setup = "water.setup";
+
     public static final String cfg_data_header = "#Data#: ";
 
 
