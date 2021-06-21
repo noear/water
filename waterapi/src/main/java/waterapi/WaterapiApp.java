@@ -1,5 +1,6 @@
 package waterapi;
 
+import org.noear.solon.SolonApp;
 import org.noear.solon.SolonBuilder;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
@@ -10,11 +11,12 @@ import waterapi.dso.CacheUtils;
 import waterapi.dso.LogUtils;
 import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.utils.PreheatUtils;
 
 public class WaterapiApp {
 
 	public static void main(String[] args) {
-		new SolonBuilder()
+		SolonApp app = new SolonBuilder()
 				.onError(err -> {
 					Context ctx = Context.current();
 
@@ -24,11 +26,11 @@ public class WaterapiApp {
 						LogUtils.error(ctx, err);
 					}
 				})
-				.start(WaterapiApp.class, args, app -> {
+				.start(WaterapiApp.class, args, x -> {
 					//加载环境变量(支持弹性容器设置的环境)
-					app.cfg().loadEnv("water.");
+					x.cfg().loadEnv("water.");
 
-					app.enableStaticfiles(false);
+					x.enableStaticfiles(false);
 
 					Config.tryInit();
 
@@ -45,5 +47,8 @@ public class WaterapiApp {
 					ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 
 				});
+
+
+		PreheatUtils.preheat("/cfg/get/?tag=water");
 	}
 }

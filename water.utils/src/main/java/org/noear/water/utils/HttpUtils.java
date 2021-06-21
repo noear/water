@@ -5,6 +5,7 @@ import okhttp3.internal.Util;
 import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
+import org.noear.water.utils.ext.Act1Ex;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,6 +38,7 @@ public class HttpUtils {
     public static HttpUtils http(String url) {
         return new HttpUtils(url);
     }
+
 
     private Charset _charset;
     private Map<String, String> _cookies;
