@@ -49,6 +49,7 @@ public class WaterapiApp {
 				});
 
 
+		PreheatUtils.preheat("/run/check/");
 		PreheatUtils.preheat("/cfg/get/?tag=water");
 	}
 }
