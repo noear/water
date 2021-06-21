@@ -32,7 +32,7 @@ public class WatersevApp {
         //是否有端口
         boolean has_server_port = xMap.containsKey("server.port");
 
-        //支持环境变量取sss值（方便k8s控制）
+        //加载环境变量(支持弹性容器设置的环境)
         String sss = System.getenv("water.sss");
 
         if (xMap.containsKey("sss")) {
