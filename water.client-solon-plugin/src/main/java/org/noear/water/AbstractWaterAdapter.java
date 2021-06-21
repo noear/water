@@ -135,7 +135,7 @@ public abstract class AbstractWaterAdapter {
     }
 
 
-    //2.2.1.内部消息处理
+    //2.2.1-r1.内部消息处理
     protected boolean messageReceiveForInner(MessageM msg) {
         if (WW.msg_ucache_topic.equals(msg.topic) == false &&
                 WW.msg_uconfig_topic.equals(msg.topic) == false) {

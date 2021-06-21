@@ -35,9 +35,15 @@ public class WateradminApp {
 
         NvMap argx = NvMap.from(args);
 
-        if(argx.getInt("setup") == 1){
+        //支持环境控制
+        String waterSetup = System.getenv("water.setup");
+        if (waterSetup != null) {
+            argx.set("setup", waterSetup);
+        }
+
+        if (argx.getInt("setup") == 1) {
             setStart(argx);
-        }else{
+        } else {
             runStart(argx);
         }
     }

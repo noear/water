@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>water-parent</artifactId>
-    <version>2.2.1</version>
+    <version>2.2.1-r1</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -43,7 +43,7 @@
         <solon.ver>1.5.5</solon.ver>
         <weed3.ver>3.3.17</weed3.ver>
         <snack3.ver>3.1.18</snack3.ver>
-        <water.ver>2.2.1</water.ver>
+        <water.ver>2.2.1-r1</water.ver>
         <HikariCP.ver>4.0.3</HikariCP.ver>
 
         <bcf.ver>2.1.1</bcf.ver>
