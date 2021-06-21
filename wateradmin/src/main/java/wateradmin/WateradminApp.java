@@ -67,7 +67,6 @@ public class WateradminApp {
             }
         }
 
-
         System.setProperty("water.dataSource.driverClassName", "com.mysql.jdbc.Driver");
 
 
