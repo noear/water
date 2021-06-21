@@ -28,10 +28,6 @@ import javax.sql.DataSource;
 
 public class WateradminApp {
     public static void main(String[] args) {
-        //
-        // http://139.224.74.31:9371/cfg/get/?tag=water
-        //
-
         NvMap argx = NvMap.from(args);
 
         //支持环境控制
