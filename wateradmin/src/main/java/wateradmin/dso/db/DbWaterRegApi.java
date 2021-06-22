@@ -5,6 +5,7 @@ import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import wateradmin.dso.NoticeUtils;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.setup.Setup;
@@ -58,7 +59,7 @@ public class DbWaterRegApi {
             return;
         }
 
-        WaterClient.Notice.updateCache("upstream:"+sev);
+        NoticeUtils.updateCache("upstream:"+sev);
     }
 
     //重置服务

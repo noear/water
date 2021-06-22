@@ -2,15 +2,14 @@ package wateradmin.dso.db;
 
 import org.noear.snack.ONode;
 import org.noear.water.WW;
-import org.noear.water.WaterClient;
 import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
-import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ConfigType;
+import wateradmin.dso.NoticeUtils;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.LoggerModel;
@@ -221,9 +220,9 @@ public class DbWaterCfgApi {
                 .andEq("key", ori_key.trim())
                 .update();
 
-        WaterClient.Notice.updateCache("upstream:" + ori_key);
+        NoticeUtils.updateCache("upstream:" + ori_key);
         if (ori_key.equals(key) == false) {
-            WaterClient.Notice.updateCache("upstream:" + key);
+            NoticeUtils.updateCache("upstream:" + key);
         }
     }
 
@@ -304,11 +303,11 @@ public class DbWaterCfgApi {
 
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;
-            WaterClient.Notice.updateConfig(tag, key);
+            NoticeUtils.updateConfig(tag, key);
             return isOk;
         } else {
             boolean isOk = db.insert() > 0;
-            WaterClient.Notice.updateConfig(tag, key);
+            NoticeUtils.updateConfig(tag, key);
             return isOk;
         }
     }

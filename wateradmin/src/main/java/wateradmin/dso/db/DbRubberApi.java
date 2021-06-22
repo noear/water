@@ -12,6 +12,7 @@ import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.Utils;
 import wateradmin.Config;
+import wateradmin.dso.NoticeUtils;
 import wateradmin.models.water_rebber.*;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_rebber.ModelFieldModel;
@@ -120,7 +121,7 @@ public class DbRubberApi {
 
             if (isOk > 0) {
                 //添加热更新机制 //通过water通知订阅方
-                WaterClient.Notice.updateCache("model:" + tag + "/" + name);
+                NoticeUtils.updateCache("model:" + tag + "/" + name);
             }
 
             return isOk;
@@ -371,7 +372,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
+            NoticeUtils.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -510,7 +511,7 @@ public class DbRubberApi {
 
         //添加热更新机制 //通过water通知订阅方
         ModelModel m = getModelById(model_id);
-        WaterClient.Notice.updateCache("model:" + m.tag + "/" + m.name);
+        NoticeUtils.updateCache("model:" + m.tag + "/" + m.name);
 
 
         return isOk;
@@ -634,7 +635,7 @@ public class DbRubberApi {
 
         if (isOk) { //更新后通知一下变更
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
+            NoticeUtils.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return isOk;
@@ -1152,7 +1153,7 @@ public class DbRubberApi {
 
         {
             SchemeModel m = getSchemeById(scheme_id);
-            WaterClient.Notice.updateCache("scheme:" + m.tag + "/" + m.name);
+            NoticeUtils.updateCache("scheme:" + m.tag + "/" + m.name);
         }
 
         return resp;
@@ -1299,7 +1300,7 @@ public class DbRubberApi {
         if (block_id > 0) {
             long isOk = tb.where("block_id = ?", block_id).update();
 
-            WaterClient.Notice.updateCache("block:" + tag + "/" + name);
+            NoticeUtils.updateCache("block:" + tag + "/" + name);
 
             return isOk;
         } else {
@@ -1335,7 +1336,7 @@ public class DbRubberApi {
                 .set("last_updatetime", vm.last_updatetime)
                 .insertBy("tag,name");
 
-        WaterClient.Notice.updateCache("block:" + vm.tag + "/" + vm.name);
+        NoticeUtils.updateCache("block:" + vm.tag + "/" + vm.name);
     }
 
     //获取数据块item集合

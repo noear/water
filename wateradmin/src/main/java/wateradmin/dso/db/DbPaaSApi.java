@@ -6,6 +6,7 @@ import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
+import wateradmin.dso.NoticeUtils;
 import wateradmin.models.water_paas.PaasFileModel;
 import wateradmin.models.water_paas.PaasFileType;
 import wateradmin.models.TagCountsModel;
@@ -114,7 +115,7 @@ public class DbPaaSApi {
             db().table("paas_file").whereEq("file_id", file_id).update(data);
 
             //更知:缓存更新
-            WaterClient.Notice.updateCache("paas:" + file_id);
+            NoticeUtils.updateCache("paas:" + file_id);
         } else {
             file_id = db().table("paas_file").insert(data);
         }
@@ -129,7 +130,7 @@ public class DbPaaSApi {
                     .update();
 
             //更知:缓存更新
-            WaterClient.Notice.updateCache("paas:" + file_id);
+            NoticeUtils.updateCache("paas:" + file_id);
 
             /** 记录历史版本 */
             DbWaterVerApi.logVersion(db(),"paas_file", "file_id", file_id);
@@ -210,7 +211,7 @@ public class DbPaaSApi {
 
         //更知:缓存更新
         for (Object file_id : list) {
-            WaterClient.Notice.updateCache("paas:" + file_id);
+            NoticeUtils.updateCache("paas:" + file_id);
         }
     }
 }
