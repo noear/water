@@ -32,8 +32,8 @@ public class WaterapiApp {
 
 					x.enableStaticfiles(false);
 
+					//尝试初始化
 					Config.tryInit();
-
 
 					TrackBuffer.singleton().bind(Config.rd_track);
 
@@ -46,6 +46,8 @@ public class WaterapiApp {
 					ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
 					ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
 
+					//尝试注册服务
+					Config.tryRegService();
 				});
 
 

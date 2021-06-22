@@ -60,8 +60,6 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            int service_port = Solon.global().port();
-
             Properties prop = Solon.cfg().getProp("water.dataSource");
 
             if (prop.size() > 0) {
@@ -93,24 +91,26 @@ public class Config {
 
             water_msg_queue = cfg(WW.water_msg_queue);
 
-            try {
-                localHost = LocalUtils.getLocalAddr(service_port);
-                String code_location = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-
-                //本地IP订阅
-                //
-
-                DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
-                        localHost,
-                        WW.path_run_check,
-                        0,
-                        code_location,
-                        Solon.cfg().isDriftMode());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
             initWeedOnException();
+        }
+    }
+
+    public static void tryRegService(){
+        try {
+            localHost = LocalUtils.getLocalAddr(Solon.global().port());
+            String code_location = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
+            //本地IP订阅
+            //
+
+            DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
+                    localHost,
+                    WW.path_run_check,
+                    0,
+                    code_location,
+                    Solon.cfg().isDriftMode());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
