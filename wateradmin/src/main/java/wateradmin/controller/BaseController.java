@@ -58,13 +58,14 @@ public class BaseController {
 
             viewModel.put("is_admin", is_admin);
             viewModel.put("is_operator", is_operator);
+
+            viewModel.put("paas_uri", Config.paas_uri());
+            viewModel.put("raas_uri", Config.raas_uri());
         }
 
 
         viewModel.put("currenttime", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)"));
         viewModel.put("ref_url", Context.current().header("referer"));
-        viewModel.put("paas_uri", Config.paas_uri());
-        viewModel.put("raas_uri", Config.raas_uri());
 
         return viewModel.view(viewName + ".ftl");
     }

@@ -127,13 +127,13 @@ public abstract class AbstractWaterAdapter {
     }
 
 
-    //2.2.2.处理消息 //可以重写
+    //2.2.2-r3.处理消息 //可以重写
     public boolean messageReceiveHandler(MessageM msg) throws Throwable {
         return true;
     }
 
 
-    //2.2.2.内部消息处理
+    //2.2.2-r3.内部消息处理
     protected boolean messageReceiveForInner(MessageM msg) {
         if (WW.msg_ucache_topic.equals(msg.topic) == false &&
                 WW.msg_uconfig_topic.equals(msg.topic) == false) {
