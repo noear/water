@@ -68,11 +68,11 @@ public abstract class AbstractWaterAdapter {
         messageSubscribeHandler();
     }
 
-    //1.订阅消息的处理 //可以重写
+    //订阅消息的处理 //可以重写
     public void messageSubscribeHandler() {
     }
 
-    //1.1.订阅消息封装，供使用
+    //订阅消息封装，供使用
     private void messageSubscribeTopicLocal(int receive_way, String... topics) throws Exception {
         if(TextUtils.isEmpty(service_secretKey())){ //有没有密钥?
             return;
@@ -127,13 +127,13 @@ public abstract class AbstractWaterAdapter {
     }
 
 
-    //2.2.2-r3.处理消息 //可以重写
+    //处理消息 //可以重写
     public boolean messageReceiveHandler(MessageM msg) throws Throwable {
         return true;
     }
 
 
-    //2.2.2-r3.内部消息处理
+    //内部消息处理
     protected boolean messageReceiveForInner(MessageM msg) {
         if (WW.msg_ucache_topic.equals(msg.topic) == false &&
                 WW.msg_uconfig_topic.equals(msg.topic) == false) {
