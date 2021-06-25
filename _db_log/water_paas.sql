@@ -14,7 +14,10 @@ ALTER TABLE `paas_file`
 
 -- 2021.06.25
 ALTER TABLE `paas_file`
-    ADD COLUMN `plan_next_time` timestamp NULL COMMENT '计划下次执行时间' AFTER `plan_last_timespan`;
+    ADD COLUMN `plan_next_timestamp` bigint NOT NULL DEFAULT '0' COMMENT '计划下次执行时间戳' AFTER `plan_last_timespan`;
+
+ALTER TABLE `paas_file`
+    ADD INDEX `IX_plan_next_timestamp`(`plan_next_timestamp`) USING BTREE;
 
 
 
