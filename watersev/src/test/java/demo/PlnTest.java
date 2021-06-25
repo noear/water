@@ -1,0 +1,30 @@
+package demo;
+
+import org.junit.Test;
+import org.noear.luffy.task.cron.CronUtils;
+import org.noear.water.utils.Datetime;
+
+import java.util.Date;
+
+/**
+ * @author noear 2021/6/25 created
+ */
+public class PlnTest {
+    @Test
+    public void test1() throws Exception{
+        Datetime datetime = Datetime.parse("2021-05-05 12:12", "yyyy-MM-dd HH:mm");
+
+        Date nexttime = CronUtils.getNextTime("* * * * * ?", datetime.getFulltime());
+
+        System.out.println(new Datetime(nexttime).toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void test2() throws Exception{
+        Datetime datetime = Datetime.parse("2021-05-05 12:12", "yyyy-MM-dd HH:mm");
+
+        Date nexttime = CronUtils.getNextTime("* * 1 * * ?", datetime.getFulltime());
+
+        System.out.println(new Datetime(nexttime).toString("yyyy-MM-dd HH:mm:ss"));
+    }
+}
