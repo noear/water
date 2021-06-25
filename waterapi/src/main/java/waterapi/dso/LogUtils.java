@@ -31,7 +31,7 @@ public class LogUtils {
             StringBuilder content = new StringBuilder(200);
 
             content.append("> ").append(ONode.stringify(ctx.paramMap()));
-            content.append("\n");
+            content.append("\n\n");
             content.append("< ").append(ONode.stringify(ctx.result));
 
             logger.info(tag, null, null, _from, "", content.toString());
