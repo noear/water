@@ -10,3 +10,13 @@ ALTER TABLE `paas_file`
     MODIFY COLUMN `plan_last_time` timestamp NULL DEFAULT NULL COMMENT '计划最后执行时间' AFTER `plan_begin_time`,
     MODIFY COLUMN `create_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' AFTER `plan_count`,
     MODIFY COLUMN `update_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间' AFTER `create_fulltime`;
+
+
+-- 2021.06.25
+ALTER TABLE `paas_file`
+    ADD COLUMN `plan_next_time` timestamp NULL COMMENT '计划下次执行时间' AFTER `plan_last_timespan`;
+
+
+
+
+
