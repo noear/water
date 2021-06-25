@@ -129,7 +129,7 @@ public class PlnController implements IJob {
 
         //1.5.检查执行时间是否到了
         Date nextTime = null;
-        if(task.plan_interval.contains(" ")){
+        if (task.plan_interval.length() > 7 && task.plan_interval.contains(" ")) {
             //说明是： cron
             nextTime = PlnHelper.getNextTimeByCron(task, baseTime);
         }else {
@@ -137,7 +137,8 @@ public class PlnController implements IJob {
             nextTime = PlnHelper.getNextTimeBySimple(task, baseTime);
         }
 
-        if (new Timespan(nextTime).seconds() < 0) {
+        //1.5.1.如果未到执行时间则反回
+        if (System.currentTimeMillis() > nextTime.getTime()) {
             return;
         }
 

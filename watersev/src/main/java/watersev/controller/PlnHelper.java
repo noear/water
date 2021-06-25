@@ -4,13 +4,14 @@ import org.noear.luffy.task.cron.CronUtils;
 import org.noear.water.utils.Datetime;
 import watersev.models.water_paas.PaasFileModel;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
  * @author noear 2021/6/25 created
  */
 public class PlnHelper {
-    public static Date getNextTimeByCron(PaasFileModel task, Date baseTime) {
+    public static Date getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
         return CronUtils.getNextTime(task.plan_interval, baseTime);
     }
 
