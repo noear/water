@@ -31,8 +31,8 @@ public class CMD_job_register extends UapiBase {
     @NotEmpty({"tag", "service", "jobs"})
     @Mapping("/job/register/")
     public Result cmd_exec(String tag, String service, String jobs) throws Exception {
-        if (jobs.startsWith("{") == false || jobs.startsWith("[") == false) {
-            return Result.failure();
+        if (jobs.startsWith("{") == false && jobs.startsWith("[") == false) {
+            return Result.failure("Wrong parameter @jobs");
         }
 
         if (LockUtils.tryLock(Solon.cfg().appName(), ("job_register_" + tag + "_" + service), 30)) {

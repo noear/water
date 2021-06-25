@@ -3,7 +3,6 @@ package waterapi.dso;
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.Command;
 
@@ -19,7 +18,7 @@ public class LogUtils {
         return logger;
     }
 
-    public static void info(String summary, Context ctx) {
+    public static void info(Context ctx) {
         try {
             String tag = ctx.path();
 
@@ -29,13 +28,13 @@ public class LogUtils {
 
             String _from = FromUtils.getFromName(ctx);
 
-            String content = ONode.stringify(ctx.paramMap());
+            StringBuilder content = new StringBuilder(200);
 
-            if (TextUtils.isEmpty(summary)) {
-                summary = FromUtils.getFrom(ctx);
-            }
+            content.append("> ").append(ONode.stringify(ctx.paramMap()));
+            content.append("\n");
+            content.append("< ").append(ONode.stringify(ctx.result));
 
-            logger.info(tag, null, null, _from, summary, content);
+            logger.info(tag, null, null, _from, "", content);
         } catch (Exception ee) {
             ee.printStackTrace();
         }

@@ -10,7 +10,7 @@ public class LoggingInterceptor implements Handler {
         //记录输入
         //
         try {
-            LogUtils.info("", ctx);
+            LogUtils.info(ctx);
         } catch (Throwable ex) {
 
         }
