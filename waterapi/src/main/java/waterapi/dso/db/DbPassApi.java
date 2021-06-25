@@ -1,6 +1,8 @@
 package waterapi.dso.db;
 
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbTableQuery;
 import waterapi.Config;
 
 import java.sql.SQLException;
@@ -16,13 +18,13 @@ public class DbPassApi {
     }
 
     //批量导入
-    public static void addJob(String tag, String service, String name, String description) throws SQLException {
+    public static void addJob(String tag, String service, String name, String cron7x, String description) throws SQLException {
 
-        String path = String.format("/%s/_%s/_%s", tag, service, name).replace("-","_");
+        String path = String.format("/%s/_%s/_%s", tag, service, name).replace("-", "_");
         String code = String.format("return water.job('%s','%s');", service, name);
 
         //只支持新增导入
-        db().table("paas_file")
+        DbTableQuery qr = db().table("paas_file")
                 .set("file_type", 1)
                 .set("tag", tag)
                 .set("label", "")
@@ -32,11 +34,18 @@ public class DbPassApi {
                 .set("content", code)
                 .set("is_disabled", 0)
                 .set("is_staticize", 0)
-                .set("plan_interval", "1h")
                 .set("plan_max", 0)
                 .set("create_fulltime", new Date())
                 .set("update_fulltime", new Date())
-                .set("use_whitelist", "")
-                .insertBy("path");
+                .set("use_whitelist", "");
+
+        if (TextUtils.isNotEmpty(cron7x)) {
+            qr.set("plan_interval", cron7x);
+            qr.set("plan_begin_time", "$NOW()");
+        } else {
+            qr.set("plan_interval", "");
+        }
+
+        qr.insertBy("path");
     }
 }

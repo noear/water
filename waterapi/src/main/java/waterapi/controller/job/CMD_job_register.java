@@ -7,11 +7,13 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
+import org.noear.water.model.JobM;
 import waterapi.controller.UapiBase;
 import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbPassApi;
 import waterapi.dso.interceptor.Logging;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,18 +31,25 @@ public class CMD_job_register extends UapiBase {
     @NotEmpty({"tag", "service", "jobs"})
     @Mapping("/job/register/")
     public Result cmd_exec(String tag, String service, String jobs) throws Exception {
-        if (jobs.startsWith("{") == false) {
+        if (jobs.startsWith("{") == false || jobs.startsWith("[") == false) {
             return Result.failure();
         }
 
         if (LockUtils.tryLock(Solon.cfg().appName(), ("job_register_" + tag + "_" + service), 30)) {
-            Map<String, String> jobMap = ONode.deserialize(jobs, Map.class);
-            StringBuilder buf = new StringBuilder(200);
+            ONode oNode = ONode.loadStr(jobs);
 
-            for (Map.Entry<String, String> kv : jobMap.entrySet()) {
-                buf.setLength(0);
+            if (oNode.isObject()) {
+                Map<String, String> jobMap = oNode.toObject(Map.class);
+                for (Map.Entry<String, String> kv : jobMap.entrySet()) {
+                    DbPassApi.addJob(tag, service, kv.getKey(), null, kv.getValue());
+                }
+            }
 
-                DbPassApi.addJob(tag, service, kv.getKey(), kv.getValue());
+            if (oNode.isArray()) {
+                List<JobM> jobList = oNode.toObjectList(JobM.class);
+                for (JobM job : jobList) {
+                    DbPassApi.addJob(tag, service, job.name, job.cron7x, job.description);
+                }
             }
         }
 
