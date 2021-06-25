@@ -5,7 +5,6 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
 import org.noear.water.utils.Timespan;
@@ -119,62 +118,27 @@ public class PlnController implements IJob {
         }
 
         //1.4.检查时间
-        Date temp = task.plan_last_time;
-        if (temp == null) {
-            temp = task.plan_begin_time;
+        Date baseTime = task.plan_last_time;
+        if (baseTime == null) {
+            baseTime = task.plan_begin_time;
         }
 
-        if (temp == null) {
+        if (baseTime == null) {
             return;
         }
 
         //1.5.检查执行时间是否到了
-        {
-            Datetime last_time = new Datetime(temp);
-            Datetime begin_time = new Datetime(task.plan_begin_time);
+        Date nextTime = null;
+        if(task.plan_interval.contains(" ")){
+            //说明是： cron
+            nextTime = PlnHelper.getNextTimeByCron(task, baseTime);
+        }else {
+            //说明是：1s,1m,1h,1d,1M
+            nextTime = PlnHelper.getNextTimeBySimple(task, baseTime);
+        }
 
-            String s1 = task.plan_interval.substring(0, task.plan_interval.length() - 1);
-            String s2 = task.plan_interval.substring(task.plan_interval.length() - 1);
-
-            switch (s2) {
-                case "s": //秒
-                    last_time.addSecond(Integer.parseInt(s1));
-                    break;
-                case "m": //分
-                    last_time.setSecond(begin_time.getSeconds());
-                    last_time.addMinute(Integer.parseInt(s1));
-                    break;
-                case "h": //时
-                    last_time.setMinute(begin_time.getMinutes());
-                    last_time.setSecond(begin_time.getSeconds());
-
-                    last_time.addHour(Integer.parseInt(s1));
-                    break;
-                case "d": //日
-                    task._is_day_task = true;
-                    last_time.setHour(begin_time.getHours());
-                    last_time.setMinute(begin_time.getMinutes());
-                    last_time.setSecond(begin_time.getSeconds());
-
-                    last_time.addDay(Integer.parseInt(s1));
-                    break;
-                case "M": //月
-                    task._is_day_task = true;
-                    last_time.setHour(begin_time.getHours());
-                    last_time.setMinute(begin_time.getMinutes());
-                    last_time.setSecond(begin_time.getSeconds());
-
-                    last_time.addMonth(Integer.parseInt(s1));
-                    break;
-                default:
-                    last_time.addDay(1);
-                    break;
-            }
-
-            //1.5.2.如果未到执行时间则反回
-            if (new Timespan(last_time.getFulltime()).seconds() < 0) {
-                return;
-            }
+        if (new Timespan(nextTime).seconds() < 0) {
+            return;
         }
 
         //////////////////////////////////////////
@@ -187,6 +151,8 @@ public class PlnController implements IJob {
         WaterClient.Track.track("waterplan", task.tag, task.path, _times);
         WaterClient.Track.trackNode("waterplan", WaterClient.localHost(), _times);
     }
+
+
 
     private long do_runTask(PaasFileModel task, Timecount timecount) throws Exception {
         //开始执行::
