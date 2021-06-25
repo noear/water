@@ -18,7 +18,7 @@ public class DbPassApi {
     }
 
     //批量导入
-    public static void addJob(String tag, String service, String name, String cron7x, String description) throws SQLException {
+    public static void addJob(String tag, String service, String name, String cron7x, String description, Date nTime) throws SQLException {
 
         String path = String.format("/%s/_%s/_%s", tag, service, name).replace("-", "_");
         String code = String.format("return water.job('%s','%s');", service, name);
@@ -41,7 +41,7 @@ public class DbPassApi {
 
         if (TextUtils.isNotEmpty(cron7x)) {
             qr.set("plan_interval", cron7x);
-            qr.set("plan_begin_time", "$NOW()");
+            qr.set("plan_begin_time", nTime);
         } else {
             qr.set("plan_interval", "");
         }

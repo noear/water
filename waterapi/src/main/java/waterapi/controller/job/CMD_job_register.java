@@ -13,6 +13,7 @@ import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbPassApi;
 import waterapi.dso.interceptor.Logging;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,21 +36,23 @@ public class CMD_job_register extends UapiBase {
             return Result.failure("Wrong parameter @jobs");
         }
 
+
         if (LockUtils.tryLock(Solon.cfg().appName(), ("job_register_" + tag + "_" + service), 30)) {
             ONode oNode = ONode.loadStr(jobs);
+            Date nTime = new Date();
 
             //兼容旧的方案
             if (oNode.isObject()) {
                 Map<String, String> jobMap = oNode.toObject(Map.class);
                 for (Map.Entry<String, String> kv : jobMap.entrySet()) {
-                    DbPassApi.addJob(tag, service, kv.getKey(), null, kv.getValue());
+                    DbPassApi.addJob(tag, service, kv.getKey(), null, kv.getValue(), nTime);
                 }
             }
 
             if (oNode.isArray()) {
                 List<JobM> jobList = oNode.toObjectList(JobM.class);
                 for (JobM job : jobList) {
-                    DbPassApi.addJob(tag, service, job.name, job.cron7x, job.description);
+                    DbPassApi.addJob(tag, service, job.name, job.cron7x, job.description, nTime);
                 }
             }
         }
