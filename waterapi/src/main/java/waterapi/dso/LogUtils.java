@@ -34,7 +34,7 @@ public class LogUtils {
             content.append("\n");
             content.append("< ").append(ONode.stringify(ctx.result));
 
-            logger.info(tag, null, null, _from, "", content);
+            logger.info(tag, null, null, _from, "", content.toString());
         } catch (Exception ee) {
             ee.printStackTrace();
         }
