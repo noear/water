@@ -19,7 +19,7 @@ ALTER TABLE `paas_file`
 ALTER TABLE `paas_file`
     ADD INDEX `IX_plan_next_timestamp`(`plan_next_timestamp`) USING BTREE;
 
-
-
+ALTER TABLE `paas_file`
+    MODIFY COLUMN `plan_interval` varchar(100) NOT NULL DEFAULT '' COMMENT '计划执行间隔' AFTER `plan_next_timestamp`;
 
 
