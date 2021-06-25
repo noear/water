@@ -7,6 +7,7 @@ import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public class JobApi {
      *
      * @param jobs [name,]
      */
-    public boolean register(String tag, String service, Map<String, JobM> jobs) throws IOException {
+    public boolean register(String tag, String service, List<JobM> jobs) throws IOException {
         if(TextUtils.isEmpty(tag) || TextUtils.isEmpty(service)){
             return false;
         }
