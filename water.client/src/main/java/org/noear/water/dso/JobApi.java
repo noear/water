@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
+import org.noear.water.model.JobM;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class JobApi {
      *
      * @param jobs [name,]
      */
-    public boolean register(String tag, String service, Map<String, String> jobs) throws IOException {
+    public boolean register(String tag, String service, Map<String, JobM> jobs) throws IOException {
         if(TextUtils.isEmpty(tag) || TextUtils.isEmpty(service)){
             return false;
         }
