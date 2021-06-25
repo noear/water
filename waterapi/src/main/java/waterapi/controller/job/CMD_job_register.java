@@ -38,6 +38,7 @@ public class CMD_job_register extends UapiBase {
         if (LockUtils.tryLock(Solon.cfg().appName(), ("job_register_" + tag + "_" + service), 30)) {
             ONode oNode = ONode.loadStr(jobs);
 
+            //兼容旧的方案
             if (oNode.isObject()) {
                 Map<String, String> jobMap = oNode.toObject(Map.class);
                 for (Map.Entry<String, String> kv : jobMap.entrySet()) {
