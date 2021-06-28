@@ -60,10 +60,6 @@ public class AuthProcessorImpl implements AuthProcessor {
                 return true;
             }
 
-            if(verifyLogined() == false){
-                return false;
-            }
-
             if (BcfClient.hasUrlpath(path)) {
                 return BcfClient.hasUrlpathByUser(puid(), path);
             }else{
@@ -78,10 +74,6 @@ public class AuthProcessorImpl implements AuthProcessor {
     public boolean verifyPermissions(String[] permissions, Logical logical) {
         if(Solon.cfg().isSetupMode()){
             return true;
-        }
-
-        if(verifyLogined() == false){
-            return false;
         }
 
         int puid = puid();
@@ -112,10 +104,6 @@ public class AuthProcessorImpl implements AuthProcessor {
     public boolean verifyRoles(String[] roles, Logical logical) {
         if(Solon.cfg().isSetupMode()){
             return true;
-        }
-
-        if(verifyLogined() == false){
-            return false;
         }
 
         //
