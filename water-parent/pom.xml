@@ -46,10 +46,10 @@
         <water.ver>2.2.3</water.ver>
         <HikariCP.ver>4.0.3</HikariCP.ver>
 
-        <bcf.ver>2.1.1</bcf.ver>
+        <bcf.ver>2.1.2</bcf.ver>
 
         <luffy.ver>1.1.2</luffy.ver>
-        <snakeyaml.ver>1.26</snakeyaml.ver>
+        <snakeyaml.ver>1.29</snakeyaml.ver>
 
         <junit.ver>4.13.1</junit.ver>
 
@@ -248,13 +248,13 @@
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
-                <version>3.14.8</version>
+                <version>3.14.9</version>
             </dependency>
 
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
-                <version>3.6.0</version>
+                <version>3.6.1</version>
             </dependency>
 
             <dependency>
