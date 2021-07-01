@@ -50,10 +50,7 @@
 
         <luffy.ver>1.1.2</luffy.ver>
         <snakeyaml.ver>1.29</snakeyaml.ver>
-
-        <junit.ver>4.13.1</junit.ver>
-
-        <springboot.ver>2.0.4.RELEASE</springboot.ver>
+        <jedis.ver>3.6.1</jedis.ver>
     </properties>
 
 
@@ -254,7 +251,7 @@
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
-                <version>3.6.1</version>
+                <version>${jedis.ver}</version>
             </dependency>
 
             <dependency>

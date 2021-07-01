@@ -24,6 +24,11 @@ public class HeiheiController extends BaseController {
         String response = NoticeUtils.heihei(target, msg);
         ONode obj = ONode.load(response);
 
-        return viewModel.code(obj.get("code").getInt(), obj.get("msg").getString());
+        int code = obj.get("code").getInt();
+        if(code == 200) {
+            code = 1;
+        }
+
+        return viewModel.code(code, obj.get("msg").getString());
     }
 }
