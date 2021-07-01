@@ -77,8 +77,6 @@ public class OSSUtils {
                 .bodyTxt(content, contentType)
                 .put();
 
-        System.out.println(tmp);
-
         return key;
     }
 
@@ -102,7 +100,6 @@ public class OSSUtils {
                 .bodyRaw(new FileInputStream(file), contentType)
                 .put();
 
-        System.out.println(tmp);
 
         return key;
     }

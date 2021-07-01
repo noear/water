@@ -30,11 +30,7 @@ public class NoticeApi {
         params.put("msg", msg);
 
         try {
-            String txt = apiCaller.post("/run/push/", params);
-
-            System.out.println("NoticeApi::/run/push/:" + txt);
-
-            return txt;
+            return apiCaller.post("/run/push/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
