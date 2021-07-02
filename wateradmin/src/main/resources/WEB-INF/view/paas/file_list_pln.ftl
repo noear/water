@@ -161,75 +161,74 @@
 
     <datagrid class="list">
         <table>
-
-                <thead>
+            <thead>
+            <tr>
+                <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
+                <td>路径</td>
+                <td width="150" class="left">开始 ^间隔</td>
+                <td width="150" class="left">最后执行（时长）</td>
+                <td width="50">状态</td>
+                <td width="50">次数</td>
+                <#if is_admin == 1>
+                    <td width="120"></td>
+                <#else>
+                    <td width="80"></td>
+                </#if>
+            </tr>
+            </thead>
+            <tbody class="sel_from">
+            <#list mlist as m1>
                 <tr>
-                    <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                    <td>路径</td>
-                    <td width="150" class="left">开始（间隔）</td>
-                    <td width="150" class="left">最后执行（时长）</td>
-                    <td width="50">状态</td>
-                    <td width="50">次数</td>
-                    <#if is_admin == 1>
-                        <td width="120"></td>
-                    <#else>
-                        <td width="80"></td>
-                    </#if>
-                </tr>
-                </thead>
-                <tbody class="sel_from">
-                <#list mlist as m1>
-                    <tr>
-                        <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
-                        <td class="left"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}'  target="_blank">${m1.path!}</a>
-                            <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">只读</a>
-                            <#if (m1.note!'') != ''>
-                                <n-l>${m1.note!}</n-l>
-                            </#if>
-                        </td>
-                        <td  class="left">
-                            ${m1.timexpre()}
-                        </td>
-                        <td  class="left">
-                            <#if m1.plan_begin_time??>
-                                ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.timespan()})
-                            <#else>
-                                -
-                            </#if>
-                        </td>
+                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${m1.file_id}" /><a></a></label></checkbox></td>
+                    <td class="left"><a href='./code?file_id=${m1.file_id}&_p=${m1.path}'  target="_blank">${m1.path!}</a>
+                        <a href='./code?file_id=${m1.file_id}&_p=${m1.path}&readonly=1' class="t2" target="_blank">只读</a>
+                        <#if (m1.note!'') != ''>
+                            <n-l>${m1.note!}</n-l>
+                        </#if>
+                    </td>
+                    <td  class="left">
+                        ${m1.timexpre()}
+                    </td>
+                    <td  class="left">
+                        <#if m1.plan_begin_time??>
+                            ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.timespan()})
+                        <#else>
+                            -
+                        </#if>
+                    </td>
 
-                        <td style='${(m1.plan_state=8)?string("color:red","")}'>
-                            <#if m1.plan_begin_time??>
-                                <#if m1.plan_state=9>
-                                    成功
-                                <#elseif m1.plan_state=8>
-                                    出错
-                                <#elseif m1.plan_state=2>
-                                    处理中
-                                <#else>
-                                    待处理
-                                </#if>
+                    <td style='${(m1.plan_state=8)?string("color:red","")}'>
+                        <#if m1.plan_begin_time??>
+                            <#if m1.plan_state=9>
+                                成功
+                            <#elseif m1.plan_state=8>
+                                出错
+                            <#elseif m1.plan_state=2>
+                                处理中
                             <#else>
-                                -
+                                待处理
                             </#if>
-                        </td>
-                        <td class="right">
-                            <#if m1.plan_begin_time??>
+                        <#else>
+                            -
+                        </#if>
+                    </td>
+                    <td class="right">
+                        <#if m1.plan_begin_time??>
                             ${m1.plan_count?default(0)%1000}/${m1.plan_max!}
-                            <#else>
-                                -
-                            </#if>
-                        </td>
-                        <td class="op">
-                            <#if is_admin == 1>
+                        <#else>
+                            -
+                        </#if>
+                    </td>
+                    <td class="op">
+                        <#if is_admin == 1>
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a> |
-                            </#if>
-                            <a href="/mot/speed/charts?tag=${m1.tag}&name_md5=${m1.pathMd5()}&service=waterplan" class="t2">监控</a> |
-                            <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
-                        </td>
-                    </tr>
-                </#list>
-                </tbody>
+                        </#if>
+                        <a href="/mot/speed/charts?tag=${m1.tag}&name_md5=${m1.pathMd5()}&service=waterplan" class="t2">监控</a> |
+                        <a href="/log/query/inner?tag_name=water&logger=water_log_paas&level=0&tagx=@@${m1.path!}" target="_parent" class="t2">日志</a>
+                    </td>
+                </tr>
+            </#list>
+            </tbody>
 
         </table>
     </datagrid>
