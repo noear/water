@@ -2,8 +2,10 @@ package wateradmin.models.water_paas;
 
 import lombok.Getter;
 import org.noear.water.track.TrackNames;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.Timespan;
 
 import java.util.Date;
 
@@ -46,6 +48,35 @@ public class PaasFileModel {
             return "tml";
         } else {
             return "api";
+        }
+    }
+
+    public String timespan() {
+        long timespan = plan_last_timespan;
+        if (timespan < 1000) {
+            return timespan + "ms";
+        }
+        timespan = timespan / 1000;
+
+        if (timespan < 60) {
+            return timespan + "s";
+        }
+
+        timespan = timespan / 60;
+
+        return timespan + "m";
+
+    }
+
+    public String timexpre() {
+        if (plan_begin_time == null || TextUtils.isEmpty(plan_interval)) {
+            return "-";
+        } else {
+            if (plan_interval.length() > 7 && plan_interval.contains(" ")) {
+                return plan_interval;
+            } else {
+                return Datetime.format(plan_begin_time, "MM.dd HH:mm / " + plan_interval);
+            }
         }
     }
 

@@ -166,8 +166,8 @@
                 <tr>
                     <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                     <td>路径</td>
-                    <td width="180" class="left">开始（间隔）</td>
-                    <td width="160" class="left">最后执行（时长）</td>
+                    <td width="150" class="left">开始（间隔）</td>
+                    <td width="150" class="left">最后执行（时长）</td>
                     <td width="50">状态</td>
                     <td width="50">次数</td>
                     <#if is_admin == 1>
@@ -188,19 +188,11 @@
                             </#if>
                         </td>
                         <td  class="left">
-                            <#if m1.plan_begin_time??>
-                            ${(m1.plan_begin_time?string('MM.dd HH:mm'))!}(${m1.plan_interval!})
-                            <#else>
-                                -
-                            </#if>
+                            ${m1.timexpre()}
                         </td>
                         <td  class="left">
                             <#if m1.plan_begin_time??>
-                                <#if m1.plan_last_timespan?default(0) gt 1000 >
-                                    ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan/1000}s)
-                                <#else>
-                                    ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.plan_last_timespan!0}ms)
-                                </#if>
+                                ${(m1.plan_last_time?string('MM.dd HH:mm'))!}(${m1.timespan()})
                             <#else>
                                 -
                             </#if>
