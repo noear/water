@@ -102,7 +102,7 @@ public class DbPaaSApi {
         return db().table("paas_file").usingExpr(true)
                 .set("plan_last_time","$NULL")
                 .set("plan_last_timespan",0)
-                .set("plan_state",0)
+                .set("plan_state",1)
                 .whereIn("file_id", list)
                 .update();
     }

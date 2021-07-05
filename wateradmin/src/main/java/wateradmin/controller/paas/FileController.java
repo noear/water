@@ -217,6 +217,9 @@ public class FileController extends BaseController {
         return viewModel.code(1,"ok");
     }
 
+    /**
+     * 立即执行
+     * */
     @Mapping("pln/ajax/reset")
     public Object reset(Context ctx, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
