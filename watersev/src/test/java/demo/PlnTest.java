@@ -1,6 +1,7 @@
 package demo;
 
 import org.junit.Test;
+import org.noear.luffy.task.cron.CronExpression;
 import org.noear.luffy.task.cron.CronUtils;
 import org.noear.water.utils.Datetime;
 
@@ -26,5 +27,17 @@ public class PlnTest {
         Date nexttime = CronUtils.getNextTime("* * 1 * * ?", datetime.getFulltime());
 
         System.out.println(new Datetime(nexttime).toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void test3() throws Exception{
+        CronExpression cron = CronUtils.get("* * 1 * * ?");
+        System.out.println(cron);
+
+        cron = CronUtils.get("0 * * * * ?");
+        System.out.println(cron);
+
+        cron = CronUtils.get("0 * 1,5 * * ?");
+        System.out.println(cron);
     }
 }
