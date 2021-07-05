@@ -132,13 +132,13 @@ public class PlnController implements IJob {
         if (task.plan_interval.length() > 7 && task.plan_interval.contains(" ")) {
             //说明是： cron
             plnNext = PlnHelper.getNextTimeByCron(task, baseTime);
-        }else {
+        } else {
             //说明是：1s,1m,1h,1d,1M
             plnNext = PlnHelper.getNextTimeBySimple(task, baseTime);
         }
 
         //1.5.1.如果未到执行时间则反回
-        if(plnNext.allow == false){
+        if (plnNext.allow == false) {
             return;
         }
 
@@ -158,7 +158,6 @@ public class PlnController implements IJob {
     }
 
 
-
     private long do_runTask(PaasFileModel task, Timecount timecount) throws Exception {
         //开始执行::
         task.plan_last_time = new Date();
@@ -169,12 +168,12 @@ public class PlnController implements IJob {
 
         //3.更新状态
         task.plan_count = (task.plan_count + 1) % 10000;
+        task.plan_last_timespan = timecount.stop().milliseconds();
+
         DbWaterPaasApi.setPlanState(task, 9, "OK");
 
-        long _times = timecount.stop().milliseconds();
+        LogUtil.planInfo(this, task, task.plan_last_timespan);
 
-        LogUtil.planInfo(this, task, _times);
-
-        return _times;
+        return task.plan_last_timespan;
     }
 }
