@@ -117,7 +117,7 @@
                 </td>
             </tr>
             <tr>
-                <th>任务执行间隔</th><td><input type="text" id="plan_interval" value="${m1.plan_interval!'1h'}"/><span class="t5">（s秒，m分钟，h小时，d天，M月 或 Cron 或 Cron+时区）</span></td>
+                <th>任务执行间隔</th><td><input type="text" id="plan_interval" value="${m1.plan_interval!'1h'}"/><span class="t5">（s秒，m分钟，h小时，d天 或 Cron 或 Cron+时区）</span></td>
             </tr>
             <tr>
                 <th>任务执行次数</th><td><input type="text" id="plan_max" value="${m1.plan_max!0}"/><span class="t5">（0为不限次数）</span></td>

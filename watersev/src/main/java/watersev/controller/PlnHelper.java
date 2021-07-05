@@ -11,13 +11,21 @@ import java.util.Date;
  * @author noear 2021/6/25 created
  */
 public class PlnHelper {
-    public static Date getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
-        return CronUtils.getNextTime(task.plan_interval, baseTime);
+    public static PlnNext getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
+        PlnNext plnNext = new PlnNext();
+
+        plnNext.datetime = CronUtils.getNextTime(task.plan_interval, baseTime);
+        plnNext.allow = true;
+
+        return plnNext;
     }
 
-    public static Date getNextTimeBySimple(PaasFileModel task, Date baseTime) {
+    public static PlnNext getNextTimeBySimple(PaasFileModel task, Date baseTime) {
+        PlnNext plnNext = new PlnNext();
+
         Datetime begin_time = new Datetime(task.plan_begin_time);
         Datetime next_time = new Datetime(baseTime);
+        Datetime now_time = Datetime.Now();
 
         String s1 = task.plan_interval.substring(0, task.plan_interval.length() - 1);
         String s2 = task.plan_interval.substring(task.plan_interval.length() - 1);
@@ -37,26 +45,23 @@ public class PlnHelper {
                 next_time.addHour(Integer.parseInt(s1));
                 break;
             case "d": //日
-                task._is_day_task = true;
+                plnNext.intervalOfDay =true;
+                plnNext.allow = (now_time.getHours() == begin_time.getHours());
+
                 next_time.setHour(begin_time.getHours());
                 next_time.setMinute(begin_time.getMinutes());
                 next_time.setSecond(begin_time.getSeconds());
 
                 next_time.addDay(Integer.parseInt(s1));
                 break;
-            case "M": //月
-                task._is_day_task = true;
-                next_time.setHour(begin_time.getHours());
-                next_time.setMinute(begin_time.getMinutes());
-                next_time.setSecond(begin_time.getSeconds());
-
-                next_time.addMonth(Integer.parseInt(s1));
-                break;
             default:
+                plnNext.allow = false; //不支持的格式，不允许执行
                 next_time.addDay(1);
                 break;
         }
 
-        return next_time.getFulltime();
+        plnNext.datetime = next_time.getFulltime();
+
+        return plnNext;
     }
 }
