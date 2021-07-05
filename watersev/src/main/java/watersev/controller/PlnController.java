@@ -7,7 +7,6 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
-import org.noear.water.utils.Timespan;
 import luffy.JtRun;
 import watersev.dso.*;
 import watersev.dso.db.DbWaterPaasApi;
@@ -22,7 +21,6 @@ import java.util.List;
  * 出错:8
  * 处理中:2
  * 待处理:0
- *
  * */
 @Component
 public class PlnController implements IJob {
