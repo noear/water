@@ -7,7 +7,6 @@ import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.water_reg.ServiceModel;
@@ -15,7 +14,6 @@ import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
-
 
 @Controller
 @Mapping("/mot/")
