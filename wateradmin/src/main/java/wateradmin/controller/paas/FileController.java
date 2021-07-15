@@ -6,7 +6,6 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.WaterClient;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
