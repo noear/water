@@ -169,6 +169,14 @@ public class PlnController implements IJob {
         task.plan_count = (task.plan_count + 1) % 10000;
         task.plan_last_timespan = timecount.stop().milliseconds();
 
+        if (task.plan_interval.length() > 7 && task.plan_interval.contains(" ")) {
+            PlnNext plnNext = PlnHelper.getNextTimeByCron(task, task.plan_last_time);
+            task.plan_next_timestamp = plnNext.datetime.getTime();
+        } else {
+            PlnNext plnNext = PlnHelper.getNextTimeBySimple(task, task.plan_last_time);
+            task.plan_next_timestamp = plnNext.datetime.getTime();
+        }
+
         DbWaterPaasApi.setPlanState(task, 9, "OK");
 
         LogUtil.planInfo(this, task, task.plan_last_timespan);

@@ -33,6 +33,10 @@ public final class DbWaterPaasApi {
                     if (plan.plan_last_timespan > 0) {
                         tb.set("plan_last_timespan", plan.plan_last_timespan);
                     }
+
+                    if(plan.plan_next_timestamp > 0){
+                        tb.set("plan_next_timestamp", plan.plan_next_timestamp);
+                    }
                 })
                 .where("file_id=?", plan.file_id)
                 .update();

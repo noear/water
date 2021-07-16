@@ -8,6 +8,7 @@ public class PaasFileModel extends AFileModel implements IBinder {
 
     public String alarm_sign;
     public String alarm_mobile;
+    public long plan_next_timestamp;
 
     @Override
     public void bind(GetHandlerEx s) {
@@ -28,6 +29,7 @@ public class PaasFileModel extends AFileModel implements IBinder {
         plan_last_time = s.get("plan_last_time").value(null);
         plan_last_timespan = s.get("plan_last_timespan").value(0l);
         plan_interval = s.get("plan_interval").value(null);
+        plan_next_timestamp = s.get("plan_next_timestamp").value(0l);
         plan_max = s.get("plan_max").value(0);
         plan_count = s.get("plan_count").value(0);
         create_fulltime = s.get("create_fulltime").value(null);
