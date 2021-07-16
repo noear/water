@@ -400,38 +400,36 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getConfigsByTag(String tag, String key, int state) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
-                .andEq("is_enabled",state==1)
+                .andEq("is_enabled", state == 1)
                 .build(tb -> {
                     if (!TextUtils.isEmpty(key)) {
                         tb.and("`key` like ?", "%" + key + "%");
                     }
                 })
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 
     public static List<ConfigModel> getConfigsByType(String tag, int type) throws SQLException {
         return db().table("water_cfg_properties")
                 .where("type = ?", type)
-                .build((tb)->{
-                    if(TextUtils.isEmpty(tag) == false){
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(tag) == false) {
                         tb.and("tag = ?", tag);
                     }
                 })
-                .select("*")
-                .getList(ConfigModel.class);
+                .orderBy("key")
+                .selectList("*", ConfigModel.class);
     }
 
     public static List<ConfigModel> getConfigTagKeyByType(String tag, int type) throws SQLException {
         return db().table("water_cfg_properties")
                 .where("type = ?", type)
-                .build((tb)->{
-                    if(TextUtils.isEmpty(tag) == false){
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(tag) == false) {
                         tb.and("tag = ?", tag);
                     }
                 })
-                .select("tag,key")
-                .getList(ConfigModel.class);
+                .selectList("tag,key", ConfigModel.class);
     }
 
     //====================================================

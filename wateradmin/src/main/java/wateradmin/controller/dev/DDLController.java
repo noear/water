@@ -53,6 +53,7 @@ public class DDLController extends BaseController {
     public ModelAndView inner(String tag) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, CFG_TYPE_DB);
 
+
         viewModel.put("cfgs", cfgs);
 
         viewModel.put("tag_name", tag);
