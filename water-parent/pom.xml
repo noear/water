@@ -40,15 +40,15 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.5.14</solon.ver>
-        <weed3.ver>3.3.17</weed3.ver>
+        <solon.ver>1.5.15</solon.ver>
+        <weed3.ver>3.3.18</weed3.ver>
         <snack3.ver>3.1.18</snack3.ver>
         <water.ver>2.2.4</water.ver>
         <HikariCP.ver>4.0.3</HikariCP.ver>
 
         <bcf.ver>2.1.2</bcf.ver>
 
-        <luffy.ver>1.1.4</luffy.ver>
+        <luffy.ver>1.1.5</luffy.ver>
         <snakeyaml.ver>1.29</snakeyaml.ver>
         <jedis.ver>3.6.1</jedis.ver>
     </properties>
