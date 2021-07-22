@@ -34,3 +34,12 @@ DROP INDEX `IX_plan_next_timestamp`,
 ADD INDEX `IX_plan_next_time`(`plan_next_time`) USING BTREE;
 
 
+UPDATE paas_file
+SET plan_begin_time = unix_timestamp(STR_TO_DATE(CAST(plan_begin_time AS CHAR),'%Y%m%d%H%i%s'))*1000
+WHERE plan_begin_time > 2000000000000;
+
+UPDATE paas_file
+SET plan_last_time = unix_timestamp(STR_TO_DATE(CAST(plan_last_time AS CHAR),'%Y%m%d%H%i%s'))*1000
+WHERE plan_last_time > 2000000000000;
+
+
