@@ -29,14 +29,14 @@ public final class DbWaterPaasApi {
 
         qr.set("plan_state", state)
                 .set("plan_count", plan.plan_count)
-                .set("plan_last_time", plan.plan_last_time)
+                .set("plan_last_time", plan.plan_last_time.getTime())
                 .build((tb) -> {
                     if (plan.plan_last_timespan > 0) {
                         tb.set("plan_last_timespan", plan.plan_last_timespan);
                     }
 
-                    if(plan.plan_next_timestamp > 0){
-                        tb.set("plan_next_timestamp", plan.plan_next_timestamp);
+                    if (plan.plan_next_time != null) {
+                        tb.set("plan_next_time", plan.plan_next_time.getTime());
                     }
                 })
                 .where("file_id=?", plan.file_id)

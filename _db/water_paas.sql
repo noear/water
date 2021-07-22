@@ -58,7 +58,7 @@ CREATE TABLE `paas_file`  (
   `plan_begin_time` timestamp NULL DEFAULT NULL COMMENT '计划开始执行时间',
   `plan_last_time` timestamp NULL DEFAULT NULL COMMENT '计划最后执行时间',
   `plan_last_timespan` bigint(20) NOT NULL DEFAULT 0 COMMENT '计划最后执行时间长度',
-  `plan_next_timestamp` bigint(20) NOT NULL DEFAULT 0 COMMENT '计划下次执行时间戳',
+  `plan_next_time` bigint(20) NOT NULL DEFAULT 0 COMMENT '计划下次执行时间戳',
   `plan_interval` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '计划执行间隔',
   `plan_max` int(11) NOT NULL DEFAULT 0 COMMENT '计划执行最多次数',
   `plan_count` int(11) NOT NULL DEFAULT 0 COMMENT '计划执行累计次数',
@@ -70,7 +70,7 @@ CREATE TABLE `paas_file`  (
   INDEX `IX_tag`(`tag`) USING BTREE,
   INDEX `IX_label`(`label`) USING BTREE,
   INDEX `IX_file_type`(`file_type`) USING BTREE,
-  INDEX `IX_plan_next_timestamp`(`plan_next_timestamp`) USING BTREE
+  INDEX `IX_plan_next_time`(`plan_next_time`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 377 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'PAAS-文件表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------

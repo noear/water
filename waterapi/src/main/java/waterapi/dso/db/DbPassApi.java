@@ -41,7 +41,7 @@ public class DbPassApi {
 
         if (TextUtils.isNotEmpty(cron7x)) {
             qr.set("plan_interval", cron7x);
-            qr.set("plan_begin_time", nTime);
+            qr.set("plan_begin_time", nTime.getTime());
         } else {
             qr.set("plan_interval", "");
         }

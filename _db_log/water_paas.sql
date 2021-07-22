@@ -14,12 +14,19 @@ ALTER TABLE `paas_file`
 
 -- 2021.06.25
 ALTER TABLE `paas_file`
-    ADD COLUMN `plan_next_timestamp` bigint NOT NULL DEFAULT '0' COMMENT '计划下次执行时间戳' AFTER `plan_last_timespan`;
+    ADD COLUMN `plan_next_time` bigint NOT NULL DEFAULT '0' COMMENT '计划下次执行时间戳' AFTER `plan_last_timespan`;
 
 ALTER TABLE `paas_file`
-    ADD INDEX `IX_plan_next_timestamp`(`plan_next_timestamp`) USING BTREE;
+    ADD INDEX `IX_plan_next_time`(`plan_next_time`) USING BTREE;
 
 ALTER TABLE `paas_file`
-    MODIFY COLUMN `plan_interval` varchar(100) NOT NULL DEFAULT '' COMMENT '计划执行间隔' AFTER `plan_next_timestamp`;
+    MODIFY COLUMN `plan_interval` varchar(100) NOT NULL DEFAULT '' COMMENT '计划执行间隔' AFTER `plan_next_time`;
+
+
+-- 2021.07.22
+ALTER TABLE `paas_file`
+    CHANGE COLUMN `plan_next_timestamp` `plan_next_time` bigint(20) NOT NULL DEFAULT 0 COMMENT '计划下次执行时间戳' AFTER `plan_last_timespan`,
+    MODIFY COLUMN `plan_begin_time` bigint NULL DEFAULT NULL COMMENT '计划开始执行时间' AFTER `plan_state`,
+    MODIFY COLUMN `plan_last_time` bigint NULL DEFAULT NULL COMMENT '计划最后执行时间' AFTER `plan_begin_time`;
 
 

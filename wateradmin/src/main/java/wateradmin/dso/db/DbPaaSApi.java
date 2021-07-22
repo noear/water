@@ -183,7 +183,7 @@ public class DbPaaSApi {
                 .set("edit_mode", wm.edit_mode)
                 .set("content_type", wm.content_type)
                 .set("content", wm.content)
-                .set("plan_begin_time", wm.plan_begin_time)
+                .set("plan_begin_time", wm.plan_begin_time.getTime())
                 .set("plan_last_timespan", wm.plan_last_timespan)
                 .set("plan_interval", wm.plan_interval)
                 .set("plan_max", wm.plan_max)

@@ -171,10 +171,10 @@ public class PlnController implements IJob {
 
         if (task.plan_interval.length() > 7 && task.plan_interval.contains(" ")) {
             PlnNext plnNext = PlnHelper.getNextTimeByCron(task, task.plan_last_time);
-            task.plan_next_timestamp = plnNext.datetime.getTime();
+            task.plan_next_time = plnNext.datetime;
         } else {
             PlnNext plnNext = PlnHelper.getNextTimeBySimple(task, task.plan_last_time);
-            task.plan_next_timestamp = plnNext.datetime.getTime();
+            task.plan_next_time = plnNext.datetime;
         }
 
         DbWaterPaasApi.setPlanState(task, 9, "OK");

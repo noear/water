@@ -169,8 +169,16 @@ public class FileController extends BaseController {
     public Object pln_ajax_save(Context ctx) throws Exception {
         DataItem data = new DataItem();
 
-        data.set("plan_begin_time", ctx.param("plan_begin_time"));
-        data.set("plan_last_time", ctx.param("plan_last_time"));
+        String plan_begin_time = ctx.param("plan_begin_time");
+        String plan_last_time = ctx.param("plan_last_time");
+
+        if (plan_begin_time != null) {
+            data.set("plan_begin_time", Datetime.parse(plan_begin_time, "yyyy-MM-dd HH:mm:ss").getTicks());
+        }
+        if (plan_last_time != null) {
+            data.set("plan_last_time", Datetime.parse(plan_last_time, "yyyy-MM-dd HH:mm:ss").getTicks());
+        }
+
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
 
