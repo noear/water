@@ -58,11 +58,13 @@ public class DbWaterMsgApi {
         return list;
     }
 
-    public static void delSubscriber(int subscriber_id) {
-        if (subscriber_id > 0) {
+    public static void delSubscriberByError(String receive_url) {
+        if (TextUtils.isNotEmpty(receive_url)) {
             try {
                 db().table("water_msg_subscriber")
-                        .where("subscriber_id = ?", subscriber_id)
+                        .whereEq("receive_url", receive_url)
+                        .andEq("is_unstable", 1)
+                        .andGt("check_error_num", 2)
                         .delete();
             } catch (Throwable ex) {
                 //EventBus.pushAsyn(ex);

@@ -59,19 +59,17 @@ public final class MsgCheckController implements IJob {
                         //成功
                         DbWaterMsgApi.setSubscriberState(url, code);
                     } else {
-                        //出错
-//                        if (subs.is_unstable && subs.check_error_num >= 2 && !isOk) {
-//                            //
-//                            // 如果是IP订阅，且出错2次以上，且是网络错误；删掉
-//                            //
-//                            DbWaterMsgApi.delSubscriber(subs.subscriber_id);
-//                        } else {
+                        //设置出错状态
                         DbWaterMsgApi.setSubscriberState(url, code);
-//                        }
+                        //尝试删除不稳定的出错订阅
+                        DbWaterMsgApi.delSubscriberByError(url);
                     }
                 });
-            } catch (Exception ex) { //出错
+            } catch (Exception e) {
+                //设置出错状态
                 DbWaterMsgApi.setSubscriberState(url, 1);
+                //尝试删除不稳定的出错订阅
+                DbWaterMsgApi.delSubscriberByError(url);
             }
         }
     }
