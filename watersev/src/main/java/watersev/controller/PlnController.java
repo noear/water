@@ -58,12 +58,12 @@ public class PlnController implements IJob {
         System.out.println("查到任务数：" + list.size());
 
         for (PaasFileModel task : list) {
-            //加锁，以支持多节点处理
-            if (LockUtils.tryLock("waterplan", task.file_id + "_job")) {
-                CallUtil.asynCall(() -> {
+            CallUtil.asynCall(() -> {
+                //加锁，以支持多节点处理
+                if (LockUtils.tryLock("waterplan", task.file_id + "_job", 1)) {
                     doExec(task);
-                });
-            }
+                }
+            });
         }
     }
 

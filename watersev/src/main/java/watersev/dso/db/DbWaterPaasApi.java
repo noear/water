@@ -20,6 +20,7 @@ public final class DbWaterPaasApi {
     public static List<PaasFileModel> getPlanList() throws SQLException {
         return db().table("paas_file")
                 .whereEq("file_type", 1).and("is_disabled=0")
+                .and().begin("plan_last_timespan = 0").or("plan_last_timespan <= ", System.currentTimeMillis()).end()
                 .selectList("*", PaasFileModel.class);
     }
 
