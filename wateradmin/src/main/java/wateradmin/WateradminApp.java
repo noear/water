@@ -117,5 +117,11 @@ public class WateradminApp {
                 logger.error(ctx.path(), summary, ex);
             }
         });
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(" isDebugMode: ").append(Solon.cfg().isDebugMode());
+        sb.append(" isWhiteMode: ").append(Solon.cfg().isWhiteMode());
+
+        System.out.println(sb.toString());
     }
 }
