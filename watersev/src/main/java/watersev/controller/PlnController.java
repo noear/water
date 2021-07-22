@@ -51,19 +51,25 @@ public class PlnController implements IJob {
             DbWaterPaasApi.resetPlanState();
         }
 
+
         JtRun.initAwait();
 
-        List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
+        //尝试获取锁（1秒内只能调度一次）
+        //
+        if (LockUtils.tryLock("waterplan", "waterplan_lock", 3)) {
+            try {
+                List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
-        System.out.println("查到任务数：" + list.size());
+                System.out.println("查到任务数：" + list.size());
 
-        for (PaasFileModel task : list) {
-            CallUtil.asynCall(() -> {
-                //加锁，以支持多节点处理
-                if (LockUtils.tryLock("waterplan", task.file_id + "_job", 1)) {
-                    doExec(task);
+                for (PaasFileModel task : list) {
+                    CallUtil.asynCall(() -> {
+                        doExec(task);
+                    });
                 }
-            });
+            } finally {
+                LockUtils.unLock("waterplan", "waterplan_lock");
+            }
         }
     }
 

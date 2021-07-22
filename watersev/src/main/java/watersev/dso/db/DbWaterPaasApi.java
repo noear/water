@@ -6,7 +6,6 @@ import watersev.Config;
 import watersev.models.water_paas.PaasFileModel;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 public final class DbWaterPaasApi {
@@ -20,7 +19,10 @@ public final class DbWaterPaasApi {
     public static List<PaasFileModel> getPlanList() throws SQLException {
         return db().table("paas_file")
                 .whereEq("file_type", 1).and("is_disabled=0")
-                //.and().begin("plan_last_timespan = 0").or("plan_last_timespan <= ", System.currentTimeMillis()).end()
+                .and()
+                .begin("plan_last_timespan = 0")
+                    .or("plan_last_timespan <= ?", System.currentTimeMillis())
+                .end()
                 .selectList("*", PaasFileModel.class);
     }
 
