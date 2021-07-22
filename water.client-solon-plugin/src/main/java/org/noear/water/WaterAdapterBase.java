@@ -158,7 +158,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
             } else if (WW.path_run_stop.equals(path)) {
                 //run/stop/
                 String ip = IPUtils.getIP(ctx);
-                if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
+                if (authIp(ip)) {
                     stateSet(false);
                     Solon.stop();
                     text = "OK";
@@ -168,7 +168,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
             } else if (WW.path_run_status.equals(path)) {
                 //run/status/
                 String ip = IPUtils.getIP(ctx);
-                if (WaterClient.Whitelist.existsOfMasterIp(ip)) {
+                if (authIp(ip)) {
                     RuntimeStatus rs = RuntimeUtils.getStatus();
                     rs.name = WaterAdapter.global().service_name();
                     rs.address = WaterAdapter.global().localHost();
@@ -189,5 +189,13 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
         }
 
         ctx.output(text);
+    }
+
+    private boolean authIp(String ip) {
+        if (Solon.cfg().isDriftMode()) {
+            return true;
+        } else {
+            return WaterClient.Whitelist.existsOfMasterIp(ip);
+        }
     }
 }
