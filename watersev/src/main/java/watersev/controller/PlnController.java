@@ -41,17 +41,8 @@ public class PlnController implements IJob {
     }
 
 
-    private boolean _init = false;
-
     @Override
     public void exec() throws Exception {
-        if (_init == false) {
-            _init = true;
-
-            DbWaterPaasApi.resetPlanState();
-        }
-
-
         JtRun.initAwait();
 
         //尝试获取锁（1秒内只能调度一次）
@@ -87,14 +78,13 @@ public class PlnController implements IJob {
         } catch (Exception ex) {
             long _times = timecount.stop().milliseconds();
 
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
             try {
                 DbWaterPaasApi.setPlanState(task, 8, "error");
             } catch (Throwable ex2) {
                 ex2.printStackTrace();
             }
-
 
             LogUtil.planError(this, task, _times, ex);
 
@@ -114,11 +104,6 @@ public class PlnController implements IJob {
 
         //1.2.检查重复间隔
         if (task.plan_interval == null || task.plan_interval.length() < 2) {
-            return;
-        }
-
-        //1.3.检查是否在处理中
-        if (task.plan_state == 2) {
             return;
         }
 
@@ -155,7 +140,7 @@ public class PlnController implements IJob {
 
 
         //2.2.执行
-        long _times = do_runTask(task, timecount);
+        long _times = runTaskDo(task, timecount);
 
         //2.3.记录性能
         WaterClient.Track.track("waterplan", task.tag, task.path, _times);
@@ -163,7 +148,7 @@ public class PlnController implements IJob {
     }
 
 
-    private long do_runTask(PaasFileModel task, Timecount timecount) throws Exception {
+    private long runTaskDo(PaasFileModel task, Timecount timecount) throws Exception {
         //开始执行::
         task.plan_last_time = new Date();
         DbWaterPaasApi.setPlanState(task, 2, "processing");
