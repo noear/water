@@ -1,5 +1,6 @@
 package waterapi;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
@@ -10,7 +11,6 @@ import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
-import waterapi.dso.WaterLoggerLocal;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.DbUtils;
@@ -95,7 +95,7 @@ public class Config {
         }
     }
 
-    public static void tryRegService(){
+    public static void tryRegService() {
         try {
             localHost = LocalUtils.getLocalAddr(Solon.global().port());
             String code_location = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -103,8 +103,10 @@ public class Config {
             //本地IP订阅
             //
 
+            String meta = ONode.stringify(Solon.cfg().argx());
+
             DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
-                    localHost,
+                    localHost, meta, "",
                     WW.path_run_check,
                     0,
                     code_location,

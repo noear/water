@@ -1,5 +1,6 @@
 package org.noear.water;
 
+import org.noear.solon.Solon;
 import org.noear.water.model.MessageM;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.LocalUtils;
@@ -50,8 +51,13 @@ public abstract class AbstractWaterAdapter {
             //::开始进行初始化
             String local_host = getLocalAddress(service_port);
 
+            String tag = Solon.cfg().appGroup();
+            if(tag == null){
+                tag = "";
+            }
+
             //1.注册到服务
-            WaterClient.Registry.register(service_name(), local_host, WW.path_run_check, alarm_mobile(), is_unstable());
+            WaterClient.Registry.register(tag, service_name(), local_host, WW.path_run_check, alarm_mobile(), is_unstable());
         }
     }
 

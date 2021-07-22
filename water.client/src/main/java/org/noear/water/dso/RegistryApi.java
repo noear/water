@@ -58,6 +58,10 @@ public class RegistryApi {
      * 注册
      */
     public void register(String tag, String service, String address, String meta, String check_url, int check_type, String alarm_mobile, String code_location, boolean is_unstable) {
+        if(tag == null){
+            tag = "";
+        }
+
         Map<String, String> params = new HashMap<>();
         params.put("service", service);
         params.put("address", address);
