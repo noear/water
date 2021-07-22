@@ -5,7 +5,8 @@
 
 1. 使用镜像：`registry.cn-hangzhou.aliyuncs.com/noearorg/waterapi:latest`
 2. 镜像端口：`8080`
-3. 添加环境变量：
+3. 服务名字：`water`   
+4. 添加环境变量：
 ```ini
 water.dataSource.schema=water
 water.dataSource.url=jdbc:mysql://${server}:3306/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
