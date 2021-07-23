@@ -76,6 +76,10 @@ public class PlnHelper {
                 next_time.addSecond(val);
                 break;
             case "m": //分
+                if (task.plan_last_timespan > (val * 1000 * 60)) {
+                    //如果上次执行时长大于间隔，则用执行时长做为间隔
+                    val = (int) (task.plan_last_timespan / 1000 / 60);
+                }
                 next_time.setSecond(begin_time.getSeconds());
                 next_time.addMinute(val);
                 break;
