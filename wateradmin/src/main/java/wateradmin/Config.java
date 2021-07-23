@@ -53,14 +53,7 @@ public class Config {
         Setup.water = cfg(WW.water).getDb(true);
 
         WaterClient.Config.get(WW.water_bcf, "bcf.yml").getProp().forEach((k, v) -> {
-            if (Solon.cfg().isDebugMode()) {
-                String key = k.toString();
-                if (key.indexOf(".session.") < 0) {
-                    Solon.cfg().put(k, v);
-                }
-            } else {
-                Solon.cfg().put(k, v);
-            }
+            Solon.cfg().put(k, v);
         });
 
         //适配认证框架
