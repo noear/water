@@ -122,15 +122,16 @@ public class PlnController implements IJob {
             //说明是： cron
             plnNext = PlnHelper.getNextTimeByCron(task, baseTime);
         } else {
-            //说明是：1s,1m,1h,1d,1M
+            //说明是：1s,1m,1h,1d
             plnNext = PlnHelper.getNextTimeBySimple(task, baseTime);
         }
 
-        //1.5.1.如果未到执行时间则反回
+        //1.5.1.如果未到执行时间则返回
         if (plnNext.allow == false) {
             return;
         }
 
+        //1.5.2.如果时间未到则返回
         if (System.currentTimeMillis() < plnNext.datetime.getTime()) {
             return;
         }
