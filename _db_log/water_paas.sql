@@ -23,7 +23,7 @@ ALTER TABLE `paas_file`
     MODIFY COLUMN `plan_interval` varchar(100) NOT NULL DEFAULT '' COMMENT '计划执行间隔' AFTER `plan_next_timestamp`;
 
 
--- 2021.07.22
+-- 2021.07.22 //执行此变更前，备份一下数据库
 ALTER TABLE `paas_file`
     CHANGE COLUMN `plan_next_timestamp` `plan_next_time` bigint(20) NOT NULL DEFAULT 0 COMMENT '计划下次执行时间戳' AFTER `plan_last_timespan`,
     MODIFY COLUMN `plan_begin_time` bigint NULL DEFAULT NULL COMMENT '计划开始执行时间' AFTER `plan_state`,
@@ -32,7 +32,6 @@ ALTER TABLE `paas_file`
 ALTER TABLE `paas_file`
 DROP INDEX `IX_plan_next_timestamp`,
 ADD INDEX `IX_plan_next_time`(`plan_next_time`) USING BTREE;
-
 
 UPDATE paas_file
 SET plan_begin_time = unix_timestamp(STR_TO_DATE(CAST(plan_begin_time AS CHAR),'%Y%m%d%H%i%s'))*1000
