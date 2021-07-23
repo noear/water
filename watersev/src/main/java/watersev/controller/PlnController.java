@@ -96,7 +96,6 @@ public class PlnController implements IJob {
 
     private void runTask(PaasFileModel task, Timecount timecount) throws Exception {
 
-
         //1.1.检查次数
         if (task.plan_max > 0 && task.plan_count >= task.plan_max) {
             return;

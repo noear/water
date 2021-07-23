@@ -61,22 +61,29 @@ public class PlnHelper {
         Datetime now_time = Datetime.Now();
         Datetime next_time = new Datetime(baseTime);
 
-        String s1 = task.plan_interval.substring(0, task.plan_interval.length() - 1);
-        String s2 = task.plan_interval.substring(task.plan_interval.length() - 1);
+        //例：1s,1m,1h,1d
+        String val_str = task.plan_interval.substring(0, task.plan_interval.length() - 1);
+        int val = Integer.parseInt(val_str);
+        String sty = task.plan_interval.substring(task.plan_interval.length() - 1);
 
-        switch (s2) {
+
+        switch (sty) {
             case "s": //秒
-                next_time.addSecond(Integer.parseInt(s1));
+                if (task.plan_last_timespan > (val * 1000)) {
+                    //如果上次执行时长大于间隔，则用执行时长做为间隔
+                    val = (int) (task.plan_last_timespan / 1000);
+                }
+                next_time.addSecond(val);
                 break;
             case "m": //分
                 next_time.setSecond(begin_time.getSeconds());
-                next_time.addMinute(Integer.parseInt(s1));
+                next_time.addMinute(val);
                 break;
             case "h": //时
                 next_time.setMinute(begin_time.getMinutes());
                 next_time.setSecond(begin_time.getSeconds());
 
-                next_time.addHour(Integer.parseInt(s1));
+                next_time.addHour(val);
                 break;
             case "d": //日
                 next.intervalOfDay = true;
@@ -86,7 +93,7 @@ public class PlnHelper {
                 next_time.setMinute(begin_time.getMinutes());
                 next_time.setSecond(begin_time.getSeconds());
 
-                next_time.addDay(Integer.parseInt(s1));
+                next_time.addDay(val);
                 break;
             default:
                 next.allow = false; //不支持的格式，不允许执行
@@ -96,6 +103,7 @@ public class PlnHelper {
 
         next.datetime = next_time.getFulltime();
 
+        //1表示立即执行
         if (task.plan_state == 1) {
             next.allow = true;
         }
