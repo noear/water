@@ -179,8 +179,11 @@ public class FileController extends BaseController {
             data.set("plan_last_time", Datetime.parse(plan_last_time, "yyyy-MM-dd HH:mm:ss").getTicks());
         }
 
+        data.set("plan_next_time", 0L);
+
         data.set("plan_interval", ctx.param("plan_interval"));
         data.set("plan_max", ctx.paramAsInt("plan_max"));
+
 
         String tag1 = ctx.param("tag", "");
         String tag2 = ctx.param("path", "");
