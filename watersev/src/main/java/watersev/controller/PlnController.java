@@ -47,7 +47,7 @@ public class PlnController implements IJob {
 
         //尝试获取锁（1秒内只能调度一次）
         //
-        if (LockUtils.tryLock("waterplan", "waterplan_lock", 3)) {
+        if (LockUtils.tryLock("waterpln", "waterpln_lock", 3)) {
             try {
                 List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
@@ -59,7 +59,7 @@ public class PlnController implements IJob {
                     });
                 }
             } finally {
-                LockUtils.unLock("waterplan", "waterplan_lock");
+                LockUtils.unLock("waterpln", "waterpln_lock");
             }
         }
     }
