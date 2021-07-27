@@ -169,7 +169,7 @@ public class DbPaaSApi {
         item.remove("file_id");
 
         //只支持新增导入
-        db().table("paas_file")
+        DbTableQuery qr = db().table("paas_file")
                 .set("file_type", wm.file_type)
                 .set("tag", wm.tag)
                 .set("label", wm.label)
@@ -183,14 +183,18 @@ public class DbPaaSApi {
                 .set("edit_mode", wm.edit_mode)
                 .set("content_type", wm.content_type)
                 .set("content", wm.content)
-                .set("plan_begin_time", wm.plan_begin_time.getTime())
                 .set("plan_last_timespan", wm.plan_last_timespan)
                 .set("plan_interval", wm.plan_interval)
                 .set("plan_max", wm.plan_max)
                 .set("create_fulltime", wm.create_fulltime)
                 .set("update_fulltime", wm.update_fulltime)
-                .set("use_whitelist", wm.use_whitelist)
-                .insertBy("path");
+                .set("use_whitelist", wm.use_whitelist);
+
+        if (wm.plan_begin_time != null) {
+            qr.set("plan_begin_time", wm.plan_begin_time.getTime());
+        }
+
+        qr.insertBy("path");
     }
 
     //批量删除
