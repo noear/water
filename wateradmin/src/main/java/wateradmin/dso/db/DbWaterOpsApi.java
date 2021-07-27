@@ -360,22 +360,22 @@ public class DbWaterOpsApi {
     }
 
     //接口的三天的请求频率
-    public static Map<String,Object> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
+    public static Map<String,List> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
         int date2 = now.addDay(-1).getDate();
 
 
-        Map<String,Object> resp = new LinkedHashMap<>();
+        Map<String, List> resp = new LinkedHashMap<>();
         List<ServiceSpeedHourModel> threeDays = db().table("water_reg_service_speed_hour")
-                                                    .where("tag = ?", tag)
-                                                    .and("name_md5 = ?", name_md5)
-                                                    .and("service = ?", service)
-                                                    .and("log_date>=?", date2)
-                                                    .orderBy("log_date DESC")
-                                                    .select(field + " val,log_date,log_hour") //把字段as为val
-                                                    .getList(new ServiceSpeedHourModel());
+                .where("tag = ?", tag)
+                .and("name_md5 = ?", name_md5)
+                .and("service = ?", service)
+                .and("log_date>=?", date2)
+                .orderBy("log_date DESC")
+                .select(field + " val,log_date,log_hour") //把字段as为val
+                .getList(new ServiceSpeedHourModel());
 
         Map<Integer, ServiceSpeedHourModel> list0 = new HashMap<>();
         Map<Integer, ServiceSpeedHourModel> list1 = new HashMap<>();
@@ -414,8 +414,8 @@ public class DbWaterOpsApi {
 
 
     //获取接口三十天响应速度情况
-    public static Map<String,Object> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
-        Map<String,Object> resp = new LinkedHashMap<>();
+    public static Map<String,List> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
+        Map<String,List> resp = new LinkedHashMap<>();
 
         List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
                                                .whereEq("tag", tag)

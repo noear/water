@@ -81,8 +81,8 @@ public class SpeedController extends BaseController {
             service = "";
         }
 
-        Map<String, Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
-        Map<String, Object> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
+        Map<String, List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
+        Map<String, List> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
         viewModel.put("speeds", ONode.stringify(speeds));
         viewModel.put("tag", tag);
@@ -115,7 +115,7 @@ public class SpeedController extends BaseController {
             case 6:valField ="slowest"; break;
         }
 
-        Map<String,Object> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
+        Map<String,List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
         viewModel.put("speedReqTate",speedReqTate);
         viewModel.put("tag",tag);
         viewModel.put("name", WaterClient.Track.getName(name_md5));
