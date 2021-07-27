@@ -15,37 +15,24 @@ public class PlnHelper {
     public static PlnNext getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
         PlnNext next = new PlnNext();
 
-        Datetime now_time = Datetime.Now();
 
         CronExpressionPlus cron = CronUtils.get(task.plan_interval);
 
         next.datetime = cron.getNextValidTimeAfter(baseTime);
 
+
         //如果，限制特定的小时
         if (task.plan_state != 1) {
-            if (cron.getHours().size() < 24) {
-                int now_hour = now_time.getHours();
-                next.allow = false;
+            Datetime now_time = Datetime.Now();
+            Datetime nxt_time = new Datetime(next.datetime);
 
-                for (Integer h : cron.getHours()) {
-                    if (now_hour == h) {
-                        next.allow = true;
-                        break;
-                    }
-                }
+            if (cron.getHours().size() < 24) {
+                next.allow = (nxt_time.getHours() == now_time.getHours());
             }
 
             //如果，限制特定的分
             if (next.allow && cron.getMinutes().size() < 60) {
-                int now_minute = now_time.getMinutes();
-                next.allow = false;
-
-                for (Integer m : cron.getMinutes()) {
-                    if (now_minute == m) {
-                        next.allow = true;
-                        break;
-                    }
-                }
+                next.allow = (nxt_time.getMinutes() == now_time.getMinutes());
             }
         } else {
             next.allow = true;

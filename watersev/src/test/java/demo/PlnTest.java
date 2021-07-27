@@ -2,6 +2,7 @@ package demo;
 
 import org.junit.Test;
 import org.noear.luffy.task.cron.CronExpression;
+import org.noear.luffy.task.cron.CronExpressionPlus;
 import org.noear.luffy.task.cron.CronUtils;
 import org.noear.water.utils.Datetime;
 
@@ -39,5 +40,12 @@ public class PlnTest {
 
         cron = CronUtils.get("0 * 1,5 * * ?");
         System.out.println(cron);
+    }
+
+    @Test
+    public void test4() throws Exception{
+        CronExpressionPlus cron = CronUtils.get("0 0 11 * * ? +05");
+
+        assert cron.getHours().size() == 1;
     }
 }
