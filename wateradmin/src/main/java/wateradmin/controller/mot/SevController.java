@@ -10,7 +10,6 @@ import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
-import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.viewModels.ViewModel;
@@ -183,8 +182,8 @@ public class SevController extends BaseController {
             service = "";
         }
 
-        Map<String, List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
-        Map<String, List> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
+        Map<String, List> speedReqTate = DbWaterRegApi.getChartsForDate(tag, name_md5, service, "total_num");
+        Map<String, List> speeds = DbWaterRegApi.getChartsForMonth(tag, name_md5, service);
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
         viewModel.put("speeds", ONode.stringify(speeds));
         viewModel.put("tag", tag);
@@ -218,7 +217,7 @@ public class SevController extends BaseController {
             case 6:valField ="slowest"; break;
         }
 
-        Map<String,List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
+        Map<String,List> speedReqTate = DbWaterRegApi.getChartsForDate(tag, name_md5, service, valField);
         viewModel.put("speedReqTate",speedReqTate);
         viewModel.put("tag",tag);
         viewModel.put("name", WaterClient.Track.getName(name_md5));
