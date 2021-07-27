@@ -2,7 +2,6 @@ package org.noear.water.protocol.model.log;
 
 
 import lombok.Getter;
-import org.noear.solon.core.util.PrintUtil;
 import org.noear.water.log.Level;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.HtmlEncode;
@@ -53,7 +52,7 @@ public class LogModel {
         //头
         buf.append("<span class='level" ).append(level).append("'>");
         buf.append("[").append(Level.of(level).name()).append("] ");
-        buf.append(new Datetime(log_fulltime).toString("yyyy-MM-dd HH:mm:ss.SSS")).append(" ");
+        buf.append(new Datetime(log_fulltime).toString("yyyy-MM-dd HH:mm:ss.SSS Z")).append(" ");
 
         if (TextUtils.isNotEmpty(thread_name)) {
             buf.append("[-").append(thread_name).append("]");
