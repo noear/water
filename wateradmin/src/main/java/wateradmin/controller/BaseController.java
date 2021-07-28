@@ -30,8 +30,6 @@ public class BaseController {
     * */
     public ModelAndView view(String viewName) {
         //设置必要参数
-        viewModel.put("root", "");
-
         viewModel.put("app", Solon.cfg().appTitle());
 
         viewModel.put("css", "/_static/css");
@@ -64,8 +62,7 @@ public class BaseController {
         }
 
 
-        viewModel.put("currenttime", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)"));
-        viewModel.put("ref_url", Context.current().header("referer"));
+        viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)"));
 
         return viewModel.view(viewName + ".ftl");
     }

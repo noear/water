@@ -139,7 +139,6 @@ public class FileController extends BaseController {
         viewModel.put("tag", tag);
         viewModel.put("m1", file);
         viewModel.put("whitelist", whitelist);
-        viewModel.put("ref_url", ctx.header("referer"));
 
         return view("paas/file_edit_" + type.name());
     }
