@@ -5,6 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import luffy.JtRun;
 import org.noear.solon.SolonApp;
+import org.noear.water.utils.PreheatUtils;
 import waterraas.controller.DebugController;
 import waterraas.controller.PreviewController;
 import waterraas.controller.ReleaseController;
@@ -46,5 +47,8 @@ public class WaterraasApp {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+
+        PreheatUtils.preheat("/run/check/");
     }
 }
