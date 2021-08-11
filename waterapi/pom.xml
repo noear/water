@@ -174,11 +174,6 @@
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
                         </resource>
-                        <resource>
-                            <targetPath>/waterapi_ext/</targetPath>
-                            <directory>${project.basedir}</directory>
-                            <include>_db.properties</include>
-                        </resource>
                     </resources>
                 </configuration>
             </plugin>
