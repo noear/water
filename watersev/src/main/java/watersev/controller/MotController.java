@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import luffy.JtRun;
 import org.noear.snack.ONode;
 import org.noear.snack.core.Constants;
 import org.noear.solon.annotation.Component;
@@ -48,7 +49,7 @@ public final class MotController implements IJob {
         }
     }
 
-    private  void doExec(MonitorModel task) {
+    private void doExec(MonitorModel task) {
         try {
             ContextUtil.currentSet(new ContextEmpty());
 
@@ -62,31 +63,31 @@ public final class MotController implements IJob {
         }
     }
 
-    private  void runTask(MonitorModel task) throws SQLException {
-        if(TextUtils.isEmpty(task.source_query) || task.source_query.indexOf("::")<0) {
+    private void runTask(MonitorModel task) throws Exception {
+        if (TextUtils.isEmpty(task.source_query) || task.source_query.indexOf("::") < 0) {
             return;
         }
 
         String[] tmp = task.source_query.split("::");
 
-        String source = tmp[0].replace("--","").trim();
-        String query  = tmp[1].trim();
+        String source = tmp[0].replace("--", "").trim();
+        String query = tmp[1].trim();
 
-        ConfigM cfg = WaterClient.Config.getByTagKey(source);
+        MotResult motResult = null;
 
-        DbContext db = cfg.getDb();
+        if (source.equals("faas()")) {
+            motResult = getDataByFaas(source, query, task);
+        } else {
+            motResult = getDataByDb(source, query, task);
+        }
 
-        String sql = SqlUtil.preProcess(query);
-
-        if (SqlUtil.isSafe(sql) == false) {
-            LogUtil.write(this, task.monitor_id+"", task.name + "（非安全代码）", "-1::"+sql);
+        if (motResult.succeed == false) {
             return;
         }
 
-        List list = db.sql(sql).getMapList();
 
         ONode model = new ONode().asObject();
-        model.set("d", ONode.loadObj(list));
+        model.set("d", motResult.data);
         model.set("tag", task.task_tag);
 
 
@@ -94,7 +95,7 @@ public final class MotController implements IJob {
 
         String task_tag = null;
 
-        if(list.size()>0) {
+        if (motResult.data.count() > 0) {
             task_tag = RuleUtil.format(model_json, "fmt_tag_" + task.monitor_id, task.task_tag_exp);
         }
 
@@ -107,13 +108,14 @@ public final class MotController implements IJob {
         }
 
         if (isMatch) {
-            LogUtil.write(this, task.monitor_id+"", task.name, "match[error]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
+            LogUtil.write(this, task.monitor_id + "", task.name, "match[error]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
         } else {
-            LogUtil.write(this, task.monitor_id+"", task.name, "no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
+            LogUtil.write(this, task.monitor_id + "", task.name, "no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
         }
 
         if (isMatch) {
             DbWaterApi.setMonitorState(task.monitor_id, task.alarm_count + 1, task_tag);//记录次数
+
             if (task.rule.indexOf("m.tag") >= 0 || task_tag.equals(task.task_tag) == false) {
                 AlarmUtil.tryAlarm(task, false);//报警
             }
@@ -123,5 +125,28 @@ public final class MotController implements IJob {
                 AlarmUtil.tryAlarm(task, true);//通知恢复
             }
         }
+    }
+
+    private MotResult getDataByFaas(String source, String query, MonitorModel task) throws Exception {
+        Object tmp = JtRun.exec(query);
+
+        return MotResult.succeed(tmp);
+    }
+
+    private MotResult getDataByDb(String source, String query, MonitorModel task) throws Exception {
+        ConfigM cfg = WaterClient.Config.getByTagKey(source);
+
+        DbContext db = cfg.getDb();
+
+        String sql = SqlUtil.preProcess(query);
+
+        if (SqlUtil.isSafe(sql) == false) {
+            LogUtil.write(this, task.monitor_id + "", task.name + "（非安全代码）", "-1::" + sql);
+            return MotResult.failure();
+        }
+
+        List list = db.sql(sql).getMapList();
+
+        return MotResult.succeed(list);
     }
 }

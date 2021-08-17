@@ -40,32 +40,38 @@ public class JtRun {
     public static void exec(String path, Context ctx) throws Exception {
         AFileModel file = JtBridge.fileGet(path);
 
-        ExecutorFactory.execOnly( file, ctx);
+        ExecutorFactory.execOnly(file, ctx);
     }
 
-    public static void exec(String code) throws Exception {
+    public static Object exec(String code) throws Exception {
         AFileModel file = new AFileModel();
         file.path = EncryptUtils.md5(code);
         file.content = code;
         file.edit_mode = "javascript";
 
-        exec(file);
+        return exec(file);
     }
 
-    public static void exec(AFileModel file) throws Exception {
+    public static Object exec(AFileModel file) throws Exception {
         initFuture.get();
 
         Context ctx = ContextUtil.current();
+        Object rst = null;
 
         if (ctx == null) {
             ctx = ContextEmpty.create();
 
             ContextUtil.currentSet(ctx);
-            ExecutorFactory.execOnly(file, ctx);
-            ContextUtil.currentRemove();
+            try {
+                rst = ExecutorFactory.execOnly(file, ctx);
+            } finally {
+                ContextUtil.currentRemove();
+            }
         } else {
-            ExecutorFactory.execOnly(file, ctx);
+            rst = ExecutorFactory.execOnly(file, ctx);
         }
+
+        return rst;
     }
 
     public static void xfunInit(){

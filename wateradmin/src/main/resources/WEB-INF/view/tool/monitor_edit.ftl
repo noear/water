@@ -208,8 +208,9 @@
         getCompletions: function(editor, session, pos, prefix, callback) {
             callback(null,
                 [
+                    {name: "--faas()",value: "--faas()::", meta: "faas",type: "local",score: 1000}
                     <#list cfgs as cfg>
-                    {name: "--${cfg.tag}/${cfg.key}",value: "--${cfg.tag}/${cfg.key}::", meta: "db",type: "local",score: 1000}<#if cfg_has_next>,</#if>
+                    ,{name: "--${cfg.tag}/${cfg.key}",value: "--${cfg.tag}/${cfg.key}::", meta: "db",type: "local",score: 1000}
                     </#list>
                 ]);
         }
