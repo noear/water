@@ -14,6 +14,7 @@ import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
+import org.noear.water.utils.PreheatUtils;
 import org.noear.weed.DbContext;
 import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
@@ -117,5 +118,7 @@ public class WateradminApp {
                 logger.error(ctx.path(), summary, ex);
             }
         });
+
+        PreheatUtils.preheat("/run/check/");
     }
 }
