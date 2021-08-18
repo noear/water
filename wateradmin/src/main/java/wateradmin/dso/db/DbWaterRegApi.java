@@ -169,8 +169,9 @@ public class DbWaterRegApi {
         List<ServiceRuntimeModel> threeDays = db().table("water_reg_service_runtime")
                 .whereEq("key",key)
                 .and("log_date>=?", date2)
+                .groupBy("key,log_date,log_hour")
                 .orderBy("log_date DESC")
-                .selectList(field + " val,log_date,log_hour", ServiceRuntimeModel.class); //把字段as为val
+                .selectList("log_date,log_hour, AVG("+field + ") val", ServiceRuntimeModel.class); //把字段as为val
 
         Map<Integer, ServiceRuntimeModel> list0 = new HashMap<>();
         Map<Integer, ServiceRuntimeModel> list1 = new HashMap<>();
@@ -212,11 +213,20 @@ public class DbWaterRegApi {
     public static Map<String,List> getChartsForMonth(String key) throws SQLException {
         Map<String,List> resp = new LinkedHashMap<>();
 
+        int date30 = Datetime.Now().addDay(-30).getDate();
+
         List<ServiceRuntimeModel> list = db().table("water_reg_service_runtime")
-                .whereEq("key",key)
+                .whereEq("key",key).andGte("log_date",date30)
+                .groupBy("key,log_date")
                 .orderBy("log_date DESC")
                 .limit(30)
-                .selectList("*", ServiceRuntimeModel.class);
+                .selectList("`key`,log_date," +
+                        "AVG(memory_max) memory_max," +
+                        "AVG(memory_total) memory_total," +
+                        "AVG(memory_used) memory_used," +
+                        "AVG(thread_peak_count) thread_peak_count," +
+                        "AVG(thread_count) thread_count," +
+                        "AVG(thread_daemon_count) thread_daemon_count", ServiceRuntimeModel.class);
 
         Collections.sort(list, (o1, o2) -> (o1.log_date - o2.log_date));
 
