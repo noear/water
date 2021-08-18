@@ -177,52 +177,42 @@ public class SevController extends BaseController {
     //性能监控图标统计
     // todo: 未完成
     @Mapping("/service/charts")
-    public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException {
-        if (service == null) {
-            service = "";
+    public ModelAndView speedCharts(String key) throws SQLException {
+        if (key == null) {
+            key = "";
         }
 
-        Map<String, List> speedReqTate = DbWaterRegApi.getChartsForDate(tag, name_md5, service, "total_num");
-        Map<String, List> speeds = DbWaterRegApi.getChartsForMonth(tag, name_md5, service);
+        ServiceModel sev = DbWaterRegApi.getServiceByKey(key);
+
+        Map<String, List> speedReqTate = DbWaterRegApi.getChartsForDate(key, "memory_used"); //total_num
+        Map<String, List> speeds = DbWaterRegApi.getChartsForMonth(key);
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
         viewModel.put("speeds", ONode.stringify(speeds));
-        viewModel.put("tag", tag);
-        viewModel.put("name", WaterClient.Track.getName(name_md5));
-        viewModel.put("name_md5", name_md5);
-        viewModel.put("service", service);
+        viewModel.put("key", key);
+        viewModel.put("service", sev.name);
+        viewModel.put("address", sev.getAddress());
 
-        if ("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".indexOf(service) < 0) {
-            return view("mot/speed_charts");
-        } else {
-            if ("_watersrt".equals(service)) {
-                return view("mot/speed_charts3");
-            } else {
-                return view("mot/speed_charts2");
-            }
-        }
+        return view("mot/service_charts");
     }
 
     // todo: 未完成
     @Mapping("/service/charts/ajax/reqtate")
-    public ViewModel speedCharts_reqtate(String tag,String name_md5,String service, Integer type) throws SQLException{
-        String valField = "total_num";
+    public ViewModel speedCharts_reqtate(String key, Integer type) throws SQLException{
+        String valField = "memory_used";
         if(type == null){type=0;}
         switch (type){
-            case 0:valField ="total_num"; break;
-            case 1:valField ="total_num_slow1"; break;
-            case 2:valField ="total_num_slow2"; break;
-            case 3:valField ="total_num_slow5"; break;
-            case 4:valField ="average"; break;
-            case 5:valField ="fastest"; break;
-            case 6:valField ="slowest"; break;
+            case 0:valField ="memory_used"; break;
+            case 1:valField ="memory_total"; break;
+            case 2:valField ="memory_max"; break;
+            case 3:valField ="thread_peak_count"; break;
+            case 4:valField ="thread_count"; break;
+            case 5:valField ="thread_daemon_count"; break;
         }
 
-        Map<String,List> speedReqTate = DbWaterRegApi.getChartsForDate(tag, name_md5, service, valField);
+        Map<String,List> speedReqTate = DbWaterRegApi.getChartsForDate(key, valField);
         viewModel.put("speedReqTate",speedReqTate);
-        viewModel.put("tag",tag);
-        viewModel.put("name", WaterClient.Track.getName(name_md5));
-        viewModel.put("name_md5",name_md5);
-        viewModel.put("service",service);
+        viewModel.put("key",key);
+        viewModel.put("typeName",valField);
         return viewModel;
     }
 }

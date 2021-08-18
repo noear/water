@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm10">
 <head>
-    <title>${app} - 性能监控</title>
+    <title>${app} - 运行时监控</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
@@ -17,7 +17,7 @@
 <body>
 <toolbar>
     <left>
-    ${tag}::${name!}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
+    ${service}::${address!}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
     </left>
     <right>
         <button type="button" onclick="location.reload()">刷新</button>
@@ -26,7 +26,7 @@
 <block>
     <toolbar>
         <div style="padding: 5px;overflow: hidden;">
-            <@stateselector items="总计数,计数1,计数2,计数5" clientID="chart1" onSelect="chart1_select"/>
+            <@stateselector items="memory_used,memory_total,memory_max,thread_peak_count,thread_count,thread_daemon_count" clientID="chart1" onSelect="chart1_select"/>
         </div>
         <div id="chartsReqTate" style="width:100%;height: 220px;margin: auto;;cursor: default;"></div>
     </toolbar>
@@ -43,8 +43,8 @@
 
     function chart1_select(type) {
         $.ajax({
-            url:"/mot/speed/charts/ajax/reqtate",
-            data:{tag:'${tag}', name_md5:'${name_md5}', service:'${service}', type:type},
+            url:"/mot/service/charts/ajax/reqtate",
+            data:{key:'${key}', type:type},
             success:function(data){
                 chartsReqTate.setOption({
                     series: [
@@ -129,7 +129,7 @@
             trigger: 'axis'
         },
         legend: {
-            data:['总计数','计数1','计数2','计数5']
+            data:['memory_used','memory_total','memory_max','thread_peak_count','thread_count','thread_daemon_count']
         },
         grid: {
             left: '3%',
@@ -154,26 +154,37 @@
             type: 'value'
         },
         series: [
+
             {
                 type:'line',
-                name:'总计数',
-                data:speeds_vm.total_num
+                name:'memory_used',
+                data:speeds_vm.memory_used
+            },
+            {
+                type:'line',
+                name:'memory_total',
+                data:speeds_vm.memory_total
+            },
+            {
+                type:'line',
+                name:'memory_max',
+                data:speeds_vm.memory_max
             }
             ,
             {
                 type:'line',
-                name:'计数1',
-                data:speeds_vm.total_num_slow1
+                name:'thread_peak_count',
+                data:speeds_vm.thread_peak_count
             },
             {
                 type:'line',
-                name:'计数2',
-                data:speeds_vm.total_num_slow2
+                name:'thread_count',
+                data:speeds_vm.thread_count
             },
             {
                 type:'line',
-                name:'计数5',
-                data:speeds_vm.total_num_slow5
+                name:'thread_daemon_count',
+                data:speeds_vm.thread_daemon_count
             }
         ]
     };

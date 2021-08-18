@@ -6,6 +6,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.dso.NoticeUtils;
+import wateradmin.models.water.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.models.water_reg.ServiceSpeedDateModel;
@@ -77,40 +78,43 @@ public class DbWaterRegApi {
                 .table("water_reg_service")
                 .where("is_enabled = ?", is_enabled)
                 .build(tb -> {
-                    if(is_web){
-                        tb.and("name LIKE ?","web:%");
-                    }else{
-                        tb.and("name NOT LIKE ?","web:%");
+                    if (is_web) {
+                        tb.and("name LIKE ?", "web:%");
+                    } else {
+                        tb.and("name NOT LIKE ?", "web:%");
                     }
 
                     if (TextUtils.isEmpty(name) == false) {
-                        if(name.startsWith("ip:")){
-                            tb.and("address LIKE ?",name.substring(3)+"%");
-                        }else{
+                        if (name.startsWith("ip:")) {
+                            tb.and("address LIKE ?", name.substring(3) + "%");
+                        } else {
                             tb.and("name like ?", name + "%");
                         }
                     }
                 })
                 .orderBy("name asc")
-                .select("*")
-                .getList(new ServiceModel());
+                .selectList("*", ServiceModel.class);
     }
 
-    public static ServiceModel getServiceById(int service_id) throws SQLException{
+    public static ServiceModel getServiceById(int service_id) throws SQLException {
         return db()
                 .table("water_reg_service")
                 .where("service_id = ?", service_id)
-                .select("*")
-                .getItem(new ServiceModel());
+                .selectItem("*", ServiceModel.class);
+    }
+
+    public static ServiceModel getServiceByKey(String key) throws SQLException {
+        return db()
+                .table("water_reg_service")
+                .whereEq("key", key)
+                .selectItem("*", ServiceModel.class);
     }
 
     public static List<ServiceModel> getServicesByName(String name) throws SQLException {
 
         return db().table("water_reg_service")
                 .where("name = ?", name)
-                .select("*")
-                .getList(new ServiceModel());
-
+                .selectList("*", ServiceModel.class);
     }
 
     public static boolean udpService(Integer service_id,String name,String address,String note,Integer check_type,String check_url) throws SQLException {
@@ -148,14 +152,13 @@ public class DbWaterRegApi {
         return db().table("water_reg_consumer")
                 .where("service = ?", service)
                 .orderBy("consumer asc")
-                .select("*")
-                .getList(new ServiceConsumerModel());
+                .selectList("*", ServiceConsumerModel.class);
 
     }
 
 
     //接口的三天的请求频率
-    public static Map<String,List> getChartsForDate(String tag, String name_md5, String service, String field) throws SQLException {
+    public static Map<String,List> getChartsForDate(String key, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
@@ -163,18 +166,16 @@ public class DbWaterRegApi {
 
 
         Map<String, List> resp = new LinkedHashMap<>();
-        List<ServiceSpeedHourModel> threeDays = db().table("water_reg_service_speed_hour")
-                .where("tag = ?", tag)
-                .and("name_md5 = ?", name_md5)
-                .and("service = ?", service)
+        List<ServiceRuntimeModel> threeDays = db().table("water_reg_service_runtime")
+                .whereEq("key",key)
                 .and("log_date>=?", date2)
                 .orderBy("log_date DESC")
-                .selectList(field + " val,log_date,log_hour", ServiceSpeedHourModel.class); //把字段as为val
+                .selectList(field + " val,log_date,log_hour", ServiceRuntimeModel.class); //把字段as为val
 
-        Map<Integer, ServiceSpeedHourModel> list0 = new HashMap<>();
-        Map<Integer, ServiceSpeedHourModel> list1 = new HashMap<>();
-        Map<Integer, ServiceSpeedHourModel> list2 = new HashMap<>();
-        for (ServiceSpeedHourModel m : threeDays) {
+        Map<Integer, ServiceRuntimeModel> list0 = new HashMap<>();
+        Map<Integer, ServiceRuntimeModel> list1 = new HashMap<>();
+        Map<Integer, ServiceRuntimeModel> list2 = new HashMap<>();
+        for (ServiceRuntimeModel m : threeDays) {
             if (m.log_date == date0) {
                 list0.put(m.log_hour, m);
             }
@@ -186,7 +187,7 @@ public class DbWaterRegApi {
             }
         }
 
-        Map<String, Map<Integer, ServiceSpeedHourModel>> data = new LinkedHashMap<>();
+        Map<String, Map<Integer, ServiceRuntimeModel>> data = new LinkedHashMap<>();
         data.put("today", list0);
         data.put("yesterday", list1);
         data.put("beforeday", list2);
@@ -208,46 +209,40 @@ public class DbWaterRegApi {
 
 
     //获取接口三十天响应速度情况
-    public static Map<String,List> getChartsForMonth(String tag, String name_md5, String service) throws SQLException {
+    public static Map<String,List> getChartsForMonth(String key) throws SQLException {
         Map<String,List> resp = new LinkedHashMap<>();
 
-        List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
-                .whereEq("tag", tag)
-                .andEq("name_md5", name_md5)
-                .andEq("service", service)
+        List<ServiceRuntimeModel> list = db().table("water_reg_service_runtime")
+                .whereEq("key",key)
                 .orderBy("log_date DESC")
                 .limit(30)
-                .select("*")
-                .getList(new ServiceSpeedDateModel());
+                .selectList("*", ServiceRuntimeModel.class);
 
         Collections.sort(list, (o1, o2) -> (o1.log_date - o2.log_date));
 
-        List<Object> average = new ArrayList<>();
-        List<Object> fastest = new ArrayList<>();
-        List<Object> slowest = new ArrayList<>();
-        List<Object> total_num = new ArrayList<>();
-        List<Object> total_num_slow1 = new ArrayList<>();
-        List<Object> total_num_slow2 = new ArrayList<>();
-        List<Object> total_num_slow5 = new ArrayList<>();
+        List<Object> memory_max = new ArrayList<>();
+        List<Object> memory_total = new ArrayList<>();
+        List<Object> memory_used = new ArrayList<>();
+        List<Object> thread_peak_count = new ArrayList<>();
+        List<Object> thread_count = new ArrayList<>();
+        List<Object> thread_daemon_count = new ArrayList<>();
         List<Object> dates = new ArrayList<>();
 
-        for (ServiceSpeedDateModel m : list) {
-            average.add(m.average);
-            fastest.add(m.fastest);
-            slowest.add(m.slowest);
-            total_num.add(m.total_num);
-            total_num_slow1.add(m.total_num_slow1);
-            total_num_slow2.add(m.total_num_slow2);
-            total_num_slow5.add(m.total_num_slow5);
+        for (ServiceRuntimeModel m : list) {
+            memory_max.add(m.memory_max);
+            memory_total.add(m.memory_total);
+            memory_used.add(m.memory_used);
+            thread_peak_count.add(m.thread_peak_count);
+            thread_count.add(m.thread_count);
+            thread_daemon_count.add(m.thread_daemon_count);
             dates.add(m.log_date);
         }
-        resp.put("average", average);
-        resp.put("fastest", fastest);
-        resp.put("slowest", slowest);
-        resp.put("total_num", total_num);
-        resp.put("total_num_slow1", total_num_slow1);
-        resp.put("total_num_slow2", total_num_slow2);
-        resp.put("total_num_slow5", total_num_slow5);
+        resp.put("memory_max", memory_max);
+        resp.put("memory_total", memory_total);
+        resp.put("memory_used", memory_used);
+        resp.put("thread_peak_count", thread_peak_count);
+        resp.put("thread_count", thread_count);
+        resp.put("thread_daemon_count", thread_daemon_count);
         resp.put("dates", dates);
         return resp;
     }
