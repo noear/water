@@ -17,7 +17,7 @@
 <body>
 <toolbar>
     <left>
-    ${service}::${address!}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
+    ${service!}@${address!}&nbsp;&nbsp;<a onClick="javascript :history.back(-1);" class="t2">(返回)</a>
     </left>
     <right>
         <button type="button" onclick="location.reload()">刷新</button>
