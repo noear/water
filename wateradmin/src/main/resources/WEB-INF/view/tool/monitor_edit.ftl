@@ -175,19 +175,19 @@
             </tr>
             <tr>
                 <th>重复标识</th>
-                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /><n>（重复的标识不报警）</n></td>
+                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /><n>（重复的标识不告警）</n></td>
             </tr>
 
             <tr>
-                <th>报警手机</th>
+                <th>告警手机</th>
                 <td><input type="text" id="alarm_mobile" class="longtxt" value = "${monitor.alarm_mobile!}"/><n>（多个手机号用逗号分隔）</n></td>
             </tr>
             <tr>
-                <th>报警签名</th>
+                <th>告警签名</th>
                 <td><input type="text" id="alarm_sign"  value = "${monitor.alarm_sign!}"/></td>
             </tr>
             <tr>
-                <th>报警说明</th>
+                <th>告警说明</th>
                 <td><textarea class="h50" id="alarm_exp">${monitor.alarm_exp!}</textarea></td>
             </tr>
             <tr>

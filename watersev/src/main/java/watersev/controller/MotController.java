@@ -108,7 +108,7 @@ public final class MotController implements IJob {
         }
 
         if (isMatch) {
-            LogUtil.write(this, task.monitor_id + "", task.name, "match[error]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
+            LogUtil.write(this, task.monitor_id + "", task.name, "match[error]==" + task.alarm_exp + "#" + task_tag + "（解发告警）\n" + model_json);
         } else {
             LogUtil.write(this, task.monitor_id + "", task.name, "no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
         }
