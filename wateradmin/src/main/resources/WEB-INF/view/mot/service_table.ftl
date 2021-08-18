@@ -1,11 +1,11 @@
 <table>
     <thead>
     <tr>
-        <td width="120px" class="left">名称</td>
+        <td class="left">名称</td>
         <td class="left">地址</td>
         <td width="50px">检测<br/>类型</td>
-        <td>检查路径</td>
-        <td width="120px">最后检查时间</td>
+        <td>检测路径</td>
+        <td width="120px">最后检测时间</td>
         <td width="60px">最后检<br/>查状态</td>
         <td width="60px">最后检<br/>查备注</td>
         <#if is_admin == 1>
@@ -22,7 +22,7 @@
             <#else>
             <tr title="${m.code_location!}">
         </#if>
-        <td class="left">${m.name}</td>
+        <td class="left">${m.tag}::${m.name}</td>
         <td class="left break">
             <#if m.check_type == 0>
                 <a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">
