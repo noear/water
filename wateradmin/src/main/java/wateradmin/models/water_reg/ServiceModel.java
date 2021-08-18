@@ -17,6 +17,7 @@ import java.util.*;
 @Setter
 public class ServiceModel implements IBinder {
     public int service_id;
+    public String tag;
     public String key;
     public String name;
     public String ver;
@@ -49,6 +50,7 @@ public class ServiceModel implements IBinder {
         //1.source:数据源
         //
         service_id = s.get("service_id").value(0);
+        tag = s.get("tag").value(null);
         key = s.get("key").value(null);
         name = s.get("name").value(null);
         ver = s.get("ver").value(null);
