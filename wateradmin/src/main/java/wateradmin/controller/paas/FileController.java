@@ -30,21 +30,26 @@ public class FileController extends BaseController {
     static WaterLogger paasLog = new WaterLogger("water_log_paas");
 
     @Mapping("api/home")
-    public ModelAndView nav_api(String tag_name, String key) throws SQLException {
-        return nav(tag_name, PaasFileType.api, key);
+    public ModelAndView api_home(String tag_name, String key) throws SQLException {
+        return home(tag_name, PaasFileType.api, key);
     }
 
     @Mapping("tml/home")
-    public ModelAndView nav_tml(String tag_name, String key) throws SQLException {
-        return nav(tag_name, PaasFileType.tml, key);
+    public ModelAndView tml_home(String tag_name, String key) throws SQLException {
+        return home(tag_name, PaasFileType.tml, key);
+    }
+
+    @Mapping("msg/home")
+    public ModelAndView msg_home(String tag_name, String key) throws SQLException {
+        return home(tag_name, PaasFileType.msg, key);
     }
 
     @Mapping("pln/home")
-    public ModelAndView nav_pln(String tag_name, String key) throws SQLException {
-        return nav(tag_name, PaasFileType.pln, key);
+    public ModelAndView pln_home(String tag_name, String key) throws SQLException {
+        return home(tag_name, PaasFileType.pln, key);
     }
 
-    private ModelAndView nav(String tag_name, PaasFileType type, String key) throws SQLException {
+    private ModelAndView home(String tag_name, PaasFileType type, String key) throws SQLException {
         List<TagCountsModel> tags = DbPaaSApi.getFileTags(type);
 
         BcfTagChecker.filter(tags, m -> m.tag);
@@ -64,6 +69,11 @@ public class FileController extends BaseController {
     @Mapping("pln/list")
     public ModelAndView pln_list(Context ctx) throws SQLException {
         return list(ctx, PaasFileType.pln);
+    }
+
+    @Mapping("msg/list")
+    public ModelAndView msg_list(Context ctx) throws SQLException {
+        return list(ctx, PaasFileType.msg);
     }
 
     @Mapping("tml/list")
@@ -109,6 +119,11 @@ public class FileController extends BaseController {
     @Mapping("pln/edit")
     public ModelAndView pln_edit(String tag, Integer file_id, Context ctx) throws SQLException {
         return edit(tag, PaasFileType.pln, file_id, ctx);
+    }
+
+    @Mapping("msg/edit")
+    public ModelAndView msg_edit(String tag, Integer file_id, Context ctx) throws SQLException {
+        return edit(tag, PaasFileType.msg, file_id, ctx);
     }
 
     @Mapping("tml/edit")
@@ -162,6 +177,22 @@ public class FileController extends BaseController {
         PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
 
         return ajax_save(ctx, data, PaasFileType.api);
+    }
+
+    @Mapping("msg/ajax/save")
+    public Object msg_ajax_save(Context ctx) throws Exception {
+        DataItem data = new DataItem();
+
+        int file_id = ctx.paramAsInt("id", 0);
+
+        //处理消息订阅
+        String label = ctx.param("label", "");
+        String path = ctx.param("path", "");
+        int is_disabled = ctx.paramAsInt("is_disabled");
+
+        PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
+
+        return ajax_save(ctx, data, PaasFileType.msg);
     }
 
     @Mapping("pln/ajax/save")
