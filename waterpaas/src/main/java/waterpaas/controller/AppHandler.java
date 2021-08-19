@@ -81,26 +81,28 @@ public class AppHandler implements Handler {
         }
 
         //安全名单验证
-        if(file.file_type ==0) {
-            //::即时接口
-            if (TextUtils.isEmpty(file.use_whitelist) == false) {
-                String ip = IPUtils.getIP(ctx);
+        if(Solon.cfg().isWhiteMode()) {
+            if (file.file_type == 0) {
+                //::即时接口
+                if (TextUtils.isEmpty(file.use_whitelist) == false) {
+                    String ip = IPUtils.getIP(ctx);
 
-                if (WaterClient.Whitelist.exists(file.use_whitelist, "ip", ip) == false) {
-                    ctx.setHandled(true);
-                    ctx.output(ip + " not is safelist!");
-                    return;
+                    if (WaterClient.Whitelist.exists(file.use_whitelist, "ip", ip) == false) {
+                        ctx.setHandled(true);
+                        ctx.output(ip + " not is safelist!");
+                        return;
+                    }
                 }
-            }
-        }else{
-            //::定时任务与模板
-            if(Solon.cfg().isWhiteMode()){
-                String ip = IPUtils.getIP(ctx);
+            } else {
+                //::定时任务与模板
+                if (Solon.cfg().isWhiteMode()) {
+                    String ip = IPUtils.getIP(ctx);
 
-                if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
-                    ctx.setHandled(true);
-                    ctx.output(ip + " not is safelist!");
-                    return;
+                    if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
+                        ctx.setHandled(true);
+                        ctx.output(ip + " not is safelist!");
+                        return;
+                    }
                 }
             }
         }
