@@ -137,7 +137,8 @@ public class AppHandler implements Handler {
                     ctx.output("CHECK ERROR");
                     return;
                 } else {
-                    ctx.attrSet("message", msg);
+                    ctx.attrSet("message", msg); //兼容旧的
+                    ctx.attrSet("event", msg);
                 }
             }
         }
