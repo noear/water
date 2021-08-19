@@ -24,7 +24,7 @@
                 }
 
                 if (!message  || message == "") {
-                    top.layer.msg("订阅地址不能为空");
+                    top.layer.msg("消息内容不能为空");
                     return;
                 }
 
