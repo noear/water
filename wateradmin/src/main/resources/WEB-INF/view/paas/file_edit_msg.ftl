@@ -17,11 +17,7 @@
     </script>
 </head>
 <body>
-<datalist id="label_list">
-    <option value="filter.path">路径过滤器；请在备注里添加'路径'，例：/path/#说明</option>
-    <option value="filter.file">文件过滤器；请在备注里添加'文件后缀'，例：md#说明</option>
-    <option value="hook.start">启动勾子；引擎启动时会被运行</option>
-</datalist>
+
 <datalist id="content_type_list">
     <option value="text/plain"></option>
     <option value="text/css"></option>
@@ -118,7 +114,7 @@
                 </td>
             </tr>
             <tr>
-                <th>事件主题</th><td><input type="text" id="label" list="label_list" autocomplete="off" value="${m1.label!}"  /></td>
+                <th>事件主题</th><td><input type="text" id="label" placeholder="@x.x.x" autocomplete="off" value="${m1.label!}"  />*</td>
             </tr>
             </tbody>
         </table>

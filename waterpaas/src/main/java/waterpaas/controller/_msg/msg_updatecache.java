@@ -12,6 +12,9 @@ import waterpaas.dso.AFileUtil;
 import waterpaas.dso.DbPaaSApi;
 import waterpaas.dso.RouteHelper;
 
+/**
+ * 实时更新FaaS代码
+ * */
 @WaterMessage("water.cache.update")
 public class msg_updatecache implements MessageHandler {
     static final String label_hook_start = "hook.start";
@@ -37,6 +40,9 @@ public class msg_updatecache implements MessageHandler {
                     AFileModel file = DbPaaSApi.fileGet(Integer.parseInt(file_id));
 
                     if (TextUtils.isEmpty(file.path) == false) {
+                        //
+                        //更新代码缓存
+                        //
                         String name = file.path.replace("/", "__");
                         AFileUtil.remove(file.path);
                         ExecutorFactory.del(name);
