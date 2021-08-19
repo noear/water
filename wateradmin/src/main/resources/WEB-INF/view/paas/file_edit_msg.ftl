@@ -114,7 +114,7 @@
                 </td>
             </tr>
             <tr>
-                <th>事件主题</th><td><input type="text" id="label" placeholder="@x.x.x" autocomplete="off" value="${m1.label!}"  required jt-alert="请输入事件主题"/>*</td>
+                <th>事件主题</th><td><input type="text" id="label" placeholder="@topic.name" autocomplete="off" value="${m1.label!}"  required jt-alert="请输入事件主题"/>*</td>
             </tr>
             </tbody>
         </table>
