@@ -4,7 +4,7 @@ server.port: 9374
 server.request.maxRequestSize: "2mb"
 
 water:
-  host: "waterapi.water"
+  host: "waterapi"
   logger: "water_log_paas"
   service:
     name: "waterpaas"

@@ -11,7 +11,7 @@ solon.app:
 waterpaas.secretKey: "0zJt0J88TkIvqYgC"
 
 water:
-  host: "waterapi.water"
+  host: "waterapi"
   logger: "water_log_admin"
   service:
     tag: "water"

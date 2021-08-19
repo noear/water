@@ -3,7 +3,7 @@ solon.extend: "waterraas_ext"
 server.port: 9376
 
 water:
-  host: "waterapi.water"
+  host: "waterapi"
   logger: "water_log_raas"
   service:
     name: "waterraas"
