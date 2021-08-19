@@ -64,7 +64,7 @@ public class DbWaterMsgApi {
                 db().table("water_msg_subscriber")
                         .whereEq("receive_url", receive_url)
                         .andEq("is_unstable", 1)
-                        .andGt("check_error_num", 2)
+                        .andGte("check_error_num", 2)
                         .delete();
             } catch (Throwable ex) {
                 //EventBus.pushAsyn(ex);
