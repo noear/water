@@ -55,6 +55,7 @@ public final class DbWaterMsgApi {
                 .set("receive_url", receive_url)
                 .set("receive_key", receive_key)//后面要改掉
                 .set("receive_way", receive_way)
+                .set("check_error_num",0)
                 .set("log_fulltime", "$NOW()");
 
         if (db().table("water_msg_subscriber")
