@@ -376,7 +376,7 @@ public class FileController extends BaseController {
             }
 
             //订阅在先
-            if (fileType == PaasFileType.api) {
+            if (fileType == PaasFileType.api || fileType == PaasFileType.msg) {
                 PaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
             }
 
