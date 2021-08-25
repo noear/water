@@ -50,7 +50,7 @@
 
         <rock.ver>1.1.4</rock.ver>
 
-        <luffy.ver>1.1.5</luffy.ver>
+        <luffy.ver>1.1.6</luffy.ver>
         <snakeyaml.ver>1.29</snakeyaml.ver>
         <jedis.ver>3.6.1</jedis.ver>
     </properties>
