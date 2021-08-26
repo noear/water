@@ -46,9 +46,9 @@
         <water.ver>2.2.7</water.ver>
         <HikariCP.ver>4.0.3</HikariCP.ver>
 
-        <bcf.ver>2.1.4</bcf.ver>
+        <bcf.ver>2.1.5</bcf.ver>
 
-        <rock.ver>1.1.4</rock.ver>
+        <rock.ver>1.1.5</rock.ver>
 
         <luffy.ver>1.1.6</luffy.ver>
         <snakeyaml.ver>1.29</snakeyaml.ver>
