@@ -1,6 +1,5 @@
 package waterapi;
 
-import org.noear.solon.SolonApp;
 import org.noear.solon.SolonBuilder;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
