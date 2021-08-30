@@ -473,7 +473,7 @@ CREATE TABLE `water_ops_server_track_ecs`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `water_reg_consumer`;
 CREATE TABLE `water_reg_consumer`  (
-  `row_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `row_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `service` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '服务',
   `consumer` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '消费者',
   `consumer_address` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '消费者地址',

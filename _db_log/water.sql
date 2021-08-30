@@ -30,3 +30,6 @@ ALTER TABLE `water_cfg_whitelist`
 -- 2021.08.30 //
 ALTER TABLE `water_reg_service`
     MODIFY COLUMN `service_id` bigint(20) NOT NULL AUTO_INCREMENT FIRST;
+
+ALTER TABLE `water_reg_consumer`
+    MODIFY COLUMN `row_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID' FIRST;
