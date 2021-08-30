@@ -102,8 +102,9 @@ public class Config {
 
             //本地IP订阅
             //
-
-            String meta = ONode.stringify(Solon.cfg().argx());
+            ONode oNode = ONode.load(Solon.cfg().argx());
+            oNode.remove("server.port");
+            String meta = oNode.toJson();
 
             DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
                     localHost, meta, "",
