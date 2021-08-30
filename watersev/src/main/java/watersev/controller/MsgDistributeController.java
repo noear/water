@@ -100,7 +100,7 @@ public final class MsgDistributeController implements IJob {
      */
     private boolean routingDo(MessageModel msg) throws Exception {
         //1.取出订阅者
-        Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
+        Map<Long, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 
         //2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
@@ -136,7 +136,7 @@ public final class MsgDistributeController implements IJob {
 
     private void distributeDo0(MessageModel msg) throws Exception {
         //1.取出订阅者
-        Map<Integer, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
+        Map<Long, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 
         //3.获出待分发任务
         List<DistributionModel> distList = new ArrayList<>();

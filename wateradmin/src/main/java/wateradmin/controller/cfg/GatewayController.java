@@ -169,7 +169,7 @@ public class GatewayController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @NotZero("service_id")
     @Mapping("ajax/enabled")
-    public ViewModel sev_enabled(int service_id, int is_enabled) {
+    public ViewModel sev_enabled(long service_id, int is_enabled) {
 
         try {
 

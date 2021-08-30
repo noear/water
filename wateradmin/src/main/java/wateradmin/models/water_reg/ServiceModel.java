@@ -16,7 +16,7 @@ import java.util.*;
 @Getter
 @Setter
 public class ServiceModel implements IBinder {
-    public int service_id;
+    public long service_id;
     public String tag;
     public String key;
     public String name;
@@ -49,7 +49,7 @@ public class ServiceModel implements IBinder {
     public void bind(GetHandlerEx s) {
         //1.source:数据源
         //
-        service_id = s.get("service_id").value(0);
+        service_id = s.get("service_id").longValue(0L);
         tag = s.get("tag").value(null);
         key = s.get("key").value(null);
         name = s.get("name").value(null);

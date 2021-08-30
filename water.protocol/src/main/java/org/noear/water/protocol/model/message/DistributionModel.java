@@ -14,7 +14,7 @@ public class DistributionModel implements IBinder {
     public long dist_id;
     public long msg_id;
     public String msg_key;
-    public int subscriber_id;
+    public long subscriber_id;
     public String subscriber_key;
 
     public String alarm_mobile;
@@ -43,7 +43,7 @@ public class DistributionModel implements IBinder {
         dist_id = s.get("dist_id").value(0L);
         msg_id = s.get("msg_id").value(0L);
         msg_key = s.get("msg_key").value("");
-        subscriber_id = s.get("subscriber_id").value(0);
+        subscriber_id = s.get("subscriber_id").longValue(0L);
         subscriber_key = s.get("subscriber_key").value("");
 
         alarm_mobile = s.get("alarm_mobile").value("");

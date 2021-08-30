@@ -10,7 +10,7 @@ import org.noear.weed.IBinder;
  */
 @Getter
 public class SubscriberModel implements IBinder {
-    public int subscriber_id;
+    public long subscriber_id; //在弹性容器里会无限增加
     public String subscriber_key;
     public String subscriber_note;
 
@@ -31,7 +31,7 @@ public class SubscriberModel implements IBinder {
 
     @Override
     public void bind(GetHandlerEx s) {
-        subscriber_id = s.get("subscriber_id").value(0);
+        subscriber_id = s.get("subscriber_id").longValue(0L);
         subscriber_key = s.get("subscriber_key").value("");
 
         subscriber_note = s.get("subscriber_note").value("");

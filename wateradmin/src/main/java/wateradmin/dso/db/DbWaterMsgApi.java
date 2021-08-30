@@ -141,7 +141,7 @@ public class DbWaterMsgApi {
     }
 
     //根据查询到的subscriber_id查询订阅者url。
-    public static SubscriberModel repairSubs2(int subscriber_id) throws SQLException {
+    public static SubscriberModel repairSubs2(long subscriber_id) throws SQLException {
         return db().table("water_msg_subscriber")
                 .where("subscriber_id = ?", subscriber_id)
                 .selectItem("receive_url", SubscriberModel.class);

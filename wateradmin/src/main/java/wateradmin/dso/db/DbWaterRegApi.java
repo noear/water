@@ -22,7 +22,7 @@ public class DbWaterRegApi {
     }
 
     //删除服务。
-    public static boolean deleteServiceById(int service_id) throws SQLException {
+    public static boolean deleteServiceById(long service_id) throws SQLException {
 
         ServiceModel m = getServiceById(service_id);
 
@@ -37,7 +37,7 @@ public class DbWaterRegApi {
     }
 
     //修改服务启用禁用状态
-    public static boolean disableService(Integer service_id, Integer is_enabled) throws SQLException {
+    public static boolean disableService(long service_id, Integer is_enabled) throws SQLException {
         ServiceModel m = getServiceById(service_id);
 
         boolean isOk = db().table("water_reg_service")
@@ -96,7 +96,7 @@ public class DbWaterRegApi {
                 .selectList("*", ServiceModel.class);
     }
 
-    public static ServiceModel getServiceById(int service_id) throws SQLException {
+    public static ServiceModel getServiceById(long service_id) throws SQLException {
         return db()
                 .table("water_reg_service")
                 .where("service_id = ?", service_id)

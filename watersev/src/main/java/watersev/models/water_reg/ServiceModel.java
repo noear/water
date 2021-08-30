@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by noear on 2017/7/28.
  */
 public class ServiceModel implements IBinder {
-    public int service_id;
+    public long service_id;
     public String key;
     public String tag;
     public String name;
@@ -31,7 +31,7 @@ public class ServiceModel implements IBinder {
 
     @Override
     public void bind(GetHandlerEx s) {
-        service_id = s.get("service_id").value(0);
+        service_id = s.get("service_id").longValue(0L);
         key = s.get("key").value("");
         tag = s.get("tag").value("");
         name = s.get("name").value(null);

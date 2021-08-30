@@ -34,8 +34,8 @@ public class DbWaterMsgApi {
     }
 
     //根据主题获取订阅者
-    public static Map<Integer, SubscriberModel> getSubscriberListByTopic(String topic_name) throws SQLException {
-        Map<Integer, SubscriberModel> map = new HashMap<>();
+    public static Map<Long, SubscriberModel> getSubscriberListByTopic(String topic_name) throws SQLException {
+        Map<Long, SubscriberModel> map = new HashMap<>();
 
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("topic_name=? AND is_enabled=1", topic_name)

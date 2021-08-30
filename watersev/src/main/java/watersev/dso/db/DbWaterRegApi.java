@@ -46,7 +46,7 @@ public final class DbWaterRegApi {
 //                .count();
 //    }
 
-    public static void setServiceState(int service_id, int state){
+    public static void setServiceState(long service_id, int state){
         try {
             db().table("water_reg_service")
                     .set("state", state)
@@ -57,7 +57,7 @@ public final class DbWaterRegApi {
         }
     }
 
-    public static void udpService0(int service_id, int check_state, String note) {
+    public static void udpService0(long service_id, int check_state, String note) {
         try {
             db().table("water_reg_service").usingExpr(true)
                     .set("state", 0)
@@ -77,7 +77,7 @@ public final class DbWaterRegApi {
         }
     }
 
-    public static void delService(int service_id) {
+    public static void delService(long service_id) {
         try {
             db().table("water_reg_service")
                     .where("service_id=? AND is_unstable=1", service_id)
@@ -87,7 +87,7 @@ public final class DbWaterRegApi {
         }
     }
 
-    public static void udpService1(int service_id, ServiceModel sev, int check_state) {
+    public static void udpService1(long service_id, ServiceModel sev, int check_state) {
         try {
             db().table("water_reg_service").usingExpr(true)
                     .set("state", 0)
