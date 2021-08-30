@@ -493,7 +493,7 @@ CREATE TABLE `water_reg_consumer`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `water_reg_service`;
 CREATE TABLE `water_reg_service`  (
-  `service_id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'md5(name+‘#’+address)',
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,

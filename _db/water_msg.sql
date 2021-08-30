@@ -10,7 +10,7 @@ CREATE TABLE `water_msg_distribution`  (
   `dist_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分发ID',
   `msg_id` bigint(20) NOT NULL COMMENT '待分发的消息ID',
   `msg_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `subscriber_id` int(11) NOT NULL,
+  `subscriber_id` bigint(20) NOT NULL,
   `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `alarm_sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `water_msg_message_ex_stat`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `water_msg_subscriber`;
 CREATE TABLE `water_msg_subscriber`  (
-  `subscriber_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID',
+  `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID',
   `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订阅者KEY（由应用方传入）',
   `subscriber_note` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '报警手机号',

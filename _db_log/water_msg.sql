@@ -20,3 +20,11 @@ update  water_msg_message_all set last_date = log_date where last_date=0;
 -- 2021.04.23
 ALTER TABLE `water_msg_subscriber`
     ADD INDEX `IX_receive_url`(`receive_url`(40)) USING BTREE;
+
+
+-- 2021.08.30 //
+ALTER TABLE `water_msg_distribution`
+    MODIFY COLUMN `subscriber_id` bigint(20) NOT NULL AFTER `msg_id`;
+
+ALTER TABLE `water_msg_subscriber`
+    MODIFY COLUMN `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID' FIRST;

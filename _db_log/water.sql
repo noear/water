@@ -25,3 +25,8 @@ ADD INDEX `IX_tag`(`tag`) USING BTREE;
 -- 2021.05.13
 ALTER TABLE `water_cfg_whitelist`
     ADD INDEX `IX_note`(`note`(40)) USING BTREE;
+
+
+-- 2021.08.30 //
+ALTER TABLE `water_reg_service`
+    MODIFY COLUMN `service_id` bigint(20) NOT NULL AUTO_INCREMENT FIRST;
