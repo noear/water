@@ -28,6 +28,10 @@ import wateradmin.widget.EnumTag;
 import javax.sql.DataSource;
 
 public class WateradminApp {
+    static final String TML_MARK_SERVER = "${server}";
+    static final String TML_MARK_SCHEMA = "${schema}";
+    static final String TML_JDBC_URL = "jdbc:mysql://${server}/${schema}?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true";
+
     public static void main(String[] args) {
         NvMap argx = NvMap.from(args);
 
@@ -61,7 +65,7 @@ public class WateradminApp {
 
             if (Utils.isNotEmpty(s) && Utils.isNotEmpty(u) && Utils.isNotEmpty(p)) {
                 System.setProperty(WW.cfg_water_ds_schema, "water");
-                System.setProperty(WW.cfg_water_ds_url, "jdbc:mysql://" + s + "/water?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+                System.setProperty(WW.cfg_water_ds_url, TML_JDBC_URL.replace(TML_MARK_SERVER, s).replace(TML_MARK_SCHEMA, "water"));
                 System.setProperty(WW.cfg_water_ds_username, u);
                 System.setProperty(WW.cfg_water_ds_password, p);
             }
@@ -73,19 +77,25 @@ public class WateradminApp {
 
         System.setProperty(WW.cfg_water_ds_driverClassName, "com.mysql.jdbc.Driver");
 
-        Props ps = app.cfg().getProp("water.dataSource");
+        //构建数据源
+        Props prop = app.cfg().getProp("water.dataSource");
 
-        if (ps.size() < 4) {
+        if (prop.size() < 4) {
             throw new RuntimeException("[Water] Missing water. DataSource configuration");
         }
+        String dbServer = prop.getProperty("server");
+        String dbSchema = prop.getProperty("schema");
+        if (Utils.isNotEmpty(dbServer)) {
+            prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
+        }
+        prop.setProperty("jdbcUrl", prop.getProperty("url"));
 
-        ps.setProperty("jdbcUrl", ps.getProperty("url"));
+        DataSource ds = Utils.injectProperties(new HikariDataSource(), prop);
 
-        DataSource ds = Utils.injectProperties(new HikariDataSource(), ps);
-
-        Setup.water = new DbContext(ps.get("schema"), ds);
+        Setup.water = new DbContext(dbSchema, ds);
         Setup.water.initMetaData();
 
+        //添加设置监听
         app.get("/", c -> c.render(new BaseController().view("setup")));
 
         System.out.println("[Water] setup open http://localhost:" + app.port() + "/");

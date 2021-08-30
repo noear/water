@@ -13,7 +13,6 @@ import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.utils.PreheatUtils;
 
 public class WaterapiApp {
-
 	public static void main(String[] args) {
 		new SolonBuilder()
 				.onError(err -> {

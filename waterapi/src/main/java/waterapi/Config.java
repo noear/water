@@ -18,6 +18,11 @@ import waterapi.dso.DbUtils;
 import java.util.Properties;
 
 public class Config {
+    static final String TML_MARK_SERVER = "${server}";
+    static final String TML_MARK_SCHEMA = "${schema}";
+    static final String TML_JDBC_URL = "jdbc:mysql://${server}/${schema}?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true";
+
+
     public static final String water_service_name = "waterapi";
 
     public static DbContext water;
@@ -64,6 +69,12 @@ public class Config {
 
             if (prop.size() > 0) {
                 prop.put("driverClassName", "com.mysql.jdbc.Driver");
+            }
+
+            String dbServer = prop.getProperty("server");
+            String dbSchema = prop.getProperty("schema");
+            if (Utils.isNotEmpty(dbServer)) {
+                prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
             }
 
             water = DbUtils.getDb(prop);
