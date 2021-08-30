@@ -12,10 +12,10 @@
 
 ```ini
 water.setup=1
-water.dataSource.schema=water
-water.dataSource.server=${server}
-water.dataSource.username=${username}
-water.dataSource.password=${password}
+water.ds.schema=water
+water.ds.server=${server}
+water.ds.username=${username}
+water.ds.password=${password}
 ```
 
 > 利用安装模式，可高定白名单入配置。安装完成后，把容器的环境变量取消掉

@@ -9,10 +9,10 @@
 4. 添加环境变量：
 
 ```ini
-water.dataSource.schema=water
-water.dataSource.server=${server}
-water.dataSource.username=${username}
-water.dataSource.password=${password}
+water.ds.schema=water
+water.ds.server=${server}
+water.ds.username=${username}
+water.ds.password=${password}
 ```
 
 

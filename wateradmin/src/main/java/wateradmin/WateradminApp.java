@@ -79,6 +79,9 @@ public class WateradminApp {
 
         //构建数据源
         Props prop = app.cfg().getProp("water.dataSource");
+        if(prop.size() == 0){
+            prop = app.cfg().getProp("water.ds");
+        }
 
         if (prop.size() < 4) {
             throw new RuntimeException("[Water] Missing water. DataSource configuration");

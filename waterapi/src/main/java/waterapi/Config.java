@@ -3,6 +3,7 @@ package waterapi;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
+import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -65,7 +66,10 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            Properties prop = Solon.cfg().getProp("water.dataSource");
+            Props prop = Solon.cfg().getProp("water.dataSource");
+            if(prop.size() == 0){
+                prop = Solon.cfg().getProp("water.ds");
+            }
 
             if (prop.size() > 0) {
                 prop.put("driverClassName", "com.mysql.jdbc.Driver");
