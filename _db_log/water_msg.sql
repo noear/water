@@ -22,7 +22,7 @@ ALTER TABLE `water_msg_subscriber`
     ADD INDEX `IX_receive_url`(`receive_url`(40)) USING BTREE;
 
 
--- 2021.08.30 //
+-- 2021.08.30 //适应弹性容器下，不断增加id
 ALTER TABLE `water_msg_distribution`
     MODIFY COLUMN `subscriber_id` bigint(20) NOT NULL AFTER `msg_id`;
 
