@@ -75,7 +75,7 @@
 
 1. 先启动 waterapi.jar
 2. 配置 nginx，完成 water 域的监听，并转发给 waterapi.jar（water 默认使用了80端口，所有需要反向代理）
-3. 然后给所有使用water服务的机器，添加 water host 记录（进 /etc/hosts 修改）
+3. 然后给所有使用water服务的机器，添加 waterapi 和 waterapi.water host 记录（进 /etc/hosts 修改）
 4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
 ### 四、部署方案参考（参考bin目录下的jar文件；建议配置成System Service进行控制）
@@ -170,11 +170,11 @@ java -jar watersev.jar --server.port=9372
 
 > 账号：admin 密码：bcf1234
 
-* 使用 nginx 为 waterapi 服务添加 water 域 80 端口监听支持
+* 使用 nginx 为 waterapi 服务添加 waterapi 和 waterapi.water 域 80 端口监听支持
 
 > 建议生产环境仅限内网访问
 
-* 在使用 water 的服务器上，添加 water 域的 host 记录
+* 在使用 water 的服务器上，添加 waterapi 和 waterapi.water 域的 host 记录
 
 ```yaml
 127.0.0.1 water #ip为waterapi服务的地址
@@ -183,7 +183,7 @@ java -jar watersev.jar --server.port=9372
 * 开发环境，且单机部署时，可以加这一批host记录
 
 ```yaml
-127.0.0.1 water 
+127.0.0.1 waterapi waterapi.water 
 127.0.0.1 memcached.water.io memcached.dev.io 
 127.0.0.1 redis.water.io redis.dev.io
 127.0.0.1 mongo.dev.io
@@ -238,7 +238,7 @@ upstream waterapi{
 }
 server{
     listen 80;
-    server_name water;
+    server_name waterapi waterapi.water;
     
     location / {
         proxy_pass http://waterapi;

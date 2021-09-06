@@ -12,7 +12,7 @@ public class ServiceConsumerModel implements IBinder {
     /**
      *
      */
-    public int row_id;
+    public long row_id;
     /**
      *服务
      */
@@ -51,7 +51,7 @@ public class ServiceConsumerModel implements IBinder {
     public double traffic_per;
 
     public void bind(GetHandlerEx s) {
-        row_id = s.get("row_id").value(0);
+        row_id = s.get("row_id").longValue(0L);
         service = s.get("service").value("");
         consumer = s.get("consumer").value("");
         consumer_address = s.get("consumer_address").value("");
