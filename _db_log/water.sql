@@ -33,3 +33,32 @@ ALTER TABLE `water_reg_service`
 
 ALTER TABLE `water_reg_consumer`
     MODIFY COLUMN `row_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID' FIRST;
+
+
+-- 2021.09.07 //转换部分时间类型
+ALTER TABLE `rubber_actor`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新' AFTER `note`;
+
+ALTER TABLE `rubber_block`
+    MODIFY COLUMN `last_updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `app_expr`;
+
+ALTER TABLE `rubber_block_item`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL AFTER `f4`;
+
+ALTER TABLE `rubber_model`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `debug_args`;
+
+ALTER TABLE `rubber_model_field`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `note`;
+
+ALTER TABLE `rubber_scheme`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `is_enabled`;
+
+ALTER TABLE `rubber_scheme_node`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `actor_display`;
+
+ALTER TABLE `rubber_scheme_rule`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `is_enabled`;
+
+
+

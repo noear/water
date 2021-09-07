@@ -42,7 +42,8 @@ SET plan_last_time = unix_timestamp(STR_TO_DATE(CAST(plan_last_time AS CHAR),'%Y
 WHERE plan_last_time > 2000000000000;
 
 
--- 2021.09.07 
+
+-- 2021.09.07 //转换部分时间类型
 ALTER TABLE `paas_etl` 
     MODIFY COLUMN `e_last_exectime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP AFTER `e_max_instance`,
     MODIFY COLUMN `t_last_exectime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP AFTER `t_max_instance`,
