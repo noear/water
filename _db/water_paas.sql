@@ -132,4 +132,34 @@ INSERT INTO `paas_file` VALUES (377, 0, '_demo', '', '/_demo/test', 0, 0, 1, 0, 
 INSERT INTO `paas_file` VALUES (378, 3, '_demo', '@demo.topic.name', '/_demo/demo.topic.name', 0, 0, 1, 0, 0, NULL, 'javascript', '', '\nlet event = ctx.attr(\'event\'); //::MessageM{times,trace_id,key,topic,message,sgin,tags,toJson()}\n\nif(event){\n    XUtil.log(\"event: \" + event.toJson());\n    XUtil.log(\"event.message: \" + event.message);\n}else{\n    XUtil.log(\"no event\")\n}\n\n\n//返回大写的OK，才算事件执行成功\nreturn \'OK\';', '', 0, NULL, NULL, 0, 0, '', 0, 0, '2021-08-19 12:29:31', '2021-08-19 13:04:31', NULL);
 
 
+
+CREATE TABLE `paas_etl` (
+  `etl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类标签',
+  `etl_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '任务名称',
+  `code` varchar(4000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'JSON配置代码',
+  `is_enabled` int(11) NOT NULL DEFAULT '0' COMMENT '是否启动 ',
+  `is_extract` int(11) NOT NULL DEFAULT '0' COMMENT '是否启用抽取器',
+  `is_load` int(11) NOT NULL DEFAULT '0' COMMENT '是否启用加载器',
+  `is_transform` int(11) NOT NULL DEFAULT '1' COMMENT '是否启用转换器',
+  `cursor_type` int(11) NOT NULL DEFAULT '0' COMMENT '0时间；1数值',
+  `cursor` bigint(20) NOT NULL DEFAULT '0' COMMENT '游标',
+  `alarm_mobile` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警手机号（多个以,隔开）',
+  `e_enabled` int(11) NOT NULL DEFAULT '0',
+  `e_max_instance` int(11) NOT NULL DEFAULT '1' COMMENT '抽取器集群数',
+  `e_last_exectime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `t_enabled` int(11) NOT NULL DEFAULT '0',
+  `t_max_instance` int(11) NOT NULL DEFAULT '1' COMMENT '转换器集群数',
+  `t_last_exectime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `l_enabled` int(11) NOT NULL DEFAULT '0',
+  `l_max_instance` int(11) NOT NULL DEFAULT '1' COMMENT '加载器集群数',
+  `l_last_exectime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `last_extract_time` timestamp NULL DEFAULT NULL COMMENT '最后抽取时间',
+  `last_load_time` timestamp NULL DEFAULT NULL COMMENT '最后加载时间',
+  `last_transform_time` timestamp NULL DEFAULT NULL COMMENT '最后转换时间',
+  PRIMARY KEY (`etl_id`) USING BTREE,
+  UNIQUE KEY `IX_key` (`tag`,`etl_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='PAAS-ETL配置表';
+
+
 SET FOREIGN_KEY_CHECKS = 1;
