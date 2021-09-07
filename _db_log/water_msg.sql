@@ -28,3 +28,53 @@ ALTER TABLE `water_msg_distribution`
 
 ALTER TABLE `water_msg_subscriber`
     MODIFY COLUMN `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID' FIRST;
+
+
+-- 2021.09.07 
+ALTER TABLE `water_msg_distribution` 
+    MODIFY COLUMN `log_fulltime` timestamp NOT NULL COMMENT '分发时间' AFTER `log_date`;
+
+ALTER TABLE `water_msg_message` 
+    MODIFY COLUMN `plan_time` timestamp NULL DEFAULT NULL AFTER `receive_check`,
+    MODIFY COLUMN `log_fulltime` timestamp NOT NULL COMMENT '记录时间' AFTER `log_date`,
+    MODIFY COLUMN `last_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后变更时间' AFTER `last_date`;
+
+ALTER TABLE `water_msg_message_all` 
+    MODIFY COLUMN `plan_time` timestamp NULL DEFAULT NULL AFTER `receive_check`,
+    MODIFY COLUMN `log_fulltime` timestamp NOT NULL COMMENT '记录时间' AFTER `log_date`,
+    MODIFY COLUMN `last_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后变更时间' AFTER `last_date`; 
+
+ALTER TABLE `water_msg_subscriber` 
+    MODIFY COLUMN `log_fulltime` timestamp NOT NULL COMMENT '记录的完整 时间' AFTER `is_sync`;
+
+
+ALTER TABLE `water_msg_topic` 
+    MODIFY COLUMN `create_fulltime` timestamp NULL DEFAULT CURRENT_TIMESTAMP AFTER `alarm_model`;
+
+
+ALTER TABLE `rubber_actor`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新' AFTER `note`;
+
+ALTER TABLE `rubber_block`
+    MODIFY COLUMN `last_updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `app_expr`;
+
+ALTER TABLE `rubber_block_item`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL AFTER `f4`;
+
+ALTER TABLE `rubber_model`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `debug_args`;
+
+ALTER TABLE `rubber_model_field`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `note`;
+
+ALTER TABLE `rubber_scheme`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `is_enabled`;
+
+ALTER TABLE `rubber_scheme_node`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `actor_display`;
+
+ALTER TABLE `rubber_scheme_rule`
+    MODIFY COLUMN `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间' AFTER `is_enabled`;
+
+
+
