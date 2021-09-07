@@ -2,6 +2,7 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
 -- ----------------------------
 -- Table structure for water_msg_distribution
 -- ----------------------------
@@ -9,8 +10,8 @@ DROP TABLE IF EXISTS `water_msg_distribution`;
 CREATE TABLE `water_msg_distribution`  (
   `dist_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分发ID',
   `msg_id` bigint(20) NOT NULL COMMENT '待分发的消息ID',
-  `msg_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `subscriber_id` bigint(20) NOT NULL,
+  `msg_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `alarm_sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE `water_msg_distribution`  (
   `state` int(11) NOT NULL DEFAULT 0 COMMENT '分发状态（-1忽略；0开始；1失败；2成功；）',
   `msg_state` int(11) NOT NULL DEFAULT 0 COMMENT '消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',
   `log_date` int(11) NOT NULL DEFAULT 0 COMMENT '分发日期（yyyyMMdd）',
-  `log_fulltime` datetime NOT NULL COMMENT '分发时间',
+  `log_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '分发时间',
   PRIMARY KEY (`dist_id`) USING BTREE,
   INDEX `IX_date`(`log_date`) USING BTREE,
   INDEX `IX_msg_id`(`msg_id`) USING BTREE,
@@ -45,15 +46,15 @@ CREATE TABLE `water_msg_message`  (
   `content` varchar(999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容（JSON格式）',
   `receive_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '定向接收目标',
   `receive_check` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '接收检查',
-  `plan_time` datetime NULL DEFAULT NULL,
+  `plan_time` timestamp NULL DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT 0 COMMENT '状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',
   `dist_routed` tinyint(1) NOT NULL DEFAULT 0,
   `dist_count` int(11) NOT NULL DEFAULT 0 COMMENT '派发累记次数',
   `dist_nexttime` bigint(20) NOT NULL DEFAULT 0 COMMENT '下次派发时间',
   `log_date` int(11) NOT NULL DEFAULT 0 COMMENT '记录日期（yyyyMMdd）',
-  `log_fulltime` datetime NOT NULL COMMENT '记录时间',
+  `log_fulltime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录时间',
   `last_date` int(11) NOT NULL DEFAULT 0,
-  `last_fulltime` datetime NULL DEFAULT NULL COMMENT '最后变更时间',
+  `last_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后变更时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`msg_key`) USING BTREE,
   INDEX `IX_topic`(`topic_id`) USING BTREE,
@@ -81,15 +82,15 @@ CREATE TABLE `water_msg_message_all`  (
   `content` varchar(999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容（JSON格式）',
   `receive_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '定向接收目标',
   `receive_check` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '接收检查',
-  `plan_time` datetime NULL DEFAULT NULL,
+  `plan_time` timestamp NULL DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT 0 COMMENT '状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',
   `dist_routed` tinyint(1) NOT NULL DEFAULT 0,
   `dist_count` int(11) NOT NULL DEFAULT 0 COMMENT '派发累记次数',
   `dist_nexttime` bigint(20) NOT NULL DEFAULT 0 COMMENT '下次派发时间',
   `log_date` int(11) NOT NULL DEFAULT 0 COMMENT '记录日期（yyyyMMdd）',
-  `log_fulltime` datetime NOT NULL COMMENT '记录时间',
+  `log_fulltime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录时间',
   `last_date` int(11) NOT NULL DEFAULT 0,
-  `last_fulltime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `last_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后变更时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`msg_key`) USING BTREE,
   INDEX `IX_topic`(`topic_id`) USING BTREE,
@@ -134,7 +135,7 @@ CREATE TABLE `water_msg_subscriber`  (
   `receive_way` int(11) NOT NULL DEFAULT 0 COMMENT '接收方式（0,1异步等待；2异步不等待,状态设为已完成；3异步不等,状态设为处理中）',
   `receive_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订阅者的接收地址的访问KEY',
   `is_sync` int(11) NOT NULL DEFAULT 0 COMMENT '是否同步接收（0异步；1同步）',
-  `log_fulltime` datetime NOT NULL COMMENT '记录的完整 时间',
+  `log_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的完整 时间',
   `is_unstable` int(11) NOT NULL DEFAULT 0 COMMENT '是否为不稳定地址',
   `is_enabled` int(11) NOT NULL DEFAULT 1 COMMENT '是否启用',
   `check_last_state` int(11) NOT NULL DEFAULT 0 COMMENT '最后检查状态（0：OK；1：error）',
@@ -157,9 +158,10 @@ CREATE TABLE `water_msg_topic`  (
   `max_concurrency_num` int(11) NOT NULL DEFAULT 0 COMMENT '最大同时派发数(0不限）',
   `stat_msg_day_num` int(11) NOT NULL DEFAULT 0 COMMENT '日生产量',
   `alarm_model` int(11) NOT NULL DEFAULT 0 COMMENT '报警模式：0=普通模式；1=不报警',
-  `create_fulltime` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_fulltime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`topic_id`) USING BTREE,
   UNIQUE INDEX `IX_topic`(`topic_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'WATER-消息-主题表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'WATER-消息-主题表' ROW_FORMAT = DYNAMIC;
+
 
 SET FOREIGN_KEY_CHECKS = 1;

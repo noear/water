@@ -1,70 +1,70 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
+
 -- ----------------------------
 -- Table structure for rubber_actor
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_actor`;
 CREATE TABLE `rubber_actor`  (
-  `actor_id` int NOT NULL AUTO_INCREMENT COMMENT '参与ID',
+  `actor_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '参与ID',
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类标签',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '参与者代号',
   `name_display` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '参与者显示名',
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新',
   PRIMARY KEY (`actor_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`tag`, `name`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_actor
 -- ----------------------------
 INSERT INTO `rubber_actor` VALUES (19, 'water', 'test', 'test', '', '2021-04-05 16:20:21');
 
-
 -- ----------------------------
 -- Table structure for rubber_block
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_block`;
 CREATE TABLE `rubber_block`  (
-  `block_id` int NOT NULL AUTO_INCREMENT,
+  `block_id` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类标签',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '代号',
   `name_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '显示名',
   `note` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `related_db` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '相关数据(sponge/angel)',
   `related_tb` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '相关数据表',
-  `is_editable` int NOT NULL DEFAULT 0,
-  `is_enabled` int NOT NULL DEFAULT 1,
+  `is_editable` int(11) NOT NULL DEFAULT 0,
+  `is_enabled` int(11) NOT NULL DEFAULT 1,
   `struct` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '数据结构({f1:\'xx\'})',
   `app_expr` varchar(999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '应用表达式',
-  `last_updatetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_updatetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`block_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`tag`, `name`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据块' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据块' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_block
 -- ----------------------------
 INSERT INTO `rubber_block` VALUES (57, 'water', 'code_agent_ip', '代理IP库', '', 'water/water_redis', '12', 1, 1, '{ip:\'ip*\'}', 'if(!x){\n  throw new Error(\'参数不能为空\');\n}\n\nvar bkey = this.block_key;\nreturn this.$().open1(function(rs){\n   return rs.key(bkey).hashHas(x);\n});', '2021-04-05 16:18:38');
 
-
 -- ----------------------------
 -- Table structure for rubber_block_item
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_block_item`;
 CREATE TABLE `rubber_block_item`  (
-  `item_id` int NOT NULL AUTO_INCREMENT,
-  `block_id` int NOT NULL DEFAULT 0,
+  `item_id` int(11) NOT NULL AUTO_INCREMENT,
+  `block_id` int(11) NOT NULL DEFAULT 0,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `f1` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `f2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `f3` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `f4` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `last_updatetime` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`item_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`block_id`, `name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据块项' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据块项' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_block_item
@@ -75,41 +75,40 @@ CREATE TABLE `rubber_block_item`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_model`;
 CREATE TABLE `rubber_model`  (
-  `model_id` int NOT NULL AUTO_INCREMENT COMMENT '模型ID',
+  `model_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '模型ID',
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类标签',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '代号',
   `name_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '显示名',
   `related_db` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '相关数据库',
-  `field_count` int NULL DEFAULT 0,
+  `field_count` int(11) NULL DEFAULT 0,
   `init_expr` varchar(999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '构造表达式',
   `debug_args` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '调试参数',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`model_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`tag`, `name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据模型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据模型表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_model
 -- ----------------------------
 INSERT INTO `rubber_model` VALUES (26, 'water', 'water_monitor_ecs', '监控模型', '', 6, 'return water.db(\'water/water\')\n     .table(\"water_ops_server_track_ecs\")\n     .whereEq(\"iaas_key\",this.iaas_key())\n     .selectMap(\"*\");', '{iaas_key:\'i-23adt35wk\'}', '2021-04-07 12:58:10');
 
-
 -- ----------------------------
 -- Table structure for rubber_model_field
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_model_field`;
 CREATE TABLE `rubber_model_field`  (
-  `field_id` int NOT NULL AUTO_INCREMENT COMMENT '字段ID',
-  `model_id` int NOT NULL DEFAULT 0 COMMENT '所属的模型ID',
+  `field_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '字段ID',
+  `model_id` int(11) NOT NULL DEFAULT 0 COMMENT '所属的模型ID',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字段名称',
   `name_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '显示名',
   `expr` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '字段动态生成代码',
   `note` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '字段',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-  `is_pk` int NOT NULL DEFAULT 0 COMMENT '是否是主键',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
+  `is_pk` int(11) NOT NULL DEFAULT 0 COMMENT '是否是主键',
   PRIMARY KEY (`field_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`model_id`, `name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据模型-字段表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-数据模型-字段表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_model_field
@@ -121,46 +120,45 @@ INSERT INTO `rubber_model_field` VALUES (458, 26, 'disk_usage', 'disk_usage', ''
 INSERT INTO `rubber_model_field` VALUES (459, 26, 'broadband_usage', 'broadband_usage', '', '', '2021-04-05 15:17:54', 0);
 INSERT INTO `rubber_model_field` VALUES (460, 26, 'tcp_num', 'tcp_num', '', '', '2021-04-05 15:18:00', 0);
 
-
 -- ----------------------------
 -- Table structure for rubber_scheme
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_scheme`;
 CREATE TABLE `rubber_scheme`  (
-  `scheme_id` int NOT NULL AUTO_INCREMENT COMMENT '方案ID',
+  `scheme_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '方案ID',
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '分类标签',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代号',
   `name_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '显示名',
   `related_model` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '相关模型(tag/name)',
-  `related_model_id` int NOT NULL DEFAULT 0 COMMENT '关联模型ID',
+  `related_model_id` int(11) NOT NULL DEFAULT 0 COMMENT '关联模型ID',
   `related_model_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联模型显示名',
   `related_block` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '引用函数',
   `debug_args` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '调试参数',
   `event` varchar(999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '事件',
-  `node_count` int NOT NULL DEFAULT 0 COMMENT '下属工作流节点数据',
-  `rule_count` int NOT NULL DEFAULT 0 COMMENT '下属规则数量',
-  `rule_relation` int NOT NULL DEFAULT 0 COMMENT '规则关系（0并且关系，1或者关系）',
-  `is_enabled` int NOT NULL DEFAULT 1 COMMENT '是否启用',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  `node_count` int(11) NOT NULL DEFAULT 0 COMMENT '下属工作流节点数据',
+  `rule_count` int(11) NOT NULL DEFAULT 0 COMMENT '下属规则数量',
+  `rule_relation` int(11) NOT NULL DEFAULT 0 COMMENT '规则关系（0并且关系，1或者关系）',
+  `is_enabled` int(11) NOT NULL DEFAULT 1 COMMENT '是否启用',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`scheme_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`tag`, `name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_scheme
 -- ----------------------------
 INSERT INTO `rubber_scheme` VALUES (82, 'water', 'water_test_ecs', 'water_test_ecs', 'water/water_monitor_ecs', 0, 'water/监控模型', '', '{iaas_key:\'i-23adt35wk\'}', '', 0, 3, 0, 1, '2021-04-05 15:21:19');
-
+INSERT INTO `rubber_scheme` VALUES (83, 'angel', 'main', '主流程', '', 0, '', '', '', '', 15, 0, 0, 1, '2021-06-18 09:49:52');
 
 -- ----------------------------
 -- Table structure for rubber_scheme_node
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_scheme_node`;
 CREATE TABLE `rubber_scheme_node`  (
-  `node_id` int NOT NULL AUTO_INCREMENT,
-  `scheme_id` int NOT NULL,
+  `node_id` int(11) NOT NULL AUTO_INCREMENT,
+  `scheme_id` int(11) NOT NULL,
   `node_key` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` int NOT NULL DEFAULT 0 COMMENT '节点类型：0开始，1线，2执行节点，3排他网关，4并行网关，5汇聚网关，9结束',
+  `type` int(11) NOT NULL DEFAULT 0 COMMENT '节点类型：0开始，1线，2执行节点，3排他网关，4并行网关，5汇聚网关，9结束',
   `name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '代号',
   `prve_key` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '上个节点ID（type=line时，才有值 ）',
   `next_key` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '下个节点ID（type=line时，才有值 ）',
@@ -168,50 +166,66 @@ CREATE TABLE `rubber_scheme_node`  (
   `tasks` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '执行任务（type=exec时，才有值：F,tag/fun1;R,tag/rule1 ）',
   `actor` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '参与者（type=exec时，才有值 ：tag/name）',
   `actor_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-  `is_enabled` int NULL DEFAULT 0 COMMENT '是否启用  0：未启用  1：启用 ',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
+  `is_enabled` int(11) NULL DEFAULT 0 COMMENT '是否启用  0：未启用  1：启用 ',
   PRIMARY KEY (`node_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`scheme_id`, `node_key`) USING BTREE,
   INDEX `IX_scheme`(`scheme_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-节点表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-节点表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_scheme_node
 -- ----------------------------
+INSERT INTO `rubber_scheme_node` VALUES (199, 83, '1cfa361c-478d-4411-8266-5ce4591e80f5', 2, '产品准入', '', '', NULL, '', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (200, 83, '1cfa361c-478d-4411-8266-5ce4591e80f52', 2, 'IP及设备指纹', '', '', NULL, 'R,water/water_test_ecs', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (201, 83, '1cfa361c-478d-4411-8266-5ce4591e80f53', 2, '风除号码识别', '', '', NULL, '', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (202, 83, '1cfa361c-478d-4411-8266-5ce4591e80f54', 2, '紧急联系人及通讯录', '', '', NULL, '', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (203, 83, '1cfa361c-478d-4411-8266-5ce4591e80f55', 2, '运营商', '', '', NULL, '', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (204, 83, '1cfa361c-478d-4411-8266-5ce4591e80f56', 2, '第三方数据处理', '', '', NULL, '', NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (205, 83, '6c46b626-fd12-4217-9704-13e0825da05d', 0, '开始', '', '', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (206, 83, 'da301626-8829-4800-a5de-e2b8bfed14ca', 9, '结束', '', '', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (207, 83, '6c46b626-fd12-4217-9704-13e0825da05d1cfa361c-478d-4411-8266-5ce4591e80f5', 1, NULL, '6c46b626-fd12-4217-9704-13e0825da05d', '1cfa361c-478d-4411-8266-5ce4591e80f5', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (208, 83, '1cfa361c-478d-4411-8266-5ce4591e80f51cfa361c-478d-4411-8266-5ce4591e80f53', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f5', '1cfa361c-478d-4411-8266-5ce4591e80f53', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (209, 83, '1cfa361c-478d-4411-8266-5ce4591e80f531cfa361c-478d-4411-8266-5ce4591e80f52', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f53', '1cfa361c-478d-4411-8266-5ce4591e80f52', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (210, 83, '1cfa361c-478d-4411-8266-5ce4591e80f521cfa361c-478d-4411-8266-5ce4591e80f54', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f52', '1cfa361c-478d-4411-8266-5ce4591e80f54', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (211, 83, '1cfa361c-478d-4411-8266-5ce4591e80f541cfa361c-478d-4411-8266-5ce4591e80f55', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f54', '1cfa361c-478d-4411-8266-5ce4591e80f55', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (212, 83, '1cfa361c-478d-4411-8266-5ce4591e80f551cfa361c-478d-4411-8266-5ce4591e80f56', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f55', '1cfa361c-478d-4411-8266-5ce4591e80f56', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
+INSERT INTO `rubber_scheme_node` VALUES (213, 83, '1cfa361c-478d-4411-8266-5ce4591e80f56da301626-8829-4800-a5de-e2b8bfed14ca', 1, NULL, '1cfa361c-478d-4411-8266-5ce4591e80f56', 'da301626-8829-4800-a5de-e2b8bfed14ca', NULL, NULL, NULL, NULL, '2021-06-18 09:49:52', 0);
 
 -- ----------------------------
 -- Table structure for rubber_scheme_node_design
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_scheme_node_design`;
 CREATE TABLE `rubber_scheme_node_design`  (
-  `scheme_id` int NOT NULL,
+  `scheme_id` int(11) NOT NULL,
   `details` varchar(9999) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`scheme_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-节点设计表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-节点设计表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_scheme_node_design
 -- ----------------------------
+INSERT INTO `rubber_scheme_node_design` VALUES (83, '{ \"class\": \"go.GraphLinksModel\",\n  \"modelData\": {\"position\":\"-5 -5\"},\n  \"nodeDataArray\": [ \n{\"width\":30, \"height\":30, \"key\":\"6c46b626-fd12-4217-9704-13e0825da05d\", \"text\":\"开始\", \"figure\":\"Circle\", \"fill\":\"#7BC726\", \"stepType\":1, \"loc\":\"150 80\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f5\", \"text\":\"产品准入\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"150 230\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f52\", \"text\":\"IP及设备指纹\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"300 80\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f53\", \"text\":\"风除号码识别\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"300 230\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f54\", \"text\":\"紧急联系人及通讯录\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"490 80\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f55\", \"text\":\"运营商\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"660 80\"},\n{\"width\":30, \"height\":30, \"key\":\"1cfa361c-478d-4411-8266-5ce4591e80f56\", \"text\":\"第三方数据处理\", \"remark\":\"\", \"fill\":\"#1CA9C7\", \"figure\":\"execute\", \"loc\":\"660 230\"},\n{\"width\":30, \"height\":30, \"key\":\"da301626-8829-4800-a5de-e2b8bfed14ca\", \"text\":\"结束\", \"figure\":\"Circle\", \"fill\":\"#DF3A18\", \"stepType\":4, \"loc\":\"810 230\"}\n ],\n  \"linkDataArray\": [ \n{\"from\":\"6c46b626-fd12-4217-9704-13e0825da05d\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f5\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f5\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f53\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f53\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f52\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f52\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f54\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f54\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f55\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f55\", \"to\":\"1cfa361c-478d-4411-8266-5ce4591e80f56\"},\n{\"from\":\"1cfa361c-478d-4411-8266-5ce4591e80f56\", \"to\":\"da301626-8829-4800-a5de-e2b8bfed14ca\"}\n ]}');
 
 -- ----------------------------
 -- Table structure for rubber_scheme_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `rubber_scheme_rule`;
 CREATE TABLE `rubber_scheme_rule`  (
-  `rule_id` int NOT NULL AUTO_INCREMENT COMMENT '规则ID',
-  `scheme_id` int NOT NULL DEFAULT 0 COMMENT '方案ID',
+  `rule_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '规则ID',
+  `scheme_id` int(11) NOT NULL DEFAULT 0 COMMENT '方案ID',
   `name_display` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '显示名',
-  `advice` int NOT NULL DEFAULT 0 COMMENT '评估建议(0无,1交易放行,2审慎审核,3阻断交易)',
-  `score` int NOT NULL DEFAULT 0 COMMENT '评估分值',
-  `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
+  `advice` int(11) NOT NULL DEFAULT 0 COMMENT '评估建议(0无,1交易放行,2审慎审核,3阻断交易)',
+  `score` int(11) NOT NULL DEFAULT 0 COMMENT '评估分值',
+  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `expr` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '条件表达式（m.user_day(30),>,15,&&;left,op,right,ct）',
   `expr_display` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `event` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `is_enabled` int NOT NULL DEFAULT 1 COMMENT '状态，(0：禁用、1：启用)',
-  `last_updatetime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  `is_enabled` int(11) NOT NULL DEFAULT 1 COMMENT '状态，(0：禁用、1：启用)',
+  `last_updatetime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
   PRIMARY KEY (`rule_id`) USING BTREE,
   INDEX `IX_scheme`(`scheme_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 275 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-规则表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = 'RAAS-计算方案-规则表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of rubber_scheme_rule
@@ -219,6 +233,9 @@ CREATE TABLE `rubber_scheme_rule`  (
 INSERT INTO `rubber_scheme_rule` VALUES (275, 82, 'rule1', 1, 1, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"cpu_usage\"}}', 'cpu_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:26');
 INSERT INTO `rubber_scheme_rule` VALUES (276, 82, 'rule2', 2, 0, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"memory_usage\"}}', 'memory_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:32');
 INSERT INTO `rubber_scheme_rule` VALUES (277, 82, 'rule3', 3, 0, 0, '{\"_1\":{\"op\":\">\",\"ct\":\"\",\"r\":\"0\",\"l\":\"disk_usage\"}}', 'disk_usage > {_1:0}  ', '', 1, '2021-04-05 15:21:19');
+
+
+
 
 
 -- ----------------------------
