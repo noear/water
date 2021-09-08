@@ -127,7 +127,7 @@ public final class SevController implements IJob {
             }
         }
 
-        if (url.startsWith("http://")) {
+        if (url.startsWith("http://") || url.startsWith("https://")) {
             check_type0_http(sev, url);
         }
 
