@@ -49,11 +49,10 @@ public class DbsController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView dbs_sinner(String instanceId, String type, String name) throws SQLException, ClientException {
-        DbsViewModel instance = null;
-
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
-        if (cfg != null) {
+        if (cfg != null && TextUtils.isNotEmpty(cfg.value)) {
+            DbsViewModel instance = null;
             switch (type) {
                 case "2":
                     instance = AliyunDbsUtil.getDescribeDbAttribute(cfg, instanceId);
@@ -71,16 +70,18 @@ public class DbsController extends BaseController {
                     instance = AliyunDbsUtil.getDescribeDbAttribute(cfg, instanceId);
                     break;
             }
+
+            viewModel.set("instance", instance);
+            viewModel.set("instanceId", instanceId);
+            viewModel.set("type", type);
+            viewModel.set("name", name);
+
+            DbWaterOpsApi.setServerAttr(instanceId, instance.productType());
+
+            return view("mot/dbs_inner");
+        } else {
+            throw new RuntimeException("There is no iaas.ram configuration");
         }
-
-        viewModel.set("instance", instance);
-        viewModel.set("instanceId", instanceId);
-        viewModel.set("type", type);
-        viewModel.set("name", name);
-        
-        DbWaterOpsApi.setServerAttr(instanceId, instance.productType());
-
-        return view("mot/dbs_inner");
     }
 
 

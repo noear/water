@@ -49,7 +49,7 @@ public class EcsController extends BaseController {
     public ModelAndView ecs_inner(String instanceId) throws Exception {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
-        if (cfg != null) {
+        if (cfg != null && TextUtils.isNotEmpty(cfg.value)) {
             DescribeInstancesResponse.Instance instance = AliyunCmsUtil.getInstanceInfo(cfg, instanceId);
             int size = AliyunCmsUtil.getEcsDiskInfo(cfg, instanceId).getSize();
             viewModel.set("instance", instance);
@@ -57,11 +57,11 @@ public class EcsController extends BaseController {
 
             String attrs = instance.getCpu() + "核/" + (instance.getMemory() / 1000) + "G/" + size + "G";
             DbWaterOpsApi.setServerAttr(instanceId, attrs);
+            return view("mot/ecs_inner");
+        } else {
+            throw new RuntimeException("There is no iaas.ram configuration");
         }
-
-        return view("mot/ecs_inner");
     }
-
 
     @Mapping("charts/ajax/reqtate")
     public List<ELineModel> ecs_chart_ajax_reqtate(Integer dateType, Integer dataType, String instanceId) throws Exception {

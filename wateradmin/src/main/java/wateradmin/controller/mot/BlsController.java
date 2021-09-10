@@ -54,16 +54,17 @@ public class BlsController extends BaseController {
     public ModelAndView bls_sinner(String instanceId, String name) throws SQLException, ClientException {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
-        if (cfg != null) {
+        if (cfg != null && TextUtils.isNotEmpty(cfg.value)) {
             BlsViewModel blsViewModel = AliyunBlsUtil.getDescribeLoadBalancerAttribute(cfg, instanceId);
             viewModel.set("instanceId", instanceId);
             viewModel.set("instance", blsViewModel);
             viewModel.set("model", blsViewModel);
 
             DbWaterOpsApi.setServerAttr(instanceId, blsViewModel.loadBalancerSpec);
+            return view("mot/bls_inner");
+        } else {
+            throw new RuntimeException("There is no iaas.ram configuration");
         }
-
-        return view("mot/bls_inner");
     }
 
 
