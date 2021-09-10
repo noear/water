@@ -57,7 +57,7 @@ public class MsgExchangeController implements IJob {
 
     private boolean getLock() throws SQLException {
         //
-        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
         if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 1)) {
             //获取当前集群节点id
