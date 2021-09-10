@@ -40,7 +40,7 @@ public final class SynController implements IJob {
     public void exec() throws Exception {
         //尝试获取锁（8秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("waterpln", "waterpln_lock", 8)) {
+        if (LockUtils.tryLock("watersyn", "watersyn_lock", 8)) {
             exec0();
         }
     }
