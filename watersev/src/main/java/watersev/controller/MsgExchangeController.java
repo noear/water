@@ -40,15 +40,13 @@ public class MsgExchangeController implements IJob {
     public void exec() throws Exception {
         //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 3)) {
-            try {
-                while (true) {
-                    if (execDo() == false) {
-                        break;
-                    }
-                }
-            } finally {
-                LockUtils.unLock("watermsg", "watermsg_exchange_lock");
+//        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 3)) {
+//
+//        }
+
+        while (true) {
+            if (execDo() == false) {
+                break;
             }
         }
     }

@@ -4,6 +4,7 @@ import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water_reg.ServiceModel;
+import watersev.models.water_reg.ServiceSmpModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -35,16 +36,17 @@ public final class DbWaterRegApi {
         //不能缓存（以便随时获取状态）
         return db().table("water_reg_service")
                 .where("is_enabled=1")
-                .select("*")
-                .getList(ServiceModel.class);
+                .selectList("*", ServiceModel.class);
     }
 
-//    public static long getServiceErrorCount() throws SQLException {
-//        //不能缓存（以便随时获取状态）
-//        return dbr().table("service")
-//                .where("is_enabled=1 AND check_last_state=1")
-//                .count();
-//    }
+    public static List<ServiceSmpModel> getServiceListByName(String serviceName) throws SQLException {
+        //不能缓存（以便随时获取状态）
+        return db().table("water_reg_service")
+                .where("is_enabled=1")
+                .andEq("name", serviceName)
+                .selectList("name,address,meta,check_last_state", ServiceSmpModel.class);
+    }
+
 
     public static void setServiceState(long service_id, int state){
         try {

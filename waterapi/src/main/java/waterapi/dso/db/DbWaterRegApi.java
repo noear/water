@@ -1,6 +1,7 @@
 package waterapi.dso.db;
 
 import org.noear.water.utils.EncryptUtils;
+import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.solon.core.handle.Context;
 import waterapi.dso.IPUtils;
@@ -37,45 +38,38 @@ public final class DbWaterRegApi {
             meta = "";
         }
 
-        if(tag == null){
+        if (tag == null) {
             tag = "";
         }
 
         String key = serviceMd5(service, address, meta);
 
-        boolean isOk = db().table("water_reg_service").usingExpr(true)
-                .set("note", meta)
+        DataItem dataItem = new DataItem();
+        dataItem.set("note", meta)
                 .set("meta", meta)
                 .set("tag", tag)
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("check_url", check_url)
                 .set("check_type", check_type)
-                .set("code_location",code_location)
-                .set("check_last_state", 0)
+                .set("code_location", code_location)
+                .set("check_last_state", 200)
                 .set("check_last_time", "$NOW()")
-                .set("check_last_note", "")
+                .set("check_last_note", "");
+
+
+        boolean isOk = db().table("water_reg_service").usingExpr(true)
                 .whereEq("key", key)
-                .update() > 0;
+                .update(dataItem) > 0;
 
 
         if (isOk == false) {
-            db().table("water_reg_service").usingExpr(true)
-                    .set("`key`", key)
+            dataItem.set("key", key)
                     .set("name", service)
-                    .set("address", address)
-                    .set("note", meta)
-                    .set("meta", meta)
-                    .set("tag", tag)
-                    .set("alarm_mobile", alarm_mobile)
-                    .set("is_unstable", (is_unstable ? 1 : 0))
-                    .set("check_url", check_url)
-                    .set("check_type", check_type)
-                    .set("code_location",code_location)
-                    .set("check_last_state", 0)
-                    .set("check_last_time", "$NOW()")
-                    .set("check_last_note", "")
-                    .insert();
+                    .set("address", address);
+
+            db().table("water_reg_service").usingExpr(true)
+                    .insert(dataItem);
 
             //新增节点时，添加负载通知
             if (service.contains(":") == false && check_type == 0) {
