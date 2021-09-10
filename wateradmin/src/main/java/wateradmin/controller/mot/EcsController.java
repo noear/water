@@ -1,6 +1,7 @@
 package wateradmin.controller.mot;
 
 import com.aliyuncs.ecs.model.v20140526.DescribeInstancesResponse;
+import org.noear.solon.core.handle.Result;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.monitor.ETimeType;
@@ -46,7 +47,7 @@ public class EcsController extends BaseController {
 
 
     @Mapping("inner")
-    public ModelAndView ecs_inner(String instanceId) throws Exception {
+    public Object ecs_inner(String instanceId) throws Exception {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
         if (cfg != null && TextUtils.isNotEmpty(cfg.value)) {
@@ -59,7 +60,7 @@ public class EcsController extends BaseController {
             DbWaterOpsApi.setServerAttr(instanceId, attrs);
             return view("mot/ecs_inner");
         } else {
-            throw new RuntimeException("There is no iaas.ram configuration");
+            return Result.failure("There is no iaas.ram configuration");
         }
     }
 

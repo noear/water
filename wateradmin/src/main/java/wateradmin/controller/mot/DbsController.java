@@ -1,6 +1,7 @@
 package wateradmin.controller.mot;
 
 import com.aliyuncs.exceptions.ClientException;
+import org.noear.solon.core.handle.Result;
 import org.noear.water.protocol.MonitorType;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.monitor.ETimeType;
@@ -48,7 +49,7 @@ public class DbsController extends BaseController {
 
 
     @Mapping("inner")
-    public ModelAndView dbs_sinner(String instanceId, String type, String name) throws SQLException, ClientException {
+    public Object dbs_sinner(String instanceId, String type, String name) throws SQLException, ClientException {
         ConfigModel cfg = DbWaterOpsApi.getServerIaasAccount(instanceId);
 
         if (cfg != null && TextUtils.isNotEmpty(cfg.value)) {
@@ -80,7 +81,7 @@ public class DbsController extends BaseController {
 
             return view("mot/dbs_inner");
         } else {
-            throw new RuntimeException("There is no iaas.ram configuration");
+            return Result.failure("There is no iaas.ram configuration");
         }
     }
 
