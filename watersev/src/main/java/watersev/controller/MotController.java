@@ -9,6 +9,7 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import watersev.dso.AlarmUtil;
@@ -21,7 +22,7 @@ import watersev.models.water.MonitorModel;
 import java.util.List;
 
 /**
- * 数据监视任务
+ * 数据监视任务（可集群，建议只运行1个实例）
  *
  * @author noear
  * */
@@ -41,6 +42,14 @@ public final class MotController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        //尝试获取锁（50秒内只能调度一次）；避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("watermot", "watermot_lock", 50)) {
+            exec0();
+        }
+    }
+
+    private void exec0() {
         List<MonitorModel> list = DbWaterApi.getMonitorList();
 
         for (MonitorModel task : list) {

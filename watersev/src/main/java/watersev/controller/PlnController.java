@@ -13,6 +13,7 @@ import watersev.dso.db.DbWaterPaasApi;
 import watersev.models.water_paas.PaasFileModel;
 import watersev.utils.CallUtil;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -45,22 +46,26 @@ public class PlnController implements IJob {
     public void exec() throws Exception {
         JtRun.initAwait();
 
-        //尝试获取锁（1秒内只能调度一次）
+        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
         //
         if (LockUtils.tryLock("waterpln", "waterpln_lock", 3)) {
             try {
-                List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
-
-                System.out.println("查到任务数：" + list.size());
-
-                for (PaasFileModel task : list) {
-                    CallUtil.asynCall(() -> {
-                        doExec(task);
-                    });
-                }
+                exec0();
             } finally {
                 LockUtils.unLock("waterpln", "waterpln_lock");
             }
+        }
+    }
+
+    private void exec0() throws SQLException {
+        List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
+
+        System.out.println("查到任务数：" + list.size());
+
+        for (PaasFileModel task : list) {
+            CallUtil.asynCall(() -> {
+                doExec(task);
+            });
         }
     }
 

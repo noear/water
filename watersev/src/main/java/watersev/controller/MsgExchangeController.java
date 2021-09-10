@@ -6,6 +6,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.DisttimeUtils;
+import org.noear.water.utils.LockUtils;
 import watersev.dso.LogUtil;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 消息交换器（从持久层转入队列）
+ * 消息交换器（从持久层转入队列）（可集群，建议只运行1个实例）
  *
  * @author noear
  * */
@@ -37,9 +38,17 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        while (true) {
-            if (execDo() == false) {
-                break;
+        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 3)) {
+            try {
+                while (true) {
+                    if (execDo() == false) {
+                        break;
+                    }
+                }
+            } finally {
+                LockUtils.unLock("watermsg", "watermsg_exchange_lock");
             }
         }
     }

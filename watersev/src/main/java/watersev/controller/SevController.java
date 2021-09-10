@@ -19,6 +19,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -47,7 +48,14 @@ public final class SevController implements IJob {
 
     @Override
     public void exec() throws Throwable {
+        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("watersev", "watersev_lock", 3)) {
+            exec0();
+        }
+    }
 
+    private void exec0() throws SQLException {
         if (_init == false) {
             _init = true;
 

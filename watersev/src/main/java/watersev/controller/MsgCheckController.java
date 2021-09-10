@@ -3,14 +3,16 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.model.message.SubscriberModel;
+import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.utils.HttpUtilEx;
 
+import java.sql.SQLException;
 import java.util.*;
 
 /**
- * 消息订阅地址有效性检查（已支持 is_unstable）
+ * 消息订阅地址有效性检查（已支持 is_unstable）（可集群，建议只运行1个实例）
  *
  * @author noear
  */
@@ -28,6 +30,14 @@ public final class MsgCheckController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("watermsg", "watermsg_sub_check_lock", 3)) {
+            exec0();
+        }
+    }
+
+    private void exec0() throws SQLException {
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
         Set<String> subs = new HashSet<>();
