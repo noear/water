@@ -19,7 +19,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 同步控制
+ * 简单同步控制
+ *
+ * @author noear
  * */
 @Component
 public final class SynController implements IJob {

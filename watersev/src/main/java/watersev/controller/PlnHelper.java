@@ -9,7 +9,9 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
- * @author noear 2021/6/25 created
+ * 定时任务助手，用于构建下一个执行点
+ *
+ * @author noear
  */
 public class PlnHelper {
     public static PlnNext getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {

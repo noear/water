@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * 服务检测（已支持 is_unstable）
+ *
+ * @author noear
  * */
 @Component
 public final class SevController implements IJob {

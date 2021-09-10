@@ -3,7 +3,9 @@ package watersev.controller;
 import org.noear.snack.ONode;
 
 /**
- * @author noear 2021/8/17 created
+ * 数据监视结果
+ *
+ * @author noear
  */
 public class MotResult {
     public final ONode data;

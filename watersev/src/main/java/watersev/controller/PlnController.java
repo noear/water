@@ -17,11 +17,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 成功:9
- * 出错:8
- * 处理中:2
- * 待处理:1（立即执行）
- * 待处理:0
+ * 定时任务
+ * <p>
+ * 状态：(成功:9, 出错:8, 处理中:2, 待处理:1（立即执行）, 待处理:0）
+ *
+ * @author noear
  * */
 @Component
 public class PlnController implements IJob {

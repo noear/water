@@ -10,7 +10,9 @@ import watersev.utils.HttpUtilEx;
 import java.util.*;
 
 /**
- * 消息订阅检查（已支持 is_unstable）
+ * 消息订阅地址有效性检查（已支持 is_unstable）
+ *
+ * @author noear
  */
 @Component
 public final class MsgCheckController implements IJob {

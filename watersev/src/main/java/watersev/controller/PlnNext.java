@@ -3,9 +3,9 @@ package watersev.controller;
 import java.util.Date;
 
 /**
- * 下一次执行
+ * 定时任务下一个执行点
  *
- * @author noear 2021/7/5 created
+ * @author noear
  */
 public class PlnNext {
     /**

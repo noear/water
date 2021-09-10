@@ -15,6 +15,8 @@ import java.util.concurrent.Executors;
 
 /**
  * 消息交换器（从持久层转入队列）
+ *
+ * @author noear
  * */
 @Component
 public class MsgExchangeController implements IJob {

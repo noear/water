@@ -30,6 +30,8 @@ import java.util.concurrent.Executors;
  *
  * 订阅类型（0,1异步等待 ; 2异步不等待并设为成功 ; 3异步不待等并设为处理中 ;）
  * 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+ *
+ * @author noear
  * */
 @Component
 public final class MsgDistributeController implements IJob {

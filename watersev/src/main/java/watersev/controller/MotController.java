@@ -9,7 +9,6 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
-import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import watersev.dso.AlarmUtil;
@@ -19,9 +18,13 @@ import watersev.dso.SqlUtil;
 import watersev.dso.db.DbWaterApi;
 import watersev.models.water.MonitorModel;
 
-import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 数据监视任务
+ *
+ * @author noear
+ * */
 @Component
 public final class MotController implements IJob {
     static Constants json_cfg = new Constants();

@@ -9,8 +9,11 @@ import org.noear.solon.extend.schedule.IJob;
 
 import watersev.Config;
 
-//check in
-//
+/**
+ * 注册服务签到任务
+ *
+ * @author noear
+ * */
 @Component
 public class ChkController implements IJob {
     private ONode _args;
