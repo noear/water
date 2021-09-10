@@ -10,7 +10,7 @@ import org.noear.solon.extend.schedule.IJob;
 import watersev.Config;
 
 /**
- * 注册服务签到任务（可集群，每个实例都可运行）
+ * 注册服务签到任务（可集群）
  *
  * @author noear
  * */

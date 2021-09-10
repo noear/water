@@ -42,9 +42,9 @@ public final class MotController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        //尝试获取锁（50秒内只能调度一次）；避免集群切换时，多次运行
+        //尝试获取锁（55秒内只能调度一次）；避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watermot", "watermot_lock", 50)) {
+        if (LockUtils.tryLock("watermot", "watermot_lock", 55)) {
             exec0();
         }
     }
