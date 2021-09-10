@@ -4,6 +4,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
 import org.noear.weed.DataItem;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 简单同步控制
+ * 简单同步控制（可集群，建议只运行1个实例）
  *
  * @author noear
  * */
@@ -37,6 +38,14 @@ public final class SynController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        //尝试获取锁（8秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("waterpln", "waterpln_lock", 8)) {
+            exec0();
+        }
+    }
+
+    private void exec0(){
         List<SynchronousModel> list = DbWaterApi.getSyncList();
 
         for (SynchronousModel task : list) {
@@ -74,7 +83,6 @@ public final class SynController implements IJob {
             }
         }
     }
-
 
 
 

@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 服务检测（已支持 is_unstable）
+ * 服务检测（已支持 is_unstable）（可集群，建议只运行1个实例）
  *
  * @author noear
  * */
