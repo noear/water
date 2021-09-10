@@ -63,7 +63,7 @@ public class MsgExchangeController implements IJob {
             //获取当前集群节点id
             String nodeId = WaterClient.localHost();
             //获取主节点id
-            String masterNodeId = Config.rd_lock.open1(us -> us.key("watermsg_lock_master").get());
+            String masterNodeId = Config.rd_lock.open1(us -> us.key("watermsg_exchange_lock_master").get());
 
             if (TextUtils.isNotEmpty(masterNodeId)) {
                 if(nodeId.equals(masterNodeId)){
@@ -91,7 +91,7 @@ public class MsgExchangeController implements IJob {
                 }
             }
 
-            Config.rd_lock.open0(us -> us.key("watermsg_lock_master").expire(-2).set(nodeId));
+            Config.rd_lock.open0(us -> us.key("watermsg_exchange_lock_master").expire(-2).set(nodeId));
             return true;
         } else {
             //获取锁失败，不用管了
