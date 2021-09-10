@@ -48,9 +48,9 @@ public final class SevController implements IJob {
 
     @Override
     public void exec() throws Throwable {
-        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watersev", "watersev_lock", 3)) {
+        if (LockUtils.tryLock("watersev", "watersev_lock", 5)) {
             exec0();
         }
     }

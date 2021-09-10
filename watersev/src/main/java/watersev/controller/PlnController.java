@@ -46,14 +46,10 @@ public class PlnController implements IJob {
     public void exec() throws Exception {
         JtRun.initAwait();
 
-        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("waterpln", "waterpln_lock", 3)) {
-            try {
-                exec0();
-            } finally {
-                LockUtils.unLock("waterpln", "waterpln_lock");
-            }
+        if (LockUtils.tryLock("waterpln", "waterpln_lock", 1)) {
+            exec0();
         }
     }
 

@@ -17,7 +17,6 @@ public class PlnHelper {
     public static PlnNext getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
         PlnNext next = new PlnNext();
 
-
         CronExpressionPlus cron = CronUtils.get(task.plan_interval);
 
         next.datetime = cron.getNextValidTimeAfter(baseTime);
