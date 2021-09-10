@@ -53,7 +53,7 @@ public final class DbWaterRegApi {
                 .set("check_url", check_url)
                 .set("check_type", check_type)
                 .set("code_location", code_location)
-                .set("check_last_state", 200)
+                .set("check_last_state", 0) //最后检查状态（0：OK；1：error）
                 .set("check_last_time", "$NOW()")
                 .set("check_last_note", "");
 

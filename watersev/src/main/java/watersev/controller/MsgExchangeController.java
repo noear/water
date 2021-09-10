@@ -2,13 +2,17 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
-import org.noear.water.utils.DisttimeUtils;
-import org.noear.water.utils.LockUtils;
+import org.noear.water.utils.*;
+import watersev.Config;
 import watersev.dso.LogUtil;
+import watersev.dso.db.DbWaterRegApi;
+import watersev.models.water_reg.ServiceSmpModel;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -28,8 +32,8 @@ public class MsgExchangeController implements IJob {
         return "zan";
     }
 
-    int _interval_def = 100;
-    int _interval = 100;
+    int _interval_def = 1000;
+    int _interval = 1000;
 
     @Override
     public int getInterval() {
@@ -38,16 +42,56 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
-        //
-//        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 3)) {
-//
-//        }
+        //控制集群内只有一个节点在跑
+        if(getLock() == false){
+            return;
+        }
+
 
         while (true) {
             if (execDo() == false) {
                 break;
             }
+        }
+    }
+
+    private boolean getLock() throws SQLException {
+        //
+        //尝试获取锁（3秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 1)) {
+            //获取当前集群节点id
+            String nodeId = WaterClient.localHost();
+            //获取主节点id
+            String masterNodeId = Config.rd_lock.open1(us -> us.key("watermsg_lock_master").get());
+
+            if (TextUtils.isNotEmpty(masterNodeId)) {
+                //如果有主节点，遍历集群是否在其中？
+                List<ServiceSmpModel> list = DbWaterRegApi.getWatermsgServiceList();
+                for (ServiceSmpModel sm : list) {
+                    if (sm.meta.contains("sss")) {
+                        if (sm.meta.contains("msg")) {
+                            //如果通过sss=msg，说明msg服务在跑
+                            if (sm.address.equals(masterNodeId)) {
+                                //如果找到了，看看是不是当前节点
+                                return nodeId.equals(masterNodeId);
+                            }
+                        }
+                    } else {
+                        //没有sss指定，说明所有服务在跑（包括：msg）
+                        if (sm.address.equals(masterNodeId)) {
+                            //如果找到了，看看是不是当前节点
+                            return nodeId.equals(masterNodeId);
+                        }
+                    }
+                }
+            }
+
+            Config.rd_lock.open0(us -> us.key("watermsg_lock_master").expire(30).set(nodeId));
+            return true;
+        } else {
+            //获取锁失败，不用管了
+            return false;
         }
     }
 
