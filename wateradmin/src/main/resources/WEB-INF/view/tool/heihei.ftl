@@ -29,7 +29,15 @@
                     url:"/tool/heihei/ajax/submit",
                     data:{"target":target,"msg":msg},
                     success:function(data){
-                        top.layer.msg(data.msg);
+                        if(data.code==1){
+                            top.layer.msg('操作成功');
+                        }else{
+                            if(data.msg){
+                                top.layer.msg(data.msg);
+                            }else{
+                                top.layer.msg('操作失败');
+                            }
+                        }
                     }
                 });
                 top.layer.close(top.layer.index);
