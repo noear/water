@@ -48,7 +48,7 @@
 
         <bcf.ver>2.1.7</bcf.ver>
 
-        <rock.ver>1.2.0</rock.ver>
+        <rock.ver>1.2.1</rock.ver>
 
         <luffy.ver>1.1.7</luffy.ver>
         <snakeyaml.ver>1.29</snakeyaml.ver>
@@ -481,6 +481,5 @@
         <module>../water.utils</module>
         <module>../water.protocol</module>
         <module>../water.client</module>
-        <module>../water.client-solon-plugin</module>
     </modules>
 </project>
