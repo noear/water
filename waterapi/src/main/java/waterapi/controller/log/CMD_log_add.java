@@ -60,6 +60,7 @@ public class CMD_log_add extends UapiBase {
             }
         }
 
+
         ProtocolHub.logStorer.write(logger, trace_id, Level.of(level), tag, tag1, tag2, tag3, summary, content, from, log_fulltime, class_name, thread_name);
 
         return Result.succeed();
