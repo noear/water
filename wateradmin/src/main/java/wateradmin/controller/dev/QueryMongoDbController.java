@@ -112,8 +112,8 @@ public class QueryMongoDbController extends BaseController {
             ONode codeQ = ONode.load(code);
             Map<String, Object> whereMap = codeQ.get("query").toObject(Map.class);
             int limit = codeQ.get("limit").getInt();
-            if (limit > 100) {
-                limit = 100;
+            if (limit > 50) {
+                limit = 50;
             }
             String sort = codeQ.get("sort").getString();
 

@@ -78,8 +78,8 @@ public class QuerySqlDbController extends BaseController {
                Matcher m  = limit_exp.matcher(code2);
 
                if(m.find()){
-                   if (Integer.parseInt(m.group(2)) > 100) {
-                       return "最多不可超过100条";
+                   if (Integer.parseInt(m.group(2)) > 50) {
+                       return "最多不可超过50条";
                    }
                }else{
                    return "需要limit行数";
