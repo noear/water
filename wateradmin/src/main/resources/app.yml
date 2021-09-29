@@ -1,7 +1,7 @@
 solon.extend: wateradmin_ext
 
 server.port: 9373
-server.session.timeout: 36000
+server.session.timeout: 360000 #10h
 
 solon.app:
   name: "wateradmin"
