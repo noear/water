@@ -42,7 +42,7 @@ public final class DbWaterRegApi {
     public static List<ServiceSmpModel> getWatermsgServiceList() throws SQLException {
         //不能缓存（以便随时获取状态）
         return db().table("water_reg_service")
-                .where("is_enabled", 1)
+                .where("is_enabled=?", 1)
                 .andEq("check_last_state", 0)
                 .andEq("check_type",0) //检查方式（0被检查；1自己签到）
                 .andEq("name", "watersev")
