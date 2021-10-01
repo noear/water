@@ -19,9 +19,9 @@
 
         $(function (){
             $(".log a").click(function (){
-                let traceId = $(this).attr('traceId');
-                if(traceId){
-                    UrlQueryBy("tagx",traceId,'page');
+                let tagx = $(this).attr('tagx');
+                if(tagx){
+                    UrlQueryBy("tagx",tagx,'page');
                 }
             });
         });
@@ -70,7 +70,7 @@
     <div id="content">
         <#list list as log>
             <div class="break log">
-                ${log.html()!}
+                ${formater.html(log)!}
             </div>
             <br>
         </#list>

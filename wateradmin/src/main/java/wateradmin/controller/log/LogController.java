@@ -10,6 +10,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.LogFormater;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -113,6 +114,8 @@ public class LogController extends BaseController {
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);
+
+        viewModel.put("formater", LogFormater.instance);
 
         return view("log/query_inner");
     }
