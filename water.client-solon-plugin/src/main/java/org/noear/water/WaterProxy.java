@@ -1,7 +1,6 @@
 package org.noear.water;
 
 import org.noear.water.log.Level;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.HttpUtils;
 import org.noear.weed.cache.CacheUsing;
 

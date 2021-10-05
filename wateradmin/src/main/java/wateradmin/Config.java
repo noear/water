@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.auth.AuthUtil;
+import org.noear.solon.extend.health.HealthHandler;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -60,7 +61,7 @@ public class Config {
         AuthUtil.adapter()
                 .loginUrl("/login")
                 .addRule(r -> r.include("**").verifyIp().failure((c, t) -> c.output(", not")))
-                .addRule(r -> r.exclude("/login**").exclude("/run/**").exclude("/msg/**").exclude("/_session/**").verifyPath())
+                .addRule(r -> r.exclude("/login**").exclude(HealthHandler.HANDLER_PATH).exclude("/run/**").exclude("/msg/**").exclude("/_session/**").verifyPath())
                 .processor(new AuthProcessorImpl())
                 .failure((ctx, rst) -> {
                     ctx.outputAsJson(new ONode().set("code", 403).set("msg", "没有权限").toJson());
