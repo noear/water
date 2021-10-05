@@ -5,7 +5,6 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.auth.annotation.AuthRoles;
-import org.noear.water.WaterClient;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -46,8 +45,8 @@ public class SevController extends BaseController {
         return view("mot/service");
     }
 
-    @Mapping("/service/check")
-    public String service_check(String s) throws Exception {
+    @Mapping("/service/status")
+    public String service_status(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
         }
@@ -67,8 +66,8 @@ public class SevController extends BaseController {
         }
     }
 
-    @Mapping("/service/runcheck")
-    public String service_runcheck(String s) throws Exception {
+    @Mapping("/service/check")
+    public String service_check(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
         }

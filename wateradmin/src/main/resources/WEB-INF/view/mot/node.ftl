@@ -38,7 +38,7 @@
         <tbody id="tbody">
         <#list speeds as m>
             <tr ${m.isHighlight()?string("class='t4'","")}>
-                <td style="text-align: left;"><a href="/mot/service/check?s=${m.tag}@${m.name}" target="_blank">${m.tag}@${m.name}</a></td>
+                <td style="text-align: left;"><a href="/mot/service/status?s=${m.tag}@${m.name}" target="_blank">${m.tag}@${m.name}</a></td>
                 <td style="text-align: right;">${m.average}</td>
                 <td style="text-align: right;" ${(m.fastest>1000)?string("class='t4'","")}>${m.fastest}</td>
                 <td style="text-align: right;" ${(m.slowest>1000)?string("class='t4'","")}>${m.slowest}</td>

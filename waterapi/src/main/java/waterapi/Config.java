@@ -5,6 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.extend.health.HealthHandler;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
@@ -123,7 +124,7 @@ public class Config {
 
             DbWaterRegApi.addService(Solon.cfg().appGroup(), water_service_name,
                     localHost, meta, "",
-                    WW.path_run_check,
+                    HealthHandler.HANDLER_PATH,
                     0,
                     code_location,
                     Solon.cfg().isDriftMode());

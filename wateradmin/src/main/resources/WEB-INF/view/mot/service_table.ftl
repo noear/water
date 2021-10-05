@@ -25,7 +25,7 @@
         <td class="left">${m.name}</td>
         <td class="left break">
             <#if m.check_type == 0>
-                <a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">
+                <a href="/mot/service/status?s=${m.name}@${m.address}" target="_blank">
                     ${m.address}
                     <#if m.note?default("")?length gt 0>
                         - ${m.note}
@@ -48,7 +48,7 @@
         </td>
         <td class="left">
             <#if m.check_url?default('')?length gt 0 >
-                <a href="/mot/service/runcheck?s=${m.name}@${m.address}" target="_blank">
+                <a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">
                     ${m.check_url!}
                 </a>
             </#if>
