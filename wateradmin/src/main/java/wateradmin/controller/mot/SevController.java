@@ -72,13 +72,27 @@ public class SevController extends BaseController {
             return "Not supported";
         }
 
-        if (s.indexOf("@") < 0 || s.indexOf(":") < 0) {
+        String[] ss = s.split("@");
+
+        if (ss.length < 3) {
             return "Not supported";
         }
 
-        String ca = s.split("@")[1];
+        String sip = ss[1];
+        String sid = ss[2];
 
-        String url = "http://" + ca + "/run/check/";
+        ServiceModel sev = DbWaterRegApi.getServiceById(Long.parseLong(sid));
+
+        if (TextUtils.isEmpty(sev.check_url)) {
+            return "Not supported";
+        }
+
+        String url = null;
+        if (sev.check_url.startsWith("/")) {
+            url = "http://" + sip + sev.check_url;
+        } else {
+            url = "http://" + sip + "/" + sev.check_url;
+        }
 
         try {
             return HttpUtils.getString(url);

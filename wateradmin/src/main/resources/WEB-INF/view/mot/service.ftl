@@ -182,7 +182,7 @@
                 </td>
                 <td class="left">
                     <#if m.check_url?default('')?length gt 0 >
-                        <a href="/mot/service/check?s=${m.name}@${m.address}" target="_blank">
+                        <a href="/mot/service/check?s=${m.name}@${m.address}@${m.service_id}" target="_blank">
                             ${m.check_url!}
                         </a>
                     </#if>
