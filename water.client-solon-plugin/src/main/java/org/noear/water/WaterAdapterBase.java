@@ -5,6 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.extend.health.HealthHandler;
 import org.noear.water.log.Logger;
 import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.IPUtils;
@@ -70,9 +71,9 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
         String code_location = Solon.cfg().sourceLocation().getPath();
 
         if (service_port > 0) {
-            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, WW.path_run_check, 0, this.alarm_mobile(), code_location, is_unstable());
+            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, HealthHandler.HANDLER_PATH, 0, this.alarm_mobile(), code_location, is_unstable());
         } else {
-            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, WW.path_run_check, 1, this.alarm_mobile(), code_location, is_unstable());
+            WaterClient.Registry.register(Solon.cfg().appGroup(), this.service_name(), _localHost, _note, HealthHandler.HANDLER_PATH, 1, this.alarm_mobile(), code_location, is_unstable());
         }
     }
 

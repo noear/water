@@ -40,7 +40,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.5.40</solon.ver>
+        <solon.ver>1.5.41</solon.ver>
         <weed3.ver>3.3.24</weed3.ver>
         <snack3.ver>3.1.20</snack3.ver>
         <water.ver>2.2.10</water.ver>
@@ -116,6 +116,12 @@
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.extend.staticfiles</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>solon.extend.health</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 
