@@ -91,6 +91,16 @@ public final class DbWaterRegApi {
         }
     }
 
+    public static void delConsumer(String consumer_address) {
+        try {
+            db().table("water_reg_consumer")
+                    .whereEq("consumer_address", consumer_address)
+                    .delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void udpService1(long service_id, ServiceModel sev, int check_state) {
         try {
             db().table("water_reg_service").usingExpr(true)

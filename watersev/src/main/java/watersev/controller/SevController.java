@@ -101,6 +101,7 @@ public final class SevController implements IJob {
                 // 如果为非稳定服务，且出错2次以上；删掉
                 //
                 DbWaterRegApi.delService(sev.service_id);
+                DbWaterRegApi.delConsumer(sev.address);
             } else {
                 //
                 // 如果稳定服务，则提示出错
@@ -172,6 +173,7 @@ public final class SevController implements IJob {
                 // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
                 //
                 DbWaterRegApi.delService(sev.service_id);
+                DbWaterRegApi.delConsumer(sev.address);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
                 LogUtil.warn(this, sev.address, sev.name,sev.name + "@" + sev.address, ex);
@@ -214,6 +216,7 @@ public final class SevController implements IJob {
                         // 如果为非稳定服务，且出错2次以上，且是网络错误；删掉
                         //
                         DbWaterRegApi.delService(sev.service_id);
+                        DbWaterRegApi.delConsumer(sev.address);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
                         LogUtil.warn(getName(), sev.address, sev.name,sev.name + "@" + sev.address, url2 + "，" + hint);
