@@ -72,7 +72,7 @@ public class CMD_sev_discover extends UapiBase {
         data.set("url", url);
         data.set("policy", policy); //default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希) //default=polling
 
-        data.get("list").addAll(list, (n, m) -> {
+        data.getOrNew("list").addAll(list, (n, m) -> {
             n.set("protocol", "http");
             n.set("address", m.address);
             n.set("meta", m.meta);
