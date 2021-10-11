@@ -71,7 +71,11 @@
         <#list csms!! as c>
             <tr class="${(c.chk_last_state=1)?string('t4 ',' ')}${(c.is_enabled=0)?string('line1 ',' ')}">
                 <td>${(c.row_id)!}</td>
-                <td class="left">${(c.consumer)!}@${c.consumer_address!} - <a class="t2" href="/cfg/gateway/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a></td>
+                <td class="left">${(c.consumer)!}@${c.consumer_address!}
+                    <#if c.consumer_address?contains(":")>
+                    - <a class="t2" href="/cfg/gateway/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a>
+                    </#if>
+                 </td>
                 <td class="left">${(c.consumer_ip)!}</td>
                 <td class="left">${c.traffic_per?string("00.00")}% (${c.traffic_num})</td>
                 <td>${(c.chk_fulltime)?string("MM-dd HH:mm:ss")}</td>
