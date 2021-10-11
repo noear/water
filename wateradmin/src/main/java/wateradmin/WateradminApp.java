@@ -133,5 +133,6 @@ public class WateradminApp {
         });
 
         PreheatUtils.preheat("/run/check/");
+        PreheatUtils.preheat("/login");
     }
 }
