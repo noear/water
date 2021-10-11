@@ -34,7 +34,7 @@ public class WaterUpstream implements LoadBalance {
     /**
      * 节点列表
      */
-    protected List<String> _nodes = new ArrayList<>();
+    private List<String> _nodes = new ArrayList<>();
     /**
      * 节点数量
      */

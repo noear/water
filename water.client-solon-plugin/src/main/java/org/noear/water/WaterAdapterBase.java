@@ -117,7 +117,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
 
                     n.set("service", k);
                     ONode nl = n.getOrNew("upstream").asArray();
-                    v._nodes.forEach((s) -> {
+                    v.nodes().forEach((s) -> {
                         nl.add(s);
                     });
                 });
@@ -130,7 +130,7 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
                     n.set("agent", v.agent());
                     n.set("policy", v.policy());
                     ONode nl = n.getOrNew("upstream").asArray();
-                    v._nodes.forEach((s) -> {
+                    v.nodes().forEach((s) -> {
                         nl.add(s);
                     });
                 }
