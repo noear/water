@@ -49,7 +49,7 @@ public class GwController extends BaseController {
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
         String sev_tmp = cfg.getProp().getProperty("service");
 
-        if(TextUtils.isEmpty(sev_tmp)==false){ //通过 cfg.user, 实现别名与实名的情况
+        if (TextUtils.isEmpty(sev_tmp) == false) { //通过 cfg.user, 实现别名与实名的情况
             sev_key = sev_tmp;
         }
 
@@ -59,7 +59,7 @@ public class GwController extends BaseController {
 
         List<ServiceConsumerModel> csms = DbWaterRegApi.getServiceConsumers(sev_key);
 
-        List<ServiceSpeedModel> csmPds = DbWaterOpsApi.getServiceSpeedByService("_from",sev_key);
+        List<ServiceSpeedModel> csmPds = DbWaterOpsApi.getServiceSpeedByService("_from", sev_key);
 
         List<GatewayVoModel> gtws = new ArrayList<>();
 
@@ -78,24 +78,19 @@ public class GwController extends BaseController {
         }
 
 
-        long pdsTotal = 1;
-        for(ServiceConsumerModel m : csms) {
+        double pdsTotal = 1.00;
+        for (ServiceConsumerModel m : csms) {
             for (ServiceSpeedModel spd : csmPds) {
                 if (TextUtils.equals(m.consumer + "@" + m.consumer_address, spd.name)) {
                     pdsTotal += spd.total_num;
+                    m.traffic_num = spd.total_num;
                     break;
                 }
             }
         }
 
-        for(ServiceConsumerModel m : csms) {
-            for (ServiceSpeedModel spd : csmPds) {
-                if (TextUtils.equals(m.consumer + "@" + m.consumer_address, spd.name)) {
-                    m.traffic_num = spd.total_num;
-                    m.traffic_per = (spd.total_num / pdsTotal) * 100.0;
-                    break;
-                }
-            }
+        for (ServiceConsumerModel m : csms) {
+            m.traffic_per = (m.traffic_num / pdsTotal) * 100;
         }
 
         viewModel.set("is_enabled", cfg.is_enabled);
