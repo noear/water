@@ -32,24 +32,24 @@ public class HeiheiImp implements Heihei {
         }
 
         ONode data = new ONode().build((d) -> {
-            d.get("platform").val("all");
+            d.getOrNew("platform").val("all");
 
-            d.get("audience").get("alias").addAll(alias);
+            d.getOrNew("audience").getOrNew("alias").addAll(alias);
 
-            d.get("options")
+            d.getOrNew("options")
                     .set("apns_production", true);
 
-            d.get("notification").build(n -> {
-                n.get("android")
+            d.getOrNew("notification").build(n -> {
+                n.getOrNew("android")
                         .set("alert", text);
 
-                n.get("ios")
+                n.getOrNew("ios")
                         .set("alert", text)
                         .set("badge", 0)
                         .set("sound", "happy");
             });
 
-            d.get("message").build(n -> {
+            d.getOrNew("message").build(n -> {
                 n.set("msg_content", text);
             });
         });
