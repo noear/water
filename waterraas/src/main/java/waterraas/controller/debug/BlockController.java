@@ -46,12 +46,12 @@ public class BlockController implements Handler {
         ONode data = new ONode();
 
         data.set("code",1).set("msg",SystemCode.code_1);
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
 
         jReq.set("block",block);
         jReq.set("args",args);
 
-        ONode jResp = data.get("response").asObject();
+        ONode jResp = data.getOrNew("response").asObject();
 
         try {
             Timecount timecount = new Timecount().start();

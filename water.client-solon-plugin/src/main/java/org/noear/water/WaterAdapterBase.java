@@ -113,10 +113,10 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
 
             if ("*".equals(ups)) {
                 WaterUpstream._map.forEach((k, v) -> {
-                    ONode n = odata.get(k);
+                    ONode n = odata.getOrNew(k);
 
                     n.set("service", k);
-                    ONode nl = n.get("upstream").asArray();
+                    ONode nl = n.getOrNew("upstream").asArray();
                     v._nodes.forEach((s) -> {
                         nl.add(s);
                     });
@@ -124,12 +124,12 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
             } else {
                 WaterUpstream v = WaterUpstream.getOnly(ups);
                 if (v != null) {
-                    ONode n = odata.get(ups);
+                    ONode n = odata.getOrNew(ups);
 
                     n.set("service", ups);
                     n.set("agent", v.agent());
                     n.set("policy", v.policy());
-                    ONode nl = n.get("upstream").asArray();
+                    ONode nl = n.getOrNew("upstream").asArray();
                     v._nodes.forEach((s) -> {
                         nl.add(s);
                     });

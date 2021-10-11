@@ -2,7 +2,7 @@ package watersev.controller;
 
 import luffy.JtRun;
 import org.noear.snack.ONode;
-import org.noear.snack.core.Constants;
+import org.noear.snack.core.Options;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
@@ -28,7 +28,7 @@ import java.util.List;
  * */
 @Component
 public final class MotController implements IJob {
-    static Constants json_cfg = new Constants();
+    static Options json_cfg = new Options();
 
     @Override
     public String getName() {
@@ -103,7 +103,7 @@ public final class MotController implements IJob {
         model.set("tag", task.task_tag);
 
 
-        String model_json = model.cfg(json_cfg).toJson();//date -> "new Date('" + new Datetime(date).toString("yyyy-MM-dd HH:mm:ss") + "')");
+        String model_json = model.options(json_cfg).toJson();//date -> "new Date('" + new Datetime(date).toString("yyyy-MM-dd HH:mm:ss") + "')");
 
         String task_tag = null;
 

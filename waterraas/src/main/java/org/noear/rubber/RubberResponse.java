@@ -27,9 +27,9 @@ public final class RubberResponse {
             data.set("total", matcher.total);
             data.set("value", matcher.value);
 
-            ONode details = data.get("details").asObject();
+            ONode details = data.getOrNew("details").asObject();
             matcher.details.forEach((k, v) -> {
-                ONode temp = details.get(k);
+                ONode temp = details.getOrNew(k);
 
                 temp.set("ok", v.is_match ? 1 : 0);
                 temp.set("s", v.scheme);
@@ -54,7 +54,7 @@ public final class RubberResponse {
             data.set("advise", evaluation.advice);
             data.set("exception", evaluation.exception);
 
-            ONode details = data.get("details").asArray();
+            ONode details = data.getOrNew("details").asArray();
 
             evaluation.details.forEach(p -> {
                 ONode n = new ONode();

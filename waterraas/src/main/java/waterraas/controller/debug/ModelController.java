@@ -33,7 +33,7 @@ public class ModelController implements Handler {
 
 
         data.set("code",1).set("msg", SystemCode.code_1);
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
 
         jReq.set("model",model);
         if(TextUtils.isEmpty(field)==false){
@@ -41,7 +41,7 @@ public class ModelController implements Handler {
         }
         jReq.set("args",args);
 
-        ONode jResp = data.get("response");
+        ONode jResp = data.getOrNew("response");
 
 
         try {

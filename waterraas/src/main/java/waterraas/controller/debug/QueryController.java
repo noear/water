@@ -52,13 +52,13 @@ public class QueryController implements Handler {
 
         ONode data = new ONode();
         data.set("code", 1).set("msg", SystemCode.code_1);
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
 
         jReq.set("scheme", scheme);
 
         RubberQuery rubberQuery = null;
 
-        ONode jResp = data.get("response");
+        ONode jResp = data.getOrNew("response");
 
         try {
             rubberQuery = Rubber.query(scheme, limit);

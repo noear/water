@@ -53,12 +53,12 @@ public class ModelController implements Handler {
 
 
         data.set("code",1).set("msg",SystemCode.code_1);
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
 
         jReq.set("model",model);
         jReq.set("args",args);
 
-        ONode jResp = data.get("response").asObject();
+        ONode jResp = data.getOrNew("response").asObject();
 
 
         try {

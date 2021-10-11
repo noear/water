@@ -23,7 +23,7 @@ public class SchemeUtil {
 
         data.set("code", 1).set("msg", SystemCode.code_1);
 
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
         jReq.set("request_id", request_id);
         jReq.set("scheme", scheme);
         jReq.set("type", type);
@@ -33,7 +33,7 @@ public class SchemeUtil {
         jReq.set("args", args);
         jReq.set("policy", policy);
 
-        ONode jResp = data.get("response");
+        ONode jResp = data.getOrNew("response");
 
         try {
             RubberResponse resp2 = run(0, request_id, scheme, policy, args, type, rule, is_debug);
@@ -109,13 +109,13 @@ public class SchemeUtil {
 
         ONode args = ONode.load(log.args_json);
 
-        ONode jReq = data.get("request");
+        ONode jReq = data.getOrNew("request");
         jReq.set("request_id", log.request_id);
         jReq.set("scheme", log.scheme_tagname);
         jReq.set("args", args);
         jReq.set("policy", log.policy);
 
-        ONode jResp = data.get("response");
+        ONode jResp = data.getOrNew("response");
 
         if (log.state >= 2) { //说明已完成
             if (log.policy / 1000 == 1) {
