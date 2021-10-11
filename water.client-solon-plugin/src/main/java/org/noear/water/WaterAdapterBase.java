@@ -112,24 +112,32 @@ abstract class WaterAdapterBase extends AbstractWaterAdapter {
             ONode odata = new ONode().asObject();
 
             if ("*".equals(ups)) {
-                WaterUpstream._map.forEach((k, v) -> {
+                WaterUpstream.forEach((k, v) -> {
                     ONode n = odata.getOrNew(k);
 
                     n.set("service", k);
+
+                    n.set("agent", v.agent());
+                    n.set("policy", v.policy());
+
                     ONode nl = n.getOrNew("upstream").asArray();
+
                     v.nodes().forEach((s) -> {
                         nl.add(s);
                     });
                 });
             } else {
+                ONode n = odata.getOrNew(ups);
+
+                n.set("service", ups);
+
                 WaterUpstream v = WaterUpstream.getOnly(ups);
                 if (v != null) {
-                    ONode n = odata.getOrNew(ups);
-
-                    n.set("service", ups);
                     n.set("agent", v.agent());
                     n.set("policy", v.policy());
+
                     ONode nl = n.getOrNew("upstream").asArray();
+
                     v.nodes().forEach((s) -> {
                         nl.add(s);
                     });

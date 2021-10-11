@@ -5,12 +5,14 @@ import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
+import sun.security.util.AuthResources_fr;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 
 /**
  * 负载器::Water Upstream （不能引用  XWaterAdapter）
@@ -51,10 +53,14 @@ public class WaterUpstream implements LoadBalance {
     private String _backup_server;
 
 
-    protected final static Map<String, WaterUpstream> _map = new ConcurrentHashMap<>();
+    private final static Map<String, WaterUpstream> _map = new ConcurrentHashMap<>();
 
     private WaterUpstream(String service) {
         _service = service;
+    }
+
+    public static void forEach(BiConsumer<String, WaterUpstream> action){
+        _map.forEach(action);
     }
 
     /**
