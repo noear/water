@@ -53,8 +53,6 @@ public class GwController extends BaseController {
             sev_key = sev_tmp;
         }
 
-        double pdsTotal = 0.01;
-
         List<ServiceModel> sevs = DbWaterRegApi.getServicesByName(sev_key);
 
         List<ServiceSpeedModel> sevPds = DbWaterOpsApi.getServiceSpeedByService(SEV_SERVER_TAG);
@@ -72,7 +70,6 @@ public class GwController extends BaseController {
             for (ServiceSpeedModel spd : sevPds) {
                 if (TextUtils.equals(sev.address, spd.name)) {
                     gtw.speed = spd;
-                    pdsTotal += spd.total_num;
                     break;
                 }
             }
@@ -80,11 +77,22 @@ public class GwController extends BaseController {
             gtws.add(gtw);
         }
 
-        for(ServiceConsumerModel m : csms){
+
+        long pdsTotal = 1;
+        for(ServiceConsumerModel m : csms) {
             for (ServiceSpeedModel spd : csmPds) {
-                if (TextUtils.equals(m.consumer+"@"+m.consumer_address, spd.name)) {
+                if (TextUtils.equals(m.consumer + "@" + m.consumer_address, spd.name)) {
+                    pdsTotal += spd.total_num;
+                    break;
+                }
+            }
+        }
+
+        for(ServiceConsumerModel m : csms) {
+            for (ServiceSpeedModel spd : csmPds) {
+                if (TextUtils.equals(m.consumer + "@" + m.consumer_address, spd.name)) {
                     m.traffic_num = spd.total_num;
-                    m.traffic_per = (spd.total_num/pdsTotal)*100;
+                    m.traffic_per = (spd.total_num / pdsTotal) * 100.0;
                     break;
                 }
             }
