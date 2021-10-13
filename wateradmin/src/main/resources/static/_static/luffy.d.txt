@@ -877,10 +877,10 @@ interface RedisSession{
 }
 
 interface RedisClient{
-    open0(callbackfn:(ru:RedisSession)=>void):void;
-    open1(callbackfn:(ru:RedisSession)=>object):object;
-    open(callbackfn:(ru:RedisSession)=>void):void;
-    openAndGet(callbackfn:(ru:RedisSession)=>object):object;
+    open0(callbackfn:(rs:RedisSession)=>void):void;
+    open1(callbackfn:(rs:RedisSession)=>object):object;
+    open(callbackfn:(rs:RedisSession)=>void):void;
+    openAndGet(callbackfn:(rs:RedisSession)=>object):object;
 }
 
 interface MongoIndexOptions{
