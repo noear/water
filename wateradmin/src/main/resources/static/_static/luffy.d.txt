@@ -827,33 +827,60 @@ interface WaterProxy{
     logError(logger:string, data:Map<string,object>);
 }
 
-interface RedisUsing{
-    key(key:string):RedisUsing;
-    expire(seconds:number):RedisUsing;
+interface RedisSession{
+    key(key:string):RedisSession;
+    expire(seconds:number):RedisSession;
 
     exists():boolean;
     delete():boolean;
     rename(newKey:string):void;
 
-    set(val:string):RedisUsing;
+    set(val:string):RedisSession;
+    set(val:number):RedisSession;
     get():string;
+    getAsLong():number;
     getMore(keys:string[]):JList<string>;
     incr(num:number):number;
+    incr():number;
+    decr():number;
     lock():boolean;
     lock(val:string):boolean;
 
+    hashGet(field:string):string;
+    hashGetAsLong(field:string):number;
     hashHas(field:string):boolean;
     hashScan(fieldPattern:string, count:number):JList<object>;
     hashMatch(fieldPattern:string):boolean;
     hashDel(fields:string[]):boolean;
-    hashSet(field:string, val:string):RedisUsing;
-    hashSet(field:string, val:number):RedisUsing;
-    hashSetAll(map:Map<string,string>):RedisUsing;
+    hashSet(field:string, val:string):RedisSession;
+    hashSet(field:string, val:number):RedisSession;
+    hashSetAll(map:Map<string,string>):RedisSession;
+    hashLen():number;
+
+    listAdd(item:string):RedisSession;
+    listAdd(item:number):RedisSession;
+    listDel(item:string, count:number):RedisSession;
+    listDel(item:string):RedisSession;
+    listPop():string;
+    listPeek():string;
+    listGet(index:number):string;
+    listLen():number;
+
+    setAdd(item:string):RedisSession;
+    setDel(item:string):RedisSession;
+    setPop():string;
+    setGet(count:number):string;
+    setMatch(itemPattern:string):boolean;
+    setLen():number;
+
+    publish(channel:string, message:string):number;
 }
 
-interface RedisX{
-    open0(callbackfn:(ru:RedisUsing)=>void):void;
-    open1(callbackfn:(ru:RedisUsing)=>object):object;
+interface RedisClient{
+    open0(callbackfn:(ru:RedisSession)=>void):void;
+    open1(callbackfn:(ru:RedisSession)=>object):object;
+    open(callbackfn:(ru:RedisSession)=>void):void;
+    openAndGet(callbackfn:(ru:RedisSession)=>object):object;
 }
 
 interface MongoIndexOptions{
@@ -994,7 +1021,7 @@ interface water{
 
     cfg(tagKey:string):AConfigM;
     db(tagKey:string):DbContext;
-    rd(tagKey:string, db:number):RedisX;
+    rd(tagKey:string, db:number):RedisClient;
     mg(tagKey:string, db:string):MgContext;
 
     job(service:string, name:string):string;
