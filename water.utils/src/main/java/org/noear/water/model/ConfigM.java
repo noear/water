@@ -1,13 +1,13 @@
 package org.noear.water.model;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.snack.core.exts.ClassWrap;
 import org.noear.snack.core.exts.FieldWrap;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.ConvertUtil;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbDataSource;
@@ -119,28 +119,28 @@ public final class ConfigM {
     /**
      * 获取 rd:RedisX
      */
-    public RedisX getRd() {
+    public RedisClient getRd() {
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        return new RedisX(getProp());
+        return new RedisClient(getProp());
     }
 
-    public RedisX getRd(int db) {
+    public RedisClient getRd(int db) {
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        return new RedisX(getProp(), db);
+        return new RedisClient(getProp(), db);
     }
 
-    public RedisX getRd(int db, int maxTotaol) {
+    public RedisClient getRd(int db, int maxTotaol) {
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
-        return new RedisX(getProp(), db, maxTotaol);
+        return new RedisClient(getProp(), db, maxTotaol);
     }
 
     public MgContext getMg() {

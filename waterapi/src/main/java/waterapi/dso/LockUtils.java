@@ -1,13 +1,13 @@
 package waterapi.dso;
 
-import org.noear.water.utils.RedisX;
+import org.noear.redisx.RedisClient;
 import waterapi.Config;
 
 /**
  * 分布式锁工具
  * */
 public class LockUtils {
-    private static RedisX _redis_uni = Config.rd_lock;
+    private static RedisClient _redis_uni = Config.rd_lock;
 
     /**
      * 尝试把 group_key 锁定给 inMaster
@@ -57,8 +57,8 @@ public class LockUtils {
     public static void unLock(String group, String key, String inMaster) {
         String key2 = group + ".lk." + key;
 
-        _redis_uni.open0((ru) -> {
-            if (inMaster == null || inMaster.equals(ru.key(key2).val())) {
+        _redis_uni.open((ru) -> {
+            if (inMaster == null || inMaster.equals(ru.key(key2).getAsLong())) {
                 ru.key(key2).delete();
             }
         });

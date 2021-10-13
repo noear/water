@@ -1,8 +1,8 @@
 package org.noear.water;
 
+import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.HostUtils;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * */
 public class WaterSetting {
     public static final Map<String, DbContext> libOfDb = new ConcurrentHashMap();
-    public static final Map<String, RedisX> libOfRd = new ConcurrentHashMap();
+    public static final Map<String, RedisClient> libOfRd = new ConcurrentHashMap();
     public static final Map<String, ICacheServiceEx> libOfCache = new ConcurrentHashMap();
 
     private static boolean _water_logger_gzip = true;

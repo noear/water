@@ -1,8 +1,9 @@
 package org.noear.water.track;
 
+import org.noear.redisx.RedisClient;
+import org.noear.redisx.RedisSession;
 import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TaskUtils;
 import org.noear.water.utils.TextUtils;
 
@@ -29,9 +30,9 @@ public class TrackBuffer implements TaskUtils.ITask {
     private Map<String, TrackEvent> _serviceSet = new LinkedHashMap<>();
     private Map<String, TrackEvent> _fromSet = new LinkedHashMap<>();
 
-    private RedisX _redisX;
+    private RedisClient _redisX;
 
-    public void bind(RedisX redisX) {
+    public void bind(RedisClient redisX) {
         _redisX = redisX;
     }
 
@@ -247,7 +248,7 @@ public class TrackBuffer implements TaskUtils.ITask {
         }
     }
 
-    private void flush0(RedisX.RedisUsing ru) {
+    private void flush0(RedisSession ru) {
         for (Map.Entry<String, TrackEvent> kv : _mainSet.entrySet()) {
             TrackUtils.trackAll(ru, kv.getKey(), kv.getValue());
         }

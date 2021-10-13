@@ -1,10 +1,10 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.MessageQueue;
 import org.noear.water.utils.RabbitMQX;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 
 import java.util.Properties;
@@ -25,7 +25,7 @@ public class ProtocolUtil {
             //user
             //password
             //db
-            return new MessageQueueRedis(name, new RedisX(prop));
+            return new MessageQueueRedis(name, new RedisClient(prop));
         }
 
         if ("rabbitmq".equals(type)) {

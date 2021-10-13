@@ -1,7 +1,7 @@
 package org.noear.water.track;
 
+import org.noear.redisx.RedisClient;
 import org.noear.water.utils.EncryptUtils;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 
 import java.util.LinkedHashMap;
@@ -21,9 +21,9 @@ public class TrackNames {
         return singleton;
     }
 
-    private RedisX _redisX;
+    private RedisClient _redisX;
 
-    public void bind(RedisX redisX) {
+    public void bind(RedisClient redisX) {
         _redisX = redisX;
     }
 
@@ -74,7 +74,7 @@ public class TrackNames {
     private void setDo(String nameMd5, String name) {
         executor.submit(() -> {
             try {
-                _redisX.open0(ru -> {
+                _redisX.open(ru -> {
                     ru.key(nameMd5).expire(60 * 60 * 24 * 30).set(name);//1月
                 });
             } catch (Throwable ex) {

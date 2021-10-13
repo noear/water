@@ -1,5 +1,6 @@
 package waterapi;
 
+import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
@@ -9,7 +10,6 @@ import org.noear.solon.extend.health.HealthHandler;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
-import org.noear.water.utils.RedisX;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
@@ -32,10 +32,10 @@ public class Config {
     public static DbContext water_log;
     public static DbContext water_paas;
 
-    public static RedisX rd_ids;   //db:1
-    public static RedisX rd_lock;  //db:2
-    public static RedisX rd_msg;   //db:3
-    public static RedisX rd_track; //db:5
+    public static RedisClient rd_ids;   //db:1
+    public static RedisClient rd_lock;  //db:2
+    public static RedisClient rd_msg;   //db:3
+    public static RedisClient rd_track; //db:5
 
     public static ConfigM water_redis;
 

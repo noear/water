@@ -1,5 +1,6 @@
 package org.noear.water.utils;
 
+import org.noear.redisx.RedisClient;
 import org.noear.water.WaterSetting;
 
 import java.util.UUID;
@@ -11,7 +12,7 @@ import java.util.UUID;
  * @since 2.0
  * */
 public class IDUtils {
-    private static RedisX _redis_idx = WaterSetting.redis_cfg().getRd(1);
+    private static RedisClient _redis_idx = WaterSetting.redis_cfg().getRd(1);
 
     public static String guid() {
         return UUID.randomUUID().toString().replaceAll("-", "");
