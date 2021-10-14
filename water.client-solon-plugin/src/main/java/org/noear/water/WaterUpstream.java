@@ -5,7 +5,6 @@ import org.noear.water.model.DiscoverM;
 import org.noear.water.model.DiscoverTargetM;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
-import sun.security.util.AuthResources_fr;
 
 import java.util.ArrayList;
 import java.util.Collections;
