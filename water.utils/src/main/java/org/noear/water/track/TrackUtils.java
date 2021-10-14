@@ -2,7 +2,7 @@ package org.noear.water.track;
 
 import org.noear.redisx.RedisClient;
 import org.noear.redisx.RedisSession;
-import org.noear.redisx.model.HashAll;
+import org.noear.redisx.model.LocalHash;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 
@@ -75,7 +75,7 @@ public class TrackUtils {
     }
 
     private static long do_track_key_minute(RedisSession ru, String rdkey_bef, String rdkey, long timespan) {
-        HashAll hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
 
         long total_time0 = hash.getAsLong("total_time");
         long total_num0 = hash.getAsLong("total_num");
@@ -92,7 +92,7 @@ public class TrackUtils {
     }
 
     private static void do_track_key_hour(RedisSession ru, String rdkey, long timespan) {
-        HashAll hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 3);
 
         long total_time = ru.hashIncr("total_time", timespan);
@@ -127,7 +127,7 @@ public class TrackUtils {
     }
 
     private static void do_track_key_date(RedisSession ru, String rdkey, long timespan, long average) {
-        HashAll hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 24);
 
         ru.hashIncr("total_time", timespan); //没有必要了
@@ -187,7 +187,7 @@ public class TrackUtils {
     }
 
     private static long trackAll_key_minute(RedisSession ru, String rdkey_bef, String rdkey, TrackEvent mc) {
-        HashAll hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey_bef).hashGetAll();//改用 getAll，减少一连接请求
 
         long total_time0 = hash.getAsLong("total_time");
         long total_num0 = hash.getAsLong("total_num");
@@ -204,7 +204,7 @@ public class TrackUtils {
     }
 
     private static void trackAll_key_hour(RedisSession ru, String rdkey, TrackEvent mc) {
-        HashAll hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 3);
 
         long total_time = ru.hashIncr("total_time", mc.total_time());
@@ -246,7 +246,7 @@ public class TrackUtils {
     }
 
     private static void trackAll_key_date(RedisSession ru, String rdkey, TrackEvent mc, long average) {
-        HashAll hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
+        LocalHash hash = ru.key(rdkey).hashGetAll();//改用 getAll，减少一连接请求
         ru.key(rdkey).expire(60 * 60 * 24);
 
         ru.hashIncr("total_time", mc.total_time()); //没有必要了
