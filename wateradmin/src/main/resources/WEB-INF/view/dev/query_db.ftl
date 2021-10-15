@@ -11,11 +11,11 @@
     <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
     <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
     <style>
-        datagrid > div{height: calc(100vh - 92px)}
+        datagrid > div{height: calc(100vh - 122px)}
         datagrid tbody td { text-align: left;}
         datagrid, pre{ border: 1px solid #C9C9C9; margin: 0px; padding: 0px;}
 
-        #btn_query{position: absolute; z-index: 2; top: 27px; right: 20px; border: none;background: transparent; color:green;outline: none;}
+        #btn_query{position: absolute; z-index: 2; top: 42px; right: 20px; border: none;background: transparent; color:green;outline: none;}
         #btn_query:hover{opacity: 0.8;}
 
     </style>
@@ -36,7 +36,7 @@
 <body>
 
     <div class="mar10-b">
-        <pre id="code" type="text" style="width: 100%; height: 60px;">--tag/key::
+        <pre id="code" type="text" style="width: 100%; height: 90px;">--tag/key::
 select * from tb limit 1</pre>
         <button id="btn_query"><i class="fa fa-play fa-2x"></i></button>
     </div>
