@@ -68,7 +68,7 @@ public class DDLController extends BaseController {
         DbContext db = cfg.getDb();
 
         List<String> tbs = new ArrayList<>();
-        db.dbTables().forEach((tw)->{
+        db.getMetaData().getTableAll().forEach((tw)->{
             tbs.add(tw.getName());
         });
         tbs.sort(String::compareTo);
