@@ -162,12 +162,7 @@ public class ConfigModel implements IBinder
 
         String schema = prop.getProperty("schema");
 
-
-        DbContext db = new DbContext();
-        db.schemaSet(schema);
-        db.dataSourceSet(getDs(pool));
-
-        return db;
+        return new DbContext(getDs(pool), schema);
     }
 
     public DataSource getDs(boolean pool) {

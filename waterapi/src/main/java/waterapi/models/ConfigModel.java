@@ -48,8 +48,8 @@ public class ConfigModel implements IBinder {
         return new ConfigModel();
     }
 
-    public ConfigM toConfigM(){
-        return new ConfigM(key,value,0);
+    public ConfigM toConfigM() {
+        return new ConfigM(key, value, 0);
     }
 
     public String getString() {
@@ -125,9 +125,9 @@ public class ConfigModel implements IBinder {
      * 获取 cache:ICacheServiceEx
      */
     public ICacheServiceEx getCh(String keyHeader, int defSeconds) {
-        if(TextUtils.isEmpty(value)){
-            return new LocalCache(keyHeader,defSeconds);
-        }else {
+        if (TextUtils.isEmpty(value)) {
+            return new LocalCache(keyHeader, defSeconds);
+        } else {
             return new MemCache(getProp(), keyHeader, defSeconds);
         }
     }
@@ -140,7 +140,6 @@ public class ConfigModel implements IBinder {
     }
 
     public DbContext getDb(boolean pool) {
-        DbContext db = new DbContext();
         Properties prop = getProp();
 
         if (pool) {
@@ -150,16 +149,13 @@ public class ConfigModel implements IBinder {
 
             Utils.injectProperties(source, prop);
 
-            if(TextUtils.isNotEmpty(url)) {
+            if (TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
             }
 
-            db.dataSourceSet(source);
-            db.schemaSet(schema);
+            return new DbContext(source, schema);
         } else {
-            db.propSet(getProp());
+            return new DbContext(prop);
         }
-
-        return db;
     }
 }

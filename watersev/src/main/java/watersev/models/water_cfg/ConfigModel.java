@@ -20,8 +20,7 @@ public class ConfigModel implements IBinder {
     public int type;
     public String value;
 
-    public void bind(GetHandlerEx s)
-    {
+    public void bind(GetHandlerEx s) {
         //1.source:数据源
         //
         tag = s.get("tag").value(null);
@@ -34,7 +33,6 @@ public class ConfigModel implements IBinder {
     public IBinder clone() {
         return new ConfigModel();
     }
-
 
 
     public String getString() {
@@ -109,9 +107,9 @@ public class ConfigModel implements IBinder {
      * 获取 cache:ICacheServiceEx
      */
     public ICacheServiceEx getCh(String keyHeader, int defSeconds) {
-        if(TextUtils.isEmpty(value)){
-            return new LocalCache(keyHeader,defSeconds);
-        }else {
+        if (TextUtils.isEmpty(value)) {
+            return new LocalCache(keyHeader, defSeconds);
+        } else {
             return new MemCache(getProp(), keyHeader, defSeconds);
         }
     }
@@ -124,7 +122,6 @@ public class ConfigModel implements IBinder {
     }
 
     public DbContext getDb(boolean pool) {
-        DbContext db = new DbContext();
         Properties prop = getProp();
         String url = prop.getProperty("url");
 
@@ -156,12 +153,9 @@ public class ConfigModel implements IBinder {
                 source.setDriverClassName(driverClassName);
             }
 
-            db.dataSourceSet(source);
-            db.schemaSet(schema);
+            return new DbContext(source, schema);
         } else {
-            db.propSet(getProp());
+            return new DbContext(prop);
         }
-
-        return db;
     }
 }
