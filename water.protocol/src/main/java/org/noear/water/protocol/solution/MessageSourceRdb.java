@@ -1,7 +1,6 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
-import org.noear.water.log.Logger;
 import org.noear.water.protocol.MessageSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -12,6 +11,7 @@ import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.weed.cache.ICacheServiceEx;
+import org.slf4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -402,26 +402,6 @@ public class MessageSourceRdb implements MessageSource {
                 .update() > 0;
 
     }
-
-
-    //肖除一个状态的消息 //不包括0,2
-//    public int deleteMsg(int state) throws SQLException {
-//        if (state == 0 || state == 1) {
-//            return -1;
-//        }
-//
-//        int date = Datetime.Now().addDay(-3).getDate();
-//
-//        _db.table("#d")
-//                .from("water_msg_distribution d,water_msg_message m")
-//                .where(" d.msg_id = m.msg_id AND m.log_date<=? and m.state=?", date, state)
-//                .delete();
-//
-//
-//        return _db.table("water_msg_message")
-//                .where("log_date<=? AND state=?", date, state)
-//                .delete();
-//    }
 
     //获得异常消息的dist_id和subscriber_id。
     public List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws SQLException {

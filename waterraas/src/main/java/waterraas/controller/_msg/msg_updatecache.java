@@ -1,23 +1,24 @@
 package waterraas.controller._msg;
 
+import org.noear.solon.cloud.CloudEventHandler;
+import org.noear.solon.cloud.annotation.CloudEvent;
+import org.noear.solon.cloud.annotation.EventLevel;
+import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
-import org.noear.water.annotation.WaterMessage;
-import org.noear.water.dso.MessageHandler;
-import org.noear.water.model.MessageM;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
 import waterraas.dao.AFileUtil;
 import waterraas.dao.DbPaaSApi;
 
-@WaterMessage("water.cache.update")
-public class msg_updatecache implements MessageHandler {
+@CloudEvent(value = "water.cache.update", level = EventLevel.instance)
+public class msg_updatecache implements CloudEventHandler {
     static final String label_hook_start = "hook.start";
 
     @Override
-    public boolean handler(MessageM msg) throws Exception {
-        for (String tag : msg.message.split(";")) {
+    public boolean handler(Event event) throws Throwable {
+        for (String tag : event.content().split(";")) {
             if (TextUtils.isEmpty(tag) == false) {
                 handlerDo(tag);
             }

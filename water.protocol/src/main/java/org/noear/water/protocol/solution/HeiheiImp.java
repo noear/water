@@ -1,11 +1,12 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.snack.ONode;
-import org.noear.water.log.Logger;
 import org.noear.water.protocol.Heihei;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -14,12 +15,7 @@ public class HeiheiImp implements Heihei {
     protected String masterSecret = "4a8cd168ca71dabcca306cac";
     protected String appKey = "af9a9da3c73d23aa30ea4af1";
 
-    protected final Logger log_heihei;
-
-    public HeiheiImp(Logger logger){
-        log_heihei = logger;
-        log_heihei.setName("water_log_heihei");
-    }
+    protected final Logger log_heihei = LoggerFactory.getLogger("water_log_heihei");
 
 
     public String push(String tag, Collection<String> alias, String text) {
@@ -76,10 +72,6 @@ public class HeiheiImp implements Heihei {
             ex.printStackTrace();
             log_heihei.error(tag, "", ex);
         }
-
-//        if (text.startsWith("报警：服务=") == false) {
-//            log_heihei.info(tag, "", text);
-//        }
 
         return null;
     }

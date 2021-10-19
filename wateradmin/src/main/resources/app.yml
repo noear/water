@@ -5,18 +5,25 @@ server.session.timeout: 360000 #10h
 
 solon.app:
   name: "wateradmin"
-  title: "WATER"
   group: "water"
+  title: "WATER"
 
 waterpaas.secretKey: "0zJt0J88TkIvqYgC"
 
-water:
-  host: "waterapi"
-  logger: "water_log_admin"
-  service:
-    tag: "water"
-    name: "wateradmin"
-    secretKey: "b5fZK49x71Rnn5Cl"
+solon.cloud.water:
+  server: "waterapi"
+  log:
+    default: "water_log_admin"
+  event:
+    seal: "b5fZK49x71Rnn5Cl"
+
+#water:
+#  host: "waterapi"
+#  logger: "water_log_admin"
+#  service:
+#    tag: "water"
+#    name: "wateradmin"
+#    secretKey: "b5fZK49x71Rnn5Cl"
 
 #water.weed.log.style: "text2"
 

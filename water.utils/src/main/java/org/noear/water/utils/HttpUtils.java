@@ -5,13 +5,10 @@ import okhttp3.internal.Util;
 import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
-import org.noear.water.utils.ext.Act1Ex;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -452,34 +449,6 @@ public class HttpUtils {
         public KeyValue(String key, String value) {
             this.key = key;
             this.value = value;
-        }
-    }
-
-    //
-    // static fun
-    //
-
-    public static String getString(String url) throws IOException{
-        return HttpUtils.http(url).get();
-    }
-
-    public static String postString(String url, Map data) throws Exception {
-        return HttpUtils.http(url).data(data).post();
-    }
-
-    public static String urlEncode(String url) {
-        try {
-            return URLEncoder.encode(url, "UTF-8");
-        } catch (Throwable ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public static String urlDecode(String url) {
-        try {
-            return URLDecoder.decode(url, "UTF-8");
-        } catch (Throwable ex) {
-            throw new RuntimeException(ex);
         }
     }
 

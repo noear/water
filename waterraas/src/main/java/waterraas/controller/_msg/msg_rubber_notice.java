@@ -3,20 +3,20 @@ package waterraas.controller._msg;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
-import org.noear.water.annotation.WaterMessage;
-import org.noear.water.dso.MessageHandler;
-import org.noear.water.model.MessageM;
+import org.noear.solon.cloud.CloudEventHandler;
+import org.noear.solon.cloud.annotation.CloudEvent;
+import org.noear.solon.cloud.model.Event;
 import org.noear.water.utils.HttpUtils;
 import waterraas.dao.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@WaterMessage("rubber.notice")
-public class msg_rubber_notice implements MessageHandler {
+@CloudEvent("rubber.notice")
+public class msg_rubber_notice implements CloudEventHandler {
     @Override
-    public boolean handler(MessageM msg) throws Exception {
-        ONode jReq = ONode.load(msg.message);
+    public boolean handler(Event event) throws Throwable {
+        ONode jReq = ONode.load(event.content());
         String request_id = jReq.get("request_id").getString();
         LogRequestModel log = Rubber.get(request_id);
         if (log.state == 2) {

@@ -1,11 +1,10 @@
 package org.noear.rubber;
 
 import org.noear.water.WaterClient;
-import org.noear.water.utils.IDUtils;
-import org.noear.water.utils.SnowflakeUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
+import waterraas.utils.SnowflakeUtils;
 
 final class RcConfig {
     public static ICacheServiceEx inner_cache = new LocalCache("rubber",60*60*24);

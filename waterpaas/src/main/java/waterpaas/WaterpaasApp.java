@@ -3,15 +3,13 @@ package waterpaas;
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
+import org.noear.solon.cloud.CloudClient;
+import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
-import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
-import org.noear.water.utils.FromUtils;
-import org.noear.water.utils.PreheatUtils;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import waterpaas.controller.AppHandler;
@@ -32,7 +30,7 @@ public class WaterpaasApp {
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 
-            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data, new WaterLogger(WW.water_log_msg));
+            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data);
 
 
             x.sharedAdd("cache", Config.cache_data);
@@ -70,7 +68,8 @@ public class WaterpaasApp {
                 String service = Solon.cfg().appName();
                 long _times = timecount.stop().milliseconds();
                 String _node = WaterClient.localHost();
-                String _from = FromUtils.getFrom(c);
+                String _from = CloudClient.trace().getFromId(); //FromUtils.getFrom(c);
+
 
                 WaterClient.Track.track(service, tag, c.path(), _times);
                 WaterClient.Track.trackNode(service, _node, _times);

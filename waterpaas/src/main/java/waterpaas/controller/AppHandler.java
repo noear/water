@@ -8,7 +8,6 @@ import org.noear.luffy.utils.TextUtils;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
-import org.noear.water.utils.IPUtils;
 import waterpaas.Config;
 import waterpaas.dso.AFileStaticHandler;
 import waterpaas.dso.AFileUtil;
@@ -85,7 +84,7 @@ public class AppHandler implements Handler {
             if (file.file_type == 0) {
                 //::即时接口
                 if (TextUtils.isEmpty(file.use_whitelist) == false) {
-                    String ip = IPUtils.getIP(ctx);
+                    String ip = ctx.realIp();
 
                     if (WaterClient.Whitelist.exists(file.use_whitelist, "ip", ip) == false) {
                         ctx.setHandled(true);
@@ -96,7 +95,7 @@ public class AppHandler implements Handler {
             } else {
                 //::定时任务与模板
                 if (Solon.cfg().isWhiteMode()) {
-                    String ip = IPUtils.getIP(ctx);
+                    String ip = ctx.realIp();
 
                     if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
                         ctx.setHandled(true);

@@ -6,9 +6,10 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.PaasUtils;
@@ -27,7 +28,7 @@ import java.util.List;
 @Controller
 @Mapping("/paas/file")
 public class FileController extends BaseController {
-    static WaterLogger paasLog = new WaterLogger("water_log_paas");
+    static Logger paasLog = LoggerFactory.getLogger("water_log_paas");
 
     @Mapping("api/home")
     public ModelAndView api_home(String tag_name, String key) throws SQLException {

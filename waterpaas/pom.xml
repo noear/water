@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>water-parent</artifactId>
-        <version>2.2.15</version>
+        <version>2.2.16</version>
         <relativePath>../water-parent/pom.xml</relativePath>
     </parent>
 
@@ -76,7 +76,20 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water.client-solon-plugin</artifactId>
+            <artifactId>water-solon-plugin</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>httputils-solon-plugin</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snowflake-id-solon-plugin</artifactId>
+            <version>${solon.ver}</version>
         </dependency>
 
         <dependency>

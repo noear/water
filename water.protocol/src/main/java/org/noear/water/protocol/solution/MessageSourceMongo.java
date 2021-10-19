@@ -4,7 +4,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.solon.Utils;
-import org.noear.water.log.Logger;
 import org.noear.water.protocol.MessageSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -15,6 +14,7 @@ import org.noear.water.utils.*;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
+import org.slf4j.Logger;
 
 import java.sql.SQLException;
 import java.util.*;

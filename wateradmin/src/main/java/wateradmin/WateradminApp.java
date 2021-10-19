@@ -5,17 +5,18 @@ import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
+import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
-import org.noear.water.utils.PreheatUtils;
 import org.noear.weed.DbContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
 import wateradmin.controller.cfg.WhitelistController;
@@ -107,7 +108,7 @@ public class WateradminApp {
     private static void runStart(NvMap argx) {
         System.err.println("[Water] run mode start...");
 
-        WaterLogger logger = new WaterLogger("water_log_admin");
+        Logger logger = LoggerFactory.getLogger("water_log_admin");
 
         Solon.start(WateradminApp.class, argx, app -> {
             Config.tryInit(app);
@@ -118,7 +119,7 @@ public class WateradminApp {
             ProtocolHub.config = WaterClient.Config::get;
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data, new WaterLogger(WW.water_log_msg));
+            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data);
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         }).onError((ex) -> {

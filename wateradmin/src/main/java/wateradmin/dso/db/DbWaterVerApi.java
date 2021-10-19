@@ -2,13 +2,11 @@ package wateradmin.dso.db;
 
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.utils.IPUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
-import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.Session;
 import wateradmin.models.water.VersionModel;
@@ -23,10 +21,12 @@ public class DbWaterVerApi {
         return Setup.water;
     }
 
-    /** 备份表的数据版本 */
-    public static void logVersion(DbContext db,String table,String keyName,Object keyValue0){
+    /**
+     * 备份表的数据版本
+     */
+    public static void logVersion(DbContext db, String table, String keyName, Object keyValue0) {
 
-        if(TextUtils.isEmpty(keyName)  || keyValue0 == null){
+        if (TextUtils.isEmpty(keyName) || keyValue0 == null) {
             return;
         }
 
@@ -34,7 +34,7 @@ public class DbWaterVerApi {
 
 
         try {
-            DataItem data = db.table(table).whereEq(keyName , keyValue0).limit(1).select("*").getDataItem();
+            DataItem data = db.table(table).whereEq(keyName, keyValue0).limit(1).select("*").getDataItem();
 
             if (data == null || data.count() == 0) {
                 return;
@@ -42,70 +42,75 @@ public class DbWaterVerApi {
 
             Datetime now_time = Datetime.Now();
             String data_json = ONode.stringify(data.getMap());
-            String data_md5 =  EncryptUtils.md5(data_json);
+            String data_md5 = EncryptUtils.md5(data_json);
 
-            String old_data_md5 = getLastVersionMd5(table,keyName,keyValue);
+            String old_data_md5 = getLastVersionMd5(table, keyName, keyValue);
 
             //如果md5一样，说明没什么变化
-            if(data_md5.equals(old_data_md5)){
+            if (data_md5.equals(old_data_md5)) {
                 return;
             }
+
+            String log_ip = Context.current().realIp();
 
             db().table("water_tool_versions")
                     .set("table", table)
                     .set("key_name", keyName)
                     .set("key_value", keyValue)
                     .set("data", data_json)
-                    .set("data_md5",data_md5)
+                    .set("data_md5", data_md5)
                     .set("log_user", Session.current().getUserName())
-                    .set("log_ip", IPUtils.getIP(Context.current()))
+                    .set("log_ip", log_ip)
                     .set("log_date", now_time.getDate())
-                    .set("log_fulltime",now_time.getFulltime())
+                    .set("log_fulltime", now_time.getFulltime())
                     .insert();
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    /** 获取历史版本最近10个 */
+    /**
+     * 获取历史版本最近10个
+     */
     public static List<VersionModel> getVersions(String table, String keyName, String keyValue) throws SQLException {
 
-        if(TextUtils.isEmpty(keyValue)){
+        if (TextUtils.isEmpty(keyValue)) {
             return new ArrayList<>();
         }
 
 
         return db().table("water_tool_versions")
-                .where("`table` = ?",table)
-                .and("`key_name`=?",keyName)
-                .and("`key_value`=?",keyValue)
+                .where("`table` = ?", table)
+                .and("`key_name`=?", keyName)
+                .and("`key_value`=?", keyValue)
                 .orderBy("commit_id DESC")
                 .limit(10)
                 .select("*")
                 .getList(new VersionModel());
     }
 
-    public static VersionModel getVersionByCommit(int commit_id) throws SQLException{
+    public static VersionModel getVersionByCommit(int commit_id) throws SQLException {
 
         return db().table("water_tool_versions")
-                .where("`commit_id` = ?",commit_id)
+                .where("`commit_id` = ?", commit_id)
                 .limit(1)
                 .select("*")
                 .caching(CacheUtil.data)
                 .getItem(new VersionModel());
     }
 
-    /** 最后一个历史版本的MD5 */
-    public static String getLastVersionMd5(String table,String keyName,String keyValue) throws SQLException{
+    /**
+     * 最后一个历史版本的MD5
+     */
+    public static String getLastVersionMd5(String table, String keyName, String keyValue) throws SQLException {
 
         return db().table("water_tool_versions")
-                .where("`table` = ?",table)
-                .and("`key_name`=?",keyName)
-                .and("`key_value`=?",keyValue)
+                .where("`table` = ?", table)
+                .and("`key_name`=?", keyName)
+                .and("`key_value`=?", keyValue)
                 .orderBy("commit_id DESC")
                 .limit(1)
-                .select("data_md5")
-                .getValue("");
+                .selectValue("data_md5", "");
     }
 }

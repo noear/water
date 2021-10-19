@@ -2,17 +2,17 @@ package watersev.dso;
 
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.luffy.model.AFileModel;
-import org.noear.water.log.Logger;
-import org.noear.water.log.WaterLogger;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.utils.HttpResultException;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LogUtil {
-    private static Logger log_msg =  WaterLogger.get("water_log_msg");
-    private static Logger log_sev =  WaterLogger.get("water_log_sev");
-    private static Logger log_paas =  WaterLogger.get("water_log_paas");
+    private static Logger log_msg =  LoggerFactory.getLogger("water_log_msg");
+    private static Logger log_sev =  LoggerFactory.getLogger("water_log_sev");
+    private static Logger log_paas =  LoggerFactory.getLogger("water_log_paas");
 
     public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {

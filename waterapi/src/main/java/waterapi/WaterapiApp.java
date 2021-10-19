@@ -39,10 +39,10 @@ public class WaterapiApp {
 
 					ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 
-					ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtils.data, new WaterLoggerLocal(WW.water_log_msg));
+					ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtils.data);
 					ProtocolHub.messageLock = new MessageLockRedis(Config.rd_lock);
 					ProtocolHub.messageQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
-					ProtocolHub.heihei = new HeiheiImp(new WaterLoggerLocal());
+					ProtocolHub.heihei = new HeiheiImp(); //new WaterLoggerLocal()
 
 					//尝试注册服务
 					Config.tryRegService();
