@@ -8,7 +8,6 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DataList;
 import waterraas.controller.SystemCode;
 import waterraas.dao.TxtUtil;
@@ -73,7 +72,7 @@ public class QueryController implements Handler {
         } catch (Exception ex) {
             data.set("code", 0).set("msg", ex.getMessage());
 
-            jResp.set("hint", ThrowableUtils.getString(ex));
+            jResp.set("hint", Utils.throwableToString(ex));
         }
 
         context.output(data.toJson());

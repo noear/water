@@ -9,6 +9,8 @@ import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.utils.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +117,7 @@ public class LogApi {
         log.tag2 = tag2;
         log.tag3 = tag3;
         log.summary = summary;
-        log.content = LogHelper.contentAsString(content);
+        log.content = contentAsString(content);
 
         log.trace_id = trace_id;
         log.from = WaterClient.localServiceHost();
@@ -157,5 +159,24 @@ public class LogApi {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private static String contentAsString(Object content) {
+        if (content != null) {
+            if (content instanceof String) {
+                //处理字符串
+                return (String) content;
+            } else if (content instanceof Throwable) {
+                //处理异常
+                StringWriter sw = new StringWriter();
+                ((Throwable) content).printStackTrace(new PrintWriter(sw));
+                return sw.toString();
+            } else {
+                //处理其它对象（进行json）
+                return ONode.load(content).toJson();
+            }
+        }
+
+        return null;
     }
 }

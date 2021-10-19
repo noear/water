@@ -5,10 +5,10 @@ import org.noear.rubber.RubberException;
 import org.noear.rubber.RubberResponse;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import waterraas.Config;
 import waterraas.controller.SystemCode;
 
@@ -58,7 +58,7 @@ public class SchemeUtil {
 
             if (is_debug) {
                 data.set("code", 0).set("msg", SystemCode.code_0);
-                jResp.set("hint", ThrowableUtils.getString(ex));
+                jResp.set("hint", Utils.throwableToString(ex));
             } else {
                 data.set("code", 0).set("msg", ex.getMessage());
                 LogUtil.logSchemeError(scheme, args_str, ex);

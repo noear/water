@@ -3,10 +3,10 @@ package waterraas.controller.debug;
 import org.noear.rubber.Rubber;
 import org.noear.rubber.RubberException;
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.controller.SystemCode;
 
@@ -59,7 +59,7 @@ public class ModelController implements Handler {
         catch (Exception ex){
 
             data.set("code",0).set("msg",SystemCode.code_0);
-            jResp.set("hint", ThrowableUtils.getString(ex));
+            jResp.set("hint", Utils.throwableToString(ex));
         }
 
         context.output(data.toJson());

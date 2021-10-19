@@ -1,9 +1,9 @@
 package waterapi.dso;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +89,7 @@ public class LogUtils {
                 StringBuilder sb = new StringBuilder();
                 sb.append("::Sql= ").append(cmd.text).append("\n");
                 sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n\n");
-                sb.append("::Error= ").append(ThrowableUtils.getString(ex));
+                sb.append("::Error= ").append(Utils.throwableToString(ex));
 
                 logger.error(sb.toString());
             }

@@ -1,10 +1,10 @@
 package wateradmin.controller.dev;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
@@ -98,7 +98,7 @@ public class QuerySqlDbController extends BaseController {
        } catch (Exception ex) {
            StringBuilder sb = new StringBuilder();
            sb.append("<p>");
-           sb.append(ThrowableUtils.getString(ex));
+           sb.append(Utils.throwableToString(ex));
            sb.append("</p>");
            return sb.toString();
        }

@@ -1,5 +1,6 @@
 package wateradmin.controller.cfg;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthRoles;
@@ -8,7 +9,6 @@ import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -162,7 +162,7 @@ public class GatewayController extends BaseController {
             viewModel.code(1, "成功");
 
         } catch (Exception e) {
-            viewModel.code(0, ThrowableUtils.getString(e));
+            viewModel.code(0, Utils.throwableToString(e));
         }
 
         return viewModel;
@@ -181,7 +181,7 @@ public class GatewayController extends BaseController {
             DbWaterRegApi.disableService(service_id, is_enabled);
 
         } catch (Exception e) {
-            viewModel.code(0, ThrowableUtils.getString(e));
+            viewModel.code(0, Utils.throwableToString(e));
         }
 
         return viewModel;

@@ -1,9 +1,8 @@
 package wateradmin.controller.tool;
 
 import com.alibaba.fastjson.JSONObject;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.Utils;
 import org.noear.water.WaterClient;
-import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
@@ -16,7 +15,6 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.JtRunner;
 import wateradmin.dso.Session;
-import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -203,7 +201,7 @@ public class ReportController extends BaseController {
         } catch (Exception ex) {
             StringBuilder sb = new StringBuilder();
             sb.append("<p>");
-            sb.append(ThrowableUtils.getString(ex));
+            sb.append(Utils.throwableToString(ex));
             sb.append("</p>");
             return sb.toString();
         }

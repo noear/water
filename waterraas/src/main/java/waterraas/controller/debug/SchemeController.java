@@ -2,10 +2,10 @@ package waterraas.controller.debug;
 
 import org.noear.rubber.Rubber;
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.ThrowableUtils;
 import waterraas.controller.SystemCode;
 import waterraas.dao.SchemeUtil;
 
@@ -35,7 +35,7 @@ public class SchemeController implements Handler {
             SchemeUtil.run(context,request_id, scheme,policy, args_str, type, rule, true);
         }catch (Exception ex){
             ONode data = new ONode();
-            data.set("code", 0).set("msg", ThrowableUtils.getString(ex));
+            data.set("code", 0).set("msg", Utils.throwableToString(ex));
         }
     }
 }
