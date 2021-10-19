@@ -7,7 +7,6 @@ import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
-import org.noear.water.utils.StringUtils;
 import org.noear.water.utils.TextUtils;
 import waterraas.dao.AFileUtil;
 import waterraas.dao.DbPaaSApi;
