@@ -26,29 +26,4 @@ public class WaterProps {
 
         return name;
     }
-
-    public static String service_tag() {
-        return System.getProperty("water.service.tag");
-    }
-
-    public static String service_hostname() {
-        String host = System.getProperty("water.service.hostname");
-        if (TextUtils.isEmpty(host)) {
-            host = System.getProperty("water.service.host"); //旧的标准
-        }
-
-        return host;
-    }
-
-    public static String service_alarm() {
-        return System.getProperty("water.service.alarm");
-    }
-
-    public static String service_secretKey() {
-        return System.getProperty("water.service.secretKey");
-    }
-
-    public static String service_config() {
-        return System.getProperty("water.service.config");
-    }
 }
