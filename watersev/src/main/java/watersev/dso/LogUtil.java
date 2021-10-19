@@ -2,6 +2,7 @@ package watersev.dso;
 
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.luffy.model.AFileModel;
+import org.noear.water.WW;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.utils.HttpResultException;
@@ -11,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 public class LogUtil {
-    private static Logger log_msg = LoggerFactory.getLogger("water_log_msg");
-    private static Logger log_sev = LoggerFactory.getLogger("water_log_sev");
-    private static Logger log_paas = LoggerFactory.getLogger("water_log_paas");
+    private static Logger log_msg = LoggerFactory.getLogger(WW.water_log_msg);
+    private static Logger log_sev = LoggerFactory.getLogger(WW.water_log_sev);
+    private static Logger log_paas = LoggerFactory.getLogger(WW.water_log_paas);
 
     public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {
