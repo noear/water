@@ -60,7 +60,7 @@ public class SevController extends BaseController {
         String url = "http://" + ca + "/run/status/";
 
         try {
-            return HttpUtils.getString(url);
+            return HttpUtils.http(url).get();
         } catch (Throwable ex) {
             return "The service unsupported";
         }
@@ -95,7 +95,7 @@ public class SevController extends BaseController {
         }
 
         try {
-            return HttpUtils.getString(url);
+            return HttpUtils.http(url).get();
         } catch (Throwable ex) {
             return "The service unsupported";
         }

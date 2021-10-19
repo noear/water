@@ -118,7 +118,7 @@ public class GatewayController extends BaseController {
             if(s.indexOf("@")>0) {
                 String ca = s.split("@")[1];
                 String url = "http://" + ca + "/run/check/?upstream=" + upstream;
-                return HttpUtils.getString(url);
+                return HttpUtils.http(url).get();
             }
         }
 
