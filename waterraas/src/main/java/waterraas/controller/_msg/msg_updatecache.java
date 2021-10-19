@@ -12,7 +12,7 @@ import org.noear.water.utils.TextUtils;
 import waterraas.dao.AFileUtil;
 import waterraas.dao.DbPaaSApi;
 
-@CloudEvent(value = "water.cache.update", level = EventLevel.instance)
+@CloudEvent(topic = "water.cache.update", level = EventLevel.instance)
 public class msg_updatecache implements CloudEventHandler {
     static final String label_hook_start = "hook.start";
 

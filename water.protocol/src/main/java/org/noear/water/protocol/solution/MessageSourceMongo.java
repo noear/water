@@ -15,6 +15,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 import org.slf4j.Logger;
+import org.slf4j.MDC;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -181,7 +182,9 @@ public class MessageSourceMongo implements MessageSource {
         } catch (Exception ex) {
             //ex.printStackTrace();
 
-            _logMsg.error("", msg.msg_id + "", "setMessageRouteState", msg.msg_id + "", ex);
+            MDC.put("tag1", String.valueOf(msg.msg_id));
+            MDC.put("tag2", "setMessageRouteState");
+            _logMsg.error("{}", ex);
         }
     }
 
@@ -226,7 +229,11 @@ public class MessageSourceMongo implements MessageSource {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            _logMsg.error(msg.topic_name, msg.msg_id + "", "setMessageState", "", ex);
+            MDC.put("tag0", msg.topic_name);
+            MDC.put("tag1", String.valueOf(msg.msg_id));
+            MDC.put("tag2", "setMessageState");
+
+            _logMsg.error("{}", ex);
 
             return false;
         }
@@ -253,7 +260,11 @@ public class MessageSourceMongo implements MessageSource {
         } catch (Exception ex) {
             ex.printStackTrace();
 
-            _logMsg.error(msg.topic_name, msg.msg_id + "", "setMessageRepet", msg.msg_id + "", ex);
+            MDC.put("tag0", msg.topic_name);
+            MDC.put("tag1", String.valueOf(msg.msg_id));
+            MDC.put("tag2", "setMessageRepet");
+
+            _logMsg.error("{}", ex);
 
             return false;
         }
@@ -314,7 +325,11 @@ public class MessageSourceMongo implements MessageSource {
             return true;
         } catch (Throwable ex) {
 
-            _logMsg.error(msg.topic_name, msg.msg_id + "", "setDistributionState", "", ex);
+            MDC.put("tag0", msg.topic_name);
+            MDC.put("tag1", String.valueOf(msg.msg_id));
+            MDC.put("tag2", "setDistributionState");
+
+            _logMsg.error("{}", ex);
 
             return false;
         }

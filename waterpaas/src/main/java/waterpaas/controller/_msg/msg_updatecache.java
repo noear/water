@@ -16,7 +16,7 @@ import waterpaas.dso.RouteHelper;
 /**
  * 实时更新FaaS代码
  * */
-@CloudEvent(value = "water.cache.update",level = EventLevel.instance)
+@CloudEvent(topic = "water.cache.update", level = EventLevel.instance)
 public class msg_updatecache implements CloudEventHandler {
     static final String label_hook_start = "hook.start";
 
