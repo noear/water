@@ -22,12 +22,16 @@ import java.util.Map;
  * @since 1.0
  */
 public class LocalLogger implements Logger {
-    private String name;
-    private Level level = Level.INFO;
+    private final String name;
+    private final Level level = Level.INFO;
 
 
-    public LocalLogger(String name) {
-        this.name = name;
+    public LocalLogger(String loggerName) {
+        if (loggerName.contains(".")) {
+            this.name = WW.water_log_api;
+        } else {
+            this.name = loggerName;
+        }
     }
 
     @Override
@@ -340,11 +344,6 @@ public class LocalLogger implements Logger {
             return;
         }
 
-        if (name.contains(".")) {
-            name = WW.water_log_api;
-        }
-
-        Map<String, String> metainfo = MDC.getCopyOfContextMap();
         Throwable throwable = null;
         String throwableStr = null;
 
@@ -392,7 +391,7 @@ public class LocalLogger implements Logger {
         log.tag1 = MDC.get("tag1");
         log.tag2 = MDC.get("tag2");
         log.tag3 = MDC.get("tag3");
-        log.content = LogHelper.contentAsString(content);
+        log.content = content;
         log.from = Config.localHost;
         log.log_date = datetime.getDate();
         log.log_fulltime = datetime.getFulltime();
