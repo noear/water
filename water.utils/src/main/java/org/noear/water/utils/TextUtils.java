@@ -1,5 +1,7 @@
 package org.noear.water.utils;
 
+import java.text.DecimalFormat;
+
 public class TextUtils {
     public static boolean isEmpty(CharSequence str){
         return (str == null || str.length()==0);
@@ -23,6 +25,12 @@ public class TextUtils {
         } else {
             return false;
         }
+    }
+
+    public static String doubleFormat(Double input){
+        DecimalFormat df = new DecimalFormat("#.00");
+        String res=df.format(input);
+        return res;
     }
 
     public static boolean equals(String cs1, String cs2) {

@@ -330,7 +330,7 @@ public class MessageSourceRdb implements MessageSource {
 
         return _db.table("water_msg_message")
                 .build((tb) -> {
-                    if (StringUtils.isNumeric(msg_key)) {
+                    if (TextUtils.isNumeric(msg_key)) {
                         tb.whereEq("msg_id", Long.parseLong(msg_key));
                     } else {
                         tb.whereEq("msg_key", msg_key);
@@ -391,7 +391,7 @@ public class MessageSourceRdb implements MessageSource {
             } else if (key.startsWith("@")) {
                 qr.andEq("tags", key.substring(1).trim());
             } else {
-                if (StringUtils.isNumeric(key)) {
+                if (TextUtils.isNumeric(key)) {
                     qr.andEq("msg_id", Long.parseLong(key));
                 } else {
                     qr.andEq("topic_name", key);

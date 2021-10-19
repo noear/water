@@ -19,6 +19,7 @@ import org.noear.water.protocol.model.monitor.EChartModel;
 import org.noear.water.protocol.model.monitor.ELineModel;
 import org.noear.water.protocol.model.monitor.ETimeType;
 import org.noear.water.utils.StringUtils;
+import org.noear.water.utils.TextUtils;
 import wateradmin.models.aliyun.*;
 import wateradmin.models.water_cfg.ConfigModel;
 import org.noear.water.utils.Datetime;
@@ -103,7 +104,7 @@ public class AliyunDbsUtil {
                 timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));
             }
 
-            timelist.add(StringUtils.doubleFormat(item.average));
+            timelist.add(TextUtils.doubleFormat(item.average));
             model.value = timelist;
             avageList.add(model);
         }

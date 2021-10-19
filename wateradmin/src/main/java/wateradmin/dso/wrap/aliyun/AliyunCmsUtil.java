@@ -19,6 +19,7 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.StringUtils;
 import org.noear.water.protocol.model.monitor.EChartModel;
 import org.noear.water.protocol.model.monitor.ELineModel;
+import org.noear.water.utils.TextUtils;
 import wateradmin.models.aliyun.AliyunResponse;
 import wateradmin.models.aliyun.EcsTrackModel;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -159,7 +160,7 @@ public class AliyunCmsUtil {
                         timelist.add(new java.text.SimpleDateFormat("yyyy/MM/dd HH").format(dt));
                     }
 
-                    timelist.add(StringUtils.doubleFormat(item.average));
+                    timelist.add(TextUtils.doubleFormat(item.average));
                     model.value = timelist;
                     avageList.add(model);
 
@@ -184,7 +185,7 @@ public class AliyunCmsUtil {
 //                        timelist.add(StringUtil.doubleFormat(item.average));
 //                    }
 
-                    timelist.add(StringUtils.doubleFormat(item.average));
+                    timelist.add(TextUtils.doubleFormat(item.average));
 
                     model.value = timelist;
                     avageList.add(model);
