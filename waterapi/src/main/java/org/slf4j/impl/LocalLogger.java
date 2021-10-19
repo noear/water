@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class LocalLogger implements Logger {
     private String name;
-    private Level level = Level.TRACE;
+    private Level level = Level.INFO;
 
 
     public LocalLogger(String name) {
