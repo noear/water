@@ -5,6 +5,9 @@ import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.utils.ThrowableUtils;
 import org.noear.weed.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.Map;
 
@@ -12,9 +15,9 @@ import java.util.Map;
  * Created by noear on 2017/7/27.
  */
 public class LogUtils {
-    private static final WaterLoggerLocal logger = new WaterLoggerLocal(WW.water_log_api);
+    private static final Logger logger = LoggerFactory.getLogger(WW.water_log_api);
 
-    public static WaterLoggerLocal getLogger() {
+    public static Logger getLogger() {
         return logger;
     }
 
@@ -34,7 +37,10 @@ public class LogUtils {
             content.append("\n\n");
             content.append("< ").append(ONode.stringify(ctx.result));
 
-            logger.info(tag, null, null, _from, "", content.toString());
+            MDC.put("tag0", tag);
+            MDC.put("tag3", _from);
+
+            logger.info(content.toString());
         } catch (Exception ee) {
             ee.printStackTrace();
         }
@@ -55,7 +61,11 @@ public class LogUtils {
                 });
             }
 
-            logger.warn(tag, null, tag2, _from, label.toJson(), content);
+            MDC.put("tag0", tag);
+            MDC.put("tag2", tag2);
+            MDC.put("tag3", _from);
+
+            logger.warn("{}\r\n{}", label.toJson(), content);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
@@ -72,17 +82,20 @@ public class LogUtils {
 
             String tag = ctx.path();
 
+            MDC.put("tag0", tag);
+            MDC.put("tag3", _from);
+
             if (cmd == null) {
                 String summary = ONode.stringify(ctx.paramMap());
 
-                logger.error(tag, null, null, _from, summary, ex);
+                logger.error("{}\r\n{}", summary, ex);
             } else {
                 StringBuilder sb = new StringBuilder();
                 sb.append("::Sql= ").append(cmd.text).append("\n");
                 sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n\n");
                 sb.append("::Error= ").append(ThrowableUtils.getString(ex));
 
-                logger.error(tag, null, null, _from, "", sb.toString());
+                logger.error(sb.toString());
             }
         } catch (Exception ee) {
             ee.printStackTrace();
@@ -96,7 +109,11 @@ public class LogUtils {
                 _from = FromUtils.getFromName(ctx);
             }
 
-            logger.error(tag, tag1, null, _from, summary, ex);
+            MDC.put("tag0", tag);
+            MDC.put("tag1", tag1);
+            MDC.put("tag3", _from);
+
+            logger.error("{}\r\n{}", summary, ex);
         } catch (Exception ee) {
             ee.printStackTrace();
         }
