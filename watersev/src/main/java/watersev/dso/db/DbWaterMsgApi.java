@@ -5,6 +5,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import watersev.Config;
 import watersev.models.water_msg.TopicModel;
 
@@ -68,7 +69,9 @@ public class DbWaterMsgApi {
                         .delete();
             } catch (Throwable ex) {
                 //EventBus.pushAsyn(ex);
-                log_msg.error("delSubscriber", "", ex);
+                MDC.put("tag0", "delSubscriber");
+
+                log_msg.error("{}", ex);
             }
         }
     }
@@ -88,7 +91,9 @@ public class DbWaterMsgApi {
                         .update();
             } catch (Throwable ex) {
                 //ex.printStackTrace();
-                log_msg.error("setSubscriberState", receive_url + "", ex);
+                MDC.put("tag0", "setSubscriberState");
+
+                log_msg.error("{}\r\n{}", receive_url + "", ex);
             }
         }
     }

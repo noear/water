@@ -17,10 +17,6 @@ import java.util.Map;
 public class LogUtils {
     private static final Logger logger = LoggerFactory.getLogger(WW.water_log_api);
 
-    public static Logger getLogger() {
-        return logger;
-    }
-
     public static void info(Context ctx) {
         try {
             String tag = ctx.path();
