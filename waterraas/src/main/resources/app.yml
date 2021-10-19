@@ -19,5 +19,5 @@ solon.cloud.water:
   log:
     default: "water_log_raas"
   event:
-    receive: "@water/raas_uri"
+    receive: "@raas_uri"
     seal: "qTYzsNjzCN9I44FB"
