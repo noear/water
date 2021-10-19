@@ -17,6 +17,7 @@ import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.weed.DbContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
 import wateradmin.controller.cfg.WhitelistController;
@@ -126,10 +127,13 @@ public class WateradminApp {
             Context ctx = Context.current();
 
             if (ctx == null) {
-                logger.error("global", "", ex);
+                MDC.put("tag0", "global");
+                logger.error( "{}", ex);
             } else {
+                MDC.put("tag0", ctx.path());
+
                 String summary = ONode.stringify(ctx.paramMap());
-                logger.error(ctx.path(), summary, ex);
+                logger.error("{}\r\n{}", summary, ex);
             }
         });
 

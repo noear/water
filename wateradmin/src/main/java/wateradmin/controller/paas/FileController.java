@@ -10,6 +10,7 @@ import org.noear.water.utils.*;
 import org.noear.weed.DataItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.PaasUtils;
@@ -219,7 +220,11 @@ public class FileController extends BaseController {
         String tag1 = ctx.param("tag", "");
         String tag2 = ctx.param("path", "");
 
-        paasLog.warn("_plan", tag1, tag2, "", "New setting: " + ONode.stringify(ctx.paramMap()));
+        MDC.put("tag0", "_plan");
+        MDC.put("tag1", tag1);
+        MDC.put("tag2", tag2);
+
+        paasLog.warn("New setting: {}",ONode.stringify(ctx.paramMap()));
 
         return ajax_save(ctx, data, PaasFileType.pln);
     }
