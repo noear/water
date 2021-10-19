@@ -7,7 +7,6 @@ import org.noear.water.WW;
 import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.utils.Datetime;
-import org.noear.water.utils.LogHelper;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 import org.slf4j.Marker;
