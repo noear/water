@@ -1,7 +1,5 @@
 package org.noear.water.utils;
 
-import org.noear.water.utils.ext.Act1;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
