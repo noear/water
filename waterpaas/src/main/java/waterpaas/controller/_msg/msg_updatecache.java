@@ -37,7 +37,7 @@ public class msg_updatecache implements CloudEventHandler {
             if ("paas".equals(ss[0])) {
                 String file_id = ss[1];
 
-                if (StringUtils.isNumeric(file_id)) {
+                if (TextUtils.isNumeric(file_id)) {
                     AFileModel file = DbPaaSApi.fileGet(Integer.parseInt(file_id));
 
                     if (TextUtils.isEmpty(file.path) == false) {

@@ -9,6 +9,22 @@ public class TextUtils {
         return !isEmpty(cs);
     }
 
+    public static boolean isNumeric(String string) {
+        if (string != null && string.length() != 0) {
+            int l = string.length();
+
+            for(int i = 0; i < l; ++i) {
+                if (!Character.isDigit(string.codePointAt(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static boolean equals(String cs1, String cs2) {
         if (cs1 == cs2) {
             return true;

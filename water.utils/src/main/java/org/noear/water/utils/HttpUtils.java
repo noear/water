@@ -374,7 +374,7 @@ public class HttpUtils {
     }
 
     private static String getRequestCookieString(Map<String, String> cookies) {
-        StringBuilder sb = StringUtils.borrowBuilder();
+        StringBuilder sb = new StringBuilder();
         boolean first = true;
 
         for (Map.Entry<String, String> kv : cookies.entrySet()) {
@@ -386,7 +386,7 @@ public class HttpUtils {
             }
         }
 
-        return StringUtils.releaseBuilder(sb);
+        return sb.toString();
     }
 
     private void tryInitPartBuilder(MediaType type) {
