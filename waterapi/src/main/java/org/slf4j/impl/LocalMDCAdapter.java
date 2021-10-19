@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * @author noear 2021/2/26 created
  */
-public class SolonMDCAdapter implements MDCAdapter {
+public class LocalMDCAdapter implements MDCAdapter {
 
     private static final ThreadLocal<Map<String, String>> threadMap = new InheritableThreadLocal<>();
 

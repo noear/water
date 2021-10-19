@@ -20,7 +20,8 @@
 
     <modules>
         <module>water-parent</module>
-<!--        <module>water.client-solon-plugin</module>-->
+
+        <module>water.server</module>
 
         <module>waterapi</module>
         <module>wateradmin</module>

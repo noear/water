@@ -21,12 +21,12 @@ import java.util.Map;
  * @author noear
  * @since 1.0
  */
-public class SolonLogger implements Logger {
+public class LocalLogger implements Logger {
     private String name;
     private Level level = Level.TRACE;
 
 
-    public SolonLogger(String name) {
+    public LocalLogger(String name) {
         this.name = name;
     }
 
@@ -336,8 +336,12 @@ public class SolonLogger implements Logger {
     }
 
     private void appendDo(Level level, String content, String format, Object[] args) {
-        if(level.code < this.level.code){
+        if (level.code < this.level.code) {
             return;
+        }
+
+        if (name.contains(".")) {
+            name = WW.water_log_api;
         }
 
         Map<String, String> metainfo = MDC.getCopyOfContextMap();

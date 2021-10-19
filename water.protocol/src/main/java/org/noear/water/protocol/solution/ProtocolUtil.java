@@ -4,7 +4,6 @@ import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.MessageQueue;
-import org.noear.water.utils.RabbitMQX;
 import org.noear.water.utils.TextUtils;
 
 import java.util.Properties;
@@ -26,19 +25,6 @@ public class ProtocolUtil {
             //password
             //db
             return new MessageQueueRedis(name, new RedisClient(prop));
-        }
-
-        if ("rabbitmq".equals(type)) {
-            //server
-            //user
-            //password
-            //virtualHost
-            return new MessageQueueRabbitMQ(name, new RabbitMQX(prop));
-        }
-
-        if ("rocketmq".equals(type)) {
-            //server
-            return new MessageQueueRocketMQ(name, prop);
         }
 
         throw new RuntimeException("ProtocolHub::There was an error in the input configuration");

@@ -11,7 +11,7 @@
         <relativePath>../water-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>water.protocol</artifactId>
+    <artifactId>water.server</artifactId>
     <packaging>jar</packaging>
 
 
@@ -23,24 +23,19 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
             <artifactId>water.utils</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <scope>provided</scope>
+            <groupId>org.noear</groupId>
+            <artifactId>water-solon-plugin</artifactId>
+            <version>${solon.ver}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <groupId>org.noear</groupId>
+            <artifactId>httputils-solon-plugin</artifactId>
+            <version>${solon.ver}</version>
         </dependency>
     </dependencies>
 

@@ -17,10 +17,10 @@ public class StaticMDCBinder {
     }
 
     public MDCAdapter getMDCA() {
-        return new SolonMDCAdapter();
+        return new LocalMDCAdapter();
     }
 
     public String getMDCAdapterClassStr() {
-        return SolonMDCAdapter.class.getName();
+        return LocalMDCAdapter.class.getName();
     }
 }
