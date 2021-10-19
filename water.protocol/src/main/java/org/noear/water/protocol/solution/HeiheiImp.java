@@ -7,6 +7,7 @@ import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.*;
 
@@ -58,6 +59,8 @@ public class HeiheiImp implements Heihei {
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Basic " + author);
 
+        MDC.put("tag0", tag);
+
         try {
             String rst = HttpUtils.http(apiUrl)
                     .headers(headers)
@@ -65,12 +68,12 @@ public class HeiheiImp implements Heihei {
                     .post();
 
 
-            log_heihei.info(tag, "", text);
+            log_heihei.info(text);
 
             return rst;
         } catch (Exception ex) {
             ex.printStackTrace();
-            log_heihei.error(tag, "", ex);
+            log_heihei.error("{}", ex);
         }
 
         return null;
