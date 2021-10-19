@@ -6,7 +6,6 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -218,49 +217,4 @@ public class EncryptUtils {
         return Base64Utils.encodeByte(bytes);
     }
 
-
-
-    ////////
-    public static String xorEncode(String str, String key) {
-        str = Base64Utils.encode(str);
-
-        Charset coder = Charset.forName("UTF-8");
-
-        byte[] data = str.getBytes(coder);
-        byte[] keyData = key.getBytes(coder);
-        int keyIndex = 0;
-
-        for (int x = 0; x < data.length; x++) {
-            data[x] = (byte)(data[x] ^ keyData[keyIndex]);
-            if (++keyIndex == keyData.length) {
-                keyIndex = 0;
-            }
-        }
-
-        str = new String(data,coder);
-
-        return Base64Utils.encode(str);
-    }
-
-    public static String xorDecode(String str, String key) {
-        str = Base64Utils.decode(str);
-
-        Charset coder = Charset.forName("UTF-8");
-
-        byte[] data = str.getBytes(coder);
-        byte[] keyData = key.getBytes(coder);
-        int keyIndex = 0;
-
-        for (int x = 0; x < data.length; x++) {
-            data[x] = (byte)(data[x] ^ keyData[keyIndex]);
-            keyIndex += 1;
-
-            if (keyIndex == keyData.length) {
-                keyIndex = 0;
-            }
-        }
-        str = new String(data,coder);
-
-        return Base64Utils.decode(str);
-    }
 }

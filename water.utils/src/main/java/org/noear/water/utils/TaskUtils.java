@@ -3,7 +3,6 @@ package org.noear.water.utils;
 
 import org.noear.water.utils.ext.Act0Ex;
 
-import java.util.concurrent.Callable;
 
 /**
  * <pre><code>
