@@ -8,11 +8,12 @@ import org.noear.water.utils.HttpResultException;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class LogUtil {
-    private static Logger log_msg =  LoggerFactory.getLogger("water_log_msg");
-    private static Logger log_sev =  LoggerFactory.getLogger("water_log_sev");
-    private static Logger log_paas =  LoggerFactory.getLogger("water_log_paas");
+    private static Logger log_msg = LoggerFactory.getLogger("water_log_msg");
+    private static Logger log_sev = LoggerFactory.getLogger("water_log_sev");
+    private static Logger log_paas = LoggerFactory.getLogger("water_log_paas");
 
     public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
         if (dist == null) {
@@ -26,14 +27,16 @@ public class LogUtil {
                 .append("#").append(msg.topic_name).append("=").append(msg.content)
                 .append("@").append(dist._duration).append("ms");
 
-        String summary =  sb.toString();
+        String summary = sb.toString();
 
+
+        MDC.put("tag0", msg.topic_name);
+        MDC.put("tag1", String.valueOf(msg.msg_id));
 
         if (TextUtils.isEmpty(dist.receive_url)) {
-            log_msg.info(msg.topic_name, msg.msg_id + "", summary, content);
-        }
-        else {
-            log_msg.info(msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
+            log_msg.info("{}\r\n{}", summary, content);
+        } else {
+            log_msg.info("{}\r\n{}", summary, dist.receive_url + "::\r\n" + content);
         }
     }
 
@@ -46,7 +49,10 @@ public class LogUtil {
 
         String summary = sb.toString();
 
-        log_msg.info(msg.topic_name, msg.msg_id + "", summary, content);
+        MDC.put("tag0", msg.topic_name);
+        MDC.put("tag1", String.valueOf(msg.msg_id));
+
+        log_msg.info("{}\r\n{}", summary, content);
     }
 
     public static void writeForMsgByError(MessageModel msg, DistributionModel dist, String content) {
@@ -61,13 +67,15 @@ public class LogUtil {
                 .append("#").append(msg.topic_name).append("=").append(msg.content)
                 .append("@").append(dist._duration).append("ms");
 
-        String summary =  sb.toString();
+        String summary = sb.toString();
+
+        MDC.put("tag0", msg.topic_name);
+        MDC.put("tag1", String.valueOf(msg.msg_id));
 
         if (TextUtils.isEmpty(dist.receive_url)) {
-            log_msg.error(msg.topic_name, msg.msg_id + "", summary, content);
-        }
-        else {
-            log_msg.error(msg.topic_name, msg.msg_id + "", summary, dist.receive_url + "::\r\n" + content);
+            log_msg.error("{}\r\n{}", summary, content);
+        } else {
+            log_msg.error("{}\r\n{}", summary, dist.receive_url + "::\r\n" + content);
         }
 
     }
@@ -79,9 +87,11 @@ public class LogUtil {
                 .append("#").append(msg.dist_count)
                 .append("#").append(msg.topic_name).append("=").append(msg.content);
 
-        String summary =  sb.toString();
 
-        log_msg.error(msg.topic_name, msg.msg_id + "", sb.toString(), ex);
+        MDC.put("tag0", msg.topic_name);
+        MDC.put("tag1", String.valueOf(msg.msg_id));
+
+        log_msg.error("{}\r\n{}", sb, ex);
     }
 
     //==========================================================
@@ -93,19 +103,27 @@ public class LogUtil {
                 .append("(").append(plan.plan_count).append("/").append(plan.plan_max)
                 .append(")执行成功 - ").append(_times).append("ms");
 
-        log_paas.info("_plan", plan.tag, plan.path, "", "", sb.toString());
+        MDC.put("tag0", "_plan");
+        MDC.put("tag1", plan.tag);
+        MDC.put("tag2", plan.path);
+
+        log_paas.info(sb.toString());
     }
 
-    public static void planError(IJob tag, AFileModel plan, long _times,Throwable content) {
+    public static void planError(IJob tag, AFileModel plan, long _times, Throwable content) {
         StringBuilder sb = new StringBuilder();
         sb.append(plan.path)
                 .append("(").append(plan.plan_count).append("/").append(plan.plan_max)
                 .append(")执行失败 - ").append(_times).append("ms");
 
+        MDC.put("tag0", "_plan");
+        MDC.put("tag1", plan.tag);
+        MDC.put("tag2", plan.path);
+
         if (content instanceof HttpResultException) {
-            log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content.getMessage());
+            log_paas.error("{}\r\n{}", sb, content.getMessage());
         } else {
-            log_paas.error("_plan", plan.tag, plan.path, "", sb.toString(), content);
+            log_paas.error("{}\r\n{}", sb, content);
         }
     }
 
@@ -119,54 +137,89 @@ public class LogUtil {
     }
 
     public static void write(String tag, String tag1, String summary, String content) {
-        log_sev.info(tag, tag1, summary, content);
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.info("{}\r\n{}", summary, content);
     }
 
     public static void error(IJob tag, String tag1, String summary, Throwable content) {
-        log_sev.error(tag.getName(), tag1, summary, content);
+        MDC.put("tag0", tag.getName());
+        MDC.put("tag1", tag1);
+
+        log_sev.error("{}\r\n{}", summary, content);
     }
 
     public static void error(String tag, String tag1, String summary, Throwable content) {
-        log_sev.error(tag, tag1, summary, content);
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.error("{}\r\n{}", summary, content);
     }
 
     public static void error(String tag, String tag1, String summary, String content) {
-        log_sev.error(tag, tag1, summary, content);
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.error("{}\r\n{}", summary, content);
     }
 
     public static void error(String tag, String tag1, String tag2, String summary, String content) {
-        log_sev.error(tag, tag1, tag2, summary, content);
-    }
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+        MDC.put("tag2", tag2);
 
+        log_sev.error("{}\r\n{}", summary, content);
+    }
 
 
     public static void warn(IJob tag, String tag1, String summary, Throwable content) {
-        log_sev.warn(tag.getName(), tag1, summary, content);
+        MDC.put("tag0", tag.getName());
+        MDC.put("tag1", tag1);
+
+        log_sev.warn("{}\r\n{}", summary, content);
     }
 
-    public static void warn(IJob tag, String tag1, String tag2,String summary, Throwable content) {
-        log_sev.warn(tag.getName(), tag1, tag2, summary, content);
+    public static void warn(IJob tag, String tag1, String tag2, String summary, Throwable content) {
+        MDC.put("tag0", tag.getName());
+        MDC.put("tag1", tag1);
+        MDC.put("tag2", tag2);
+
+        log_sev.warn("{}\r\n{}", summary, content);
     }
 
     public static void warn(String tag, String tag1, String summary, Throwable content) {
-        log_sev.warn(tag, tag1, summary, content);
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.warn("{}\r\n{}", summary, content);
     }
 
     public static void warn(String tag, String tag1, String summary, String content) {
-        log_sev.warn(tag, tag1, summary, content);
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.warn("{}\r\n{}", summary, content);
     }
 
     public static void warn(String tag, String tag1, String tag2, String summary, String content) {
-        log_sev.warn(tag, tag1, tag2, summary, content);
-    }
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+        MDC.put("tag2", tag2);
 
+        log_sev.warn("{}\r\n{}", summary, content);
+    }
 
 
     public static void debug(IJob tag, String summary, String content) {
-        log_sev.debug(tag.getName(), summary, content);
+        MDC.put("tag0", tag.getName());
+
+        log_sev.debug("{}\r\n{}", summary, content);
     }
 
     public static void debug(String tag, String summary, String content) {
-        log_sev.debug(tag, summary, content);
+        MDC.put("tag0", tag);
+
+        log_sev.debug("{}\r\n{}", summary, content);
     }
 }
