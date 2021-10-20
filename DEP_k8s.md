@@ -27,7 +27,7 @@
 
 ### 二、进入安装模式初始化配置
 
-#### 1、 运行安装模式： `java -jar wateradmin.jar -setup=1 -s=x -u=x -p=x` 
+#### 1、 运行安装模式： `java -jar wateradmin.jar -setup=1 -s=x -u=x -p=x`
 
 * -s 为主库地址，格式 ip:port
 * -u 为链接账号
