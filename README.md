@@ -29,6 +29,12 @@
 
 地址： [http://water.noear.org](http://water.noear.org)  （账号：demo ；密码：demo ）
 
+
+关键持久化说明：
+
+* 日志持久化，支持：mysql（或兼容 mysql 的rdb 或 adb）、mongodb、es
+* 消息持久化，支持：mysql、mongodb
+
 ### (一) 使用
 
 #### 配置
