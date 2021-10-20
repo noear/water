@@ -6,7 +6,6 @@ import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.models.water_cfg.ConfigModel;
 
-import java.io.IOException;
 import java.util.Properties;
 
 public class EsUtil {
@@ -32,8 +31,6 @@ public class EsUtil {
             }
         }
 
-        //HttpBodyRequest request = new HttpBodyRequest(url, method.toUpperCase(), json);
-
         HttpUtils httpUtils = HttpUtils.http(url).bodyTxt(json, WW.mime_json);
 
         if (TextUtils.isEmpty(username) == false) {
@@ -49,40 +46,4 @@ public class EsUtil {
 
         return httpUtils.exec2(method);
     }
-
-//    private static String call(HttpUtils request) throws IOException {
-//        CloseableHttpClient client = HttpClients.createDefault();
-//
-//        CloseableHttpResponse response = null;
-//
-//        try {
-//            response = client.execute(request);
-//
-//            return EntityUtils.toString(response.getEntity(), "utf-8");
-//        } finally {
-//            if (response != null) {
-//                response.close();
-//            }
-//
-//            if (client != null) {
-//                client.close();
-//            }
-//        }
-//    }
-
-//    public static class HttpBodyRequest extends HttpEntityEnclosingRequestBase{
-//
-//        String method;
-//        public HttpBodyRequest(String uri,String method, String body){
-//            super();
-//            this.method =  method;
-//            setURI(URI.create(uri));
-//            setEntity(new StringEntity(body, ContentType.APPLICATION_JSON));
-//        }
-//
-//        @Override
-//        public String getMethod() {
-//            return method;
-//        }
-//    }
 }

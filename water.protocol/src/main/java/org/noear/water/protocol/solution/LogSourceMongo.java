@@ -143,7 +143,7 @@ public class LogSourceMongo implements LogSource {
 
         int date = Datetime.Now().addDay(-keep_days).getDate();
 
-        return _db.table(logger).whereEq("log_date", date).delete();
+        return _db.table(logger).whereLte("log_date", date).delete();
     }
 
     private void initIndex(String logger){
