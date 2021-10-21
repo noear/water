@@ -86,6 +86,10 @@ public final class DbWaterLogApi {
     public static void addTrackAll(String logger, List<TrackEvent> eventList) throws SQLException {
         Config.water_log.table(logger).usingExpr(false).usingNull(true)
                 .insertList(eventList, (d, m) -> {
+                    if(d.cmd_arg != null && d.cmd_arg.length() > 4000) {
+                        d.cmd_arg = d.cmd_arg.substring(0, 4000) + "...";
+                    }
+
                     m.set("log_id", d.log_id)
                             .set("service", d.service)
                             .set("trace_id", d.trace_id)

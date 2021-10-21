@@ -26,7 +26,7 @@ public class TrackSqlPipelineLocal extends EventPipeline<TrackEvent> {
         try {
             DbWaterLogApi.addTrackAll("water_exam_log_sql", logEvents);
         } catch (Throwable ex) {
-            EventBus.pushAsyn(ex);
+            EventBus.push(ex); //todo: EventBus.pushAsyn(ex);
         }
     }
 }
