@@ -25,7 +25,6 @@ public final class ProtocolHub {
         return messageSourceFactory.getSource();
     }
 
-    public static MessageLock messageLock;
     public static MessageQueue messageQueue;
 
     public static Monitoring monitoring;
