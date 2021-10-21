@@ -1,6 +1,5 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
@@ -8,10 +7,9 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQuery;
+import org.noear.weed.wrap.DbType;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class LogSourceRdb implements LogSource {

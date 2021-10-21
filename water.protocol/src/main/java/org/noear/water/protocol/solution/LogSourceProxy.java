@@ -1,12 +1,10 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 
-import java.util.Date;
 import java.util.List;
 
 public class LogSourceProxy implements LogSource {
