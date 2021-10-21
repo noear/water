@@ -57,9 +57,7 @@ public class CMD_log_add2 extends UapiBase {
         List<LogEvent> list = ONode.load(list_json).toObjectList(LogEvent.class);
 
         for (LogEvent log : list) {
-            if (log.log_id == 0) {
-                log.log_id = SnowflakeUtils.genId();
-            }
+            log.log_id = SnowflakeUtils.genId();
         }
 
         LogPipelineLocal.singleton().addAll(list);
