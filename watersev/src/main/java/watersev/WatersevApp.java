@@ -4,7 +4,6 @@ import org.noear.solon.Solon;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
-import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.protocol.solution.*;
