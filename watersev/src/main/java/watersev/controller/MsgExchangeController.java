@@ -27,13 +27,13 @@ import java.util.concurrent.Executors;
 public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
+    final int _interval_def = 1000;
+    int _interval = 1000;
+
     @Override
     public String getName() {
         return "zan";
     }
-
-    int _interval_def = 1000;
-    int _interval = 1000;
 
     @Override
     public int getInterval() {
@@ -43,7 +43,7 @@ public class MsgExchangeController implements IJob {
     @Override
     public void exec() throws Exception {
         //控制集群内只有一个节点在跑
-        if(getLock() == false){
+        if (getLock() == false) {
             return;
         }
 
@@ -55,49 +55,6 @@ public class MsgExchangeController implements IJob {
         }
     }
 
-    private boolean getLock() throws SQLException {
-        //
-        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
-        //
-        if (LockUtils.tryLock("watermsg", "watermsg_exchange_lock", 1)) {
-            //获取当前集群节点id
-            String nodeId = WaterClient.localHost();
-            //获取主节点id
-            String masterNodeId = Config.rd_lock.open1(us -> us.key("watermsg_exchange_lock_master").get());
-
-            if (TextUtils.isNotEmpty(masterNodeId)) {
-                if(nodeId.equals(masterNodeId)){
-                    return true;
-                }
-
-                //如果有主节点，遍历集群是否在其中？
-                List<ServiceSmpModel> list = DbWaterRegApi.getWatermsgServiceList();
-                for (ServiceSmpModel sm : list) {
-                    if (sm.meta.contains("sss")) {
-                        if (sm.meta.contains("msg")) {
-                            //如果通过sss=msg，说明msg服务在跑
-                            if (sm.address.equals(masterNodeId)) {
-                                //如果找到了，看看是不是当前节点
-                                return nodeId.equals(masterNodeId);
-                            }
-                        }
-                    } else {
-                        //没有sss指定，说明所有服务在跑（包括：msg）
-                        if (sm.address.equals(masterNodeId)) {
-                            //如果找到了，看看是不是当前节点
-                            return nodeId.equals(masterNodeId);
-                        }
-                    }
-                }
-            }
-
-            Config.rd_lock.open0(us -> us.key("watermsg_exchange_lock_master").expire(-2).set(nodeId));
-            return true;
-        } else {
-            //获取锁失败，不用管了
-            return false;
-        }
-    }
 
     private boolean execDo() throws Exception {
         if (ProtocolHub.messageQueue.count() > 20000) {
@@ -160,6 +117,59 @@ public class MsgExchangeController implements IJob {
                     .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
+        }
+    }
+
+
+
+    //
+    // 进行锁控制
+    //
+    private final String lock_group = "watermsg";
+    private final String lock_key = "watermsg_exchange_lock";
+    private final String lock_master_key = "watermsg_exchange_lock_master";
+
+    private boolean getLock() throws SQLException {
+        //
+        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
+        //
+        if (LockUtils.tryLock(lock_group, lock_key, 1)) {
+            //获取当前集群节点id
+            String nodeId = WaterClient.localHost();
+            //获取主节点id
+            String masterNodeId = Config.rd_lock.openAndGet(us -> us.key(lock_master_key).get());
+
+            if (TextUtils.isNotEmpty(masterNodeId)) {
+                if (nodeId.equals(masterNodeId)) {
+                    return true;
+                }
+
+                //如果有主节点，遍历集群是否在其中？
+                List<ServiceSmpModel> list = DbWaterRegApi.getWatermsgServiceList();
+                for (ServiceSmpModel sm : list) {
+                    if (sm.meta.contains("sss")) {
+                        if (sm.meta.contains("msg")) {
+                            //如果通过sss=msg，说明msg服务在跑
+                            if (sm.address.equals(masterNodeId)) {
+                                //如果找到了，看看是不是当前节点
+                                return nodeId.equals(masterNodeId);
+                            }
+                        }
+                    } else {
+                        //没有sss指定，说明所有服务在跑（包括：msg）
+                        if (sm.address.equals(masterNodeId)) {
+                            //如果找到了，看看是不是当前节点
+                            return nodeId.equals(masterNodeId);
+                        }
+                    }
+                }
+            }
+
+            Config.rd_lock.open(us -> us.key(lock_master_key).persist().set(nodeId));
+            return true;
+        } else {
+            //获取锁失败，不用管了
+            return false;
         }
     }
 }

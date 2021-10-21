@@ -28,7 +28,7 @@ public class LogPipelineLocal extends EventPipeline<LogEvent> {
         try {
             ProtocolHub.logStorer.writeAll(logEvents);
         } catch (Throwable ex) {
-            EventBus.pushAsyn(ex);
+            EventBus.push(ex); //todo: EventBus.pushAsyn(ex);
         }
     }
 }

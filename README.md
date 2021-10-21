@@ -32,8 +32,8 @@
 
 关键持久化说明：
 
-* 日志持久化，支持：mysql（或兼容 mysql 的rdb 或 adb）、mongodb、es
-* 消息持久化，支持：mysql、mongodb
+* 日志持久化，支持：MySql（或与MySql兼容的可存储服务）、MongoDb、ElasticSearch、ClickHouse
+* 消息持久化，支持：MySql、MongoDb
 
 ### (一) 使用
 

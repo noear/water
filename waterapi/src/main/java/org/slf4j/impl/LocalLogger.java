@@ -14,8 +14,6 @@ import org.slf4j.helpers.MessageFormatter;
 import waterapi.Config;
 import waterapi.dso.LogPipelineLocal;
 
-import java.util.Map;
-
 /**
  * @author noear
  * @since 1.0
