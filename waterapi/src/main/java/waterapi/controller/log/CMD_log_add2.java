@@ -9,10 +9,11 @@ import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.WW;
 import org.noear.water.log.LogEvent;
-import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.GzipUtils;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
+import waterapi.dso.LogPipelineLocal;
 import waterapi.dso.LogUtils;
 
 import java.util.List;
@@ -55,7 +56,13 @@ public class CMD_log_add2 extends UapiBase {
 
         List<LogEvent> list = ONode.load(list_json).toObjectList(LogEvent.class);
 
-        ProtocolHub.logStorer.writeAll(list);
+        for (LogEvent log : list) {
+            if (log.log_id == 0) {
+                log.log_id = SnowflakeUtils.genId();
+            }
+        }
+
+        LogPipelineLocal.singleton().addAll(list);
 
         return Result.succeed();
     }

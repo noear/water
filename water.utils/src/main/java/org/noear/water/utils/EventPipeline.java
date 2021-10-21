@@ -1,6 +1,7 @@
 package org.noear.water.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -23,7 +24,7 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
         TaskUtils.run(this);
     }
 
-    public EventPipeline(long interval,int packetSize) {
+    public EventPipeline(long interval, int packetSize) {
         setInterval(interval);
         setPacketSize(packetSize);
         TaskUtils.run(this);
@@ -45,12 +46,18 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
         }
     }
 
-
+    public void addAll(Collection<Event> events) {
+        try {
+            queueLocal.addAll(events);
+        } catch (Exception ex) {
+            //不打印
+        }
+    }
 
 
     /**
      * 获取任务间隔时间
-     * */
+     */
     @Override
     public long getInterval() {
         return interval;
@@ -64,7 +71,7 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
 
     /**
      * 设置管道包大小
-     * */
+     */
     public void setPacketSize(int packetSize) {
         if (packetSize >= packetSize_min) {
             this.packetSize = packetSize;
