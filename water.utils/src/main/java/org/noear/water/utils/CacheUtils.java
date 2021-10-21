@@ -26,7 +26,7 @@ public final class CacheUtils {
      * 获取 cache:ICacheServiceEx
      */
     public static ICacheServiceEx getCh(Properties prop, String keyHeader, int defSeconds) {
-        if ("redis".equals(prop.getProperty("type"))) {
+        if ("redis".equals(prop.getProperty("driverType"))) {
             return new RedisCache(prop, keyHeader, defSeconds);
         } else {
             return new MemCache(prop, keyHeader, defSeconds);
@@ -37,7 +37,7 @@ public final class CacheUtils {
      * 获取 cache:ICacheServiceEx
      */
     public static ICacheServiceEx getCh(Properties prop) {
-        if ("redis".equals(prop.getProperty("type"))) {
+        if ("redis".equals(prop.getProperty("driverType"))) {
             return new RedisCache(prop);
         } else {
             return new MemCache(prop);
