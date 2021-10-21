@@ -32,4 +32,15 @@ public final class CacheUtils {
             return new MemCache(prop, keyHeader, defSeconds);
         }
     }
+
+    /**
+     * 获取 cache:ICacheServiceEx
+     */
+    public static ICacheServiceEx getCh(Properties prop) {
+        if ("redis".equals(prop.getProperty("type"))) {
+            return new RedisCache(prop);
+        } else {
+            return new MemCache(prop);
+        }
+    }
 }
