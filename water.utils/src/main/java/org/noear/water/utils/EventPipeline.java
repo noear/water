@@ -42,7 +42,8 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
         try {
             queueLocal.add(event);
         } catch (Exception ex) {
-            //不打印
+            //不打印，不推出
+            ex.printStackTrace();
         }
     }
 
@@ -50,7 +51,8 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
         try {
             queueLocal.addAll(events);
         } catch (Exception ex) {
-            //不打印
+            //不打印，不推出
+            ex.printStackTrace();
         }
     }
 
