@@ -1,6 +1,5 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.log.Level;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
@@ -63,38 +62,6 @@ public class LogSourceMongo implements LogSource {
         return tb.orderByDesc("log_fulltime")
                 .andByDesc("log_id")
                 .selectList(LogModel.class);
-    }
-
-    @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception{
-
-        Datetime datetime = null;
-        if (log_fulltime == null) {
-            datetime = new Datetime();
-        } else {
-            datetime = new Datetime(log_fulltime);
-        }
-
-        MgTableQuery tb = _db.table(logger);
-
-        tb.set("log_id", log_id);
-        tb.set("trace_id", trace_id);
-        tb.set("level", level.code);
-        tb.set("tag", tag);
-        tb.set("tag1", tag1);
-        tb.set("tag2", tag2);
-        tb.set("tag3", tag3);
-        tb.set("summary", summary);
-        tb.set("content", content);
-        tb.set("from", from);
-
-        tb.set("class_name", NameUtils.formatClassName(class_name));
-        tb.set("thread_name", thread_name);
-
-        tb.set("log_date", datetime.getDate());
-        tb.set("log_fulltime", datetime.getFulltime());
-
-        tb.insert();
     }
 
     @Override

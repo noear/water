@@ -18,13 +18,6 @@ public class LogStorerImp implements LogStorer {
     public LogStorerImp() {
     }
 
-    @Override
-    public void write(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception {
-        //ProtocolHub.idBuilder.getLogId(logger)
-
-        ProtocolHub.logSourceFactory.getSource(logger)
-                .write(SnowflakeUtils.genId(), logger, trace_id, level, tag, tag1, tag2, tag3, summary, content, from, log_fulltime, class_name, thread_name);
-    }
 
     @Override
     public void writeAll(List<LogEvent> list) {

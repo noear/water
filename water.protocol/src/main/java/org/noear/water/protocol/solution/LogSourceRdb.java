@@ -46,35 +46,6 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void write(long log_id, String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, String from, Date log_fulltime, String class_name, String thread_name) throws Exception {
-        Datetime datetime = null;
-        if (log_fulltime == null) {
-            datetime = new Datetime();
-        } else {
-            datetime = new Datetime(log_fulltime);
-        }
-
-        DbTableQuery qr = _db.table(logger).usingExpr(false)
-                .set("log_id", log_id)
-                .set("trace_id", trace_id)
-                .set("level", level.code)
-                .setDf("tag", tag, "")
-                .setDf("tag1", tag1, "")
-                .setDf("tag2", tag2, "")
-                .setDf("tag3", tag3, "")
-                .setDf("summary", summary, "")
-                .setDf("content", content, "")
-                .setDf("from", from, "");
-
-
-        qr.set("log_date", datetime.getDate())
-                .set("log_fulltime", datetime.getFulltime().getTime())
-                .set("class_name", NameUtils.formatClassName(class_name))
-                .set("thread_name", thread_name)
-                .insert();
-    }
-
-    @Override
     public void writeAll(String logger, List<LogEvent> list) throws Exception {
         if (list.size() == 0) {
             return;
