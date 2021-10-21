@@ -2,7 +2,6 @@ package wateradmin.models.water_cfg;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
-import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WW;
@@ -10,9 +9,6 @@ import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.*;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
-import org.noear.weed.cache.memcached.MemCache;
 import org.noear.weed.mongo.MgContext;
 import wateradmin.dso.ConfigType;
 
@@ -120,29 +116,6 @@ public class ConfigModel implements IBinder
         }
 
         return _node;
-    }
-
-
-    /**
-     * 获取 rd:RedisX
-     */
-    public RedisClient getRd(int db) {
-        return new RedisClient(getProp(), db);
-    }
-
-    public RedisClient getRd(int db, int maxTotaol) {
-        return new RedisClient(getProp(), db, maxTotaol);
-    }
-
-    /**
-     * 获取 cache:ICacheServiceEx
-     */
-    public ICacheServiceEx getCh(String keyHeader, int defSeconds) {
-        if(TextUtils.isEmpty(value)){
-            return new LocalCache(keyHeader,defSeconds);
-        }else {
-            return new MemCache(getProp(), keyHeader, defSeconds);
-        }
     }
 
     /**

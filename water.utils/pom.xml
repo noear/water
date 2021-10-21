@@ -43,6 +43,11 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>weed3.cache.redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
         </dependency>
 

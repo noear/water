@@ -1,7 +1,6 @@
 package waterapi.models;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WW;
@@ -12,9 +11,6 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
-import org.noear.weed.cache.memcached.MemCache;
 
 import java.util.Date;
 import java.util.Properties;
@@ -109,28 +105,6 @@ public class ConfigModel implements IBinder {
         return _node;
     }
 
-
-    /**
-     * 获取 rd:RedisX
-     */
-    public RedisClient getRd(int db) {
-        return new RedisClient(getProp(), db);
-    }
-
-    public RedisClient getRd(int db, int maxTotaol) {
-        return new RedisClient(getProp(), db, maxTotaol);
-    }
-
-    /**
-     * 获取 cache:ICacheServiceEx
-     */
-    public ICacheServiceEx getCh(String keyHeader, int defSeconds) {
-        if (TextUtils.isEmpty(value)) {
-            return new LocalCache(keyHeader, defSeconds);
-        } else {
-            return new MemCache(getProp(), keyHeader, defSeconds);
-        }
-    }
 
     /**
      * 获取 db:DbContext
