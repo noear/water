@@ -6,6 +6,7 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.exts.ClassWrap;
 import org.noear.snack.core.exts.FieldWrap;
 import org.noear.water.WaterProps;
+import org.noear.water.utils.CacheUtils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.ConvertUtil;
 import org.noear.water.utils.TextUtils;
@@ -14,7 +15,6 @@ import org.noear.weed.DbDataSource;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.SecondCache;
-import org.noear.weed.cache.memcached.MemCache;
 import org.noear.weed.mongo.MgContext;
 
 import javax.sql.DataSource;
@@ -192,7 +192,7 @@ public final class ConfigM {
             return new LocalCache(keyHeader, defSeconds);
         }
 
-        return new MemCache(getProp(), keyHeader, defSeconds);
+        return CacheUtils.getCh(getProp(), keyHeader, defSeconds);
     }
 
     public ICacheServiceEx getCh() {
