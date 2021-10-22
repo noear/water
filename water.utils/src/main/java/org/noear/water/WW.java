@@ -4,6 +4,7 @@ public class WW {
     public static final String mime_glog="water/glog";
     public static final String mime_gzip="application/x-gzip";
     public static final String mime_json="application/json";
+    public static final String mime_ndjson = "application/x-ndjson";
 
     public static final String http_header_from = "Water-From";
     public static final String http_header_trace = "Water-Trace-Id";

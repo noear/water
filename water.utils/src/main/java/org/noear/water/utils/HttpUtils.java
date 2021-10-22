@@ -373,6 +373,10 @@ public class HttpUtils {
         return exec2("DELETE");
     }
 
+    public int head() throws IOException{
+        return exec3("HEAD");
+    }
+
     private static String getRequestCookieString(Map<String, String> cookies) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;
