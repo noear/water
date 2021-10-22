@@ -76,7 +76,7 @@ public class PropController extends BaseController {
             tml.value = "{}";
         }
 
-        viewModel.put("config_tml", tml.value);
+        viewModel.put("config_tml", tml.getNode().toJson());
         viewModel.put("row_id", row_id);
         viewModel.put("cfg", cfg);
         viewModel.put("tag_name", tag_name);
