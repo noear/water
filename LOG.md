@@ -1,8 +1,6 @@
-#### 2.2.18
-* 增加 water_lob 的 es 存储
-
 #### 2.2.17
 * 基于增加 memcache 与 rediscache 自由切换的支持
+* 增加 water_lob 的 es 存储
 
 #### 2.2.16
 * 整个项目基于solon cloud接口进行开发（即基于 water-solon-plugin ）
