@@ -11,17 +11,15 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author noear 2021/10/20 created
  */
-public class LogSourceEs implements LogSource {
+public class LogSourceElasticsearch implements LogSource {
     EsContext _db;
 
-    public LogSourceEs(EsContext db) {
+    public LogSourceElasticsearch(EsContext db) {
         _db = db;
     }
 
@@ -30,7 +28,7 @@ public class LogSourceEs implements LogSource {
         String indiceAliasName = "water__" + logger;
 
         EsIndiceQuery eq = _db.indice(indiceAliasName).where(c -> {
-            c.must();
+            c.filter(); //用过滤，不打分
 
             if (TextUtils.isNotEmpty(trace_id)) {
                 c.term("trace_id", trace_id);

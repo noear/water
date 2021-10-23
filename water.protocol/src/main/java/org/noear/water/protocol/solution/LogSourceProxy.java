@@ -13,6 +13,8 @@ public class LogSourceProxy implements LogSource {
     public LogSourceProxy(ConfigM cfg) {
         if (cfg.value.indexOf("=mongodb") > 0) {
             real = new LogSourceMongo(cfg.getMg("water_log"));
+        } else if (cfg.value.indexOf("=elasticsearch") > 0) {
+            real = new LogSourceElasticsearch(cfg.getEs());
         } else {
             real = new LogSourceRdb(cfg.getDb(true));
         }
