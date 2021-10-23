@@ -1,5 +1,6 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.solon.Utils;
 import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
@@ -7,16 +8,21 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
-import org.noear.weed.wrap.DbType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogSourceRdb implements LogSource {
-    DbContext _db;
+    final DbContext _db;
+    final String _tml;
 
     public LogSourceRdb(DbContext db) {
         _db = db;
+        try {
+            _tml = Utils.getResourceAsString("water/water_log_tml.sql", "utf-8");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -77,7 +83,8 @@ public class LogSourceRdb implements LogSource {
 
     @Override
     public void create(String logger) throws Exception {
-
+        String sql = _tml.replace("${logger}", logger);
+        _db.exe(sql);
     }
 
     @Override

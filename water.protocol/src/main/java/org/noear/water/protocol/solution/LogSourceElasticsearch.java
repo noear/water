@@ -17,10 +17,16 @@ import java.util.List;
  * @author noear 2021/10/20 created
  */
 public class LogSourceElasticsearch implements LogSource {
-    EsContext _db;
+    final EsContext _db;
+    final String _dsl;
 
     public LogSourceElasticsearch(EsContext db) {
         _db = db;
+        try {
+            _dsl = Utils.getResourceAsString("water/water_log_dsl.json", "utf-8");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -93,28 +99,24 @@ public class LogSourceElasticsearch implements LogSource {
     public void create(String logger) throws Exception {
         Datetime today = Datetime.Now();
 
-        String indiceDsl = Utils.getResourceAsString("water/water_log_dsl.json", "utf-8");
-
         String indiceAliasName = "water__" + logger;
 
         //添加今天的记录器
-        addIndiceByDate(logger, today, indiceDsl, indiceAliasName);
+        addIndiceByDate(logger, today, _dsl, indiceAliasName);
         //添加明天的记录器
-        addIndiceByDate(logger, today.addDay(1), indiceDsl, indiceAliasName);
+        addIndiceByDate(logger, today.addDay(1), _dsl, indiceAliasName);
     }
 
     @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         Datetime today = Datetime.Now();
 
-        String indiceDsl = Utils.getResourceAsString("water/water_log_dsl.json", "utf-8");
-
         String indiceAliasName = "water__" + logger;
 
         //添加今天的记录器
-        addIndiceByDate(logger, today, indiceDsl, indiceAliasName);
+        addIndiceByDate(logger, today, _dsl, indiceAliasName);
         //添加明天的记录器
-        addIndiceByDate(logger, today.addDay(1), indiceDsl, indiceAliasName);
+        addIndiceByDate(logger, today.addDay(1), _dsl, indiceAliasName);
 
         today.addDay(-1); //回到今天
         today.addDay(-keep_days);

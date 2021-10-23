@@ -15,7 +15,7 @@ import java.util.*;
  * @author noear 2021/2/2 created
  */
 public class LogSourceMongo implements LogSource {
-    MgContext _db;
+    final MgContext _db;
 
     public LogSourceMongo(MgContext db) {
         _db = db;
