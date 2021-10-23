@@ -7,6 +7,7 @@ import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
+import org.noear.water.protocol.ProtocolHub;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -93,15 +94,15 @@ public class LoggerController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @NotEmpty({"tag", "logger"})
     @Mapping("logger/edit/ajax/save")
-    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws SQLException {
+    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
         boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
 
-
         if (result) {
+            ProtocolHub.logQuerier.create(logger);
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败！");

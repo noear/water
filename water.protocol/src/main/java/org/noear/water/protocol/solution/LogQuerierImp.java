@@ -19,6 +19,12 @@ public class LogQuerierImp implements LogQuerier {
     }
 
     @Override
+    public void create(String logger) throws Exception {
+        ProtocolHub.logSourceFactory.getSource(logger)
+                .create(logger);
+    }
+
+    @Override
     public long clear(String logger) throws Exception {
         LoggerMeta mod = ProtocolHub.logSourceFactory.getLogger(logger);
 
