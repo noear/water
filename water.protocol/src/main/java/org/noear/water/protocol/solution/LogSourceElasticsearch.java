@@ -90,6 +90,20 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     @Override
+    public void create(String logger) throws Exception {
+        Datetime today = Datetime.Now();
+
+        String indiceDsl = Utils.getResourceAsString("water/water_log_dsl.json", "utf-8");
+
+        String indiceAliasName = "water__" + logger;
+
+        //添加今天的记录器
+        addIndiceByDate(logger, today, indiceDsl, indiceAliasName);
+        //添加明天的记录器
+        addIndiceByDate(logger, today.addDay(1), indiceDsl, indiceAliasName);
+    }
+
+    @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         Datetime today = Datetime.Now();
 
@@ -106,7 +120,7 @@ public class LogSourceElasticsearch implements LogSource {
         today.addDay(-keep_days);
 
         for (int i = 0; i < 10; i++) {
-            remIndiceByDate(logger, today.addDay(-1));
+            removeIndiceByDate(logger, today.addDay(-1));
         }
 
         return 0;
@@ -120,7 +134,7 @@ public class LogSourceElasticsearch implements LogSource {
         }
     }
 
-    private void remIndiceByDate(String logger, Datetime datetime) throws IOException {
+    private void removeIndiceByDate(String logger, Datetime datetime) throws IOException {
         String indiceName2 = "water__" + logger + "_" + datetime.toString("yyyyMMdd");
         _db.indiceDrop(indiceName2);
     }

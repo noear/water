@@ -107,6 +107,11 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
+    public void create(String logger) throws Exception {
+
+    }
+
+    @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         initIndex(logger);
 

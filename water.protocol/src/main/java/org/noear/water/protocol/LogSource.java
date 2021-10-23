@@ -10,5 +10,7 @@ public interface LogSource {
 
     void writeAll(String logger, List<LogEvent> list) throws Exception;
 
+    void create(String logger) throws Exception;
+
     long clear(String logger, int keep_days, int limit_rows) throws Exception;
 }

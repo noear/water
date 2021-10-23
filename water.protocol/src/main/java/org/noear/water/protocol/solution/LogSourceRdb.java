@@ -76,6 +76,11 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
+    public void create(String logger) throws Exception {
+
+    }
+
+    @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         int date = Datetime.Now().addDay(-keep_days).getDate();
 
