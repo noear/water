@@ -3,14 +3,16 @@ package wateradmin.controller.dev;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.noear.esearchx.EsCommand;
+import org.noear.esearchx.EsContext;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
-import wateradmin.dso.EsUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.utils.JsonFormatTool;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -94,7 +96,14 @@ public class QueryEsController extends BaseController {
         try {
             ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(cfg_str);
 
-            return EsUtil.search(cfg, method, path, json.toString());
+            EsContext esx = new EsContext(cfg.getProp());
+            EsCommand cmd = new EsCommand();
+            cmd.method = method;
+            cmd.path = path;
+            cmd.dsl = json.toString();
+            cmd.dslType = WW.mime_json;
+
+            return esx.execAsBody(cmd);
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,

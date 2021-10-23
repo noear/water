@@ -1,6 +1,7 @@
 package org.noear.water.model;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.esearchx.EsContext;
 import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.snack.core.exts.ClassWrap;
@@ -115,6 +116,16 @@ public final class ConfigM {
         return getProp().toObject(clz);
     }
 
+    /**
+     * 获取 es:EsearchX
+     */
+    public EsContext getEs() {
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        return new EsContext(getProp());
+    }
 
     /**
      * 获取 rd:RedisX

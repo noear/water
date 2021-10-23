@@ -17,8 +17,6 @@ import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.DbUtils;
 
-import java.util.Properties;
-
 public class Config {
     static final String TML_MARK_SERVER = "${server}";
     static final String TML_MARK_SCHEMA = "${schema}";

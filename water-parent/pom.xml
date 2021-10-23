@@ -45,6 +45,7 @@
         <snack3.ver>3.2.0</snack3.ver>
         <bcf.ver>2.1.14</bcf.ver>
         <redisx.ver>1.2</redisx.ver>
+        <esearchx.ver>1.0</esearchx.ver>
 
         <water.ver>2.2.17</water.ver>
 
@@ -208,6 +209,12 @@
                 <groupId>org.noear</groupId>
                 <artifactId>redisx</artifactId>
                 <version>${redisx.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
+                <artifactId>esearchx</artifactId>
+                <version>${esearchx.ver}</version>
             </dependency>
 
             <dependency>
