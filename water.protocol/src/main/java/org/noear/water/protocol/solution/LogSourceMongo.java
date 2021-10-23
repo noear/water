@@ -59,7 +59,9 @@ public class LogSourceMongo implements LogSource {
             tb.andLte("log_fulltime", timestamp);
         }
 
-        return tb.orderByDesc("log_fulltime")
+
+        return tb.limit(size)
+                .orderByDesc("log_fulltime")
                 .andByDesc("log_id")
                 .selectList(LogModel.class);
     }
