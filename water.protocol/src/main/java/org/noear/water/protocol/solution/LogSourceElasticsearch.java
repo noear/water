@@ -31,7 +31,7 @@ public class LogSourceElasticsearch implements LogSource {
 
     @Override
     public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
-        String indiceAliasName = "water__" + logger;
+        String indiceAliasName = "water-" + logger;
 
         EsIndiceQuery eq = _db.indice(indiceAliasName).where(c -> {
             c.filter(); //用过滤，不打分
@@ -90,16 +90,16 @@ public class LogSourceElasticsearch implements LogSource {
             event.class_name = NameUtils.formatClassName(event.class_name);
         }
 
-        String indiceAliasName = "water__" + logger;
+        String indiceName = "water-" + logger + "-" + Datetime.Now().toString("yyyyMMdd");
 
-        _db.indice(indiceAliasName).insertList(list);
+        _db.indice(indiceName).insertList(list);
     }
 
     @Override
     public void create(String logger) throws Exception {
         Datetime today = Datetime.Now();
 
-        String indiceAliasName = "water__" + logger;
+        String indiceAliasName = "water-" + logger;
 
         //添加今天的记录器
         addIndiceByDate(logger, today, _dsl, indiceAliasName);
@@ -111,7 +111,7 @@ public class LogSourceElasticsearch implements LogSource {
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         Datetime today = Datetime.Now();
 
-        String indiceAliasName = "water__" + logger;
+        String indiceAliasName = "water-" + logger;
 
         //添加今天的记录器
         addIndiceByDate(logger, today, _dsl, indiceAliasName);
@@ -129,15 +129,15 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     private void addIndiceByDate(String logger, Datetime datetime, String dsl, String alias) throws IOException {
-        String indiceName2 = "water__" + logger + "_" + datetime.toString("yyyyMMdd");
-        if (_db.indiceExist(indiceName2) == false) {
-            _db.indiceCreate(indiceName2, dsl);
-            _db.indiceAliases(a -> a.add(indiceName2, alias));
+        String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
+        if (_db.indiceExist(indiceName) == false) {
+            _db.indiceCreate(indiceName, dsl);
+            _db.indiceAliases(a -> a.add(indiceName, alias));
         }
     }
 
     private void removeIndiceByDate(String logger, Datetime datetime) throws IOException {
-        String indiceName2 = "water__" + logger + "_" + datetime.toString("yyyyMMdd");
-        _db.indiceDrop(indiceName2);
+        String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
+        _db.indiceDrop(indiceName);
     }
 }
