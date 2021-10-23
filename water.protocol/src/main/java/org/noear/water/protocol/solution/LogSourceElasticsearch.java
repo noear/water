@@ -23,7 +23,7 @@ public class LogSourceElasticsearch implements LogSource {
     public LogSourceElasticsearch(EsContext db) {
         _db = db;
         try {
-            _dsl = Utils.getResourceAsString("water/water_log_dsl.json", "utf-8");
+            _dsl = Utils.getResourceAsString("water/water_log_es_dsl.json", "utf-8");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
