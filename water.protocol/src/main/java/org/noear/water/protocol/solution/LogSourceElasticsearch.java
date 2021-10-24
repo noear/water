@@ -11,6 +11,7 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,34 +31,37 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
+        if (TextUtils.isEmpty(logger)) {
+            return new ArrayList<>();
+        }
+
         String indiceAliasName = "water-" + logger;
 
         EsIndiceQuery eq = _db.indice(indiceAliasName).where(c -> {
             c.filter(); //用过滤，不打分
 
-            if (TextUtils.isNotEmpty(trace_id)) {
-                c.term("trace_id", trace_id);
-            }
-
-            if (TextUtils.isNotEmpty(tag)) {
-                if (tag.startsWith("$")) {
-                    c.match("content", tag.substring(1));
+            if (TextUtils.isNotEmpty(tagx)) {
+                if (tagx.startsWith("*")) {
+                    c.term("trace_id", tagx.substring(1));
+                } else if (tagx.startsWith("$")) {
+                    c.match("content", tagx.substring(1));
                 } else {
-                    c.term("tag", tag);
+                    String[] tags = tagx.split("@");
+
+                    if (tags.length > 0) {
+                        c.term("tag", tags[0]);
+                    }
+                    if (tags.length > 1) {
+                        c.term("tag1", tags[1]);
+                    }
+                    if (tags.length > 2) {
+                        c.term("tag2", tags[2]);
+                    }
+                    if (tags.length > 3) {
+                        c.term("tag3", tags[3]);
+                    }
                 }
-            }
-
-            if (TextUtils.isNotEmpty(tag1)) {
-                c.term("tag1", tag1);
-            }
-
-            if (TextUtils.isNotEmpty(tag2)) {
-                c.term("tag2", tag2);
-            }
-
-            if (TextUtils.isNotEmpty(tag3)) {
-                c.term("tag3", tag3);
             }
 
             if (level != null && level > 0) {

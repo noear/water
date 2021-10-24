@@ -22,33 +22,38 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
+        }
+
+        if (level == null) {
+            level = 0;
         }
 
         MgTableQuery tb = _db.table(logger);
 
         tb.whereTrue();
 
-        if (TextUtils.isNotEmpty(trace_id)) {
-            tb.andEq("trace_id", trace_id);
-        }
+        if(TextUtils.isNotEmpty(tagx)) {
+            if (tagx.startsWith("*")) {
+                tb.andEq("trace_id", tagx.substring(1));
+            } else {
+                String[] tags = tagx.split("@");
 
-        if (TextUtils.isNotEmpty(tag)) {
-            tb.andEq("tag", tag);
-        }
-
-        if (TextUtils.isNotEmpty(tag1)) {
-            tb.andEq("tag1", tag1);
-        }
-
-        if (TextUtils.isNotEmpty(tag2)) {
-            tb.andEq("tag2", tag2);
-        }
-
-        if (TextUtils.isNotEmpty(tag3)) {
-            tb.andEq("tag3", tag3);
+                if (tags.length > 0) {
+                    tb.andEq("tag", tags[0]);
+                }
+                if (tags.length > 1) {
+                    tb.andEq("tag1", tags[1]);
+                }
+                if (tags.length > 2) {
+                    tb.andEq("tag2", tags[2]);
+                }
+                if (tags.length > 3) {
+                    tb.andEq("tag3", tags[3]);
+                }
+            }
         }
 
         if (level != null && level > 0) {
@@ -58,7 +63,6 @@ public class LogSourceMongo implements LogSource {
         if (timestamp > 0) {
             tb.andLte("log_fulltime", timestamp);
         }
-
 
         return tb.limit(size)
                 .orderByDesc("log_fulltime")

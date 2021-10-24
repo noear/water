@@ -13,9 +13,9 @@ public class LogQuerierImp implements LogQuerier {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
         return ProtocolHub.logSourceFactory.getSource(logger)
-                .query(logger, trace_id, level, size, tag, tag1, tag2, tag3, timestamp);
+                .query(logger, level, size, tagx, timestamp);
     }
 
     @Override

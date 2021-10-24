@@ -8,6 +8,7 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbTableQuery;
 import org.noear.weed.wrap.DbType;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, String trace_id, Integer level, int size, String tag, String tag1, String tag2, String tag3, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -38,17 +39,42 @@ public class LogSourceRdb implements LogSource {
             level = 0;
         }
 
-        return _db.table(logger).usingExpr(false)
-                .where("1 = 1")
-                .andIf(TextUtils.isNotEmpty(trace_id), "trace_id = ?", trace_id)
-                .andIf(TextUtils.isNotEmpty(tag), "tag = ?", tag)
-                .andIf(TextUtils.isNotEmpty(tag1), "tag1 = ?", tag1)
-                .andIf(TextUtils.isNotEmpty(tag2), "tag2 = ?", tag2)
-                .andIf(TextUtils.isNotEmpty(tag3), "tag3 = ?", tag3)
-                .andIf(timestamp > 0, "log_fulltime <= ?", timestamp)
-                .andIf(level > 0, "level=?", level)
-                .orderBy("log_fulltime desc, log_id desc")
-                .limit(size)
+        DbTableQuery tb = _db.table(logger).usingExpr(false);
+
+        tb.whereTrue();
+
+        if(TextUtils.isNotEmpty(tagx)) {
+            if (tagx.startsWith("*")) {
+                tb.andEq("trace_id", tagx.substring(1));
+            } else {
+                String[] tags = tagx.split("@");
+
+                if (tags.length > 0) {
+                    tb.andEq("tag", tags[0]);
+                }
+                if (tags.length > 1) {
+                    tb.andEq("tag1", tags[1]);
+                }
+                if (tags.length > 2) {
+                    tb.andEq("tag2", tags[2]);
+                }
+                if (tags.length > 3) {
+                    tb.andEq("tag3", tags[3]);
+                }
+            }
+        }
+
+        if (level != null && level > 0) {
+            tb.andEq("level", level);
+        }
+
+        if (timestamp > 0) {
+            tb.andLte("log_fulltime", timestamp);
+        }
+
+        return tb.limit(size)
+                .orderByDesc("log_fulltime")
+                .andByDesc("log_id")
                 .selectList("*", LogModel.class);
     }
 
