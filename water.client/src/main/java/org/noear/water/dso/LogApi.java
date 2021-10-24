@@ -63,7 +63,7 @@ public class LogApi {
             return;
         }
 
-        if (log.logger.indexOf(".") > 0) {
+        if (log.logger.contains(".")) {
             return;
         }
 
