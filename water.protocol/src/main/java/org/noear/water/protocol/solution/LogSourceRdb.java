@@ -49,16 +49,16 @@ public class LogSourceRdb implements LogSource {
             } else {
                 String[] tags = tagx.split("@");
 
-                if (tags.length > 0) {
+                if (tags.length > 0 && tags[0].length() > 0) {
                     tb.andEq("tag", tags[0]);
                 }
-                if (tags.length > 1) {
+                if (tags.length > 1 && tags[1].length() > 0) {
                     tb.andEq("tag1", tags[1]);
                 }
-                if (tags.length > 2) {
+                if (tags.length > 2 && tags[2].length() > 0) {
                     tb.andEq("tag2", tags[2]);
                 }
-                if (tags.length > 3) {
+                if (tags.length > 3 && tags[3].length() > 0) {
                     tb.andEq("tag3", tags[3]);
                 }
             }
