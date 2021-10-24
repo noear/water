@@ -31,71 +31,8 @@ public class LogApi {
     /**
      * 添加日志
      */
+    @Deprecated
     public void append(String logger, Level level, Map<String, Object> map) {
-        append(logger, level,
-                (String) map.get("tag"),
-                (String) map.get("tag1"),
-                (String) map.get("tag2"),
-                (String) map.get("tag3"),
-                (String) map.get("summary"),
-                map.get("content"));
-    }
-
-    /**
-     * 添加日志
-     */
-    public void append(String logger, Level level, String summary, Object content) {
-        append(logger, level, null, null, null, null, summary, content, true);
-    }
-
-    /**
-     * 添加日志
-     */
-    public void append(String logger, Level level, String tag, String summary, Object content) {
-        append(logger, level, tag, null, null, null, summary, content, true);
-    }
-
-    /**
-     * 添加日志
-     */
-    public void append(String logger, Level level, String tag, String tag1, String summary, Object content) {
-        append(logger, level, tag, tag1, null, null, summary, content, true);
-    }
-
-    /**
-     * 添加日志
-     */
-    public void append(String logger, Level level, String tag, String tag1, String tag2, String summary, Object content) {
-        append(logger, level, tag, tag1, tag2, null, summary, content, true);
-    }
-
-    /**
-     * 添加日志
-     */
-    public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
-        append(logger, level, tag, tag1, tag2, tag3, summary, content, true);
-    }
-
-    /**
-     * 添加日志
-     *
-     * @param logger  日志接收器
-     * @param level   等级
-     * @param tag     标签
-     * @param tag1    标签1
-     * @param tag2    标签2
-     * @param tag3    标签3
-     * @param summary 简介
-     * @param content 内容
-     * @param async   是否异步提交
-     */
-    public void append(String logger, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content, boolean async) {
-        String trace_id = WaterClient.waterTraceId();
-
-        appendDo(logger, trace_id, level, tag, tag1, tag2, tag3, summary, content);
-    }
-
-    private void appendDo(String logger, String trace_id, Level level, String tag, String tag1, String tag2, String tag3, String summary, Object content) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }
@@ -104,24 +41,44 @@ public class LogApi {
             return;
         }
 
-        Datetime datetime = Datetime.Now();
-
         LogEvent log = new LogEvent();
 
         log.logger = logger;
         log.level = level.code;
-        log.tag = tag;
-        log.tag1 = tag1;
-        log.tag2 = tag2;
-        log.tag3 = tag3;
-        log.content = LogHelper.contentAsString(content);
 
-        log.trace_id = trace_id;
+        log.tag = map.getOrDefault("tag", "").toString();
+        log.tag1 = map.getOrDefault("tag1", "").toString();
+        log.tag2 = map.getOrDefault("tag2", "").toString();
+        log.tag3 = map.getOrDefault("tag3", "").toString();
+        log.tag4 = map.getOrDefault("tag4", "").toString();
+
+        log.content = LogHelper.contentAsString(map.get("content"));
+
+
+        append(log);
+    }
+
+    public void append(LogEvent log) {
+        if (TextUtils.isEmpty(log.logger)) {
+            return;
+        }
+
+        if (log.logger.indexOf(".") > 0) {
+            return;
+        }
+
+        if (log.trace_id == null) {
+            log.trace_id = WaterClient.waterTraceId();
+        }
+
         log.from = WaterClient.localServiceHost();
         log.thread_name = Thread.currentThread().getName();
 
-        log.log_date = datetime.getDate();
-        log.log_fulltime = datetime.getFulltime();
+        if (log.log_date == 0) {
+            Datetime datetime = Datetime.Now();
+            log.log_date = datetime.getDate();
+            log.log_fulltime = datetime.getFulltime();
+        }
 
         LogPipeline.singleton().add(log);
     }
