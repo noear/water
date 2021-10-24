@@ -148,4 +148,9 @@ public class LogSourceElasticsearch implements LogSource {
         String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
         _db.indiceDrop(indiceName);
     }
+
+    @Override
+    public void close() throws IOException {
+
+    }
 }

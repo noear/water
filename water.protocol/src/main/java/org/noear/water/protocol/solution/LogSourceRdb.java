@@ -11,6 +11,7 @@ import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.weed.wrap.DbType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class LogSourceRdb implements LogSource {
 
         tb.whereTrue();
 
-        if(TextUtils.isNotEmpty(tagx)) {
+        if (TextUtils.isNotEmpty(tagx)) {
             if (tagx.startsWith("*")) {
                 tb.andEq("trace_id", tagx.substring(1));
             } else {
@@ -129,5 +130,10 @@ public class LogSourceRdb implements LogSource {
         } else {
             return _db.table(logger).whereLte("log_date", date).delete();
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        _db.close();
     }
 }

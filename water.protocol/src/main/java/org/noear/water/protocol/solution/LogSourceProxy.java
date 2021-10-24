@@ -5,6 +5,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LogSourceProxy implements LogSource {
@@ -38,5 +39,10 @@ public class LogSourceProxy implements LogSource {
     @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         return real.clear(logger, keep_days, limit_rows);
+    }
+
+    @Override
+    public void close() throws IOException {
+        real.close();
     }
 }

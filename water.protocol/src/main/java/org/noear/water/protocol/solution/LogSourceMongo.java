@@ -9,6 +9,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -141,5 +142,10 @@ public class LogSourceMongo implements LogSource {
 
         _db.table(logger).orderByDesc("log_fulltime").andByDesc("log_id")
                 .createIndex(true);
+    }
+
+    @Override
+    public void close() throws IOException {
+        _db.close();
     }
 }

@@ -26,7 +26,7 @@ public class LogQuerierImp implements LogQuerier {
 
     @Override
     public long clear(String logger) throws Exception {
-        LoggerMeta mod = ProtocolHub.logSourceFactory.getLogger(logger);
+        LoggerMeta mod = ProtocolHub.logSourceFactory.getLoggerMeta(logger);
 
         return ProtocolHub.logSourceFactory.getSource(logger)
                 .clear(logger, mod.getKeepDays(), 0);

@@ -35,7 +35,6 @@ public class ProtocolUtil {
             return null;
         }
 
-        //String type = cfg.getProp().getProperty(WW.type_logger);
         return new LogSourceProxy(cfg);
     }
 }
