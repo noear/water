@@ -8,8 +8,6 @@ solon.app:
   group: "water"
   title: "WATER"
 
-waterpaas.secretKey: "0zJt0J88TkIvqYgC"
-
 solon.cloud.water:
   server: "waterapi"
   log:
@@ -17,15 +15,7 @@ solon.cloud.water:
   event:
     seal: "b5fZK49x71Rnn5Cl"
 
-#water:
-#  host: "waterapi"
-#  logger: "water_log_admin"
-#  service:
-#    tag: "water"
-#    name: "wateradmin"
-#    secretKey: "b5fZK49x71Rnn5Cl"
-
-#water.weed.log.style: "text2"
+waterpaas.secretKey: "0zJt0J88TkIvqYgC"
 
 #water.log:
 #  gzip: 1

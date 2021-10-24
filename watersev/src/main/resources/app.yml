@@ -2,13 +2,6 @@ solon.extend: "watersev_ext"
 
 server.port: 9372
 
-#water:
-#  host: "waterapi"
-#  logger: "water_log_sev"
-#  service:
-#    name: "watersev"
-#    secretKey: "0kqvJpJ3dsSGCPoH"
-
 solon.app:
   name: "watersev"
   group: "water"
