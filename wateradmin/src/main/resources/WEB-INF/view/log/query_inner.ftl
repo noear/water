@@ -22,6 +22,13 @@
                 let tagx = $(this).attr('tagx');
                 if(tagx){
                     UrlQueryBy("tagx",tagx,'page');
+                    return
+                }
+
+                let time = $(this).attr('time');
+                if(time){
+                    UrlQueryBy("time",time,'page');
+                    return;
                 }
             });
         });
@@ -51,7 +58,7 @@
                     </#list>
                 </select>&nbsp;&nbsp;
                 标签：<input type="text" class="w250"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3 or *TraceId" id="tagx"/>&nbsp;&nbsp;
-                时间：<input type="text"  name="log_fulltime" placeholder="yyyy-MM-dd HH:MM:ss.SSS" id="log_fulltime" style="width: 180px;"/>&nbsp;&nbsp;
+                时间：<input type="text"  name="time" placeholder="yyyy-MM-dd HH:MM:ss.SSS" id="time" style="width: 180px;"/>&nbsp;&nbsp;
 
                 <button type="submit">查询</button>
                 <script>

@@ -18,7 +18,13 @@ public class LogFormater {
         //头
         buf.append("<span class='level").append(log.level).append("'>");
         buf.append("[").append(Level.of(log.level).name()).append("] ");
-        buf.append(new Datetime(log.log_fulltime).toString("yyyy-MM-dd HH:mm:ss.SSS Z")).append(" ");
+
+        Datetime log_fulltime = new Datetime(log.log_fulltime);
+        buf.append("<a time='>").append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS")).append("'>");
+        buf.append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS Z"));
+        buf.append("</a>");
+
+        buf.append(" ");
 
         if (TextUtils.isNotEmpty(log.thread_name)) {
             buf.append("[-").append(log.thread_name).append("]");

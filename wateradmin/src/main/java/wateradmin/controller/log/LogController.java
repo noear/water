@@ -37,7 +37,7 @@ public class LogController extends BaseController {
     }
 
     @Mapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, String log_fulltime, Integer level, Context ctx) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, String time, Integer level, Context ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
@@ -68,8 +68,8 @@ public class LogController extends BaseController {
 
             try {
                 long timestamp = 0;
-                if (TextUtils.isNotEmpty(log_fulltime)) {
-                    timestamp = Datetime.parse(log_fulltime.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
+                if (TextUtils.isNotEmpty(time)) {
+                    timestamp = Datetime.parse(time.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
                 }
 
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, timestamp);
@@ -83,7 +83,6 @@ public class LogController extends BaseController {
             viewModel.put("logger", "");
         }
 
-        viewModel.put("log_fulltime", log_fulltime);
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);
