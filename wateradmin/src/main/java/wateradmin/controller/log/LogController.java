@@ -45,7 +45,7 @@ public class LogController extends BaseController {
             logger = ctx.cookie("wateradmin_log__tag_" + tag_name);
         }
 
-        if("null".equals(logger)){
+        if ("null".equals(logger)) {
             logger = "";
         }
 
@@ -63,43 +63,16 @@ public class LogController extends BaseController {
         List list = new ArrayList<>();
 
 
-        String trace_id = null;
-        String tag = null, tag1 = null, tag2 = null, tag3 = null;
-
-
-        if (TextUtils.isNotEmpty(tagx)) {
-            if(tagx.startsWith("*")){
-                trace_id = tagx.substring(1).trim();
-            }else {
-                String[] ss = tagx.split("@");
-                if (ss.length > 0) {
-                    tag = ss[0].trim();
-                }
-
-                if (ss.length > 1) {
-                    tag1 = ss[1].trim();
-                }
-
-                if (ss.length > 2) {
-                    tag2 = ss[2].trim();
-                }
-
-                if (ss.length > 3) {
-                    tag3 = ss[3].trim();
-                }
-            }
-        }
-
         if (!TextUtils.isEmpty(logger)) {
             LoggerModel log = DbWaterCfgApi.getLogger(logger);
 
             try {
                 long timestamp = 0;
-                if(TextUtils.isNotEmpty(log_fulltime)) {
-                    timestamp = Datetime.parse(log_fulltime.replace("+"," "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
+                if (TextUtils.isNotEmpty(log_fulltime)) {
+                    timestamp = Datetime.parse(log_fulltime.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
                 }
 
-                list = ProtocolHub.logQuerier.query(logger, trace_id, level, 50, tag, tag1, tag2, tag3, timestamp);
+                list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, timestamp);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -110,7 +83,7 @@ public class LogController extends BaseController {
             viewModel.put("logger", "");
         }
 
-        viewModel.put("log_fulltime",log_fulltime);
+        viewModel.put("log_fulltime", log_fulltime);
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);
