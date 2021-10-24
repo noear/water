@@ -20,7 +20,7 @@ public class LogFormater {
         buf.append("[").append(Level.of(log.level).name()).append("] ");
 
         Datetime log_fulltime = new Datetime(log.log_fulltime);
-        buf.append("<a time='>").append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS")).append("'>");
+        buf.append("<a time='").append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS")).append("'>");
         buf.append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS Z"));
         buf.append("</a>");
 
