@@ -28,6 +28,7 @@ public class WaterpaasApp {
             //
             ProtocolHub.config = WaterClient.Config::get;
 
+            //用于清除控制
             ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
 
             ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data);
