@@ -2,7 +2,6 @@ package waterapi;
 
 import org.noear.solon.SolonBuilder;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.track.TrackBuffer;

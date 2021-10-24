@@ -3,9 +3,12 @@ package org.noear.rubber;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.noear.rubber.models.SchemeRuleModel;
 import org.noear.snack.ONode;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,11 +130,14 @@ public final class RubberContext {
         return val != null;
     }
 
+    static Logger log = LoggerFactory.getLogger("water_log_raas");
     //记录规则异常
     //
     public void e(String scheme,int rule_id, String err) {
-        WaterClient.Log.append("water_log_raas_error", Level.ERROR, "s", scheme,
-                scheme + "/" + rule_id + "::" + response().request.args.toJson(), err);
+        TagsMDC.tag0("s");
+        TagsMDC.tag1(scheme);
+
+        log.error("{}\r\n{}", scheme + "/" + rule_id + "::" + response().request.args.toJson(), err);
     }
 
     public RcState t(){

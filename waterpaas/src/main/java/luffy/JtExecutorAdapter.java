@@ -4,11 +4,14 @@ import org.noear.luffy.executor.IJtConfigAdapter;
 import org.noear.luffy.executor.IJtExecutorAdapter;
 import org.noear.luffy.model.AFileModel;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import waterpaas.dso.AFileUtil;
 
 import java.util.Map;
@@ -17,6 +20,7 @@ import java.util.Map;
  * 执行工厂适配器
  * */
 public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
+    static Logger log = LoggerFactory.getLogger("water_log_paas");
 
     private String _defaultExecutor = "freemarker";
     private String _defLogTag = "_paas";
@@ -56,7 +60,13 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        WaterClient.Log.append(water_log_paas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
+        TagsMDC.tag0(_defLogTag);
+        TagsMDC.tag1(file.tag);
+        TagsMDC.tag2(file.path);
+
+        log.error("{}\r\n{}", msg, err);
+
+        //WaterClient.Log.append(water_log_paas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
     }
 
     @Override
