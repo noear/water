@@ -71,7 +71,6 @@ public class LogSourceRdb implements LogSource {
                             .setDf("tag1", event.tag1, "")
                             .setDf("tag2", event.tag2, "")
                             .setDf("tag3", event.tag3, "")
-                            .setDf("summary", event.summary, "")
                             .setDf("content", event.content, "")
                             .setDf("from", event.from, "")
                             .set("class_name", NameUtils.formatClassName(event.class_name))

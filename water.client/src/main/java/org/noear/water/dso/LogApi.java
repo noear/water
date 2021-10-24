@@ -114,7 +114,6 @@ public class LogApi {
         log.tag1 = tag1;
         log.tag2 = tag2;
         log.tag3 = tag3;
-        log.summary = summary;
         log.content = LogHelper.contentAsString(content);
 
         log.trace_id = trace_id;

@@ -63,14 +63,6 @@ public class LogStorerImp implements LogStorer {
                     log.tag3 = log.tag3.substring(0, 99);
                 }
             }
-
-            if (log.summary == null) {
-                log.summary = "";
-            } else {
-                if (log.summary.length() > 999) {
-                    log.summary = log.summary.substring(0, 999);
-                }
-            }
         }
 
         Map<String, List<LogEvent>> map = list.stream().collect(Collectors.groupingBy(m -> m.logger));

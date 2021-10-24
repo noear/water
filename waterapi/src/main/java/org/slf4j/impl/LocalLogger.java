@@ -379,6 +379,8 @@ public class LocalLogger implements Logger {
         LogEvent log = new LogEvent();
 
         log.group = Solon.cfg().appGroup();
+        log.app_name = Solon.cfg().appName();
+
         log.logger = name;
         if (ctx != null) {
             log.trace_id = ctx.header(WW.http_header_trace);
@@ -388,6 +390,7 @@ public class LocalLogger implements Logger {
         log.tag1 = MDC.get("tag1");
         log.tag2 = MDC.get("tag2");
         log.tag3 = MDC.get("tag3");
+        log.tag4 = MDC.get("tag4");
         log.content = content;
         log.from = Config.localHost;
         log.log_date = datetime.getDate();

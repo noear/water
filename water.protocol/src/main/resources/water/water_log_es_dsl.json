@@ -32,6 +32,9 @@
       "content": {
         "type": "text"
       },
+      "group": {
+        "type":"keyword"
+      },
       "app_name": {
         "type":"keyword"
       },

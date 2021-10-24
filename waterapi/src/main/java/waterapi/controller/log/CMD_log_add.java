@@ -45,10 +45,14 @@ public class CMD_log_add extends UapiBase {
 
         LogEvent log = new LogEvent();
 
+        log.group = ctx.param("group", "");
+        log.app_name = ctx.param("app_name", "");
+
         log.tag = ctx.param("tag", "");
         log.tag1 = ctx.param("tag1", "");
         log.tag2 = ctx.param("tag2", "");
         log.tag3 = ctx.param("tag3", "");
+        log.tag4 = ctx.param("tag4", "");
 
         log.class_name = ctx.param("class_name");
         log.thread_name = ctx.param("thread_name");
@@ -68,7 +72,6 @@ public class CMD_log_add extends UapiBase {
         }
 
         log.level = Level.of(level).code;
-        log.summary = summary;
         log.content = content;
         log.from = from;
 
