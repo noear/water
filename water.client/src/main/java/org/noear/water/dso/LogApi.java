@@ -67,6 +67,10 @@ public class LogApi {
             return;
         }
 
+        if(log.level == 0){
+            log.level = Level.ERROR.code;
+        }
+
         if (log.trace_id == null) {
             log.trace_id = WaterClient.waterTraceId();
         }

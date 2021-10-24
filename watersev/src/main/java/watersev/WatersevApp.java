@@ -6,12 +6,16 @@ import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
 import org.noear.water.WaterClient;
 import org.noear.water.log.Level;
+import org.noear.water.log.LogEvent;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
+import org.noear.water.utils.LogHelper;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.JobRunnerEx;
 import watersev.dso.db.DbWaterCfgApi;
+
+import java.util.Map;
 
 /**
  * 可以按三个服务进行部署：
@@ -62,8 +66,16 @@ public class WatersevApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
-        }).onError((ex) -> {
-            WaterClient.Log.append("water_log_sev", Level.ERROR, "global", "", ex);
+
+            x.onError(ex->{
+                LogEvent log = new LogEvent();
+                log.logger = "water_log_sev";
+                log.level = Level.ERROR.code;
+                log.tag = "global";
+                log.content = LogHelper.contentAsString(ex);
+
+                WaterClient.Log.append(log);
+            });
         });
 
         JtRun.xfunInit();
