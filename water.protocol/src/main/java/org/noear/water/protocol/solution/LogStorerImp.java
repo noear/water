@@ -65,12 +65,13 @@ public class LogStorerImp implements LogStorer {
             }
         }
 
-        Map<String, List<LogEvent>> map = list.stream().collect(Collectors.groupingBy(m -> m.logger));
+        Map<String, List<LogEvent>> map = list.stream()
+                .collect(Collectors.groupingBy(m -> m.logger));
 
         for (Map.Entry<String, List<LogEvent>> kv : map.entrySet()) {
             try {
                 if (kv.getKey().contains(".")) {
-                    //EventBus.push(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));
+                    EventBus.push(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));
                     continue;
                 }
 
