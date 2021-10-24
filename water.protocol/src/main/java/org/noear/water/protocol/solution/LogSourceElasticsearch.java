@@ -41,10 +41,10 @@ public class LogSourceElasticsearch implements LogSource {
             }
 
             if (TextUtils.isNotEmpty(tag)) {
-                c.term("tag", tag);
-
                 if (tag.startsWith("$")) {
                     c.match("content", tag.substring(1));
+                } else {
+                    c.term("tag", tag);
                 }
             }
 
