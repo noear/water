@@ -8,18 +8,21 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
+import org.noear.weed.wrap.DbType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogSourceRdb implements LogSource {
     final DbContext _db;
-    final String _tml;
+    final String _rdbTml;
+    final String _chTml;
 
     public LogSourceRdb(DbContext db) {
         _db = db;
         try {
-            _tml = Utils.getResourceAsString("water/water_log_rdb_tml.sql", "utf-8");
+            _rdbTml = Utils.getResourceAsString("water/water_log_rdb_tml.sql", "utf-8");
+            _chTml = Utils.getResourceAsString("water/water_log_ch_tml.sql", "utf-8");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -82,8 +85,13 @@ public class LogSourceRdb implements LogSource {
 
     @Override
     public void create(String logger) throws Exception {
-        String sql = _tml.replace("${logger}", logger);
-        _db.exe(sql);
+        if (_db.getType() == DbType.ClickHouse) {
+            String sql = _chTml.replace("${logger}", logger);
+            _db.exe(sql);
+        } else {
+            String sql = _rdbTml.replace("${logger}", logger);
+            _db.exe(sql);
+        }
     }
 
     @Override
