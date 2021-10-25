@@ -30,6 +30,8 @@ public final class MsgCheckController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        Thread.currentThread().setName("water-msg-chk");
+
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
         if (LockUtils.tryLock("watermsg", "watermsg_sub_check_lock", 5)) {

@@ -66,6 +66,7 @@ public class PlnController implements IJob {
     }
 
     private void doExec(PaasFileModel task) {
+        Thread.currentThread().setName("water-pln-" + task.file_id);
 
         //2.1.计时开始
         Timecount timecount = new Timecount().start();

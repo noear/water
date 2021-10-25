@@ -62,6 +62,8 @@ public final class MotController implements IJob {
     }
 
     private void doExec(MonitorModel task) {
+        Thread.currentThread().setName("water-mot-" + task.monitor_id);
+
         try {
             ContextUtil.currentSet(new ContextEmpty());
 

@@ -46,6 +46,8 @@ public final class SynController implements IJob {
     }
 
     private void exec0(){
+        Thread.currentThread().setName("water-syn");
+
         List<SynchronousModel> list = DbWaterApi.getSyncList();
 
         for (SynchronousModel task : list) {

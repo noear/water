@@ -62,6 +62,8 @@ public final class MsgDistributeController implements IJob {
 
 
     private void distribute(String msg_id_str) {
+        Thread.currentThread().setName("water-msg-d-" + msg_id_str);
+
         try {
             //转为ID
             long msgID = Long.parseLong(msg_id_str);

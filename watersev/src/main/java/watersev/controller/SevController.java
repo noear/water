@@ -56,6 +56,8 @@ public final class SevController implements IJob {
     }
 
     private void exec0() throws SQLException {
+        Thread.currentThread().setName("water-sev-chk");
+
         if (_init == false) {
             _init = true;
 

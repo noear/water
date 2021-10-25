@@ -90,6 +90,8 @@ public class MsgExchangeController implements IJob {
     }
 
     private void exchange(MessageModel msg) {
+        Thread.currentThread().setName("water-msg-e-" + msg.msg_id);
+
         try {
             long ntime = DisttimeUtils.currTime();
             if (msg.dist_nexttime > ntime) { //如果时间还没到
