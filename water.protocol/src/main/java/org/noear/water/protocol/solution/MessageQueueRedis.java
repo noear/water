@@ -2,6 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.redisx.RedisClient;
 import org.noear.water.protocol.MessageQueue;
+import org.noear.water.utils.TextUtils;
 
 import java.util.function.Consumer;
 
@@ -15,6 +16,10 @@ public class MessageQueueRedis implements MessageQueue {
     public MessageQueueRedis(String name, RedisClient redisX) {
         _queue_name = name;
         _redisX = redisX;
+
+        if(TextUtils.isEmpty(_queue_name)){
+            _queue_name = "water_msg";
+        }
     }
 
     @Override

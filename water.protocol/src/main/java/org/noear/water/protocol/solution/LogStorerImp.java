@@ -19,6 +19,14 @@ public class LogStorerImp implements LogStorer {
 
     @Override
     public void writeAll(List<LogEvent> list) {
+        if(list == null){
+            return;
+        }
+
+        if(ProtocolHub.logSourceFactory == null){
+            return;
+        }
+
         for (LogEvent log : list) {
             if (log.log_id == 0) {
                 log.log_id = SnowflakeUtils.genId(); //ProtocolHub.idBuilder.getLogId(log.logger);
