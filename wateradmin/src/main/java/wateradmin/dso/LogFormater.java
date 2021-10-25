@@ -1,6 +1,6 @@
 package wateradmin.dso;
 
-import org.noear.water.log.Level;
+import org.noear.water.model.LogLevel;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.HtmlEncode;
@@ -17,7 +17,7 @@ public class LogFormater {
 
         //头
         buf.append("<span class='level").append(log.level).append("'>");
-        buf.append("[").append(Level.of(log.level).name()).append("] ");
+        buf.append("[").append(LogLevel.of(log.level).name()).append("] ");
 
         Datetime log_fulltime = new Datetime(log.log_fulltime);
         buf.append("<a time='").append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS")).append("'>");
@@ -83,7 +83,7 @@ public class LogFormater {
 
 
     public String levelHtml(LogModel log) {
-        return "<span class='level" + log.level + "'>[" + Level.of(log.level).name() + "]</span>";
+        return "<span class='level" + log.level + "'>[" + LogLevel.of(log.level).name() + "]</span>";
     }
 
     public String summaryHtml(LogModel log) {

@@ -1,8 +1,8 @@
-package org.noear.water.log;
+package org.noear.water.model;
 
 import java.util.Date;
 
-public class LogEvent {
+public class LogM {
     public String group;
     public long log_id;
     public String logger;

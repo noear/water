@@ -1,6 +1,6 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
@@ -27,7 +27,7 @@ public class LogSourceProxy implements LogSource {
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) throws Exception {
+    public void writeAll(String logger, List<LogM> list) throws Exception {
         real.writeAll(logger, list);
     }
 

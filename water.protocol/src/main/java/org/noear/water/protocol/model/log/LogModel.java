@@ -2,10 +2,6 @@ package org.noear.water.protocol.model.log;
 
 
 import lombok.Getter;
-import org.noear.water.log.Level;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.HtmlEncode;
-import org.noear.water.utils.TextUtils;
 
 import java.util.Date;
 

@@ -4,8 +4,6 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.noear.rubber.models.SchemeRuleModel;
 import org.noear.snack.ONode;
 import org.noear.solon.logging.utils.TagsMDC;
-import org.noear.water.WaterClient;
-import org.noear.water.log.Level;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

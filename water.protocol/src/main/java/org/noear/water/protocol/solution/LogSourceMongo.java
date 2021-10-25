@@ -1,6 +1,6 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.NameUtils;
@@ -72,14 +72,14 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) throws Exception {
+    public void writeAll(String logger, List<LogM> list) throws Exception {
         if (list.size() == 0) {
             return;
         }
 
         List<Map<String, Object>> dataList = new ArrayList<>();
 
-        for (LogEvent event : list) {
+        for (LogM event : list) {
             Datetime datetime = null;
             if (event.log_fulltime == null) {
                 datetime = new Datetime();

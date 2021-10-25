@@ -1,7 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.solon.core.event.EventBus;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.LogStorer;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.utils.SnowflakeUtils;
@@ -18,7 +18,7 @@ public class LogStorerImp implements LogStorer {
 
 
     @Override
-    public void writeAll(List<LogEvent> list) {
+    public void writeAll(List<LogM> list) {
         if(list == null){
             return;
         }
@@ -27,7 +27,7 @@ public class LogStorerImp implements LogStorer {
             return;
         }
 
-        for (LogEvent log : list) {
+        for (LogM log : list) {
             if (log.log_id == 0) {
                 log.log_id = SnowflakeUtils.genId(); //ProtocolHub.idBuilder.getLogId(log.logger);
             }
@@ -73,10 +73,10 @@ public class LogStorerImp implements LogStorer {
             }
         }
 
-        Map<String, List<LogEvent>> map = list.stream()
+        Map<String, List<LogM>> map = list.stream()
                 .collect(Collectors.groupingBy(m -> m.logger));
 
-        for (Map.Entry<String, List<LogEvent>> kv : map.entrySet()) {
+        for (Map.Entry<String, List<LogM>> kv : map.entrySet()) {
             try {
                 if (kv.getKey().contains(".")) {
                     EventBus.push(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));

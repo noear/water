@@ -1,7 +1,7 @@
 package org.noear.water;
 
 import org.noear.solon.cloud.utils.http.HttpUtils;
-import org.noear.water.log.Level;
+import org.noear.water.model.LogLevel;
 import org.noear.weed.cache.CacheUsing;
 
 import java.util.Map;
@@ -103,22 +103,22 @@ public class WaterProxy {
      * 给FaaS用
      * */
     public static void logTrace(String logger, Map<String, Object> map) {
-        WaterClient.Log.append(logger, Level.TRACE, map);
+        WaterClient.Log.append(logger, LogLevel.TRACE, map);
     }
 
     public static void logDebug(String logger, Map<String, Object> map) {
-        WaterClient.Log.append(logger, Level.DEBUG, map);
+        WaterClient.Log.append(logger, LogLevel.DEBUG, map);
     }
 
     public static void logInfo(String logger, Map<String, Object> map) {
-        WaterClient.Log.append(logger, Level.INFO, map);
+        WaterClient.Log.append(logger, LogLevel.INFO, map);
     }
 
     public static void logWarn(String logger, Map<String, Object> map) {
-        WaterClient.Log.append(logger, Level.WARN, map);
+        WaterClient.Log.append(logger, LogLevel.WARN, map);
     }
 
     public static void logError(String logger, Map<String, Object> map) {
-        WaterClient.Log.append(logger, Level.ERROR, map);
+        WaterClient.Log.append(logger, LogLevel.ERROR, map);
     }
 }

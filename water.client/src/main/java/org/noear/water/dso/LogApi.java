@@ -5,8 +5,8 @@ import org.noear.water.WW;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
-import org.noear.water.log.Level;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogLevel;
+import org.noear.water.model.LogM;
 import org.noear.water.utils.*;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class LogApi {
      * 添加日志
      */
     @Deprecated
-    public void append(String logger, Level level, Map<String, Object> map) {
+    public void append(String logger, LogLevel level, Map<String, Object> map) {
         if (TextUtils.isEmpty(logger)) {
             return;
         }
@@ -41,7 +41,7 @@ public class LogApi {
             return;
         }
 
-        LogEvent log = new LogEvent();
+        LogM log = new LogM();
 
         log.logger = logger;
         log.level = level.code;
@@ -58,7 +58,7 @@ public class LogApi {
         append(log);
     }
 
-    public void append(LogEvent log) {
+    public void append(LogM log) {
         if (TextUtils.isEmpty(log.logger)) {
             return;
         }
@@ -68,7 +68,7 @@ public class LogApi {
         }
 
         if(log.level == 0){
-            log.level = Level.ERROR.code;
+            log.level = LogLevel.ERROR.code;
         }
 
         if (log.trace_id == null) {
@@ -88,7 +88,7 @@ public class LogApi {
     }
 
 
-    public void appendAll(List<LogEvent> list, boolean async) {
+    public void appendAll(List<LogM> list, boolean async) {
         if (async) {
             WaterSetting.pools.submit(() -> {
                 appendAllDo(list);
@@ -98,7 +98,7 @@ public class LogApi {
         }
     }
 
-    private void appendAllDo(List<LogEvent> list) {
+    private void appendAllDo(List<LogM> list) {
         if (list == null || list.size() == 0) {
             return;
         }

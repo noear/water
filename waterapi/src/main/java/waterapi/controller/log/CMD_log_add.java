@@ -6,8 +6,8 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
-import org.noear.water.log.Level;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogLevel;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
@@ -43,7 +43,7 @@ public class CMD_log_add extends UapiBase {
 
         String log_fulltime_str = ctx.param("log_fulltime");
 
-        LogEvent log = new LogEvent();
+        LogM log = new LogM();
 
         log.group = ctx.param("group", "");
         log.app_name = ctx.param("app_name", "");
@@ -71,7 +71,7 @@ public class CMD_log_add extends UapiBase {
             log.trace_id = trace_id;
         }
 
-        log.level = Level.of(level).code;
+        log.level = LogLevel.of(level).code;
         log.content = content;
         log.from = from;
 

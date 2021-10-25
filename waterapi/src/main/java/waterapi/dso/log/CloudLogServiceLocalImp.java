@@ -7,6 +7,7 @@ import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.cloud.service.CloudLogService;
 import org.noear.solon.logging.event.LogEvent;
 import org.noear.water.WW;
+import org.noear.water.model.LogM;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LogHelper;
 import waterapi.dso.LogPipelineLocal;
@@ -35,7 +36,7 @@ public class CloudLogServiceLocalImp implements CloudLogService {
 
         Datetime datetime = Datetime.Now();
 
-        org.noear.water.log.LogEvent log = new org.noear.water.log.LogEvent();
+        LogM log = new LogM();
 
         log.group = Solon.cfg().appGroup();
         log.app_name = Solon.cfg().appName();

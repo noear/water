@@ -1,7 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.NameUtils;
@@ -80,7 +80,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void writeAll(String logger, List<LogEvent> list) throws Exception {
+    public void writeAll(String logger, List<LogM> list) throws Exception {
         if (list.size() == 0) {
             return;
         }

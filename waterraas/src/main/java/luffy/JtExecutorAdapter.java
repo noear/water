@@ -7,7 +7,7 @@ import org.noear.luffy.model.AFileModel;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WaterClient;
-import org.noear.water.log.Level;
+import org.noear.water.model.LogLevel;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
@@ -57,7 +57,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
             }
         }
 
-        WaterClient.Log.append(water_log_paas, Level.DEBUG, data);
+        WaterClient.Log.append(water_log_paas, LogLevel.DEBUG, data);
     }
 
     @Override

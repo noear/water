@@ -8,7 +8,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.WW;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.utils.SnowflakeUtils;
 import org.noear.water.utils.GzipUtils;
 import waterapi.controller.UapiBase;
@@ -54,9 +54,9 @@ public class CMD_log_add2 extends UapiBase {
             throw UapiCodes.CODE_13("list");
         }
 
-        List<LogEvent> list = ONode.load(list_json).toObjectList(LogEvent.class);
+        List<LogM> list = ONode.load(list_json).toObjectList(LogM.class);
 
-        for (LogEvent log : list) {
+        for (LogM log : list) {
             log.log_id = SnowflakeUtils.genId();
         }
 

@@ -1,6 +1,6 @@
-package org.noear.water.log;
+package org.noear.water.model;
 
-public enum Level {
+public enum LogLevel {
     TRACE(1),
     DEBUG(2),
     INFO(3),
@@ -9,8 +9,8 @@ public enum Level {
 
     public final int code;
 
-    public static Level of(int code){
-        for(Level v : values()){
+    public static LogLevel of(int code){
+        for(LogLevel v : values()){
             if(v.code == code){
                 return v;
             }
@@ -19,7 +19,7 @@ public enum Level {
         return INFO;
     }
 
-    Level(int code) {
+    LogLevel(int code) {
         this.code = code;
     }
 }

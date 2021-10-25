@@ -1,7 +1,7 @@
 package org.noear.water.dso;
 
 import org.noear.water.WaterClient;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.utils.EventPipeline;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author noear
  * @since 2.0
  * */
-public class LogPipeline extends EventPipeline<LogEvent> {
+public class LogPipeline extends EventPipeline<LogM> {
     private static LogPipeline singleton = new LogPipeline();
 
     public static LogPipeline singleton() {
@@ -25,7 +25,7 @@ public class LogPipeline extends EventPipeline<LogEvent> {
     }
 
     @Override
-    protected void handler(List<LogEvent> logEvents) {
+    protected void handler(List<LogM> logEvents) {
         WaterClient.Log.appendAll(logEvents, true);
     }
 }

@@ -1,7 +1,7 @@
 package waterapi.dso;
 
 import org.noear.solon.core.event.EventBus;
-import org.noear.water.log.LogEvent;
+import org.noear.water.model.LogM;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.EventPipeline;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * 提交时，每次提交100条；消费完后暂停1秒
  *
  * */
-public class LogPipelineLocal extends EventPipeline<LogEvent> {
+public class LogPipelineLocal extends EventPipeline<LogM> {
     private static LogPipelineLocal singleton = new LogPipelineLocal();
 
     public static LogPipelineLocal singleton() {
@@ -24,7 +24,7 @@ public class LogPipelineLocal extends EventPipeline<LogEvent> {
     }
 
     @Override
-    protected void handler(List<LogEvent> logEvents) {
+    protected void handler(List<LogM> logEvents) {
         try {
             ProtocolHub.logStorer.writeAll(logEvents);
         } catch (Throwable ex) {
