@@ -2,6 +2,7 @@ package waterapi;
 
 import org.noear.solon.SolonBuilder;
 import org.noear.solon.cloud.CloudManager;
+import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
@@ -50,6 +51,8 @@ public class WaterapiApp {
 					Config.tryRegService();
 				});
 
+
+		System.out.println("[WaterApi]App started: http://" + Instance.local().address());
 
 		PreheatUtils.preheat("/run/check/");
 		PreheatUtils.preheat("/cfg/get/?tag=water");
