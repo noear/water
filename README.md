@@ -32,7 +32,7 @@
 
 关键持久化说明：
 
-* 日志持久化，支持：MySql（或与MySql兼容的可存储服务）、MongoDb、ElasticSearch、ClickHouse
+* 日志持久化，支持：MySql（或兼容服务）、MongoDb、ElasticSearch、ClickHouse
 * 消息持久化，支持：MySql、MongoDb
 
 ### (一) 使用
