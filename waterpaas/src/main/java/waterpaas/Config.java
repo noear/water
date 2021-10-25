@@ -21,8 +21,6 @@ public class Config {
     public static final DbContext water = cfg(WW.water).getDb(true);
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
-    public static ConfigM water_redis = cfg(WW.water_redis);
-
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 
@@ -32,7 +30,7 @@ public class Config {
 
         //WeedConfig.isUsingValueExpression = false;
 
-        waterpaas_secretKey = app.cfg().get("water.service.secretKey");
+        waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
     }
 
 
