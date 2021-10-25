@@ -18,7 +18,7 @@ public class MessageQueueRedis implements MessageQueue {
         _redisX = redisX;
 
         if(TextUtils.isEmpty(_queue_name)){
-            _queue_name = "water_msg";
+            _queue_name = "water_msg_queue";
         }
     }
 
