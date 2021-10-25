@@ -14,4 +14,15 @@ solon.cloud.water:
   event:
     seal: "0zJt0J88TkIvqYgC"
 
+solon.logging.appender:
+  console:
+    level: "INFO"
+
+solon.logging.logger:
+  "org.eclipse.jetty.*":
+    level: "WARN"
+  "com.zaxxer.hikari.*":
+    level: "WARN"
+
+
 waterpaas.secretKey: "0zJt0J88TkIvqYgC"

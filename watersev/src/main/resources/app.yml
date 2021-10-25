@@ -12,3 +12,13 @@ solon.cloud.water:
     default: "water_log_sev"
   event:
     seal: "0kqvJpJ3dsSGCPoH"
+
+solon.logging.appender:
+  console:
+    level: "INFO"
+
+solon.logging.logger:
+  "org.eclipse.jetty.*":
+    level: "WARN"
+  "com.zaxxer.hikari.*":
+    level: "WARN"

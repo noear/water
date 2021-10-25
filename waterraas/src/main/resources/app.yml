@@ -13,3 +13,13 @@ solon.cloud.water:
   event:
     receive: "@raas_uri"
     seal: "qTYzsNjzCN9I44FB"
+
+solon.logging.appender:
+  console:
+    level: "INFO"
+
+solon.logging.logger:
+  "org.eclipse.jetty.*":
+    level: "WARN"
+  "com.zaxxer.hikari.*":
+    level: "WARN"
