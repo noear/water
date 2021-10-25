@@ -1,0 +1,18 @@
+server.port: 9371
+server.request.maxRequestSize: 2mb
+
+solon.extend: waterapi_ext
+
+solon.app:
+  name: waterapi
+  group: water
+
+solon.logging.appender:
+  console:
+    level: "INFO"
+
+solon.logging.logger:
+  "org.eclipse.jetty.*":
+    level: "WARN"
+  "com.zaxxer.hikari.*":
+    level: "WARN"
