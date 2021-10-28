@@ -1,27 +1,24 @@
 package wateradmin;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.Props;
-import org.noear.solon.core.handle.Context;
+import org.noear.solon.extend.cors.CrossHandler;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
 import org.noear.weed.DbContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.controller.cfg.PropController;
 import wateradmin.controller.cfg.WhitelistController;
 import wateradmin.dso.CacheUtil;
+import wateradmin.dso.ErrorListener;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.MonitoringAliyun;
 import wateradmin.setup.Setup;
@@ -111,13 +108,14 @@ public class WateradminApp {
     private static void runStart(NvMap argx) {
         System.err.println("[Water] run mode start...");
 
-        Logger logger = LoggerFactory.getLogger("water_log_admin");
-
         Solon.start(WateradminApp.class, argx, x -> {
             Config.tryInit(x);
 
             x.enableErrorAutoprint(false);
+            x.before(new CrossHandler().allowCredentials(true));
 
+
+            x.onError(new ErrorListener());
 
             //设置接口
             //
@@ -127,18 +125,6 @@ public class WateradminApp {
             ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data);
 
             ProtocolHub.monitoring = new MonitoringAliyun();
-        }).onError((ex) -> {
-            Context ctx = Context.current();
-
-            if (ctx == null) {
-                MDC.put("tag0", "global");
-                logger.error( "{}", ex);
-            } else {
-                MDC.put("tag0", ctx.path());
-
-                String summary = ONode.stringify(ctx.paramMap());
-                logger.error("{}\r\n{}", summary, ex);
-            }
         });
 
         PreheatUtils.preheat("/run/check/");
