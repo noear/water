@@ -61,12 +61,12 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water.utils</artifactId>
+            <artifactId>water.protocol</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water.protocol</artifactId>
+            <artifactId>water.server</artifactId>
         </dependency>
 
         <dependency>
