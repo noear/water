@@ -68,7 +68,18 @@ public class TrackApi {
     /**
      * 跟踪SQL命令性能
      */
+    @Deprecated
     public void track(String service, Command cmd, long thresholdValue) {
+        trackOfPerformance(service, cmd, thresholdValue);
+    }
+
+    /**
+     * 跟踪SQL性能
+     *
+     * @param service 服务名
+     * @param thresholdValue 阈值
+     */
+    public void trackOfPerformance(String service, Command cmd, long thresholdValue) {
         long timespan = cmd.timespan();
 
         if (timespan > thresholdValue) {
@@ -76,11 +87,22 @@ public class TrackApi {
         }
     }
 
-    /**
-     * 跟踪SQL命令性能
-     */
-    public void track(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
 
+    @Deprecated
+    public void track(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
+        trackOfBehavior(service, cmd, ua, path, operator, operator_ip);
+    }
+
+    /**
+     * 跟踪SQL行为
+     *
+     * @param service 服务名
+     * @param ua ua
+     * @param path 请求路径
+     * @param operator 操作人
+     * @param operator_ip 操作IP
+     */
+    public void trackOfBehavior(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
         track0(service, cmd, ua, path, operator, operator_ip, null);
     }
 
