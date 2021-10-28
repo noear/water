@@ -5,6 +5,8 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.water.protocol.ProtocolHub;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import waterapi.controller.UapiBase;
 
 /**
@@ -15,6 +17,8 @@ import waterapi.controller.UapiBase;
  */
 @Controller
 public class CMD_run_cache_update extends UapiBase {
+    static Logger log = LoggerFactory.getLogger(CMD_run_cache_update.class);
+
     @Mapping("/run/cache/update/")
     public Result cmd_exec(String tags) throws Exception {
         if (Utils.isNotEmpty(tags)) {
@@ -35,6 +39,7 @@ public class CMD_run_cache_update extends UapiBase {
             if ("logger".equals(ss[0])) {
                 if (ProtocolHub.logSourceFactory != null) {
                     ProtocolHub.logSourceFactory.updateSource(ss[1]); //尝试更新源
+                    log.info("Logger source updated: {}", ss[1]);
                 }
                 return;
             }
