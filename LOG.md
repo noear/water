@@ -1,4 +1,4 @@
-#### 2.2.17
+#### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持
 * 增加 water_lob 的 es 存储
 * 实现 Logger source 即时同步热切换

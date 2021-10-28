@@ -99,7 +99,7 @@ public class LogSourceMongo implements LogSource {
             data.put("from", event.from);
 
             data.put("group", event.group);
-            data.put("app_name", event.app_name);
+            data.put("service", event.service);
             data.put("class_name", NameUtils.formatClassName(event.class_name));
             data.put("thread_name", event.thread_name);
 

@@ -3,7 +3,6 @@ package org.noear.water.model;
 import java.util.Date;
 
 public class LogM {
-    public String group;
     public long log_id;
     public String logger;
     public String trace_id;
@@ -14,7 +13,8 @@ public class LogM {
     public String tag3;
     public String tag4;
     public String content;
-    public String app_name;
+    public String group;
+    public String service;
     public String class_name;
     public String thread_name;
     public String from;

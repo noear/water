@@ -46,7 +46,7 @@ public class CMD_log_add extends UapiBase {
         LogM log = new LogM();
 
         log.group = ctx.param("group", "");
-        log.app_name = ctx.param("app_name", "");
+        log.service = ctx.param("app_name", "");
 
         log.tag = ctx.param("tag", "");
         log.tag1 = ctx.param("tag1", "");

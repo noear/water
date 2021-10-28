@@ -9,7 +9,7 @@ create table if not exists ${logger}
     tag3 Nullable(String),
     tag4 Nullable(String),
     group Nullable(String),
-    app_name Nullable(String),
+    service Nullable(String),
     class_name Nullable(String),
     thread_name Nullable(String),
     content Nullable(String),

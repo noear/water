@@ -35,7 +35,7 @@
       "group": {
         "type":"keyword"
       },
-      "app_name": {
+      "service": {
         "type":"keyword"
       },
       "class_name": {

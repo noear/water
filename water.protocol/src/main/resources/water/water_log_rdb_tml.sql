@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `${logger}` (
   `tag3` varchar(100) COLLATE utf8mb4_general_ci COMMENT '标签3',
   `tag4` varchar(100) COLLATE utf8mb4_general_ci COMMENT '标签4',
   `group` varchar(100) COLLATE utf8mb4_general_ci COMMENT '分组',
-  `app_name` varchar(100) COLLATE utf8mb4_general_ci COMMENT '应用名',
+  `service` varchar(100) COLLATE utf8mb4_general_ci COMMENT '服务名',
   `class_name` varchar(512) COLLATE utf8mb4_general_ci COMMENT '类名',
   `thread_name` varchar(255) COLLATE utf8mb4_general_ci COMMENT '线程名',
   `content` longtext COLLATE utf8mb4_general_ci COMMENT '内容',
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `${logger}` (
   KEY `IX_tag3` (`tag3`) USING BTREE,
   KEY `IX_tag4` (`tag4`) USING BTREE,
   KEY `IX_group` (`group`) USING BTREE,
-  KEY `IX_app_name` (`app_name`) USING BTREE,
+  KEY `IX_service` (`service`) USING BTREE,
   KEY `IX_trace_id` (`trace_id`) USING BTREE,
   KEY `IX_log_fulltime` (`log_fulltime`) USING BTREE,
   KEY `IX_level` (`level`) USING BTREE

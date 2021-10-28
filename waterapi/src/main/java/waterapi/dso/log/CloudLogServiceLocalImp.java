@@ -39,7 +39,7 @@ public class CloudLogServiceLocalImp implements CloudLogService {
         LogM log = new LogM();
 
         log.group = Solon.cfg().appGroup();
-        log.app_name = Solon.cfg().appName();
+        log.service = Solon.cfg().appName();
 
         log.logger = loggerName;
         log.level = (logEvent.getLevel().code / 10);
