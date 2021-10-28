@@ -33,6 +33,7 @@ public class WaterapiApp {
 					x.cfg().loadEnv("water.");
 
 					x.enableStaticfiles(false);
+					x.enableErrorAutoprint(false);
 
 					//尝试初始化
 					Config.tryInit();

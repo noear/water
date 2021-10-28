@@ -24,6 +24,8 @@ public class WaterpaasApp {
         SolonApp app = Solon.start(WaterpaasApp.class, args, (x) -> {
             Config.tryInit(x);
 
+            x.enableErrorAutoprint(false);
+
             //设置接口
             //
             ProtocolHub.config = WaterClient.Config::get;

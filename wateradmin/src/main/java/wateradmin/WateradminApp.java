@@ -72,6 +72,8 @@ public class WateradminApp {
                 System.setProperty(WW.cfg_water_ds_password, p);
             }
 
+            x.enableErrorAutoprint(false);
+
             x.beanScan(EnumTag.class);
             x.beanMake(PropController.class);
             x.beanMake(WhitelistController.class);
@@ -111,8 +113,10 @@ public class WateradminApp {
 
         Logger logger = LoggerFactory.getLogger("water_log_admin");
 
-        Solon.start(WateradminApp.class, argx, app -> {
-            Config.tryInit(app);
+        Solon.start(WateradminApp.class, argx, x -> {
+            Config.tryInit(x);
+
+            x.enableErrorAutoprint(false);
 
 
             //设置接口
