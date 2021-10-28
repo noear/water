@@ -13,13 +13,9 @@ import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 
-/**
- * 实时更新FaaS代码
- * */
 @Slf4j
 @CloudEvent(topic = "water.cache.update", level = EventLevel.instance)
 public class msg_updatecache implements CloudEventHandler {
-    static final String label_hook_start = "hook.start";
 
     @Override
     public boolean handler(Event event) throws Throwable {
@@ -41,24 +37,24 @@ public class msg_updatecache implements CloudEventHandler {
                     ProtocolHub.logSourceFactory.updateSource(ss[1]); //尝试更新源
                 }
 
-                loggerUpdateOfApi(ss[1]);
+                cachedUpdateOfApi(ss[1]);
                 return;
             }
         }
     }
 
 
-    private void loggerUpdateOfApi(String logger) {
+    private void cachedUpdateOfApi(String logger) {
         CloudLoadBalance loadBalance = CloudLoadBalanceFactory.instance.get("water", WW.waterapi);
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
             try {
-                HttpUtils.http("http://" + instance.address() + "/log/logger/")
+                HttpUtils.http("http://" + instance.address() + "/run/cache/update/")
                         .data("logger", logger)
                         .post();
 
-                log.error("Logger source update succeed: {}", instance.address());
+                log.error("Cached update succeed: {}", instance.address());
             } catch (Exception e) {
-                log.error("Logger source update error: {}:\r\n{}", instance.address(), e);
+                log.error("Cached update error: {}:\r\n{}", instance.address(), e);
             }
         }
     }
