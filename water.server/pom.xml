@@ -18,7 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3-solon-plugin</artifactId>
+            <artifactId>solon</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
         </dependency>
 
         <dependency>

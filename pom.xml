@@ -21,8 +21,6 @@
     <modules>
         <module>water-parent</module>
 
-        <module>water.server</module>
-
         <module>waterapi</module>
         <module>wateradmin</module>
         <module>watersev</module>

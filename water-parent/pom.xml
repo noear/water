@@ -442,5 +442,6 @@
         <module>../water.utils</module>
         <module>../water.protocol</module>
         <module>../water.client</module>
+        <module>../water.server</module>
     </modules>
 </project>
