@@ -25,6 +25,8 @@ public class msg_updatecache implements CloudEventHandler {
             }
         }
 
+        cachedUpdateOfApi(event.content());
+
         return true;
     }
 
@@ -36,20 +38,23 @@ public class msg_updatecache implements CloudEventHandler {
                 if (ProtocolHub.logSourceFactory != null) {
                     ProtocolHub.logSourceFactory.updateSource(ss[1]); //尝试更新源
                 }
-
-                cachedUpdateOfApi(ss[1]);
                 return;
             }
         }
     }
 
 
-    private void cachedUpdateOfApi(String logger) {
-        CloudLoadBalance loadBalance = CloudLoadBalanceFactory.instance.get("water", WW.waterapi);
+    private void cachedUpdateOfApi(String tags) {
+        if (TextUtils.isEmpty(tags)) {
+            return;
+        }
+
+        CloudLoadBalance loadBalance = (CloudLoadBalance) CloudLoadBalanceFactory.instance.create("water", WW.waterapi);
+
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
             try {
                 HttpUtils.http("http://" + instance.address() + "/run/cache/update/")
-                        .data("logger", logger)
+                        .data("tags", tags)
                         .post();
 
                 log.error("Cached update succeed: {}", instance.address());
