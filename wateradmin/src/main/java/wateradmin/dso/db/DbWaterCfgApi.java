@@ -494,6 +494,7 @@ public class DbWaterCfgApi {
         if (logger_id > 0) {
             boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
 
+            //发送通知消息
             NoticeUtils.updateCache("logger:" + logger);
 
             return isOk;
