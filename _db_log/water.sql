@@ -62,3 +62,9 @@ ALTER TABLE `rubber_scheme_rule`
 
 
 
+-- 2021.10.28 //添加更新时间
+ALTER TABLE `water_cfg_logger`
+    ADD COLUMN `update_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' AFTER `is_alarm`;
+
+
+
