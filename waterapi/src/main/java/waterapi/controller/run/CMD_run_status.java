@@ -8,6 +8,7 @@ import org.noear.water.utils.RuntimeStatus;
 import org.noear.water.utils.RuntimeUtils;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
+import waterapi.dso.interceptor.Logging;
 
 /**
  * 运行时状态
@@ -16,6 +17,7 @@ import waterapi.controller.UapiBase;
  * @since 2017.07
  * Update time 2020.09
  */
+@Logging
 @Whitelist
 @Controller
 public class CMD_run_status extends UapiBase {

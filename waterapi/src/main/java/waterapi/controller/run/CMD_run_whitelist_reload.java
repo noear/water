@@ -6,6 +6,7 @@ import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.interceptor.Logging;
 
 /**
  * 白名单重新加载
@@ -14,6 +15,7 @@ import waterapi.dso.db.DbWaterCfgApi;
  * @since 2017.07
  * Update time 2020.09
  */
+@Logging
 @Whitelist
 @Controller
 public class CMD_run_whitelist_reload extends UapiBase {

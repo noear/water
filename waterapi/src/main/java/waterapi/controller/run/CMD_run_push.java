@@ -11,6 +11,7 @@ import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.Config;
+import waterapi.dso.interceptor.Logging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * @since 2017.07
  * Update time 2020.09
  */
+@Logging
 @Whitelist
 @Controller
 public class CMD_run_push extends UapiBase {

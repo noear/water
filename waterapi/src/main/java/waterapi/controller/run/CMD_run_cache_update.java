@@ -4,10 +4,12 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
+import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.protocol.ProtocolHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import waterapi.controller.UapiBase;
+import waterapi.dso.interceptor.Logging;
 
 /**
  * 缓存更新
@@ -15,6 +17,8 @@ import waterapi.controller.UapiBase;
  * @author noear
  * @since 2021.10
  */
+@Logging
+@Whitelist
 @Controller
 public class CMD_run_cache_update extends UapiBase {
     static Logger log = LoggerFactory.getLogger(CMD_run_cache_update.class);
