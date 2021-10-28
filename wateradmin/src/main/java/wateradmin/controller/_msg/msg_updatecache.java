@@ -61,7 +61,7 @@ public class msg_updatecache implements CloudEventHandler {
                         .data("tags", tags)
                         .post();
 
-                log.error("Cached update succeed: {} - @{}", tags, instance.address());
+                log.info("Cached update succeed: {} - @{}", tags, instance.address());
             } catch (Exception e) {
                 log.error("Cached update error: {} - @{}:\r\n{}", tags, instance.address(), e);
             }
