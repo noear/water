@@ -55,6 +55,8 @@ public class msg_updatecache implements CloudEventHandler {
                 HttpUtils.http("http://" + instance.address() + "/log/logger/")
                         .data("logger", logger)
                         .post();
+
+                log.error("Logger source update succeed: {}", instance.address());
             } catch (Exception e) {
                 log.error("Logger source update error: {}:\r\n{}", instance.address(), e);
             }
