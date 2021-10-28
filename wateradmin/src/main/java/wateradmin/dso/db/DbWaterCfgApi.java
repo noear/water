@@ -366,22 +366,6 @@ public class DbWaterCfgApi {
         return getConfigByTagName(ss[0], ss[1]);
     }
 
-    //获取配置项目
-    public static DbContext getDbContext(String sourceKey, DbContext defDb) throws SQLException {
-
-        if (sourceKey == null || sourceKey.indexOf("/") < 0) {
-            return defDb;
-        } else {
-            String[] ss = sourceKey.split("/");
-            ConfigModel cfg = getConfigByTagName(ss[0], ss[1]);
-
-            if (TextUtils.isEmpty(cfg.value)) {
-                return defDb;
-            } else {
-                return cfg.getDb();
-            }
-        }
-    }
 
     public static ConfigModel getConfigByTagName(String tag, String name) throws SQLException {
         return getConfigByTagName(tag,name,false);
@@ -505,12 +489,16 @@ public class DbWaterCfgApi {
                 .set("logger", logger)
                 .set("keep_days", keep_days)
                 .set("source", source)
-                .set("is_alarm",is_alarm)
+                .set("is_alarm", is_alarm)
                 .set("note", note);
         if (logger_id > 0) {
-            return db.where("logger_id = ?", logger_id).update() > 0;
+            boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
+
+            NoticeUtils.updateCache("logger:" + logger);
+
+            return isOk;
         } else {
-            return db.set("is_enabled",1).insert() > 0;
+            return db.set("is_enabled", 1).insert() > 0;
         }
     }
 

@@ -7,6 +7,7 @@ import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
+import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.AFileUtil;
 import watersev.dso.DbPaaSApi;
@@ -47,6 +48,14 @@ public class msg_updatecache implements CloudEventHandler {
                         }
                     }
                 }
+                return;
+            }
+
+            if ("logger".equals(ss[0])) {
+                if (ProtocolHub.logSourceFactory != null) {
+                    ProtocolHub.logSourceFactory.updateSource(ss[1]);
+                }
+                return;
             }
         }
     }

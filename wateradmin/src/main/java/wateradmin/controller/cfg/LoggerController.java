@@ -103,6 +103,7 @@ public class LoggerController extends BaseController {
 
         if (result) {
             ProtocolHub.logQuerier.create(logger);
+            ProtocolHub.logSourceFactory.updateSource(logger); //尝试更新源
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败！");
