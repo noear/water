@@ -1,13 +1,20 @@
 package wateradmin.controller.cfg;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Param;
 import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.cloud.impl.CloudLoadBalance;
+import org.noear.solon.cloud.impl.CloudLoadBalanceFactory;
+import org.noear.solon.cloud.model.Instance;
+import org.noear.solon.cloud.utils.http.HttpUtils;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
+import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
+import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
@@ -23,6 +30,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @Mapping("/cfg/")
 public class LoggerController extends BaseController {
@@ -104,6 +112,9 @@ public class LoggerController extends BaseController {
         if (result) {
             ProtocolHub.logQuerier.create(logger);
             ProtocolHub.logSourceFactory.updateSource(logger); //尝试更新源
+
+            loggerUpdateOfApi(logger);
+
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败！");
@@ -132,5 +143,18 @@ public class LoggerController extends BaseController {
         DbWaterCfgApi.setLoggerEnabled(logger_id, is_enabled);
 
         return viewModel.code(1, "保存成功！");
+    }
+
+    private void loggerUpdateOfApi(String logger) {
+        CloudLoadBalance loadBalance = CloudLoadBalanceFactory.instance.get("water", WW.waterapi);
+        for (Instance instance : loadBalance.getDiscovery().cluster()) {
+            try {
+                HttpUtils.http("http://" + instance.address() + "/log/logger/")
+                        .data("logger", logger)
+                        .post();
+            } catch (Exception e) {
+                log.error("Logger source update error: {}:\r\n{}", instance.address(), e);
+            }
+        }
     }
 }
