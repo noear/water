@@ -49,6 +49,10 @@ public class msg_updatecache implements CloudEventHandler {
             return;
         }
 
+        if (tags.contains("logger:") == false) {
+            return;
+        }
+
         CloudLoadBalance loadBalance = (CloudLoadBalance) CloudLoadBalanceFactory.instance.create("water", WW.waterapi);
 
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
