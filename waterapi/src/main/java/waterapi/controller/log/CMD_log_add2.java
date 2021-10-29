@@ -1,6 +1,7 @@
 package waterapi.controller.log;
 
 import org.noear.snack.ONode;
+import org.noear.snack.core.Options;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -16,6 +17,7 @@ import waterapi.controller.UapiCodes;
 import waterapi.dso.LogPipelineLocal;
 import waterapi.dso.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,10 +56,16 @@ public class CMD_log_add2 extends UapiBase {
             throw UapiCodes.CODE_13("list");
         }
 
-        List<LogM> list = ONode.load(list_json).toObjectList(LogM.class);
+        List<LogM> list = new ArrayList<>();
+        ONode oNode = ONode.load(list_json);
+        String typePropertyName = oNode.options().getTypePropertyName();
+        for (ONode n1 : oNode.ary()) {
+            n1.remove(typePropertyName);
 
-        for (LogM log : list) {
+            LogM log = n1.toObject(LogM.class);
             log.log_id = SnowflakeUtils.genId();
+
+            list.add(log);
         }
 
         LogPipelineLocal.singleton().addAll(list);
