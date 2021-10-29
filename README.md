@@ -78,8 +78,8 @@ public class DemoApp {
     public void main(String[] args) {
         SolonApp app = Solon.start(DemoApp.class, args);
 
-        Logger log = Logger
-        //监控服务：之：添加接口性能记录
+        //监控服务：之：添加接口性能记录（一般这个过滤器写成独立类）
+        Logger log = LoggerFactory.getLogger(DemoApp.class);
         app.filter((ctx, chain) -> {
             //1.开始计时（用于计算响应时长）
             long start = System.currentTimeMillis();
@@ -88,7 +88,7 @@ public class DemoApp {
                 chain.doFilter(ctx);
             } catch (Throwable e) {
                 //2.顺带记录个异常
-
+                log.error(e);
             } finally {
                 //3.获得接口响应时长
                 long milliseconds = System.currentTimeMillis() - start;
