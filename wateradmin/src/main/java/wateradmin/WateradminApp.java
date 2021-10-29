@@ -112,7 +112,7 @@ public class WateradminApp {
             Config.tryInit(x);
 
             x.enableErrorAutoprint(false);
-            x.before(new CrossHandler().allowCredentials(true));
+            //x.before(new CrossHandler().allowCredentials(true));
 
 
             x.onError(new ErrorListener());
