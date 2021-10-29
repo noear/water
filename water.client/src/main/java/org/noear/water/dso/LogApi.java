@@ -103,7 +103,7 @@ public class LogApi {
             return;
         }
 
-        String json = ONode.serialize(list);
+        String json = ONode.stringify(list);
 
         try {
             if (WaterSetting.water_logger_gzip()) {
