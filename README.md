@@ -51,7 +51,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.5.49</version>
+    <version>1.5.54</version>
 </dependency>
 ```
 
@@ -76,21 +76,20 @@ solon.cloud.water:
 ```java
 public class DemoApp{
   public void main(String[] args){
-      Solon app = Solon.start(args);
+      Solon.start(DemoApp.class, args, app->{
+          //监控服务：之：添加接口性能记录
+          app.filter((ctx, chain) -> {
+              //1.开始计时（用于计算响应时长）
+              long start = System.currentTimeMillis();
 
-      //监控服务：之：添加接口性能记录
-      app.before((c)->{
-          c.attrSet("_timecount", new Timecount().start());
-      });
-      app.after((c)->{
-          Timecount timecount = c.attr("_timecount", null);
-  
-          if (timecount == null || c.status() == 404) {
-              return;
-          }
-          
-          long milliseconds = timecount.stop().milliseconds();
-          CloudClient.metric().addMeter("path", c.pathNew(), milliseconds);
+              try {
+                  chain.doFilter(ctx);
+              } finally {
+                  //3.获得接口响应时长
+                  long milliseconds = System.currentTimeMillis() - start;
+                  CloudClient.metric().addMeter("path", c.pathNew(), milliseconds);
+              }
+          });
       });
   }
 }
