@@ -74,24 +74,28 @@ solon.cloud.water:
 
 #### 代码
 ```java
-public class DemoApp{
-  public void main(String[] args){
-      Solon.start(DemoApp.class, args, app->{
-          //监控服务：之：添加接口性能记录
-          app.filter((ctx, chain) -> {
-              //1.开始计时（用于计算响应时长）
-              long start = System.currentTimeMillis();
+public class DemoApp {
+    public void main(String[] args) {
+        SolonApp app = Solon.start(DemoApp.class, args);
 
-              try {
-                  chain.doFilter(ctx);
-              } finally {
-                  //3.获得接口响应时长
-                  long milliseconds = System.currentTimeMillis() - start;
-                  CloudClient.metric().addMeter("path", c.pathNew(), milliseconds);
-              }
-          });
-      });
-  }
+        Logger log = Logger
+        //监控服务：之：添加接口性能记录
+        app.filter((ctx, chain) -> {
+            //1.开始计时（用于计算响应时长）
+            long start = System.currentTimeMillis();
+
+            try {
+                chain.doFilter(ctx);
+            } catch (Throwable e) {
+                //2.顺带记录个异常
+
+            } finally {
+                //3.获得接口响应时长
+                long milliseconds = System.currentTimeMillis() - start;
+                CloudClient.metric().addMeter("path", c.pathNew(), milliseconds);
+            }
+        });
+    }
 }
 
 @Slf4j
