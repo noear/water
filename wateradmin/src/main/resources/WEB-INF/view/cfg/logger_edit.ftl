@@ -29,11 +29,15 @@
 
             vm.logger_id = logger_id;
 
+            layer.load(2);
+
             $.ajax({
                 type:"POST",
                 url:"/cfg/logger/edit/ajax/save",
                 data:vm,
                 success:function (data) {
+                    layer.closeAll();
+
                     if(data.code == 1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
@@ -42,6 +46,10 @@
                     }else{
                         top.layer.msg(data.msg);
                     }
+                },
+                error:function(data){
+                    layer.closeAll();
+                    layer.msg('网络请求出错...');
                 }
             });
         }
