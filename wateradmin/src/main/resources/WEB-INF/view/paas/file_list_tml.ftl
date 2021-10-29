@@ -32,7 +32,7 @@
             fromData.append("file", file);
             fromData.append("tag","${tag_name!}");
 
-            layer.load(2);
+            top.layer.load(2);
 
             $.ajax({
                 type:"POST",
@@ -41,7 +41,7 @@
                 processData: false,
                 contentType: false,
                 success:function (data) {
-                    layer.closeAll();
+                    top.layer.closeAll();
 
                     if(data.code==1) {
                         top.layer.msg('操作成功');
@@ -53,8 +53,8 @@
                     }
                 },
                 error:function(data){
-                    layer.closeAll();
-                    layer.msg('网络请求出错...');
+                    top.layer.closeAll();
+                    top.layer.msg('网络请求出错...');
                 }
             });
         }
