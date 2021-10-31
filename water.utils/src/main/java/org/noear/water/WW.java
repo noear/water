@@ -57,9 +57,6 @@ public class WW {
 
     public static final String water_bcf = "water_bcf";
 
-    public static final String type_logger = "logger.type";
-    public static final String type_queue = "queue.type";
-
     public static final String track_service = "_service";
     public static final String track_from = "_from";
 
