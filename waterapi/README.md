@@ -19,7 +19,7 @@ services:
     image: noearorg/waterapi
     container_name: waterapi
     environment:
-      water.ds.schema: water
+      water.ds.schema: water #默认可以不要
       water.ds.server: ${server}
       water.ds.username: ${username}
       water.ds.password: ${password}
@@ -28,7 +28,7 @@ services:
     networks:
       - water
 
-# JAVA_OPTS: "-Dwater.ds.schema=water -Dwater.ds.server=${server} -Dwater.ds.username=${username} -Dwater.ds.password=${password}"
+# JAVA_OPTS: "-Dwater.ds.server=${server} -Dwater.ds.username=${username} -Dwater.ds.password=${password}"
 # http://localhost:9371/healthz
 
 ```
@@ -42,7 +42,7 @@ services:
 
 **第一步：添加配置文件**
 
-在 waterapi.jar 文件包部添加配置文件：water_ini/_db.properties
+在 waterapi.jar 文件包部添加配置文件：`water_ini/_db.properties`
 
 ```properties
 water.ds.schema=water

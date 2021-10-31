@@ -20,7 +20,7 @@ public class InitPlugin implements Plugin {
 
         //构建数据源
         Props prop = app.cfg().getProp("water.dataSource");
-        if(prop.size() == 0){
+        if (prop.size() == 0) {
             prop = app.cfg().getProp("water.ds");
         }
 
@@ -29,6 +29,12 @@ public class InitPlugin implements Plugin {
         }
         String dbServer = prop.getProperty("server");
         String dbSchema = prop.getProperty("schema");
+
+        if (Utils.isEmpty(dbSchema)) {
+            dbSchema = "water";
+            prop.setProperty("schema", dbSchema);
+        }
+
         if (Utils.isNotEmpty(dbServer)) {
             prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
         }
