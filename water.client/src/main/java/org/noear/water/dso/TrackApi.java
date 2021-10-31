@@ -145,7 +145,7 @@ public class TrackApi {
         logM.trace_id = trace_id;
         logM.group = schema;
         logM.service = service;
-        logM.class_name = String.valueOf(interval); //毫秒数
+        logM.weight = interval; //毫秒数
 
         StringBuilder content = new StringBuilder();
 
