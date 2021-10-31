@@ -19,11 +19,13 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -39,21 +41,25 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.cache.memcached</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3.cache.redis</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>esearchx</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
