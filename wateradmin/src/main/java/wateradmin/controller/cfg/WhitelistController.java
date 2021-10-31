@@ -31,9 +31,9 @@ public class WhitelistController extends BaseController {
     public ModelAndView whitelist(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getWhitelistTags();
 
-        if (Solon.cfg().isSetupMode() == false) {
-            BcfTagChecker.filter(tags, m -> m.tag);
-        }
+
+        BcfTagChecker.filter(tags, m -> m.tag);
+
 
         tag_name = TagUtil.build(tag_name, tags);
 
@@ -48,9 +48,9 @@ public class WhitelistController extends BaseController {
 
         List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByTag(tag_name, key, state);
 
-        if (Solon.cfg().isSetupMode() == false) {
-            BcfTagChecker.filter(list, m -> m.tag);
-        }
+
+        BcfTagChecker.filter(list, m -> m.tag);
+
 
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
@@ -84,7 +84,7 @@ public class WhitelistController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("edit/ajax/save")
     public ViewModel saveWhitelistAdd(Integer row_id, String tag,String type, String value, String note) throws Exception {
-        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
+        if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
@@ -106,7 +106,7 @@ public class WhitelistController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("ajax/del")
     public ViewModel saveWhitelistDel(Integer row_id) throws Exception {
-        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
+        if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 

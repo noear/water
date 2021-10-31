@@ -41,25 +41,20 @@ public class BaseController {
         viewModel.put("puid", Session.current().getPUID());
         viewModel.put("cn_name", Session.current().getUserName());
 
-        viewModel.put("is_setup", Solon.cfg().isSetupMode() ? 1 : 0);
+        viewModel.put("is_setup", 0);
 
-        if (Solon.cfg().isSetupMode()) {
-            //支持设置模式
-            viewModel.put("is_admin", 1);
-            viewModel.put("is_operator", 1);
-        } else {
-            int is_admin = Session.current().getIsAdmin();
-            int is_operator = Session.current().getIsOperator();
-            if (is_admin == 1) {
-                is_operator = 1;
-            }
 
-            viewModel.put("is_admin", is_admin);
-            viewModel.put("is_operator", is_operator);
-
-            viewModel.put("paas_uri", Config.paas_uri());
-            viewModel.put("raas_uri", Config.raas_uri());
+        int is_admin = Session.current().getIsAdmin();
+        int is_operator = Session.current().getIsOperator();
+        if (is_admin == 1) {
+            is_operator = 1;
         }
+
+        viewModel.put("is_admin", is_admin);
+        viewModel.put("is_operator", is_operator);
+
+        viewModel.put("paas_uri", Config.paas_uri());
+        viewModel.put("raas_uri", Config.raas_uri());
 
 
         viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)"));

@@ -19,10 +19,6 @@ public class AuthProcessorImpl implements AuthProcessor {
 
     @Override
     public boolean verifyIp(String ip) {
-        if(Solon.cfg().isSetupMode()){
-            return true;
-        }
-
         if (Solon.cfg().isWhiteMode() && Solon.cfg().isFilesMode() == false) {
             if (WaterClient.Whitelist.existsOfClientAndServerIp(ip) == false) {
                 return false;
@@ -42,19 +38,11 @@ public class AuthProcessorImpl implements AuthProcessor {
 
     @Override
     public boolean verifyLogined() {
-        if(Solon.cfg().isSetupMode()){
-            return true;
-        }
-
         return puid() > 0;
     }
 
     @Override
     public boolean verifyPath(String path, String method) {
-        if(Solon.cfg().isSetupMode()){
-            return true;
-        }
-
         try {
             if (path.contains("@") || path.contains("/ajax/pull")) {
                 return true;
@@ -72,10 +60,6 @@ public class AuthProcessorImpl implements AuthProcessor {
 
     @Override
     public boolean verifyPermissions(String[] permissions, Logical logical) {
-        if(Solon.cfg().isSetupMode()){
-            return true;
-        }
-
         int puid = puid();
 
         try {
@@ -102,10 +86,6 @@ public class AuthProcessorImpl implements AuthProcessor {
 
     @Override
     public boolean verifyRoles(String[] roles, Logical logical) {
-        if(Solon.cfg().isSetupMode()){
-            return true;
-        }
-
         //
         //bcf 的角色也是资源
         //

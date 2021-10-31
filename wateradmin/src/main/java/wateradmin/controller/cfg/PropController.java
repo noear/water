@@ -28,11 +28,8 @@ public class PropController extends BaseController {
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
-        if(Solon.cfg().isSetupMode()) {
-            BcfTagChecker.filterWaterTag(tags, m -> m.tag);
-        }else{
-            BcfTagChecker.filter(tags, m -> m.tag);
-        }
+        BcfTagChecker.filter(tags, m -> m.tag);
+
 
         tag_name = TagUtil.build(tag_name,tags);
 
@@ -87,7 +84,7 @@ public class PropController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("edit/ajax/save")
     public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
-        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
+        if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
@@ -105,7 +102,7 @@ public class PropController extends BaseController {
     //编辑、保存功能。
     @Mapping("edit/ajax/del")
     public ViewModel del(Integer row_id) throws SQLException {
-        if (Solon.cfg().isSetupMode()==false && Session.current().isAdmin() == false) {
+        if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
