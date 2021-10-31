@@ -5,7 +5,6 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.validation.annotation.Valid;
 import org.noear.water.utils.Datetime;
 import watersetup.viewModels.ViewModel;
 
@@ -13,7 +12,6 @@ import watersetup.viewModels.ViewModel;
 /**
  * Created by noear on 14-9-11.
  */
-@Valid
 @Singleton(false)
 public class BaseController {
     /*视图数据模型*/
