@@ -14,7 +14,7 @@ public class BcfTagChecker {
             String tag = getter.run(list.get(i));
 
             if (TextUtils.isNotEmpty(tag)) {
-                if (tag.startsWith("_") || tag.startsWith("water")) {
+                if (tag.startsWith("water")) {
                     continue;
                 }
             }
