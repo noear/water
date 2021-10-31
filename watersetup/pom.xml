@@ -23,6 +23,16 @@
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
             <version>${solon.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.noear</groupId>
+                    <artifactId>solon.extend.aspect</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.noear</groupId>
+                    <artifactId>solon.extend.properties.yaml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

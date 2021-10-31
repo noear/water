@@ -18,18 +18,6 @@ public class WatersetupApp {
     public static void main(String[] args) {
         NvMap argx = NvMap.from(args);
 
-        //支持环境控制
-        //
-        String waterSetup = System.getenv("water.setup");
-        if (waterSetup != null) {
-            argx.set("setup", waterSetup);
-        }
-
-        System.err.println("[Water] setup mode start...");
-
-        //添加扩展目录(直接使用 waterapi 的扩展目录)
-        argx.set("extend", "watersetup_ext");
-
         SolonApp app = Solon.start(WatersetupApp.class, argx, x -> {
             //加载环境变量(支持弹性容器设置的环境)
             x.cfg().loadEnv("water.");
