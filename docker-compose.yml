@@ -11,6 +11,15 @@ services:
       water.ds.password: ${password}
     ports:
       - 9371:8080
+  watersev:
+    image: noearorg/watersev:latest
+    container_name: watersev
+    ports:
+      - 9372:8080
+    links:
+      - waterapi
+    depends_on:
+      - waterapi
   wateradmin:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
@@ -24,16 +33,16 @@ services:
     image: noearorg/waterpaas:latest
     container_name: waterpaas
     ports:
-      - 9376:8080
+      - 9374:8080
     links:
       - waterapi
     depends_on:
       - waterapi
-  watersev:
-    image: noearorg/watersev:latest
-    container_name: watersev
+  waterraas:
+    image: noearorg/waterraas:latest
+    container_name: waterraas
     ports:
-      - 9372:8080
+      - 9376:8080
     links:
       - waterapi
     depends_on:
