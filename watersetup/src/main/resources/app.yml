@@ -1,0 +1,9 @@
+solon.extend: watersetup_ext
+
+server.port: 8080
+server.session.timeout: 360000 #10h
+
+solon.app:
+  name: "watersetup"
+  group: "water"
+  title: "WATER"
