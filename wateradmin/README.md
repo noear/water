@@ -14,14 +14,13 @@
 version: '3'
 
 services:
-  waterapi:
+  wateradmin:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
     ports:
       - 9373:8080
     networks:
       - water
-      - waterapi
 
 # http://localhost:9373
 

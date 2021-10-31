@@ -27,10 +27,9 @@ services:
       - 9371:8080
     networks:
       - water
-      - waterapi
 
 # JAVA_OPTS: "-Dwater.ds.schema=water -Dwater.ds.server=${server} -Dwater.ds.username=${username} -Dwater.ds.password=${password}"
-# http://localhost:9371
+# http://localhost:9371/healthz
 
 ```
 

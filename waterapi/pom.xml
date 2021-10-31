@@ -16,8 +16,6 @@
     <name>${project.artifactId}</name>
     <description>Java project for water</description>
 
-
-
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
