@@ -8,7 +8,6 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
-import watersev.Config;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceSmpModel;
@@ -29,7 +28,6 @@ public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
 
-    private String broker = "";
     private MsgBroker msgBroker;
 
     final int _interval_def = 1000;
@@ -52,7 +50,7 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
-        msgBroker = ProtocolHub.msgBrokerFactory.getBroker(broker);
+        msgBroker = ProtocolHub.getMsgBroker(null);
 
         while (true) {
             if (execDo() == false) {
@@ -71,7 +69,7 @@ public class MsgExchangeController implements IJob {
         }
 
         long dist_nexttime = System.currentTimeMillis();
-        List<MessageModel> msgList = ProtocolHub.getMsgSource(broker)
+        List<MessageModel> msgList = msgBroker.getSource()
                 .getMessageListOfPending(5000, dist_nexttime);
 
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
@@ -118,10 +116,10 @@ public class MsgExchangeController implements IJob {
             msgBroker.getQueue().push(msg_id_str);
 
             //2.状态改为处理中
-            ProtocolHub.getMsgSource(broker).setMessageState(msg, MessageState.processed);
+            msgBroker.getSource().setMessageState(msg, MessageState.processed);
 
         } catch (Throwable ex) {
-            ProtocolHub.getMsgSource(broker)
+            msgBroker.getSource()
                     .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
@@ -145,7 +143,7 @@ public class MsgExchangeController implements IJob {
             //获取当前集群节点id
             String nodeId = WaterClient.localHost();
             //获取主节点id
-            String masterNodeId = Config.rd_lock.openAndGet(us -> us.key(lock_master_key).get());
+            String masterNodeId = LockUtils.getClient().openAndGet(us -> us.key(lock_master_key).get());
 
             if (TextUtils.isNotEmpty(masterNodeId)) {
                 if (nodeId.equals(masterNodeId)) {
@@ -173,7 +171,7 @@ public class MsgExchangeController implements IJob {
                 }
             }
 
-            Config.rd_lock.open(us -> us.key(lock_master_key).persist().set(nodeId));
+            LockUtils.getClient().open(us -> us.key(lock_master_key).persist().set(nodeId));
             return true;
         } else {
             //获取锁失败，不用管了

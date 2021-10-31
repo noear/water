@@ -39,8 +39,6 @@ import java.util.concurrent.Executors;
 public final class MsgDistributeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-
-    private String broker = "";
     private MsgBroker msgBroker;
 
     @Override
@@ -55,7 +53,7 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        msgBroker = ProtocolHub.msgBrokerFactory.getBroker(broker);
+        msgBroker = ProtocolHub.getMsgBroker(null);
 
         msgBroker.getQueue().pollGet(msg_id_str -> {
             if (TextUtils.isEmpty(msg_id_str)) {

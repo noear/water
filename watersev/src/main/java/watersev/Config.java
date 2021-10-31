@@ -1,6 +1,5 @@
 package watersev;
 
-import org.noear.redisx.RedisClient;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -21,14 +20,6 @@ public class Config {
     public static final DbContext water_msg = cfg(WW.water_msg).getDb(true);
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
 
-    public static RedisClient rd_ids = cfg(WW.water_redis).getRd(1);
-    public static RedisClient rd_lock = cfg(WW.water_redis).getRd(2);
-    public static RedisClient rd_msg = cfg(WW.water_redis).getRd(3);
-    public static RedisClient rd_count = cfg(WW.water_redis).getRd(6);
-
-    public static ConfigM water_redis = cfg(WW.water_redis);
-
-    public static ConfigM water_msg_queue = cfg(WW.water_msg_queue);
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 

@@ -39,8 +39,6 @@ public class Config {
 
     public static String water_cache_header;
 
-    public static ConfigM water_msg_queue;
-
     public static String localHost;
 
     public static ConfigM water_log_store;
@@ -104,8 +102,6 @@ public class Config {
 
             water_log_store = cfg(WW.water_log_store);
             water_msg_store = cfg(WW.water_msg_store);
-
-            water_msg_queue = cfg(WW.water_msg_queue);
 
             initWeedOnException();
         }

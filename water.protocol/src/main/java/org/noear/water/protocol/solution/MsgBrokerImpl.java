@@ -40,21 +40,15 @@ public class MsgBrokerImpl implements MsgBroker {
         }
     }
 
-    /**
-     * 兼容旧的
-     */
-    public MsgBrokerImpl(Properties sourceProp, Properties queueProp, ICacheServiceEx cache) {
-        init(sourceProp, queueProp, cache);
-    }
-
     private void init(Properties sourceProp, Properties queueProp, ICacheServiceEx cache) {
+        //for source
         if ("mongodb".equals(sourceProp.getProperty(WW.driverType))) {
             source = new MsgSourceMongo(new MgContext(sourceProp), cache, log);
         } else {
             source = new MsgSourceRdb(DsUtils.getDb(sourceProp, true), cache, log);
         }
 
-        if (queueProp == null || queueProp.size() == 0) {
+        if (queueProp == null || queueProp.size() < 2) {
             queue = new MsgQueueLocal();
         } else {
             String name = queueProp.getProperty("name");

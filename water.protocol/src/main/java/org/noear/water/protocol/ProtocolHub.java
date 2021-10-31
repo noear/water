@@ -17,13 +17,14 @@ public final class ProtocolHub {
     public static final LogStorer logStorer = new LogStorerImp();
 
     public static MsgBrokerFactory msgBrokerFactory;
-    public static MsgSource getMsgSource(String broker){
-        return msgBrokerFactory.getBroker(broker).getSource();
+
+    public static MsgBroker getMsgBroker(String broker){
+        return msgBrokerFactory.getBroker(broker);
     }
 
-//    public static MsgSource getMsgBroker(String broker){
-//        return msgBrokerFactory.getBroker(broker).getSource();
-//    }
+    public static MsgSource getMsgSource(String broker){
+        return getMsgBroker(broker).getSource();
+    }
 
     public static MsgQueue msgQueue;
 
