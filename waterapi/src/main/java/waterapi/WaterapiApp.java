@@ -2,6 +2,7 @@ package waterapi;
 
 import org.noear.solon.Solon;
 import org.noear.solon.cloud.CloudManager;
+import org.noear.solon.core.ExtendLoader;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.track.TrackBuffer;
@@ -13,6 +14,8 @@ import waterapi.utils.PreheatUtils;
 public class WaterapiApp {
 	public static void main(String[] args) {
 		Solon.start(WaterapiApp.class, args, x -> {
+			ExtendLoader.load("water_ext");
+
 			//注册本地日志服务
 			CloudManager.register(new CloudLogServiceLocalImp());
 
