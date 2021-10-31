@@ -1,9 +1,9 @@
 #### 2.2.19
 * Logger source 增加：weight,metainfo,tag4
-* 将以下改为标准 water_log 架构，统一管理
-  * rubber_log_request, 
-  * rubber_log_request_all, 
-  * water_exam_log_bcf, 
+* 将以下改为标准 water_log 架构，统一管理：
+  * rubber_log_request
+  * rubber_log_request_all 
+  * water_exam_log_bcf
   * water_exam_log_sql
 
 #### 2.2.18
