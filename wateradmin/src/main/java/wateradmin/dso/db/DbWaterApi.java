@@ -8,7 +8,6 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water.ReportModel;
 import wateradmin.models.water.MonitorModel;
 import wateradmin.models.water.SynchronousModel;
-import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -16,7 +15,7 @@ import java.util.*;
 
 public class DbWaterApi {
     private static DbContext db() {
-        return Setup.water;
+        return Config.water;
     }
 
 

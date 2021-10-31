@@ -7,6 +7,7 @@ import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.NoticeUtils;
@@ -14,7 +15,6 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.LoggerModel;
 import wateradmin.models.water_cfg.WhitelistModel;
-import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class DbWaterCfgApi {
 
     private static DbContext db() {
-        return Setup.water;
+        return Config.water;
     }
 
     public static List<LoggerModel> getLoggerByTag(String tag) throws Exception {

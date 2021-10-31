@@ -11,10 +11,9 @@ import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import wateradmin.dso.auth.AuthProcessorImpl;
-import wateradmin.setup.Setup;
 
 public class Config {
-
+    public static final DbContext water = cfg(WW.water).getDb(true);
     public static final DbContext water_log = cfg(WW.water_log).getDb(true);
     public static final DbContext water_msg = cfg(WW.water_msg).getDb(true);
     public static final DbContext water_paas = cfg(WW.water_paas).getDb(true);
@@ -50,8 +49,6 @@ public class Config {
 
     public static void tryInit(SolonApp app) {
         waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
-
-        Setup.water = cfg(WW.water).getDb(true);
 
         WaterClient.Config.get(WW.water_bcf, "bcf.yml").getProp().forEach((k, v) -> {
             Solon.cfg().put(k, v);

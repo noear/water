@@ -5,20 +5,18 @@ import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
+import wateradmin.Config;
 import wateradmin.dso.NoticeUtils;
 import wateradmin.models.water.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
-import wateradmin.models.water_reg.ServiceSpeedDateModel;
-import wateradmin.models.water_reg.ServiceSpeedHourModel;
-import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.*;
 
 public class DbWaterRegApi {
     private static DbContext db() {
-        return Setup.water;
+        return Config.water;
     }
 
     //删除服务。

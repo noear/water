@@ -18,7 +18,6 @@ import wateradmin.models.aliyun.BlsTrackModel;
 import wateradmin.models.aliyun.DbsTrackModel;
 import wateradmin.models.aliyun.EcsTrackModel;
 import wateradmin.models.water_cfg.ConfigModel;
-import wateradmin.setup.Setup;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -26,7 +25,7 @@ import java.util.*;
 public class DbWaterOpsApi {
 
     private static DbContext db() {
-        return Setup.water;
+        return Config.water;
     }
 
     ////////////////////////////////////////////////////
