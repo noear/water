@@ -67,7 +67,7 @@
 
 
 
-#### 4、 进入 bin 目录 waterapi_ext/_db.properties 文件，修改 water 主库的链接配置
+#### 4、 进入 bin 目录 water_ini/_db.properties 文件，修改 water 主库的链接配置
 
 > 尝试运行 `java -jar waterapi.jar` 进行测试。如果没有出错，则停掉安装模式。
 
