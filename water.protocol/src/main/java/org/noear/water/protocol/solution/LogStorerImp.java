@@ -83,7 +83,7 @@ public class LogStorerImp implements LogStorer {
                     continue;
                 }
 
-                ProtocolHub.logSourceFactory.getSource(kv.getKey())
+                ProtocolHub.getLogSource(kv.getKey())
                         .writeAll(kv.getKey(), kv.getValue());
 
                 //track

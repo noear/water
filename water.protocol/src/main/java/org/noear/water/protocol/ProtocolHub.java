@@ -13,6 +13,10 @@ public final class ProtocolHub {
     public static Config config;
 
     public static LogSourceFactory logSourceFactory;
+    public static LogSource getLogSource(String logger){
+        return logSourceFactory.getSource(logger);
+    }
+
     public static final LogQuerier logQuerier = new LogQuerierImpl();
     public static final LogStorer logStorer = new LogStorerImp();
 

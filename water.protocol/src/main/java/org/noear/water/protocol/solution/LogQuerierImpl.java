@@ -14,13 +14,13 @@ public class LogQuerierImpl implements LogQuerier {
 
     @Override
     public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
-        return ProtocolHub.logSourceFactory.getSource(logger)
+        return ProtocolHub.getLogSource(logger)
                 .query(logger, level, size, tagx, timestamp);
     }
 
     @Override
     public void create(String logger) throws Exception {
-        ProtocolHub.logSourceFactory.getSource(logger)
+        ProtocolHub.getLogSource(logger)
                 .create(logger);
     }
 
@@ -28,13 +28,13 @@ public class LogQuerierImpl implements LogQuerier {
     public long clear(String logger) throws Exception {
         LoggerMeta mod = ProtocolHub.logSourceFactory.getLoggerMeta(logger);
 
-        return ProtocolHub.logSourceFactory.getSource(logger)
+        return ProtocolHub.getLogSource(logger)
                 .clear(logger, mod.getKeepDays(), 0);
     }
 
     @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
-        return ProtocolHub.logSourceFactory.getSource(logger)
+        return ProtocolHub.getLogSource(logger)
                 .clear(logger, keep_days, limit_rows);
     }
 }
