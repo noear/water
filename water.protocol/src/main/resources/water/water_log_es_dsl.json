@@ -1,11 +1,11 @@
 {
   "mappings": {
     "properties": {
-      "log_id": {
-        "type":"long"
-      },
       "logger": {
         "type":"keyword"
+      },
+      "log_id": {
+        "type":"long"
       },
       "trace_id": {
         "type":"keyword"
@@ -29,11 +29,8 @@
       "tag4": {
         "type":"keyword"
       },
-      "content": {
-        "type": "text"
-      },
-      "metainfo": {
-        "type": "text"
+      "weight": {
+        "type":"long"
       },
       "group": {
         "type":"keyword"
@@ -46,6 +43,15 @@
       },
       "thread_name": {
         "type": "keyword"
+      },
+      "content": {
+        "type": "text"
+      },
+      "metainfo": {
+        "type": "text"
+      },
+      "log_date": {
+        "type":"long"
       },
       "log_fulltime":{
         "type":   "date"

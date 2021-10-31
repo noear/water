@@ -8,6 +8,7 @@ create table if not exists ${logger}
     tag2 Nullable(String),
     tag3 Nullable(String),
     tag4 Nullable(String),
+    weight Int64,
     group Nullable(String),
     service Nullable(String),
     class_name Nullable(String),

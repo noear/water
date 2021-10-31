@@ -12,12 +12,13 @@ public class LogM {
     public String tag2;
     public String tag3;
     public String tag4;
-    public String content;
-    public String metainfo;
+    public long weight;
     public String group;
     public String service;
     public String class_name;
     public String thread_name;
+    public String content;
+    public String metainfo;
     public String from;
     public int log_date;
     public Date log_fulltime;
