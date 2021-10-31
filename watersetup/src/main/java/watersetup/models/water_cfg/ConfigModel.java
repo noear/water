@@ -164,11 +164,7 @@ public class ConfigModel implements IBinder
             return source;
         } else {
             if (TextUtils.isNotEmpty(driverClassName)) {
-                try {
-                    Class.forName(driverClassName);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                Utils.loadClass(driverClassName);
             }
 
             return new DbDataSource(url, username, password);

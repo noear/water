@@ -55,7 +55,6 @@ public class WatersetupApp {
         if(prop.size() == 0){
             prop = app.cfg().getProp("water.ds");
         }
-        prop.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
         if (prop.size() < 4) {
             throw new RuntimeException("[Water] Missing water. DataSource configuration");

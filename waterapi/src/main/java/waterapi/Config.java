@@ -70,10 +70,6 @@ public class Config {
                 prop = Solon.cfg().getProp("water.ds");
             }
 
-            if (prop.size() > 0) {
-                prop.put("driverClassName", "com.mysql.jdbc.Driver");
-            }
-
             String dbServer = prop.getProperty("server");
             String dbSchema = prop.getProperty("schema");
             if (Utils.isNotEmpty(dbServer)) {
