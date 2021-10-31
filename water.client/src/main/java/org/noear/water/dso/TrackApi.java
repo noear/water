@@ -5,12 +5,12 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
+import org.noear.water.model.LogM;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.track.TrackNames;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.Command;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +21,8 @@ import java.util.Map;
  * */
 public class TrackApi {
     protected final ApiCaller apiCaller;
-    public TrackApi(){
+
+    public TrackApi() {
         apiCaller = new ApiCaller(WaterAddress.getTrackApiUrl());
     }
 
@@ -36,11 +37,11 @@ public class TrackApi {
         TrackNames.singleton().bind(rd_track_md5);
     }
 
-    public String getNameMd5(String name){
+    public String getNameMd5(String name) {
         return TrackNames.singleton().getNameMd5(name);
     }
 
-    public String getName(String nameMd5){
+    public String getName(String nameMd5) {
         return TrackNames.singleton().getName(nameMd5);
     }
 
@@ -54,7 +55,7 @@ public class TrackApi {
     }
 
     public void trackNode(String service, String _node, long timespan) {
-        if(TextUtils.isNotEmpty(_node)) {
+        if (TextUtils.isNotEmpty(_node)) {
             TrackBuffer.singleton().appendNode(service, _node, timespan);
         }
     }
@@ -76,14 +77,14 @@ public class TrackApi {
     /**
      * 跟踪SQL性能
      *
-     * @param service 服务名
+     * @param service        服务名
      * @param thresholdValue 阈值
      */
     public void trackOfPerformance(String service, Command cmd, long thresholdValue) {
         long timespan = cmd.timespan();
 
         if (timespan > thresholdValue) {
-            track0(service, cmd, null, null, null, null, null);
+            track0(service, cmd, null, null, null, null);
         }
     }
 
@@ -96,63 +97,48 @@ public class TrackApi {
     /**
      * 跟踪SQL行为
      *
-     * @param service 服务名
-     * @param ua ua
-     * @param path 请求路径
-     * @param operator 操作人
+     * @param service     服务名
+     * @param ua          ua
+     * @param path        请求路径
+     * @param operator    操作人
      * @param operator_ip 操作IP
      */
     public void trackOfBehavior(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
-        track0(service, cmd, ua, path, operator, operator_ip, null);
+        track0(service, cmd, ua, path, operator, operator_ip);
     }
 
     /**
      * 跟踪SQL命令性能
      */
-    private void track0(String service, Command cmd, String ua, String path, String operator, String operator_ip, String note) {
+    private void track0(String service, Command cmd, String ua, String path, String operator, String operator_ip) {
         long interval = cmd.timespan();
         String trace_id = WaterClient.waterTraceId();
 
         WaterSetting.pools.submit(() -> {
-            track0Do(service, trace_id, cmd, interval, ua, path, operator, operator_ip, note);
+            track0Do(service, trace_id, cmd, interval, ua, path, operator, operator_ip);
         });
     }
 
-    private void track0Do(String service, String trace_id, Command cmd, long interval, String ua, String path, String operator, String operator_ip, String note) {
-        Map<String, Object> map = cmd.paramMap();
+    private void track0Do(String service, String trace_id, Command cmd, long interval, String ua, String path, String operator, String operator_ip) {
+        int seconds = (int) (interval / 1000);
+        String schema = cmd.context.schema();
 
-        Map<String, String> params = new HashMap<>();
+        LogM logM = new LogM();
+        logM.logger = "water_sql_log";
+        logM.service = service;
+        logM.tag = schema;
+        logM.tag1 = String.valueOf(seconds); //秒数
+        logM.tag2 = path;
+        logM.tag3 = operator;
+        logM.from = operator_ip;
+        logM.trace_id = trace_id;
+        logM.class_name = String.valueOf(interval); //毫秒数
 
-        params.put("service", service);
-        params.put("schema", cmd.context.schema());
-        params.put("interval", String.valueOf(interval));
-        params.put("cmd_sql", cmd.text);
-        params.put("cmd_arg", ONode.loadObj(map).toJson());
+        StringBuilder content = new StringBuilder();
 
-        if (TextUtils.isEmpty(operator) == false) {
-            params.put("operator", operator);
-        }
+        content.append(schema).append("::").append(cmd.text).append("\r\n");
+        content.append("$$$").append(ONode.stringify(cmd.paramMap())).append("\r\n");
 
-        if (TextUtils.isEmpty(operator_ip) == false) {
-            params.put("operator_ip", operator_ip);
-        }
-
-        if (TextUtils.isEmpty(path) == false) {
-            params.put("path", path);
-        }
-
-        if (TextUtils.isEmpty(ua) == false) {
-            params.put("ua", ua);
-        }
-
-        if (TextUtils.isEmpty(note) == false) {
-            params.put("note", note);
-        }
-
-        try {
-            apiCaller.post("/mot/track/sql/", params, trace_id);
-        } catch (Exception ex) {
-
-        }
+        WaterClient.Log.append(logM);
     }
 }

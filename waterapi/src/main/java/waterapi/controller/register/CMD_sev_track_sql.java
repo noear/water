@@ -17,6 +17,7 @@ import waterapi.dso.db.DbWaterLogApi;
  * @since 2017.07
  * Update time 2020.09
  */
+@Deprecated
 @Whitelist
 @Controller
 public class CMD_sev_track_sql extends UapiBase {
@@ -25,6 +26,7 @@ public class CMD_sev_track_sql extends UapiBase {
      * @param service 服务名
      * @param interval 时长
      * */
+    @Deprecated
     @NotEmpty({"service", "interval"})
     @Mapping("/sev/track/sql/")
     public Result cmd_exec(Context ctx, String service, long interval,

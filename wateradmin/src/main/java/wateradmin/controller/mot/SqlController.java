@@ -50,7 +50,6 @@ public class SqlController extends BaseController {
             page=1;
         }
 
-
         List<LogSqlModel> tag2s = DbWaterLogApi.getSqlSecondsTags(tableName,tag_name);
         List<LogSqlModel> logs = new ArrayList<>();
 

@@ -16,6 +16,7 @@ import waterapi.controller.UapiBase;
  * @since 2017.07
  * Update time 2020.09
  */
+@Deprecated
 @Whitelist
 @Controller
 public class CMD_mot_track_api extends UapiBase {
@@ -26,6 +27,7 @@ public class CMD_mot_track_api extends UapiBase {
      * @param name     名称
      * @param timespan 时长
      */
+    @Deprecated
     @NotEmpty({"service", "tag", "name", "timespan"})
     @Mapping("/mot/track/")
     protected Result cmd_exec(String _node, String _from,
@@ -36,6 +38,7 @@ public class CMD_mot_track_api extends UapiBase {
         return Result.succeed();
     }
 
+    @Deprecated
     @NotEmpty({"service", "tag", "name", "timespan"})
     @Mapping("/mot/track/api/")
     protected Result cmd_exec2(String _node, String _from,
