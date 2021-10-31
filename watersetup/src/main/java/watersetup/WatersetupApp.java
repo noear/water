@@ -1,6 +1,5 @@
 package watersetup;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
@@ -64,11 +63,8 @@ public class WatersetupApp {
         if (Utils.isNotEmpty(dbServer)) {
             prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
         }
-        prop.setProperty("jdbcUrl", prop.getProperty("url"));
 
-        DataSource ds = Utils.injectProperties(new HikariDataSource(), prop);
-
-        Config.water = new DbContext(dbSchema, ds);
+        Config.water = new DbContext(prop);
         Config.water.initMetaData();
     }
 }
