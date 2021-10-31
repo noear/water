@@ -1,63 +1,43 @@
 version: "3"
 
 services:
-  water:
-    image: openjdk:11.0.6-jdk
+  waterapi:
+    image: noearorg/waterapi
     container_name: waterapi
-    command: java -jar /opt/waterapi.jar --server.port=9371
-    volumes:
-      - ./waterapi_ext:/opt/waterapi_ext
-      - ./waterapi.jar:/opt/waterapi.jar
+    environment:
+      water.ds.schema: water #默认可以不要
+      water.ds.server: ${server}
+      water.ds.username: ${username}
+      water.ds.password: ${password}
     ports:
-      - 9370:9370
+      - 9371:8080
   wateradmin:
-    image: openjdk:11.0.6-jdk
+    image: noearorg/wateradmin:latest
     container_name: wateradmin
-    command: java -jar /opt/wateradmin.jar --server.port=9373 ##如果要不限ip访问，添加参考：--white=0
-    volumes:
-      - ./wateradmin.jar:/opt/wateradmin.jar
     ports:
-      - 9373:9373
+      - 9373:8080
     links:
-      - water
+      - waterapi
     depends_on:
-      - water
+      - waterapi
   waterpaas:
-    image: openjdk:11.0.6-jdk
+    image: noearorg/waterpaas:latest
     container_name: waterpaas
-    command: java -jar /opt/waterpaas.jar --server.port=9376
-    volumes:
-      - ./waterpaas.jar:/opt/waterpaas.jar
     ports:
-      - 9376:9376
+      - 9376:8080
     links:
-      - water
+      - waterapi
     depends_on:
-      - water
-  # waterraas:  ##可选服务
-  #     image: openjdk:11.0.6-jdk
-  #     container_name: waterpaas
-  #     command: java -jar /opt/waterraas.jar --server.port=9374
-  #     volumes:
-  #       - ./waterraas.jar:/opt/waterraas.jar
-  #     ports:
-  #       - 9374:9374
-  #     links:
-  #       - water
-  #     depends_on:
-  #       - water
+      - waterapi
   watersev:
-    image: openjdk:11.0.6-jdk
+    image: noearorg/watersev:latest
     container_name: watersev
-    command: java -jar /opt/watersev.jar --server.port=9372
-    volumes:
-      - ./watersev.jar:/opt/watersev.jar
     ports:
-      - 9372:9372
+      - 9372:8080
     links:
-      - water
+      - waterapi
     depends_on:
-      - water
+      - waterapi
 networks:
   default:
     external:
