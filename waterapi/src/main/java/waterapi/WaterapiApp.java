@@ -14,7 +14,8 @@ import waterapi.utils.PreheatUtils;
 public class WaterapiApp {
 	public static void main(String[] args) {
 		Solon.start(WaterapiApp.class, args, x -> {
-			ExtendLoader.load("water_ext");
+			//兼容旧的扩展配置
+			ExtendLoader.load("waterapi_ext");
 
 			//注册本地日志服务
 			CloudManager.register(new CloudLogServiceLocalImp());
