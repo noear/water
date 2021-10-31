@@ -107,7 +107,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>wateradmin.WateradminApp</mainClass>
+                            <mainClass>watersetup.WatersetupApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
