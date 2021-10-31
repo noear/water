@@ -1,5 +1,7 @@
 ## 部署事项:
 
+> 注意：初始化完成之后， watersetup 可以删除了
+
 ### 一、docker-compose.yml 模式
 
 * 镜像仓库：
