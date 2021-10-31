@@ -3,14 +3,12 @@ package waterpaas;
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
-import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImp;
 import org.noear.water.protocol.solution.MessageSourceFactoryImp;
-import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
@@ -50,35 +48,6 @@ public class WaterpaasApp {
         app.all("**", AppHandler.g());
 
         JtRun.xfunInit();
-
-
-        //添加性能记录
-        app.before("**", MethodType.HTTP, -1, (c) -> {
-            //
-            //不记录，检测的性能
-            //
-            if ("/run/check/".equals(c.path()) == false) {
-                c.attrSet("timecount", new Timecount().start());
-            }
-        });
-
-        app.after("**", MethodType.HTTP, (c) -> {
-            Timecount timecount = c.attr("timecount", null);
-
-            if (timecount != null && c.status() != 404) {
-                String tag = c.attr("file_tag", "paas");
-
-                String service = Solon.cfg().appName();
-                long _times = timecount.stop().milliseconds();
-                String _node = WaterClient.localHost();
-                String _from = CloudClient.trace().getFromId(); //FromUtils.getFrom(c);
-
-
-                WaterClient.Track.track(service, tag, c.path(), _times);
-                WaterClient.Track.trackNode(service, _node, _times);
-                WaterClient.Track.trackFrom(service, _from, _times);
-            }
-        });
 
         PreheatUtils.preheat("/run/check/");
     }
