@@ -8,7 +8,6 @@ import org.noear.solon.core.NvMap;
 import org.noear.solon.core.Props;
 import org.noear.water.WW;
 import org.noear.weed.DbContext;
-import watersetup.controller.BaseController;
 
 import javax.sql.DataSource;
 
@@ -50,13 +49,13 @@ public class WatersetupApp {
             x.enableErrorAutoprint(false);
         });
 
-        System.setProperty(WW.cfg_water_ds_driverClassName, "com.mysql.jdbc.Driver");
 
         //构建数据源
         Props prop = app.cfg().getProp("water.dataSource");
         if(prop.size() == 0){
             prop = app.cfg().getProp("water.ds");
         }
+        prop.setProperty("driverClassName", "com.mysql.jdbc.Driver");
 
         if (prop.size() < 4) {
             throw new RuntimeException("[Water] Missing water. DataSource configuration");
@@ -72,10 +71,5 @@ public class WatersetupApp {
 
         Config.water = new DbContext(dbSchema, ds);
         Config.water.initMetaData();
-
-        //添加设置监听
-        app.get("/", c -> c.render(new BaseController().view("setup")));
-
-        System.out.println("[Water] setup open http://localhost:" + app.port() + "/");
     }
 }
