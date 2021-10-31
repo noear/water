@@ -3,13 +3,13 @@ package org.noear.water.protocol.solution;
 import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.LogSource;
-import org.noear.water.protocol.MessageQueue;
+import org.noear.water.protocol.MsgQueue;
 import org.noear.water.utils.TextUtils;
 
 import java.util.Properties;
 
 public class ProtocolUtil {
-    public static MessageQueue createMessageQueue(ConfigM cfg) {
+    public static MsgQueue createMessageQueue(ConfigM cfg) {
         Properties prop = cfg.getProp();
 
         String name = prop.getProperty("store.name", "").toLowerCase();
@@ -24,7 +24,7 @@ public class ProtocolUtil {
             //user
             //password
             //db
-            return new MessageQueueRedis(name, new RedisClient(prop));
+            return new MsgQueueRedis(name, new RedisClient(prop));
         }
 
         throw new RuntimeException("ProtocolHub::There was an error in the input configuration");

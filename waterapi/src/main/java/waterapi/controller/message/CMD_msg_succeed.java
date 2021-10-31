@@ -31,9 +31,9 @@ public class CMD_msg_succeed extends UapiBase {
     protected Result cmd_exec(String key, String subscriber_key) throws Exception {
 
         if (TextUtils.isEmpty(subscriber_key)) {
-            ProtocolHub.messageSource().setMessageAsSucceed(key);
+            ProtocolHub.msgSource().setMessageAsSucceed(key);
         } else {
-            ProtocolHub.messageSource().setDistributionAsSucceed(key, subscriber_key);
+            ProtocolHub.msgSource().setDistributionAsSucceed(key, subscriber_key);
         }
 
         return Result.succeed();

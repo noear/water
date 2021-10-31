@@ -1,6 +1,6 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.water.protocol.MessageQueue;
+import org.noear.water.protocol.MsgQueue;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * @author noear 2021/11/1 created
  */
-public class MessageQueueLocal implements MessageQueue {
+public class MsgQueueLocal implements MsgQueue {
     Queue<String> queueLocal = new LinkedBlockingQueue<>();
     @Override
     public boolean push(String msg_id) {

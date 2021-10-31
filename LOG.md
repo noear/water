@@ -1,10 +1,13 @@
-#### 2.2.19
+#### 2.3
 * Logger source 增加：weight,metainfo,tag4
-* 将以下改为标准 water_log 架构，统一管理：
+* 日志改动：所有日志相关的都改成 water_log 架构，统一管理：
   * rubber_log_request
   * rubber_log_request_all 
   * water_exam_log_bcf
   * water_exam_log_sql
+* 消息改动：
+  * Queue 增加 local 方案
+  * 增加 Broker 概念 
 
 #### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持

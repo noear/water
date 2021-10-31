@@ -1,7 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
-import org.noear.water.protocol.MessageSource;
+import org.noear.water.protocol.MsgSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
@@ -23,12 +23,12 @@ import java.util.List;
 /**
  * @author noear 2021/2/3 created
  */
-public class MessageSourceRdb implements MessageSource {
+public class MsgSourceRdb implements MsgSource {
     DbContext _db;
     ICacheServiceEx _cache;
     Logger _logMsg;
 
-    public MessageSourceRdb(DbContext db, ICacheServiceEx cache, Logger log) {
+    public MsgSourceRdb(DbContext db, ICacheServiceEx cache, Logger log) {
         _db = db;
         _cache = cache;
         _logMsg = log;
@@ -36,18 +36,6 @@ public class MessageSourceRdb implements MessageSource {
 
     /////////
     //for waterapi
-
-    //检查是否已有消息（key）
-    public boolean hasMessage(String msg_key) throws SQLException {
-        if (TextUtils.isEmpty(msg_key)) {
-            return false;
-        } else {
-            return _db.table("water_msg_message")
-                    .whereEq("msg_key", msg_key)
-                    .caching(_cache)
-                    .selectExists();
-        }
-    }
 
     //取消消息（key）
     public void setMessageAsCancel(String msg_key) throws SQLException {

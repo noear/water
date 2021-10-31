@@ -51,7 +51,7 @@ public class CMD_msg_send extends UapiBase {
 
         TrackBuffer.singleton().append("_watermsg", "topic", topic, 1);
 
-        long msg_id = ProtocolHub.messageSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
+        long msg_id = ProtocolHub.msgSource().addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
 
         if (msg_id > 0) {
             //非定时消息，直接转队列

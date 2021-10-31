@@ -11,12 +11,10 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.DisttimeUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.viewModels.ViewModel;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +27,7 @@ public class ListController extends BaseController {
     public ModelAndView list(Context ctx, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
 
-        List<MessageModel> list = ProtocolHub.messageSource().getMessageList(_m, key);
+        List<MessageModel> list = ProtocolHub.msgSource().getMessageList(_m, key);
 
 
         viewModel.put("key",key);
@@ -43,7 +41,7 @@ public class ListController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/distribute")
     public ViewModel distribute(String ids) throws Exception {
-        boolean result = ProtocolHub.messageSource().setMessageAsPending(idList(ids));
+        boolean result = ProtocolHub.msgSource().setMessageAsPending(idList(ids));
 
         if (result) {
             viewModel.code(1, "派发成功！");
@@ -58,7 +56,7 @@ public class ListController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/cancelSend")
     public ViewModel cancelSend(String ids) throws Exception {
-        boolean result = ProtocolHub.messageSource().setMessageAsCancel(idList(ids));
+        boolean result = ProtocolHub.msgSource().setMessageAsCancel(idList(ids));
 
         if (result) {
             viewModel.code(1, "取消成功");
@@ -75,7 +73,7 @@ public class ListController extends BaseController {
     public ViewModel repairSubs(String ids) throws Exception {
         boolean error = false;
 
-        List<DistributionModel> list = ProtocolHub.messageSource().getDistributionListByMsgIds(idList(ids));
+        List<DistributionModel> list = ProtocolHub.msgSource().getDistributionListByMsgIds(idList(ids));
         if (!list.isEmpty()) {
             for (DistributionModel dis : list) {
                 //查询subscriber的url
@@ -83,7 +81,7 @@ public class ListController extends BaseController {
                 boolean result = false;
                 if (subs.subscriber_id > 0) {
                     //更新distribution的url
-                    result = ProtocolHub.messageSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
+                    result = ProtocolHub.msgSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
                 }
 
                 if (!result) {

@@ -1,7 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.redisx.RedisClient;
-import org.noear.water.protocol.MessageQueue;
+import org.noear.water.protocol.MsgQueue;
 import org.noear.water.utils.TextUtils;
 
 import java.util.function.Consumer;
@@ -9,11 +9,11 @@ import java.util.function.Consumer;
 /**
  * 基于 Redis 适配队列
  * */
-public class MessageQueueRedis implements MessageQueue {
+public class MsgQueueRedis implements MsgQueue {
     RedisClient _redisX = null;
     String _queue_name;
 
-    public MessageQueueRedis(String name, RedisClient redisX) {
+    public MsgQueueRedis(String name, RedisClient redisX) {
         _queue_name = name;
         _redisX = redisX;
 

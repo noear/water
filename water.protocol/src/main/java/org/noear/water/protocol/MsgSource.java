@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author noear 2021/2/1 created
  */
-public interface MessageSource {
+public interface MsgSource {
     //
     //for api
     //

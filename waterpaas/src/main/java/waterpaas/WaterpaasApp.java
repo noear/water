@@ -7,9 +7,9 @@ import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.solution.LogSourceFactoryImp;
-import org.noear.water.protocol.solution.MessageSourceFactoryImp;
+import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
+import org.noear.water.protocol.solution.MsgBrokerImpl;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
 import waterpaas.dso.DbWaterCfgApi;
@@ -29,9 +29,9 @@ public class WaterpaasApp {
             ProtocolHub.config = WaterClient.Config::get;
 
             //用于清除控制
-            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
+            ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
 
-            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, Config.cache_data);
+            ProtocolHub.msgSourceFactory = new MsgBrokerImpl(Config.water_msg_store, Config.cache_data);
 
 
             x.sharedAdd("cache", Config.cache_data);

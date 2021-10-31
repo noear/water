@@ -4,7 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.IndexOptions;
 import org.bson.Document;
 import org.noear.solon.Utils;
-import org.noear.water.protocol.MessageSource;
+import org.noear.water.protocol.MsgSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
@@ -23,14 +23,14 @@ import java.util.*;
 /**
  * @author noear 2021/2/5 created
  */
-public class MessageSourceMongo implements MessageSource {
+public class MsgSourceMongo implements MsgSource {
     MgContext _db;
     ICacheServiceEx _cache;
     Logger _logMsg;
 
     static final String COLL = "water_msg_message";
 
-    public MessageSourceMongo(MgContext db, ICacheServiceEx cache, Logger log) {
+    public MsgSourceMongo(MgContext db, ICacheServiceEx cache, Logger log) {
         _db = db;
         _cache = cache;
         _logMsg = log;
@@ -38,18 +38,6 @@ public class MessageSourceMongo implements MessageSource {
 
     /////////
     //for waterapi
-
-    //检查是否已有消息（key）
-    public boolean hasMessage(String msg_key) throws Exception {
-        if (TextUtils.isEmpty(msg_key)) {
-            return false;
-        } else {
-            return _db.table("water_msg_message")
-                    .whereEq("msg_key", msg_key)
-                    .caching(_cache)
-                    .selectExists();
-        }
-    }
 
     //取消消息（key）
     public void setMessageAsCancel(String msg_key) throws Exception {

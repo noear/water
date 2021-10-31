@@ -7,8 +7,8 @@ import org.noear.water.protocol.model.log.LoggerMeta;
 
 import java.util.List;
 
-public class LogQuerierImp implements LogQuerier {
-    public LogQuerierImp() {
+public class LogQuerierImpl implements LogQuerier {
+    public LogQuerierImpl() {
 
     }
 

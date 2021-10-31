@@ -2,7 +2,7 @@ package org.noear.water.protocol;
 
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
-import org.noear.water.protocol.solution.LogQuerierImp;
+import org.noear.water.protocol.solution.LogQuerierImpl;
 import org.noear.water.protocol.solution.LogStorerImp;
 import org.noear.water.protocol.solution.ProtocolUtil;
 
@@ -17,25 +17,25 @@ public final class ProtocolHub {
     public static Config config;
 
     public static LogSourceFactory logSourceFactory;
-    public static final LogQuerier logQuerier = new LogQuerierImp();
+    public static final LogQuerier logQuerier = new LogQuerierImpl();
     public static final LogStorer logStorer = new LogStorerImp();
 
-    public static MessageSourceFactory messageSourceFactory;
-    public static MessageSource messageSource(){
-        return messageSourceFactory.getSource();
+    public static MsgBroker msgSourceFactory;
+    public static MsgSource msgSource(){
+        return msgSourceFactory.getSource();
     }
 
-    public static MessageQueue messageQueue;
+    public static MsgQueue msgQueue;
 
     public static Monitoring monitoring;
 
     public static Heihei heihei;
 
-    private static Map<String, MessageQueue> messageQueueMap = new HashMap<>();
+    private static Map<String, MsgQueue> messageQueueMap = new HashMap<>();
 
-    public static MessageQueue getMessageQueue(ConfigM cfg) {
+    public static MsgQueue getMessageQueue(ConfigM cfg) {
         synchronized (messageQueueMap) {
-            MessageQueue tmp = messageQueueMap.get(cfg.value);
+            MsgQueue tmp = messageQueueMap.get(cfg.value);
             if (tmp == null) {
                 tmp = ProtocolUtil.createMessageQueue(cfg);
                 messageQueueMap.put(cfg.value, tmp);

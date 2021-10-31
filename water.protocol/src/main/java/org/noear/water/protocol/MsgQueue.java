@@ -1,18 +1,15 @@
 package org.noear.water.protocol;
 
-import org.noear.water.utils.ext.Act1;
-
 import java.util.function.Consumer;
 
 /**
  * 消息队列接口（发到队列里的消息，是原消息ID）
  * */
-public interface MessageQueue extends AutoCloseable {
+public interface MsgQueue extends AutoCloseable {
     /**
      * 添加一个消息
      * */
     boolean push(String msg_id) ;
-
 
     /**
      * 返问并移除队列头部的消息

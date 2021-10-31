@@ -32,9 +32,9 @@ public class CMD_msg_cancel extends UapiBase {
         //如果不需要修改，检查是否已存在
         //
         if (TextUtils.isEmpty(subscriber_key)) {
-            ProtocolHub.messageSource().setMessageAsCancel(key);
+            ProtocolHub.msgSource().setMessageAsCancel(key);
         } else {
-            ProtocolHub.messageSource().setDistributionAsCancel(key, subscriber_key);
+            ProtocolHub.msgSource().setDistributionAsCancel(key, subscriber_key);
         }
 
         return Result.succeed();

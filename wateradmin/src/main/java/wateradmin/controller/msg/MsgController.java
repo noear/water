@@ -14,12 +14,10 @@ import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.viewModels.ViewModel;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
 @Controller
@@ -33,7 +31,7 @@ public class MsgController extends BaseController {
     //消息调试
     @Mapping("/msg/debug")
     public ModelAndView debug(String key) throws Exception {
-        MessageModel msg = ProtocolHub.messageSource().getMessageByKey(key);
+        MessageModel msg = ProtocolHub.msgSource().getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         viewModel.put("key", key);
         viewModel.put("msg", msg);

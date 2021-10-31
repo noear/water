@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogSourceFactoryImp implements LogSourceFactory {
+public class LogSourceFactoryImpl implements LogSourceFactory {
     private static String _lock = "";
 
     private LoggerEntity _def;
@@ -19,7 +19,7 @@ public class LogSourceFactoryImp implements LogSourceFactory {
 
     private Map<String, LoggerEntity> _logMap = new HashMap<>();
 
-    public LogSourceFactoryImp(ConfigM def, Fun1<String, LoggerMeta> loggerGetter) {
+    public LogSourceFactoryImpl(ConfigM def, Fun1<String, LoggerMeta> loggerGetter) {
         _def = new LoggerEntity(ProtocolUtil.createLogSource(def), def);
         _loggerGetter = loggerGetter;
     }

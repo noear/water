@@ -5,8 +5,8 @@ import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.NvMap;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.solution.LogSourceFactoryImp;
-import org.noear.water.protocol.solution.MessageSourceFactoryImp;
+import org.noear.water.protocol.solution.LogSourceFactoryImpl;
+import org.noear.water.protocol.solution.MsgBrokerImpl;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ErrorListener;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -31,8 +31,8 @@ public class WateradminApp {
             //
             ProtocolHub.config = WaterClient.Config::get;
 
-            ProtocolHub.logSourceFactory = new LogSourceFactoryImp(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.messageSourceFactory = new MessageSourceFactoryImp(Config.water_msg_store, CacheUtil.data);
+            ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
+            ProtocolHub.msgSourceFactory = new MsgBrokerImpl(Config.water_msg_store, CacheUtil.data);
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         });
