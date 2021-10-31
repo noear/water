@@ -430,8 +430,7 @@ public class DbWaterCfgApi {
     //获取type=10的配置（结构化数据库）
     public static List<ConfigModel> getLogStoreConfigs() throws SQLException {
         return db().table("water_cfg_properties")
-                .whereEq("type", ConfigType.db)
-                .orEq("type",ConfigType.water_logger)
+                .whereEq("type", ConfigType.water_logger)
                 .orderBy("`tag`,`key`")
                 .select("*")
                 .getList(ConfigModel.class);
