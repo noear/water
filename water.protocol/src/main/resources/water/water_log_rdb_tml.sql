@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `${logger}` (
   `class_name` varchar(512) COLLATE utf8mb4_general_ci COMMENT '类名',
   `thread_name` varchar(255) COLLATE utf8mb4_general_ci COMMENT '线程名',
   `content` longtext COLLATE utf8mb4_general_ci COMMENT '内容',
+  `metainfo` text COLLATE utf8mb4_general_ci COMMENT '元信息(json)',
   `from` varchar(200) COLLATE utf8mb4_general_ci ,
   `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期（yyyyMMdd）',
   `log_fulltime` bigint(20) NOT NULL,

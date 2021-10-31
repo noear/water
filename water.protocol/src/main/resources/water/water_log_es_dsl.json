@@ -32,6 +32,9 @@
       "content": {
         "type": "text"
       },
+      "metainfo": {
+        "type": "text"
+      },
       "group": {
         "type":"keyword"
       },

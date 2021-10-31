@@ -13,6 +13,7 @@ create table if not exists ${logger}
     class_name Nullable(String),
     thread_name Nullable(String),
     content Nullable(String),
+    metainfo Nullable(String),
     from Nullable(String),
     log_date Nullable(Int32),
     log_fulltime Int64
