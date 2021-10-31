@@ -30,7 +30,7 @@ public class WatersetupApp {
         System.err.println("[Water] setup mode start...");
 
         //添加扩展目录(直接使用 waterapi 的扩展目录)
-        argx.set("extend", "waterapi_ext");
+        argx.set("extend", "watersetup_ext");
 
         SolonApp app = Solon.start(WatersetupApp.class, argx, x -> {
             //加载环境变量(支持弹性容器设置的环境)

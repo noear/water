@@ -1,0 +1,1049 @@
+interface InputStream{
+}
+
+interface OutputStream{
+}
+
+interface URI{
+}
+
+interface BufferedImage{
+}
+
+interface JDate{
+
+}
+
+interface Properties{
+
+}
+
+interface Response{
+
+}
+
+interface ICacheService{
+
+}
+
+interface Throwable{
+
+}
+
+interface JSet<V> {
+    size(): number;
+    isEmpty(): boolean;
+    contains(val:V): boolean;
+    add(val:V): boolean;
+    remove(val:V): boolean;
+
+    addAll(c:Array<V>): boolean;
+
+    clear(): void;
+    forEach(callbackfn: (val: V) => void): void;
+}
+
+interface JList<V> {
+    size(): number;
+    isEmpty(): boolean;
+    contains(val:V): boolean;
+    add(val:V): boolean;
+    add(index:number,mval:V): void;
+    remove(val:V): boolean;
+    remove(index:number): boolean;
+    indexOf(val:V): number;
+    lastIndexOf(val:V): number;
+
+    addAll(c:Array<V>): boolean;
+
+    subList(fromIndex:number, toIndex:number):JList<V>;
+
+    toArray():object[];
+
+    clear(): void;
+    forEach(callbackfn: (val: V) => void): void;
+}
+
+interface JMap<K, V> {
+    size(): number;
+    isEmpty(): boolean;
+    containsKey(key:K):boolean;
+    containsValue(val:V):boolean;
+    get(key: K): V | null;
+    put(key: K, val:V): V | null;
+    remove(key:K): V | null;
+    putAll(m:JMap<K,V>):void;
+
+    clear(): void;
+    forEach(callbackfn: (key: K, val: V) => void): void;
+}
+
+interface AConfigM{
+    getString():string;
+    getString(def:string):string;
+
+    getInt(def:number):number;
+    getLong(def:number):number;
+
+    getXmap():JMap<string,object>;
+    getProp():Properties;
+    getNode():ONode;
+
+    getDb():DbContext;
+    getDb(pool:boolean):DbContext;
+}
+
+interface PagingModel{
+    totalSet(total:number):PagingModel; // 设置总记录数
+
+    start():number; //获取起始页
+    page():number;  //获取当前页
+    total():bigint; //获取总页记录数
+    pages():bigint; //获取总页数
+
+    pageSize():number;
+    pageSizeDef():number;
+
+    pagePrev():number;
+    pageNext():number;
+    hasPrev():boolean;
+    hasNext():boolean;
+
+    pageRange(size):JList<bigint>;
+}
+
+interface HttpUtils{
+    multipart(multipart:boolean):HttpUtils;
+    userAgent(ua:string):HttpUtils;
+    charset(charset:string):HttpUtils;
+
+    headers(headers:JMap<string,string>):HttpUtils;
+    header(name:string, value:string):HttpUtils;
+    headerAdd(name:string, value:string):HttpUtils;
+
+    data(data:JMap<string,string>):HttpUtils;
+    data(key:string, value:string):HttpUtils;
+    data(key:string, filename:string, inputStream:InputStream, contentType:string):HttpUtils;
+
+    bodyTxt(txt:string):HttpUtils;
+    bodyTxt(txt:string, contentType:string):HttpUtils;
+    bodyRaw(raw:InputStream):HttpUtils;
+    bodyRaw(raw:InputStream, contentType:string):HttpUtils;
+
+    cookies(cookies:JMap<string,string>):HttpUtils;
+
+    cache(seconds:number):HttpUtils;
+
+    exec(mothod:String):Response;
+    exec2(mothod:String):string;
+
+    get():string;
+    post():string;
+    put():string;
+    patch():string;
+    delete():string;
+}
+
+
+interface DataItem{
+    set(name:string, val:object):DataItem;
+    get(name:string):object;
+}
+
+
+interface IQuery{
+    getCount():number;
+    getValue():object;
+    getValue(def:object):object;
+
+    getMapList():JList<JMap<string,object>>;
+    getMap():JMap<string,object>;
+
+    getArray():JList<object>;
+
+}
+
+interface DbAccess extends IQuery{
+    insert():number;
+    update():number;
+    delete():number;
+
+    execute():number;
+}
+
+interface DbTableQuery extends IQuery{
+    build(callbackfn:(tb:DbTableQuery)=>void):DbTableQuery;
+
+    begin():DbTableQuery;
+    begin(code:string, args:object[]):DbTableQuery;
+    end():DbTableQuery;
+
+    whereTrue():DbTableQuery;
+
+    where():DbTableQuery;
+    where(code:string, args:object[]):DbTableQuery;
+    whereIf(condition:boolean, code:string, args:object[]):DbTableQuery;
+    whereMap(columnMap:Map<string,object>):DbTableQuery;
+    whereEq(column:string, val:object):DbTableQuery;
+    whereNeq(column:string, val:object):DbTableQuery;
+    whereLt(column:string, val:object):DbTableQuery;
+    whereLte(column:string, val:object):DbTableQuery;
+    whereGt(column:string, val:object):DbTableQuery;
+    whereGte(column:string, val:object):DbTableQuery;
+    whereLk(column:string, val:object):DbTableQuery;
+    whereNlk(column:string, val:object):DbTableQuery;
+    whereBtw(column:string, start:object, end:object):DbTableQuery;
+    whereNbtw(column:string, start:object, end:object):DbTableQuery;
+    whereIn(column:string, ary:JList<object>):DbTableQuery;
+    whereNin(column:string, ary:JList<object>):DbTableQuery;
+
+    and():DbTableQuery;
+    and(code:string, args:object[]):DbTableQuery;
+    andIf(condition:boolean, code:string, args:object[]):DbTableQuery;
+    andEq(column:string, val:object):DbTableQuery;
+    andNeq(column:string, val:object):DbTableQuery;
+    andLt(column:string, val:object):DbTableQuery;
+    andLte(column:string, val:object):DbTableQuery;
+    andGt(column:string, val:object):DbTableQuery;
+    andGte(column:string, val:object):DbTableQuery;
+    andLk(column:string, val:object):DbTableQuery;
+    andNlk(column:string, val:object):DbTableQuery;
+    andBtw(column:string, start:object, end:object):DbTableQuery;
+    andNbtw(column:string, start:object, end:object):DbTableQuery;
+    andIn(column:string, ary:JList<object>):DbTableQuery;
+    andNin(column:string, ary:JList<object>):DbTableQuery;
+
+    or():DbTableQuery;
+    or(code:string, args:object[]):DbTableQuery;
+    orIf(condition:boolean, code:string, args:object[]):DbTableQuery;
+    orEq(column:string, val:object):DbTableQuery;
+    orNeq(column:string, val:object):DbTableQuery;
+    orLt(column:string, val:object):DbTableQuery;
+    orLte(column:string, val:object):DbTableQuery;
+    orGt(column:string, val:object):DbTableQuery;
+    orGte(column:string, val:object):DbTableQuery;
+    orLk(column:string, val:object):DbTableQuery;
+    orNlk(column:string, val:object):DbTableQuery;
+    orBtw(column:string, start:object, end:object):DbTableQuery;
+    orNbtw(column:string, start:object, end:object):DbTableQuery;
+    orIn(column:string, ary:JList<object>):DbTableQuery;
+    orNin(column:string, ary:JList<object>):DbTableQuery;
+
+    with(name:string, code:string, args:object[]):DbTableQuery;
+
+    join(style:string, table:string):DbTableQuery;
+    innerJoin(table:string):DbTableQuery;
+    leftJoin(table:string):DbTableQuery;
+    rightJoin(table:string):DbTableQuery;
+
+    on(code:string):DbTableQuery;
+    onEq(column1:string, column2:string):DbTableQuery;
+
+    append(code:string, args:object[]):DbTableQuery;
+
+    set(name:string, value:object):DbTableQuery;
+    setMap(map:Map<string,object>):DbTableQuery;
+
+    orderBy(code:string):DbTableQuery;
+    orderByAsc(fileds:string):DbTableQuery;
+    orderByDesc(fileds:string):DbTableQuery;
+
+    groupBy(code:string):DbTableQuery;
+
+    having(code:string):DbTableQuery;
+
+    limit(size:number):DbTableQuery;
+    limit(start:number, size:number):DbTableQuery;
+
+
+    usingNull(isUsing:boolean):DbTableQuery;
+    usingExpr(isUsing:boolean):DbTableQuery;
+
+    caching(service:ICacheService):DbTableQuery;
+    usingCache(isCache:boolean):DbTableQuery;
+    usingCache(seconds:number):DbTableQuery;
+    cacheTag(tag:string):DbTableQuery;
+
+
+    insert():number;
+    insertBy(conditionFields:string):number;
+    insertList(valuesList:JList<DataItem>):void;
+
+    update():number;
+
+    upsertBy(conditionFields:string):number;
+
+    delete():number;
+
+
+    exists():boolean;
+    count():number;
+    count(code:string):number;
+
+    select(columns:string):IQuery;
+
+    selectExists():boolean;
+    selectCount():number;
+    selectCount(code:string):number;
+
+    selectValue(column:string):object;
+    selectValue(column:string, def:object):object;
+
+    selectItem(columns:string, clz:object):object;
+    selectList(columns:string, clz:object):JList<object>;
+
+    selectMap(columns:string):Map<string,object>;
+    selectMapList(columns:string):JList<Map<string,object>>;
+
+    selectArray(column:string):JList<object>;
+}
+
+interface DbQuery extends DbAccess{
+
+}
+
+interface DbProcedure extends DbAccess{
+    set(name:string, value:object):DbProcedure;
+    setMap(map:Map<string,object>):DbProcedure;
+}
+
+interface DbTran{
+    result:object;
+    isSucceed():boolean;
+}
+
+interface DbContext{
+    table(table:string):DbTableQuery;
+    call(process:string):DbProcedure;
+    sql(code:string, args:object[]):DbQuery;
+
+    exe(code:string, args:object[]):object;
+
+    tran(callbackfn:(tran)=>void):DbTran;
+}
+
+interface ONode{
+    load(obj:object):ONode;
+    loadObj(obj:object):ONode;
+    loadStr(str:string):ONode;
+
+    rename(key:string, newKey:string):ONode;
+
+    isNull():boolean;
+    isValue():boolean;
+    isObject():boolean;
+    isArray():boolean;
+
+    get(key:string):ONode;
+    getOrNew(key:string):ONode;
+    set(key:string, val:Object):ONode;
+    remove(key:string):void;
+
+    get(index:number):ONode;
+    getOrNew(index:number):ONode;
+    removeAt(index:number):void;
+    addNew():ONode;
+    add(val:object):Node;
+
+
+    getString():string;
+    getShort():number;
+    getInt():number;
+    getLong():number;
+    getFloat():number;
+    getDouble():number;
+    getBoolean():boolean;
+    getDate():JDate;
+
+    toJson():string;
+    toData():object;
+
+    select(jpath:string):ONode;
+    select(jpath:string, useStandard:boolean):ONode;
+    select(jpath:string, useStandard:boolean, cacheJpath:boolean):ONode;
+}
+
+interface UploadedFile{
+    contentType:string;
+    content:InputStream;
+    name:string;
+    extension:string;
+}
+
+interface Context{
+    setHandled(handled:boolean):void;
+    getHandled():boolean;
+
+    isMultipart():boolean;
+    isMultipartFormData():boolean;
+
+    method():string;
+    protocol():string
+    protocolAsUpper():string;
+
+    uri():URI;
+    path():string;
+    pathMap(expr:string):JMap<string,string>;
+    pathAsUpper():string;
+
+    userAgent():string;
+    url():string;
+
+    contentLength():number;
+    contentType():string;
+    body():string;
+    body(charset:string):string;
+    bodyAsBytes():Int8Array;
+    bodyAsStream():InputStream;
+
+    paramValues(key:string):string[];
+    param(key:string):string;
+    param(key:string, def:string):string;
+    paramAsInt(key:string):number;
+    paramAsInt(key:string, def:number):number;
+    paramAsLong(key:string):number;
+    paramAsLong(key:string, def:number):number;
+    paramAsDouble(key:string):number;
+    paramAsDouble(key:string, def:number):number;
+    paramAsDecimal(key:string):number;
+    paramAsDecimal(key:string, def:number):number;
+
+    paramMap():JMap<string,string>;
+    paramSet(key:string, val:string):void;
+
+    paramsMap():JMap<string,JList<string>>;
+    paramsAdd(key:string, val:string):void;
+
+    files(key:string):JList<UploadedFile>;
+    file(key:string):UploadedFile;
+
+    cookie(key:string):string;
+    cookie(key:string, def:string):string;
+    cookieMap():JMap<string,string>;
+
+    header(key:string):string;
+    header(key:string, def:string):string;
+    headerMap():JMap<string,string>;
+
+    sessionId():string;
+    session(key:string):string;
+    sessionSet(key:string, val:string):void;
+    sessionClear():void;
+
+    charset(charset:string):void;
+    contentType(contentType:string):void;
+    contentTypeNew():string;
+
+    output(str:string):void;
+    output(err:Throwable):void;
+    output(stream:InputStream):void;
+
+    outputStream():OutputStream;
+    outputAsJson(json:string):void;
+    outputAsHtml(html:string):void;
+
+    headerSet(key:string, val:string):void;
+    headerAdd(key:string, val:string):void;
+
+    cookieSet(key:string, val:string):void;
+    cookieSet(key:string, val:string, maxAge:number):void;
+    cookieSet(key:string, val:string, domain:string, maxAge:number):void;
+    cookieSet(key:string, val:string, domain:string, path:string, maxAge:number):void;
+    cookieRemove(key:string):void;
+
+    redirect(url:string):void;
+    redirect(url:string, code:number):void;
+
+    status():number;
+    status(status:number):void;
+
+    attrMap():JMap<string,object>;
+    attr(key:string):object;
+    attr(key:string, def:object):object;
+    attrSet(key:string, val:string):void;
+    attrSet(map:JMap<string,object>):void;
+    attrClear():void;
+
+    render(obj:object):void;
+    render(view:string, data:JMap<string,object>):void;
+}
+
+
+interface JtUtil {
+    guid():string;
+    ip():string;
+    db(cfg:string):DbContext;
+    db(cfg:string, def:DbContext):DbContext;
+
+    empMap():JMap<string,object>;
+    empList():JList<object>;
+    empSet():JSet<object>;
+
+    newMap():JMap<string,object>;
+    newList():JList<object>;
+    newList(ary:object[]):JList<object>;
+    newSet():JSet<object>;
+
+    newOutputStream():OutputStream;
+    newXfile():UploadedFile;
+    newUri(url:string):URI;
+
+    http(url:string):HttpUtils;
+    htmlEncode(str:string):string;
+    urlEncode(str:string):string;
+    urlDecode(str:string):string;
+
+    executorList():JSet<String>;
+
+    sharedAdd(key:string, obj:object):boolean;
+    sharedHas(key:string):boolean;
+
+
+    md5(str:string):string;
+    md5(str:string, charset:string):string;
+
+    sha1(str:string):string;
+    sha1(str:string, charset:string):string;
+
+    sha256(str:string):string;
+    sha256(str:string, charset:string):string;
+
+    hmac(str:string, key:string, algorithm:string):Int8Array;
+    hmac(str:string, key:string, algorithm:string, charset:string):Int8Array;
+    toX16(bytes:Int8Array):string;
+    toX64(bytes:Int8Array):string;
+
+    aesEncrypt(str:string, password:string):string;
+    aesEncrypt(str:string, password:string, algorithm:string, offset:string, charset:string):string;
+    aesDecrypt(str:string, password:string):string;
+    aesDecrypt(str:string, password:string, algorithm:string, offset:string, charset:string):string;
+
+    base64Encode(str:string):string;
+    base64Decode(str:string):string;
+
+    codeByRandom(len:number):string;
+
+    codeToImage(code:string):BufferedImage;
+    streamToString(inStream:InputStream): string;
+    streamOutToIn(outStream:OutputStream): InputStream;
+    stringToStream(str:string) : InputStream;
+
+    oNode(obj:object):ONode;
+
+
+    paging(ctx:Context, pageSize:number):PagingModel;
+    paging(ctx:Context, pageSize:number, fixedSize:number):PagingModel;
+
+    liveTime(date: JDate):string;
+    liveString(str:string, len:number, salt:string):string;
+
+    isNumber(str:string):boolean;
+
+    log(data:Map<string,object>):boolean;
+    log(content:string):boolean;
+
+    localAddr():string;
+    statusSet(status:number):number;
+    stringOf(obj:object):string;
+
+    cfg(name:string):AConfigM;
+    cfgOf(value:string):AConfigM;
+    cfgSet(name:string, value:string):boolean;
+
+    sleep(millis:number):void;
+
+    heihei(text:string, mobileS:string[]):string;
+
+    ridAdd(key:string, obj:object):void;
+    ridGet():JMap<string,object>;
+
+    interfaceList():JList<JMap<string,object>>;
+
+    ////////
+
+
+    rootSet(path:string) : void;
+    menuGet(label:string, pid:number) : JList<JMap<string,object>>;
+    menuGet(label:string) : JList<JMap<string,object>>;
+
+    imgSet(file:UploadedFile) : string;
+    imgSet(file:UploadedFile, tag:string, dir:string, name_mod:Number) : String;
+    imgSet(file:UploadedFile, extension:string) : string;
+    imgSet(content:string, contentType:string, extension:string) : string;
+    imgSet(content:string, contentType:string, extension:string, name:string) : string;
+    imgSet(content:string, contentType:string, extension:string, name:string, label:string) : string;
+
+    imgOutName(ctx:Context, filename:string) : void;
+    imgUpd(path:string, content:string) : string;
+    imgGet(path:string) : string;
+    imgGetBytes(path:string) : Int8Array;
+    img2String(data:string) : string;
+
+    fileGet(path:string): string;
+    fileNew(fid:number, ctx:Context) : boolean;
+    fileSet(fid:number, fcontent:string) : boolean;
+    fileFlush(path:string, is_del:boolean) : boolean;
+    fileFlush(path:string, is_del:boolean, label:string, note:string) : boolean;
+
+    restart() : boolean;
+
+    extendList() : JList<JMap<string,object>>;
+    extendDel(name:string):boolean;
+
+    thumbnailOf(stream:InputStream): Object;
+
+    loadJar(path: string, data64:string, data_md5:string, plugin:string): boolean;
+}
+
+interface JtFunHandler{
+    call(arg:Map<string,object>):object;
+}
+
+interface JtFun{
+    set(name:string, fun:JtFunHandler):void;
+    set(name:string, note:string, fun:JtFunHandler):void;
+    set(name:string, note:string, priority:number, fun:JtFunHandler):void;
+
+    find(name:string):JtFunHandler;
+    contains(name:string):boolean;
+
+    tryCall(name:string, args:Map<string,object>):object;
+    call(name:string, args:Map<string,object>):object;
+
+    callFile(path:string):object;
+    callFile(path:string, attrs:Map<string,object>):object;
+
+    callLabel(tag:string, label:string, useCache:boolean):object;
+    callLabel(tag:string, label:string, useCache:boolean, attrs:Map<string,object>):object;
+}
+
+interface JtMsg{
+    forward(topic:string, content:object, topic_source:string):boolean;
+    forward(map:Map<string,object>):boolean;
+
+    publish(topic:string, content:object):boolean;
+    publish(map:Map<string,object>):boolean;
+}
+
+interface JtLock{
+    tryLock(group:string, key:string, inSeconds:number, inMaster:string):boolean;
+    tryLock(group:string, key:string, inSeconds:number):boolean;
+    tryLock(group:string, key:string):boolean;
+
+    isLocked(group:string, key:string):boolean;
+
+    unLock(group:string, key:string):void;
+}
+
+interface ICacheServiceEx{
+
+}
+
+interface TimeZone{
+
+}
+
+interface Locale{
+
+}
+
+interface Datetime{
+    Now():Datetime;
+    parse(datetime:string, format:string):Datetime;
+    parseEx(datetime:string, format:JList<string>):Datetime;
+
+    setFulltime(date:JDate):Datetime;
+    getFulltime():JDate;
+
+    addYear(year:number):Datetime;
+    addMonth(month:number):Datetime;
+    addDay(day:number):Datetime;
+    addHour(hour:number):Datetime;
+    addMinute(minute:number):Datetime;
+    addSecond(second:number):Datetime;
+    addMillisecond(millisecond:number):Datetime;
+
+    setYear(year:number):Datetime;
+    setMonth(month:number):Datetime;
+    setDay(day:number):Datetime;
+    setHour(hour:number):Datetime;
+    setMinute(minute:number):Datetime;
+    setSecond(second:number):Datetime;
+    setMillisecond(millisecond:number):Datetime;
+
+    getYear():number;
+    getMonth():number;
+    getDays():number;
+    getHours():number;
+    getMinutes():number;
+    getSeconds():number;
+    getMilliseconds():number;
+
+    getAllDays():number;
+    getAllHours():number;
+    getAllMinutes():number;
+    getAllSeconds():number;
+    getAllMilliseconds():number;
+    getTicks():number;
+
+    getDate():number;
+    toString():string;
+    toString(format:string):string;
+    toString(format:string, locale:Locale, timeZone:TimeZone):string;
+    toGmtString():string;
+}
+
+interface Timespan{
+    milliseconds():number;
+    seconds():number;
+    minutes():number;
+    hours():number;
+    days():number;
+}
+
+interface Timecount{
+    start():Timecount;
+    stop():Timespan;
+    stop(ref_second:number):Timespan;
+
+}
+
+declare var Datetime: Datetime;
+declare var Timecount: Timecount;
+declare var Timespan: Timespan;
+
+declare var db: DbContext;
+declare var ctx: Context;
+declare var cache: ICacheServiceEx;
+declare var localCache: ICacheServiceEx;
+
+
+declare var XUtil: JtUtil;
+declare var XFun: JtFun;
+declare var XMsg: JtMsg;
+declare var XLock: JtLock;
+
+declare function requireX(path:string): void;
+declare function modelAndView(path:string, model:Map<string,object>): string;
+
+/////////////// RockClient
+
+interface AppModel{
+    app_id:number;
+    app_key:string;
+    akey:string;
+
+    agroup_id:number;
+    ugroup_id:number;
+
+    name:string;
+    note:string;
+}
+
+interface RockClient{
+    getApp(appID:number):AppModel;
+    getApp(akey:string):AppModel;
+    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
+}
+
+interface RockUtil{
+
+}
+
+interface rock{
+    client:RockClient;
+    util:RockUtil;
+
+    app(appID:number):AppModel;
+
+    cmd(service:string, cmd:string, args:Map<string,object>):string;
+    api(service:string, fun:string, args:Map<string,object>):string;
+
+    newID(group:string, key:string, times:number):number;
+}
+
+declare var RockClient: RockClient;
+declare var RockUtil: RockUtil;
+
+declare var rock: rock;
+
+
+/////////////// WaterClient
+
+interface ConfigApi{
+
+}
+
+interface MessageApi{
+
+}
+
+interface LogApi{
+
+}
+
+interface RegistryApi{
+
+}
+
+interface TrackApi{
+
+}
+
+interface NoticeApi{
+
+}
+
+interface WhitelistApi{
+
+}
+
+interface WaterClient{
+    Config:ConfigApi;
+    Message:MessageApi;
+    Log:LogApi;
+    Registry:RegistryApi;
+    Track:TrackApi;
+    Notice:NoticeApi;
+    Whitelist:WhitelistApi;
+}
+
+interface WaterProxy{
+    job(service:string, name:string):string;
+
+    call(service:string, path:string):string;
+    call(service:string, path:string, args:Map<string,object>):string;
+
+    faas(path:string):string;
+    faas(path:string, args:Map<string,object>):string;
+
+    raas(path:string, args:Map<string,object>):string;
+    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
+}
+
+interface RedisSession{
+    key(key:string):RedisSession;
+    expire(seconds:number):RedisSession;
+
+    exists():boolean;
+    delete():boolean;
+    rename(newKey:string):void;
+
+    set(val:string):RedisSession;
+    set(val:number):RedisSession;
+    get():string;
+    getAsLong():number;
+    getMore(keys:string[]):JList<string>;
+    incr(num:number):number;
+    incr():number;
+    decr():number;
+    lock():boolean;
+    lock(val:string):boolean;
+
+    hashGet(field:string):string;
+    hashGetAsLong(field:string):number;
+    hashHas(field:string):boolean;
+    hashScan(fieldPattern:string, count:number):JList<object>;
+    hashMatch(fieldPattern:string):boolean;
+    hashDel(fields:string[]):boolean;
+    hashSet(field:string, val:string):RedisSession;
+    hashSet(field:string, val:number):RedisSession;
+    hashSetAll(map:Map<string,string>):RedisSession;
+    hashLen():number;
+
+    listAdd(item:string):RedisSession;
+    listAdd(item:number):RedisSession;
+    listDel(item:string, count:number):RedisSession;
+    listDel(item:string):RedisSession;
+    listPop():string;
+    listPeek():string;
+    listGet(index:number):string;
+    listLen():number;
+
+    setAdd(item:string):RedisSession;
+    setDel(item:string):RedisSession;
+    setPop():string;
+    setGet(count:number):string;
+    setMatch(itemPattern:string):boolean;
+    setLen():number;
+
+    publish(channel:string, message:string):number;
+}
+
+interface RedisClient{
+    open0(callbackfn:(rs:RedisSession)=>void):void;
+    open1(callbackfn:(rs:RedisSession)=>object):object;
+    open(callbackfn:(rs:RedisSession)=>void):void;
+    openAndGet(callbackfn:(rs:RedisSession)=>object):object;
+}
+
+interface MongoIndexOptions{
+    background:boolean;
+    unique:boolean;
+    name:string;
+    sparse:boolean;
+    expireAfterSeconds:bigint;
+    version:number;
+    defaultLanguage:string;
+    languageOverridea:string;
+    textVersion:number;
+    sphereVersion:number;
+    bits:number;
+    min:number;
+    max:number;
+    bucketSize:number;
+}
+
+interface MongoX{
+    insertOne(coll:string, data:Map<string,object>):void;
+    insertMany(coll:string, data:Array<Map<string,object>>):void;
+
+    updateOne(coll:string, filter:Map<string,object>, data:Map<string,object>):object;
+    updateMany(coll:string, filter:Map<string,object>, data:Array<Map<string,object>>):object;
+
+    replaceOne(coll:string, filter:Map<string,object>, data:Map<string,object>):object;
+
+    findOne(coll:string, filter:Map<string,object>):JMap<string, object>;
+    findTop(coll:string, filter:Map<string,object>, top:number):JList<JMap<string, object>>;
+    findPage(coll:string, filter:Map<string,object>, start:number, size:number):JList<JMap<string, object>>;
+    findMany(coll:string, filter:Map<string,object>):JList<JMap<string, object>>;
+
+    deleteOne(coll:string, data:Map<string,object>):object;
+    deleteMany(coll:string, data:Array<Map<string,object>>):object;
+
+    createIndex(coll:string, keys:Map<string,object>, options:MongoIndexOptions):string;
+}
+
+interface MgTableQuery{
+    build(callbackfn:(tb:MgTableQuery)=>void):MgTableQuery;
+
+    whereTrue():MgTableQuery;
+
+    whereMap(map:Map<string,object>):MgTableQuery;
+    whereEq(field:string, val:object):MgTableQuery;
+    whereNeq(field:string, val:object):MgTableQuery;
+    whereLt(field:string, val:object):MgTableQuery;
+    whereLte(field:string, val:object):MgTableQuery;
+    whereGt(field:string, val:object):MgTableQuery;
+    whereGte(field:string, val:object):MgTableQuery;
+    whereLk(field:string, val:object):MgTableQuery;
+    whereNlk(field:string, val:object):MgTableQuery;
+    whereBtw(field:string, start:object, end:object):MgTableQuery;
+    whereNbtw(field:string, start:object, end:object):MgTableQuery;
+    whereIn(field:string, ary:JList<object>):MgTableQuery;
+    whereNin(field:string, ary:JList<object>):MgTableQuery;
+    whereMod(field:string, base:number, val:number):MgTableQuery;
+    whereNmod(field:string, base:number, val:number):MgTableQuery;
+    whereAll(field:string, ary:JList<object>):MgTableQuery;
+    whereSize(field:string, size:number):MgTableQuery;
+    whereExists(field:string, exists:boolean):MgTableQuery;
+
+    andEq(field:string, val:object):MgTableQuery;
+    andNeq(field:string, val:object):MgTableQuery;
+    andLt(field:string, val:object):MgTableQuery;
+    andLte(field:string, val:object):MgTableQuery;
+    andGt(field:string, val:object):MgTableQuery;
+    andGte(field:string, val:object):MgTableQuery;
+    andLk(field:string, val:object):MgTableQuery;
+    andNlk(field:string, val:object):MgTableQuery;
+    andBtw(field:string, start:object, end:object):MgTableQuery;
+    andNbtw(field:string, start:object, end:object):MgTableQuery;
+    andIn(field:string, ary:JList<object>):MgTableQuery;
+    andNin(field:string, ary:JList<object>):MgTableQuery;
+    andMod(field:string, base:number, val:number):MgTableQuery;
+    andNmod(field:string, base:number, val:number):MgTableQuery;
+    andAll(field:string, ary:JList<object>):MgTableQuery;
+    andSize(field:string, size:number):MgTableQuery;
+    andExists(field:string, exists:boolean):MgTableQuery;
+
+    set(field:string, val:object):MgTableQuery;
+    setMap(map:Map<string,object>):MgTableQuery;
+    setInc(field:string, val:number):MgTableQuery;
+
+    orderByAsc(field:string):MgTableQuery;
+    orderByDesc(field:string):MgTableQuery;
+    andByAsc(field:string):MgTableQuery;
+    andByDesc(field:string):MgTableQuery;
+
+
+    limit(size:number):MgTableQuery;
+    limit(start:number, size:number):MgTableQuery;
+
+
+
+    caching(service:ICacheService):MgTableQuery;
+    usingCache(isCache:boolean):MgTableQuery;
+    usingCache(seconds:number):MgTableQuery;
+    cacheTag(tag:string):MgTableQuery;
+
+    insert():void;
+    insert(map:Map<string,object>):void;
+    insertList(dataList:JList<Map<string,object>>):void;
+
+    update():number;
+    replace():number;
+
+    delete():number;
+
+
+    selectList(clz:Object):JList<Object>;
+    selectItem(clz:Object):Object;
+
+    selectMapList():JList<Map<string,object>>;
+    selectMap():Map<string,object>;
+
+    selectArray():JList<Object>;
+
+    selectCount():number;
+
+    selectExists():boolean;
+
+    createIndex(background:boolean):string;
+    createIndex(options:Map<string,object>):string;
+
+    createIndex(options:MongoIndexOptions):string;
+}
+
+interface MgContext{
+    table(table:string):MgTableQuery;
+    mongo():MongoX;
+}
+
+interface water{
+    client:WaterClient;
+    proxy:WaterProxy;
+
+    cfg(tagKey:string):AConfigM;
+    db(tagKey:string):DbContext;
+    rd(tagKey:string, db:number):RedisClient;
+    mg(tagKey:string, db:string):MgContext;
+
+    job(service:string, name:string):string;
+
+    updateCache(tags:string):void;
+
+    call(service:string,path:string,args:Map<string,object>):string;
+    faas(path:string,args:Map<string,object>):string;
+    raas(path:string,args:Map<string,object>):string;
+
+    heihei(target:string,msg:string):string;
+
+    sendMessage(topic:string,message:string):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
+}
+
+declare var WaterClient: WaterClient;
+declare var WaterProxy: WaterProxy;
+
+declare var water: water;
