@@ -5,13 +5,14 @@ import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 
+import java.io.Closeable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author noear 2021/2/1 created
  */
-public interface MsgSource {
+public interface MsgSource extends Closeable {
     //
     //for api
     //

@@ -2,6 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.water.protocol.MsgQueue;
 
+import java.io.IOException;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
@@ -41,7 +42,7 @@ public class MsgQueueLocal implements MsgQueue {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
 
     }
 }

@@ -14,6 +14,7 @@ import org.noear.weed.cache.ICacheServiceEx;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -485,5 +486,10 @@ public class MsgSourceRdb implements MsgSource {
 
         //清理统计
         _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
+    }
+
+    @Override
+    public void close() throws IOException {
+        _db.close();
     }
 }

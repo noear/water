@@ -20,7 +20,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
     private Map<String, LoggerEntity> _logMap = new HashMap<>();
 
     public LogSourceFactoryImpl(ConfigM def, Fun1<String, LoggerMeta> loggerGetter) {
-        _def = new LoggerEntity(ProtocolUtil.createLogSource(def), def);
+        _def = new LoggerEntity(createLogSource(def), def);
         _loggerGetter = loggerGetter;
     }
 
@@ -44,7 +44,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
             return;
         }
 
-        LogSource source = ProtocolUtil.createLogSource(cfg);
+        LogSource source = createLogSource(cfg);
         if (source != null) {
             LogSource oldSource = entity.source;
 
@@ -69,7 +69,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
                     if (model != null && TextUtils.isEmpty(model.getSource()) == false) {
                         ConfigM cfg = ProtocolHub.config.getByTagKey(model.getSource());
-                        entity = new LoggerEntity(ProtocolUtil.createLogSource(cfg), cfg);
+                        entity = new LoggerEntity(createLogSource(cfg), cfg);
                     }
                 }
 
@@ -87,5 +87,20 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
     @Override
     public LoggerMeta getLoggerMeta(String logger) {
         return _loggerGetter.run(logger);
+    }
+
+
+    public static LogSource createLogSource(ConfigM cfg) {
+        if (cfg == null || TextUtils.isEmpty(cfg.value)) {
+            return null;
+        }
+
+        if (cfg.value.indexOf("=mongodb") > 0) {
+            return new LogSourceMongo(cfg.getMg("water_log"));
+        } else if (cfg.value.indexOf("=elasticsearch") > 0) {
+            return new LogSourceElasticsearch(cfg.getEs());
+        } else {
+            return new LogSourceRdb(cfg.getDb(true));
+        }
     }
 }

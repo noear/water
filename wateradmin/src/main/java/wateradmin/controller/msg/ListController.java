@@ -24,15 +24,15 @@ public class ListController extends BaseController {
 
     //消息异常记录
     @Mapping("/msg/list")
-    public ModelAndView list(Context ctx, String key) throws Exception {
+    public ModelAndView list(Context ctx, String broker, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
 
-        List<MessageModel> list = ProtocolHub.msgSource().getMessageList(_m, key);
+        List<MessageModel> list = ProtocolHub.getMsgSource(broker).getMessageList(_m, key);
 
 
-        viewModel.put("key",key);
-        viewModel.put("_m",_m);
-        viewModel.put("list",list);
+        viewModel.put("key", key);
+        viewModel.put("_m", _m);
+        viewModel.put("list", list);
         viewModel.put("currTime", DisttimeUtils.currTime());
         return view("msg/list");
     }
@@ -40,8 +40,8 @@ public class ListController extends BaseController {
     //派发功能ajax
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/distribute")
-    public ViewModel distribute(String ids) throws Exception {
-        boolean result = ProtocolHub.msgSource().setMessageAsPending(idList(ids));
+    public ViewModel distribute(String broker, String ids) throws Exception {
+        boolean result = ProtocolHub.getMsgSource(broker).setMessageAsPending(idList(ids));
 
         if (result) {
             viewModel.code(1, "派发成功！");
@@ -55,8 +55,8 @@ public class ListController extends BaseController {
     //取消派发
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/cancelSend")
-    public ViewModel cancelSend(String ids) throws Exception {
-        boolean result = ProtocolHub.msgSource().setMessageAsCancel(idList(ids));
+    public ViewModel cancelSend(String broker, String ids) throws Exception {
+        boolean result = ProtocolHub.getMsgSource(broker).setMessageAsCancel(idList(ids));
 
         if (result) {
             viewModel.code(1, "取消成功");
@@ -70,10 +70,10 @@ public class ListController extends BaseController {
     //异常记录中 修复订阅功能的ajax
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/ajax/repair")
-    public ViewModel repairSubs(String ids) throws Exception {
+    public ViewModel repairSubs(String broker, String ids) throws Exception {
         boolean error = false;
 
-        List<DistributionModel> list = ProtocolHub.msgSource().getDistributionListByMsgIds(idList(ids));
+        List<DistributionModel> list = ProtocolHub.getMsgSource(broker).getDistributionListByMsgIds(idList(ids));
         if (!list.isEmpty()) {
             for (DistributionModel dis : list) {
                 //查询subscriber的url
@@ -81,7 +81,7 @@ public class ListController extends BaseController {
                 boolean result = false;
                 if (subs.subscriber_id > 0) {
                     //更新distribution的url
-                    result = ProtocolHub.msgSource().setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
+                    result = ProtocolHub.getMsgSource(broker).setDistributionReceiveUrl(dis.dist_id, subs.receive_url);
                 }
 
                 if (!result) {
@@ -101,10 +101,10 @@ public class ListController extends BaseController {
         return viewModel;
     }
 
-    private List<Object> idList(String ids){
-        return  Arrays.asList(ids.split(","))
+    private List<Object> idList(String ids) {
+        return Arrays.asList(ids.split(","))
                 .stream()
-                .map(s->Long.parseLong(s))
+                .map(s -> Long.parseLong(s))
                 .collect(Collectors.toList());
     }
 }

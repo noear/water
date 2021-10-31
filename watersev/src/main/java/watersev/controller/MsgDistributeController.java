@@ -8,6 +8,8 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
+import org.noear.water.protocol.MsgBroker;
+import org.noear.water.protocol.MsgSource;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -38,6 +40,9 @@ public final class MsgDistributeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
 
+    private String broker = "";
+    private MsgBroker msgBroker;
+
     @Override
     public String getName() {
         return "msg";
@@ -50,7 +55,9 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        ProtocolHub.msgQueue.pollGet(msg_id_str -> {
+        msgBroker = ProtocolHub.msgBrokerFactory.getBroker(broker);
+
+        msgBroker.getQueue().pollGet(msg_id_str -> {
             if (TextUtils.isEmpty(msg_id_str)) {
                 return;
             }
@@ -69,7 +76,7 @@ public final class MsgDistributeController implements IJob {
             long msgID = Long.parseLong(msg_id_str);
 
             //可能会出异常
-            MessageModel msg = ProtocolHub.msgSource().getMessageById(msgID);
+            MessageModel msg = msgBroker.getSource().getMessageById(msgID);
 
             //如果找不到消息，则退出
             if (msg == null) {
@@ -84,7 +91,7 @@ public final class MsgDistributeController implements IJob {
 
             //设置处理状态
             if (msg.state != MessageState.processed.code) {
-                ProtocolHub.msgSource().setMessageState(msg, MessageState.processed);
+                msgBroker.getSource().setMessageState(msg, MessageState.processed);
             }
 
             //路由
@@ -108,17 +115,17 @@ public final class MsgDistributeController implements IJob {
 
         //2.如果没有订阅者，就收工
         if (subsList.size() == 0) {
-            ProtocolHub.msgSource().setMessageState(msg, MessageState.notarget);//-2);
+            msgBroker.getSource().setMessageState(msg, MessageState.notarget);//-2);
             return false;
         }
 
         //3.尝试建立路由关系和派发任务
         if (msg.dist_routed == false) {
             for (SubscriberModel m : subsList.values()) {
-                ProtocolHub.msgSource().addDistributionNoLock(msg, m);
+                msgBroker.getSource().addDistributionNoLock(msg, m);
             }
 
-            ProtocolHub.msgSource().setMessageRouteState(msg, true);
+            msgBroker.getSource().setMessageRouteState(msg, true);
         }
 
         return true;
@@ -131,7 +138,7 @@ public final class MsgDistributeController implements IJob {
         try {
             distributeDo0(msg);
         } catch (Throwable ex) {
-            ProtocolHub.msgSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
+            msgBroker.getSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
         }
@@ -144,7 +151,7 @@ public final class MsgDistributeController implements IJob {
 
         //3.获出待分发任务
         List<DistributionModel> distList = new ArrayList<>();
-        List<DistributionModel> distList_tmp = ProtocolHub.msgSource().getDistributionListByMsg(msg.msg_id);
+        List<DistributionModel> distList_tmp = msgBroker.getSource().getDistributionListByMsg(msg.msg_id);
 
         //3.1.过滤可能已不存在的订阅者
         for (DistributionModel d : distList_tmp) { //可能会有什么意外，会产生重复数据
@@ -157,7 +164,7 @@ public final class MsgDistributeController implements IJob {
 
         //3.2.如果没有可派发对象，就收工
         if (distList.size() == 0) {
-            ProtocolHub.msgSource().setMessageState(msg, MessageState.completed);//2);
+            msgBroker.getSource().setMessageState(msg, MessageState.completed);//2);
             return;
         }
 
@@ -186,18 +193,18 @@ public final class MsgDistributeController implements IJob {
         //锁一下，确保计数的线程安全
         //
         if (isOk) {
-            if (ProtocolHub.msgSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
+            if (msgBroker.getSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
                 tag.value.incrementAndGet();
             }
         } else {
-            ProtocolHub.msgSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
+            msgBroker.getSource().setDistributionState(tag.msg, dist, MessageState.processed);//1);
         }
 
         //4.返回派发结果
         if (tag.count.incrementAndGet() == tag.total) {
             //处理完了后，解锁
             if (tag.value.get() == tag.total) {
-                ProtocolHub.msgSource().setMessageState(tag.msg, MessageState.completed);//2);
+                msgBroker.getSource().setMessageState(tag.msg, MessageState.completed);//2);
 
                 if (tag.msg.dist_count >= 3) {
 //                    System.out.print("发送短信报警---\r\n");
@@ -206,12 +213,12 @@ public final class MsgDistributeController implements IJob {
 
             } else {
                 if (tag.isDistributionEnd()) { //是否已派发结束（超出超大派发次数）
-                    ProtocolHub.msgSource().setMessageState(tag.msg, MessageState.excessive);//3);
+                    msgBroker.getSource().setMessageState(tag.msg, MessageState.excessive);//3);
 
 //                    System.out.print("发送短信报警---\r\n");
                     AlarmUtil.tryAlarm(tag, false, dist);
                 } else {
-                    ProtocolHub.msgSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
+                    msgBroker.getSource().setMessageRepet(tag.msg, MessageState.undefined);//0);
 
                     if (tag.msg.dist_count >= 3) {
 //                        System.out.print("发送短信报警---\r\n");
@@ -262,7 +269,7 @@ public final class MsgDistributeController implements IJob {
                 if (dist.receive_way == 3) {
                     //推后一小时，可手工再恢复
                     long ntime = DisttimeUtils.distTime(Datetime.Now().addHour(1).getFulltime());
-                    ProtocolHub.msgSource().setMessageState(msg, MessageState.processed, ntime);//1
+                    msgBroker.getSource().setMessageState(msg, MessageState.processed, ntime);//1
                 }
             } else {
                 //::0,1

@@ -28,12 +28,12 @@ public class CMD_msg_succeed extends UapiBase {
      */
     @NotEmpty("key")
     @Mapping("/msg/succeed/")
-    protected Result cmd_exec(String key, String subscriber_key) throws Exception {
+    protected Result cmd_exec(String broker, String key, String subscriber_key) throws Exception {
 
         if (TextUtils.isEmpty(subscriber_key)) {
-            ProtocolHub.msgSource().setMessageAsSucceed(key);
+            ProtocolHub.getMsgSource(broker).setMessageAsSucceed(key);
         } else {
-            ProtocolHub.msgSource().setDistributionAsSucceed(key, subscriber_key);
+            ProtocolHub.getMsgSource(broker).setDistributionAsSucceed(key, subscriber_key);
         }
 
         return Result.succeed();

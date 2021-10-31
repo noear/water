@@ -3,6 +3,7 @@ package watersev.controller;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
+import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
@@ -27,6 +28,10 @@ import java.util.concurrent.Executors;
 public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
+
+    private String broker = "";
+    private MsgBroker msgBroker;
+
     final int _interval_def = 1000;
     int _interval = 1000;
 
@@ -47,6 +52,7 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
+        msgBroker = ProtocolHub.msgBrokerFactory.getBroker(broker);
 
         while (true) {
             if (execDo() == false) {
@@ -57,7 +63,7 @@ public class MsgExchangeController implements IJob {
 
 
     private boolean execDo() throws Exception {
-        if (ProtocolHub.msgQueue.count() > 20000) {
+        if (msgBroker.getQueue().count() > 20000) {
             //
             //防止派发机出问题时，队列不会暴掉
             //
@@ -65,7 +71,7 @@ public class MsgExchangeController implements IJob {
         }
 
         long dist_nexttime = System.currentTimeMillis();
-        List<MessageModel> msgList = ProtocolHub.msgSource()
+        List<MessageModel> msgList = ProtocolHub.getMsgSource(broker)
                 .getMessageListOfPending(5000, dist_nexttime);
 
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
@@ -109,13 +115,13 @@ public class MsgExchangeController implements IJob {
             //1.推送到队列（未来可以转发到不同的队列）
             String msg_id_str = String.valueOf(msg.msg_id);
 
-            ProtocolHub.msgQueue.push(msg_id_str);
+            msgBroker.getQueue().push(msg_id_str);
 
             //2.状态改为处理中
-            ProtocolHub.msgSource().setMessageState(msg, MessageState.processed);
+            ProtocolHub.getMsgSource(broker).setMessageState(msg, MessageState.processed);
 
         } catch (Throwable ex) {
-            ProtocolHub.msgSource()
+            ProtocolHub.getMsgSource(broker)
                     .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);

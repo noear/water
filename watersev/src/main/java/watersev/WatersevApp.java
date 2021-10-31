@@ -53,8 +53,7 @@ public class WatersevApp {
             //用于清除控制
             ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
 
-            ProtocolHub.msgSourceFactory = new MsgBrokerImpl(Config.water_msg_store, Config.cache_data);
-            ProtocolHub.msgQueue = ProtocolHub.getMessageQueue(Config.water_msg_queue);
+            ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, Config.cache_data);
 
             ProtocolHub.heihei = new HeiheiImp();
 

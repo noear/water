@@ -17,6 +17,7 @@ import org.noear.weed.mongo.MgTableQuery;
 import org.slf4j.Logger;
 import org.slf4j.MDC;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -550,5 +551,10 @@ public class MsgSourceMongo implements MsgSource {
 
         //清理统计
         _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
+    }
+
+    @Override
+    public void close() throws IOException {
+        _db.close();
     }
 }

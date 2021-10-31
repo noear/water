@@ -27,14 +27,14 @@ public class CMD_msg_cancel extends UapiBase {
      */
     @NotEmpty("key")
     @Mapping("/msg/cancel/")
-    public Result cmd_exec(String key, String subscriber_key) throws Exception {
+    public Result cmd_exec(String broker,String key, String subscriber_key) throws Exception {
 
         //如果不需要修改，检查是否已存在
         //
         if (TextUtils.isEmpty(subscriber_key)) {
-            ProtocolHub.msgSource().setMessageAsCancel(key);
+            ProtocolHub.getMsgSource(broker).setMessageAsCancel(key);
         } else {
-            ProtocolHub.msgSource().setDistributionAsCancel(key, subscriber_key);
+            ProtocolHub.getMsgSource(broker).setDistributionAsCancel(key, subscriber_key);
         }
 
         return Result.succeed();

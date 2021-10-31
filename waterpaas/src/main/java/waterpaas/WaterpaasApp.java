@@ -9,6 +9,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
+import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import org.noear.water.protocol.solution.MsgBrokerImpl;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
@@ -30,8 +31,8 @@ public class WaterpaasApp {
 
             //用于清除控制
             ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
-
-            ProtocolHub.msgSourceFactory = new MsgBrokerImpl(Config.water_msg_store, Config.cache_data);
+            //用于清除控制
+            ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, Config.cache_data);
 
 
             x.sharedAdd("cache", Config.cache_data);

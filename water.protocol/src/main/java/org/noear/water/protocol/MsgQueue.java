@@ -1,11 +1,12 @@
 package org.noear.water.protocol;
 
+import java.io.Closeable;
 import java.util.function.Consumer;
 
 /**
  * 消息队列接口（发到队列里的消息，是原消息ID）
  * */
-public interface MsgQueue extends AutoCloseable {
+public interface MsgQueue extends Closeable {
     /**
      * 添加一个消息
      * */

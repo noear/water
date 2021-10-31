@@ -35,7 +35,7 @@ public class WaterapiApp {
 
 			ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
 
-			ProtocolHub.msgSourceFactory = new MsgBrokerImpl(Config.water_msg_store, CacheUtils.data);
+			ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, CacheUtils.data);
 
 			ProtocolHub.heihei = new HeiheiImp(); //new WaterLoggerLocal()
 

@@ -4,6 +4,7 @@ import org.noear.redisx.RedisClient;
 import org.noear.water.protocol.MsgQueue;
 import org.noear.water.utils.TextUtils;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
@@ -56,7 +57,7 @@ public class MsgQueueRedis implements MsgQueue {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws IOException {
 
     }
 }

@@ -7,10 +7,7 @@ import org.noear.snack.ONode;
 import org.noear.snack.core.exts.ClassWrap;
 import org.noear.snack.core.exts.FieldWrap;
 import org.noear.water.WaterProps;
-import org.noear.water.utils.CacheUtils;
-import org.noear.water.utils.ConfigUtils;
-import org.noear.water.utils.ConvertUtil;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbDataSource;
 import org.noear.weed.cache.ICacheServiceEx;
@@ -178,6 +175,7 @@ public final class ConfigM {
     }
 
     private static Map<String, MgContext> _mgMap = new HashMap<>();
+
     private MgContext getMgDo(Properties prop, String db) {
         MgContext mg = _mgMap.get(value);
 
@@ -280,43 +278,6 @@ public final class ConfigM {
     }
 
     public DataSource getDs(boolean pool) {
-        Properties prop = getProp();
-        String url = prop.getProperty("url");
-
-        if (TextUtils.isEmpty(url)) {
-            return null;
-        }
-
-        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
-        String driverClassName = prop.getProperty("driverClassName");
-
-        if (pool) {
-            HikariDataSource source = new HikariDataSource();
-
-            for (FieldWrap fw : ClassWrap.get(HikariDataSource.class).fieldAllWraps()) {
-                String valStr = prop.getProperty(fw.name());
-                if (TextUtils.isNotEmpty(valStr)) {
-                    Object val = ConvertUtil.to(fw.type, valStr);
-                    fw.setValue(source, val);
-                }
-            }
-
-            if (TextUtils.isNotEmpty(url)) {
-                source.setJdbcUrl(url);
-            }
-
-            return source;
-        } else {
-            if (TextUtils.isNotEmpty(driverClassName)) {
-                try {
-                    Class.forName(driverClassName);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            return new DbDataSource(url, username, password);
-        }
+        return DsUtils.getDs(getProp(), pool);
     }
 }

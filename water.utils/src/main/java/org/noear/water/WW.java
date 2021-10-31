@@ -55,6 +55,8 @@ public class WW {
     public static final String track_service = "_service";
     public static final String track_from = "_from";
 
+    public static final String driverType = "driverType";
+
     /**
      * 主控组
      * */
