@@ -121,15 +121,30 @@ public class TrackApi {
         int seconds = (int) (interval / 1000);
         String schema = cmd.context.schema();
 
+        String sqlUp = cmd.text.toUpperCase();
+
+        String method = "OTHER";
+        if (sqlUp.indexOf("SELECT ") >= 0) {
+            method = "SELECT";
+        } else if (sqlUp.indexOf("UPDATE ") >= 0) {
+            method = "UPDATE";
+        } else if (sqlUp.indexOf("DELETE ") >= 0) {
+            method = "DELETE";
+        } else if (sqlUp.indexOf("INSERT INTO ") >= 0) {
+            method = "INSERT";
+        }
+
         LogM logM = new LogM();
         logM.logger = "water_sql_log";
-        logM.service = service;
-        logM.tag = schema;
+        logM.tag = method;
         logM.tag1 = String.valueOf(seconds); //秒数
         logM.tag2 = path;
         logM.tag3 = operator;
+        logM.tag4 = "";
         logM.from = operator_ip;
         logM.trace_id = trace_id;
+        logM.group = schema;
+        logM.service = service;
         logM.class_name = String.valueOf(interval); //毫秒数
 
         StringBuilder content = new StringBuilder();
