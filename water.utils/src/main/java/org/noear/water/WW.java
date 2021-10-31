@@ -12,12 +12,7 @@ public class WW {
     public static final String msg_ucache_topic = "water.cache.update";
     public static final String msg_uconfig_topic = "water.config.update";
 
-
-    public static final String cfg_water_sss = "water.sss";
-    public static final String cfg_water_setup = "water.setup";
-
     public static final String cfg_data_header = "#Data#: ";
-
 
     public static final String path_run_job = "/run/job/";//for cloud job call
     public static final String path_run_status = "/run/status/";
