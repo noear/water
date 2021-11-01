@@ -30,12 +30,18 @@ public class ListController extends BaseController {
     public ModelAndView list(Context ctx, String broker, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             broker = broker.trim();
         }
 
-        if(TextUtils.isNotEmpty(key)) {
+        if (TextUtils.isNotEmpty(key)) {
             key = key.trim();
+        }
+
+        if (TextUtils.isEmpty(broker)) {
+            broker = ctx.cookie("wateradmin_msg__broker");
+        } else {
+            ctx.cookieSet("wateradmin_msg__broker", broker);
         }
 
         List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
@@ -45,7 +51,7 @@ public class ListController extends BaseController {
         viewModel.put("key", key);
         viewModel.put("_m", _m);
         viewModel.put("list", list);
-        viewModel.put("broker",broker);
+        viewModel.put("broker", broker);
         viewModel.put("brokerList", brokerList);
         viewModel.put("currTime", DisttimeUtils.currTime());
         return view("msg/list");

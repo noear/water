@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
@@ -8,6 +9,7 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
@@ -18,8 +20,10 @@ import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
+import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
+import watersev.models.water_cfg.BrokerHolder;
 
 import java.io.IOException;
 import java.util.*;
@@ -34,10 +38,13 @@ import java.util.concurrent.Executors;
  *
  * @author noear
  * */
+@Slf4j
 @Component
 public final class MsgDistributeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
+
+    Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
 
     @Override
     public String getName() {
@@ -51,20 +58,51 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        MsgBroker msgBroker = ProtocolHub.getMsgBroker(null);
+        List<TagCountsM> list = DbWaterCfgApi.getBrokerNameTags();
 
-        execDo(msgBroker);
-    }
+        for (TagCountsM broker : list) {
+            BrokerHolder brokerHolder = brokerHolderMap.get(broker.tag);
 
-    private void execDo(MsgBroker msgBroker){
-        msgBroker.getQueue().pollGet(msg_id_str -> {
-            if (TextUtils.isEmpty(msg_id_str)) {
-                return;
+            if (brokerHolder == null) {
+                //如果是第一次
+                brokerHolder = new BrokerHolder(ProtocolHub.getMsgBroker(broker.tag));
+                if (brokerHolder.msgBroker == null) {
+                    continue;
+                } else {
+                    brokerHolderMap.put(broker.tag, brokerHolder);
+                }
+            } else {
+                //如果之前有，检检是否已停?
+                if (brokerHolder.stoped == false) {
+                    break;
+                }
             }
 
-            //改用线程池处理
-            executor.execute(() -> distribute(msgBroker, msg_id_str));
-        });
+            exec0(brokerHolder);
+        }
+    }
+
+    private void exec0(BrokerHolder brokerHolder) {
+        brokerHolder.stoped = false;
+
+        new Thread(() -> {
+            try {
+
+                brokerHolder.msgBroker.getQueue().pollGet(msg_id_str -> {
+                    if (TextUtils.isEmpty(msg_id_str)) {
+                        return;
+                    }
+
+                    //改用线程池处理
+                    executor.execute(() -> distribute(brokerHolder.msgBroker, msg_id_str));
+                });
+
+            } catch (Throwable e) {
+                log.error("{}", e);
+            } finally {
+                brokerHolder.stoped = true;
+            }
+        }).start();
     }
 
 
