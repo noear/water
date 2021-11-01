@@ -21,6 +21,7 @@ import wateradmin.models.water_cfg.LoggerModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,8 +105,12 @@ public class LoggerController extends BaseController {
         boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
 
         if (result) {
-            ProtocolHub.logQuerier.create(logger);
-            viewModel.code(1, "保存成功！");
+            try {
+                ProtocolHub.logQuerier.create(logger);
+                viewModel.code(1, "保存成功！");
+            } catch (SQLNonTransientConnectionException e) {
+                viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
+            }
         } else {
             viewModel.code(0, "保存失败！");
         }

@@ -21,6 +21,7 @@ import wateradmin.models.water_cfg.BrokerModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,8 +105,12 @@ public class BrokerController extends BaseController {
         boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm);
 
         if (result) {
-            ProtocolHub.getMsgSource(broker).create();
-            viewModel.code(1, "保存成功！");
+            try {
+                ProtocolHub.getMsgSource(broker).create();
+                viewModel.code(1, "保存成功！");
+            } catch (SQLNonTransientConnectionException e) {
+                viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
+            }
         } else {
             viewModel.code(0, "保存失败！");
         }
