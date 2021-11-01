@@ -53,6 +53,10 @@ public final class MsgDistributeController implements IJob {
     public void exec() throws Exception {
         MsgBroker msgBroker = ProtocolHub.getMsgBroker(null);
 
+        exec0(msgBroker);
+    }
+
+    private void exec0(MsgBroker msgBroker){
         msgBroker.getQueue().pollGet(msg_id_str -> {
             if (TextUtils.isEmpty(msg_id_str)) {
                 return;

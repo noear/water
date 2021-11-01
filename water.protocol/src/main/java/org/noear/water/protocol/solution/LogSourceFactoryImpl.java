@@ -27,23 +27,39 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
     public void updateSource(String logger) throws IOException {
         LoggerEntity entity = _loggerMap.get(logger);
         if (entity == null) {
+            //如果没有，则不用更新
             return;
         }
 
         LoggerMeta meta = getLoggerMeta(logger);
 
-        if (meta == null || TextUtils.isEmpty(meta.getSource())) {
-            //找不到元信息
+        if (meta == null) {
+            //找不到元信息，不用更新
             return;
         }
 
-        ConfigM cfg = ProtocolHub.config.getByTagKey(meta.getSource());
 
-        if (entity.sourceConfig.value.equals(cfg.value)) {
-            return;
+        LogSource source;
+        ConfigM cfg;
+
+        if (TextUtils.isEmpty(meta.getSource())) {
+            //如果是空配置，是否为默认？
+            if (entity.source == _def.source) {
+                return;//说明没变
+            }
+
+            cfg = _def.sourceConfig;
+            source = _def.source;
+        } else {
+            cfg = ProtocolHub.config.getByTagKey(meta.getSource());
+
+            if (entity.sourceConfig.value.equals(cfg.value)) {
+                return;//说明没变
+            }
+
+            source = createLogSource(cfg);
         }
 
-        LogSource source = createLogSource(cfg);
         if (source != null) {
             LogSource oldSource = entity.source;
 

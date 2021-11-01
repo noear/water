@@ -35,23 +35,38 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
     public void updateBroker(String broker) throws IOException {
         BrokerEntity entity = _brokerMap.get(broker);
         if (entity == null) {
+            //如果没有，则不用更新
             return;
         }
 
         BrokerMeta meta = getBrokerMeta(broker);
 
-        if (meta == null || TextUtils.isEmpty(meta.getSource())) {
+        if (meta == null) {
             //找不到元信息
             return;
         }
 
-        ConfigM cfg = ProtocolHub.config.getByTagKey(meta.getSource());
+        MsgBroker source = null;
+        ConfigM cfg;
 
-        if (entity.sourceConfig.value.equals(cfg.value)) {
-            return;
+        if (TextUtils.isEmpty(meta.getSource())) {
+            //如果是空配置，是否为默认？
+            if (entity.source == _def.source) {
+                return; //说明没变
+            }
+
+            source = _def.source;
+            cfg = _def.sourceConfig;
+        } else {
+            cfg = ProtocolHub.config.getByTagKey(meta.getSource());
+
+            if (entity.sourceConfig.value.equals(cfg.value)) {
+                return;//说明没变
+            }
+
+            source = new MsgBrokerImpl(cfg, _cache);
         }
 
-        MsgBroker source = new MsgBrokerImpl(cfg, _cache);
         if (source != null) {
             MsgBroker oldSource = entity.source;
 
