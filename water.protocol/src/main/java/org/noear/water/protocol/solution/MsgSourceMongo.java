@@ -385,9 +385,7 @@ public class MsgSourceMongo implements MsgSource {
             qr.whereLt("state", 0);
         }
 
-        if (key != null) {
-            key = key.trim();
-
+        if (TextUtils.isNotEmpty(key)) {
             if (key.startsWith("*")) {
                 qr.andEq("trace_id", key.substring(1).trim());
             } else if (key.startsWith("@")) {
@@ -445,6 +443,11 @@ public class MsgSourceMongo implements MsgSource {
                 .set("last_date", datetime.getDate())
                 .set("last_fulltime", datetime.getFulltime())
                 .update() > 0;
+    }
+
+    @Override
+    public void create() throws Exception {
+
     }
 
     private void initIndex(){

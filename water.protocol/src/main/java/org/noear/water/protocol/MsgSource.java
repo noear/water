@@ -66,6 +66,11 @@ public interface MsgSource extends Closeable {
 
 
     /**
+     * 创建
+     * */
+    void create() throws Exception;
+
+    /**
      * 清理
      * */
     void clear(int lteDate) throws Exception;

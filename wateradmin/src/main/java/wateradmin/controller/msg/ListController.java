@@ -10,6 +10,7 @@ import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.DisttimeUtils;
+import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -28,6 +29,14 @@ public class ListController extends BaseController {
     @Mapping("/msg/list")
     public ModelAndView list(Context ctx, String broker, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
+
+        if(TextUtils.isNotEmpty(broker)) {
+            broker = broker.trim();
+        }
+
+        if(TextUtils.isNotEmpty(key)) {
+            key = key.trim();
+        }
 
         List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
         List<MessageModel> list = ProtocolHub.getMsgSource(broker).getMessageList(_m, key);

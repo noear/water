@@ -1,5 +1,6 @@
 package watersev.dso.db;
 
+import org.noear.water.model.TagCountsM;
 import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water_cfg.BrokerModel;
@@ -18,7 +19,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_whitelist")
                 .whereEq("tag", "_alarm")
                 .andEq("type", "mobile")
-                .andEq("is_enabled",1)
+                .andEq("is_enabled", 1)
                 .andNeq("value", "")
                 .select("value ")
                 .caching(Config.cache_data)
@@ -29,7 +30,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_whitelist")
                 .whereEq("tag", tag)
                 .andEq("type", "mobile")
-                .andEq("is_enabled",1)
+                .andEq("is_enabled", 1)
                 .andNeq("value", "")
                 .select("value ")
                 .caching(Config.cache_data)
@@ -41,9 +42,9 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_properties")
                     .whereEq("tag", "_gateway")
                     .andEq("key", name)
-                    .andEq("is_enabled",1)
+                    .andEq("is_enabled", 1)
                     .exists();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return false;
         }
     }
@@ -55,7 +56,7 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(LoggerModel.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -67,8 +68,17 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(BrokerModel.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static List<TagCountsM> getBrokerNameTags() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .groupBy("broker")
+                .orderByAsc("broker")
+                .caching(Config.cache_data)
+                .usingCache(10)
+                .selectList("broker tag,count(*) counts", TagCountsM.class);
     }
 }

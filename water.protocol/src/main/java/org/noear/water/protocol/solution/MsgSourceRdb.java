@@ -376,9 +376,7 @@ public class MsgSourceRdb implements MsgSource {
             qr.whereLt("state", 0);
         }
 
-        if (key != null) {
-            key = key.trim();
-
+        if (TextUtils.isNotEmpty(key)) {
             if (key.startsWith("*")) {
                 qr.andEq("trace_id", key.substring(1).trim());
             } else if (key.startsWith("@")) {
@@ -437,6 +435,24 @@ public class MsgSourceRdb implements MsgSource {
                 .set("last_date", datetime.getDate())
                 .set("last_fulltime", datetime.getFulltime())
                 .update() > 0;
+    }
+
+    @Override
+    public void create() throws Exception {
+        String sql = Utils.getResourceAsString("water/watr_msg_distribution_rdb_tml.sql", "utf-8");
+        if (TextUtils.isNotEmpty(sql)) {
+            _db.exe(sql);
+        }
+
+        sql = Utils.getResourceAsString("water/watr_msg_message_all_rdb_tml.sql", "utf-8");
+        if (TextUtils.isNotEmpty(sql)) {
+            _db.exe(sql);
+        }
+
+        sql = Utils.getResourceAsString("water/watr_msg_message_rdb_tml.sql", "utf-8");
+        if (TextUtils.isNotEmpty(sql)) {
+            _db.exe(sql);
+        }
     }
 
     @Override

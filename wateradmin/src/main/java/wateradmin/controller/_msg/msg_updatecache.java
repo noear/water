@@ -40,6 +40,13 @@ public class msg_updatecache implements CloudEventHandler {
                 }
                 return;
             }
+
+            if ("broker".equals(ss[0])) {
+                if (ProtocolHub.msgBrokerFactory != null) {
+                    ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
+                }
+                return;
+            }
         }
     }
 
@@ -49,7 +56,8 @@ public class msg_updatecache implements CloudEventHandler {
             return;
         }
 
-        if (tags.contains("logger:") == false) {
+        if (tags.contains("logger:") == false
+                && tags.contains("broker:") == false) {
             return;
         }
 
