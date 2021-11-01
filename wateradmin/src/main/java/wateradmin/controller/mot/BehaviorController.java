@@ -5,7 +5,6 @@ import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.TextUtils;
 
-
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
@@ -13,7 +12,6 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.db.DbWaterLogApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

@@ -47,7 +47,7 @@ public class SqlController extends BaseController {
      */
     @Mapping("sql/inner")
     public ModelAndView behavior_inner(String tag_name, String tagx, String log_date, Integer _state) throws Exception {
-        List<TagCountsM> tag2s = DbWaterLogApi.getSqlOperatorTags(logger, tag_name);
+        List<TagCountsM> tag2s = DbWaterLogApi.getSqlSecondsTags(logger, tag_name);
 
 
         int seconds = 0;

@@ -106,7 +106,7 @@ public class DbWaterLogApi {
 
     public static List<TagCountsM> getSqlSecondsTags(String tableName, String service) throws Exception {
         return ProtocolHub.getLogSource(tableName)
-                .queryGroupCountBy(tableName, service, "tag1");//tag1=>seconds
+                .queryGroupCountBy(tableName, service, "tag");//tag1=>seconds
 
 //        return db().table(tableName)
 //                .where("`service`=?", service)
@@ -120,7 +120,7 @@ public class DbWaterLogApi {
     public static List<TagCountsM> getSqlOperatorTags(String tableName, String service) throws Exception {
 
         return ProtocolHub.getLogSource(tableName)
-                .queryGroupCountBy(tableName, service, "tag3");//tag3=>operator
+                .queryGroupCountBy(tableName, service, "tag2");//tag3=>operator
 
 //        return db().table(tableName)
 //                .where("`service`=?", service)
