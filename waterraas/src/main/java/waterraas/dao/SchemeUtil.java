@@ -6,6 +6,8 @@ import org.noear.rubber.RubberResponse;
 import org.noear.rubber.models.LogRequestModel;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
+import org.noear.solon.cloud.CloudClient;
+import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
@@ -92,7 +94,7 @@ public class SchemeUtil {
         msg.set("scheme", scheme);
         msg.set("log_id", log_id);
 
-        WaterClient.Message.sendMessage(null, Config.msg_rubber_task, msg.toJson());
+        CloudClient.event().publish(new Event(Config.msg_rubber_task, msg.toJson()));
 
         //返回结果
         ONode data = new ONode();
