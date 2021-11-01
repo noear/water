@@ -3,6 +3,7 @@ package wateradmin.controller.mot;
 import org.noear.water.WW;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.model.log.LogModel;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 
 import org.noear.solon.annotation.Controller;
@@ -70,8 +71,16 @@ public class BehaviorController extends BaseController {
             }
         }
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, 0, 0);
+        long timestamp = 0;
+        if (TextUtils.isNotEmpty(log_date)) {
+            if (log_date.contains(".")) {
+                timestamp = Datetime.parse(log_date, "yyyyMMdd.HH").getTicks();
+            } else {
+                timestamp = Datetime.parse(log_date, "yyyyMMdd").getTicks();
+            }
+        }
 
+        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, 0, timestamp);
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("list", logs);

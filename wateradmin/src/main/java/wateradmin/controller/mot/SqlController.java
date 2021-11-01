@@ -78,8 +78,17 @@ public class SqlController extends BaseController {
             }
         }
 
+        long timestamp = 0;
+        if (TextUtils.isNotEmpty(log_date)) {
+            if (log_date.contains(".")) {
+                timestamp = Datetime.parse(log_date, "yyyyMMdd.HH").getTicks();
+            } else {
+                timestamp = Datetime.parse(log_date, "yyyyMMdd").getTicks();
+            }
+        }
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, 0, 0);
+
+        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, 0, timestamp);
 
 
         viewModel.put("refdate", Datetime.Now().addDay(-2).getDate());
