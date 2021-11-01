@@ -27,47 +27,48 @@
         </#list>
     </datalist>
 
-        <toolbar>
-            <left>
-                秒数：<input type="text"  id="tagx" placeholder="num" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
-                log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
+    <toolbar>
+        <left>
+            秒数：<input type="text"  id="tagx" placeholder="num" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
+            log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
 
-                <button type="button" onclick="do_query()">查询</button>
-            </left>
-            <right>
-                <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
-            </right>
-        </toolbar>
-        <datagrid class="list">
-            <table>
-                <thead>
-                    <td width="90px">
-                        时间
-                    </td>
-                    <td width="60px">毫秒数</td>
-                    <td class="left">代码</td>
-                </thead>
-                <tbody>
-                <#list list as log>
+            <button type="button" onclick="do_query()">查询</button>
+        </left>
+        <right>
+            <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
+        </right>
+    </toolbar>
+    <datagrid class="list">
+        <table>
+            <thead>
+            <td width="90px">
+                时间
+            </td>
+            <td width="60px">毫秒数</td>
+            <td class="left">代码</td>
+            </thead>
+            <tbody>
+            <#list list as log>
                 <tr ${(log.log_date<refdate)?string("class='t5'","")}>
                     <td>
                         ${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}
                     </td>
                     <td>
-                        ${log.interval}
+                        ${log.weight!0}
                     </td>
                     <td class="left break" style="font-size: small">
                         <div>*${log.trace_id!}</div>
-                        <div style="font-size: small">${log.schema!}::${log.cmd_sql!}
-                            <n-l>$$$ ${log.cmd_arg!}</n-l>
-                        </div>
+                        <div style="font-size: small">${log.content!}</div>
                     </td>
                 </tr>
-                </#list>
-                </tbody>
-            </table>
-        </datagrid>
-    <@pagebar pageSize="${pageSize}" rowCount="${rowCount}"/>
+            </#list>
+            </tbody>
+        </table>
+    </datagrid>
+    <div>
+        <a>上一页</a>
+        <a>下一页</a>
+    </div>
 </main>
 
 </body>

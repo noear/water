@@ -29,17 +29,17 @@
             <option value="${m.tag}">${m.tag}</option>
         </#list>
     </datalist>
-        <toolbar>
-            <left>
-                账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
-                log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" class="w100"/>&nbsp;&nbsp;
-                path：<input type="text"  id="path" placeholder="/"  id="path" class="w150"/>&nbsp;&nbsp;
-                <button type="button" onclick="do_query()">查询</button>
-            </left>
-            <right>
-                <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
-            </right>
-        </toolbar>
+    <toolbar>
+        <left>
+            账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
+            log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.hh" id="log_date" class="w100"/>&nbsp;&nbsp;
+            path：<input type="text"  id="path" placeholder="/"  id="path" class="w150"/>&nbsp;&nbsp;
+            <button type="button" onclick="do_query()">查询</button>
+        </left>
+        <right>
+            <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
+        </right>
+    </toolbar>
     <datagrid class="list">
         <table>
             <thead>
@@ -51,23 +51,24 @@
             </thead>
             <tbody>
             <#list list as log>
-            <tr title="${log.ua!}">
-                <td>
-                    ${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}
-                </td>
-                <td>${log.operator!}</td>
-                <td class="left break">
-                    <div>*${log.trace_id!} ${log.path!} (${log.operator_ip!})</div>
-                    <div style="font-size: small">${log.schema!}::${log.cmd_sql!}
-                    <n-l>$$$ ${log.cmd_arg!}</n-l>
-                    </div>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        ${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}
+                    </td>
+                    <td>${log.tag2!}</td>
+                    <td class="left break">
+                        <div>*${log.trace_id!} ${log.tag1!} (${log.from!})</div>
+                        <div style="font-size: small">${log.content!}</div>
+                    </td>
+                </tr>
             </#list>
             </tbody>
         </table>
     </datagrid>
-    <@pagebar pageSize="${pageSize}" rowCount="${rowCount}"/>
+    <div>
+        <a>上一页</a>
+        <a>下一页</a>
+    </div>
 </main>
 
 </body>
