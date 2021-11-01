@@ -30,13 +30,13 @@ public class MsgBrokerImpl implements MsgBroker {
      */
     public MsgBrokerImpl(ConfigM cfg, ICacheServiceEx cache) {
         PropertiesM prop = cfg.getProp();
-        PropertiesM sourceProp = prop.getProp("source");
+        PropertiesM storeProp = prop.getProp("store");
         PropertiesM queueProp = prop.getProp("queue");
 
-        if (sourceProp.size() == 0) {
+        if (storeProp.size() == 0) {
             init(prop, null, cache);
         } else {
-            init(sourceProp, queueProp, cache);
+            init(storeProp, queueProp, cache);
         }
     }
 
