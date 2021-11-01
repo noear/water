@@ -7,7 +7,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 import waterraas.controller.SystemCode;
-import waterraas.dao.SchemeUtil;
+import waterraas.dso.SchemeUtil;
 
 public class SchemeController implements Handler {
     @Override

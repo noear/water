@@ -1,4 +1,4 @@
-package waterraas.dao;
+package waterraas.dso;
 
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;

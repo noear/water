@@ -10,7 +10,7 @@ import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DataList;
 import waterraas.controller.SystemCode;
-import waterraas.dao.TxtUtil;
+import waterraas.dso.TxtUtil;
 
 public class QueryController implements Handler {
     @Override

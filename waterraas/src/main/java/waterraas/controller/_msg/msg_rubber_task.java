@@ -7,10 +7,9 @@ import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.CloudEventHandler;
 import org.noear.solon.cloud.annotation.CloudEvent;
 import org.noear.solon.cloud.model.Event;
-import org.noear.water.WaterClient;
 import waterraas.Config;
-import waterraas.dao.LogUtil;
-import waterraas.dao.SchemeUtil;
+import waterraas.dso.LogUtil;
+import waterraas.dso.SchemeUtil;
 
 @CloudEvent("rubber.task")
 public class msg_rubber_task implements CloudEventHandler {

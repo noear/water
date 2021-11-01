@@ -8,8 +8,8 @@ import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.utils.TextUtils;
-import waterraas.dao.AFileUtil;
-import waterraas.dao.DbPaaSApi;
+import waterraas.dso.AFileUtil;
+import waterraas.dso.DbPaaSApi;
 
 @CloudEvent(topic = "water.cache.update", level = EventLevel.instance)
 public class msg_updatecache implements CloudEventHandler {

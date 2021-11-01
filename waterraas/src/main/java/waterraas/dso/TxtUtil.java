@@ -1,4 +1,4 @@
-package waterraas.dao;
+package waterraas.dso;
 
 import org.noear.snack.ONode;
 import org.noear.weed.DataItem;

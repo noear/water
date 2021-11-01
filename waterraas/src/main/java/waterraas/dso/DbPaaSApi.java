@@ -1,4 +1,4 @@
-package waterraas.dao;
+package waterraas.dso;
 
 import org.noear.luffy.model.AFileModel;
 import org.noear.luffy.utils.TextUtils;

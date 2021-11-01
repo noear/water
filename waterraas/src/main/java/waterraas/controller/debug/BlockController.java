@@ -7,7 +7,7 @@ import org.noear.solon.core.handle.Handler;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.controller.SystemCode;
-import waterraas.dao.LogUtil;
+import waterraas.dso.LogUtil;
 
 public class BlockController implements Handler {
     @Override

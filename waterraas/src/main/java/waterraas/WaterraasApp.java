@@ -4,7 +4,6 @@ import org.noear.rubber.Rubber;
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import luffy.JtRun;
-import org.noear.solon.SolonApp;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import waterraas.controller.DebugController;
 import waterraas.controller.PreviewController;
@@ -13,7 +12,7 @@ import waterraas.controller.debug.BlockController;
 import waterraas.controller.debug.QueryController;
 import waterraas.controller.release.ModelController;
 import waterraas.controller.release.SchemeController;
-import waterraas.dao.CacheUtil;
+import waterraas.dso.CacheUtil;
 
 
 public class WaterraasApp {

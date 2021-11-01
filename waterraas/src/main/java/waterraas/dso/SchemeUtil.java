@@ -1,4 +1,4 @@
-package waterraas.dao;
+package waterraas.dso;
 
 import org.noear.rubber.Rubber;
 import org.noear.rubber.RubberException;
@@ -9,7 +9,6 @@ import org.noear.solon.Utils;
 import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 import waterraas.Config;
 import waterraas.controller.SystemCode;

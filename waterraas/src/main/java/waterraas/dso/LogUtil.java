@@ -1,4 +1,4 @@
-package waterraas.dao;
+package waterraas.dso;
 
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WW;

@@ -7,7 +7,7 @@ import org.noear.solon.cloud.CloudEventHandler;
 import org.noear.solon.cloud.annotation.CloudEvent;
 import org.noear.solon.cloud.model.Event;
 import org.noear.water.utils.HttpUtils;
-import waterraas.dao.LogUtil;
+import waterraas.dso.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;

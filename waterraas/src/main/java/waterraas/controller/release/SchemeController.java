@@ -10,8 +10,8 @@ import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timecount;
 import waterraas.Config;
 import waterraas.controller.SystemCode;
-import waterraas.dao.LogUtil;
-import waterraas.dao.SchemeUtil;
+import waterraas.dso.LogUtil;
+import waterraas.dso.SchemeUtil;
 
 //::/([^\/]+)/([^\/]+)
 public class SchemeController implements Handler {
