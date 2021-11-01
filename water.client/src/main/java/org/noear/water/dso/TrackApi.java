@@ -83,7 +83,7 @@ public class TrackApi {
         long timespan = cmd.timespan();
 
         if (timespan > thresholdValue) {
-            track0(service, cmd, null, null, null, null);
+            track0(service, cmd, null, null, null, WaterClient.localHost());
         }
     }
 
