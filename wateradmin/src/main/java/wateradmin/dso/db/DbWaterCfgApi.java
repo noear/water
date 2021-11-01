@@ -157,12 +157,20 @@ public class DbWaterCfgApi {
         }
     }
 
-    //获取logger表tag
+    //获取 broker 表tag
     public static List<TagCountsModel> getBrokerTags() throws Exception {
         return db().table("water_cfg_broker").whereEq("is_enabled",1)
                 .groupBy("tag")
                 .orderByAsc("tag")
                 .select("tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
+    public static List<TagCountsModel> getBrokerNameTags() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .groupBy("broker")
+                .orderByAsc("broker")
+                .select("broker tag,count(*) counts")
                 .getList(TagCountsModel.class);
     }
 
@@ -183,7 +191,7 @@ public class DbWaterCfgApi {
 
     }
 
-    //根据id获取logger。
+    //根据id获取 broker。
     public static BrokerModel getBroker(Integer broker_id) throws Exception {
         return db().table("water_cfg_broker")
                 .where("broker_id=?", broker_id)
@@ -192,7 +200,7 @@ public class DbWaterCfgApi {
                 .getItem(BrokerModel.class);
     }
 
-    //设置logger。
+    //设置 broker。
     public static boolean setBroker(Integer broker_id, String tag, String broker, String source, String note, int keep_days, int is_alarm) throws SQLException {
         DbTableQuery db = db().table("water_cfg_broker")
                 .set("tag", tag)

@@ -54,7 +54,15 @@
         <table>
             <tr>
                 <th>broker</th>
-                <td><input type="text" id="broker" value=""/><n>（默认为空）</n></td>
+                <td>
+                    <select id="broker">
+                        <option value=""></option>
+                        <#list brokerList as broker>
+                            <option value="${broker.tag!}">${broker.tag!}</option>
+                        </#list>
+                    </select>
+                    <n>（默认为空）</n>
+                </td>
             </tr>
             <tr>
                 <th>主题</th>

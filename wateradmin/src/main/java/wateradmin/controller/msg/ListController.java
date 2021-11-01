@@ -12,7 +12,9 @@ import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.DisttimeUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
+import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterMsgApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.util.Arrays;
@@ -27,12 +29,14 @@ public class ListController extends BaseController {
     public ModelAndView list(Context ctx, String broker, String key) throws Exception {
         Integer _m = ctx.paramAsInt("_m", 0);
 
+        List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
         List<MessageModel> list = ProtocolHub.getMsgSource(broker).getMessageList(_m, key);
 
 
         viewModel.put("key", key);
         viewModel.put("_m", _m);
         viewModel.put("list", list);
+        viewModel.put("brokerList", brokerList);
         viewModel.put("currTime", DisttimeUtils.currTime());
         return view("msg/list");
     }

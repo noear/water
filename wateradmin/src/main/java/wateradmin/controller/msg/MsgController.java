@@ -16,10 +16,13 @@ import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
+import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterMsgApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class MsgController extends BaseController {
@@ -75,7 +78,11 @@ public class MsgController extends BaseController {
     }
 
     @Mapping("/msg/send")
-    public ModelAndView distribute() {
+    public ModelAndView distribute() throws Exception {
+
+        List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
+
+        viewModel.put("brokerList", brokerList);
 
         return view("msg/send");
     }

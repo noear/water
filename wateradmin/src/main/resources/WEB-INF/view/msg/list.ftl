@@ -75,8 +75,9 @@
 
         function search(){
             var key = $('#key').val();
+            var broker = $('#broker').val();
             if(key){
-                urlQueryByDic({'key':key});
+                urlQueryByDic({'key':key, 'broker':broker});
             }
         }
 
@@ -135,6 +136,12 @@
                 </#if>
             </left>
             <middle class="col-6 center">
+                <select id="broker" class="w100">
+                    <option value=""></option>
+                    <#list brokerList as broker>
+                    <option value="${broker.tag!}">${broker.tag!}</option>
+                    </#list>
+                </select>
                 <input type="text" id="key" value="${key!}" placeholder="*TraceId or ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
