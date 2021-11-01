@@ -46,7 +46,6 @@ public class WW {
 
     public static final String water_msg = "water_msg";
     public static final String water_msg_store = "water_msg_store";
-    public static final String water_msg_queue = "water_msg_queue";
 
     public static final String water_paas = "water_paas";
 
