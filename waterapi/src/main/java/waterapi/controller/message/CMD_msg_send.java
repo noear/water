@@ -38,7 +38,7 @@ public class CMD_msg_send extends UapiBase {
      */
     @NotEmpty({"topic", "message"})
     @Mapping("/msg/send/")
-    public Result cmd_exec(Context ctx,String broker,  String key, String topic, String message, String plan_time, String tags) throws Exception {
+    public Result cmd_exec(Context ctx, String broker, String key, String topic, String message, String plan_time, String tags) throws Exception {
 
         Date plan_time2 = DisttimeUtils.parse(plan_time);
         String trace_id = ctx.header(WW.http_header_trace);
@@ -54,11 +54,6 @@ public class CMD_msg_send extends UapiBase {
         long msg_id = ProtocolHub.getMsgSource(broker).addMessage(key, trace_id, tags, topicModel.topic_id, topic, message, plan_time2, false);
 
         if (msg_id > 0) {
-            //非定时消息，直接转队列
-//            if (plan_time2 == null) {
-//                ProtocolHub.messageQueue.push(String.valueOf(msg_id));
-//            }
-
             return Result.succeed();
         } else {
             return Result.failure();
