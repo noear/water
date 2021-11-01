@@ -148,7 +148,7 @@
                     <option value="${broker.tag!}">${broker.tag!}</option>
                     </#list>
                 </select>
-                <script>$('#broker').val(${broker!})</script>
+                <script>$('#broker').val('${broker!}')</script>
                 <input type="text" id="key" value="${key!}" placeholder="*TraceId or ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
