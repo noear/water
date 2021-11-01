@@ -104,7 +104,7 @@ public class BrokerController extends BaseController {
         boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm);
 
         if (result) {
-            ProtocolHub.logQuerier.create(broker);
+            ProtocolHub.getMsgSource(broker).create();
             viewModel.code(1, "保存成功！");
         } else {
             viewModel.code(0, "保存失败！");
