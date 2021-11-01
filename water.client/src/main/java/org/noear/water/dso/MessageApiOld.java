@@ -2,10 +2,9 @@ package org.noear.water.dso;
 
 import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
+import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
-import org.noear.water.utils.EncryptUtils;
-import org.noear.water.utils.IDUtils;
-import org.noear.water.utils.TextUtils;
+import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Fun1;
 
 import java.util.Date;
@@ -18,10 +17,10 @@ import java.util.Map;
  * @author noear
  * @since 2.0
  * */
-public class MessageApi {
+public class MessageApiOld {
     protected final ApiCaller apiCaller;
 
-    public MessageApi() {
+    public MessageApiOld() {
         apiCaller = new ApiCaller(WaterAddress.getMessageApiUrl());
     }
 
@@ -34,8 +33,8 @@ public class MessageApi {
      * @param receive_way    接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
      * @param receive_key    接收密钥，签名用
      */
-    public boolean subscribeTopic(String broker, String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
-        return subscribeTopic(broker, subscriber_key, "", receive_url, receive_key, alarm_mobile, receive_way, is_unstable, topics);
+    public boolean subscribeTopic(String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+        return subscribeTopic(subscriber_key, "", receive_url, receive_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
     /**
@@ -49,18 +48,12 @@ public class MessageApi {
      * @param alarm_mobile    报警手机号
      * @param topics          主题..
      */
-    public boolean subscribeTopic(String broker, String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
         String topics_str = String.join(",", topics);
 
         Map<String, String> params = new HashMap<>();
-        params.put("key", subscriber_key); //**此字段名将弃用。by 2020-09
-        params.put("note", subscriber_note); //**此字段名将弃用。by 2020-09
-
-        params.put("broker", broker);
-
-        params.put("subscriber_key", subscriber_key);
-        params.put("subscriber_note", subscriber_note);
-
+        params.put("key", subscriber_key);
+        params.put("note", subscriber_note);
         params.put("topic", topics_str);
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receive_url);
@@ -82,11 +75,10 @@ public class MessageApi {
      * @param subscriber_key 订阅者标识
      * @param topics         主题..
      */
-    public boolean unSubscribeTopic(String broker, String subscriber_key, String... topics) throws Exception {
+    public boolean unSubscribeTopic(String subscriber_key, String... topics) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("key", subscriber_key);//**此字段名将弃用。by 2020-09
+        params.put("key", subscriber_key);//**此字段名将充用。by 2020-09
 
-        params.put("broker", broker);
         params.put("subscriber_key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
@@ -102,8 +94,8 @@ public class MessageApi {
      * @param topic   消息主题
      * @param message 消息内容
      */
-    public boolean sendMessage(String broker, String topic, String message) throws Exception {
-        return sendMessage(broker, null, topic, message, null);
+    public boolean sendMessage(String topic, String message) throws Exception {
+        return sendMessage(null, topic, message, null);
     }
 
 
@@ -114,8 +106,8 @@ public class MessageApi {
      * @param topic   消息主题
      * @param message 消息内容
      */
-    public boolean sendMessage(String broker, String msg_key, String topic, String message) throws Exception {
-        return sendMessage(broker, msg_key, topic, message, null);
+    public boolean sendMessage(String msg_key, String topic, String message) throws Exception {
+        return sendMessage(msg_key, topic, message, null);
     }
 
 
@@ -127,17 +119,17 @@ public class MessageApi {
      * @param message  消息内容
      * @param planTime 计划通知时间
      */
-    public boolean sendMessage(String broker, String msg_key, String topic, String message, Date planTime) throws Exception {
-        return sendMessageAndTags(broker, msg_key, topic, message, planTime, null);
+    public boolean sendMessage(String msg_key, String topic, String message, Date planTime) throws Exception {
+        return sendMessageAndTags(msg_key, topic, message, planTime, null);
     }
 
 
-    public boolean sendMessageAndTags(String broker, String topic, String message, String tags) throws Exception {
-        return sendMessageAndTags(broker, null, topic, message, tags);
+    public boolean sendMessageAndTags(String topic, String message, String tags) throws Exception {
+        return sendMessageAndTags(null, topic, message, tags);
     }
 
-    public boolean sendMessageAndTags(String broker, String msg_key, String topic, String message, String tags) throws Exception {
-        return sendMessageAndTags(broker, msg_key, topic, message, null, tags);
+    public boolean sendMessageAndTags(String msg_key, String topic, String message, String tags) throws Exception {
+        return sendMessageAndTags(msg_key, topic, message, null, tags);
     }
 
     /**
@@ -149,11 +141,9 @@ public class MessageApi {
      * @param message  消息内容
      * @param planTime 计划通知时间
      */
-    public boolean sendMessageAndTags(String broker, String msg_key, String topic, String message, Date planTime, String tags) throws Exception {
+    public boolean sendMessageAndTags(String msg_key, String topic, String message, Date planTime, String tags) throws Exception {
 
         Map<String, String> params = new HashMap<>();
-
-        params.put("broker", broker);
 
         params.put("topic", topic);
         params.put("message", message);
@@ -185,16 +175,16 @@ public class MessageApi {
     /**
      * 发送消息回调
      */
-    public boolean sendMessageCallback(String broker, String message, String receiver_url, String receiver_cehck) throws Exception {
-        return sendMessageCallback(broker, null, message, null, receiver_url, receiver_cehck);
+    public boolean sendMessageCallback(String message, String receiver_url, String receiver_cehck) throws Exception {
+        return sendMessageCallback(null, message, null, receiver_url, receiver_cehck);
     }
 
-    public boolean sendMessageCallback(String broker, String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception {
-        return sendMessageAndTagsCallback(broker, msg_key, message, planTime, receiver_url, receiver_cehck, null);
+    public boolean sendMessageCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck) throws Exception {
+        return sendMessageAndTagsCallback(msg_key, message, planTime, receiver_url, receiver_cehck, null);
     }
 
-    public boolean sendMessageAndTagsCallback(String broker, String message, String receiver_url, String receiver_cehck, String tags) throws Exception {
-        return sendMessageAndTagsCallback(broker, null, message, null, receiver_url, receiver_cehck, tags);
+    public boolean sendMessageAndTagsCallback(String message, String receiver_url, String receiver_cehck, String tags) throws Exception {
+        return sendMessageAndTagsCallback(null, message, null, receiver_url, receiver_cehck, tags);
     }
 
     /**
@@ -207,7 +197,7 @@ public class MessageApi {
      * @param receiver_cehck 接收检测
      * @param planTime       计划发送时间
      */
-    public boolean sendMessageAndTagsCallback(String broker, String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck, String tags) throws Exception {
+    public boolean sendMessageAndTagsCallback(String msg_key, String message, Date planTime, String receiver_url, String receiver_cehck, String tags) throws Exception {
         if (TextUtils.isEmpty(msg_key)) {
             msg_key = IDUtils.guid();
         }
@@ -217,7 +207,6 @@ public class MessageApi {
         }
 
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
         params.put("key", msg_key);
         params.put("tags", tags);
         params.put("message", message);
@@ -244,16 +233,15 @@ public class MessageApi {
     /**
      * 取消消息
      */
-    public boolean cancelMessage(String broker, String msg_key) throws Exception {
-        return cancelMessage(broker, msg_key, null);
+    public boolean cancelMessage(String msg_key) throws Exception {
+        return cancelMessage(msg_key, null);
     }
 
     /**
      * 取消XXX订阅者的消息
      */
-    public boolean cancelMessage(String broker, String msg_key, String subscriber_key) throws Exception {
+    public boolean cancelMessage(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
         params.put("key", msg_key);
 
         if (TextUtils.isEmpty(subscriber_key) == false) {
@@ -269,16 +257,15 @@ public class MessageApi {
     /**
      * 完成消息（设为成功）
      */
-    public boolean succeedMessage(String broker, String msg_key) throws Exception {
-        return succeedMessage(broker, msg_key, null);
+    public boolean succeedMessage(String msg_key) throws Exception {
+        return succeedMessage(msg_key, null);
     }
 
     /**
      * 完成XXX订阅者的消息
      */
-    public boolean succeedMessage(String broker, String msg_key, String subscriber_key) throws Exception {
+    public boolean succeedMessage(String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
         params.put("key", msg_key);
 
         if (TextUtils.isEmpty(subscriber_key) == false) {
