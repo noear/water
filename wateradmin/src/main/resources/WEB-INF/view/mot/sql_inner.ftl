@@ -57,7 +57,7 @@
                         ${log.weight!0}
                     </td>
                     <td class="left break" style="font-size: small">
-                        <div>*${log.trace_id!}</div>
+                        <div>*${log.trace_id!} (${log.from!})</div>
                         <div style="font-size: small">${log.content!}</div>
                     </td>
                 </tr>
