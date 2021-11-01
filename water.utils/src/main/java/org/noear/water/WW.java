@@ -57,6 +57,7 @@ public class WW {
     public static final String logger_water_log_raas = "water_log_raas";
     public static final String logger_water_log_admin = "water_log_admin";
     public static final String logger_water_log_heihei = "water_log_heihei";
+    public static final String logger_water_log_upstream = "water_log_upstream";
 
     public static final String logger_rubber_log_request = "rubber_log_request";
 
