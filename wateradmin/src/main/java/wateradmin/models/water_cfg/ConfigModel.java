@@ -16,8 +16,7 @@ import javax.sql.DataSource;
 import java.util.*;
 
 @Getter
-public class ConfigModel implements IBinder
-{
+public class ConfigModel implements IBinder {
     public transient int row_id;
     public String tag;
     public String key;
@@ -25,7 +24,6 @@ public class ConfigModel implements IBinder
     public String value;
     public String edit_mode;
     public transient int is_enabled;
-
 
 
     @Override
@@ -48,8 +46,8 @@ public class ConfigModel implements IBinder
         return new ConfigModel();
     }
 
-	public String type_str(){
-	    return ConfigType.getTitle(type);
+    public String type_str() {
+        return ConfigType.getTitle(type);
     }
 
 
@@ -61,12 +59,12 @@ public class ConfigModel implements IBinder
         return value == null ? def : value;
     }
 
-    public String value_html(){
-	    if(value == null){
-	        return "";
-        }else{
-	        return value.replace("\n","<br/>")
-                    .replace(" ","&nbsp;");
+    public String value_html() {
+        if (value == null) {
+            return "";
+        } else {
+            return value.replace("\n", "<br/>")
+                    .replace(" ", "&nbsp;");
         }
     }
 
@@ -154,7 +152,7 @@ public class ConfigModel implements IBinder
             HikariDataSource source = new HikariDataSource();
 
             Utils.injectProperties(source, prop);
-            if(TextUtils.isNotEmpty(url)) {
+            if (TextUtils.isNotEmpty(url)) {
                 source.setJdbcUrl(url);
             }
 
@@ -176,14 +174,14 @@ public class ConfigModel implements IBinder
         Properties prop = getProp();
         String db = prop.getProperty("db");
 
-        if(TextUtils.isEmpty(db)){
+        if (TextUtils.isEmpty(db)) {
             throw new IllegalArgumentException("Missing db configuration");
         }
 
         return new MgContext(prop, db);
     }
 
-    public MgContext getMg(String db){
+    public MgContext getMg(String db) {
         if (TextUtils.isEmpty(value)) {
             return null;
         }

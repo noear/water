@@ -12,6 +12,7 @@ import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.NoticeUtils;
 import wateradmin.models.TagCountsModel;
+import wateradmin.models.water_cfg.BrokerModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.LoggerModel;
 import wateradmin.models.water_cfg.WhitelistModel;
@@ -52,6 +53,187 @@ public class DbWaterCfgApi {
             throw new RuntimeException(ex);
         }
     }
+
+    //获取logger表tag
+    public static List<TagCountsModel> getLoggerTags() throws Exception {
+        return db().table("water_cfg_logger").whereEq("is_enabled",1)
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .select("tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
+    //根据tag获取列表。
+    public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+        return db().table("water_cfg_logger")
+                .where("tag = ?", tag_name)
+                .and("is_enabled = ?",is_enabled)
+                .build((tb)->{
+                    if(TextUtils.isEmpty(sort) == false){
+                        tb.orderBy(sort+" DESC");
+                    }else{
+                        tb.orderBy("logger ASC");
+                    }
+                })
+                .select("*")
+                .getList(LoggerModel.class);
+
+    }
+
+    //根据id获取logger。
+    public static LoggerModel getLogger(Integer logger_id) throws Exception {
+        return db().table("water_cfg_logger")
+                .where("logger_id=?", logger_id)
+                .limit(1)
+                .select("*")
+                .getItem(LoggerModel.class);
+    }
+
+    //设置logger。
+    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
+        DbTableQuery db = db().table("water_cfg_logger")
+                .set("tag", tag)
+                .set("logger", logger)
+                .set("keep_days", keep_days)
+                .set("source", source)
+                .set("is_alarm", is_alarm)
+                .set("note", note);
+        if (logger_id > 0) {
+            boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
+
+            //发送通知消息
+            NoticeUtils.updateCache("logger:" + logger);
+
+            return isOk;
+        } else {
+            return db.set("is_enabled", 1).insert() > 0;
+        }
+    }
+
+    //设置启用状态
+    public static void setLoggerEnabled(int logger_id, int is_enabled) throws SQLException {
+        db().table("water_cfg_logger")
+                .where("logger_id = ?", logger_id)
+                .set("is_enabled", is_enabled)
+                .update();
+    }
+
+    public static void delLogger(Integer logger_id) throws SQLException {
+        if(logger_id == null){
+            return;
+        }
+
+        db().table("water_cfg_logger")
+                .where("logger_id = ?", logger_id)
+                .delete();
+    }
+
+    //===============================================================
+    //协调器
+
+    public static List<BrokerModel> getBrokerByTag(String tag) throws Exception {
+        return db().table("water_cfg_broker")
+                .where("is_enabled=1")
+                .build(tb -> {
+                    if (!TextUtils.isEmpty(tag)) {
+                        tb.and("tag = ?",tag);
+                    }
+                })
+                .orderBy("broker asc")
+                .select("*")
+                .getList(BrokerModel.class);
+    }
+
+    //
+    public static BrokerModel getBroker(String broker) {
+        try {
+            return db().table("water_cfg_broker")
+                    .where("broker = ?", broker)
+                    .limit(1)
+                    .select("*")
+                    .getItem(BrokerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    //获取logger表tag
+    public static List<TagCountsModel> getBrokerTags() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled",1)
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .select("tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
+    //根据tag获取列表。
+    public static List<BrokerModel> getBrokersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+        return db().table("water_cfg_broker")
+                .where("tag = ?", tag_name)
+                .and("is_enabled = ?",is_enabled)
+                .build((tb)->{
+                    if(TextUtils.isEmpty(sort) == false){
+                        tb.orderBy(sort+" DESC");
+                    }else{
+                        tb.orderBy("logger ASC");
+                    }
+                })
+                .select("*")
+                .getList(BrokerModel.class);
+
+    }
+
+    //根据id获取logger。
+    public static BrokerModel getBroker(Integer broker_id) throws Exception {
+        return db().table("water_cfg_broker")
+                .where("broker_id=?", broker_id)
+                .limit(1)
+                .select("*")
+                .getItem(BrokerModel.class);
+    }
+
+    //设置logger。
+    public static boolean setBroker(Integer broker_id, String tag, String broker, String source, String note, int keep_days, int is_alarm) throws SQLException {
+        DbTableQuery db = db().table("water_cfg_broker")
+                .set("tag", tag)
+                .set("broker", broker)
+                .set("keep_days", keep_days)
+                .set("source", source)
+                .set("is_alarm", is_alarm)
+                .set("note", note);
+        if (broker_id > 0) {
+            boolean isOk = db.where("broker_id = ?", broker_id).update() > 0;
+
+            //发送通知消息
+            NoticeUtils.updateCache("broker:" + broker);
+
+            return isOk;
+        } else {
+            return db.set("is_enabled", 1).insert() > 0;
+        }
+    }
+
+    //设置启用状态
+    public static void setBrokerEnabled(int broker_id, int is_enabled) throws SQLException {
+        db().table("water_cfg_broker")
+                .where("broker_id = ?", broker_id)
+                .set("is_enabled", is_enabled)
+                .update();
+    }
+
+    public static void delBroker(Integer broker_id) throws SQLException {
+        if(broker_id == null){
+            return;
+        }
+
+        db().table("water_cfg_broker")
+                .where("broker_id = ?", broker_id)
+                .delete();
+    }
+
+    //===============================================================
+    // 白名单
+
 
     //获取白名单表tag
     public static List<TagCountsModel> getWhitelistTags() throws SQLException {
@@ -443,81 +625,4 @@ public class DbWaterCfgApi {
                 .select("*")
                 .getList(ConfigModel.class);
     }
-
-    //====================================================
-
-    //获取logger表tag
-    public static List<TagCountsModel> getLoggerTags() throws Exception {
-        return db().table("water_cfg_logger").whereEq("is_enabled",1)
-                .groupBy("tag")
-                .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
-    }
-
-    //根据tag获取列表。
-    public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
-        return db().table("water_cfg_logger")
-                .where("tag = ?", tag_name)
-                .and("is_enabled = ?",is_enabled)
-                .build((tb)->{
-                    if(TextUtils.isEmpty(sort) == false){
-                        tb.orderBy(sort+" DESC");
-                    }else{
-                        tb.orderBy("logger ASC");
-                    }
-                })
-                .select("*")
-                .getList(LoggerModel.class);
-
-    }
-
-    //根据id获取logger。
-    public static LoggerModel getLogger(Integer logger_id) throws Exception {
-        return db().table("water_cfg_logger")
-                .where("logger_id=?", logger_id)
-                .limit(1)
-                .select("*")
-                .getItem(LoggerModel.class);
-    }
-
-    //设置logger。
-    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
-        DbTableQuery db = db().table("water_cfg_logger")
-                .set("tag", tag)
-                .set("logger", logger)
-                .set("keep_days", keep_days)
-                .set("source", source)
-                .set("is_alarm", is_alarm)
-                .set("note", note);
-        if (logger_id > 0) {
-            boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
-
-            //发送通知消息
-            NoticeUtils.updateCache("logger:" + logger);
-
-            return isOk;
-        } else {
-            return db.set("is_enabled", 1).insert() > 0;
-        }
-    }
-
-    //设置启用状态
-    public static void setLoggerEnabled(int logger_id, int is_enabled) throws SQLException {
-        db().table("water_cfg_logger")
-                .where("logger_id = ?", logger_id)
-                .set("is_enabled", is_enabled)
-                .update();
-    }
-
-    public static void delLogger(Integer logger_id) throws SQLException {
-        if(logger_id == null){
-            return;
-        }
-
-        db().table("water_cfg_logger")
-                .where("logger_id = ?", logger_id)
-                .delete();
-    }
-
 }
