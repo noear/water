@@ -134,13 +134,18 @@ public class LogSourceMongo implements LogSource {
             data.put("tag1", event.tag1);
             data.put("tag2", event.tag2);
             data.put("tag3", event.tag3);
-            data.put("content", event.content);
-            data.put("from", event.from);
+            data.put("tag4", event.tag4);
+
+            data.put("weight", event.weight);
 
             data.put("group", event.group);
             data.put("service", event.service);
             data.put("class_name", NameUtils.formatClassName(event.class_name));
             data.put("thread_name", event.thread_name);
+
+            data.put("content", event.content);
+            data.put("metainfo", event.metainfo);
+            data.put("from", event.from);
 
             data.put("log_date", datetime.getDate());
             data.put("log_fulltime", datetime.getFulltime().getTime());
@@ -176,6 +181,12 @@ public class LogSourceMongo implements LogSource {
         _db.table(logger).orderByDesc("tag1").createIndex(true);
         _db.table(logger).orderByDesc("tag2").createIndex(true);
         _db.table(logger).orderByDesc("tag3").createIndex(true);
+        _db.table(logger).orderByDesc("tag4").createIndex(true);
+
+        _db.table(logger).orderByDesc("weight").createIndex(true);
+
+        _db.table(logger).orderByDesc("group").createIndex(true);
+        _db.table(logger).orderByDesc("service").createIndex(true);
 
         _db.table(logger).orderByDesc("trace_id").createIndex(true);
 

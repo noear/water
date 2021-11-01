@@ -118,10 +118,15 @@ public class LogSourceRdb implements LogSource {
                             .setDf("tag1", event.tag1, "")
                             .setDf("tag2", event.tag2, "")
                             .setDf("tag3", event.tag3, "")
-                            .setDf("content", event.content, "")
-                            .setDf("from", event.from, "")
+                            .setDf("tag4", event.tag4, "")
+                            .set("weight",event.weight)
+                            .setDf("group", event.group, "")
+                            .setDf("service", event.service, "")
                             .set("class_name", NameUtils.formatClassName(event.class_name))
                             .set("thread_name", event.thread_name)
+                            .setDf("content", event.content, "")
+                            .setDf("metainfo", event.metainfo, "")
+                            .setDf("from", event.from, "")
                             .set("log_date", datetime.getDate())
                             .set("log_fulltime", datetime.getFulltime().getTime());
                 });
