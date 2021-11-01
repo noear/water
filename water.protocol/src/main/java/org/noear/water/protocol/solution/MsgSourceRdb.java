@@ -439,17 +439,22 @@ public class MsgSourceRdb implements MsgSource {
 
     @Override
     public void create() throws Exception {
-        String sql = Utils.getResourceAsString("water/watr_msg_distribution_rdb_tml.sql", "utf-8");
+        String sql = Utils.getResourceAsString("water/water_msg_distribution_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             _db.exe(sql);
         }
 
-        sql = Utils.getResourceAsString("water/watr_msg_message_all_rdb_tml.sql", "utf-8");
+        sql = Utils.getResourceAsString("water/water_msg_message_all_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             _db.exe(sql);
         }
 
-        sql = Utils.getResourceAsString("water/watr_msg_message_rdb_tml.sql", "utf-8");
+        sql = Utils.getResourceAsString("water/water_msg_message_rdb_tml.sql", "utf-8");
+        if (TextUtils.isNotEmpty(sql)) {
+            _db.exe(sql);
+        }
+
+        sql = Utils.getResourceAsString("water/water_msg_message_ex_stat_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             _db.exe(sql);
         }
