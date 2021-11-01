@@ -34,7 +34,7 @@ public class MessageApi {
      * @param receive_way    接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
      * @param receive_key    接收密钥，签名用
      */
-    public boolean subscribeTopic(String broker, String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String broker, String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String[] topics) throws Exception {
         return subscribeTopic(broker, subscriber_key, "", receive_url, receive_key, alarm_mobile, receive_way, is_unstable, topics);
     }
 
@@ -47,16 +47,18 @@ public class MessageApi {
      * @param receive_way     接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
      * @param receive_key     接收密钥
      * @param alarm_mobile    报警手机号
-     * @param topics          主题..
+     * @param topics          主题（多个）
      */
-    public boolean subscribeTopic(String broker, String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String... topics) throws Exception {
+    public boolean subscribeTopic(String broker, String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String[] topics) throws Exception {
         String topics_str = String.join(",", topics);
 
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key); //**此字段名将弃用。by 2020-09
         params.put("note", subscriber_note); //**此字段名将弃用。by 2020-09
 
-        params.put("broker", broker);
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
 
         params.put("subscriber_key", subscriber_key);
         params.put("subscriber_note", subscriber_note);
@@ -80,13 +82,16 @@ public class MessageApi {
      * 取消麻阅
      *
      * @param subscriber_key 订阅者标识
-     * @param topics         主题..
+     * @param topics         主题（多个）
      */
-    public boolean unSubscribeTopic(String broker, String subscriber_key, String... topics) throws Exception {
+    public boolean unSubscribeTopic(String broker, String subscriber_key, String[] topics) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);//**此字段名将弃用。by 2020-09
 
-        params.put("broker", broker);
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
+
         params.put("subscriber_key", subscriber_key);
         params.put("topic", String.join(",", topics));
 
@@ -153,7 +158,9 @@ public class MessageApi {
 
         Map<String, String> params = new HashMap<>();
 
-        params.put("broker", broker);
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
 
         params.put("topic", topic);
         params.put("message", message);
@@ -217,7 +224,11 @@ public class MessageApi {
         }
 
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
+
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
+
         params.put("key", msg_key);
         params.put("tags", tags);
         params.put("message", message);
@@ -253,7 +264,11 @@ public class MessageApi {
      */
     public boolean cancelMessage(String broker, String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
+
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
+
         params.put("key", msg_key);
 
         if (TextUtils.isEmpty(subscriber_key) == false) {
@@ -278,7 +293,11 @@ public class MessageApi {
      */
     public boolean succeedMessage(String broker, String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
-        params.put("broker", broker);
+
+        if(TextUtils.isNotEmpty(broker)) {
+            params.put("broker", broker);
+        }
+
         params.put("key", msg_key);
 
         if (TextUtils.isEmpty(subscriber_key) == false) {

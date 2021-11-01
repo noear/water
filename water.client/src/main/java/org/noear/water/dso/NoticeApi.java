@@ -15,7 +15,8 @@ import java.util.Map;
  * */
 public class NoticeApi {
     protected final ApiCaller apiCaller;
-    public NoticeApi(){
+
+    public NoticeApi() {
         apiCaller = new ApiCaller(WaterAddress.getNoticeApiUrl());
     }
 
@@ -48,7 +49,7 @@ public class NoticeApi {
         }
 
         try {
-            WaterClient.Message.sendMessageAndTags(WW.msg_ucache_topic, sb.toString(), WaterClient.localService());
+            WaterClient.Message.sendMessageAndTags(null, WW.msg_ucache_topic, sb.toString(), WaterClient.localService());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -59,7 +60,7 @@ public class NoticeApi {
      */
     public void updateConfig(String tag, String name) {
         try {
-            WaterClient.Message.sendMessageAndTags(WW.msg_uconfig_topic, tag + "::" + name, tag);
+            WaterClient.Message.sendMessageAndTags(null, WW.msg_uconfig_topic, tag + "::" + name, tag);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -92,7 +92,7 @@ public class SchemeUtil {
         msg.set("scheme", scheme);
         msg.set("log_id", log_id);
 
-        WaterClient.Message.sendMessage(Config.msg_rubber_task, msg.toJson());
+        WaterClient.Message.sendMessage(null,Config.msg_rubber_task, msg.toJson());
 
         //返回结果
         ONode data = new ONode();

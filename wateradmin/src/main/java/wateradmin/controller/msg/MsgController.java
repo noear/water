@@ -30,7 +30,7 @@ public class MsgController extends BaseController {
 
     //消息调试
     @Mapping("/msg/debug")
-    public ModelAndView debug(String broker,String key) throws Exception {
+    public ModelAndView debug(String broker, String key) throws Exception {
         MessageModel msg = ProtocolHub.getMsgSource(broker).getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
         viewModel.put("key", key);
@@ -40,7 +40,7 @@ public class MsgController extends BaseController {
     }
 
     //提交消息调试
-    @NotEmpty({"msg_key","topic_name","receive_key"})
+    @NotEmpty({"msg_key", "topic_name", "receive_key"})
     @Mapping("/msg/debug/ajax/submitDebug")
     public ViewModel submitDebug(Long id, String msg_key, String topic_name, Integer dist_count, String content, String receive_key, String url) throws Exception {
         if (dist_count == null) {
@@ -79,11 +79,11 @@ public class MsgController extends BaseController {
         return view("msg/send");
     }
 
-    @NotEmpty({"message","topic"})
+    @NotEmpty({"message", "topic"})
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/send/ajax/dosend")
-    public ViewModel sendMessage(String topic, String message, String tags) throws Exception {
-        boolean isOk = WaterClient.Message.sendMessageAndTags(topic, message, tags);
+    public ViewModel sendMessage(String broker, String topic, String message, String tags) throws Exception {
+        boolean isOk = WaterClient.Message.sendMessageAndTags(broker, topic, message, tags);
 
         if (isOk) {
             viewModel.code(1, "消息派发成功！");

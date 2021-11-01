@@ -6,6 +6,8 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 import wateradmin.dso.db.DbPaaSApi;
 
+import java.util.Arrays;
+
 public class PaasUtils {
     public static void trySubscribe(int file_id, String label, String path, boolean is_disabled) throws Exception {
         if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
@@ -16,7 +18,7 @@ public class PaasUtils {
                 if (path.equals(path_old) == false) {
                     //如果地址变了，退订
                     String subscriber_key_old = EncryptUtils.md5(path_old);
-                    WaterClient.Message.unSubscribeTopic(subscriber_key_old, topic);
+                    WaterClient.Message.unSubscribeTopic(null, subscriber_key_old, new String[]{topic});
                 }
             }
 
@@ -25,10 +27,10 @@ public class PaasUtils {
             String subscriber_key = EncryptUtils.md5(path);
 
             if (is_disabled) {
-                WaterClient.Message.unSubscribeTopic(subscriber_key, topic);
+                WaterClient.Message.unSubscribeTopic(null, subscriber_key, new String[]{topic});
             } else {
-                WaterClient.Message.subscribeTopic(subscriber_key, receiver_url,
-                        Config.waterpaas_secretKey, "", 0, false, topic);
+                WaterClient.Message.subscribeTopic(null, subscriber_key, receiver_url,
+                        Config.waterpaas_secretKey, "", 0, false, new String[]{topic});
             }
         }
     }
