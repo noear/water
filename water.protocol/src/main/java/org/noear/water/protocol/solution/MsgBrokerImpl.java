@@ -43,7 +43,11 @@ public class MsgBrokerImpl implements MsgBroker {
     private void init(ConfigM cfg, Properties sourceProp, Properties queueProp, ICacheServiceEx cache) {
         //for source
         if (cfg.value.contains("=mongodb")) {
-            source = new MsgSourceMongo(new MgContext(sourceProp), cache, log);
+            String schema = sourceProp.getProperty("schema");
+            if (TextUtils.isEmpty(schema)) {
+                schema = "water_msg";
+            }
+            source = new MsgSourceMongo(new MgContext(sourceProp, schema), cache, log);
         } else {
             source = new MsgSourceRdb(DsUtils.getDb(sourceProp, true), cache, log);
         }
