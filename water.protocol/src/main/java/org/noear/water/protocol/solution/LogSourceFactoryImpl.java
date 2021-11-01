@@ -95,9 +95,9 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
             return null;
         }
 
-        if (cfg.value.indexOf("=mongodb") > 0) {
+        if (cfg.value.contains("=mongodb")) {
             return new LogSourceMongo(cfg.getMg("water_log"));
-        } else if (cfg.value.indexOf("=elasticsearch") > 0) {
+        } else if (cfg.value.contains("=elasticsearch")) {
             return new LogSourceElasticsearch(cfg.getEs());
         } else {
             return new LogSourceRdb(cfg.getDb(true));

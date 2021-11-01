@@ -33,16 +33,16 @@ public class MsgBrokerImpl implements MsgBroker {
         PropertiesM storeProp = prop.getProp("store");
         PropertiesM queueProp = prop.getProp("queue");
 
-        if (storeProp.size() == 0) {
-            init(prop, null, cache);
+        if (storeProp.size() < 3) {
+            init(cfg, prop, null, cache);
         } else {
-            init(storeProp, queueProp, cache);
+            init(cfg, storeProp, queueProp, cache);
         }
     }
 
-    private void init(Properties sourceProp, Properties queueProp, ICacheServiceEx cache) {
+    private void init(ConfigM cfg, Properties sourceProp, Properties queueProp, ICacheServiceEx cache) {
         //for source
-        if ("mongodb".equals(sourceProp.getProperty(WW.driverType))) {
+        if (cfg.value.contains("=mongodb")) {
             source = new MsgSourceMongo(new MgContext(sourceProp), cache, log);
         } else {
             source = new MsgSourceRdb(DsUtils.getDb(sourceProp, true), cache, log);
