@@ -14,6 +14,7 @@
             top.layer.confirm('确定发送该消息', {
                 btn: ['确定','取消'] //按钮
             }, function(){
+                var broker = $('#broker').val();
                 var topic = $('#topic').val();
                 var tags = $('#tags').val();
                 var message = $('#message').val();
@@ -31,7 +32,7 @@
                 $.ajax({
                     type:"POST",
                     url:"/msg/send/ajax/dosend",
-                    data:{"topic":topic,"message":message,"tags":tags},
+                    data:{"broker":broker, "topic":topic, "message":message, "tags":tags},
                     success:function(data){
                         top.layer.msg(data.msg);
                     }
@@ -51,6 +52,10 @@
     <detail>
         <form>
         <table>
+            <tr>
+                <th>broker</th>
+                <td><input type="text" id="broker" value=""/><n>（默认为空）</n></td>
+            </tr>
             <tr>
                 <th>主题</th>
                 <td><input type="text" id="topic" value=""/></td>
