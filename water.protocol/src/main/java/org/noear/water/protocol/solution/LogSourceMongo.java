@@ -1,6 +1,13 @@
 package org.noear.water.protocol.solution;
 
+import com.mongodb.client.AggregateIterable;
+import org.bson.BsonArray;
+import org.bson.BsonDocument;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.noear.snack.ONode;
 import org.noear.water.model.LogM;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.NameUtils;
@@ -9,6 +16,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.util.*;
 
@@ -69,6 +77,26 @@ public class LogSourceMongo implements LogSource {
                 .orderByDesc("log_fulltime")
                 .andByDesc("log_id")
                 .selectList(LogModel.class);
+    }
+
+    @Override
+    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
+        List<Document> filter = Arrays.asList(new Document("$group",
+                new Document("_id",
+                        new Document("tag", "$" + filed)
+                                .append("counts", new Document("$sum", 1)))));
+
+
+        AggregateIterable<Document> docList = _db.mongo().getCollection(logger).aggregate(filter);
+
+        List<TagCountsM> tagCountsList = new ArrayList<>();
+        ONode oNode = new ONode();
+        for (Document doc : docList) {
+            TagCountsM tc = oNode.fill(doc).get("_id").toObject(TagCountsM.class);
+            tagCountsList.add(tc);
+        }
+
+        return tagCountsList;
     }
 
     @Override

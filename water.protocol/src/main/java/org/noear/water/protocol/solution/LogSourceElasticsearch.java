@@ -2,8 +2,10 @@ package org.noear.water.protocol.solution;
 
 import org.noear.esearchx.EsContext;
 import org.noear.esearchx.EsIndiceQuery;
+import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.model.LogM;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
@@ -78,6 +80,28 @@ public class LogSourceElasticsearch implements LogSource {
                 .andByDesc("log_id")
                 .selectList(LogModel.class)
                 .getList();
+    }
+
+    @Override
+    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
+        String json = _db.indice(logger)
+                .aggs(a -> a.terms(filed))
+                .selectJson();
+
+        ONode oNode = ONode.loadStr(json)
+                .get("aggregations")
+                .get(filed + "_terms")
+                .get("buckets");
+
+        List<TagCountsM> list = new ArrayList<>();
+
+        for (ONode n1 : oNode.ary()) {
+            TagCountsM t1 = new TagCountsM();
+            t1.tag = n1.get("key").getString();
+            t1.counts = n1.get("doc_count").getLong();
+        }
+
+        return list;
     }
 
     @Override

@@ -2,6 +2,7 @@ package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
 import org.noear.water.model.LogM;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.NameUtils;
@@ -77,6 +78,13 @@ public class LogSourceRdb implements LogSource {
                 .orderByDesc("log_fulltime")
                 .andByDesc("log_id")
                 .selectList("*", LogModel.class);
+    }
+
+    @Override
+    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
+        return _db.table(logger)
+                .groupBy(filed)
+                .selectList(filed + " tag, COUNT(*) counts", TagCountsM.class);
     }
 
     @Override
