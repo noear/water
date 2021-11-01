@@ -5,6 +5,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
+import waterapi.models.BrokerModel;
 import waterapi.models.ConfigModel;
 import waterapi.models.LoggerModel;
 
@@ -191,6 +192,18 @@ public class DbWaterCfgApi {
                     .select("*")
                     .caching(CacheUtils.data).usingCache(60)
                     .getItem(LoggerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static BrokerModel getBroker(String broker) {
+        try {
+            return db().table("water_cfg_broker")
+                    .where("broker = ?", broker)
+                    .limit(1)
+                    .select("*")
+                    .getItem(BrokerModel.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }

@@ -1,5 +1,8 @@
 package org.noear.water.protocol;
 
+import org.noear.water.protocol.model.log.LoggerMeta;
+import org.noear.water.protocol.model.message.BrokerMeta;
+
 import java.io.IOException;
 
 /**
@@ -15,4 +18,10 @@ public interface MsgBrokerFactory {
      * 获取日志源
      * */
     MsgBroker getBroker(String broker);
+
+
+    /**
+     * 获取日志器元信息
+     * */
+    BrokerMeta getBrokerMeta(String broker);
 }

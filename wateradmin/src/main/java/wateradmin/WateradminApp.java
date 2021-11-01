@@ -32,7 +32,7 @@ public class WateradminApp {
             ProtocolHub.config = WaterClient.Config::get;
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
-            ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, CacheUtil.data);
+            ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, CacheUtil.data, DbWaterCfgApi::getBroker);
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         });

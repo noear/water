@@ -16,8 +16,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     private LoggerEntity _def;
     private Fun1<String, LoggerMeta> _loggerGetter;
-
-    private Map<String, LoggerEntity> _logMap = new HashMap<>();
+    private Map<String, LoggerEntity> _loggerMap = new HashMap<>();
 
     public LogSourceFactoryImpl(ConfigM def, Fun1<String, LoggerMeta> loggerGetter) {
         _def = new LoggerEntity(createLogSource(def), def);
@@ -26,7 +25,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     @Override
     public void updateSource(String logger) throws IOException {
-        LoggerEntity entity = _logMap.get(logger);
+        LoggerEntity entity = _loggerMap.get(logger);
         if (entity == null) {
             return;
         }
@@ -58,11 +57,11 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     @Override
     public LogSource getSource(String logger) {
-        LoggerEntity entity = _logMap.get(logger);
+        LoggerEntity entity = _loggerMap.get(logger);
 
         if (entity == null) {
             synchronized (_lock) {
-                entity = _logMap.get(logger);
+                entity = _loggerMap.get(logger);
 
                 if (entity == null) {
                     LoggerMeta model = getLoggerMeta(logger);
@@ -77,7 +76,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
                     entity = _def;
                 }
 
-                _logMap.put(logger, entity);
+                _loggerMap.put(logger, entity);
             }
         }
 

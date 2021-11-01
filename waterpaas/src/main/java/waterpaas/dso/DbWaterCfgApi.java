@@ -2,6 +2,7 @@ package waterpaas.dso;
 
 import org.noear.weed.DbContext;
 import waterpaas.Config;
+import waterpaas.models.BrokerModel;
 import waterpaas.models.LoggerModel;
 
 /**
@@ -20,6 +21,18 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(LoggerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static BrokerModel getBroker(String broker) {
+        try {
+            return db().table("water_cfg_broker")
+                    .where("broker = ?", broker)
+                    .limit(1)
+                    .select("*")
+                    .getItem(BrokerModel.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }

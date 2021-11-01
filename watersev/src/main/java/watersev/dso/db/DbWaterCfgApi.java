@@ -2,6 +2,7 @@ package watersev.dso.db;
 
 import org.noear.weed.DbContext;
 import watersev.Config;
+import watersev.models.water_cfg.BrokerModel;
 import watersev.models.water_cfg.LoggerModel;
 
 import java.sql.SQLException;
@@ -54,6 +55,18 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(LoggerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static BrokerModel getBroker(String broker) {
+        try {
+            return db().table("water_cfg_broker")
+                    .where("broker = ?", broker)
+                    .limit(1)
+                    .select("*")
+                    .getItem(BrokerModel.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
