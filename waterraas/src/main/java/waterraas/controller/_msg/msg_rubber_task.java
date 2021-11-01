@@ -30,7 +30,7 @@ public class msg_rubber_task implements CloudEventHandler {
                     SchemeUtil.run(log.log_id, request_id, log.scheme_tagname, log.policy, args, 0, null, false);
 
                     if (log.callback != null && log.callback.indexOf("://") > 0) {
-                        WaterClient.Message.sendMessage(null,Config.msg_rubber_notice, event.content());
+                        WaterClient.Message.sendMessage(null, Config.msg_rubber_notice, event.content());
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

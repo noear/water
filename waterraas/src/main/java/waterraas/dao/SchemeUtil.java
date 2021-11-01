@@ -53,7 +53,7 @@ public class SchemeUtil {
             }
 
         } catch (RubberException ex) {
-            data.set("code", 11).set("msg", SystemCode.code_11(ex.getMessage()) );
+            data.set("code", 11).set("msg", SystemCode.code_11(ex.getMessage()));
         } catch (Exception ex) {
 
             if (is_debug) {
@@ -92,12 +92,12 @@ public class SchemeUtil {
         msg.set("scheme", scheme);
         msg.set("log_id", log_id);
 
-        WaterClient.Message.sendMessage(null,Config.msg_rubber_task, msg.toJson());
+        WaterClient.Message.sendMessage(null, Config.msg_rubber_task, msg.toJson());
 
         //返回结果
         ONode data = new ONode();
         data.set("code", 1).set("msg", SystemCode.code_1);
-        data.set("request",msg);
+        data.set("request", msg);
 
         context.output(data.toJson());
     }

@@ -6,8 +6,6 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 import wateradmin.dso.db.DbPaaSApi;
 
-import java.util.Arrays;
-
 public class PaasUtils {
     public static void trySubscribe(int file_id, String label, String path, boolean is_disabled) throws Exception {
         if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {

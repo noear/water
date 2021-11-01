@@ -56,7 +56,7 @@ public class MessageApi {
         params.put("key", subscriber_key); //**此字段名将弃用。by 2020-09
         params.put("note", subscriber_note); //**此字段名将弃用。by 2020-09
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
@@ -88,7 +88,7 @@ public class MessageApi {
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key);//**此字段名将弃用。by 2020-09
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
@@ -158,7 +158,7 @@ public class MessageApi {
 
         Map<String, String> params = new HashMap<>();
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
@@ -225,7 +225,7 @@ public class MessageApi {
 
         Map<String, String> params = new HashMap<>();
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
@@ -265,7 +265,7 @@ public class MessageApi {
     public boolean cancelMessage(String broker, String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
@@ -294,7 +294,7 @@ public class MessageApi {
     public boolean succeedMessage(String broker, String msg_key, String subscriber_key) throws Exception {
         Map<String, String> params = new HashMap<>();
 
-        if(TextUtils.isNotEmpty(broker)) {
+        if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
