@@ -77,7 +77,14 @@
     <main>
             <toolbar>
                     <form>
-                        ID/key：<input type="text" name="key" value="${key!}" style="width: 287px;"/>&nbsp;&nbsp;&nbsp;
+                        <select id="broker" class="w100">
+                            <option value=""></option>
+                            <#list brokerList as broker>
+                                <option value="${broker.tag!}">${broker.tag!}</option>
+                            </#list>
+                        </select>
+                        <script>$('#broker').val('${broker!}')</script>
+                        ，ID/key：<input type="text" name="key" value="${key!}" style="width: 287px;"/>&nbsp;&nbsp;&nbsp;
                         <button type="submit">查询</button>
                     </form>
             </toolbar>

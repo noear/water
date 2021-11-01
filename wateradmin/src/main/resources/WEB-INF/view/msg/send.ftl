@@ -61,6 +61,7 @@
                             <option value="${broker.tag!}">${broker.tag!}</option>
                         </#list>
                     </select>
+                    <script>$('#broker').val('${broker!}')</script>
                     <n>（默认为空）</n>
                 </td>
             </tr>

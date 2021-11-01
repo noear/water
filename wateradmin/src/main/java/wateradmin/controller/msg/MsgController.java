@@ -2,6 +2,7 @@ package wateradmin.controller.msg;
 
 import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.cloud.CloudClient;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.WaterClient;
 
@@ -14,6 +15,7 @@ import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
+import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -34,9 +36,20 @@ public class MsgController extends BaseController {
 
     //消息调试
     @Mapping("/msg/debug")
-    public ModelAndView debug(String broker, String key) throws Exception {
+    public ModelAndView debug(Context ctx,String broker, String key) throws Exception {
         MessageModel msg = ProtocolHub.getMsgSource(broker).getMessageByKey(key);
         SubscriberModel sub = DbWaterMsgApi.getSubscriber(msg.topic_name);
+
+        if (TextUtils.isEmpty(broker)) {
+            broker = ctx.cookie("wateradmin_msg__broker");
+        } else {
+            ctx.cookieSet("wateradmin_msg__broker", broker);
+        }
+
+        List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
+
+        viewModel.put("broker", broker);
+        viewModel.put("brokerList", brokerList);
         viewModel.put("key", key);
         viewModel.put("msg", msg);
         viewModel.put("sub", sub);
@@ -78,10 +91,12 @@ public class MsgController extends BaseController {
     }
 
     @Mapping("/msg/send")
-    public ModelAndView distribute() throws Exception {
+    public ModelAndView distribute(Context ctx) throws Exception {
+        String broker = ctx.cookie("wateradmin_msg__broker");
 
         List<TagCountsModel> brokerList = DbWaterCfgApi.getBrokerNameTags();
 
+        viewModel.put("broker", broker);
         viewModel.put("brokerList", brokerList);
 
         return view("msg/send");
