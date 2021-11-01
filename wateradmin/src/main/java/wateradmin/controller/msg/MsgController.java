@@ -84,11 +84,15 @@ public class MsgController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/send/ajax/dosend")
     public ViewModel sendMessage(String broker, String topic, String message, String tags) throws Exception {
-        if(topic.startsWith("@")){
-            topic = topic.substring(1);
+        if (topic.startsWith("@")) {
+            topic = topic.substring(1).trim();
         }
 
-        boolean isOk = WaterClient.Message.sendMessageAndTags(broker, topic, message, tags);
+        if (broker == null) {
+            broker = "";
+        }
+
+        boolean isOk = WaterClient.Message.sendMessageAndTags(broker.trim(), topic.trim(), message.trim(), tags);
 
         if (isOk) {
             viewModel.code(1, "消息派发成功！");
