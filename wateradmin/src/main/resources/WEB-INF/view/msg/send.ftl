@@ -55,7 +55,7 @@
             <tr>
                 <th>broker</th>
                 <td>
-                    <select id="broker">
+                    <select id="broker" title="broker">
                         <option value=""></option>
                         <#list brokerList as broker>
                             <option value="${broker.tag!}">${broker.tag!}</option>

@@ -142,7 +142,7 @@
                 </#if>
             </left>
             <middle class="col-6 center">
-                <select id="broker" class="w100">
+                <select id="broker" class="w100" title="broker">
                     <option value=""></option>
                     <#list brokerList as broker>
                     <option value="${broker.tag!}">${broker.tag!}</option>
