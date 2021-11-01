@@ -145,12 +145,16 @@ public class TrackApi {
 
         logM.trace_id = trace_id;
 
+        logM.level = 1;
+
         logM.tag = String.valueOf(seconds);//留空
         logM.tag1 = path; //秒数
         logM.tag2 = operator;
         logM.tag3 = method;
         logM.tag4 = "";
+
         logM.weight = interval; //=tag5, 毫秒数
+
         logM.group = schema; //=tag6
         logM.service = service;//=tag7
 
