@@ -12,6 +12,21 @@ import java.util.function.Consumer;
  */
 public class MsgQueueLocal implements MsgQueue {
     Queue<String> queueLocal = new LinkedBlockingQueue<>();
+
+    private static MsgQueueLocal instance;
+
+    public static MsgQueueLocal getInstance() {
+        if (instance == null) {
+            instance = new MsgQueueLocal();
+        }
+
+        return instance;
+    }
+
+    private MsgQueueLocal() {
+
+    }
+
     @Override
     public boolean push(String msg_id) {
         queueLocal.add(msg_id);

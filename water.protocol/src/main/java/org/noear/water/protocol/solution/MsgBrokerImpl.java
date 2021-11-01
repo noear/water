@@ -61,7 +61,7 @@ public class MsgBrokerImpl implements MsgBroker {
 
             queue = new MsgQueueRedis(name, new RedisClient(queueProp));
         } else {
-            queue = new MsgQueueLocal();
+            queue = MsgQueueLocal.getInstance();
         }
     }
 
