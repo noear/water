@@ -9,18 +9,17 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.protocol.MsgBroker;
-import org.noear.water.protocol.MsgSource;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.*;
+import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
-import watersev.utils.ext.Act3;
 
 import java.io.IOException;
 import java.util.*;
@@ -39,7 +38,6 @@ import java.util.concurrent.Executors;
 public final class MsgDistributeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    private MsgBroker msgBroker;
 
     @Override
     public String getName() {
@@ -53,7 +51,7 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        msgBroker = ProtocolHub.getMsgBroker(null);
+        MsgBroker msgBroker = ProtocolHub.getMsgBroker(null);
 
         msgBroker.getQueue().pollGet(msg_id_str -> {
             if (TextUtils.isEmpty(msg_id_str)) {
@@ -61,12 +59,12 @@ public final class MsgDistributeController implements IJob {
             }
 
             //改用线程池处理
-            executor.execute(() -> distribute(msg_id_str));
+            executor.execute(() -> distribute(msgBroker, msg_id_str));
         });
     }
 
 
-    private void distribute(String msg_id_str) {
+    private void distribute(MsgBroker msgBroker, String msg_id_str) {
         Thread.currentThread().setName("water-msg-d-" + msg_id_str);
 
         try {
@@ -93,12 +91,12 @@ public final class MsgDistributeController implements IJob {
             }
 
             //路由
-            if (routingDo(msg) == false) {
+            if (routingDo(msgBroker, msg) == false) {
                 return;
             }
 
             //派发
-            distributeDo(msg);
+            distributeDo(msgBroker, msg);
         } catch (Throwable ex) {
             EventBus.push(ex);
         }
@@ -107,7 +105,7 @@ public final class MsgDistributeController implements IJob {
     /**
      * 路由
      */
-    private boolean routingDo(MessageModel msg) throws Exception {
+    private boolean routingDo(MsgBroker msgBroker, MessageModel msg) throws Exception {
         //1.取出订阅者
         Map<Long, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 
@@ -132,9 +130,9 @@ public final class MsgDistributeController implements IJob {
     /**
      * 派发
      */
-    private void distributeDo(MessageModel msg) throws Exception {
+    private void distributeDo(MsgBroker msgBroker, MessageModel msg) throws Exception {
         try {
-            distributeDo0(msg);
+            distributeDo0(msgBroker, msg);
         } catch (Throwable ex) {
             msgBroker.getSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
@@ -143,7 +141,7 @@ public final class MsgDistributeController implements IJob {
     }
 
 
-    private void distributeDo0(MessageModel msg) throws Exception {
+    private void distributeDo0(MsgBroker msgBroker, MessageModel msg) throws Exception {
         //1.取出订阅者
         Map<Long, SubscriberModel> subsList = DbWaterMsgApi.getSubscriberListByTopic(msg.topic_name);
 
@@ -177,7 +175,7 @@ public final class MsgDistributeController implements IJob {
             for (DistributionModel m : distList) {
                 m._start_time = new Date();
 
-                distributeMessage(state, msg, m, distributeMessage_callback);
+                distributeMessage(msgBroker, state, msg, m, distributeMessage_callback);
             }
         } finally {
             ContextUtil.currentRemove();
@@ -185,7 +183,7 @@ public final class MsgDistributeController implements IJob {
     }
 
 
-    private Act3<StateTag, DistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
+    private Act4<MsgBroker, StateTag, DistributionModel, Boolean> distributeMessage_callback = (msgBroker, tag, dist, isOk) -> {
         //synchronized (tag.msg.msg_id) {
         //
         //锁一下，确保计数的线程安全
@@ -228,7 +226,7 @@ public final class MsgDistributeController implements IJob {
         }
     };
 
-    private void distributeMessage(StateTag tag, MessageModel msg, DistributionModel dist, Act3<StateTag, DistributionModel, Boolean> callback) {
+    private void distributeMessage(MsgBroker msgBroker, StateTag tag, MessageModel msg, DistributionModel dist, Act4<MsgBroker, StateTag, DistributionModel, Boolean> callback) {
 
         //1.生成签名
         StringBuilder sb = new StringBuilder(200);
@@ -255,12 +253,12 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(dist.receive_url)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-                    distributeResultLog(msg, dist, isOk, resp, ex);
-                });
+                            distributeResultLog(msg, dist, isOk, resp, ex);
+                        });
 
                 //::2:: 进行异步http分发 //不等待 //状态设为已完成
                 if (dist.receive_way == 2) {
-                    callback.run(tag, dist, true);
+                    callback.run(msgBroker, tag, dist, true);
                 }
 
                 //::3:: 进行异步http分发 //不等待 //状态设为处理中（等消费者主动设为成功）
@@ -276,15 +274,15 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(dist.receive_url)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-                    boolean isOk2 = distributeResultLog(msg, dist, isOk, resp, ex);
-                    callback.run(tag, dist, isOk2);
-                });
+                            boolean isOk2 = distributeResultLog(msg, dist, isOk, resp, ex);
+                            callback.run(msgBroker, tag, dist, isOk2);
+                        });
             }
 
         } catch (Exception ex) {
             LogUtil.writeForMsgByError(msg, dist, ex.getLocalizedMessage());
 
-            callback.run(tag, dist, false);
+            callback.run(msgBroker, tag, dist, false);
         }
     }
 

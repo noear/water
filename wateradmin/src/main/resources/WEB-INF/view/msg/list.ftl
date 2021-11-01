@@ -155,11 +155,11 @@
             </middle>
             <right class="col-3">
                 <selector>
-                    <a class="${(_m =0)?string('sel','')}" click="selectorClick(0)" >异常的</a>
-                    <a class="${(_m =1)?string('sel','')}" click="selectorClick(1)" >等待中</a>
-                    <a class="${(_m =2)?string('sel','')}" click="selectorClick(2)" >处理中</a>
-                    <a class="${(_m =3)?string('sel','')}" click="selectorClick(3)" >已成功</a>
-                    <a class="${(_m =4)?string('sel','')}" click="selectorClick(4)" >其它的</a>
+                    <a class="${(_m =0)?string('sel','')}" onclick="selectorClick(0)" >异常的</a>
+                    <a class="${(_m =1)?string('sel','')}" onclick="selectorClick(1)" >等待中</a>
+                    <a class="${(_m =2)?string('sel','')}" onclick="selectorClick(2)" >处理中</a>
+                    <a class="${(_m =3)?string('sel','')}" onclick="selectorClick(3)" >已成功</a>
+                    <a class="${(_m =4)?string('sel','')}" onclick="selectorClick(4)" >其它的</a>
                 </selector>
             </right>
         </flex>

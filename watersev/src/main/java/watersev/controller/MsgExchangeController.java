@@ -28,8 +28,6 @@ public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
 
-    private MsgBroker msgBroker;
-
     final int _interval_def = 1000;
     int _interval = 1000;
 
@@ -50,17 +48,17 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
-        msgBroker = ProtocolHub.getMsgBroker(null);
+        MsgBroker msgBroker = ProtocolHub.getMsgBroker(null);
 
         while (true) {
-            if (execDo() == false) {
+            if (execDo(msgBroker) == false) {
                 break;
             }
         }
     }
 
 
-    private boolean execDo() throws Exception {
+    private boolean execDo(MsgBroker msgBroker) throws Exception {
         if (msgBroker.getQueue().count() > 20000) {
             //
             //防止派发机出问题时，队列不会暴掉
@@ -76,7 +74,7 @@ public class MsgExchangeController implements IJob {
 
         for (MessageModel msg : msgList) {
             executor.execute(() -> {
-                exchange(msg);
+                exchange(msgBroker, msg);
                 countDownLatch.countDown();
             });
         }
@@ -93,7 +91,7 @@ public class MsgExchangeController implements IJob {
         }
     }
 
-    private void exchange(MessageModel msg) {
+    private void exchange(MsgBroker msgBroker, MessageModel msg) {
         Thread.currentThread().setName("water-msg-e-" + msg.msg_id);
 
         try {
@@ -102,13 +100,13 @@ public class MsgExchangeController implements IJob {
                 return;
             }
 
-            exchangeDo(msg);
+            exchangeDo(msgBroker, msg);
         } catch (Throwable ex) {
             LogUtil.writeForMsgByError(msg, ex);
         }
     }
 
-    private void exchangeDo(MessageModel msg) {
+    private void exchangeDo(MsgBroker msgBroker, MessageModel msg) {
         try {
             //1.推送到队列（未来可以转发到不同的队列）
             String msg_id_str = String.valueOf(msg.msg_id);
@@ -125,7 +123,6 @@ public class MsgExchangeController implements IJob {
             LogUtil.writeForMsgByError(msg, ex);
         }
     }
-
 
 
     //

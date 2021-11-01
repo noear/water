@@ -262,7 +262,11 @@ public class MsgSourceRdb implements MsgSource {
                 .selectExists();
 
         if (isExists == false) {
+            Datetime datetime = new Datetime();
+            long dist_id =  SnowflakeUtils.genId();
+
             _db.table("water_msg_distribution").usingExpr(true)
+                    .set("dist_id", dist_id)
                     .set("msg_id", msg.msg_id)
                     .set("msg_key", msg.msg_key)
                     .set("subscriber_id", subs.subscriber_id)
@@ -272,8 +276,8 @@ public class MsgSourceRdb implements MsgSource {
                     .set("receive_url", subs.receive_url)
                     .set("receive_key", subs.receive_key)
                     .set("receive_way", subs.receive_way)
-                    .set("log_date", "$DATE(NOW())")
-                    .set("log_fulltime", "$NOW()")
+                    .set("log_date", datetime.getDate())
+                    .set("log_fulltime", datetime.getFulltime())
                     .insert();
         }
     }

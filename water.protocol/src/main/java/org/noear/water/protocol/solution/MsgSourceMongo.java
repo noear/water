@@ -29,8 +29,6 @@ public class MsgSourceMongo implements MsgSource {
     ICacheServiceEx _cache;
     Logger _logMsg;
 
-    static final String COLL = "water_msg_message";
-
     public MsgSourceMongo(MgContext db, ICacheServiceEx cache, Logger log) {
         _db = db;
         _cache = cache;
@@ -270,7 +268,7 @@ public class MsgSourceMongo implements MsgSource {
 
         if (isExists == false) {
             Datetime datetime = new Datetime();
-            long dist_id =  SnowflakeUtils.genId();//ProtocolHub.idBuilder.getId("water_msg_distribution");
+            long dist_id =  SnowflakeUtils.genId();
 
             _db.table("water_msg_distribution")
                     .set("dist_id", dist_id)
@@ -289,7 +287,6 @@ public class MsgSourceMongo implements MsgSource {
                     .set("msg_state", 0)
                     .set("log_date", datetime.getDate())
                     .set("log_fulltime", datetime.getFulltime())
-                    .whereEq("msg_id", msg.msg_id).andEq("subscriber_id", subs.subscriber_id)
                     .insert();
         }
     }
