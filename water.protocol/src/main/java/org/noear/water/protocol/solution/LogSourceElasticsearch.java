@@ -33,7 +33,7 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long startLogId, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -70,6 +70,10 @@ public class LogSourceElasticsearch implements LogSource {
                 c.term("level", level);
             }
 
+            if (startLogId > 0) {
+                c.range("log_id", r -> r.lte(startLogId));
+            }
+
             if (timestamp > 0) {
                 c.range("log_fulltime", r -> r.lte(timestamp));
             }
@@ -83,13 +87,15 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
-        String json = _db.indice(logger)
-                .aggs(a -> a.terms(filed))
-                .selectJson();
+    public List<TagCountsM> queryGroupCountBy(String logger,String service, String filed) throws Exception {
+        EsIndiceQuery query = _db.indice(logger);
 
-        ONode oNode = ONode.loadStr(json)
-                .get("aggregations")
+        if (TextUtils.isNotEmpty(service)) {
+            query.where(w -> w.term("service", service));
+        }
+
+        ONode oNode = query.aggs(a -> a.terms(filed))
+                .selectAggs()
                 .get(filed + "_terms")
                 .get("buckets");
 

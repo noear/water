@@ -37,7 +37,7 @@ public class LogController extends BaseController {
     }
 
     @Mapping("query/inner")
-    public ModelAndView index_inner(String tag_name, String logger, String tagx, String time, Integer level, Context ctx) throws Exception {
+    public ModelAndView index_inner(String tag_name, String logger, String tagx, String time, long startLogId, Integer level, Context ctx) throws Exception {
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
@@ -72,7 +72,7 @@ public class LogController extends BaseController {
                     timestamp = Datetime.parse(time.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
                 }
 
-                list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, timestamp);
+                list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, startLogId, timestamp);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

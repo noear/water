@@ -1,11 +1,12 @@
 package waterraas.dao;
 
 import org.noear.solon.logging.utils.TagsMDC;
+import org.noear.water.WW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class LogUtil {
-    static Logger log = LoggerFactory.getLogger("water_log_raas");
+    static Logger log = LoggerFactory.getLogger(WW.logger_water_log_raas);
 
     public static void logBlockError(String block, String args_str, Exception ex) {
 

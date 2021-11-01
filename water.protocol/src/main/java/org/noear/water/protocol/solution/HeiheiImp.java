@@ -1,6 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.snack.ONode;
+import org.noear.water.WW;
 import org.noear.water.protocol.Heihei;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.HttpUtils;
@@ -16,7 +17,7 @@ public class HeiheiImp implements Heihei {
     protected String masterSecret = "4a8cd168ca71dabcca306cac";
     protected String appKey = "af9a9da3c73d23aa30ea4af1";
 
-    protected final Logger log_heihei = LoggerFactory.getLogger("water_log_heihei");
+    protected final Logger log_heihei = LoggerFactory.getLogger(WW.logger_water_log_heihei);
 
 
     public String push(String tag, Collection<String> alias, String text) {

@@ -32,7 +32,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx, long startLogId, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -70,6 +70,10 @@ public class LogSourceRdb implements LogSource {
             tb.andEq("level", level);
         }
 
+        if(startLogId > 0){
+            tb.andLte("log_id", startLogId);
+        }
+
         if (timestamp > 0) {
             tb.andLte("log_fulltime", timestamp);
         }
@@ -81,9 +85,14 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
-        return _db.table(logger)
-                .groupBy(filed)
+    public List<TagCountsM> queryGroupCountBy(String logger, String service, String filed) throws Exception {
+        DbTableQuery query = _db.table(logger);
+
+        if (TextUtils.isNotEmpty(service)) {
+            query.whereEq("service", service);
+        }
+
+        return query.groupBy(filed)
                 .selectList(filed + " tag, COUNT(*) counts", TagCountsM.class);
     }
 

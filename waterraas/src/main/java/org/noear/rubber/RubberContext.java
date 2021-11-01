@@ -4,6 +4,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.noear.rubber.models.SchemeRuleModel;
 import org.noear.snack.ONode;
 import org.noear.solon.logging.utils.TagsMDC;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,7 +129,7 @@ public final class RubberContext {
         return val != null;
     }
 
-    static Logger log = LoggerFactory.getLogger("water_log_raas");
+    static Logger log = LoggerFactory.getLogger(WW.logger_water_log_raas);
     //记录规则异常
     //
     public void e(String scheme,int rule_id, String err) {

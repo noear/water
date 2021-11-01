@@ -19,7 +19,7 @@ public class CloudLogServiceLocalImp implements CloudLogService {
     private String loggerNameDefault;
 
     public CloudLogServiceLocalImp() {
-        loggerNameDefault = WW.water_log_api;
+        loggerNameDefault = WW.logger_water_log_api;
     }
 
     @Override

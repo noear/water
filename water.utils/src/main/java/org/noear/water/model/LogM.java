@@ -12,9 +12,9 @@ public class LogM {
     public String tag2;
     public String tag3;
     public String tag4;
-    public long weight;
-    public String group;
-    public String service;
+    public long weight;//=tag5
+    public String group;//=tag6
+    public String service;//=tag7
     public String class_name;
     public String thread_name;
     public String content;

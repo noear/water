@@ -5,7 +5,7 @@ import org.noear.water.protocol.model.log.LogModel;
 import java.util.List;
 
 public interface LogQuerier {
-    List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception;
+    List<LogModel> query(String logger, Integer level, int size, String tagx, long startLogId, long timestamp) throws Exception;
 
     void create(String logger) throws Exception;
 

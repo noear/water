@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
+import org.noear.water.WW;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
@@ -135,22 +136,31 @@ public class TrackApi {
         }
 
         LogM logM = new LogM();
-        logM.logger = "water_sql_log";
-        logM.tag = method;
-        logM.tag1 = String.valueOf(seconds); //秒数
-        logM.tag2 = path;
-        logM.tag3 = operator;
-        logM.tag4 = "";
-        logM.from = operator_ip;
+
+        if (path == null) {
+            logM.logger = WW.logger_water_log_sql_p;
+        } else {
+            logM.logger = WW.logger_water_log_sql_b;
+        }
+
         logM.trace_id = trace_id;
-        logM.group = schema;
-        logM.service = service;
-        logM.weight = interval; //毫秒数
+
+        logM.tag = String.valueOf(seconds);//留空
+        logM.tag1 = path; //秒数
+        logM.tag2 = operator;
+        logM.tag3 = method;
+        logM.tag4 = "";
+        logM.weight = interval; //=tag5, 毫秒数
+        logM.group = schema; //=tag6
+        logM.service = service;//=tag7
 
         StringBuilder content = new StringBuilder();
 
         content.append(schema).append("::").append(cmd.text).append("\r\n");
         content.append("$$$").append(ONode.stringify(cmd.paramMap())).append("\r\n");
+
+        logM.content = content.toString();
+        logM.from = operator_ip;
 
         WaterClient.Log.append(logM);
     }

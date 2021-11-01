@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by noear on 2017/7/27.
  */
 public class LogUtils {
-    private static final Logger logger = LoggerFactory.getLogger(WW.water_log_api);
+    private static final Logger logger = LoggerFactory.getLogger(WW.logger_water_log_api);
 
     public static void info(Context ctx) {
         try {

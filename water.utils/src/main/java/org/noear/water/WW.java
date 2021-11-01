@@ -30,12 +30,6 @@ public class WW {
     public static final String water_log = "water_log";
     public static final String water_log_store = "water_log_store";
 
-    public static final String water_log_upstream = "water_log_upstream";
-    public static final String water_log_api = "water_log_api";
-    public static final String water_log_msg = "water_log_msg";
-    public static final String water_log_paas = "water_log_paas";
-    public static final String water_log_sev = "water_log_sev";
-
     public static final String water = "water";
     public static final String waterapi = "waterapi";
     public static final String watersev = "watersev";
@@ -50,6 +44,18 @@ public class WW {
     public static final String water_paas = "water_paas";
 
     public static final String water_bcf = "water_bcf";
+
+
+    public static final String logger_water_log_api = "water_log_api";
+    public static final String logger_water_log_sev = "water_log_sev";
+    public static final String logger_water_log_msg = "water_log_msg";
+    public static final String logger_water_log_etl = "water_log_etl";
+    public static final String logger_water_log_sql_p = "water_log_sql_p"; //性能
+    public static final String logger_water_log_sql_b = "water_log_sql_b"; // 行为
+    public static final String logger_water_log_paas = "water_log_paas";
+    public static final String logger_water_log_raas = "water_log_raas";
+    public static final String logger_water_log_admin = "water_log_admin";
+    public static final String logger_water_log_heihei = "water_log_heihei";
 
     public static final String track_service = "_service";
     public static final String track_from = "_from";

@@ -23,7 +23,7 @@ import java.util.Properties;
 public class MsgBrokerImpl implements MsgBroker {
     MsgSource source;
     MsgQueue queue;
-    Logger log = LoggerFactory.getLogger(WW.water_log_msg);
+    Logger log = LoggerFactory.getLogger(WW.logger_water_log_msg);
 
     /**
      * 新的配置

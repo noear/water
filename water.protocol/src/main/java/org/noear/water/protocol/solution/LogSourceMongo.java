@@ -31,7 +31,7 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception {
+    public List<LogModel> query(String logger, Integer level, int size, String tagx,long startLogId, long timestamp) throws Exception {
         if (TextUtils.isEmpty(logger)) {
             return new ArrayList<>();
         }
@@ -69,6 +69,10 @@ public class LogSourceMongo implements LogSource {
             tb.andEq("level", level);
         }
 
+        if(startLogId > 0){
+            tb.andLte("log_id", startLogId);
+        }
+
         if (timestamp > 0) {
             tb.andLte("log_fulltime", timestamp);
         }
@@ -80,14 +84,21 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception {
-        List<Document> filter = Arrays.asList(new Document("$group",
+    public List<TagCountsM> queryGroupCountBy(String logger, String service, String filed) throws Exception {
+        List<Document> filter = new ArrayList<>();
+
+        if (TextUtils.isNotEmpty(service)) {
+            filter.add(new Document("$match", new Document("service", service)));
+        }
+
+        filter.add(new Document("$group",
                 new Document("_id",
                         new Document("tag", "$" + filed)
                                 .append("counts", new Document("$sum", 1)))));
 
 
-        AggregateIterable<Document> docList = _db.mongo().getCollection(logger).aggregate(filter);
+        AggregateIterable<Document> docList = _db.mongo().getCollection(logger)
+                .aggregate(filter);
 
         List<TagCountsM> tagCountsList = new ArrayList<>();
         ONode oNode = new ONode();

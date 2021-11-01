@@ -8,9 +8,9 @@ import java.io.Closeable;
 import java.util.List;
 
 public interface LogSource extends Closeable {
-    List<LogModel> query(String logger, Integer level, int size, String tagx, long timestamp) throws Exception;
+    List<LogModel> query(String logger, Integer level, int size, String tagx, long startLogId, long timestamp) throws Exception;
 
-    List<TagCountsM> queryGroupCountBy(String logger, String filed) throws Exception;
+    List<TagCountsM> queryGroupCountBy(String logger, String service, String filed) throws Exception;
 
     void writeAll(String logger, List<LogM> list) throws Exception;
 

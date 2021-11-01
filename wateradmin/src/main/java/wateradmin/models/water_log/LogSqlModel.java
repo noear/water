@@ -7,8 +7,7 @@ import org.noear.weed.IBinder;
 import java.util.Date;
 
 @Getter
-public class LogSqlModel implements IBinder
-{
+public class LogSqlModel {
     public long log_id;
     public String trace_id;
     public String service;
@@ -22,40 +21,6 @@ public class LogSqlModel implements IBinder
     public String operator_ip;
     public String path;
     public String ua;
-    public String note;
     public int log_date;
-    public int log_hour;
     public Date log_fulltime;
-
-    public String tag;
-
-    public void bind(GetHandlerEx s)
-    {
-        //1.source:数据源
-        //
-        log_id = s.get("log_id").value(0L);
-        trace_id = s.get("trace_id").value(null);
-        service = s.get("service").value(null);
-        schema = s.get("schema").value(null);
-        method = s.get("method").value(null);
-        seconds = s.get("seconds").value(0);
-        interval = s.get("interval").value(0L);
-        cmd_sql = s.get("cmd_sql").value(null);
-        cmd_arg = s.get("cmd_arg").value(null);
-        operator = s.get("operator").value(null);
-        operator_ip = s.get("operator_ip").value(null);
-        path = s.get("path").value(null);
-        ua = s.get("ua").value(null);
-        note = s.get("note").value(null);
-        log_date = s.get("log_date").value(0);
-        log_hour = s.get("log_hour").value(0);
-        log_fulltime = s.get("log_fulltime").dateValue(null);
-
-        tag = s.get("tag").stringValue("");
-    }
-
-    public IBinder clone()
-    {
-        return new LogSqlModel();
-    }
 }
