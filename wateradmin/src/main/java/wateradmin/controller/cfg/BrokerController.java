@@ -73,7 +73,7 @@ public class BrokerController extends BaseController {
         }
 
         BrokerModel broker = DbWaterCfgApi.getBroker(broker_id);
-        List<ConfigModel> configs = DbWaterCfgApi.getLogStoreConfigs();
+        List<ConfigModel> configs = DbWaterCfgApi.getMsgStoreConfigs();
         List<String> option_sources = new ArrayList<>();
         for (ConfigModel config : configs) {
             option_sources.add(config.tag + "/" + config.key);

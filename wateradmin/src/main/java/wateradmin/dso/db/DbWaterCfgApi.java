@@ -175,7 +175,7 @@ public class DbWaterCfgApi {
                     if(TextUtils.isEmpty(sort) == false){
                         tb.orderBy(sort+" DESC");
                     }else{
-                        tb.orderBy("logger ASC");
+                        tb.orderBy("broker ASC");
                     }
                 })
                 .select("*")
@@ -613,6 +613,14 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getLogStoreConfigs() throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.water_logger)
+                .orderBy("`tag`,`key`")
+                .select("*")
+                .getList(ConfigModel.class);
+    }
+
+    public static List<ConfigModel> getMsgStoreConfigs() throws SQLException {
+        return db().table("water_cfg_properties")
+                .whereEq("type", ConfigType.water_broker)
                 .orderBy("`tag`,`key`")
                 .select("*")
                 .getList(ConfigModel.class);
