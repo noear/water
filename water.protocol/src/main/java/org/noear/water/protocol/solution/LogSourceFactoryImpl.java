@@ -50,7 +50,10 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
             entity.source = source;
             entity.sourceConfig = cfg;
 
-            oldSource.close();
+            //如果与默认的是同一个源，则不关闭
+            if (oldSource != _def.source) {
+                oldSource.close();
+            }
         }
     }
 
@@ -73,7 +76,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
                 }
 
                 if (entity == null) {
-                    entity = _def;
+                    entity = new LoggerEntity(_def.source, _def.sourceConfig);
                 }
 
                 _loggerMap.put(logger, entity);

@@ -58,7 +58,10 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
             entity.source = source;
             entity.sourceConfig = cfg;
 
-            oldSource.close();
+            //如果与默认的是同一个源，则不关闭
+            if (oldSource != _def.source) {
+                oldSource.close();
+            }
         }
     }
 
@@ -84,7 +87,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
                 }
 
                 if (entity == null) {
-                    entity = _def;
+                    entity = new BrokerEntity(_def.source, _def.sourceConfig);
                 }
 
                 _brokerMap.put(broker, entity);
