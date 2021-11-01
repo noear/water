@@ -160,8 +160,8 @@ public class TrackApi {
 
         StringBuilder content = new StringBuilder();
 
-        content.append(schema).append("::").append(cmd.text).append("\r\n");
-        content.append("$$$").append(ONode.stringify(cmd.paramMap())).append("\r\n");
+        content.append(schema).append("::").append(cmd.text).append("\n");
+        content.append("$$$").append(ONode.stringify(cmd.paramMap()));
 
         logM.content = content.toString();
         logM.from = operator_ip;

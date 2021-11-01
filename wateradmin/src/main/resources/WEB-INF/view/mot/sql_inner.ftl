@@ -58,7 +58,7 @@
                     </td>
                     <td class="left break" style="font-size: small">
                         <div>*${log.trace_id!}</div>
-                        <div style="font-size: small">${log.content!}</div>
+                        <div style="font-size: small">${(log.content!'')?replace('\n','<br/>')}</div>
                     </td>
                 </tr>
             </#list>

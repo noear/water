@@ -58,7 +58,7 @@
                     <td>${log.tag2!}</td>
                     <td class="left break">
                         <div>*${log.trace_id!} ${log.tag1!} (${log.from!})</div>
-                        <div style="font-size: small">${log.content!}</div>
+                        <div style="font-size: small">${(log.content!'')?replace('\n','<br/>')}</div>
                     </td>
                 </tr>
             </#list>
