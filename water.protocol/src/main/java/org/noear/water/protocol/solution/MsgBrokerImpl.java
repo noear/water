@@ -48,9 +48,7 @@ public class MsgBrokerImpl implements MsgBroker {
             source = new MsgSourceRdb(DsUtils.getDb(sourceProp, true), cache, log);
         }
 
-        if (queueProp == null || queueProp.size() < 2) {
-            queue = new MsgQueueLocal();
-        } else {
+        if (cfg.value.contains("=redis") && queueProp != null) {
             String name = queueProp.getProperty("name");
 
             if (TextUtils.isEmpty(name)) {
@@ -58,6 +56,8 @@ public class MsgBrokerImpl implements MsgBroker {
             }
 
             queue = new MsgQueueRedis(name, new RedisClient(queueProp));
+        } else {
+            queue = new MsgQueueLocal();
         }
     }
 
