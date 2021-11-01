@@ -76,9 +76,15 @@
         function search(){
             var key = $('#key').val();
             var broker = $('#broker').val();
-            if(key){
+            if(key || broker){
                 urlQueryByDic({'key':key, 'broker':broker});
             }
+        }
+
+        function selectorClick(m){
+            var broker = $('#broker').val();
+
+            urlQueryByDic({'_m':m, 'broker':broker});
         }
 
         $(function(){
@@ -142,17 +148,18 @@
                     <option value="${broker.tag!}">${broker.tag!}</option>
                     </#list>
                 </select>
+                <script>$('#broker').val(${broker!})</script>
                 <input type="text" id="key" value="${key!}" placeholder="*TraceId or ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>
             <right class="col-3">
                 <selector>
-                    <a class="${(_m =0)?string('sel','')}" href="?_m=0">异常的</a>
-                    <a class="${(_m =1)?string('sel','')}" href="?_m=1">等待中</a>
-                    <a class="${(_m =2)?string('sel','')}" href="?_m=2">处理中</a>
-                    <a class="${(_m =3)?string('sel','')}" href="?_m=3">已成功</a>
-                    <a class="${(_m =4)?string('sel','')}" href="?_m=4">其它的</a>
+                    <a class="${(_m =0)?string('sel','')}" click="selectorClick(0)" >异常的</a>
+                    <a class="${(_m =1)?string('sel','')}" click="selectorClick(1)" >等待中</a>
+                    <a class="${(_m =2)?string('sel','')}" click="selectorClick(2)" >处理中</a>
+                    <a class="${(_m =3)?string('sel','')}" click="selectorClick(3)" >已成功</a>
+                    <a class="${(_m =4)?string('sel','')}" click="selectorClick(4)" >其它的</a>
                 </selector>
             </right>
         </flex>

@@ -36,6 +36,7 @@ public class ListController extends BaseController {
         viewModel.put("key", key);
         viewModel.put("_m", _m);
         viewModel.put("list", list);
+        viewModel.put("broker",broker);
         viewModel.put("brokerList", brokerList);
         viewModel.put("currTime", DisttimeUtils.currTime());
         return view("msg/list");
