@@ -1,0 +1,62 @@
+[
+  {
+    "name": "BCF_Config.LK_OBJT",
+    "value": "1",
+    "note": null
+  },
+  {
+    "name": "BCF_Group.LK_OBJT",
+    "value": "2",
+    "note": null
+  },
+  {
+    "name": "BCF_Log.LK_OBJT",
+    "value": "3",
+    "note": null
+  },
+  {
+    "name": "BCF_OPSx.LK_OBJT",
+    "value": "4",
+    "note": null
+  },
+  {
+    "name": "BCF_Resource.LK_OBJT",
+    "value": "5",
+    "note": null
+  },
+  {
+    "name": "BCF_Resource_Linked.LK_OBJT",
+    "value": "6",
+    "note": null
+  },
+  {
+    "name": "BCF_User.LK_OBJT",
+    "value": "7",
+    "note": null
+  },
+  {
+    "name": "BCF_User_Linked.LK_OBJT",
+    "value": "8",
+    "note": null
+  },
+  {
+    "name": "DEFINE.BCF_Dept=2.R_PGID",
+    "value": "1",
+    "note": "Dept"
+  },
+  {
+    "name": "DEFINE.BCF_Package=2.R_PGID",
+    "value": "4",
+    "note": "Pack"
+  },
+  {
+    "name": "DEFINE.BCF_Role=2.R_PGID",
+    "value": "2",
+    "note": "Role"
+  },
+  {
+    "name": "DEFINE.BCF_Unit=2.R_PGID",
+    "value": "3",
+    "note": "Unit"
+  }
+]

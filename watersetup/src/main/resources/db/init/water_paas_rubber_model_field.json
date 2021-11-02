@@ -1,0 +1,62 @@
+[
+  {
+    "field_id": 453,
+    "model_id": 26,
+    "name": "iaas_key",
+    "name_display": "iaas_key",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:18:06",
+    "is_pk": 1
+  },
+  {
+    "field_id": 454,
+    "model_id": 26,
+    "name": "cpu_usage",
+    "name_display": "cpu_usage",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:17:06",
+    "is_pk": 0
+  },
+  {
+    "field_id": 457,
+    "model_id": 26,
+    "name": "memory_usage",
+    "name_display": "memory_usage",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:17:30",
+    "is_pk": 0
+  },
+  {
+    "field_id": 458,
+    "model_id": 26,
+    "name": "disk_usage",
+    "name_display": "disk_usage",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:17:39",
+    "is_pk": 0
+  },
+  {
+    "field_id": 459,
+    "model_id": 26,
+    "name": "broadband_usage",
+    "name_display": "broadband_usage",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:17:54",
+    "is_pk": 0
+  },
+  {
+    "field_id": 460,
+    "model_id": 26,
+    "name": "tcp_num",
+    "name_display": "tcp_num",
+    "expr": "",
+    "note": "",
+    "last_updatetime": "2021-04-05 15:18:00",
+    "is_pk": 0
+  }
+]

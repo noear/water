@@ -1,17 +1,20 @@
 package watersetup.controller;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.Props;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Result;
+import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import watersetup.Config;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -41,6 +44,11 @@ public class HomeController extends BaseController {
     public Result ajax_connect(String config) throws Exception {
         if (Config.water == null) {
             Properties prop = Utils.buildProperties(config);
+
+            if (config.contains("water.ds.")) {
+                prop = new Props(prop).getProp("water.ds");
+            }
+
             if (prop.size() == 4) {
                 DbContext db = Config.getDb(prop);
 
@@ -66,32 +74,63 @@ public class HomeController extends BaseController {
 
 
         if (map.size() > 0) {
-            //说明已存在表
-            Config.water = db;
-            return;
+            if (db.table(water_cfg_properties).selectCount() > 0) {
+                //说明已存在表，且有数据
+                Config.water = db;
+                return;
+            }
         }
 
 
         db.setAllowMultiQueries(true);
 
-        String sql;
-
-        sql = Utils.getResourceAsString("static/_db/water.sql");
-        tryInitSchemaBySplitSql(db, sql);
-
-//        sql = Utils.getResourceAsString("static/_db/water.sql_init.sql");
-//        tryInitSchemaByLineSql(db, sql);
-
-        sql = Utils.getResourceAsString("static/_db/water_bcf.sql");
-        tryInitSchemaBySplitSql(db, sql);
-//
-//        sql = Utils.getResourceAsString("static/_db/water_bcf.sql_init.sql");
-//        tryInitSchemaByLineSql(db, sql);
-
-        sql = Utils.getResourceAsString("static/_db/water_paas.sql");
-        tryInitSchemaBySplitSql(db, sql);
+        tryInitWaterPaas(db);
 
         //Config.water = db;
+    }
+
+    private void tryInitWater(DbContext db) throws Exception {
+        String sql = Utils.getResourceAsString("db/water.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+        tryInitSchemaByJsonSql(db, "water_cfg_broker", "water");
+        tryInitSchemaByJsonSql(db, "water_cfg_logger", "water");
+        tryInitSchemaByJsonSql(db, "water_cfg_properties", "water");
+        tryInitSchemaByJsonSql(db, "water_cfg_whitelist", "water");
+
+        tryInitSchemaByJsonSql(db, "water_tool_monitor", "water");
+        tryInitSchemaByJsonSql(db, "water_tool_report", "water");
+        tryInitSchemaByJsonSql(db, "water_tool_synchronous", "water");
+    }
+
+    private void tryInitWaterBcf(DbContext db) throws Exception {
+        String sql = Utils.getResourceAsString("db/water_bcf.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+        tryInitSchemaByJsonSql(db, "bcf_config", "water_bcf");
+        tryInitSchemaByJsonSql(db, "bcf_group", "water_bcf");
+        tryInitSchemaByJsonSql(db, "bcf_resource", "water_bcf");
+        tryInitSchemaByJsonSql(db, "bcf_resource_linked", "water_bcf");
+
+        tryInitSchemaByJsonSql(db, "bcf_user", "water_bcf");
+        tryInitSchemaByJsonSql(db, "bcf_user_linked", "water_bcf");
+    }
+
+    private void tryInitWaterPaas(DbContext db) throws Exception {
+        String sql = Utils.getResourceAsString("db/water_paas.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+        tryInitSchemaByJsonSql(db, "paas_file", "water_paas");
+
+        tryInitSchemaByJsonSql(db, "rubber_actor", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_block", "water_paas");
+
+        tryInitSchemaByJsonSql(db, "rubber_model", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_model_field", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_scheme", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_scheme_node", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_scheme_node_design", "water_paas");
+        tryInitSchemaByJsonSql(db, "rubber_scheme_rule", "water_paas");
     }
 
 
@@ -108,20 +147,21 @@ public class HomeController extends BaseController {
         }
     }
 
-    private void tryInitSchemaByLineSql(DbContext db, String sql) throws Exception {
-        if (Utils.isNotEmpty(sql)) {
-            System.out.println(sql);
-            db.exe(sql);
+    private void tryInitSchemaByJsonSql(DbContext db, String table, String dir) throws Exception {
+        String fileName = "db/init/" + dir + "_" + table + ".json";
+        System.out.println(">>>>>>>>>>>>>>>>>>>>: " + fileName);
 
-//            BufferedReader reader = new BufferedReader(new StringReader(sql));
-//            String sqlItem;
-//
-//            while ((sqlItem = reader.readLine()) != null) {
-//                if (Utils.isNotEmpty(sqlItem)) {
-//                    System.out.println(">>>>>>>>>>>>>>>>>>>>: " + sqlItem);
-//                    db.exe(sqlItem);
-//                }
-//            }
+        String json = Utils.getResourceAsString(fileName);
+
+        ONode oNode = ONode.loadStr(json);
+        List<DataItem> dataItems = new ArrayList<>();
+        for (ONode n1 : oNode.ary()) {
+            Map<String, Object> map = n1.toObject(Map.class);
+            dataItems.add(new DataItem().setMap(map));
+        }
+
+        if (dataItems.size() > 0) {
+            db.table(table).insertList(dataItems);
         }
     }
 }
