@@ -1,14 +1,16 @@
 #### 2.3
 * Logger source 增加：weight,metainfo,tag4
 * 日志改动：所有日志相关的都改成 water_log 架构，统一管理：
-  * rubber_log_request
-  * rubber_log_request_all 
   * water_exam_log_bcf
   * water_exam_log_sql
 * 消息改动：
   * Queue 增加 local 方案
-  * 增加 Broker 概念 
-* water_raas 库可独立
+  * 增加 Broker 概念
+* water_msg 元信息合到 water 库
+* water_msg_soter? 取消 topic_id 的需要（可完全独立）
+* water_raas 合到 water_paas 库（water, water_paas）
+  * rubber_log_request 归到 water_paas 库（或可独立到 water_paas_request 库）
+  * rubber_log_request_all 归到 water_paas 库（或可独立到 water_paas_request 库）
 
 #### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持
