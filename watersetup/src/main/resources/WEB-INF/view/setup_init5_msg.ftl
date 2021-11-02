@@ -131,12 +131,12 @@
                                 </div>
                             </n-l>
                             <code>
-                                #rdb,mongodb
-                                store.driverType=mongodb
-                                store.schema=water_msg_store
-                                store.url=mongodb://water:1234@mongodb.water.io
-                                #redis,local
-                                queue.driverType=local
+                                #rdb,mongodb<br/>
+                                store.driverType=mongodb<br/>
+                                store.schema=water_msg_store<br/>
+                                store.url=mongodb://water:1234@mongodb.water.io<br/>
+                                #redis,local<br/>
+                                queue.driverType=local<br/>
                             </code>
 
                         </td>
