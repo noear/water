@@ -110,7 +110,8 @@
                         <td>
                             <hr />
                             <n-l>
-                                Water DB，支持 Mysql 8.0、5.7、5.6（建议用 8.0）。如果还没有，可以创建个空库：
+                                Water 主数据库，支持 MySql 8.0、5.7、5.6（建议用 8.0）。如果还没有，可以创建个空库：
+                                <br />
                                 <br />
                                 <code lang="sql">
                                     CREATE DATABASE water <br/>
