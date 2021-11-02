@@ -97,7 +97,7 @@
                     <tr>
                         <th>配置</th><td>
                             <textarea id="config" class="hidden">${config!}</textarea>
-                            <pre style="height:100px; width:600px;"  id="config_edit">${config!}</pre>
+                            <pre style="height:300px; width:600px;"  id="config_edit">${config!}</pre>
                         </td>
                     </tr>
                     <tr>

@@ -83,7 +83,7 @@ public class HomeController extends BaseController {
                 }
 
                 viewModel.put("config", cfg);
-                return view("setup_init4_msg");
+                return view("setup_init5_msg");
             }
         }
 
