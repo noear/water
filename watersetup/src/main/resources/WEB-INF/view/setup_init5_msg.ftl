@@ -98,7 +98,7 @@
                     <tr>
                         <th>配置</th><td>
                             <textarea id="config" class="hidden">${config!}</textarea>
-                            <pre style="height:300px; width:600px;"  id="config_edit">${config!}</pre>
+                            <pre style="height:250px; width:600px;"  id="config_edit">${config!}</pre>
                         </td>
                     </tr>
                     <tr>
@@ -111,10 +111,19 @@
                         <td>
                             <hr />
                             <n-l>
-                                Water Msg Bug 是 Water 的基础服务之一
-                                <br/>
-                                为事件驱动开发、为业务水扩展，提供有力的支持
+                                <div>
+                                    Water Msg Bus：
+                                    <br/>
+                                    为事件驱动开发、为业务水扩展，提供有力的支持
+                                    <br/>
+                                    同时为分布式环境配置同步、本地缓存同步刷新提供保障
+                                </div>
+
+                                <div class="mar10-t">
+                                    支持 MySql 或 MongoDB 两种持久化方案
+                                </div>
                             </n-l>
+
                         </td>
                     </tr>
                 </table>
