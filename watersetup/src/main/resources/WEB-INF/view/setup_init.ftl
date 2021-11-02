@@ -16,6 +16,7 @@
         pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
         n-l{display: block;line-height: 24px!important;}
+        ul li{line-height: 24px!important;}
     </style>
     <script>
 
@@ -100,8 +101,14 @@
                         <td>
                             <h3>Water 是一站式提供服务治理支持的平台。欢迎加入！</h3>
                             <ul>
-                                <li>配置服务</li>
-                                <li>注册与发现服务</li>
+                                <li>1. 配置服务</li>
+                                <li>2. 注册与发现服务</li>
+                                <li>3. 分布式日志服务</li>
+                                <li>4. 消息总线服务（或事件总线）</li>
+                                <li>5. 跟踪服务</li>
+                                <li>6. 监控服务</li>
+                                <li>7. FaaS 服务（基于动态技术提供：即时接口、定时任务、动态事件）</li>
+                                <li>8. RaaS 服务</li>
                             </ul>
                         </td>
                     </tr>
@@ -115,7 +122,13 @@
                         <td>
                             <hr />
                             <n-l>
-                                Water 主库，为配置服务、注册与发现服务、监控服务等提供持久化支持
+                                Water 主库，为配置服务、注册与发现服务、监控服务等提供持久化支持，是核心部份
+                                <br />
+                                支持 Mysql 8.0、5.7、5.6（建议用 8.0）
+                                <br />
+                                <code>
+                                    CREATE DATABASE water DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+                                </code>
                             </n-l>
                         </td>
                     </tr>

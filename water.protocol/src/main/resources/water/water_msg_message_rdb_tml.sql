@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS  `water_msg_message` (
   `msg_id` bigint(20) NOT NULL COMMENT '消息ID',
-  `msg_key` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `trace_id` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '跟踪-guid',
-  `tags` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `topic_name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` varchar(999) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '内容（JSON格式）',
-  `receive_url` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '定向接收目标',
-  `receive_check` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '接收检查',
+  `msg_key` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `trace_id` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '跟踪-guid',
+  `tags` varchar(80) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
+  `topic_name` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `content` varchar(999) COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容（JSON格式）',
+  `receive_url` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '定向接收目标',
+  `receive_check` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '接收检查',
   `plan_time` timestamp NULL DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0' COMMENT '状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',
   `dist_routed` tinyint(1) NOT NULL DEFAULT '0',
@@ -26,4 +26,4 @@ CREATE TABLE IF NOT EXISTS  `water_msg_message` (
   KEY `IX_tags` (`tags`(40)) USING BTREE,
   KEY `IX_trace_id` (`trace_id`) USING BTREE,
   KEY `IX_last_date` (`last_date`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-存储热表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-存储热表';

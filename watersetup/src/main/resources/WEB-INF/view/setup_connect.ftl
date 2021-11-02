@@ -105,6 +105,21 @@
                             <button type="button">确定</button>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water DB，支持 Mysql 8.0、5.7、5.6（建议用 8.0）。如果还没有，可以创建个空库：
+                                <br />
+                                <code lang="sql">
+                                    CREATE DATABASE water <br/>
+                                    DEFAULT CHARACTER SET utf8mb4 <br/>
+                                    DEFAULT COLLATE utf8mb4_general_ci;
+                                </code>
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>

@@ -2,14 +2,14 @@ CREATE TABLE IF NOT EXISTS `water_msg_distribution` (
     `dist_id` bigint(20) NOT NULL COMMENT '分发ID',
     `msg_id` bigint(20) NOT NULL COMMENT '待分发的消息ID',
     `subscriber_id` bigint(20) NOT NULL,
-    `msg_key` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `subscriber_key` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `alarm_mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `alarm_sign` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `receive_url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `msg_key` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `subscriber_key` varchar(40) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `alarm_mobile` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `alarm_sign` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `receive_url` varchar(200) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `receive_way` int(11) NOT NULL DEFAULT '0' COMMENT '接收方式（0HTTP异步等待；1HTTP同步等待；2HTTP异步不等待）',
-    `receive_check` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'OK',
-    `receive_key` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+    `receive_check` varchar(40) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'OK',
+    `receive_key` varchar(40) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '',
     `is_sync` int(11) NOT NULL DEFAULT '0',
     `duration` int(11) NOT NULL DEFAULT '0' COMMENT '消耗时长（s）',
     `state` int(11) NOT NULL DEFAULT '0' COMMENT '分发状态（-1忽略；0开始；1失败；2成功；）',
@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS `water_msg_distribution` (
     KEY `IX_msg_id` (`msg_id`) USING BTREE,
     KEY `IX_msg_key` (`msg_key`) USING BTREE,
     KEY `IX_msg_state` (`msg_state`) USING BTREE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-派送表';
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-派送表';
