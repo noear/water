@@ -90,7 +90,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">配置 Water Msg Store (5/5)</h2>
+            <h2 class="ln30">配置 Water Msg Bus 默认存储块(5/5)</h2>
         </blockquote>
         <detail>
             <form>

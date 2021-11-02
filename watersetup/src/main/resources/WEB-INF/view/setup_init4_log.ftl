@@ -90,7 +90,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">配置 Water Log Store (4/5)</h2>
+            <h2 class="ln30">配置 Water Log 默认存储块(4/5)</h2>
         </blockquote>
         <detail>
             <form>
