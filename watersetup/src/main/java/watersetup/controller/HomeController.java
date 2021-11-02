@@ -41,6 +41,6 @@ public class HomeController extends BaseController {
             }
         }
 
-        return Result.succeed("链接成功");
+        return Result.succeed();
     }
 }

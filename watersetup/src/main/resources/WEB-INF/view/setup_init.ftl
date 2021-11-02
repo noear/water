@@ -29,7 +29,7 @@
                         top.layer.closeAll();
 
                         if(data.code==200) {
-                            top.layer.msg(data.description)
+                            top.layer.msg('连接成功')
                             setTimeout(function(){
                                 location.reload();
                             },800);
@@ -53,7 +53,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">链接主数据库</h2>
+            <h2 class="ln30">连接主数据库</h2>
         </blockquote>
         <detail>
             <form>
