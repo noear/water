@@ -57,7 +57,7 @@ public class CMD_msg_subscribe extends UapiBase {
         boolean isOk = true;
         for (String topic2 : topic.split(",")) {//多个主题以","隔开
             if (topic2.length() > 0) {
-                isOk = isOk & do_subscprebe(key, note, alarm_mobile, topic2, receive_url, receive_key, receive_way, is_unstable > 0);
+                isOk = isOk & subscribeDo(key, note, alarm_mobile, topic2, receive_url, receive_key, receive_way, is_unstable > 0);
             }
         }
 
@@ -68,7 +68,7 @@ public class CMD_msg_subscribe extends UapiBase {
         }
     }
 
-    private boolean do_subscprebe(String key, String note, String alarm_mobile, String topic, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws Exception {
+    private boolean subscribeDo(String key, String note, String alarm_mobile, String topic, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws Exception {
         if (receive_url.indexOf("://") < 0) { //如果不是url不能订阅
             return false;
         }

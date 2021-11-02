@@ -90,12 +90,12 @@ public class MsgSourceMongo implements MsgSource {
                 .update();
     }
 
-    public long addMessage(int topic_id, String topic_name, String content) throws Exception {
-        return addMessage(null, null, null, topic_id, topic_name, content, null, false);
+    public long addMessage(String topic_name, String content) throws Exception {
+        return addMessage(null, null, null,  topic_name, content, null, false);
     }
 
     //添加消息
-    public long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception {
+    public long addMessage(String msg_key, String trace_id, String tags, String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception {
         long msg_id = SnowflakeUtils.genId();//ProtocolHub.idBuilder.getMsgId();
 
         if (Utils.isEmpty(msg_key)) {
@@ -126,7 +126,6 @@ public class MsgSourceMongo implements MsgSource {
                 .set("msg_key", msg_key)
                 .set("trace_id", trace_id)
                 .set("tags", tags)
-                .set("topic_id", topic_id)
                 .set("topic_name", topic_name)
                 .set("content", content)
                 .set("receive_url", "")
@@ -459,7 +458,6 @@ public class MsgSourceMongo implements MsgSource {
 
         _db.table("water_msg_message").orderByDesc("msg_key").createIndex(indexOptions);
         _db.table("water_msg_message").orderByDesc("msg_id").createIndex(indexOptions);
-        _db.table("water_msg_message").orderByDesc("topic_id").createIndex(true);
         _db.table("water_msg_message").orderByDesc("state").createIndex(true);
         _db.table("water_msg_message").orderByDesc("dist_count").createIndex(true);
         _db.table("water_msg_message").orderByDesc("log_date").createIndex(true);

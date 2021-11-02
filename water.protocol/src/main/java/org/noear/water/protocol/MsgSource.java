@@ -20,8 +20,8 @@ public interface MsgSource extends Closeable {
     void setMessageAsSucceed(String msg_key) throws Exception;
     void setDistributionAsCancel(String msg_key, String subscriber_key) throws Exception;
     void setDistributionAsSucceed(String msg_key, String subscriber_key) throws Exception;
-    long addMessage(int topic_id, String topic_name, String content) throws Exception;
-    long addMessage(String msg_key, String trace_id, String tags, int topic_id,String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception;
+    long addMessage(String topic_name, String content) throws Exception;
+    long addMessage(String msg_key, String trace_id, String tags, String topic_name, String content, Date plan_time, boolean autoDelay) throws Exception;
 
 
     //

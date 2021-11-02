@@ -14,10 +14,8 @@ import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
 import waterapi.dso.LockUtils;
 import waterapi.dso.db.DbWaterCfgApi;
-import waterapi.dso.db.DbWaterMsgApi;
 import waterapi.dso.interceptor.Logging;
 import waterapi.models.ConfigModel;
-import waterapi.models.TopicModel;
 
 /**
  * 设置配置
@@ -57,9 +55,8 @@ public class CMD_cfg_set extends UapiBase {
         if (isOk) {
             String trace_id = ctx.header(WW.http_header_trace);
 
-            TopicModel topicModel = DbWaterMsgApi.getTopicById(WW.msg_uconfig_topic);
             ProtocolHub.getMsgSource(null)
-                    .addMessage(Utils.guid(), trace_id, Config.water_service_name, topicModel.topic_id, WW.msg_uconfig_topic, tag + "::" + key, null, false);
+                    .addMessage(Utils.guid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null, false);
         }
 
         return Result.succeed();
