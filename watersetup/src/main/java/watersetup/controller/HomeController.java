@@ -10,8 +10,6 @@ import org.noear.water.utils.Base64Utils;
 import watersetup.Config;
 import watersetup.dso.InitUtils;
 
-import java.util.Properties;
-
 
 /**
  * @author noear 2021/10/31 created
@@ -23,18 +21,15 @@ public class HomeController extends BaseController {
 
     @Mapping("/")
     public ModelAndView home(Context ctx) throws Exception {
-        if (Config.water == null) {
-            String token = ctx.cookie("TOKEN");
-            if(Utils.isNotEmpty(token)){
-                String config = Base64Utils.decode(token);
-                Properties props = Config.getProp(config);
-                Config.water = Config.getDb(props);
-            }
-        }
-
         //1.开始连接
         if (Config.water == null) {
-            viewModel.put("config", rdb_water_tml);
+            String config = rdb_water_tml;
+            String token = ctx.cookie("TOKEN");
+            if(Utils.isNotEmpty(token)){
+                config = Base64Utils.decode(token);
+            }
+
+            viewModel.put("config", config);
             return view("setup_connect");
         }
 
