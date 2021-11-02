@@ -1,16 +1,5 @@
 [
   {
-    "row_id": 25,
-    "tag": "water",
-    "key": "water_msg",
-    "type": 10,
-    "value": "#Data#: c2NoZW1hPXdhdGVyCnVybD1qZGJjOm15c3FsOi8vbXlzcWwud2F0ZXIuaW86MzMwNi93YXRlcj91c2VTU0w9ZmFsc2UmYWxsb3dNdWx0aVF1ZXJpZXM9dHJ1ZSZ1c2VVbmljb2RlPXRydWUmY2hhcmFjdGVyRW5jb2Rpbmc9dXRmOCZhdXRvUmVjb25uZWN0PXRydWUmcmV3cml0ZUJhdGNoZWRTdGF0ZW1lbnRzPXRydWUKcGFzc3dvcmQ9S0hlODVFNE1ZZGVMQkhTUgp1c2VybmFtZT1kZW1vCmpkYmNVcmw9JHt1cmx9",
-    "edit_mode": "properties",
-    "is_editable": 1,
-    "is_enabled": 1,
-    "update_fulltime": "2021-06-22 12:18:50"
-  },
-  {
     "row_id": 28,
     "tag": "water",
     "key": "water",
@@ -405,16 +394,5 @@
     "is_editable": 0,
     "is_enabled": 1,
     "update_fulltime": "2021-11-01 08:30:37"
-  },
-  {
-    "row_id": 994,
-    "tag": "water",
-    "key": "water_raas",
-    "type": 10,
-    "value": "#Data#: c2NoZW1hPXdhdGVyCnVybD1qZGJjOm15c3FsOi8vbXlzcWwud2F0ZXIuaW86MzMwNi93YXRlcj91c2VTU0w9ZmFsc2UmYWxsb3dNdWx0aVF1ZXJpZXM9dHJ1ZSZ1c2VVbmljb2RlPXRydWUmY2hhcmFjdGVyRW5jb2Rpbmc9dXRmOCZhdXRvUmVjb25uZWN0PXRydWUmcmV3cml0ZUJhdGNoZWRTdGF0ZW1lbnRzPXRydWUKcGFzc3dvcmQ9S0hlODVFNE1ZZGVMQkhTUgp1c2VybmFtZT1kZW1vCmpkYmNVcmw9JHt1cmx9",
-    "edit_mode": "properties",
-    "is_editable": 0,
-    "is_enabled": 1,
-    "update_fulltime": "2021-11-02 07:46:05"
   }
 ]

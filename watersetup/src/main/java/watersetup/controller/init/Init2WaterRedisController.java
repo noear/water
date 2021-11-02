@@ -37,8 +37,11 @@ public class Init2WaterRedisController {
             return Result.failure("连接失败");
         }
 
+        String cacheCfg = "driverType=redis\n" + config + "\ndb=9";
+
         //更新配置
         DbWaterCfgApi.updConfig(WW.water, WW.water_redis, config);
+        DbWaterCfgApi.updConfig(WW.water, WW.water_cache, cacheCfg);
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "2");
 
         //2.

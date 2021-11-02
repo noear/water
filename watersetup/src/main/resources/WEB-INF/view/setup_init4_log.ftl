@@ -120,6 +120,16 @@
                                     支持 MySql 或 MongoDB 或 ElasticSearch 三种持久化方案
                                 </div>
                             </n-l>
+                            <code>
+                                driverType=mongodb
+                                schema=water_log_store
+                                url=mongodb://water:1234@mongodb.water.io
+                            </code>
+
+                            <code>
+                                driverType=elasticsearch
+                                url=localhost:1212
+                            </code>
                         </td>
                     </tr>
                 </table>
