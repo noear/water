@@ -7,6 +7,7 @@ import org.noear.water.utils.DsCacheUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
+import waterraas.Config;
 import waterraas.utils.SnowflakeUtils;
 
 final class RcConfig {
@@ -22,14 +23,12 @@ final class RcConfig {
     }
 
 
-    public static final DbContext water;
     public static final DbContext water_paas;
     public static final DbContext water_paas_request;
 
     static {
-        water = DsCacheUtils.getDb(cfg(WW.water).value, true);
-        water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
-        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water_paas);
+        water_paas = Config.water_paas;
+        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas_request).value, true, water_paas);
     }
 
 

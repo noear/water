@@ -20,12 +20,10 @@ public class Config {
 
     public static final DbContext water;
     public static final DbContext water_paas;
-    public static final DbContext water_paas_request;
 
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
-        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water_paas);
     }
 
     //向Water注册当前服务

@@ -50,7 +50,7 @@ public class Config {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
-        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water_paas);
+        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas_request).value, true, water_paas);
     }
 
     public static void tryInit(SolonApp app) {

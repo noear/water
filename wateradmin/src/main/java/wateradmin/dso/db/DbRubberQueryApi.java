@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DbRubberQueryApi {
     private static DbContext db() {
-        return Config.water_raas;
+        return Config.water_paas;
     }
 
     //代码片段查询
