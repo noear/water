@@ -15,6 +15,7 @@
         body > header label{background-color: #222;}
         pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
+        n-l{display: block;line-height: 24px!important;}
     </style>
     <script>
 
@@ -103,6 +104,15 @@
                     <tr>
                         <td></td><td>
                             <button type="button">确定</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Redis 配置将为 Water 内部提供缓存、分布式锁、流统计等能力支持。
+                            </n-l>
                         </td>
                     </tr>
                 </table>

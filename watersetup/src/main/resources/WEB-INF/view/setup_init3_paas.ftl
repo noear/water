@@ -15,6 +15,7 @@
         body > header label{background-color: #222;}
         pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
+        n-l{display: block;line-height: 24px!important;}
     </style>
     <script>
 
@@ -89,7 +90,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">配置 Water Paas DB (3/5)</h2>
+            <h2 class="ln30">配置 Water PaaS DB (3/5)</h2>
         </blockquote>
         <detail>
             <form>
@@ -103,6 +104,21 @@
                     <tr>
                         <td></td><td>
                             <button type="button">确定</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water PaaS 是 Water 的基础组件之一
+                                <br/>
+                                提供了 FaaS（即时接口、定时任务、动态事件）和 RaaS（规则计算）两种动态计算服务
+                                <br/>
+                                为开发和运维提供了友好的动态计算能力
+                                <br/>
+                                以及一种应急处理能力
+                            </n-l>
                         </td>
                     </tr>
                 </table>
