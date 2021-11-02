@@ -18,7 +18,6 @@ public class Config {
     public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
 
     public static final DbContext water;
-    public static final DbContext water_msg;
     public static final DbContext water_paas;
 
     public static ConfigM water_log_store = cfg(WW.water_log_store);
@@ -34,7 +33,6 @@ public class Config {
 
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
-        water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
     }
 

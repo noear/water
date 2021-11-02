@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public final class DbWaterMsgApi {
 
     private static DbContext db() {
-        return Config.water_msg;
+        return Config.water;
     }
 
     //获取主题ID（没有则创建一个）

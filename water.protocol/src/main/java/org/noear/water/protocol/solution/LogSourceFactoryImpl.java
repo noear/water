@@ -116,7 +116,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
         if (cfg.value.contains("=mongodb")) {
             String schema = cfg.getProp().getProperty("schema");
             if (TextUtils.isEmpty(schema)) {
-                schema = "water_log";
+                schema = "water_log_store";
             }
 
             return new LogSourceMongo(cfg.getMg(schema));

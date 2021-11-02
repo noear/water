@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DbWaterMsgApi {
     private static DbContext db() {
-        return Config.water_msg;
+        return Config.water;
     }
 
 

@@ -15,7 +15,6 @@ import wateradmin.dso.auth.AuthProcessorImpl;
 
 public class Config {
     public static final DbContext water;
-    public static final DbContext water_msg;
     public static final DbContext water_paas;
     public static final DbContext water_paas_request;
 
@@ -48,7 +47,6 @@ public class Config {
         WeedConfig.isUsingValueExpression = false;
 
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
-        water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
         water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas_request).value, true, water_paas);
     }
@@ -56,9 +54,9 @@ public class Config {
     public static void tryInit(SolonApp app) {
         waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
 
-        WaterClient.Config.get(WW.water_bcf, "bcf.yml").getProp().forEach((k, v) -> {
-            Solon.cfg().put(k, v);
-        });
+//        WaterClient.Config.get(WW.water_bcf, "bcf.yml").getProp().forEach((k, v) -> {
+//            Solon.cfg().put(k, v);
+//        });
 
         //适配认证框架
         AuthUtil.adapter()

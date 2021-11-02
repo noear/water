@@ -21,7 +21,7 @@ public class DbWaterMsgApi {
     private static Logger log_msg = LoggerFactory.getLogger("water_log_msg");
 
     public static DbContext db() {
-        return Config.water_msg;
+        return Config.water;
     }
 
     //获取主题

@@ -45,7 +45,7 @@ public class MsgBrokerImpl implements MsgBroker {
         if (cfg.value.contains("=mongodb")) {
             String schema = sourceProp.getProperty("schema");
             if (TextUtils.isEmpty(schema)) {
-                schema = "water_msg";
+                schema = "water_msg_store";
             }
             source = new MsgSourceMongo(new MgContext(sourceProp, schema), cache, log);
         } else {
