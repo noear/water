@@ -13,7 +13,7 @@
     "tag": "server",
     "type": "ip",
     "value": "0:0:0:0:0:0:0:1",
-    "note": "本地调试",
+    "note": "本机",
     "is_enabled": 1,
     "update_fulltime": null
   },
@@ -31,88 +31,7 @@
     "tag": "master",
     "type": "ip",
     "value": "0:0:0:0:0:0:0:1",
-    "note": "自己",
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 168,
-    "tag": "_alarm",
-    "type": "mobile",
-    "value": "18658857337",
-    "note": "谢**",
-    "is_enabled": 0,
-    "update_fulltime": "2020-08-27 22:46:37"
-  },
-  {
-    "row_id": 172,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.162",
-    "note": "压测1",
-    "is_enabled": 1,
-    "update_fulltime": "2021-01-29 15:59:48"
-  },
-  {
-    "row_id": 173,
-    "tag": "master",
-    "type": "ip",
-    "value": "172.168.0.164",
-    "note": null,
-    "is_enabled": 1,
-    "update_fulltime": "2021-01-29 15:59:16"
-  },
-  {
-    "row_id": 174,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.163",
-    "note": "压测2",
-    "is_enabled": 1,
-    "update_fulltime": "2021-01-29 15:59:58"
-  },
-  {
-    "row_id": 175,
-    "tag": "master",
-    "type": "ip",
-    "value": "172.168.0.165",
-    "note": null,
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 176,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.164",
-    "note": "压测3",
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 177,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.165",
-    "note": "压测4",
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 178,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.166",
-    "note": "压测5",
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 179,
-    "tag": "server",
-    "type": "ip",
-    "value": "172.168.0.167",
-    "note": "压测6",
+    "note": "本机",
     "is_enabled": 1,
     "update_fulltime": null
   },
@@ -120,36 +39,9 @@
     "row_id": 180,
     "tag": "_alarm",
     "type": "mobile",
-    "value": "9979331",
+    "value": "666666",
     "note": null,
     "is_enabled": 1,
     "update_fulltime": "2021-04-16 10:46:47"
-  },
-  {
-    "row_id": 181,
-    "tag": "master",
-    "type": "ip",
-    "value": "172.16.5.239",
-    "note": null,
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 182,
-    "tag": "client",
-    "type": "ip",
-    "value": "125.119.236.105",
-    "note": "tmp",
-    "is_enabled": 1,
-    "update_fulltime": null
-  },
-  {
-    "row_id": 183,
-    "tag": "server",
-    "type": "ip",
-    "value": "121.41.104.216",
-    "note": "self",
-    "is_enabled": 1,
-    "update_fulltime": null
   }
 ]
