@@ -1,7 +1,6 @@
 package wateradmin;
 
 import org.noear.snack.ONode;
-import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.auth.AuthUtil;
 import org.noear.solon.extend.health.HealthHandler;
@@ -53,10 +52,6 @@ public class Config {
 
     public static void tryInit(SolonApp app) {
         waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
-
-//        WaterClient.Config.get(WW.water_bcf, "bcf.yml").getProp().forEach((k, v) -> {
-//            Solon.cfg().put(k, v);
-//        });
 
         //适配认证框架
         AuthUtil.adapter()

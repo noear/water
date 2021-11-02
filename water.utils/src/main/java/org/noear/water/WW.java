@@ -20,8 +20,6 @@ public class WW {
     public static final String path_run_stop = "/run/stop/";
     public static final String path_msg_receiver = "/msg/receive";
 
-    public static final String clz_BcfClient = "org.noear.bcf.BcfClient";
-
     public static final String water_host = "water.host";
     public static final String water_logger = "water.logger";
 

@@ -15,13 +15,15 @@ import org.noear.weed.WeedConfig;
  * @author noear 2021/10/28 created
  */
 public class ServerPlugin implements Plugin {
+     static final String clz_BcfClient = "org.noear.bcf.BcfClient";
+
     @Override
     public void start(SolonApp app) {
         initWeed();
     }
 
     private void initWeed() {
-        Class<?> bcfClz = Utils.loadClass(WW.clz_BcfClient);
+        Class<?> bcfClz = Utils.loadClass(clz_BcfClient);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
         final boolean isTrackEnable = Solon.cfg().getBool("water.weed.track.enable", false);
