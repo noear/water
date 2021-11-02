@@ -16,10 +16,31 @@
     </style>
     <script>
         $(function (){
-            $('nav a').each(function (){
-                $(this).click(function (){
-                    $("a.sel").removeClass("sel");
-                    $(this).addClass("sel");
+            $('button').click(function (){
+                let config = $('#config').val();
+
+                top.layer.load(2);
+
+                $.ajax({
+                    type:"POST",
+                    url:"/ajax/connect",
+                    data: {config:config},
+                    success:function (data) {
+                        top.layer.closeAll();
+
+                        if(data.code==200) {
+                            top.layer.msg(data.description)
+                            setTimeout(function(){
+                                location.reload();
+                            },800);
+                        }else{
+                            top.layer.msg(data.description);
+                        }
+                    },
+                    error:function(data){
+                        top.layer.closeAll();
+                        top.layer.msg('网络请求出错...');
+                    }
                 });
             });
         });
@@ -39,12 +60,12 @@
                 <table>
                     <tr>
                         <th>配置</th><td>
-                            <textarea name="config" rows="5">${config!}</textarea>
+                            <textarea id="config" rows="5">${config!}</textarea>
                         </td>
                     </tr>
                     <tr>
                         <td></td><td>
-                            <button>确定</button>
+                            <button type="button">确定</button>
                         </td>
                     </tr>
                 </table>

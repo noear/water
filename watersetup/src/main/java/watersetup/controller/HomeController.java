@@ -1,9 +1,11 @@
 package watersetup.controller;
 
+import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Result;
 import watersetup.Config;
 
 import java.util.Properties;
@@ -18,24 +20,27 @@ public class HomeController extends BaseController {
     final String rdb_tml = "schema=\nserver=\nusername=\npassword=";
 
     @Mapping("/")
-    public ModelAndView home(String config) {
+    public ModelAndView home() {
         if (Config.water == null) {
-            if (Utils.isEmpty(config)) {
-                config = rdb_water_tml;
-            } else {
-                Properties prop = Utils.buildProperties(config);
-                if (prop.size() == 4) {
-                    Config.tryInit(prop);
-                }
-            }
-        }
-
-        if (Config.water == null) {
-            viewModel.put("config", config);
+            viewModel.put("config", rdb_water_tml);
 
             return view("setup_init");
         } else {
             return view("setup");
         }
+    }
+
+    @Mapping("/ajax/connect")
+    public Result ajax_connect(String config) {
+        if (Config.water == null) {
+            Properties prop = Utils.buildProperties(config);
+            if (prop.size() == 4) {
+                if (Config.tryInit(prop) == false) {
+                    return Result.failure("链接失败");
+                }
+            }
+        }
+
+        return Result.succeed("链接成功");
     }
 }
