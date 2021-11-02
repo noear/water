@@ -40,10 +40,6 @@ INSERT INTO `bcf_group` VALUES (283, 55, 4, '', '日志查询', '', '/log/', 0, 
 INSERT INTO `bcf_group` VALUES (325, 1, 1, '', 'water', '', NULL, 0, 0, '', 0, 0, 1, '2021-10-13 12:59:36', '2021-10-13 12:59:36');
 
 
-INSERT INTO `bcf_opsx` VALUES (7, 1, 'S', '');
-INSERT INTO `bcf_opsx` VALUES (7, 127, 'S', '');
-INSERT INTO `bcf_opsx` VALUES (7, 128, 'S', '');
-
 
 INSERT INTO `bcf_resource` VALUES (93, '', '标签配置', 'BiaoQianGuanLi', '/track/tag', '', '', 0, '', '', 0, '2017-12-05 10:01:42', '2020-05-08 17:47:17');
 INSERT INTO `bcf_resource` VALUES (94, '', '跟踪配置', 'GenZongPeiZhi', '/track/url', '', '', 1, '', '', 0, '2017-12-05 10:02:18', '2018-06-07 18:08:19');

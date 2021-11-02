@@ -253,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `water_reg_service_speed`  (
   `last_updatetime` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`row_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`service`, `tag`, `name_md5`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表' ROW_FORMAT = DYNAMIC;
 
 CREATE TABLE IF NOT EXISTS `water_reg_service_speed_date`  (
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `water_reg_service_speed_date`  (
   `log_date` int(11) NOT NULL DEFAULT 0 COMMENT '记录时间',
   PRIMARY KEY (`row_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`service`, `tag`, `name_md5`, `log_date`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表-按日' ROW_FORMAT = Compact;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表-按日'ROW_FORMAT = DYNAMIC;
 
 CREATE TABLE IF NOT EXISTS `water_reg_service_speed_hour`  (
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -290,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `water_reg_service_speed_hour`  (
   `log_hour` int(11) NOT NULL DEFAULT 0 COMMENT '记录小时',
   PRIMARY KEY (`row_id`) USING BTREE,
   UNIQUE INDEX `IX_key`(`service`, `tag`, `name_md5`, `log_date`, `log_hour`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表-按时' ROW_FORMAT = Compact;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-注册-服务性能记录表-按时' ROW_FORMAT = DYNAMIC;
 
 CREATE TABLE IF NOT EXISTS `water_tool_monitor`  (
   `monitor_id` int(11) NOT NULL AUTO_INCREMENT,

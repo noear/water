@@ -1,6 +1,5 @@
 package watersetup.controller;
 
-import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -10,6 +9,8 @@ import org.noear.solon.core.handle.Result;
 import org.noear.weed.DbContext;
 import watersetup.Config;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
@@ -70,22 +71,57 @@ public class HomeController extends BaseController {
             return;
         }
 
-        String sql = Utils.getResourceAsString("static/_db/water.sql");
+
+        db.setAllowMultiQueries(true);
+
+        String sql;
+
+        sql = Utils.getResourceAsString("static/_db/water.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+//        sql = Utils.getResourceAsString("static/_db/water.sql_init.sql");
+//        tryInitSchemaByLineSql(db, sql);
+
+        sql = Utils.getResourceAsString("static/_db/water_bcf.sql");
+        tryInitSchemaBySplitSql(db, sql);
+//
+//        sql = Utils.getResourceAsString("static/_db/water_bcf.sql_init.sql");
+//        tryInitSchemaByLineSql(db, sql);
+
+        sql = Utils.getResourceAsString("static/_db/water_paas.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+        //Config.water = db;
+    }
+
+
+    private void tryInitSchemaBySplitSql(DbContext db, String sql) throws Exception {
         if (Utils.isNotEmpty(sql)) {
             for (String sqlItem : sql.split(";")) {
-                System.out.println(">>>>" + sqlItem);
-                db.exe(sqlItem);
+                sqlItem = sqlItem.trim();
+
+                if (Utils.isNotEmpty(sqlItem)) {
+                    System.out.println(">>>>>>>>>>>>>>>>>>>>: " + sqlItem);
+                    db.exe(sqlItem);
+                }
             }
         }
+    }
 
-        sql = Utils.getResourceAsString("static/_db/water.sql_init.sql");
+    private void tryInitSchemaByLineSql(DbContext db, String sql) throws Exception {
         if (Utils.isNotEmpty(sql)) {
-            for (String sqlItem : sql.split(";")) {
-                System.out.println(">>>>" + sqlItem);
-                db.exe(sqlItem);
-            }
-        }
+            System.out.println(sql);
+            db.exe(sql);
 
-        Config.water = db;
+//            BufferedReader reader = new BufferedReader(new StringReader(sql));
+//            String sqlItem;
+//
+//            while ((sqlItem = reader.readLine()) != null) {
+//                if (Utils.isNotEmpty(sqlItem)) {
+//                    System.out.println(">>>>>>>>>>>>>>>>>>>>: " + sqlItem);
+//                    db.exe(sqlItem);
+//                }
+//            }
+        }
     }
 }
