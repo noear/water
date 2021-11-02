@@ -436,11 +436,6 @@ public class MsgSourceRdb implements MsgSource {
         if (TextUtils.isNotEmpty(sql)) {
             _db.exe(sql);
         }
-
-        sql = Utils.getResourceAsString("water/water_msg_message_ex_stat_rdb_tml.sql", "utf-8");
-        if (TextUtils.isNotEmpty(sql)) {
-            _db.exe(sql);
-        }
     }
 
     @Override
@@ -491,9 +486,6 @@ public class MsgSourceRdb implements MsgSource {
 
         //清理持久化
         _db.table("water_msg_message_all").whereLte("last_date", coldDate);
-
-        //清理统计
-        _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
     }
 
     @Override

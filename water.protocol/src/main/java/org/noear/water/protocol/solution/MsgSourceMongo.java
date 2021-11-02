@@ -527,9 +527,6 @@ public class MsgSourceMongo implements MsgSource {
 
         //清理持久化
         _db.table("water_msg_message_all").whereLte("last_date", coldDate);
-
-        //清理统计
-        _db.table("water_msg_message_ex_stat").whereLte("log_date", coldDate);
     }
 
     @Override

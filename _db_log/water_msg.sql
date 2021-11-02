@@ -52,3 +52,21 @@ ALTER TABLE `water_msg_subscriber`
 ALTER TABLE `water_msg_topic` 
     MODIFY COLUMN `create_fulltime` timestamp NULL DEFAULT CURRENT_TIMESTAMP AFTER `alarm_model`;
 
+-- 2021.11.01
+ALTER TABLE `water_msg_message`
+    MODIFY COLUMN `topic_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `topic_id`;
+
+ALTER TABLE `water_msg_message`
+DROP COLUMN `topic_id`,
+DROP INDEX `IX_topic`;
+
+ALTER TABLE `water_msg_message_all`
+DROP COLUMN `topic_id`,
+DROP INDEX `IX_topic`;
+
+ALTER TABLE `water_msg_message_ex_stat`
+DROP COLUMN `topic_id`,
+ADD COLUMN `topic_name` varchar(40) NULL AFTER `row_id`,
+DROP INDEX `IX_topic_id`,
+ADD INDEX `IX_topic_name`(`topic_name`);
+
