@@ -57,6 +57,7 @@ INSERT INTO `water_cfg_properties` VALUES (989, '_gateway', 'waterapi', 9, '{\"u
 INSERT INTO `water_cfg_properties` VALUES (991, 'water', 'water_log_store_clickhouse', 1101, '#Data#: ZHJpdmVyVHlwZT1yZGIKc2NoZW1hPXdhdGVyX2xvZwp1cmw9amRiYzpjbGlja2hvdXNlOi8vbG9jYWxob3N0OjgxMjMvd2F0ZXJfbG9nCmRyaXZlckNsYXNzTmFtZT1ydS55YW5kZXguY2xpY2tob3VzZS5DbGlja0hvdXNlRHJpdmVy', 'properties', 0, 1, '2021-11-01 08:30:27');
 INSERT INTO `water_cfg_properties` VALUES (992, 'water', 'water_log_store_elasticsearch', 1101, '#Data#: ZHJpdmVyVHlwZT1lbGFzdGljc2VhcmNoCnVybD1sb2NhbGhvc3Q6MTIxMg==', 'properties', 0, 1, '2021-11-01 08:30:37');
 INSERT INTO `water_cfg_properties` VALUES (994, 'water', 'water_raas', 10, '#Data#: c2NoZW1hPXdhdGVyCnVybD1qZGJjOm15c3FsOi8vbXlzcWwud2F0ZXIuaW86MzMwNi93YXRlcj91c2VTU0w9ZmFsc2UmYWxsb3dNdWx0aVF1ZXJpZXM9dHJ1ZSZ1c2VVbmljb2RlPXRydWUmY2hhcmFjdGVyRW5jb2Rpbmc9dXRmOCZhdXRvUmVjb25uZWN0PXRydWUmcmV3cml0ZUJhdGNoZWRTdGF0ZW1lbnRzPXRydWUKcGFzc3dvcmQ9S0hlODVFNE1ZZGVMQkhTUgp1c2VybmFtZT1kZW1vCmpkYmNVcmw9JHt1cmx9', 'properties', 0, 1, '2021-11-02 07:46:05');
+INSERT INTO `water_cfg_properties` VALUES (995, 'ops', 'alyun', 1003, '#Data#: cmVnaW9uSWQ9CmFjY2Vzc0tleUlkPQphY2Nlc3NTZWNyZXQ9CmVuZHBvaW50PQ==', 'properties', 0, 1, '2021-11-02 13:04:29');
 
 INSERT INTO `water_cfg_whitelist` VALUES (1, 'server', 'ip', '127.0.0.1', NULL, 1, NULL);
 INSERT INTO `water_cfg_whitelist` VALUES (2, 'server', 'ip', '0:0:0:0:0:0:0:1', '本机', 1, NULL);
