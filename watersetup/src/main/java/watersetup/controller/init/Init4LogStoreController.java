@@ -26,7 +26,7 @@ import java.util.Properties;
  * @author noear 2021/11/2 created
  */
 @Controller
-public class WaterLogStoreController {
+public class Init4LogStoreController {
 
     @Post
     @Mapping("/ajax/init/water_log")
@@ -55,6 +55,8 @@ public class WaterLogStoreController {
             }
         }
 
+        //更新配置
+        DbWaterCfgApi.updConfig(WW.water, WW.water_log_store, config);
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "4");
 
         //2.

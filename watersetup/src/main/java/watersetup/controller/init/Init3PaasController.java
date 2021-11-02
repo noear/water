@@ -20,7 +20,7 @@ import java.util.Properties;
  * @author noear 2021/11/2 created
  */
 @Controller
-public class WaterPaasController {
+public class Init3PaasController {
 
     @Post
     @Mapping("/ajax/init/water_paas")
@@ -42,7 +42,7 @@ public class WaterPaasController {
                 return Result.failure("连接失败");
             } else {
                 try {
-                    tryInitSchema(props, db);
+                    tryInitSchema(db, config);
                 } catch (SQLException e) {
                     EventBus.push(e);
                     return Result.failure("初始化失败..");
@@ -56,8 +56,8 @@ public class WaterPaasController {
     }
 
 
-    private void tryInitSchema(Properties props, DbContext db) throws Exception {
-        if(InitUtils.allowWaterPaasInit(db) == false){
+    private void tryInitSchema(DbContext db, String config) throws Exception {
+        if (InitUtils.allowWaterPaasInit(db) == false) {
             DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "3");
             return;
         }
@@ -67,6 +67,8 @@ public class WaterPaasController {
 
         InitUtils.tryInitWaterPaas(db);
 
+        //更新配置
+        DbWaterCfgApi.updConfig(WW.water, WW.water_paas, config);
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "3");
     }
 }

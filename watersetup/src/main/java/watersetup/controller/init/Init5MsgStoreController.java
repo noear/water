@@ -19,7 +19,7 @@ import java.util.List;
  * @author noear 2021/11/2 created
  */
 @Controller
-public class WaterMsgStoreController {
+public class Init5MsgStoreController {
 
     @Post
     @Mapping("/ajax/init/water_msg")
@@ -47,6 +47,8 @@ public class WaterMsgStoreController {
             }
         }
 
+        //更新配置
+        DbWaterCfgApi.updConfig(WW.water, WW.water_msg_store, config);
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "5");
 
         //2.
