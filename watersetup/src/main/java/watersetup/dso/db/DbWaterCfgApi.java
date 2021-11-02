@@ -9,6 +9,7 @@ import org.noear.weed.DbTableQuery;
 import watersetup.Config;
 import watersetup.dso.ConfigType;
 import watersetup.models.TagCountsModel;
+import watersetup.models.water_cfg.BrokerModel;
 import watersetup.models.water_cfg.ConfigModel;
 import watersetup.models.water_cfg.LoggerModel;
 import watersetup.models.water_cfg.WhitelistModel;
@@ -49,6 +50,40 @@ public class DbWaterCfgApi {
             throw new RuntimeException(ex);
         }
     }
+
+    public static List<LoggerModel> getLoggerList() {
+        try {
+            return db().table("water_cfg_logger")
+                    .whereEq("is_enabled",1)
+                    .selectList("*", LoggerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    //
+    public static BrokerModel getBroker(String broker) {
+        try {
+            return db().table("water_cfg_broker")
+                    .where("broker = ?", broker)
+                    .limit(1)
+                    .select("*")
+                    .getItem(BrokerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static List<BrokerModel> getBrokerList() {
+        try {
+            return db().table("water_cfg_broker")
+                    .whereEq("is_enabled",1)
+                    .selectList("*", BrokerModel.class);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
 
     //获取白名单表tag
     public static List<TagCountsModel> getWhitelistTags() throws SQLException {

@@ -6,6 +6,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
 import watersetup.dso.db.DbWaterCfgApi;
 import watersetup.models.water_cfg.ConfigModel;
+import watersetup.models.water_cfg.LoggerModel;
 
 import java.sql.SQLException;
 import java.util.Properties;
@@ -60,8 +61,14 @@ public class Config {
     /**
      * 获取配置
      * */
-    public static ConfigModel getCfg(String tag, String key) throws SQLException {
-        return DbWaterCfgApi.getConfigByTagName(tag, key);
+    public static ConfigM getCfg(String tag, String key) {
+        try {
+            ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tag, key);
+
+            return new ConfigM(cfg.key, cfg.value, 0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

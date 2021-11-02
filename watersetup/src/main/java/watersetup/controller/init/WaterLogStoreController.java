@@ -8,12 +8,18 @@ import org.noear.solon.annotation.Post;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.Result;
 import org.noear.water.WW;
+import org.noear.water.model.ConfigM;
+import org.noear.water.protocol.LogSource;
+import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import org.noear.weed.DbContext;
 import watersetup.Config;
 import watersetup.dso.InitUtils;
 import watersetup.dso.db.DbWaterCfgApi;
+import watersetup.models.water_cfg.LoggerModel;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -33,6 +39,21 @@ public class WaterLogStoreController {
             return Result.failure("配置不能为空");
         }
 
+        ProtocolHub.config = Config::getCfg;
+
+        ConfigM logCfg = new ConfigM("water_log_store", config, 0);
+        ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+
+
+        List<LoggerModel> loggerList = DbWaterCfgApi.getLoggerList();
+
+        for (LoggerModel logger : loggerList) {
+            if (Utils.isEmpty(logger.source)) {
+                ProtocolHub.logSourceFactory
+                        .getSource(logger.logger)
+                        .create(logger.logger);
+            }
+        }
 
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "4");
 

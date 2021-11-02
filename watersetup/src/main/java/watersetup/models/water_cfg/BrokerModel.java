@@ -1,14 +1,14 @@
 package watersetup.models.water_cfg;
 
 import lombok.Getter;
-import org.noear.water.protocol.model.log.LoggerMeta;
+import org.noear.water.protocol.model.message.BrokerMeta;
 import org.noear.water.utils.EncryptUtils;
 
 @Getter
-public class LoggerModel implements LoggerMeta {
-    public int logger_id;
+public class BrokerModel implements BrokerMeta {
+    public int broker_id;
     public String tag;
-    public String logger;
+    public String broker;
     public String source;
     public int keep_days;
     public long row_num;
@@ -27,12 +27,12 @@ public class LoggerModel implements LoggerMeta {
         return (row_num_today_error > 0);
     }
 
-    public String logger_md5() {
-        return "%7Bmd5%7D" + EncryptUtils.md5(logger);
-    }
-
     @Override
     public int getKeepDays() {
-        return 0;
+        return keep_days;
+    }
+
+    public String broker_md5() {
+        return "%7Bmd5%7D" + EncryptUtils.md5(broker);
     }
 }

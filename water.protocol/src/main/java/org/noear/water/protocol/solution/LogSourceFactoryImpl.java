@@ -76,6 +76,10 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     @Override
     public LogSource getSource(String logger) {
+        if (TextUtils.isEmpty(logger)) {
+            return _def.source;
+        }
+
         LoggerEntity entity = _loggerMap.get(logger);
 
         if (entity == null) {
