@@ -381,7 +381,7 @@ public class MsgSourceRdb implements MsgSource {
     public List<MessageModel> getMessageWarmList(int dist_count, String topic_name) throws SQLException {
         List<MessageModel> list = new ArrayList<>();
 
-        if (dist_count == 0 || TextUtils.isEmpty(topic_name)) {
+        if (dist_count == 0 && TextUtils.isEmpty(topic_name)) {
             return list;
         } else {
             return _db.table("water_msg_message").build((tb) -> {

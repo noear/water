@@ -21,20 +21,14 @@ public class Msg2Controller extends BaseController {
     //消息异常记录
     @Mapping("/msg")
     public ModelAndView warm() throws Exception {
-        int topic_id = 0;
-        String t = "";
         int dist_count = 0;
 
-        if(TextUtils.isEmpty(t) == false){
-            topic_id = DbWaterMsgApi.getTopicID(t).topic_id;
+        if (dist_count == 0) {
+            dist_count = 1;
         }
 
-        if(dist_count==0 && topic_id == 0){
-            dist_count=1;
-        }
-        List<MessageModel> list = ProtocolHub.getMsgSource(null).getMessageWarmList(dist_count, topic_id);
-        viewModel.put("list",list);
+        List<MessageModel> list = ProtocolHub.getMsgSource(null).getMessageWarmList(dist_count, "");
+        viewModel.put("list", list);
         return view("mot/msg");
     }
-
 }
