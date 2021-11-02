@@ -15,7 +15,6 @@ import wateradmin.dso.auth.AuthProcessorImpl;
 
 public class Config {
     public static final DbContext water;
-    public static final DbContext water_log;
     public static final DbContext water_msg;
     public static final DbContext water_paas;
     public static final DbContext water_raas;
@@ -49,7 +48,6 @@ public class Config {
         WeedConfig.isUsingValueExpression = false;
 
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
-        water_log = DsCacheUtils.getDb(cfg(WW.water_log).value, true, water);
         water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
         water_raas = DsCacheUtils.getDb(cfg(WW.water_raas).value, true, water);

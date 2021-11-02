@@ -28,7 +28,6 @@ public class Config {
 
     public static DbContext water;
     public static DbContext water_msg;
-    public static DbContext water_log;
     public static DbContext water_paas;
 
     public static RedisClient rd_ids;   //db:1
@@ -84,7 +83,6 @@ public class Config {
             //必须最先被初始化
             water = DsUtils.getDb(prop, true);
             water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
-            water_log = DsCacheUtils.getDb(cfg(WW.water_log).value, true, water);
             water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 
             water_redis = cfg(WW.water_redis);

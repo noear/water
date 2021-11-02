@@ -20,10 +20,6 @@ import java.util.List;
  logM.service = service;//=tag7
  * */
 public class DbWaterLogApi {
-    private static DbContext db() {
-        return Config.water_log;
-    }
-
     public static List<LogModel> getSqlLogsByPage(String tableName, String service, String method, int seconds, String operator, String path, long startLogId, long timestamp) throws Exception {
         StringBuilder tagx = new StringBuilder();
         tagx.append(""); //tag0

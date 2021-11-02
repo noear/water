@@ -25,9 +25,6 @@ public class WW {
     public static final String water_host = "water.host";
     public static final String water_logger = "water.logger";
 
-
-
-    public static final String water_log = "water_log";
     public static final String water_log_store = "water_log_store";
 
     public static final String water = "water";
