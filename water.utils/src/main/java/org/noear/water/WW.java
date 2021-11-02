@@ -38,10 +38,6 @@ public class WW {
     public static final String water_paas = "water_paas";
     public static final String water_paas_request = "water_paas_request";
 
-
-    //public static final String water_bcf = "water_bcf";
-
-
     public static final String logger_water_log_api = "water_log_api";
     public static final String logger_water_log_sev = "water_log_sev";
     public static final String logger_water_log_msg = "water_log_msg";
