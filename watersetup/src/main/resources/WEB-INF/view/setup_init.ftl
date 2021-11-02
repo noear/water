@@ -96,8 +96,18 @@
             <form>
                 <table>
                     <tr>
+                        <th></th>
+                        <td>
+                            <h3>Water 是一站式提供服务治理支持的平台。欢迎加入！</h3>
+                            <ul>
+                                <li>配置服务</li>
+                                <li>注册与发现服务</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
                         <td></td><td>
-                            <button type="button">确定</button>
+                            <button type="button">开始</button>
                         </td>
                     </tr>
                     <tr>
