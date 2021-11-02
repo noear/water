@@ -43,8 +43,8 @@ public interface MsgSource extends Closeable {
     //for admin
     //
     MessageModel getMessageByKey(String msg_key) throws Exception;
-    List<MessageModel> getMessageList(int dist_count, int topic_id) throws Exception;
     List<MessageModel> getMessageList(int _m, String key) throws Exception;
+    List<MessageModel> getMessageWarmList(int dist_count, String topic_name) throws Exception;
 //    int deleteMsg(int state) throws Exception;
     /**
      * 获取派发记录

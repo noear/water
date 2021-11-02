@@ -340,24 +340,6 @@ public class MsgSourceRdb implements MsgSource {
                 .selectItem("*", MessageModel.class);
     }
 
-    //获取消息列表
-    public List<MessageModel> getMessageList(int dist_count, int topic_id) throws SQLException {
-        List<MessageModel> list = new ArrayList<>();
-
-        if (dist_count == 0 && topic_id == 0) {
-            return list;
-        } else {
-            return _db.table("water_msg_message").build((tb) -> {
-                tb.whereEq("state", 0);
-                if (dist_count > 0) {
-                    tb.andGte("dist_count", dist_count);
-                } else {
-                    tb.andEq("topic_id", topic_id);
-                }
-            }).orderByAsc("msg_id").limit(50)
-                    .selectList("*", MessageModel.class);
-        }
-    }
 
     public List<MessageModel> getMessageList(int _m, String key) throws SQLException {
         DbTableQuery qr = _db.table("water_msg_message");
@@ -392,6 +374,26 @@ public class MsgSourceRdb implements MsgSource {
 
         return qr.orderByDesc("msg_id").limit(50)
                 .selectList("*", MessageModel.class);
+    }
+
+
+    //获取消息列表
+    public List<MessageModel> getMessageWarmList(int dist_count, String topic_name) throws SQLException {
+        List<MessageModel> list = new ArrayList<>();
+
+        if (dist_count == 0 || TextUtils.isEmpty(topic_name)) {
+            return list;
+        } else {
+            return _db.table("water_msg_message").build((tb) -> {
+                        tb.whereEq("state", 0);
+                        if (dist_count > 0) {
+                            tb.andGte("dist_count", dist_count);
+                        } else {
+                            tb.andEq("topic_name", topic_name);
+                        }
+                    }).orderByAsc("msg_id").limit(50)
+                    .selectList("*", MessageModel.class);
+        }
     }
 
 
