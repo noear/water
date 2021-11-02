@@ -54,6 +54,8 @@ public class Init1WaterDbController {
         InitUtils.tryInitWater(db);
         InitUtils.tryInitWaterBcf(db);
 
+        Config.checkProp(props);
+
         String schema = props.getProperty("schema");
         String password = props.getProperty("password");
         String username = props.getProperty("username");

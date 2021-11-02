@@ -72,7 +72,7 @@ public class Config {
     }
 
 
-    private static void checkProp(Properties prop) {
+    public static void checkProp(Properties prop) {
         String dbServer = prop.getProperty("server");
         String dbSchema = prop.getProperty("schema");
 

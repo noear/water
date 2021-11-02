@@ -134,11 +134,9 @@
                             <br/>
                             <n-l>MongoDB + Local示例：</n-l>
                             <code>
-                                #rdb,mongodb<br/>
                                 store.driverType=mongodb<br/>
                                 store.schema=water_msg_store<br/>
                                 store.url=mongodb://water:1234@mongodb.water.io<br/>
-                                #redis,local<br/>
                                 queue.driverType=local<br/>
                             </code>
 
