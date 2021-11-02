@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 public class DbRubberApi {
     private static DbContext db() {
-        return Config.water;
+        return Config.water_raas;
     }
 
     //获取模型tag
