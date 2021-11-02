@@ -378,26 +378,6 @@ public class MsgSourceRdb implements MsgSource {
     }
 
 
-    //获取消息列表
-    public List<MessageModel> getMessageWarmList(int dist_count, String topic_name) throws SQLException {
-        List<MessageModel> list = new ArrayList<>();
-
-        if (dist_count == 0 && TextUtils.isEmpty(topic_name)) {
-            return list;
-        } else {
-            return _db.table("water_msg_message").build((tb) -> {
-                        tb.whereEq("state", 0);
-                        if (dist_count > 0) {
-                            tb.andGte("dist_count", dist_count);
-                        } else {
-                            tb.andEq("topic_name", topic_name);
-                        }
-                    }).orderByAsc("msg_id").limit(50)
-                    .selectList("*", MessageModel.class);
-        }
-    }
-
-
     //派发功能
     public boolean setMessageAsPending(List<Object> ids) throws SQLException {
         Datetime datetime = Datetime.Now();
