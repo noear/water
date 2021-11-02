@@ -1,8 +1,13 @@
 package watersetup;
 
 import org.noear.solon.Utils;
+import org.noear.water.WW;
+import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
+import watersetup.dso.db.DbWaterCfgApi;
+import watersetup.models.water_cfg.ConfigModel;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -13,6 +18,8 @@ public class Config {
         Utils.loadClass("com.mysql.jdbc.Driver");
         Utils.loadClass("com.mysql.cj.jdbc.Driver");
     }
+
+    public static final String water_setup_step = "water_setup_step";
 
     static final String TML_MARK_SERVER = "${server}";
     static final String TML_MARK_SCHEMA = "${schema}";
@@ -54,6 +61,13 @@ public class Config {
         return db;
     }
 
+    /**
+     * 获取配置
+     * */
+    public static ConfigModel getCfg(String tag, String key) throws SQLException {
+        return DbWaterCfgApi.getConfigByTagName(tag, key);
+    }
+
 
     private static void checkProp(Properties prop) {
         String dbServer = prop.getProperty("server");
@@ -68,5 +82,4 @@ public class Config {
             prop.setProperty("url", getJdbcUrl(dbServer, dbSchema));
         }
     }
-
 }

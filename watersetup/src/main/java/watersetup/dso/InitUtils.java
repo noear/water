@@ -4,7 +4,9 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
+import org.noear.weed.annotation.Db;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,39 @@ import java.util.Map;
  * @author noear 2021/11/2 created
  */
 public class InitUtils {
+
+    static final String water_check_table = "water_cfg_properties";
+    static final String water_bcf_check_table = "bcf_group";
+    static final String water_paas_check_table = "paas_file";
+
+    public static boolean allowWaterInit(DbContext db) throws SQLException {
+        return hasTable(db, water_check_table) == false;
+    }
+
+    public static boolean allowWaterBcfInit(DbContext db) throws SQLException {
+        return hasTable(db, water_bcf_check_table) == false;
+    }
+
+    public static boolean allowWaterPaasInit(DbContext db) throws SQLException {
+        return hasTable(db, water_paas_check_table) == false;
+    }
+
+    /**
+     * 检查一张表是否存在
+     */
+    private static boolean hasTable(DbContext db, String table) throws SQLException {
+        Map map = db.sql("SHOW TABLES LIKE ?", table).getMap();
+
+        if (map.size() > 0) {
+            //说明有表
+            if (db.table(table).selectCount() > 0) {
+                //说明也有数据
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static void tryInitWater(DbContext db) throws Exception {
         String sql = Utils.getResourceAsString("db/water.sql");

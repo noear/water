@@ -58,7 +58,7 @@
 
                 $.ajax({
                     type:"POST",
-                    url:"/ajax/connect/water",
+                    url:"/ajax/connect/water_paas",
                     data: {config:config},
                     success:function (data) {
                         top.layer.closeAll();
@@ -89,7 +89,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">连接 Water DB</h2>
+            <h2 class="ln30">连接 Water Paas DB</h2>
         </blockquote>
         <detail>
             <form>

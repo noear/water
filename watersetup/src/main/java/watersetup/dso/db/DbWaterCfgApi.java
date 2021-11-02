@@ -288,6 +288,20 @@ public class DbWaterCfgApi {
         }
     }
 
+    public static void updConfig(String tag, String key, String value) throws SQLException {
+
+        value = WW.cfg_data_header + Base64Utils.encode(value.trim());
+
+        DbTableQuery tb = db().table("water_cfg_properties")
+                .set("update_fulltime", "$NOW()").usingExpr(true)
+                .set("value", value)
+                .set("tag", tag)
+                .set("key", key);
+
+
+        tb.upsertBy("tag,key");
+    }
+
     public static void delConfig(Integer row_id) throws SQLException {
         if (row_id == null) {
             return;

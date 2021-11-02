@@ -3,17 +3,10 @@ package watersetup.controller;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.annotation.Post;
-import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.core.handle.Result;
-import org.noear.weed.DbContext;
+import org.noear.water.WW;
 import watersetup.Config;
 import watersetup.dso.InitUtils;
-
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.Properties;
 
 
 /**
@@ -25,73 +18,44 @@ public class HomeController extends BaseController {
     final String rdb_tml = "schema=\nserver=\nusername=\npassword=";
 
     @Mapping("/")
-    public ModelAndView home() {
+    public ModelAndView home() throws Exception {
         if (Config.water == null) {
             viewModel.put("config", rdb_water_tml);
+            return view("setup_init");
+        }
+
+        if (InitUtils.allowWaterInit(Config.water)) {
+            //还没有表或数据
+            String water_cfg = Config.getCfg(WW.water, WW.water).value;
+
+            if(Utils.isNotEmpty(water_cfg)){
+                viewModel.put("config", rdb_water_tml);
+            }else{
+                viewModel.put("config", rdb_water_tml);
+            }
 
             return view("setup_init");
-        } else {
-            return view("setup");
-        }
-    }
-
-    final String water_cfg_properties = "water_cfg_properties";
-
-    @Post
-    @Mapping("/ajax/connect")
-    public Result ajax_connect(String config) throws Exception {
-        if (Utils.isEmpty(config)) {
-            return Result.failure("配置不能为空");
         }
 
-        if (Config.water == null) {
-            Properties props = Config.getProp(config);
 
-            if (props.size() > 3) {
-                DbContext db = Config.getDb(props);
+        String step = Config.getCfg(WW.water, Config.water_setup_step).value;
 
-                if (db == null) {
-                    return Result.failure("连接失败");
-                } else {
-                    try {
-                        tryInitSchema(props, db);
-                    } catch (SQLException e) {
-                        EventBus.push(e);
-                        return Result.failure("初始化失败..");
-                    }
-                }
-            } else {
-                return Result.failure("配置有问题...");
+        if (Utils.isNotEmpty(step)) {
+            String water_cfg = Config.getCfg(WW.water, WW.water).value;
+
+            if ("1".equals(step)) {
+                //初始化
+                viewModel.put("config", water_cfg);
+                return view("setup_init");
             }
-        }
 
-        if (Config.water == null) {
-            return Result.failure("连接失败");
-        }
-
-        return Result.succeed();
-    }
-
-
-    private void tryInitSchema(Properties props, DbContext db) throws Exception {
-        Map map = db.sql("SHOW TABLES LIKE ?", water_cfg_properties).getMap();
-
-        if (map.size() > 0) {
-            //说明有表
-            if (db.table(water_cfg_properties).selectCount() > 0) {
-                //说明也有数据
-                Config.water = db;
-                return;
+            if ("2".equals(step)) {
+                viewModel.put("config", water_cfg);
+                return view("setup_init");
             }
         }
 
 
-        db.setAllowMultiQueries(true);
-
-        InitUtils.tryInitWater(db);
-        InitUtils.tryInitWaterBcf(db);
-        InitUtils.tryInitWaterPaas(db);
-
-        Config.water = db;
+        return view("setup");
     }
 }

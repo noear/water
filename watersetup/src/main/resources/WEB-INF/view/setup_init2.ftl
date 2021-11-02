@@ -9,20 +9,77 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
+    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
+    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
     <style>
         body > header label{background-color: #222;}
-
+        pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
     </style>
     <script>
+
+        function build_editor(mod){
+            if(window.editor){
+                window.editor.getSession().setMode("ace/mode/"+mod);
+                return
+            }
+
+            var editor = ace.edit(document.getElementById('config_edit'));
+
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setMode("ace/mode/"+mod);
+            editor.setOptions({
+                showFoldWidgets:false,
+                showLineNumbers:false,
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true
+            });
+
+            editor.setShowPrintMargin(false);
+            editor.moveCursorTo(0, 0);
+
+            editor.getSession().on('change', function(e) {
+                var value = editor.getValue();
+                $('#config').val(value);
+            });
+
+            window.editor = editor;
+        }
+
         $(function (){
-            $('nav a').each(function (){
-                $(this).click(function (){
-                    $("a.sel").removeClass("sel");
-                    $(this).addClass("sel");
+
+            build_editor("properties");
+
+            $('button').click(function (){
+                let config = $('#config').val();
+
+                top.layer.load(2);
+
+                $.ajax({
+                    type:"POST",
+                    url:"/ajax/connect/water_bcf",
+                    data: {config:config},
+                    success:function (data) {
+                        top.layer.closeAll();
+
+                        if(data.code==200) {
+                            top.layer.msg('连接成功')
+                            setTimeout(function(){
+                                location.reload();
+                            },800);
+                        }else{
+                            top.layer.msg(data.description);
+                        }
+                    },
+                    error:function(data){
+                        top.layer.closeAll();
+                        top.layer.msg('网络请求出错...');
+                    }
                 });
             });
         });
+
     </script>
 </head>
 <body>
@@ -32,65 +89,20 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">1 主数据库初始化</h2>
+            <h2 class="ln30">连接 Water Bcf DB</h2>
         </blockquote>
         <detail>
             <form>
                 <table>
                     <tr>
                         <th>配置</th><td>
-                            <textarea rows="5">${rdb_water_tml!}</textarea>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </detail>
-    </section>
-
-    <section>
-        <blockquote>
-            <h2 class="ln30">2 日志存储初始化</h2>
-        </blockquote>
-        <detail>
-            <form>
-                <table>
-                    <tr>
-                        <th>类型</th><td>
-                            <boxlist>
-                                <label><input type="radio" name="log_drive_type" /><a>MySQL</a></label>
-                                <label><input type="radio" name="log_drive_type" /><a>MongoDB</a></label>
-                                <label><input type="radio" name="log_drive_type" /><a>Elasticsearch</a></label>
-                            </boxlist>
+                            <textarea id="config" class="hidden">${config!}</textarea>
+                            <pre style="height:100px; width:600px;"  id="config_edit">${config!}</pre>
                         </td>
                     </tr>
                     <tr>
-                        <th>配置</th><td>
-                            <textarea rows="5"></textarea>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </detail>
-    </section>
-
-    <section>
-        <blockquote>
-            <h2 class="ln30">3 消息存储初始化</h2>
-        </blockquote>
-        <detail>
-            <form>
-                <table>
-                    <tr>
-                        <th>类型</th><td>
-                            <boxlist>
-                                <label><input type="radio" name="msg_drive_type" /><a>MySQL</a></label>
-                                <label><input type="radio" name="msg_drive_type" /><a>MongoDB</a></label>
-                            </boxlist>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>配置</th><td>
-                            <textarea rows="5"></textarea>
+                        <td></td><td>
+                            <button type="button">确定</button>
                         </td>
                     </tr>
                 </table>
