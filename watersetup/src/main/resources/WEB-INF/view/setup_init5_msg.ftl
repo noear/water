@@ -130,6 +130,14 @@
                                     支持 MySql 或 MongoDB 两种持久化方案
                                 </div>
                             </n-l>
+                            <code>
+                                #rdb,mongodb
+                                store.driverType=mongodb
+                                store.schema=water_msg_store
+                                store.url=mongodb://water:1234@mongodb.water.io
+                                #redis,local
+                                queue.driverType=local
+                            </code>
 
                         </td>
                     </tr>

@@ -131,12 +131,12 @@
                             <code>
                                 driverType=mongodb<br/>
                                 schema=water_log_store<br/>
-                                url=mongodb://water:1234@mongodb.water.io<br/>
+                                url=mongodb://water:1234@mongodb.water.io
                             </code>
 
                             <code>
                                 driverType=elasticsearch<br/>
-                                url=localhost:1212<br/>
+                                url=localhost:1212
                             </code>
                         </td>
                     </tr>
