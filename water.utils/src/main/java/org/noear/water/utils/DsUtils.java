@@ -14,6 +14,10 @@ import java.util.Properties;
  */
 public class DsUtils {
     public static DbContext getDb(Properties prop, boolean pool) {
+        if (prop.size() < 4) {
+            throw new RuntimeException("Data source configuration error!");
+        }
+
         String url = prop.getProperty("url");
 
         if (TextUtils.isEmpty(url)) {

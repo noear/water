@@ -156,7 +156,7 @@ public final class DbApi {
 
         Datetime now = Datetime.Now();
 
-        RcConfig.water_log().table(WW.logger_rubber_log_request)
+        db().table(WW.rubber_log_request)
                 .set("request_id", request_id)
                 .set("scheme_tagname", scheme_tagname)
                 .set("args_json", args_json)
@@ -172,7 +172,7 @@ public final class DbApi {
     }
 
     public static void logRequestSetState(long log_id,int state) throws SQLException{
-        RcConfig.water_log().table(WW.logger_rubber_log_request)
+        db().table(WW.rubber_log_request)
                 .set("state",state)
                 .where("log_id=?",log_id)
                 .update();
@@ -197,7 +197,7 @@ public final class DbApi {
                 .set("advice", response.evaluation.advice)
                 .set("exception", response.evaluation.exception);
 
-        DbTableQuery tb = RcConfig.water_log().table(WW.logger_rubber_log_request)
+        DbTableQuery tb = db().table(WW.rubber_log_request)
                 .set("request_id", response.request.request_id)
                 .set("scheme_tagname", scheme_tagname)
                 .set("args_json", args_json)
@@ -226,10 +226,9 @@ public final class DbApi {
         }
     }
 
-    public static LogRequestModel logRequestGet(String request_id) throws SQLException{
-        return
-        RcConfig.water_log().table(WW.logger_rubber_log_request)
-                .where("request_id=?",request_id)
+    public static LogRequestModel logRequestGet(String request_id) throws SQLException {
+        return db().table(WW.rubber_log_request)
+                .where("request_id=?", request_id)
                 .orderBy("log_id DESC")
                 .limit(1)
                 .selectItem("*", LogRequestModel.class);

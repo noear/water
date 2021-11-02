@@ -9,13 +9,14 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.extend.health.HealthHandler;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.DsCacheUtils;
+import org.noear.water.utils.DsUtils;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
-import waterapi.dso.DbUtils;
 
 public class Config {
     static final String TML_MARK_SERVER = "${server}";
@@ -64,7 +65,7 @@ public class Config {
             _inited = true;
 
             Props prop = Solon.cfg().getProp("water.dataSource");
-            if(prop.size() == 0){
+            if (prop.size() == 0) {
                 prop = Solon.cfg().getProp("water.ds");
             }
 
@@ -80,10 +81,12 @@ public class Config {
                 prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
             }
 
-            water = DbUtils.getDb(prop);
-            water_msg = cfg(WW.water_msg).getDb(true);
-            water_log = cfg(WW.water_log).getDb(true);
-            water_paas = cfg(WW.water_paas).getDb(true);
+            //必须最先被初始化
+            water = DsUtils.getDb(prop, true);
+            water_msg = DsCacheUtils.getDb(cfg(WW.water_msg).value, true, water);
+            water_log = DsCacheUtils.getDb(cfg(WW.water_log).value, true, water);
+            water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
+
             water_redis = cfg(WW.water_redis);
 
             ConfigM cm2 = cfg(WW.water_redis_track);

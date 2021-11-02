@@ -21,7 +21,6 @@ final class RcConfig {
     }
 
 
-    private static DbContext _water_log; //rubber_log_request
     private static DbContext _water_raas;
 
     public static DbContext water_raas() {
@@ -36,15 +35,6 @@ final class RcConfig {
 
         return _water_raas;
     }
-
-    public static DbContext water_log() {
-        if (_water_log == null) {
-            _water_log = cfg(WW.water_log).getDb(true);
-        }
-
-        return _water_log;
-    }
-
 
     public static boolean is_debug = false;
 

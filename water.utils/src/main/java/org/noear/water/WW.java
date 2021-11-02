@@ -60,7 +60,7 @@ public class WW {
     public static final String logger_water_log_heihei = "water_log_heihei";
     public static final String logger_water_log_upstream = "water_log_upstream";
 
-    public static final String logger_rubber_log_request = "rubber_log_request";
+    public static final String rubber_log_request = "rubber_log_request";
 
     public static final String track_service = "_service";
     public static final String track_from = "_from";

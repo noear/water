@@ -8,6 +8,7 @@
 * 消息改动：
   * Queue 增加 local 方案
   * 增加 Broker 概念 
+* water_raas 库可独立
 
 #### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持

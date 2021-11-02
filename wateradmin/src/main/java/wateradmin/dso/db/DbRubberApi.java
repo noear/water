@@ -62,7 +62,7 @@ public class DbRubberApi {
 
     //获取模型tag
     public static List<ModelModel> getRequestTags() throws SQLException {
-        return Config.water_log.table(WW.logger_rubber_log_request)
+        return db().table(WW.rubber_log_request)
                 .groupBy("tag")
                 .orderByAsc("tag")
                 .select("tag,count(*) counts")
@@ -72,7 +72,7 @@ public class DbRubberApi {
     //根据request_id获取model
     public static List<LogRequestModel> getReuestList(int page, int pageSize, String key, CountModel count) throws SQLException {
         int start = (page - 1) * pageSize;
-        DbTableQuery query = Config.water_log.table(WW.logger_rubber_log_request)
+        DbTableQuery query = db().table(WW.rubber_log_request)
                 .where("1=1")
                 .build(tb -> {
                     if (!TextUtils.isEmpty(key)) {
@@ -1239,7 +1239,7 @@ public class DbRubberApi {
 
     //根据log_id获取请求记录
     public static LogRequestModel getLogReqById(long log_id) throws SQLException {
-        return Config.water_log.table(WW.logger_rubber_log_request)
+        return db().table(WW.rubber_log_request)
                 .where("log_id = ?", log_id)
                 .select("*")
                 .getItem(new LogRequestModel());
