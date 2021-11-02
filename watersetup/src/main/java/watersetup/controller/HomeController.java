@@ -3,10 +3,14 @@ package watersetup.controller;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
+import org.noear.water.utils.Base64Utils;
 import watersetup.Config;
 import watersetup.dso.InitUtils;
+
+import java.util.Properties;
 
 
 /**
@@ -18,22 +22,24 @@ public class HomeController extends BaseController {
     final String rdb_tml = "schema=\nserver=\nusername=\npassword=";
 
     @Mapping("/")
-    public ModelAndView home() throws Exception {
+    public ModelAndView home(Context ctx) throws Exception {
         if (Config.water == null) {
-            viewModel.put("config", rdb_water_tml);
-            return view("setup_init");
+            String token = ctx.cookie("TOKEN");
+            if(Utils.isNotEmpty(token)){
+                String config = Base64Utils.decode(token);
+                Properties props = Config.getProp(config);
+                Config.water = Config.getDb(props);
+            }
         }
 
+        //1.开始连接
+        if (Config.water == null) {
+            viewModel.put("config", rdb_water_tml);
+            return view("setup_connect");
+        }
+
+        //2.开始初始化Water
         if (InitUtils.allowWaterInit(Config.water)) {
-            //还没有表或数据
-            String water_cfg = Config.getCfg(WW.water, WW.water).value;
-
-            if(Utils.isNotEmpty(water_cfg)){
-                viewModel.put("config", rdb_water_tml);
-            }else{
-                viewModel.put("config", rdb_water_tml);
-            }
-
             return view("setup_init");
         }
 
@@ -41,17 +47,43 @@ public class HomeController extends BaseController {
         String step = Config.getCfg(WW.water, Config.water_setup_step).value;
 
         if (Utils.isNotEmpty(step)) {
-            String water_cfg = Config.getCfg(WW.water, WW.water).value;
-
+            //初始化 Paas
             if ("1".equals(step)) {
+                String cfg = Config.getCfg(WW.water, WW.water_redis).value;
+
                 //初始化
-                viewModel.put("config", water_cfg);
-                return view("setup_init");
+                viewModel.put("config", cfg);
+                return view("setup_init2");
             }
 
             if ("2".equals(step)) {
-                viewModel.put("config", water_cfg);
-                return view("setup_init");
+                String cfg = Config.getCfg(WW.water, WW.water_paas).value;
+                if (Utils.isEmpty(cfg)) {
+                    cfg = Config.getCfg(WW.water, WW.water).value;
+                }
+
+                viewModel.put("config", cfg);
+                return view("setup_init3_paas");
+            }
+
+            if ("3".equals(step)) {
+                String cfg = Config.getCfg(WW.water, WW.water_log_store).value;
+                if (Utils.isEmpty(cfg)) {
+                    cfg = Config.getCfg(WW.water, WW.water).value;
+                }
+
+                viewModel.put("config", cfg);
+                return view("setup_init4_log");
+            }
+
+            if ("4".equals(step)) {
+                String cfg = Config.getCfg(WW.water, WW.water_msg_store).value;
+                if (Utils.isEmpty(cfg)) {
+                    cfg = Config.getCfg(WW.water, WW.water).value;
+                }
+
+                viewModel.put("config", cfg);
+                return view("setup_init4_msg");
             }
         }
 

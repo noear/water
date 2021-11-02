@@ -43,10 +43,6 @@ public class Config {
     }
 
     public static DbContext getDb(Properties prop) {
-        if (water != null) {
-            return null;
-        }
-
         if (prop.size() < 4) {
             System.out.println("[Water] Missing water. DataSource configuration");
             return null;

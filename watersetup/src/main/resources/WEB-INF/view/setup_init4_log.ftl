@@ -52,13 +52,13 @@
             build_editor("properties");
 
             $('button').click(function (){
-                let config = '';
+                let config = $('#config').val();
 
                 top.layer.load(2);
 
                 $.ajax({
                     type:"POST",
-                    url:"/ajax/init/water",
+                    url:"/ajax/init/water_log",
                     data: {config:config},
                     success:function (data) {
                         top.layer.closeAll();
@@ -89,11 +89,17 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">初始化 Water DB (1/5)</h2>
+            <h2 class="ln30">配置 Water Log Store (4/5)</h2>
         </blockquote>
         <detail>
             <form>
                 <table>
+                    <tr>
+                        <th>配置</th><td>
+                            <textarea id="config" class="hidden">${config!}</textarea>
+                            <pre style="height:100px; width:600px;"  id="config_edit">${config!}</pre>
+                        </td>
+                    </tr>
                     <tr>
                         <td></td><td>
                             <button type="button">确定</button>

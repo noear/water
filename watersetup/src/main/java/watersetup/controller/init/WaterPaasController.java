@@ -21,11 +21,14 @@ import java.util.Properties;
  */
 @Controller
 public class WaterPaasController {
-    final String water_check_table = "paas_file";
 
     @Post
-    @Mapping("/ajax/connect/water_bcf")
+    @Mapping("/ajax/init/water_paas")
     public Result ajax_connect(String config) throws Exception {
+        if (Config.water == null) {
+            return Result.failure("未连接数据库，刷新再试...");
+        }
+
         if (Utils.isEmpty(config)) {
             return Result.failure("配置不能为空");
         }
@@ -49,12 +52,13 @@ public class WaterPaasController {
             return Result.failure("配置有问题...");
         }
 
-        return Result.succeed();
+        return Result.succeed(null, "配置成功");
     }
 
 
     private void tryInitSchema(Properties props, DbContext db) throws Exception {
         if(InitUtils.allowWaterPaasInit(db) == false){
+            DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "3");
             return;
         }
 
@@ -63,6 +67,6 @@ public class WaterPaasController {
 
         InitUtils.tryInitWaterPaas(db);
 
-        DbWaterCfgApi.updConfig(WW.water, "water_setup", "3");
+        DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "3");
     }
 }

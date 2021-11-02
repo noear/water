@@ -58,13 +58,13 @@
 
                 $.ajax({
                     type:"POST",
-                    url:"/ajax/connect/water_bcf",
+                    url:"/ajax/init/redis",
                     data: {config:config},
                     success:function (data) {
                         top.layer.closeAll();
 
                         if(data.code==200) {
-                            top.layer.msg('连接成功')
+                            top.layer.msg(data.description)
                             setTimeout(function(){
                                 location.reload();
                             },800);
@@ -89,7 +89,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">连接 Water Bcf DB</h2>
+            <h2 class="ln30">配置 Water Redis (2/5)</h2>
         </blockquote>
         <detail>
             <form>
