@@ -120,6 +120,7 @@
                                     支持 MySql 或 MongoDB 或 ElasticSearch 三种持久化方案
                                 </div>
                             </n-l>
+
                             <code>
                                 driverType=mongodb
                                 schema=water_log_store
