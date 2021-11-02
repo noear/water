@@ -24,8 +24,8 @@ public class LogSourceRdb implements LogSource {
     public LogSourceRdb(DbContext db) {
         _db = db;
         try {
-            _rdbTml = Utils.getResourceAsString("water/water_log_rdb_tml.sql", "utf-8");
-            _chTml = Utils.getResourceAsString("water/water_log_ch_tml.sql", "utf-8");
+            _rdbTml = Utils.getResourceAsString("water/water_log_rdb_tml.sql");
+            _chTml = Utils.getResourceAsString("water/water_log_ch_tml.sql");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

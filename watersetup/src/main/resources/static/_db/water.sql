@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `water_cfg_properties`  (
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
   `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分组标签',
   `key` varchar(99) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '属性key',
-  `type` int(11) NOT NULL DEFAULT 0 COMMENT '类型：0:未知，1:数据库；2:Redis；3:MangoDb; 4:Memcached',
+  `type` int(11) NOT NULL DEFAULT 0 COMMENT '类型：0:未知，1:数据库；2:Redis；3:MangoDb；4:Memcached',
   `value` varchar(8000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '属性值',
   `edit_mode` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `is_editable` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否可编辑',

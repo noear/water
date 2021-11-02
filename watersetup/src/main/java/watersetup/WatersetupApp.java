@@ -12,7 +12,6 @@ public class WatersetupApp {
         Solon.start(WatersetupApp.class, argx, x -> {
             //加载环境变量(支持弹性容器设置的环境)
             x.cfg().loadEnv("water.");
-            x.enableErrorAutoprint(false);
 
             x.pluginAdd(-1, new InitPlugin());
         });

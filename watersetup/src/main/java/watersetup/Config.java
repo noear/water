@@ -1,9 +1,6 @@
 package watersetup;
 
-import org.noear.solon.Solon;
-import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
-import org.noear.solon.core.Props;
 import org.noear.weed.DbContext;
 
 import java.util.Properties;
@@ -23,14 +20,14 @@ public class Config {
 
     public static DbContext water;
 
-    public static boolean tryInit(Properties prop) {
+    public static DbContext getDb(Properties prop) {
         if (water != null) {
-            return true;
+            return null;
         }
 
         if (prop.size() < 4) {
             System.out.println("[Water] Missing water. DataSource configuration");
-            return false;
+            return null;
         }
 
 
@@ -46,9 +43,9 @@ public class Config {
             prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
         }
 
-        water = new DbContext(prop);
-        water.initMetaData();
+        DbContext db = new DbContext(prop);
+        db.initMetaData();
 
-        return true;
+        return db;
     }
 }

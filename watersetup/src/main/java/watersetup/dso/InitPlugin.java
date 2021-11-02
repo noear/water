@@ -1,9 +1,9 @@
 package watersetup.dso;
 
-import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.Props;
+import org.noear.weed.DbContext;
 import watersetup.Config;
 
 /**
@@ -17,6 +17,10 @@ public class InitPlugin implements Plugin {
             prop = app.cfg().getProp("water.ds");
         }
 
-        Config.tryInit(prop);
+        DbContext db = Config.getDb(prop);
+
+        if (db != null) {
+            Config.water = db;
+        }
     }
 }
