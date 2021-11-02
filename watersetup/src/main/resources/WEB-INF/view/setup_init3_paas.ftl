@@ -107,6 +107,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <td></td><td>
+                            <n-l>
+                                对应配置：water/water_paas
+                            </n-l>
+                        </td>
+                    </tr>
+                    <tr>
                         <th></th>
                         <td>
                             <hr />

@@ -119,7 +119,13 @@
                             <button type="button">开始</button>
                         </td>
                     </tr>
-
+                    <tr>
+                        <td></td><td>
+                            <n-l>
+                                对应配置：water/water
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>
