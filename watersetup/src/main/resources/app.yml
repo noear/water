@@ -1,5 +1,3 @@
-solon.extend: "!water_ini"
-
 server.port: 19371
 
 solon.app:

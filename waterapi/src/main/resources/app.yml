@@ -1,7 +1,7 @@
 server.port: 9371
 server.request.maxRequestSize: 2mb
 
-solon.extend: water_ini
+solon.extend: "waterapi_ext"
 
 
 solon.app:
