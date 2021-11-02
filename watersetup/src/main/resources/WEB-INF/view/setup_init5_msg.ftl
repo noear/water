@@ -130,6 +130,8 @@
                                     支持 MySql 或 MongoDB 两种持久化方案
                                 </div>
                             </n-l>
+
+                            <n-l>MongoDB + Local示例：</n-l>
                             <code>
                                 #rdb,mongodb<br/>
                                 store.driverType=mongodb<br/>

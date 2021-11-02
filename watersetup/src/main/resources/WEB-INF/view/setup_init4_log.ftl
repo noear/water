@@ -127,13 +127,14 @@
                                     支持 MySql 或 MongoDB 或 ElasticSearch 三种持久化方案
                                 </div>
                             </n-l>
-
+                            <n-l>MongoDB 示例：</n-l>
                             <code>
                                 driverType=mongodb<br/>
                                 schema=water_log_store<br/>
                                 url=mongodb://water:1234@mongodb.water.io<br/>
                             </code>
                             <br/>
+                            <n-l>ElasticSearch 示例：</n-l>
                             <code>
                                 driverType=elasticsearch<br/>
                                 url=localhost:1212<br/>
