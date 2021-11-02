@@ -127,6 +127,7 @@
                                     支持 MySql 或 MongoDB 或 ElasticSearch 三种持久化方案
                                 </div>
                             </n-l>
+                            <br/>
                             <n-l>MongoDB 示例：</n-l>
                             <code>
                                 driverType=mongodb<br/>
