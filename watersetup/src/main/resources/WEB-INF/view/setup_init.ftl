@@ -100,6 +100,15 @@
                             <button type="button">确定</button>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water 主库，为配置服务、注册与发现服务、监控服务等提供持久化支持
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>

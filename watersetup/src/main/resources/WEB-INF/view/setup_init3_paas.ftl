@@ -111,7 +111,7 @@
                         <td>
                             <hr />
                             <n-l>
-                                Water PaaS 是 Water 的基础组件之一
+                                Water PaaS 是 Water 的基础服务之一
                                 <br/>
                                 提供了 FaaS（即时接口、定时任务、动态事件）和 RaaS（规则计算）两种动态计算服务
                                 <br/>

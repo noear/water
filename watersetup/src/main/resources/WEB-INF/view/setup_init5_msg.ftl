@@ -106,6 +106,17 @@
                             <button type="button">确定</button>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water Msg Bug 是 Water 的基础服务之一
+                                <br/>
+                                为事件驱动开发、为业务水扩展，提供有力的支持
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>

@@ -106,6 +106,17 @@
                             <button type="button">确定</button>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water Log 是 Water 的基础服务之一
+                                <br/>
+                                究讲统一收集、统一查询界面的原则。提倡日志业务，记录日志的同时把上下文数据也带上。
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>
