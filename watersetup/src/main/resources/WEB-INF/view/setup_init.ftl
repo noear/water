@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm-y">
 <head>
-    <title>${app} - 安装模式</title>
+    <title>${app} - 安装工具</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>

@@ -20,6 +20,21 @@ public class Config {
 
     public static DbContext water;
 
+    public static String getJdbcUrl(String dbServer, String dbSchema) {
+        return TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema);
+    }
+
+    public static Properties getProp(String cfg) {
+        Properties prop = Utils.buildProperties(cfg);
+        if (prop.size() == 0) {
+            return prop;
+        }
+
+        checkProp(prop);
+
+        return prop;
+    }
+
     public static DbContext getDb(Properties prop) {
         if (water != null) {
             return null;
@@ -31,6 +46,16 @@ public class Config {
         }
 
 
+        checkProp(prop);
+
+        DbContext db = new DbContext(prop);
+        db.initMetaData();
+
+        return db;
+    }
+
+
+    private static void checkProp(Properties prop) {
         String dbServer = prop.getProperty("server");
         String dbSchema = prop.getProperty("schema");
 
@@ -40,12 +65,8 @@ public class Config {
         }
 
         if (Utils.isNotEmpty(dbServer)) {
-            prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
+            prop.setProperty("url", getJdbcUrl(dbServer, dbSchema));
         }
-
-        DbContext db = new DbContext(prop);
-        db.initMetaData();
-
-        return db;
     }
+
 }
