@@ -29,7 +29,11 @@ import java.util.stream.Collectors;
 
 public class DbRubberApi {
     private static DbContext db() {
-        return Config.water_raas;
+        return Config.water_paas;
+    }
+
+    private static DbContext dbReq() {
+        return Config.water_paas_request;
     }
 
     //获取模型tag
@@ -60,35 +64,7 @@ public class DbRubberApi {
         return flag;
     }
 
-    //获取模型tag
-    public static List<ModelModel> getRequestTags() throws SQLException {
-        return db().table(WW.rubber_log_request)
-                .groupBy("tag")
-                .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(new ModelModel());
-    }
 
-    //根据request_id获取model
-    public static List<LogRequestModel> getReuestList(int page, int pageSize, String key, CountModel count) throws SQLException {
-        int start = (page - 1) * pageSize;
-        DbTableQuery query = db().table(WW.rubber_log_request)
-                .where("1=1")
-                .build(tb -> {
-                    if (!TextUtils.isEmpty(key)) {
-                        if (key.length() == 32) {
-                            tb.and("(request_id = ? OR args_json LIKE ?)", key, "%" + key + "%");
-                        } else {
-                            tb.and("(args_json LIKE ?)", "%" + key + "%");
-                        }
-                    }
-                });
-        count.setCount(query.count());
-        return query.orderBy("log_id DESC")
-                .limit(start, pageSize)
-                .select("*")
-                .getList(new LogRequestModel());
-    }
 
     //根据tag和名称获取model
     public static List<ModelModel> getModelList(String tag, String name) throws SQLException {
@@ -1237,14 +1213,6 @@ public class DbRubberApi {
         return true;
     }
 
-    //根据log_id获取请求记录
-    public static LogRequestModel getLogReqById(long log_id) throws SQLException {
-        return db().table(WW.rubber_log_request)
-                .where("log_id = ?", log_id)
-                .select("*")
-                .getItem(new LogRequestModel());
-    }
-
     //根据id获取数据块
     public static BlockModel getBlockById(int block_id) throws SQLException {
         return db().table("rubber_block")
@@ -1487,5 +1455,49 @@ public class DbRubberApi {
                 tb.end();
             }
         }).select("block_id,tag,name,name_display").getList(new BlockModel());
+    }
+
+
+    //===========================
+    //request_log
+
+
+    //根据log_id获取请求记录
+    public static LogRequestModel getLogReqById(long log_id) throws SQLException {
+        return dbReq().table(WW.rubber_log_request)
+                .where("log_id = ?", log_id)
+                .select("*")
+                .getItem(new LogRequestModel());
+    }
+
+
+    //获取模型tag
+    public static List<ModelModel> getRequestTags() throws SQLException {
+        return dbReq().table(WW.rubber_log_request)
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .select("tag,count(*) counts")
+                .getList(new ModelModel());
+    }
+
+    //根据request_id获取model
+    public static List<LogRequestModel> getReuestList(int page, int pageSize, String key, CountModel count) throws SQLException {
+        int start = (page - 1) * pageSize;
+        DbTableQuery query = dbReq().table(WW.rubber_log_request)
+                .where("1=1")
+                .build(tb -> {
+                    if (!TextUtils.isEmpty(key)) {
+                        if (key.length() == 32) {
+                            tb.and("(request_id = ? OR args_json LIKE ?)", key, "%" + key + "%");
+                        } else {
+                            tb.and("(args_json LIKE ?)", "%" + key + "%");
+                        }
+                    }
+                });
+        count.setCount(query.count());
+        return query.orderBy("log_id DESC")
+                .limit(start, pageSize)
+                .select("*")
+                .getList(new LogRequestModel());
     }
 }

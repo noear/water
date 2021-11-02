@@ -3,6 +3,7 @@ package org.noear.rubber;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.DsCacheUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -21,20 +22,17 @@ final class RcConfig {
     }
 
 
-    private static DbContext _water_raas;
+    public static final DbContext water;
+    public static final DbContext water_paas;
+    public static final DbContext water_paas_request;
 
-    public static DbContext water_raas() {
-        if (_water_raas == null) {
-            _water_raas = cfg(WW.water_raas).getDb(true);
-        }
-
-        if (_water_raas == null) {
-            //如果没有 water_raas ，则以 water 库
-            _water_raas = cfg(WW.water).getDb(true);
-        }
-
-        return _water_raas;
+    static {
+        water = DsCacheUtils.getDb(cfg(WW.water).value, true);
+        water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
+        water_paas_request = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water_paas);
     }
+
+
 
     public static boolean is_debug = false;
 
