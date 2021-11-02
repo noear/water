@@ -61,7 +61,7 @@ public class Init2WaterRedisController {
         //更新配置
         DbWaterCfgApi.updConfig(WW.water, WW.water_redis, config);
         DbWaterCfgApi.updConfig(WW.water, WW.water_cache, cacheCfg);
-        DbWaterCfgApi.updConfig("water_bcf", "bcf.yml", cacheCfg);
+        DbWaterCfgApi.updConfig("water_bcf", "bcf.yml", bcfCfg.toString());
         DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "2");
 
         //2.
