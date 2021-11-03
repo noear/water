@@ -542,4 +542,92 @@ public class DbWaterCfgApi {
                 .delete();
     }
 
+
+    //获取 broker 表tag
+    public static List<TagCountsModel> getBrokerTags() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .selectList("tag,count(*) counts", TagCountsModel.class);
+    }
+
+    public static List<TagCountsModel> getBrokerNameTags() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .groupBy("broker")
+                .orderByAsc("broker")
+                .selectList("broker tag,count(*) counts", TagCountsModel.class);
+    }
+
+    //根据tag获取列表。
+    public static List<BrokerModel> getBrokersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+        return db().table("water_cfg_broker")
+                .where("tag = ?", tag_name)
+                .and("is_enabled = ?",is_enabled)
+                .build((tb)->{
+                    if(TextUtils.isEmpty(sort) == false){
+                        tb.orderBy(sort+" DESC");
+                    }else{
+                        tb.orderBy("broker ASC");
+                    }
+                })
+                .select("*")
+                .getList(BrokerModel.class);
+
+    }
+
+    //根据id获取 broker。
+    public static BrokerModel getBroker(Integer broker_id) throws Exception {
+        return db().table("water_cfg_broker")
+                .where("broker_id=?", broker_id)
+                .limit(1)
+                .select("*")
+                .getItem(BrokerModel.class);
+    }
+
+    //设置 broker。
+    public static boolean setBroker(Integer broker_id, String tag, String broker, String source, String note, int keep_days, int is_alarm) throws SQLException {
+        DbTableQuery db = db().table("water_cfg_broker")
+                .set("tag", tag)
+                .set("broker", broker)
+                .set("keep_days", keep_days)
+                .set("source", source)
+                .set("is_alarm", is_alarm)
+                .set("note", note);
+        if (broker_id > 0) {
+            boolean isOk = db.where("broker_id = ?", broker_id).update() > 0;
+
+
+            return isOk;
+        } else {
+            return db.set("is_enabled", 1).insert() > 0;
+        }
+    }
+
+    //设置启用状态
+    public static void setBrokerEnabled(int broker_id, int is_enabled) throws SQLException {
+        db().table("water_cfg_broker")
+                .where("broker_id = ?", broker_id)
+                .set("is_enabled", is_enabled)
+                .update();
+    }
+
+    public static void delBroker(Integer broker_id) throws SQLException {
+        if(broker_id == null){
+            return;
+        }
+
+        db().table("water_cfg_broker")
+                .where("broker_id = ?", broker_id)
+                .delete();
+    }
+
+
+    public static List<ConfigModel> getMsgStoreConfigs() throws SQLException {
+        return db().table("water_cfg_properties")
+                .whereEq("type", ConfigType.water_broker)
+                .orderBy("`tag`,`key`")
+                .select("*")
+                .getList(ConfigModel.class);
+    }
+
 }

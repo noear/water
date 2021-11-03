@@ -19,7 +19,7 @@ public class ConfigType {
     public static final int iaas_ram = 1003;
 
     public static final int water_logger = 1101;
-    public static final int water_queue = 1102;
+    public static final int water_broker = 1102;
 
     private static Map<Integer,String> _types = new HashMap<>();
     public static void loadTypes(boolean reset){

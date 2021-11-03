@@ -30,6 +30,8 @@
     <nav>
         <a href="/cfg/prop" class="sel" target="dock">属性配置</a>
         <a href="/cfg/whitelist" target="dock">安全名单</a>
+        <a href="/cfg/logger" target="dock">日志存储</a>
+        <a href="/cfg/broker" target="dock">消息管道</a>
     </nav>
 </header>
 <main>
