@@ -1,13 +1,21 @@
 package watersetup.dso;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
-import org.noear.weed.annotation.Db;
+import watersetup.models.water.WaterToolMonitorModel;
+import watersetup.models.water.WaterToolReportModel;
+import watersetup.models.water.WaterToolSynchronousModel;
+import watersetup.models.water_bcf.BcfConfigModel;
+import watersetup.models.water_bcf.BcfGroupModel;
+import watersetup.models.water_bcf.BcfResourceModel;
+import watersetup.models.water_bcf.BcfUserModel;
+import watersetup.models.water_cfg.BrokerModel;
+import watersetup.models.water_cfg.ConfigModel;
+import watersetup.models.water_cfg.LoggerModel;
+import watersetup.models.water_cfg.WhitelistModel;
+import watersetup.models.water_paas.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,26 +64,26 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByJsonSql(db, "water_cfg_broker", "water");
-        tryInitDataByJsonSql(db, "water_cfg_logger", "water");
-        tryInitDataByJsonSql(db, "water_cfg_properties", "water");
-        tryInitDataByJsonSql(db, "water_cfg_whitelist", "water");
+        tryInitDataByTypeJsonSql(db, BrokerModel.class, "water_cfg_broker", "water");
+        tryInitDataByTypeJsonSql(db, LoggerModel.class, "water_cfg_logger", "water");
+        tryInitDataByTypeJsonSql(db, ConfigModel.class, "water_cfg_properties", "water");
+        tryInitDataByTypeJsonSql(db, WhitelistModel.class, "water_cfg_whitelist", "water");
 
-        tryInitDataByJsonSql(db, "water_tool_monitor", "water");
-        tryInitDataByJsonSql(db, "water_tool_report", "water");
-        tryInitDataByJsonSql(db, "water_tool_synchronous", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolMonitorModel.class, "water_tool_monitor", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolReportModel.class, "water_tool_report", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolSynchronousModel.class, "water_tool_synchronous", "water");
     }
 
     public static void tryInitWaterBcf(DbContext db) throws Exception {
         String sql = Utils.getResourceAsString("db/water_bcf.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByJsonSql(db, "bcf_config", "water_bcf");
-        tryInitDataByJsonSql(db, "bcf_group", "water_bcf");
-        tryInitDataByJsonSql(db, "bcf_resource", "water_bcf");
+        tryInitDataByTypeJsonSql(db, BcfConfigModel.class,"bcf_config", "water_bcf");
+        tryInitDataByTypeJsonSql(db, BcfGroupModel.class,"bcf_group", "water_bcf");
+        tryInitDataByTypeJsonSql(db, BcfResourceModel.class,"bcf_resource", "water_bcf");
         tryInitDataByJsonSql(db, "bcf_resource_linked", "water_bcf");
 
-        tryInitDataByJsonSql(db, "bcf_user", "water_bcf");
+        tryInitDataByTypeJsonSql(db, BcfUserModel.class,"bcf_user", "water_bcf");
         tryInitDataByJsonSql(db, "bcf_user_linked", "water_bcf");
     }
 
@@ -83,17 +91,17 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water_paas.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByJsonSql(db, "paas_file", "water_paas");
+        tryInitDataByTypeJsonSql(db, PaasFileModel.class, "paas_file", "water_paas");
 
-        tryInitDataByJsonSql(db, "rubber_actor", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_block", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberActorModel.class, "rubber_actor", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberBlockModel.class, "rubber_block", "water_paas");
 
-        tryInitDataByJsonSql(db, "rubber_model", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_model_field", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_scheme", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_scheme_node", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_scheme_node_design", "water_paas");
-        tryInitDataByJsonSql(db, "rubber_scheme_rule", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberModelModel.class, "rubber_model", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberModelFieldModel.class, "rubber_model_field", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeModel.class, "rubber_scheme", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeNodeModel.class, "rubber_scheme_node", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeNodeDesignModel.class, "rubber_scheme_node_design", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeRuleModel.class, "rubber_scheme_rule", "water_paas");
     }
 
 
@@ -117,14 +125,31 @@ public class InitUtils {
         String json = Utils.getResourceAsString(fileName);
 
 
-        JSONArray array = JSON.parseArray(json);
+        ONode array = ONode.loadStr(json);
         List<DataItem> dataItems = new ArrayList<>();
-        for (Object n1 : array) {
-            dataItems.add(new DataItem().setMap((Map<String, Object>) n1));
+        for (ONode n1 : array.ary()) {
+            dataItems.add(new DataItem().setMap(n1.toObject(Map.class)));
         }
 
         if (dataItems.size() > 0) {
             db.table(table).insertList(dataItems);
+        }
+    }
+
+    private static <T> void tryInitDataByTypeJsonSql(DbContext db, Class<T> clz, String table, String schema) throws Exception {
+        String fileName = "db/init/" + schema + "_" + table + ".json";
+        System.out.println(">>>>>>>>>>>>>>>>>>>>: " + fileName);
+
+        String json = Utils.getResourceAsString(fileName);
+
+        ONode array = ONode.loadStr(json);
+        List<T> dataItems = new ArrayList<>();
+        for (ONode n1 : array.ary()) {
+            dataItems.add(n1.toObject(clz));
+        }
+
+        if (dataItems.size() > 0) {
+            db.mapperBase(clz).insertList(dataItems);
         }
     }
 }

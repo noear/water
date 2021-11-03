@@ -8,40 +8,36 @@ import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
+import org.noear.weed.annotation.PrimaryKey;
+import org.noear.weed.annotation.Table;
 import watersetup.dso.ConfigType;
 
+import java.util.Date;
 import java.util.Properties;
 
+@Table("water_cfg_properties")
 @Getter
-public class ConfigModel implements IBinder {
-    public transient int row_id;
+public class ConfigModel  {
+    /**  */
+    @PrimaryKey
+    public int row_id;
+    /** 分组标签 */
     public String tag;
+    /** 属性key */
     public String key;
+    /** 类型：0:未知，1:数据库；2:Redis；3:MangoDb；4:Memcached */
     public int type;
+    /** 属性值 */
     public String value;
+    /**  */
     public String edit_mode;
-    public transient int is_enabled;
+    /** 是否可编辑 */
+    public boolean is_editable;
+    /** 是否启用 */
+    public int is_enabled;
+    /** 更新时间 */
+    public Date update_fulltime;
 
-
-    @Override
-    public void bind(GetHandlerEx s) {
-        row_id = s.get("row_id").value(0);
-        tag = s.get("tag").value("");
-        key = s.get("key").value("");
-        type = s.get("type").value(0);
-        value = s.get("value").value("");
-        edit_mode = s.get("edit_mode").value("");
-        is_enabled = s.get("is_enabled").value(0);
-
-        if (value.startsWith(WW.cfg_data_header)) {
-            value = Base64Utils.decode(value.substring(8));
-        }
-    }
-
-    @Override
-    public IBinder clone() {
-        return new ConfigModel();
-    }
 
     public String type_str() {
         return ConfigType.getTitle(type);
