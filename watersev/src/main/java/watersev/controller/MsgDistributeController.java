@@ -293,6 +293,7 @@ public final class MsgDistributeController implements IJob {
         String receive_url = dist.receive_url;
 
         if(receive_url.startsWith("@")){
+            //说明是集群订阅模式
             String service = receive_url.substring(1);
             receive_url = LoadBalance.get(service).getServer() + "/msg/receive";
         }
