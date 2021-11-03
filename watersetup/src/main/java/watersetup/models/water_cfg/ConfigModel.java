@@ -17,7 +17,7 @@ import java.util.Properties;
 
 @Table("water_cfg_properties")
 @Getter
-public class ConfigModel  {
+public class ConfigModel  implements IBinder{
     /**  */
     @PrimaryKey
     public int row_id;
@@ -37,6 +37,29 @@ public class ConfigModel  {
     public int is_enabled;
     /** 更新时间 */
     public Date update_fulltime;
+
+
+    @Override
+    public void bind(GetHandlerEx s) {
+        row_id = s.get("row_id").value(0);
+        tag = s.get("tag").value("");
+        key = s.get("key").value("");
+        type = s.get("type").value(0);
+        value = s.get("value").value("");
+        edit_mode = s.get("edit_mode").value("");
+        is_editable = s.get("is_editable").value(false);
+        is_enabled = s.get("is_enabled").value(0);
+
+        if (value.startsWith(WW.cfg_data_header)) {
+            value = Base64Utils.decode(value.substring(8));
+        }
+        update_fulltime = s.get("update_fulltime").value(null);
+    }
+
+    @Override
+    public IBinder clone() {
+        return new ConfigModel();
+    }
 
 
     public String type_str() {
