@@ -54,19 +54,8 @@ ALTER TABLE `water_msg_topic`
 
 -- 2021.11.01
 ALTER TABLE `water_msg_message`
-    MODIFY COLUMN `topic_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `topic_id`;
-
-ALTER TABLE `water_msg_message`
-DROP COLUMN `topic_id`,
-DROP INDEX `IX_topic`;
+    MODIFY COLUMN `topic_id` int NULL DEFAULT 0 COMMENT '主题ID' AFTER `tags`;
 
 ALTER TABLE `water_msg_message_all`
-DROP COLUMN `topic_id`,
-DROP INDEX `IX_topic`;
-
-ALTER TABLE `water_msg_message_ex_stat`
-DROP COLUMN `topic_id`,
-ADD COLUMN `topic_name` varchar(40) NULL AFTER `row_id`,
-DROP INDEX `IX_topic_id`,
-ADD INDEX `IX_topic_name`(`topic_name`);
+    MODIFY COLUMN `topic_id` int NULL DEFAULT 0 COMMENT '主题ID' AFTER `tags`;
 
