@@ -1,5 +1,7 @@
 server.port: 19371
 
+file.encoding: "utf-8"
+
 solon.app:
   name: "watersetup"
   group: "water"

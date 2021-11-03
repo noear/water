@@ -14,7 +14,7 @@ public class PaasFileModel {
     @PrimaryKey
     public int file_id;
     /** 文件类型(0:api, 1:pln, 2:tml) */
-    public int file_type;
+    public Integer file_type;
     /** 分组村签 */
     public String tag;
     /** 标记 */
@@ -22,15 +22,15 @@ public class PaasFileModel {
     /** 文件路径 */
     public String path;
     /** 排列（小的排前） */
-    public int rank;
+    public Integer rank;
     /** 是否静态 */
-    public boolean is_staticize;
+    public Boolean is_staticize;
     /** 是否可编辑 */
-    public boolean is_editable;
+    public Boolean is_editable;
     /** 是否禁用 */
-    public boolean is_disabled;
+    public Boolean is_disabled;
     /** 排除导入 */
-    public boolean is_exclude;
+    public Boolean is_exclude;
     /** 连接到 */
     public String link_to;
     /** 编辑模式 */
@@ -42,21 +42,21 @@ public class PaasFileModel {
     /** 备注 */
     public String note;
     /** 计划状态 */
-    public int plan_state;
+    public Integer plan_state;
     /** 计划开始执行时间 */
-    public long plan_begin_time;
+    public Long plan_begin_time;
     /** 计划最后执行时间 */
-    public long plan_last_time;
+    public Long plan_last_time;
     /** 计划最后执行时间长度 */
-    public long plan_last_timespan;
+    public Long plan_last_timespan;
     /** 计划下次执行时间戳 */
-    public long plan_next_time;
+    public Long plan_next_time;
     /** 计划执行间隔 */
     public String plan_interval;
     /** 计划执行最多次数 */
-    public int plan_max;
+    public Integer plan_max;
     /** 计划执行累计次数 */
-    public int plan_count;
+    public Integer plan_count;
     /** 创建时间 */
     public Date create_fulltime;
     /** 更新时间 */
