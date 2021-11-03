@@ -31,6 +31,10 @@ CREATE TABLE `water_cfg_broker` (
   KEY `IX_tag` (`tag`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-消息协调器表';
 
+
+INSERT INTO `water_cfg_broker` VALUES (1, 'water', 'default', 0, 0, 0, 0, 0, 0, 0, 3, '', NULL, 1, 0, '2021-11-02 07:25:32');
+
+
 -- 2021-11-03
 ALTER TABLE `water_cfg_logger`
     ADD UNIQUE INDEX `UX_logger`(`logger`) USING BTREE;

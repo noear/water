@@ -72,7 +72,7 @@ public class LoggerController extends BaseController {
             option_sources.add(config.tag + "/" + config.key);
         }
 
-        if (logger.logger_id == 0) {
+        if (logger.logger_id == null) {
             logger.keep_days = 15;
         } else {
             tag_name = logger.tag;
