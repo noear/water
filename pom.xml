@@ -27,6 +27,6 @@
         <module>waterpaas</module>
         <module>waterraas</module>
 
-        <module>watersetup</module>
+        <module>wateraide</module>
     </modules>
 </project>
