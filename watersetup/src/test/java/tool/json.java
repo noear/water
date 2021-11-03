@@ -1,27 +1,13 @@
 package tool;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
 import org.noear.solon.test.SolonJUnit4ClassRunner;
 import org.noear.weed.DbContext;
-import org.noear.weed.SelectQ;
 import watersetup.Config;
-import watersetup.models.water.WaterToolMonitorModel;
-import watersetup.models.water.WaterToolReportModel;
-import watersetup.models.water.WaterToolSynchronousModel;
-import watersetup.models.water_bcf.BcfConfigModel;
-import watersetup.models.water_bcf.BcfGroupModel;
-import watersetup.models.water_bcf.BcfResourceModel;
-import watersetup.models.water_bcf.BcfUserModel;
-import watersetup.models.water_cfg.BrokerModel;
-import watersetup.models.water_cfg.ConfigModel;
-import watersetup.models.water_cfg.LoggerModel;
-import watersetup.models.water_cfg.WhitelistModel;
-import watersetup.models.water_paas.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -34,9 +20,9 @@ import java.util.Map;
 /**
  * @author noear 2021/11/3 created
  */
-@RunWith(SolonJUnit4ClassRunner.class)
+//@RunWith(SolonJUnit4ClassRunner.class)
 public class json {
-    @Test
+//    @Test
     public void buildJosn() throws Exception {
         Props waterProp = Solon.cfg().getProp("water.ds");
         //Props waterBcfProp = Solon.cfg().getProp("water.ds");
