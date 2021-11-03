@@ -134,7 +134,6 @@
         <tr>
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
             <td width="220px" class="left">key</td>
-            <td width="110px" class="left">type</td>
             <td class="left">value</td>
             <#if is_admin == 1>
                 <td width="50px">操作</td>
@@ -145,8 +144,11 @@
         <#list list as cfg>
             <tr>
                 <td><checkbox><label><input type="checkbox" name="sel_id" value="${cfg.row_id}" /><a></a></label></checkbox></td>
-                <td class="left">${cfg.key!}</td>
-                <td class="left">${cfg.type_str()}</td>
+                <td class="left">${cfg.key!}
+                    <#if cfg.type != 0>
+                        <n-l>::${cfg.type_str()}</n-l>
+                    </#if>
+                </td>
                 <td class="left break">${cfg.value_html()!}</td>
                 <#if is_admin == 1>
                     <td class="op"><a href="/cfg/prop/edit?row_id=${cfg.row_id}" class="t2">编辑</a></td>
