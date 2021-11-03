@@ -35,7 +35,12 @@ public class BrokerController extends BaseController {
             ConfigM msgCfg = Config.getCfg(WW.water, WW.water_msg_store);
 
             if (msgCfg != null) {
-                ProtocolHub.msgBrokerFactory =new MsgBrokerFactoryImpl(msgCfg, Config.cache, DbWaterCfgApi::getBroker);
+                try {
+                    ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(msgCfg, Config.cache, DbWaterCfgApi::getBroker);
+                } catch (Exception e) {
+                    ProtocolHub.msgBrokerFactory = null;
+                    throw e;
+                }
             }
         }
     }

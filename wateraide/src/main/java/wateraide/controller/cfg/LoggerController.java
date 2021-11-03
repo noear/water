@@ -33,7 +33,12 @@ public class LoggerController extends BaseController {
             ConfigM logCfg = Config.getCfg(WW.water, WW.water_log_store);
 
             if (logCfg != null) {
-                ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+                try {
+                    ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+                } catch (Exception e) {
+                    ProtocolHub.logSourceFactory = null;
+                    throw e;
+                }
             }
         }
     }

@@ -26,13 +26,18 @@ import java.util.List;
 @Mapping("/log/")
 public class LogController extends BaseController {
 
-    private void tryInit() {
+    private void tryInit() throws Exception {
         if (ProtocolHub.logSourceFactory == null) {
             ProtocolHub.config = Config::getCfg;
-            ConfigM logCfg = Config.getCfg(WW.water,  WW.water_log_store);
+            ConfigM logCfg = Config.getCfg(WW.water, WW.water_log_store);
 
             if (logCfg != null) {
-                ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+                try {
+                    ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+                } catch (Exception e) {
+                    ProtocolHub.logSourceFactory = null;
+                    throw e;
+                }
             }
         }
     }
