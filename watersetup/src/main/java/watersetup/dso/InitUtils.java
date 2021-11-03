@@ -4,9 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
-import watersetup.models.water.WaterToolMonitorModel;
-import watersetup.models.water.WaterToolReportModel;
-import watersetup.models.water.WaterToolSynchronousModel;
+import watersetup.models.water.*;
 import watersetup.models.water_bcf.BcfConfigModel;
 import watersetup.models.water_bcf.BcfGroupModel;
 import watersetup.models.water_bcf.BcfResourceModel;
@@ -64,10 +62,10 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, BrokerModel.class, "water_cfg_broker", "water");
-        tryInitDataByTypeJsonSql(db, LoggerModel.class, "water_cfg_logger", "water");
-        tryInitDataByTypeJsonSql(db, ConfigModel.class, "water_cfg_properties", "water");
-        tryInitDataByTypeJsonSql(db, WhitelistModel.class, "water_cfg_whitelist", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgBrokerModel.class, "water_cfg_broker", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgLoggerModel.class, "water_cfg_logger", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgPropertiesModel.class, "water_cfg_properties", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgWhitelistModel.class, "water_cfg_whitelist", "water");
 
         tryInitDataByTypeJsonSql(db, WaterToolMonitorModel.class, "water_tool_monitor", "water");
         tryInitDataByTypeJsonSql(db, WaterToolReportModel.class, "water_tool_report", "water");
