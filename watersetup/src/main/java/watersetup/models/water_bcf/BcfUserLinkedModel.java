@@ -8,11 +8,11 @@ import org.noear.weed.annotation.Table;
 @Table("bcf_user_linked")
 public class BcfUserLinkedModel {
     /** 内部用户ID */
-    public int puid;
+    public Integer puid;
     /** 连接对象 */
-    public int lk_objt;
+    public Integer lk_objt;
     /** 连接对象ID */
-    public int lk_objt_id;
+    public Integer lk_objt_id;
     /** 连接操作符（+,-） */
     public String lk_operate;
 

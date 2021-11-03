@@ -8,13 +8,13 @@ import org.noear.weed.annotation.Table;
 @Table("bcf_resource_linked")
 public class BcfResourceLinkedModel {
     /** 资源ID */
-    public int rsid;
+    public Integer rsid;
     /** 连接对象 */
-    public int lk_objt;
+    public Integer lk_objt;
     /** 连接对象ID */
-    public int lk_objt_id;
+    public Integer lk_objt_id;
     /** 连操操作符(+,-) */
     public String lk_operate;
     /** 操作表达式(预留) */
-    public int p_express;
+    public Integer p_express;
 }

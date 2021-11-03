@@ -12,11 +12,11 @@ import java.util.Date;
 public class BcfGroupModel {
     /** 组ID */
     @PrimaryKey
-    public int pgid;
+    public Integer pgid;
     /** 组的父节点ID */
-    public int p_pgid;
+    public Integer p_pgid;
     /** 组的根节点ID */
-    public int r_pgid;
+    public Integer r_pgid;
     /** 组的手工编码 */
     public String pg_code;
     /** 中文名称 */
@@ -26,17 +26,17 @@ public class BcfGroupModel {
     /** 连接地址 */
     public String uri_path;
     /** 级别 */
-    public int in_level;
+    public Integer in_level;
     /** 是否为支线 */
-    public boolean is_branch;
+    public Boolean is_branch;
     /** 标签 */
     public String tags;
     /** 排序 */
-    public int order_index;
+    public Integer order_index;
     /** 是否禁用 */
-    public boolean is_disabled;
+    public Boolean is_disabled;
     /** 是否显示 */
-    public boolean is_visibled;
+    public Boolean is_visibled;
     /** 创建时间 */
     public Date create_time;
     /** 更新时间 */

@@ -13,35 +13,35 @@ import java.util.Date;
 public class BrokerModel implements BrokerMeta {
     /** 协调器ID */
     @PrimaryKey
-    public int broker_id;
+    public Integer broker_id;
     /** 分组标签 */
     public String tag;
     /** 协调器 */
     public String broker;
     /** 累积行数 */
-    public long row_num;
+    public Long row_num;
     /** 今日行数 */
-    public long row_num_today;
+    public Long row_num_today;
     /** 今日错误行数 */
-    public long row_num_today_error;
+    public Long row_num_today_error;
     /** 昨天行数 */
-    public long row_num_yesterday;
+    public Long row_num_yesterday;
     /** 昨天错误行数 */
-    public long row_num_yesterday_error;
+    public Long row_num_yesterday_error;
     /** 前天行数 */
-    public long row_num_beforeday;
+    public Long row_num_beforeday;
     /** 前天错误行数 */
-    public long row_num_beforeday_error;
+    public Long row_num_beforeday_error;
     /** 保留天数 */
-    public int keep_days;
+    public Integer keep_days;
     /** 数据源 */
     public String source;
     /** 备注 */
     public String note;
     /** 是否启用 */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 是否报警 */
-    public int is_alarm;
+    public Integer is_alarm;
     /** 更新时间 */
     public Date update_fulltime;
 

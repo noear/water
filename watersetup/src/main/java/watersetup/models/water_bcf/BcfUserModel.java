@@ -12,13 +12,13 @@ import java.util.Date;
 public class BcfUserModel {
     /** 内部用户ID */
     @PrimaryKey
-    public int puid;
+    public Integer puid;
     /** 用户账号 */
     public String user_id;
     /** 外部关系对象 */
-    public int out_objt;
+    public Integer out_objt;
     /** 外部关系对象ID */
-    public long out_objt_id;
+    public Long out_objt_id;
     /** 中文名称 */
     public String cn_name;
     /** 英文名称 */
@@ -32,9 +32,9 @@ public class BcfUserModel {
     /** 备注 */
     public String note;
     /** 是否禁用 */
-    public boolean is_disabled;
+    public Boolean is_disabled;
     /** 是否可见 */
-    public boolean is_visibled;
+    public Boolean is_visibled;
     /** 创建时间 */
     public Date create_time;
     /** 最后更新时间 */
@@ -42,6 +42,6 @@ public class BcfUserModel {
     /** 账号密码 */
     public String pass_wd;
     /** 状态（预留） */
-    public int state;
+    public Integer state;
 
 }

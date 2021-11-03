@@ -8,9 +8,9 @@ import org.noear.weed.annotation.Table;
 @Table("bcf_opsx")
 public class BcfOpsxModel {
     /** 连接对象 */
-    public int lk_objt;
+    public Integer lk_objt;
     /** 连接对象ID */
-    public int lk_objt_id;
+    public Integer lk_objt_id;
     /** 标签 */
     public String tags;
     /** JSON值  */
