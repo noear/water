@@ -11,7 +11,9 @@ import org.noear.water.utils.ext.Fun1;
 import org.noear.weed.cache.ICacheServiceEx;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +26,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
     ICacheServiceEx _cache;
     Fun1<String, BrokerMeta> _brokerGetter;
     private Map<String, BrokerEntity> _brokerMap = new HashMap<>();
+    private List<BrokerEntity> _brokerAry = new ArrayList<>();
 
     public MsgBrokerFactoryImpl(ConfigM def, ICacheServiceEx cache, Fun1<String, BrokerMeta> brokerGetter) {
         _def = new BrokerEntity(new MsgBrokerImpl(def, cache), def);
@@ -80,10 +83,30 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
         }
     }
 
+    int brokerIndex;
+
     @Override
     public MsgBroker getBroker(String broker) {
         if (TextUtils.isEmpty(broker)) {
             return _def.source;
+        }
+
+        if("*".equals(broker)) {
+            //
+            // * 表示自动负载均衡
+            //
+            int size = _brokerAry.size();
+            if (size > 0) {
+                if (brokerIndex > 9999999) {
+                    brokerIndex = 0;
+                } else {
+                    brokerIndex++;
+                }
+
+                return _brokerAry.get(brokerIndex % size).source;
+            } else {
+                return _def.source;
+            }
         }
 
         BrokerEntity entity = _brokerMap.get(broker);
@@ -106,6 +129,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
                 }
 
                 _brokerMap.put(broker, entity);
+                _brokerAry.add(entity);
             }
         }
 

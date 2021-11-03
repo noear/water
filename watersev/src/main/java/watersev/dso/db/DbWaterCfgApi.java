@@ -3,7 +3,7 @@ package watersev.dso.db;
 import org.noear.water.model.TagCountsM;
 import org.noear.weed.DbContext;
 import watersev.Config;
-import watersev.models.water_cfg.BrokerModel;
+import watersev.models.water_cfg.BrokerVo;
 import watersev.models.water_cfg.LoggerModel;
 
 import java.sql.SQLException;
@@ -61,24 +61,21 @@ public class DbWaterCfgApi {
         }
     }
 
-    public static BrokerModel getBroker(String broker) {
+    public static BrokerVo getBroker(String broker) {
         try {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
                     .select("*")
-                    .getItem(BrokerModel.class);
+                    .getItem(BrokerVo.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
-
-    public static List<TagCountsM> getBrokerNameTags() throws Exception {
+    public static List<BrokerVo> getBrokerList() throws Exception {
         return db().table("water_cfg_broker").whereEq("is_enabled", 1)
-                .groupBy("broker")
-                .orderByAsc("broker")
                 .caching(Config.cache_data)
                 .usingCache(10)
-                .selectList("broker tag,count(*) counts", TagCountsM.class);
+                .selectList("*", BrokerVo.class);
     }
 }

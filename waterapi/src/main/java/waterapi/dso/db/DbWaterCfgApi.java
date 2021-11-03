@@ -1,11 +1,12 @@
 package waterapi.dso.db;
 
 import org.noear.water.model.ConfigM;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
-import waterapi.models.BrokerModel;
+import waterapi.models.BrokerVo;
 import waterapi.models.ConfigModel;
 import waterapi.models.LoggerModel;
 
@@ -197,16 +198,23 @@ public class DbWaterCfgApi {
         }
     }
 
-    public static BrokerModel getBroker(String broker) {
+    public static BrokerVo getBroker(String broker) {
         try {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
                     .select("*")
-                    .getItem(BrokerModel.class);
+                    .getItem(BrokerVo.class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
         }
+    }
+
+    public static List<BrokerVo> getBrokerList() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .caching(CacheUtils.data)
+                .usingCache(10)
+                .selectList("*", BrokerVo.class);
     }
 
     public static boolean hasGateway(String name) {

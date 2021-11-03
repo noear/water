@@ -9,7 +9,6 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
@@ -24,6 +23,7 @@ import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
 import watersev.models.water_cfg.BrokerHolder;
+import watersev.models.water_cfg.BrokerVo;
 
 import java.io.IOException;
 import java.util.*;
@@ -58,18 +58,18 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        List<TagCountsM> list = DbWaterCfgApi.getBrokerNameTags();
+        List<BrokerVo> list = DbWaterCfgApi.getBrokerList();
 
-        for (TagCountsM broker : list) {
-            BrokerHolder brokerHolder = brokerHolderMap.get(broker.tag);
+        for (BrokerVo brokerVo : list) {
+            BrokerHolder brokerHolder = brokerHolderMap.get(brokerVo.broker);
 
             if (brokerHolder == null) {
                 //如果是第一次
-                brokerHolder = new BrokerHolder(ProtocolHub.getMsgBroker(broker.tag));
+                brokerHolder = new BrokerHolder(ProtocolHub.getMsgBroker(brokerVo.broker));
                 if (brokerHolder.msgBroker == null) {
                     continue;
                 } else {
-                    brokerHolderMap.put(broker.tag, brokerHolder);
+                    brokerHolderMap.put(brokerVo.broker, brokerHolder);
                 }
             } else {
                 //如果之前有，检检是否已停?
