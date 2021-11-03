@@ -90,7 +90,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">配置 Water Log Service (4/5)</h2>
+            <h2 class="ln30">配置 Water Log Service Store (4/5)</h2>
         </blockquote>
         <detail>
             <form>
