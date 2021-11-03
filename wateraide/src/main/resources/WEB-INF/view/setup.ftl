@@ -32,6 +32,7 @@
         <a href="/cfg/whitelist" target="dock">安全名单</a>
         <a href="/cfg/logger" target="dock">日志存储</a>
         <a href="/cfg/broker" target="dock">消息管道</a>
+        <a href="/log/query" target="dock">日志查询</a>
     </nav>
 </header>
 <main>

@@ -25,7 +25,7 @@ public class HomeController extends BaseController {
         if (Config.water == null) {
             String config = rdb_water_tml;
             String token = ctx.cookie("TOKEN");
-            if(Utils.isNotEmpty(token)){
+            if (Utils.isNotEmpty(token)) {
                 config = Base64Utils.decode(token);
             }
 
@@ -81,7 +81,6 @@ public class HomeController extends BaseController {
                 return view("setup_init5_msg");
             }
         }
-
 
         return view("setup");
     }
