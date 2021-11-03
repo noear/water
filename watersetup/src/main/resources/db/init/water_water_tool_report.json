@@ -1,11 +1,1 @@
-[
-  {
-    "row_id": 1,
-    "tag": "_demo",
-    "name": "water_cfg_logger",
-    "args": "",
-    "code": "--water/water::\nselect * from water_cfg_logger limit 10",
-    "note": "",
-    "create_fulltime": "2021-01-07 17:23:02"
-  }
-]
+[{"row_id":1,"tag":"_demo","name":"water_cfg_logger","args":"","code":"--water/water::\nselect * from water_cfg_logger limit 10","note":"","create_fulltime":1610011382000}]

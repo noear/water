@@ -1,13 +1,1 @@
-[
-  {
-    "model_id": 26,
-    "tag": "water",
-    "name": "water_monitor_ecs",
-    "name_display": "监控模型",
-    "related_db": "",
-    "field_count": 6,
-    "init_expr": "return water.db('water/water')\n     .table(\"water_ops_server_track_ecs\")\n     .whereEq(\"iaas_key\",this.iaas_key())\n     .selectMap(\"*\");",
-    "debug_args": "{iaas_key:'i-23adt35wk'}",
-    "last_updatetime": "2021-04-07 12:58:10"
-  }
-]
+[{"model_id":26,"tag":"water","name":"water_monitor_ecs","name_display":"监控模型","related_db":"","field_count":6,"init_expr":"return water.db('water/water')\n     .table(\"water_ops_server_track_ecs\")\n     .whereEq(\"iaas_key\",this.iaas_key())\n     .selectMap(\"*\");","debug_args":"{iaas_key:'i-23adt35wk'}","last_updatetime":1617771490000}]

@@ -1,18 +1,1 @@
-[
-  {
-    "sync_id": 1,
-    "tag": "_demo",
-    "key": "530d056e4018471fa5292065dbc549e2",
-    "name": "同步APPX表",
-    "type": 0,
-    "interval": 100,
-    "target": "_demo/test::appx",
-    "target_pk": "app_id",
-    "source_model": "--_demo/rock::\nselect * from `appx` where app_id>@key order by app_id asc",
-    "task_tag": 0,
-    "alarm_mobile": "",
-    "alarm_sign": null,
-    "is_enabled": 0,
-    "last_fulltime": "2020-05-27 15:44:26"
-  }
-]
+[{"sync_id":1,"tag":"_demo","key":"530d056e4018471fa5292065dbc549e2","name":"同步APPX表","type":0,"interval":100,"target":"_demo/test::appx","target_pk":"app_id","source_model":"--_demo/rock::\nselect * from `appx` where app_id>@key order by app_id asc","task_tag":0,"alarm_mobile":"","alarm_sign":null,"is_enabled":0,"last_fulltime":1590565466000}]

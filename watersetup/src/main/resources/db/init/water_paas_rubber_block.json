@@ -1,16 +1,1 @@
-[
-  {
-    "block_id": 57,
-    "tag": "water",
-    "name": "code_agent_ip",
-    "name_display": "代理IP库",
-    "note": "",
-    "related_db": "water/water_redis",
-    "related_tb": "12",
-    "is_editable": 1,
-    "is_enabled": 1,
-    "struct": "{ip:'ip*'}",
-    "app_expr": "if(!x){\n  throw new Error('参数不能为空');\n}\n\nvar bkey = this.block_key;\nreturn this.$().open1(function(rs){\n   return rs.key(bkey).hashHas(x);\n});",
-    "last_updatetime": "2021-04-05 16:18:38"
-  }
-]
+[{"block_id":57,"tag":"water","name":"code_agent_ip","name_display":"代理IP库","note":"","related_db":"water/water_redis","related_tb":"12","is_editable":1,"is_enabled":1,"struct":"{ip:'ip*'}","app_expr":"if(!x){\n  throw new Error('参数不能为空');\n}\n\nvar bkey = this.block_key;\nreturn this.$().open1(function(rs){\n   return rs.key(bkey).hashHas(x);\n});","last_updatetime":1617610718000}]
