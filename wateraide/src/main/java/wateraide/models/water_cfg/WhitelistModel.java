@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 public class WhitelistModel {
     @PrimaryKey
-    public Integer row_id;
+    public int row_id;
     /** 分组标签 */
     public String tag;
     /** 名单类型 */
@@ -20,7 +20,7 @@ public class WhitelistModel {
     /** 备注 */
     public String note;
     /** 是否启用 */
-    public Integer is_enabled;
+    public int is_enabled;
     /** 更新时间 */
     public Date update_fulltime;
 }
