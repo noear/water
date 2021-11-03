@@ -11,6 +11,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import wateraide.Config;
 import wateraide.controller.BaseController;
+import wateraide.dso.BcfTagChecker;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
@@ -48,6 +49,8 @@ public class LoggerController extends BaseController {
         tryInit();
 
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
+
+        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

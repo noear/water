@@ -46,8 +46,9 @@ public class LogController extends BaseController {
     public ModelAndView index(String tag_name, Context ctx) throws Exception {
         tryInit();
 
-
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
+
+        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

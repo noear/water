@@ -13,6 +13,7 @@ import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import org.noear.water.utils.CacheUtils;
 import wateraide.Config;
 import wateraide.controller.BaseController;
+import wateraide.dso.BcfTagChecker;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
@@ -51,6 +52,7 @@ public class BrokerController extends BaseController {
 
         List<TagCountsModel> tags = DbWaterCfgApi.getBrokerTags();
 
+        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 
