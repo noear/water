@@ -13,7 +13,7 @@ import java.util.Date;
 public class LoggerModel implements LoggerMeta {
     /** 日志器ID */
     @PrimaryKey
-    public Integer logger_id;
+    public int logger_id;
     /** 分组标签 */
     public String tag;
     /** 日志器 */

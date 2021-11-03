@@ -73,7 +73,7 @@ public class BrokerController extends BaseController {
             option_sources.add(config.tag + "/" + config.key);
         }
 
-        if (broker.broker_id == null) {
+        if (broker.broker_id == 0) {
             broker.keep_days = 15;
         } else {
             tag_name = broker.tag;

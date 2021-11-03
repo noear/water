@@ -13,7 +13,7 @@ import java.util.Date;
 public class BrokerModel implements BrokerMeta {
     /** 协调器ID */
     @PrimaryKey
-    public Integer broker_id;
+    public int broker_id;
     /** 分组标签 */
     public String tag;
     /** 协调器 */
