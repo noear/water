@@ -44,11 +44,11 @@ public class CMD_msg_subscribe extends UapiBase {
             throw UapiCodes.CODE_13("receive_url");
         }
 
-        if(Utils.isEmpty(receive_key)){
+        if (Utils.isEmpty(receive_key)) {
             receive_key = ctx.param("access_key");
         }
 
-        if(Utils.isEmpty(receive_key)){
+        if (Utils.isEmpty(receive_key)) {
             throw UapiCodes.CODE_13("receive_key");
         }
 
@@ -69,12 +69,13 @@ public class CMD_msg_subscribe extends UapiBase {
     }
 
     private boolean subscribeDo(String key, String note, String alarm_mobile, String topic, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws Exception {
-        if (receive_url.indexOf("://") < 0) { //如果不是url不能订阅
-            return false;
-        }
-
-        if (DbWaterMsgApi.addSubscriber(key, note, alarm_mobile, topic, receive_url, receive_key, receive_way, is_unstable) > 0) {
-            return true;
+        if (receive_url.contains("://") || receive_url.startsWith("@")) {
+            //如果不是url 或不是服务名 不能订阅
+            if (DbWaterMsgApi.addSubscriber(key, note, alarm_mobile, topic, receive_url, receive_key, receive_way, is_unstable) > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

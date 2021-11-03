@@ -292,7 +292,7 @@ public final class MsgDistributeController implements IJob {
 
         String receive_url = dist.receive_url;
 
-        if(receive_url.startsWith("*")){
+        if(receive_url.startsWith("@")){
             String service = receive_url.substring(1);
             receive_url = LoadBalance.get(service).getServer() + "/msg/receive";
         }
