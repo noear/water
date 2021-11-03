@@ -47,5 +47,13 @@ ALTER TABLE `water_msg_message_all`
 
 3. water_msg 的表 [water_msg_subscriber], [water_msg_topic] 复制到 water 库
 
+4. water 的表 [rubber_*] 复制到 water_paas 库
+5. water_log 的表 [rubber_*] 复制到 water_paas 库
+6. 删掉 water_log 的所有表（通过 wateradmin 创建）
+
+7. 更新 water 服务包，然后重新
+
+注：更新后，water 部份定时任务运失败；把那失败的任务删掉，导入 water_paasfile_pln_water_20211103.jsond 数据
+
 
 

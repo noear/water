@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS  `water_msg_message` (
   `dist_count` int(11) NOT NULL DEFAULT '0' COMMENT '派发累记次数',
   `dist_nexttime` bigint(20) NOT NULL DEFAULT '0' COMMENT '下次派发时间',
   `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期（yyyyMMdd）',
-  `log_fulltime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '记录时间',
+   `log_fulltime` timestamp NOT NULL COMMENT '记录时间',
   `last_date` int(11) NOT NULL DEFAULT '0',
   `last_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后变更时间',
   PRIMARY KEY (`msg_id`) USING BTREE,
