@@ -1,5 +1,8 @@
 package watersetup.dso;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.weed.DataItem;
@@ -113,11 +116,11 @@ public class InitUtils {
 
         String json = Utils.getResourceAsString(fileName);
 
-        ONode oNode = ONode.loadStr(json);
+
+        JSONArray array = JSON.parseArray(json);
         List<DataItem> dataItems = new ArrayList<>();
-        for (ONode n1 : oNode.ary()) {
-            Map<String, Object> map = n1.toObject(Map.class);
-            dataItems.add(new DataItem().setMap(map));
+        for (Object n1 : array) {
+            dataItems.add(new DataItem().setMap((Map<String, Object>) n1));
         }
 
         if (dataItems.size() > 0) {
