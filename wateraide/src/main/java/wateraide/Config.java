@@ -3,6 +3,8 @@ package wateraide;
 import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
 import org.noear.weed.DbContext;
+import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.weed.cache.LocalCache;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.water_cfg.ConfigModel;
 
@@ -17,6 +19,8 @@ public class Config {
         Utils.loadClass("com.mysql.jdbc.Driver");
         Utils.loadClass("com.mysql.cj.jdbc.Driver");
     }
+
+    public static final ICacheServiceEx cache = new LocalCache();
 
     public static final String water_setup_step = "water_setup_step";
 

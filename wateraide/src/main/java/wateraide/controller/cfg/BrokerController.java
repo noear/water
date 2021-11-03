@@ -5,7 +5,13 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Param;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.WW;
+import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogSourceFactoryImpl;
+import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
+import org.noear.water.utils.CacheUtils;
+import wateraide.Config;
 import wateraide.controller.BaseController;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
@@ -23,9 +29,21 @@ import java.util.List;
 @Controller
 @Mapping("/cfg/")
 public class BrokerController extends BaseController {
+    private void tryInit() {
+        if (ProtocolHub.msgBrokerFactory == null) {
+            ProtocolHub.config = Config::getCfg;
+            ConfigM msgCfg = Config.getCfg(WW.water, WW.water_msg_store);
+
+            if (msgCfg != null) {
+                ProtocolHub.msgBrokerFactory =new MsgBrokerFactoryImpl(msgCfg, Config.cache, DbWaterCfgApi::getBroker);
+            }
+        }
+    }
 
     @Mapping("broker")
     public ModelAndView broker(String tag_name) throws Exception {
+        tryInit();
+
         List<TagCountsModel> tags = DbWaterCfgApi.getBrokerTags();
 
 
@@ -38,6 +56,8 @@ public class BrokerController extends BaseController {
 
     @Mapping("broker/inner")
     public ModelAndView brokerInner(String tag_name, Integer _state) throws Exception {
+        tryInit();
+
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;

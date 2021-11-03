@@ -5,7 +5,11 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Param;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.WW;
+import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.solution.LogSourceFactoryImpl;
+import wateraide.Config;
 import wateraide.controller.BaseController;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
@@ -23,9 +27,21 @@ import java.util.List;
 @Controller
 @Mapping("/cfg/")
 public class LoggerController extends BaseController {
+    private void tryInit() {
+        if (ProtocolHub.logSourceFactory == null) {
+            ProtocolHub.config = Config::getCfg;
+            ConfigM logCfg = Config.getCfg(WW.water, WW.water_log_store);
+
+            if (logCfg != null) {
+                ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(logCfg, DbWaterCfgApi::getLogger);
+            }
+        }
+    }
 
     @Mapping("logger")
     public ModelAndView logger(String tag_name) throws Exception {
+        tryInit();
+
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
         tag_name = TagUtil.build(tag_name, tags);
@@ -37,6 +53,8 @@ public class LoggerController extends BaseController {
 
     @Mapping("logger/inner")
     public ModelAndView loggerInner(String tag_name, Integer _state) throws Exception {
+        tryInit();
+
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
