@@ -17,7 +17,7 @@
 运行 Water 助理服务（在本地或服务器上运行都可）
 
 ```properties
-java -Dfile.encoding=utf-8 -jar /data/sss/water/wateraide.jar
+java -Dfile.encoding=utf-8 -jar wateraide.jar
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
@@ -29,12 +29,12 @@ java -Dfile.encoding=utf-8 -jar /data/sss/water/wateraide.jar
 | server     | 添加所有会用到 water 服务的服务器的ip（一般是内网ip）     |
 | client     | 添加所有操作 water 后台的电脑的ip（一般是外网ip）     |
 
-* 完成操作后，关掉服务(有需要再启动，每次用完都关掉)  
+* 完成操作后，关掉服务(有需要再启动，每次用完都关掉)
 
 ## 三、开始部署服务
 
 #### 1、测试 waterapi 服务
-> `waterapi.jar` 和 `waterapi_ext/` 必须在一起
+> `waterapi.jar` 和 `waterapi_ext/` 必须在同一目录
 
 * 修改 `waterapi_ext/_db.properties` 的配置
 * 然后运行 `java -jar waterapi.jar`
@@ -42,12 +42,12 @@ java -Dfile.encoding=utf-8 -jar /data/sss/water/wateraide.jar
 
 #### 2、部署流程说明
 
-1. 启动 waterapi.jar 
-2. 配置 nginx，完成 `waterapi` 域的监听，并转发给 waterapi.jar（`waterapi` 默认使用了80端口，要需要反向代理）
+1. 启动 waterapi.jar
+2. [配置 nginx](#nginx)，完成 `waterapi` 域的监听，并转发给 waterapi.jar
 3. 然后给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
 4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
-### 四、部署方案参考（参考bin目录下的jar文件；建议配置成System Service进行控制）
+### 四、部署方案参考（建议配置成System Service进行控制）
 
 #### 1、 生产环境建议方案
 **服务器2台（2c4g）**
@@ -198,7 +198,7 @@ WantedBy=multi-user.target
 # systemctl stop waterapi     #停止服务
 ```
 
-* `waterapi` 域的nginx配置示例（注意真实的ip转发）
+* <a name="nginx"> `waterapi` 域的nginx配置示例（注意真实的ip转发）</a>
 
 ```ini
 upstream waterapi{

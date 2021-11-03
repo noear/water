@@ -47,7 +47,3 @@ services:
       - waterapi
     depends_on:
       - waterapi
-networks:
-  default:
-    external:
-      name: water-net
