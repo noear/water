@@ -12,7 +12,7 @@ import java.util.Date;
 public class PaasFileModel {
     /** 文件ID */
     @PrimaryKey
-    public int file_id;
+    public Integer file_id;
     /** 文件类型(0:api, 1:pln, 2:tml) */
     public Integer file_type;
     /** 分组村签 */

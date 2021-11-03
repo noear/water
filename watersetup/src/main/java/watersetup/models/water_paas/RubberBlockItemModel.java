@@ -12,9 +12,9 @@ import java.util.Date;
 public class RubberBlockItemModel {
     /**  */
     @PrimaryKey
-    public int item_id;
+    public Integer item_id;
     /**  */
-    public int block_id;
+    public Integer block_id;
     /**  */
     public String name;
     /**  */

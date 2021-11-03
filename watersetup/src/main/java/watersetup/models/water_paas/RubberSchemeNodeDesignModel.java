@@ -10,7 +10,7 @@ import org.noear.weed.annotation.Table;
 public class RubberSchemeNodeDesignModel {
     /**  */
     @PrimaryKey
-    public int scheme_id;
+    public Integer scheme_id;
     /**  */
     public String details;
 }

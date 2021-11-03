@@ -12,9 +12,9 @@ import java.util.Date;
 public class RubberModelFieldModel {
     /** 字段ID */
     @PrimaryKey
-    public int field_id;
+    public Integer field_id;
     /** 所属的模型ID */
-    public int model_id;
+    public Integer model_id;
     /** 字段名称 */
     public String name;
     /** 显示名 */
@@ -26,5 +26,5 @@ public class RubberModelFieldModel {
     /** 最后更新时间 */
     public Date last_updatetime;
     /** 是否是主键 */
-    public int is_pk;
+    public Integer is_pk;
 }

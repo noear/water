@@ -10,9 +10,10 @@ import java.util.Date;
  */
 @Table("paas_etl")
 public class PaasEtlModel {
+
     /**  */
     @PrimaryKey
-    public int etl_id;
+    public Integer etl_id;
     /** 分类标签 */
     public String tag;
     /** 任务名称 */

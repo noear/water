@@ -12,7 +12,7 @@ import java.util.Date;
 public class RubberActorModel {
     /** 参与ID */
     @PrimaryKey
-    public int actor_id;
+    public Integer actor_id;
     /** 分类标签 */
     public String tag;
     /** 参与者代号 */
@@ -23,5 +23,6 @@ public class RubberActorModel {
     public String note;
     /** 最后更新 */
     public Date last_updatetime;
+
 
 }
