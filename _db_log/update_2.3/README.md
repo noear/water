@@ -50,10 +50,31 @@ ALTER TABLE `water_msg_message_all`
 4. water 的表 [rubber_*] 复制到 water_paas 库
 5. water_log 的表 [rubber_*] 复制到 water_paas 库
 6. 删掉 water_log 的所有表（通过 wateradmin 创建）
+7. 删掉配置 water/water_msg, water/water_raas, water/water_log, water/water_msg_queue, water/water_log_level
+8. 修改配置 water/water_msg_store
 
-7. 更新 water 服务包，然后重新
+```properties
+#rdb,mongodb
+store.driverType=rdb
+store.schema=water_msg_store
+store.url=jdbc:mysql://mysql.water.io:3306/water_msg_store?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+store.password=KHe85E4MYdeLBHSR
+store.username=demo
+store.jdbcUrl=${store.url}
+#redis,local
+queue.driverType=redis
+queue.name=water_msg_queue_dev
+queue.server=redis.water.io:6379
+queue.password=L8vcQgep
+queue.db=3
+```
+
+
+9. 更新 water 服务包，然后重新
 
 注：更新后，water 部份定时任务运失败；把那失败的任务删掉，导入 water_paasfile_pln_water_20211103.jsond 数据
+
+
 
 
 
