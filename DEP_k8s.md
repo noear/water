@@ -21,9 +21,9 @@
 | water_msg | 消息库。存放主题、订阅关系以及消息（消息可通过配置存入mongodb） |
 | water_paas | FaaS代码库。即放存FaaS的函数代码 |
 
-### 二、进入安装工具初始化配置
+### 二、进入助理工具初始化配置
 
-#### 1、 运行安装工具： `java -jar wateradmin.jar -setup=1 -s=x -u=x -p=x`
+#### 1、 运行 Water 助理： `java -jar wateradmin.jar -setup=1 -s=x -u=x -p=x`
 
 * -s 为主库地址，格式 ip:port
 * -u 为链接账号
@@ -65,7 +65,7 @@
 
 #### 4、 进入 bin 目录 waterapi_ext/_db.properties 文件，修改 water 主库的链接配置
 
-> 尝试运行 `java -jar waterapi.jar` 进行测试。如果没有出错，则停掉安装工具。
+> 尝试运行 `java -jar waterapi.jar` 进行测试。如果没有出错，则停掉 Water 助理。
 
 ### 三、部署流程说明
 

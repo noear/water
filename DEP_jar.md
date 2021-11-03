@@ -1,11 +1,10 @@
-# Water 部署说明
+# Water jar 部署说明
 
 ## 请在完整的看完文档后，再开始动手!!!
 
-## 环境要求说明
+## 一、环境要求说明（请准备好）
 
 * mysql8：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
-* memcached：做为泛缓存使用
 * redis：做为分布式锁、数据临时队列用
 * mongodb：做为消息持久化用（也可以使用 mysql8）
 * jdk11：做为运行时用（一定要用JDK11）
@@ -13,51 +12,16 @@
 
 > 建议使用 centos7+ 部署；生产环境最少 4台服务器；开发环境1台即可。
 
-## 开始部署
+## 二、初始化环境
 
-### 一、初始化数据库（参考db目录下的sql文件）
+运行 Water 助理服务（在本地或服务器上运行都可）
 
-| 数据库 | 说明 |
-| -------- | -------- |
-| water | 主库 |
-| water_bcf | 账号与权限库 |
-| water_log | 日志库。包括特定日志和普通日志（普通日志，每个日志器可选择不同的存储） |
-| water_msg | 消息库。存放主题、订阅关系以及消息（消息可通过配置存入mongodb） |
-| water_paas | FaaS代码库。即放存FaaS的函数代码 |
+```properties
+java -Dfile.encoding=utf-8 -jar /data/sss/water/wateraide.jar
+```
 
-### 二、进入安装工具初始化配置
-
-#### 1、 运行安装工具： `java -jar wateradmin.jar -setup=1 -s=x -u=x -p=x` 
-
-* -s 为主库地址，格式 ip:port
-* -u 为链接账号
-* -p 为链接密码
-
-> 例：运行 `java -jar wateradmin.jar -server.port=9373 -setup=1 -s=localhost:3306 -u=root -p=1234` ； 然后，打开 http://localhost:9373 或打开对应的外网地址。
-
-#### 2、 进入属性配置模块，修改以下相关配置值：
-
-| 配置组 | 配置键 | 说明 |
-| -------- | -------- | -------- |
-| water     | water     | water 数据库的链接配置     |
-| | | |
-| water     | water_msg     | water_msg 数据库的链接配置     |
-| water     | water_msg_queue     | reids 链接配置，用作消息临时队列（建议独享实例）     |
-| water     | water_msg_store     | mongodb 或 mysql 链接配置，用作消息持久化（建议独享实例）     |
-| | | |
-| water     | water_log     | water_log 数据库的链接配置     |
-| water     | water_log_store     | water_log 数据库的链接配置（后期可以换成别的链接）     |
-| | | |
-| water     | water_redis     | reids 链接配置，用作分布式锁、ID生成     |
-| water     | water_cache     | memcached 链接配置，用作缓存     |
-| | | |
-| water     | water_paas     | water_paas 数据库的链接配置     |
-| | | |
-| water_bcf     | bcf.yml     | 修改掉 memcached 链接配置 和 water_bcf 数据库连接配置;同时修改server.session.state.domain为你的域名或服务器ip     |
-
-
-#### 3、 进入安全名单模块，添加相关ip名单：
-
+* 用浏览器打开界面：`http://locahost:19371`，按提示操作
+* 初始化完成后，进入 [安全名单] 添加相关服务器的ip
 
 | 名单列表 | 说明 |
 | -------- | -------- |
@@ -65,17 +29,22 @@
 | server     | 添加所有会用到 water 服务的服务器的ip（一般是内网ip）     |
 | client     | 添加所有操作 water 后台的电脑的ip（一般是外网ip）     |
 
+* 完成操作后，关掉服务(有需要再启动，每次用完都关掉)  
 
+## 三、开始部署服务
 
-#### 4、 进入 bin 目录 water_ini/_db.properties 文件，修改 water 主库的链接配置
+#### 1、测试 waterapi 服务
+> `waterapi.jar` 和 `waterapi_ext/` 必须在一起
 
-> 尝试运行 `java -jar waterapi.jar` 进行测试。如果没有出错，则停掉安装工具。
+* 修改 `waterapi_ext/_db.properties` 的配置
+* 然后运行 `java -jar waterapi.jar`
+* 如果出错，则检查相关配置。直到成功为止
 
-### 三、部署流程说明
+#### 2、部署流程说明
 
-1. 先启动 waterapi.jar
-2. 配置 nginx，完成 water 域的监听，并转发给 waterapi.jar（water 默认使用了80端口，所有需要反向代理）
-3. 然后给所有使用water服务的机器，添加 waterapi 和 waterapi.water host 记录（进 /etc/hosts 修改）
+1. 启动 waterapi.jar 
+2. 配置 nginx，完成 `waterapi` 域的监听，并转发给 waterapi.jar（`waterapi` 默认使用了80端口，要需要反向代理）
+3. 然后给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
 4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
 ### 四、部署方案参考（参考bin目录下的jar文件；建议配置成System Service进行控制）
@@ -170,11 +139,11 @@ java -jar watersev.jar --server.port=9372
 
 > 账号：admin 密码：bcf1234
 
-* 使用 nginx 为 waterapi 服务添加 waterapi 和 waterapi.water 域 80 端口监听支持
+* 使用 nginx 为 waterapi 服务添加 `waterapi` 域 80 端口监听支持
 
 > 建议生产环境仅限内网访问
 
-* 在使用 water 的服务器上，添加 waterapi 和 waterapi.water 域的 host 记录
+* 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
 
 ```yaml
 127.0.0.1 water #ip为waterapi服务的地址
@@ -183,7 +152,7 @@ java -jar watersev.jar --server.port=9372
 * 开发环境，且单机部署时，可以加这一批host记录
 
 ```yaml
-127.0.0.1 waterapi waterapi.water 
+127.0.0.1 waterapi 
 127.0.0.1 memcached.water.io memcached.dev.io 
 127.0.0.1 redis.water.io redis.dev.io
 127.0.0.1 mongo.dev.io
@@ -229,7 +198,7 @@ WantedBy=multi-user.target
 # systemctl stop waterapi     #停止服务
 ```
 
-* water域的nginx配置示例（注意真实的ip转发）
+* `waterapi` 域的nginx配置示例（注意真实的ip转发）
 
 ```ini
 upstream waterapi{
@@ -238,7 +207,7 @@ upstream waterapi{
 }
 server{
     listen 80;
-    server_name waterapi waterapi.water;
+    server_name waterapi;
     
     location / {
         proxy_pass http://waterapi;
