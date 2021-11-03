@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.noear</groupId>
+    <artifactId>wateraide</artifactId>
+    <version>2.3.0</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>Java project for water</description>
+
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>water-parent</artifactId>
+        <version>2.3.0</version>
+        <relativePath>../water-parent/pom.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <!-- Http 启动器 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.boot.jlhttp</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <!-- 静态文件支持组件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.extend.staticfiles</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <!-- Yaml配置支持组件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.extend.properties.yaml</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <!-- 本地SessionSate支持组件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.extend.sessionstate.local</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <!-- Json序列化支持组件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.serialization.snack3</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <!-- freemarker模板支持组件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.view.freemarker</artifactId>
+            <version>${solon.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>water.protocol</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>redisx</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-test</artifactId>
+            <version>${solon.ver}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <finalName>${project.artifactId}</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>wateraide.WateraideApp</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--新增的docker maven插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.2</version>
+                <!--docker镜像相关的配置信息-->
+                <configuration>
+                    <!--镜像名，这里用工程名-->
+                    <imageName>${project.artifactId}</imageName>
+                    <!--TAG,这里用工程版本号-->
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <!--镜像的FROM，使用java官方镜像-->
+                    <baseImage>adoptopenjdk/openjdk11</baseImage>
+                    <!--该镜像的容器启动后，直接运行spring boot工程-->
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "--server.port=8080","--drift=1"]</entryPoint>
+                    <!--构建镜像的配置信息-->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>
