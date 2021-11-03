@@ -69,8 +69,9 @@ queue.password=L8vcQgep
 queue.db=3
 ```
 
+9. 添加 配置管理/消息配置: water/default 数据源为空
 
-9. 更新 water 服务包，然后重新
+10. 更新 water 服务包，然后重新
 
 注：更新后，water 部份定时任务运失败；把那失败的任务删掉，导入 water_paasfile_pln_water_20211103.jsond 数据
 
