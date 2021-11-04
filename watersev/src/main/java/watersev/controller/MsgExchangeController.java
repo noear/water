@@ -43,8 +43,8 @@ public class MsgExchangeController implements IJob {
 
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
 
-    @Inject("${water.job.event.broker}")
-    String waterEventBroker;
+    @Inject("${water.job.msg.broker}")
+    String jobMsgBroker;
 
     @Override
     public String getName() {
@@ -65,10 +65,10 @@ public class MsgExchangeController implements IJob {
 
         List<BrokerVo> list = null;
 
-        if (Utils.isEmpty(waterEventBroker)) {
+        if (Utils.isEmpty(jobMsgBroker)) {
             list = DbWaterCfgApi.getBrokerList();
         } else {
-            list = Arrays.asList(DbWaterCfgApi.getBroker(waterEventBroker));
+            list = Arrays.asList(DbWaterCfgApi.getBroker(jobMsgBroker));
         }
 
         for (BrokerVo brokerVo : list) {

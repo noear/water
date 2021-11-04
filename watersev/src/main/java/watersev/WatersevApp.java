@@ -47,6 +47,9 @@ public class WatersevApp {
             x.enableHttp(has_server_port);
             x.enableErrorAutoprint(false);
 
+            //加载环境变量(支持弹性容器设置的环境)
+            x.cfg().loadEnv("water.");
+
             Config.tryInit();
 
             ProtocolHub.config = WaterClient.Config::get;
