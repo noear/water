@@ -426,6 +426,20 @@ public class MsgSourceMongo implements MsgSource {
     }
 
     @Override
+    public long getWarnCount() throws Exception {
+        /**
+         * select count(*) num
+         * from `water_msg_message`
+         * where state=0 and dist_count=0 and dist_nexttime=0
+         * */
+        return _db.table("water_msg_message")
+                .whereEq("state", 0)
+                .andEq("dist_count", 0)
+                .andEq("dist_nexttime", 0)
+                .selectCount();
+    }
+
+    @Override
     public void create() throws Exception {
 
     }

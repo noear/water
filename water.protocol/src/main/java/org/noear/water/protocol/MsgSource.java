@@ -62,6 +62,10 @@ public interface MsgSource extends Closeable {
      * */
     boolean setMessageAsCancel(List<Object> ids) throws Exception;
 
+    /**
+     * 获取警告数量
+     * */
+    long getWarnCount() throws Exception;
 
     /**
      * 创建

@@ -22,7 +22,7 @@ public class PaasUtils {
             }
 
             //订阅
-            String receiver_url = "@" + WW.waterraas + path;
+            String receiver_url = "@" + WW.waterpaas + path;
             String subscriber_key = EncryptUtils.md5(path);
 
             if (is_disabled) {

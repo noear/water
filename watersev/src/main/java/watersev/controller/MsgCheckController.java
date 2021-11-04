@@ -61,15 +61,18 @@ public final class MsgCheckController implements IJob {
     }
 
     private void check_type0(String receive_url) {
-        if (receive_url.startsWith("http://")) {
-            try {
+        try {
+            String checkUrl = MsgUtils.getReceiveUrl2(receive_url); //可能会异常
+
+            if (checkUrl.startsWith("http://")) {
+
                 /**
                  * callback:
                  * isOk:请求是否成功
                  * code:如果成功，状态码为何?
                  * hint:如果出错，提示信息?
                  */
-                HttpUtilEx.getStatusByAsync(receive_url, (isOk, code, hint) -> {
+                HttpUtilEx.getStatusByAsync(checkUrl, (isOk, code, hint) -> {
                     if (code >= 200 && code < 400) {
                         //成功
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
@@ -80,12 +83,13 @@ public final class MsgCheckController implements IJob {
                         DbWaterMsgApi.delSubscriberByError(receive_url);
                     }
                 });
-            } catch (Exception e) {
-                //设置出错状态
-                DbWaterMsgApi.setSubscriberState(receive_url, 1);
-                //尝试删除不稳定的出错订阅
-                DbWaterMsgApi.delSubscriberByError(receive_url);
+
             }
+        } catch (Exception e) {
+            //设置出错状态
+            DbWaterMsgApi.setSubscriberState(receive_url, 1);
+            //尝试删除不稳定的出错订阅
+            DbWaterMsgApi.delSubscriberByError(receive_url);
         }
     }
 }
