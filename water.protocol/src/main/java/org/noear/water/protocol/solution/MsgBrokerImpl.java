@@ -28,7 +28,7 @@ public class MsgBrokerImpl implements MsgBroker {
     /**
      * 新的配置
      */
-    public MsgBrokerImpl(ConfigM cfg, ICacheServiceEx cache) {
+    public MsgBrokerImpl(String name, ConfigM cfg, ICacheServiceEx cache) {
         PropertiesM prop = cfg.getProp();
         PropertiesM storeProp = prop.getProp("store");
         PropertiesM queueProp = prop.getProp("queue");
@@ -63,6 +63,11 @@ public class MsgBrokerImpl implements MsgBroker {
         } else {
             queue = MsgQueueLocal.getInstance();
         }
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 
     @Override

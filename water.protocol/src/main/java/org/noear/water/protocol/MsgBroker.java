@@ -7,6 +7,11 @@ import java.io.Closeable;
  */
 public interface MsgBroker extends Closeable {
     /**
+     * 获取名字
+     * */
+    String getName();
+
+    /**
      * 获取队列
      * */
     MsgQueue getQueue();

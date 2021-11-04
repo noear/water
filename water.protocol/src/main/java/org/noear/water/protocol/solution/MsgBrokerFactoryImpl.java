@@ -30,7 +30,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
     private List<BrokerEntity> _brokerAry = new ArrayList<>();
 
     public MsgBrokerFactoryImpl(ConfigM def, ICacheServiceEx cache, Fun1<String, BrokerMeta> brokerGetter) {
-        _def = new BrokerEntity(new MsgBrokerImpl(def, cache), def);
+        _def = new BrokerEntity(new MsgBrokerImpl("default", def, cache), def);
         _cache = cache;
         _brokerGetter = brokerGetter;
     }
@@ -68,7 +68,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
                 return;//说明没变
             }
 
-            source = new MsgBrokerImpl(cfg, _cache);
+            source = new MsgBrokerImpl(broker, cfg, _cache);
         }
 
         if (source != null) {
@@ -121,7 +121,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
 
                     if (model != null && TextUtils.isEmpty(model.getSource()) == false) {
                         ConfigM cfg = ProtocolHub.config.getByTagKey(model.getSource());
-                        entity = new BrokerEntity(new MsgBrokerImpl(cfg, _cache), cfg);
+                        entity = new BrokerEntity(new MsgBrokerImpl(broker, cfg, _cache), cfg);
                     }
                 }
 
