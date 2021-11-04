@@ -99,3 +99,10 @@ ALTER TABLE `water_cfg_logger`
 ALTER TABLE `water_cfg_broker`
     ADD UNIQUE INDEX `UX_broker`(`broker`) USING BTREE;
 
+
+-- 2021-11-04
+ALTER TABLE `water_msg_subscriber`
+DROP COLUMN `topic_id`,
+DROP INDEX `IX_subscribe`,
+ADD UNIQUE INDEX `IX_subscribe`(`subscriber_key`, `topic_name`) USING BTREE;
+

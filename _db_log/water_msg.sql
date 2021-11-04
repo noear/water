@@ -59,3 +59,7 @@ ALTER TABLE `water_msg_message`
 ALTER TABLE `water_msg_message_all`
     MODIFY COLUMN `topic_id` int NULL DEFAULT 0 COMMENT '主题ID' AFTER `tags`;
 
+
+
+
+

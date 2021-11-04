@@ -54,6 +54,12 @@ ALTER TABLE `water_msg_message`
 
 ALTER TABLE `water_msg_message_all`
     MODIFY COLUMN `topic_id` int NULL DEFAULT 0 COMMENT '主题ID' AFTER `tags`;
+
+-- 2021-11-04
+ALTER TABLE `water_msg_subscriber`
+    DROP COLUMN `topic_id`,
+    DROP INDEX `IX_subscribe`,
+    ADD UNIQUE INDEX `IX_subscribe`(`subscriber_key`, `topic_name`) USING BTREE;    
 ```
 
 3. water_msg 的表 [water_msg_subscriber], [water_msg_topic] 复制到 water 库

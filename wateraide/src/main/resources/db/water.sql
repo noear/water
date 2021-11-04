@@ -72,28 +72,27 @@ CREATE TABLE IF NOT EXISTS `water_cfg_whitelist`  (
   INDEX `IX_note`(`note`(40)) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-配置-安全名单表' ROW_FORMAT = DYNAMIC;
 
-CREATE TABLE IF NOT EXISTS `water_msg_subscriber`  (
-  `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID',
-  `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订阅者KEY（由应用方传入）',
-  `subscriber_note` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '报警手机号',
-  `alarm_sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '报警签名',
-  `topic_id` int(11) NOT NULL DEFAULT 0 COMMENT '主题ID',
-  `topic_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主题名字',
-  `receive_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '订阅者的接收地址',
-  `receive_way` int(11) NOT NULL DEFAULT 0 COMMENT '接收方式（0,1异步等待；2异步不等待,状态设为已完成；3异步不等,状态设为处理中）',
-  `receive_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '订阅者的接收地址的访问KEY',
-  `is_sync` int(11) NOT NULL DEFAULT 0 COMMENT '是否同步接收（0异步；1同步）',
-  `log_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的完整 时间',
-  `is_unstable` int(11) NOT NULL DEFAULT 0 COMMENT '是否为不稳定地址',
-  `is_enabled` int(11) NOT NULL DEFAULT 1 COMMENT '是否启用',
-  `check_last_state` int(11) NOT NULL DEFAULT 0 COMMENT '最后检查状态（0：OK；1：error）',
-  `check_error_num` int(11) NOT NULL DEFAULT 0 COMMENT '检测异常数量',
-  PRIMARY KEY (`subscriber_id`) USING BTREE,
-  UNIQUE INDEX `IX_subscribe`(`subscriber_key`, `topic_id`) USING BTREE,
-  INDEX `IX_topic_name`(`topic_name`) USING BTREE,
-  INDEX `IX_receive_url`(`receive_url`(40)) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-消息-订阅者表' ROW_FORMAT = DYNAMIC;
+CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
+    `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID',
+    `subscriber_key` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订阅者KEY（由应用方传入）',
+    `subscriber_note` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `alarm_mobile` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警手机号',
+    `alarm_sign` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警签名',
+    `topic_name` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主题名字',
+    `receive_url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订阅者的接收地址',
+    `receive_way` int(11) NOT NULL DEFAULT '0' COMMENT '接收方式（0,1异步等待；2异步不等待,状态设为已完成；3异步不等,状态设为处理中）',
+    `receive_key` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '订阅者的接收地址的访问KEY',
+    `is_sync` int(11) NOT NULL DEFAULT '0' COMMENT '是否同步接收（0异步；1同步）',
+    `log_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录的完整 时间',
+    `is_unstable` int(11) NOT NULL DEFAULT '0' COMMENT '是否为不稳定地址',
+    `is_enabled` int(11) NOT NULL DEFAULT '1' COMMENT '是否启用',
+    `check_last_state` int(11) NOT NULL DEFAULT '0' COMMENT '最后检查状态（0：OK；1：error）',
+    `check_error_num` int(11) NOT NULL DEFAULT '0' COMMENT '检测异常数量',
+    PRIMARY KEY (`subscriber_id`) USING BTREE,
+    UNIQUE KEY `IX_subscribe` (`subscriber_key`,`topic_name`) USING BTREE,
+    KEY `IX_topic_name` (`topic_name`) USING BTREE,
+    KEY `IX_receive_url` (`receive_url`(40)) USING BTREE
+    ) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-订阅者表';
 
 
 CREATE TABLE IF NOT EXISTS `water_msg_topic`  (
