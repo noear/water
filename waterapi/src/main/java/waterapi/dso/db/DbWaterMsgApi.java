@@ -3,7 +3,7 @@ package waterapi.dso.db;
 import org.noear.weed.*;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
-import waterapi.models.TopicModel;
+import waterapi.dso.TopicPipelineLocal;
 
 import java.sql.SQLException;
 
@@ -16,22 +16,18 @@ public final class DbWaterMsgApi {
         return Config.water;
     }
 
-
-
     //获取主题ID（没有则创建一个）
-    public static TopicModel getTopicById(String topic_name) throws SQLException {
-        TopicModel m = db().table("water_msg_topic")
+    public static void tryAddTopic(String topic_name) throws SQLException {
+        boolean ieExists = db().table("water_msg_topic")
                 .whereEq("topic_name", topic_name)
                 .caching(CacheUtils.data)
-                .selectItem("*", TopicModel.class);
+                .selectExists();
 
-        if (m.topic_id == 0) {
-            m.topic_id = (int) (db().table("water_msg_topic")
+        if (ieExists == false) {
+            db().table("water_msg_topic")
                     .set("topic_name", topic_name)
-                    .insert());
+                    .insert();
         }
-
-        return m;
     }
 
 
@@ -45,9 +41,9 @@ public final class DbWaterMsgApi {
     //添加订阅者
     public static long addSubscriber(String key, String note, String alarm_mobile, String topic_name, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws SQLException {
         topic_name = topic_name.trim();
-        //用于生成主题
-        getTopicById(topic_name);
 
+        //注册主题
+        TopicPipelineLocal.singleton().add(topic_name);
 
         DbTableQuery tq = db().table("water_msg_subscriber").usingExpr(true)
                 .set("alarm_mobile", alarm_mobile)
