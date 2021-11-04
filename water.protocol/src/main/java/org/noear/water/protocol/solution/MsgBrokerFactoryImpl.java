@@ -37,9 +37,14 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
 
     @Override
     public void updateBroker(String broker) throws IOException {
+        if(TextUtils.isEmpty(broker)){
+            return;
+        }
+
         BrokerEntity entity = _brokerMap.get(broker);
         if (entity == null) {
             //如果没有，则不用更新
+            getBroker(broker);
             return;
         }
 

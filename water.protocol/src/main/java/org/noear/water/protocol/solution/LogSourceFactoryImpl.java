@@ -25,9 +25,14 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     @Override
     public void updateSource(String logger) throws IOException {
+        if(TextUtils.isEmpty(logger)){
+            return;
+        }
+
         LoggerEntity entity = _loggerMap.get(logger);
         if (entity == null) {
             //如果没有，则不用更新
+            getSource(logger);
             return;
         }
 
