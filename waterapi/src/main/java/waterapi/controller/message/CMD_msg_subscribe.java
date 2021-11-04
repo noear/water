@@ -56,6 +56,7 @@ public class CMD_msg_subscribe extends UapiBase {
 
         boolean isOk = true;
         for (String topic2 : topic.split(",")) {//多个主题以","隔开
+            topic2 = topic2.trim();
             if (topic2.length() > 0) {
                 isOk = isOk & subscribeDo(key, note, alarm_mobile, topic2, receive_url, receive_key, receive_way, is_unstable > 0);
             }
