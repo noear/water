@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.core.LoadBalance;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
@@ -20,6 +19,7 @@ import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
+import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
@@ -290,17 +290,12 @@ public final class MsgDistributeController implements IJob {
         params.put("tags", msg.tags);
         params.put("sgin", sgin);
 
-        String receive_url = dist.receive_url;
-
-        if(receive_url.startsWith("@")){
-            //说明是集群订阅模式
-            String service = receive_url.substring(1);
-            receive_url = LoadBalance.get(service).getServer() + "/msg/receive";
-        }
-
         try {
+            //两种模式：http://xxx/path 和 @service/path
+            String receive_url2 = MsgUtils.getReceiveUrl2(dist.receive_url);
+
             if (dist.receive_way == 2 || dist.receive_way == 3) {
-                HttpUtils.http(receive_url)
+                HttpUtils.http(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
                             distributeResultLog(msg, dist, isOk, resp, ex);
@@ -321,7 +316,7 @@ public final class MsgDistributeController implements IJob {
                 //::0,1
                 //
                 //3.2.0.进行异步http分发
-                HttpUtils.http(receive_url)
+                HttpUtils.http(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
                             boolean isOk2 = distributeResultLog(msg, dist, isOk, resp, ex);

@@ -15,6 +15,10 @@
     * rubber_log_request 归到 water_paas 库（或可独立到 water_paas_request 库）
     * rubber_log_request_all 归到 water_paas 库（或可独立到 water_paas_request 库）
 
+
+* water.client::MessageApi 增加 broker 参数
+
+
 #### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持
 * 增加 water_lob_store 的 es 存储

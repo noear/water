@@ -1,5 +1,6 @@
 package wateradmin.dso;
 
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
@@ -21,7 +22,7 @@ public class PaasUtils {
             }
 
             //订阅
-            String receiver_url = Config.paas_uri() + path;
+            String receiver_url = "@" + WW.waterraas + path;
             String subscriber_key = EncryptUtils.md5(path);
 
             if (is_disabled) {

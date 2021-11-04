@@ -36,8 +36,6 @@ public class Config {
 
     public static ConfigM water_redis;
 
-    public static String water_cache_header;
-
     public static String localHost;
 
     public static ConfigM water_log_store;
@@ -95,9 +93,6 @@ public class Config {
             } else {
                 rd_track = cm2.getRd(5);
             }
-
-            water_cache_header = cfg("water_cache_header")
-                    .getString("WATER2_CACHE") + "_API2";
 
             water_log_store = cfg(WW.water_log_store);
             water_msg_store = cfg(WW.water_msg_store);
