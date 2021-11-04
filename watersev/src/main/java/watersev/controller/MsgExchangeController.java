@@ -8,12 +8,10 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
 import watersev.dso.LogUtil;
-import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
 import watersev.models.water_reg.ServiceSmpModel;
@@ -63,24 +61,24 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
-        List<BrokerVo> list = null;
+        List<MsgBroker> list = null;
 
         if (Utils.isEmpty(jobMsgBroker)) {
-            list = DbWaterCfgApi.getBrokerList();
+            list = ProtocolHub.getMsgBrokerList();
         } else {
-            list = Arrays.asList(DbWaterCfgApi.getBroker(jobMsgBroker));
+            list = Arrays.asList(ProtocolHub.getMsgBroker(jobMsgBroker));
         }
 
-        for (BrokerVo brokerVo : list) {
-            BrokerHolder brokerHolder = brokerHolderMap.get(brokerVo.broker);
+        for (MsgBroker msgBroker : list) {
+            BrokerHolder brokerHolder = brokerHolderMap.get(msgBroker.getName());
 
             if (brokerHolder == null) {
                 //如果是第一次
-                brokerHolder = new BrokerHolder(ProtocolHub.getMsgBroker(brokerVo.broker));
+                brokerHolder = new BrokerHolder(msgBroker);
                 if (brokerHolder.msgBroker == null) {
                     continue;
                 } else {
-                    brokerHolderMap.put(brokerVo.broker, brokerHolder);
+                    brokerHolderMap.put(msgBroker.getName(), brokerHolder);
                 }
             } else {
                 //如果之前有，检检是否已停?

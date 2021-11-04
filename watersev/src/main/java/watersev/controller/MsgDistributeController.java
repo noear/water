@@ -18,7 +18,6 @@ import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
-import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.StateTag;
 import watersev.models.water_cfg.BrokerHolder;
@@ -59,24 +58,24 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        List<BrokerVo> list = null;
+        List<MsgBroker> list = null;
 
         if (Utils.isEmpty(jobMsgBroker)) {
-            list = DbWaterCfgApi.getBrokerList();
+            list = ProtocolHub.getMsgBrokerList();
         } else {
-            list = Arrays.asList(DbWaterCfgApi.getBroker(jobMsgBroker));
+            list = Arrays.asList(ProtocolHub.getMsgBroker(jobMsgBroker));
         }
 
-        for (BrokerVo brokerVo : list) {
-            BrokerHolder brokerHolder = brokerHolderMap.get(brokerVo.broker);
+        for (MsgBroker msgBroker : list) {
+            BrokerHolder brokerHolder = brokerHolderMap.get(msgBroker.getName());
 
             if (brokerHolder == null) {
                 //如果是第一次
-                brokerHolder = new BrokerHolder(ProtocolHub.getMsgBroker(brokerVo.broker));
+                brokerHolder = new BrokerHolder(msgBroker);
                 if (brokerHolder.msgBroker == null) {
                     continue;
                 } else {
-                    brokerHolderMap.put(brokerVo.broker, brokerHolder);
+                    brokerHolderMap.put(msgBroker.getName(), brokerHolder);
                 }
             } else {
                 //如果之前有，检检是否已停?
