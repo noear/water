@@ -6,6 +6,7 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
@@ -13,7 +14,6 @@ import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
-import watersev.models.water_cfg.BrokerVo;
 import watersev.models.water_reg.ServiceSmpModel;
 
 import java.sql.SQLException;
