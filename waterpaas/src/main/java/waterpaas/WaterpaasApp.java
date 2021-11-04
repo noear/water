@@ -14,6 +14,7 @@ import org.noear.water.protocol.solution.MsgBrokerImpl;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
 import waterpaas.dso.DbWaterCfgApi;
+import waterpaas.dso.MsgInitPlugin;
 
 
 public class WaterpaasApp {
@@ -40,6 +41,8 @@ public class WaterpaasApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.pluginAdd(-1, new MsgInitPlugin());
         });
 
         app.before("**", MethodType.GET, FrmInterceptor.g());

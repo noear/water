@@ -1,12 +1,11 @@
 package waterapi.dso.db;
 
 import org.noear.water.model.ConfigM;
-import org.noear.water.model.TagCountsM;
+import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
-import waterapi.models.BrokerVo;
 import waterapi.models.ConfigModel;
 import waterapi.models.LoggerModel;
 

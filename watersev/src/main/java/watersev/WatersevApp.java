@@ -10,6 +10,7 @@ import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.JobRunnerEx;
+import watersev.dso.MsgInitPlugin;
 import watersev.dso.db.DbWaterCfgApi;
 
 /**
@@ -62,6 +63,8 @@ public class WatersevApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.pluginAdd(-1, new MsgInitPlugin());
         });
 
         JtRun.xfunInit();

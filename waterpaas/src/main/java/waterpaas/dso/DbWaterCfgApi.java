@@ -1,9 +1,12 @@
 package waterpaas.dso;
 
+import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.weed.DbContext;
 import waterpaas.Config;
 import waterpaas.models.BrokerModel;
 import waterpaas.models.LoggerModel;
+
+import java.util.List;
 
 /**
  * @author noear 2021/2/2 created
@@ -21,7 +24,7 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(LoggerModel.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -33,8 +36,15 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(BrokerModel.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public static List<BrokerVo> getBrokerList() throws Exception {
+        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+                .caching(Config.cache_data)
+                .usingCache(10)
+                .selectList("*", BrokerVo.class);
     }
 }

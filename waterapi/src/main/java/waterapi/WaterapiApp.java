@@ -6,13 +6,10 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.track.TrackBuffer;
 import waterapi.dso.CacheUtils;
-import waterapi.dso.InitPlugin;
+import waterapi.dso.MsgInitPlugin;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.log.CloudLogServiceLocalImp;
-import waterapi.models.BrokerVo;
 import waterapi.utils.PreheatUtils;
-
-import java.util.List;
 
 public class WaterapiApp {
 	public static void main(String[] args) {
@@ -42,7 +39,7 @@ public class WaterapiApp {
 			//尝试注册服务
 			Config.tryRegService();
 
-			x.pluginAdd(-1, new InitPlugin());
+			x.pluginAdd(-1, new MsgInitPlugin());
 		});
 
 

@@ -1,9 +1,8 @@
 package watersev.dso.db;
 
-import org.noear.water.model.TagCountsM;
+import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.weed.DbContext;
 import watersev.Config;
-import watersev.models.water_cfg.BrokerVo;
 import watersev.models.water_cfg.LoggerModel;
 
 import java.sql.SQLException;

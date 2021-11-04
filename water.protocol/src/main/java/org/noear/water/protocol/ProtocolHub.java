@@ -5,6 +5,8 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.solution.LogQuerierImpl;
 import org.noear.water.protocol.solution.LogStorerImp;
 
+import java.util.List;
+
 /**
  * 协议中心
  * */
@@ -13,7 +15,8 @@ public final class ProtocolHub {
     public static Config config;
 
     public static LogSourceFactory logSourceFactory;
-    public static LogSource getLogSource(String logger){
+
+    public static LogSource getLogSource(String logger) {
         return logSourceFactory.getSource(logger);
     }
 
@@ -22,15 +25,17 @@ public final class ProtocolHub {
 
     public static MsgBrokerFactory msgBrokerFactory;
 
-    public static MsgBroker getMsgBroker(String broker){
+    public static List<MsgBroker> getMsgBrokerList() {
+        return msgBrokerFactory.getBrokerList();
+    }
+
+    public static MsgBroker getMsgBroker(String broker) {
         return msgBrokerFactory.getBroker(broker);
     }
 
-    public static MsgSource getMsgSource(String broker){
+    public static MsgSource getMsgSource(String broker) {
         return getMsgBroker(broker).getSource();
     }
-
-    public static MsgQueue msgQueue;
 
     public static Monitoring monitoring;
 

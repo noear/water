@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author noear 2021/11/1 created
@@ -91,7 +92,7 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
             return _def.source;
         }
 
-        if("*".equals(broker)) {
+        if ("*".equals(broker)) {
             //
             // * 表示自动负载均衡
             //
@@ -134,6 +135,11 @@ public class MsgBrokerFactoryImpl implements MsgBrokerFactory {
         }
 
         return entity.source;
+    }
+
+    @Override
+    public List<MsgBroker> getBrokerList() {
+        return _brokerAry.stream().map(e -> e.source).collect(Collectors.toList());
     }
 
     @Override

@@ -1,7 +1,8 @@
-package waterapi.models;
+package org.noear.water.protocol.model.message;
 
-import org.noear.water.protocol.model.message.BrokerMeta;
-
+/**
+ * @author noear 2021/11/4 created
+ */
 public class BrokerVo implements BrokerMeta {
     public String tag;
     public String broker;
