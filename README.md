@@ -4,8 +4,7 @@
 
 # Water for java （水孕育万物...）
 
-为中小量级项目，提供服务开发和治理的整体解决方案（可以理解为微服务架构套件）。本案基于 Solon 框架开发，并支持完整的 Solon Cloud 规范；已在生产环境跑了4年。
-
+为中量级项目，提供服务开发和治理的整体解决方案（可以理解为微服务架构套件）。本案基于 Solon 框架开发，并支持完整的 Solon Cloud 规范；已在生产环境跑了4年。
 
 
 ## 开始
@@ -51,7 +50,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.5.54</version>
+    <version>1.5.57</version>
 </dependency>
 ```
 
