@@ -165,9 +165,17 @@ public class LogSourceMongo implements LogSource {
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
         initIndex(logger);
 
-        int date = Datetime.Now().addDay(-keep_days).getDate();
+        Datetime today = Datetime.Now();
+        today.addDay(-keep_days);
 
-        return _db.table(logger).whereLte("log_date", date).delete();
+        long count = 0;
+
+        for (int i = 0; i < 10; i++) {
+            count += _db.table(logger).whereEq("log_date", today.getDate()).delete();
+            today.addDay(-1);
+        }
+
+        return count;
     }
 
     private void initIndex(String logger){
