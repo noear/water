@@ -1,7 +1,9 @@
 package watersev.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
@@ -17,6 +19,7 @@ import watersev.models.water_cfg.BrokerHolder;
 import watersev.models.water_reg.ServiceSmpModel;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,9 @@ public class MsgExchangeController implements IJob {
 
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
 
+    @Inject("${water.job.event.broker}")
+    String waterEventBroker;
+
     @Override
     public String getName() {
         return "zan";
@@ -57,7 +63,13 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
-        List<BrokerVo> list = DbWaterCfgApi.getBrokerList();
+        List<BrokerVo> list = null;
+
+        if (Utils.isEmpty(waterEventBroker)) {
+            list = DbWaterCfgApi.getBrokerList();
+        } else {
+            list = Arrays.asList(DbWaterCfgApi.getBroker(waterEventBroker));
+        }
 
         for (BrokerVo brokerVo : list) {
             BrokerHolder brokerHolder = brokerHolderMap.get(brokerVo.broker);

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
@@ -43,6 +44,9 @@ public final class MsgDistributeController implements IJob {
 
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
 
+    @Inject("${water.job.event.broker}")
+    String waterEventBroker;
+
     @Override
     public String getName() {
         return "msg";
@@ -55,7 +59,13 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        List<BrokerVo> list = DbWaterCfgApi.getBrokerList();
+        List<BrokerVo> list = null;
+
+        if (Utils.isEmpty(waterEventBroker)) {
+            list = DbWaterCfgApi.getBrokerList();
+        } else {
+            list = Arrays.asList(DbWaterCfgApi.getBroker(waterEventBroker));
+        }
 
         for (BrokerVo brokerVo : list) {
             BrokerHolder brokerHolder = brokerHolderMap.get(brokerVo.broker);
