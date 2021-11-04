@@ -1,27 +1,24 @@
-#### 2.3
+#### 2.3.0.1
+* 消息订阅支持 服务名模式订单（不再需要域名调用）***//未验证,这很重要
 
+#### 2.3.0
 * 完成 water 助手项目开发
-* 消息总线，增加消息管道概念（即多存储块）和本地队列概念，并支持集群
-* 消息订阅支持 服务名模式订单（不再需要域名调用）
-* 日志服务增加更多的字段
-
-* Logger source 增加：weight,metainfo,tag4
-* 日志改动：所有日志相关的都改成 water_log 架构，统一管理：
-  * water_exam_log_bcf
-  * water_exam_log_sql
-* 消息改动：
-  * Queue 增加 local 方案
-  * 增加 Broker 概念
-* water_msg 元信息合到 water 库
-* water_msg_soter? 取消 topic_id 的需要（可完全独立）
-* water_raas 合到 water_paas 库（water, water_paas）
-  * rubber_log_request 归到 water_paas 库（或可独立到 water_paas_request 库）
-  * rubber_log_request_all 归到 water_paas 库（或可独立到 water_paas_request 库）
+* 消息总线，增加消息管道概念[Broker]并支持负载均衡（即多存储块）和本地队列方案[local]
+* 日志服务增加更多的字段支持(weight,metainfo,tag4,service)
+* 所有日志相关的都改成 water_log 架构，统一管理：
+  * water_exam_log_bcf 更名为：water_log_sql_b
+  * water_exam_log_sql 更名为：water_log_sql_p
+* 数据架构调整
+  * water_msg 元信息合到 water 库（[water_msg_subscriber][water_msg_topic]）
+  * water_msg_soter? 取消 topic_id 的需要（可完全独立）
+  * raas 相关表移到 water_paas 库 [rubber_*]
+    * rubber_log_request 归到 water_paas 库（或可独立到 water_paas_request 库）
+    * rubber_log_request_all 归到 water_paas 库（或可独立到 water_paas_request 库）
 
 #### 2.2.18
 * 基于增加 memcache 与 rediscache 自由切换的支持
-* 增加 water_lob 的 es 存储
-* 实现 Logger source 即时同步热切换
+* 增加 water_lob_store 的 es 存储
+* 实现 Logger source 即时同步热切换!!!
 
 #### 2.2.16
 * 整个项目基于solon cloud接口进行开发（即基于 water-solon-plugin ）
@@ -37,7 +34,7 @@
 * 增加非稳定的消息订阅，自动删除处理
 * 实现计划任务调度器集群能力；原执行中的状态限制会失效；秒数间隔的会与执行时长结合起来控制
 * 实现 wateradmin 查看 `服务运行时状态` 的监控图表功能
-* 解决 k8s 环境，wateradmin 不能查看 `服务运行时状态` 的安全问题
+* 解决 k8s 环境，wateradmin 不能查看 `服务运行时状态` 的安全问题 //java -jar xxx.jar -white=0
 * 修复定时任务的时区配置不能有效执行的问题
 * 日志查询，添加时区显示
 
@@ -56,7 +53,7 @@
 
 #### 2.0.29 - 2021.04.27
 * 添加日志错误数量统计
-* 服务注册，增加服务分组功能（tag）
+* 服务注册，增加服务分组功能（tag）//为后台分组提供支持
 * 告警增加基于tag的推送
 * 日志统计，改为流式处理
 * 消息统计，改为流式处理
