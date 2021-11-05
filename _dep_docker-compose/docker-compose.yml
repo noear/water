@@ -1,18 +1,20 @@
 version: '3'
 
 # 注意事项：
-# 1.部署时把 solon.cloud.water 的 ip 换成宿主机ip
-# 2.管理后台地址 http://localhost:9373
+# 1.运行之前，先运行 Water 助理完成初始化
+# 2.把 water.ds.* 换成 WaterDb
+# 3.把 solon.cloud.water 的 ip 换成宿主机ip
+# 4.管理后台地址 http://localhost:9373
 
 services:
   waterapi:
     image: noearorg/waterapi:latest
     container_name: waterapi
     environment:
-      - water.dataSource.schema=water
-      - water.dataSource.url=mysql.water.io:3306
-      - water.dataSource.username=demo
-      - water.dataSource.password=KHe85E4MYdeLBHSR
+      - water.ds.schema=water
+      - water.ds.url=mysql.water.io:3306
+      - water.ds.username=demo
+      - water.ds.password=KHe85E4MYdeLBHSR
       - solon.white=0
       - TZ=Asia/Shanghai
     ports:
