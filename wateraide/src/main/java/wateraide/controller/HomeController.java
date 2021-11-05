@@ -24,7 +24,7 @@ public class HomeController extends BaseController {
         //1.开始连接
         if (Config.water == null) {
             String config = rdb_water_tml;
-            String token = ctx.cookie("TOKEN");
+            String token = ctx.cookie("WATERAIDE_TOKEN");
             if (Utils.isNotEmpty(token)) {
                 config = Base64Utils.decode(token);
             }
