@@ -1,8 +1,9 @@
 version: '3'
 
 # 注意事项：
-# 1.运行之前，先运行 Water 助理 完成初始化
-# 2.把 water.ds.* 换成 WaterDb
+# 1.运行 Water 助理 完成初始化
+#   > docker run -p 19371:8080 --name wateraide noearorg/wateraide
+# 2.把配置里的 water.ds.* 换成 WaterDb
 # 4.管理后台地址 http://localhost:9373
 
 services:
