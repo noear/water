@@ -1,49 +1,60 @@
-version: "3"
+version: '3'
+
+# 注意事项：
+# 1.部署时把 solon.cloud.water 的 ip 换成宿主机ip
+# 2.管理后台地址 http://localhost:9373
 
 services:
   waterapi:
-    image: noearorg/waterapi
+    image: noearorg/waterapi:latest
     container_name: waterapi
     environment:
-      water.ds.schema: water #默认可以不要
-      water.ds.server: ${server}
-      water.ds.username: ${username}
-      water.ds.password: ${password}
+      - water.dataSource.schema=water
+      - water.dataSource.url=mysql.water.io:3306
+      - water.dataSource.username=demo
+      - water.dataSource.password=KHe85E4MYdeLBHSR
+      - solon.white=0
+      - TZ=Asia/Shanghai
     ports:
       - 9371:8080
   watersev:
     image: noearorg/watersev:latest
     container_name: watersev
+    environment:
+      - solon.cloud.water=172.16.200.48:9371
+      - TZ=Asia/Shanghai
+    depends_on:
+      -  waterapi
     ports:
       - 9372:8080
-    links:
-      - waterapi
-    depends_on:
-      - waterapi
   wateradmin:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
+    environment:
+      - solon.cloud.water=172.16.200.48:9371
+      - solon.white=0
+      - TZ=Asia/Shanghai
+    depends_on:
+      -  waterapi
     ports:
       - 9373:8080
-    links:
-      - waterapi
-    depends_on:
-      - waterapi
   waterpaas:
     image: noearorg/waterpaas:latest
     container_name: waterpaas
+    environment:
+      - solon.cloud.water=172.16.200.48:9371
+      - TZ=Asia/Shanghai
+    depends_on:
+      -  waterapi
     ports:
       - 9374:8080
-    links:
-      - waterapi
-    depends_on:
-      - waterapi
   waterraas:
     image: noearorg/waterraas:latest
     container_name: waterraas
-    ports:
-      - 9376:8080
-    links:
-      - waterapi
+    environment:
+      - solon.cloud.water=172.16.200.48:9371
+      - TZ=Asia/Shanghai
     depends_on:
-      - waterapi
+      -  waterapi
+    ports:
+      - 9375:8080
