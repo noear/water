@@ -22,7 +22,14 @@ import watersev.dso.db.DbWaterCfgApi;
  *
  * */
 public class WatersevApp {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception{
+        //尝试等待
+        String sleepNum = System.getenv("water.sleep");
+        if(TextUtils.isNotEmpty(sleepNum)){
+            Thread.sleep(Integer.parseInt(sleepNum));
+        }
+
+        //开始
         NvMap xMap = NvMap.from(args);
 
         //是否有端口

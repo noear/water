@@ -11,6 +11,7 @@ import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import org.noear.water.protocol.solution.MsgBrokerImpl;
+import org.noear.water.utils.TextUtils;
 import waterpaas.controller.AppHandler;
 import waterpaas.controller.FrmInterceptor;
 import waterpaas.dso.DbWaterCfgApi;
@@ -18,7 +19,14 @@ import waterpaas.dso.MsgInitPlugin;
 
 
 public class WaterpaasApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        //尝试等待
+        String sleepNum = System.getenv("water.sleep");
+        if(TextUtils.isNotEmpty(sleepNum)){
+            Thread.sleep(Integer.parseInt(sleepNum));
+        }
+
+        //开始
         JtRun.init();
 
         SolonApp app = Solon.start(WaterpaasApp.class, args, (x) -> {

@@ -7,13 +7,21 @@ import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
+import org.noear.water.utils.TextUtils;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ErrorListener;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        //尝试等待
+        String sleepNum = System.getenv("water.sleep");
+        if(TextUtils.isNotEmpty(sleepNum)){
+            Thread.sleep(Integer.parseInt(sleepNum));
+        }
+
+        //开始
         NvMap argx = NvMap.from(args);
 
         System.err.println("[Water] run mode start...");
