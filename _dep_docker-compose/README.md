@@ -22,4 +22,10 @@ docker run -p 19371:8080 --name wateraide noearorg/wateraide
 
 ## 三、开始部署服务
 
+新建个目录：water，把 docker-compose.yml 放进去 
+
+**开始运行**
+
+```shell
 docker-compose up water/docker-compose.yml
+```
