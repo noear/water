@@ -19,11 +19,10 @@ public class WateradminApp {
         System.err.println("[Water] run mode start...");
 
         Solon.start(WateradminApp.class, argx, x -> {
-            Config.tryInit(x);
 
             x.enableErrorAutoprint(false);
-            //x.before(new CrossHandler().allowCredentials(true));
 
+            Config.tryInit(x);
 
             x.onError(new ErrorListener());
 

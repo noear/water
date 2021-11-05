@@ -13,7 +13,8 @@
 
 运行 Water 助理服务（在本地或服务器上运行都可）
 
-```shell
+```shell 
+#docker rm wateraide
 docker run -p 19371:8080 --name wateraide noearorg/wateraide
 ```
 

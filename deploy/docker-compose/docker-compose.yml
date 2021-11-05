@@ -12,7 +12,7 @@ services:
     container_name: waterapi
     environment:
       - water.ds.schema=water
-      - water.ds.url=mysql.water.io:3306
+      - water.ds.server=mysql.water.io:3306
       - water.ds.username=demo
       - water.ds.password=KHe85E4MYdeLBHSR
       - TZ=Asia/Shanghai
