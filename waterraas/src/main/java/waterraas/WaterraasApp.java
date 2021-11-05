@@ -19,11 +19,6 @@ import waterraas.dso.CacheUtil;
 public class WaterraasApp {
 
     public static void main(String[] args) throws Exception{
-        //尝试等待
-        String sleepNum = System.getenv("water.sleep");
-        if(TextUtils.isNotEmpty(sleepNum)){
-            Thread.sleep(Integer.parseInt(sleepNum));
-        }
 
         //开始
         JtRun.init();
