@@ -1,4 +1,4 @@
-# Water docker-compose 部署说明
+# Water docker-compose 模式部署说明
 
 ## 请在完整的看完文档后，再开始动手!!!
 
@@ -7,6 +7,7 @@
 * mysql8：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
 * redis：做为分布式锁、数据临时队列用
 * mongodb：做为消息持久化用（也可以使用 mysql8）
+* elasticsearch：做为日志持久化用（也可以使用 mysql8 或 mongodb）
 
 ## 二、初始化环境
 
