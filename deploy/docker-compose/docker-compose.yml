@@ -13,7 +13,7 @@ services:
       - water.ds.schema=water
       - water.ds.server=mysql.water.io:3306
       - water.ds.username=demo
-      - water.ds.password=KHe85E4MYdeLBHSR
+      - water.ds.password=1234
       - TZ=Asia/Shanghai
     ports:
       - 9371:8080
