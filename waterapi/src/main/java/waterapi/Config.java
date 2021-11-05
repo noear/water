@@ -61,7 +61,7 @@ public class Config {
             _inited = true;
 
             Props prop = Solon.cfg().getProp("water.dataSource");
-            if (prop.size() == 0) {
+            if (prop.size() < 3) {
                 prop = Solon.cfg().getProp("water.ds");
             }
 
