@@ -23,21 +23,38 @@ docker run -p 19371:8080 --name wateraide noearorg/wateraide
 
 ## 三、开始部署服务
 
-新建个域：water
+新建域：water
 
-* 添加 water/waterapi 服务（镜像：noearorg/waterapi:latest）
+* 添加 water/waterapi 服务 x2+（镜像：noearorg/waterapi:latest）
 
-添加环境变量（换成初始化好的 Water DB 配置）：
+    ```properties
+    #添加环境变量（换成初始化好的 Water DB 配置）：
+    water.ds.schema=water
+    water.ds.url=mysql.water.io:3306
+    water.ds.username=demo
+    water.ds.password=KHe85E4MYdeLBHSR
+    ```
 
-```properties
-water.ds.schema=water
-water.ds.url=mysql.water.io:3306
-water.ds.username=demo
-water.ds.password=KHe85E4MYdeLBHSR
-```
+* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）
+* 添加 water/waterpaas 服务 x1+（镜像：noearorg/waterpaas:latest）
+* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）
+* 添加 water/watertool 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
 
+    ```properties
+    #添加环境变量：
+    water.sss=tool
+    ```
 
-* 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:latest）
-* 添加 water/watersev 服务（镜像：noearorg/watersev:latest）
-* 添加 water/waterpaas 服务（镜像：noearorg/waterpaas:latest）
-* 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）
+* 添加 water/waterpln 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
+
+    ```properties
+    #添加环境变量：
+    water.sss=pln
+    ```
+
+* 添加 water/watermsg 服务 x1+（镜像：noearorg/watersev:latest）
+
+    ```properties
+    #添加环境变量：
+    water.sss=msg
+    ```
