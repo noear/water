@@ -16,6 +16,7 @@
 ```shell 
 #docker rm wateraide
 docker run -p 19371:8080 --name wateraide noearorg/wateraide
+docker run -p 19371:8080 --name wateraide wateraide
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作

@@ -8,6 +8,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.utils.Base64Utils;
 import wateraide.Config;
+import wateraide.dso.Base64Utils2;
 import wateraide.dso.InitUtils;
 
 
@@ -26,7 +27,11 @@ public class HomeController extends BaseController {
             String config = rdb_water_tml;
             String token = ctx.cookie("WATERAIDE_TOKEN");
             if (Utils.isNotEmpty(token)) {
-                config = Base64Utils.decode(token);
+                config = Base64Utils2.decode(token);
+            }
+
+            if (Utils.isEmpty(config)) {
+                config = rdb_water_tml;
             }
 
             viewModel.put("config", config);

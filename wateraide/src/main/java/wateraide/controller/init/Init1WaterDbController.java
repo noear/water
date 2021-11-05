@@ -10,6 +10,7 @@ import org.noear.water.WW;
 import org.noear.water.utils.Base64Utils;
 import org.noear.weed.DbContext;
 import wateraide.Config;
+import wateraide.dso.Base64Utils2;
 import wateraide.dso.InitUtils;
 import wateraide.dso.db.DbWaterCfgApi;
 
@@ -29,12 +30,14 @@ public class Init1WaterDbController {
 
         String config = ctx.cookie("WATERAIDE_TOKEN");
         if (Utils.isNotEmpty(config)) {
-            config = Base64Utils.decode(config);
+            config = Base64Utils2.decode(config);
         }
 
-        Properties props = Utils.buildProperties(config);
+        if (Utils.isNotEmpty(config)) {
+            Properties props = Utils.buildProperties(config);
+            tryInitSchema(Config.water, props);
+        }
 
-        tryInitSchema(Config.water, props);
 
         //1.
         return Result.succeed(null, "初始化成功");
