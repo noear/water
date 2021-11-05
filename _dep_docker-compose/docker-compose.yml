@@ -3,7 +3,7 @@ version: '3'
 # 注意事项：
 # 1.运行之前，先运行 Water 助理完成初始化
 # 2.把 water.ds.* 换成 WaterDb
-# 3.把 solon.cloud.water 的 ip 换成宿主机ip
+# 3.把 solon.cloud.water.server 的 ip 换成宿主机ip
 # 4.管理后台地址 http://localhost:9373
 
 services:
@@ -23,7 +23,7 @@ services:
     image: noearorg/watersev:latest
     container_name: watersev
     environment:
-      - solon.cloud.water=172.16.200.48:9371
+      - solon.cloud.water.server=172.16.200.48:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
@@ -33,7 +33,7 @@ services:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
     environment:
-      - solon.cloud.water=172.16.200.48:9371
+      - solon.cloud.water.server=172.16.200.48:9371
       - solon.white=0
       - TZ=Asia/Shanghai
     depends_on:
@@ -44,7 +44,7 @@ services:
     image: noearorg/waterpaas:latest
     container_name: waterpaas
     environment:
-      - solon.cloud.water=172.16.200.48:9371
+      - solon.cloud.water.server=172.16.200.48:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
@@ -54,7 +54,7 @@ services:
     image: noearorg/waterraas:latest
     container_name: waterraas
     environment:
-      - solon.cloud.water=172.16.200.48:9371
+      - solon.cloud.water.server=172.16.200.48:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi

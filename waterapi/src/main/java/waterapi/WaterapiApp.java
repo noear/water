@@ -20,11 +20,12 @@ public class WaterapiApp {
 			//加载环境变量(支持弹性容器设置的环境)
 			x.cfg().loadEnv("water.");
 
-			//尝试初始化
-			Config.tryInit();
-
 			x.enableStaticfiles(false);
 			x.enableErrorAutoprint(false);
+
+
+			//尝试初始化
+			Config.tryInit();
 
 
 			TrackBuffer.singleton().bind(Config.rd_track);
