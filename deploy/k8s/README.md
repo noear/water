@@ -30,7 +30,7 @@ docker run -p 19371:8080 --name wateraide noearorg/wateraide
     ```properties
     #添加环境变量（换成初始化好的 Water DB 配置）：
     water.ds.schema=water
-    water.ds.url=mysql.water.io:3306
+    water.ds.server=mysql.water.io:3306
     water.ds.username=demo
     water.ds.password=KHe85E4MYdeLBHSR
     ```
