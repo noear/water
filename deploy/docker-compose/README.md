@@ -25,7 +25,7 @@ docker run -p 19371:8080 --name wateraide wateraide
 
 ## 三、开始部署服务
 
-新建个目录：water，把 docker-compose.yml 放进去 
+新建个目录：water，把 docker-compose.yml 放进去。然后修改相关的 water.ds. 数据源配置
 
 **开始运行**
 
