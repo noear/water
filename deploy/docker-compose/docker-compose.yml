@@ -3,19 +3,20 @@ version: '3'
 # 部署指南：
 # 1.运行 Water 助理 完成初始化
 #   > docker run -p 19371:8080 --name wateraide noearorg/wateraide
-# 2.把配置里的 water.ds.* 换成 WaterDb，并启动
+# 2.把配置里的 water.ds.* 换成真实的 WaterDb，并启动
 # 3.管理后台地址 http://localhost:9373 做日常管理
 # 4.使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:8080
+
 
 services:
   waterapi:
     image: noearorg/waterapi:latest
     container_name: waterapi
     environment:
-      - water.ds.schema=water
-      - water.ds.server=mysql.water.io:3306
-      - water.ds.username=demo
-      - water.ds.password=1234
+      - water.ds.schema={water}
+      - water.ds.server={water.mysql.io:3306}
+      - water.ds.username={demo}
+      - water.ds.password={1234}
       - TZ=Asia/Shanghai
     ports:
       - 9371:8080

@@ -15,18 +15,10 @@ import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
     public static void main(String[] args) throws Exception{
-
-        //开始
-        NvMap argx = NvMap.from(args);
-
-        System.err.println("[Water] run mode start...");
-
-        Solon.start(WateradminApp.class, argx, x -> {
-
-            x.enableErrorAutoprint(false);
-
+        Solon.start(WateradminApp.class, args, x -> {
             Config.tryInit(x);
 
+            x.enableErrorAutoprint(false);
             x.onError(new ErrorListener());
 
             //设置接口
