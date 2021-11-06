@@ -27,7 +27,7 @@ public class ConnectController {
         Properties props = Config.getProp(config);
 
         if (props.size() > 3) {
-            Config.water = Config.getDb(props);
+            Config.water = Config.getDb(props, true);
 
             if (Config.water != null) {
                 //连接成功

@@ -35,7 +35,7 @@ public class Init3PaasController {
         Properties props = Config.getProp(config);
 
         if (props.size() > 3) {
-            DbContext db = Config.getDb(props);
+            DbContext db = Config.getDb(props, false);
 
             if (db == null) {
                 return Result.failure("连接失败");
@@ -44,6 +44,8 @@ public class Init3PaasController {
                     tryInitSchema(db, config);
                 } catch (SQLException e) {
                     EventBus.push(e);
+                    //如果失败，关掉数据源; 免得链接池
+                    db.close();
                     return Result.failure("初始化失败..");
                 }
             }

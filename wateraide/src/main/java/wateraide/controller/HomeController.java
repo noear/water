@@ -22,7 +22,7 @@ public class HomeController extends BaseController {
 
     @Mapping("/")
     public ModelAndView home(Context ctx) throws Exception {
-        //1.开始连接
+        //0.开始连接
         if (Config.water == null) {
             String config = rdb_water_tml;
             String token = ctx.cookie("WATERAIDE_TOKEN");
@@ -38,7 +38,7 @@ public class HomeController extends BaseController {
             return view("setup_connect");
         }
 
-        //2.开始初始化Water
+        //1.开始初始化 water
         if (InitUtils.allowWaterInit(Config.water)) {
             return view("setup_init");
         }
@@ -47,7 +47,7 @@ public class HomeController extends BaseController {
         String step = Config.getCfg(WW.water, Config.water_setup_step).value;
 
         if (Utils.isNotEmpty(step)) {
-            //初始化 Paas
+            //2. 开始配置 reids
             if ("1".equals(step)) {
                 String cfg = Config.getCfg(WW.water, WW.water_redis).value;
 
@@ -56,6 +56,7 @@ public class HomeController extends BaseController {
                 return view("setup_init2");
             }
 
+            //3. 开始配置 water paas
             if ("2".equals(step)) {
                 String cfg = Config.getCfg(WW.water, WW.water_paas).value;
                 if (Utils.isEmpty(cfg)) {
@@ -66,6 +67,7 @@ public class HomeController extends BaseController {
                 return view("setup_init3_paas");
             }
 
+            //4. 开始配置 water log store
             if ("3".equals(step)) {
                 String cfg = Config.getCfg(WW.water, WW.water_log_store).value;
                 if (Utils.isEmpty(cfg)) {
@@ -76,6 +78,7 @@ public class HomeController extends BaseController {
                 return view("setup_init4_log");
             }
 
+            //5. 开始配置 water msg store
             if ("4".equals(step)) {
                 String cfg = Config.getCfg(WW.water, WW.water_msg_store).value;
                 if (Utils.isEmpty(cfg)) {
@@ -87,6 +90,7 @@ public class HomeController extends BaseController {
             }
         }
 
+        //开始进入管理界面
         return view("setup");
     }
 }

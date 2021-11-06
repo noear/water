@@ -2,6 +2,7 @@ package wateraide;
 
 import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.DsUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -45,17 +46,16 @@ public class Config {
         return prop;
     }
 
-    public static DbContext getDb(Properties prop) {
-        if (prop.size() < 4) {
+    public static DbContext getDb(Properties props, boolean pool) {
+        if (props.size() < 4) {
             System.out.println("[Water] Missing water. DataSource configuration");
             return null;
         }
 
 
-        checkProp(prop);
+        checkProp(props);
 
-        DbContext db = new DbContext(prop);
-        db.initMetaData();
+        DbContext db = DsUtils.getDb(props, pool);
 
         return db;
     }
