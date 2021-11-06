@@ -78,9 +78,12 @@ public class Config {
             }
 
             //必须最先被初始化
+            System.out.println("[Water] start config water db...");
             water = DsUtils.getDb(prop, true);
+            System.out.println("[Water] start config water paas db...");
             water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 
+            System.out.println("[Water] start config water redis...");
             water_redis = cfg(WW.water_redis);
 
             ConfigM cm2 = cfg(WW.water_redis_track);
@@ -98,6 +101,8 @@ public class Config {
             water_msg_store = cfg(WW.water_msg_store);
 
             initWeedOnException();
+
+            System.out.println("[Water] config completed.");
         }
     }
 
