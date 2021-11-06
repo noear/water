@@ -33,7 +33,7 @@ public class PlnController implements IJob {
 
     @Override
     public int getDelay() {
-        return 1000;
+        return 2000;
     }
 
     @Override
