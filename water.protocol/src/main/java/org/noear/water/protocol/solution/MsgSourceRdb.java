@@ -44,7 +44,7 @@ public class MsgSourceRdb implements MsgSource {
         _db.table("water_msg_message")
                 .set("state", -1)
                 .set("last_date", datetime.getDate())
-                .set("last_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getTicks())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -61,7 +61,7 @@ public class MsgSourceRdb implements MsgSource {
         _db.table("water_msg_message")
                 .set("state", 2)
                 .set("last_date", datetime.getDate())
-                .set("last_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getTicks())
                 .whereEq("msg_key", msg_key)
                 .update();
 
@@ -185,7 +185,7 @@ public class MsgSourceRdb implements MsgSource {
             _db.table("water_msg_message")
                     .set("state", state.code)
                     .set("last_date", datetime.getDate())
-                    .set("last_fulltime", datetime.getFulltime())
+                    .set("last_fulltime", datetime.getTicks())
                     .build(tb -> {
                         if (state == MessageState.undefined) {
                             long ntime = DisttimeUtils.nextTime(1);
@@ -230,7 +230,7 @@ public class MsgSourceRdb implements MsgSource {
             _db.table("water_msg_message").usingExpr(true)
                     .set("state", state.code)
                     .set("last_date", datetime.getDate())
-                    .set("last_fulltime", new Date())
+                    .set("last_fulltime", datetime.getTicks())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
                     .whereEq("msg_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
@@ -385,7 +385,7 @@ public class MsgSourceRdb implements MsgSource {
                 .whereIn("msg_id", ids).andNeq("state", 2)
                 .set("state", 0)
                 .set("last_date", datetime.getDate())
-                .set("last_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getTicks())
                 .set("dist_nexttime", 0)
                 .update() > 0;
 
@@ -415,7 +415,7 @@ public class MsgSourceRdb implements MsgSource {
                 .whereIn("msg_id", ids)
                 .set("state", -1)
                 .set("last_date", datetime.getDate())
-                .set("last_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getTicks())
                 .update() > 0;
     }
 
@@ -492,7 +492,7 @@ public class MsgSourceRdb implements MsgSource {
             return _db.table("water_msg_message")
                     .set("state", 0)
                     .set("last_date", datetime.getDate())
-                    .set("last_fulltime", datetime.getFulltime())
+                    .set("last_fulltime", datetime.getTicks())
                     .whereEq("state", 1).andLt("dist_nexttime", refTime)
                     .update();
         } else {

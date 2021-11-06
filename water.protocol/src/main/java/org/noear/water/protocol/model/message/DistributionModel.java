@@ -31,7 +31,6 @@ public class DistributionModel implements IBinder {
     public int msg_state;
 
     public int log_date;
-    public Date log_fulltime;
 
     public Date _start_time;
     //派发处理的花费时间
@@ -57,7 +56,6 @@ public class DistributionModel implements IBinder {
         msg_state = s.get("msg_state").value(0);
 
         log_date = s.get("log_date").value(0);
-        log_fulltime = s.get("log_fulltime").value(null);
     }
 
     @Override

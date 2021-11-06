@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by noear on 2017/7/18.
  */
 @Getter
-public class MessageModel implements IBinder {
+public class MessageModel{
     public Long msg_id;
     public String msg_key;
     public String trace_id;
@@ -34,39 +34,6 @@ public class MessageModel implements IBinder {
     public int log_date;
     public Date log_fulltime;
     public Date last_fulltime;
-
-    @Override
-    public void bind(GetHandlerEx s) {
-        msg_id = s.get("msg_id").value(0L);
-        msg_key = s.get("msg_key").value("");
-
-        trace_id = s.get("trace_id").value("");
-
-        topic_name = s.get("topic_name").value("");
-
-        content = s.get("content").value("");
-        tags = s.get("tags").value("");
-
-        state = s.get("state").value(0);
-
-        dist_routed = s.get("dist_routed").value(false);
-        dist_count = s.get("dist_count").value(0);
-        dist_nexttime = s.get("dist_nexttime").longValue(0L);
-
-        log_date = s.get("log_date").value(0);
-        log_fulltime = s.get("log_fulltime").value(null);
-        last_fulltime = s.get("last_fulltime").value(null);
-
-        if (last_fulltime == null) {
-            last_fulltime = new Date();
-        }
-    }
-
-    @Override
-    public IBinder clone() {
-        return new MessageModel();
-    }
-
 
     /**
      * 状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
