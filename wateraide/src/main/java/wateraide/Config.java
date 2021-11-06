@@ -57,6 +57,8 @@ public class Config {
 
         DbContext db = DsUtils.getDb(props, pool);
 
+        db.initMetaData();
+
         return db;
     }
 

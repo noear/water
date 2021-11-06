@@ -16,7 +16,6 @@ import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -438,17 +437,29 @@ public class MsgSourceRdb implements MsgSource {
     public void create() throws Exception {
         String sql = Utils.getResourceAsString("water/water_msg_distribution_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
-            _db.exe(sql);
+            try {
+                _db.exe(sql);
+            } catch (SQLException e) {
+                throw new RuntimeException("[water_msg_distribution] create failure: " + e.getLocalizedMessage());
+            }
         }
 
         sql = Utils.getResourceAsString("water/water_msg_message_all_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
-            _db.exe(sql);
+            try {
+                _db.exe(sql);
+            } catch (SQLException e) {
+                throw new RuntimeException("[water_msg_message_all] create failure: " + e.getLocalizedMessage());
+            }
         }
 
         sql = Utils.getResourceAsString("water/water_msg_message_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
-            _db.exe(sql);
+            try {
+                _db.exe(sql);
+            } catch (SQLException e) {
+                throw new RuntimeException("[water_msg_message] create failure: " + e.getLocalizedMessage());
+            }
         }
     }
 

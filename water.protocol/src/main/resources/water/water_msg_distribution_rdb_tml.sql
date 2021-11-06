@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `water_msg_distribution` (
     `state` int(11) NOT NULL DEFAULT '0' COMMENT '分发状态（-1忽略；0开始；1失败；2成功；）',
     `msg_state` int(11) NOT NULL DEFAULT '0' COMMENT '消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',
     `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '分发日期（yyyyMMdd）',
-    `log_fulltime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '分发时间',
+    `log_fulltime` timestamp NULL DEFAULT NULL COMMENT '分发时间',
     PRIMARY KEY (`dist_id`) USING BTREE,
     KEY `IX_date` (`log_date`) USING BTREE,
     KEY `IX_msg_id` (`msg_id`) USING BTREE,
