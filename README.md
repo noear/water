@@ -50,7 +50,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.5.57</version>
+    <version>1.5.60</version>
 </dependency>
 ```
 
@@ -88,7 +88,7 @@ public class DemoApp {
             } finally {
                 //3.获得接口响应时长
                 long milliseconds = System.currentTimeMillis() - start;
-                CloudClient.metric().addMeter("path", c.pathNew(), milliseconds);
+                CloudClient.metric().addMeter(Solon.cfg().appName(), "path", c.pathNew(), milliseconds);
             }
         });
     }
