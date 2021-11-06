@@ -130,9 +130,9 @@ public class MsgSourceRdb implements MsgSource {
                 .set("content", content)
                 .set("plan_time", plan_time)
                 .set("log_date", date)
-                .set("log_fulltime", datetime.getFulltime())
+                .set("log_fulltime", datetime.getTicks())
                 .set("last_date", date)
-                .set("last_fulltime", datetime.getFulltime())
+                .set("last_fulltime", datetime.getTicks())
                 .set("dist_nexttime", dist_nexttime)
                 .insert();
 
@@ -277,7 +277,7 @@ public class MsgSourceRdb implements MsgSource {
                     .set("receive_key", subs.receive_key)
                     .set("receive_way", subs.receive_way)
                     .set("log_date", datetime.getDate())
-                    .set("log_fulltime", datetime.getFulltime())
+                    .set("log_fulltime", datetime.getTicks())
                     .insert();
         }
     }
