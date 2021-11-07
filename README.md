@@ -150,7 +150,7 @@ public class Job_test implements CloudJobHandler {
     @Override
     public void handle(Context ctx) throws Throwable {
         //处理任务...
-        log.debug("我被调度了");
+        log.info("我被调度了");
     }
 }
 
