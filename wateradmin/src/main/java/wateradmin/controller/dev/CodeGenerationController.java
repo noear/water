@@ -6,7 +6,9 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.view.freemarker.RenderUtil;
+import org.noear.weed.wrap.TableWrap;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.ConfigType;
 import wateradmin.dso.db.DbPaaSApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -18,16 +20,11 @@ import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @Mapping("/dev/code")
 public class CodeGenerationController extends BaseController {
-
-    private static final int CFG_TYPE_DB = 10;
 
     private static final String TEMPLATE_TAG = "_code";
 
@@ -37,8 +34,7 @@ public class CodeGenerationController extends BaseController {
 
     @Mapping("")
     public ModelAndView code(String tag_name) throws SQLException {
-
-        List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(CFG_TYPE_DB);
+        List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(ConfigType.db);
 
         viewModel.set("tag_name", TextUtils.isNotEmpty(tag_name) ? tag_name : (tags.size() > 0 ? tags.get(0).tag : null));
 
@@ -51,7 +47,7 @@ public class CodeGenerationController extends BaseController {
     @Mapping("inner/{tag}")
     public ModelAndView inner(String tag) throws SQLException {
 
-        List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, CFG_TYPE_DB);
+        List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, ConfigType.db);
 
         List<PaasFileModel> tmls = DbPaaSApi.getFileList(TEMPLATE_TAG, PaasFileType.tml);
 
@@ -75,7 +71,8 @@ public class CodeGenerationController extends BaseController {
         db.getMetaData().getTableAll().forEach((tw)->{
             tbs.add(tw.getName());
         });
-        tbs.sort(String::compareTo);
+        tbs.sort(null);
+        //tbs.sort(String::compareTo);
 
         return new ViewModel().code(1, "成功").set("tbs", tbs);
 
@@ -91,7 +88,18 @@ public class CodeGenerationController extends BaseController {
 
         Map<String, Object> model = new HashMap<>();
 
+//        TableWrap tbw = db.getMetaData().getTable(tb);
+
+
         List<FieldVoModel> fields = db.sql(buildSqlGetFields(tb)).getList(FieldVoModel.class);
+
+//        List<FieldVoModel> fields = tbw.getColumns().stream().map(cw->{
+//            FieldVoModel fv = new FieldVoModel();
+//
+//            fv.type = cw.getTypeMapping().getSqlType();
+//            fv.field = cw.field;
+//
+//        });
 
         for (FieldVoModel f : fields) {
 

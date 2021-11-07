@@ -41,7 +41,7 @@
         <java.version>1.8</java.version>
 
         <solon.ver>1.5.60</solon.ver>
-        <weed3.ver>3.4.8</weed3.ver>
+        <weed3.ver>3.4.9</weed3.ver>
         <snack3.ver>3.2.0</snack3.ver>
         <bcf.ver>2.1.15</bcf.ver>
         <redisx.ver>1.2</redisx.ver>
