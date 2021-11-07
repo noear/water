@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="frm10">
 <head>
-    <title>文件</title>
+    <title>${app} - 即时接口</title>
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
