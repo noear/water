@@ -70,7 +70,7 @@
 
                     <input type="text"  name="time"  id="time"
                            jt-laydate="datetime"
-                           placeholder="yyyy-MM-dd HH:mm:ss"
+                           placeholder="yyyy-MM-dd HH:mm:ss.SSS"
                            autocomplete="off"
                            style="width: 165px;"/>&nbsp;&nbsp;
 
