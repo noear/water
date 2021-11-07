@@ -3,7 +3,7 @@ package wateradmin.controller.log;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.DateUtil;
 import org.noear.water.protocol.ProtocolHub;
-import org.noear.water.utils.Datetime;
+import org.noear.water.protocol.model.log.LogFormater;
 import org.noear.water.utils.TextUtils;
 
 import org.noear.solon.annotation.Controller;
@@ -11,7 +11,6 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.LogFormater;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -62,7 +61,6 @@ public class LogController extends BaseController {
 
 
         List list = new ArrayList<>();
-
         boolean allowSearch = false;
 
 

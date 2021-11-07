@@ -7,13 +7,13 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.ProtocolHub;
+import org.noear.water.protocol.model.log.LogFormater;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import wateraide.Config;
 import wateraide.controller.BaseController;
 import wateraide.dso.BcfTagChecker;
-import wateraide.dso.LogFormater;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
@@ -83,6 +83,7 @@ public class LogController extends BaseController {
 
 
         List list = new ArrayList<>();
+        boolean allowSearch = false;
 
 
         if (!TextUtils.isEmpty(logger)) {
@@ -93,6 +94,8 @@ public class LogController extends BaseController {
                 if (TextUtils.isNotEmpty(time)) {
                     timestamp = Datetime.parse(time.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
                 }
+
+                allowSearch = ProtocolHub.getLogSource(logger).allowSearch();
 
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, startLogId, timestamp);
             } catch (Exception ex) {
@@ -105,6 +108,7 @@ public class LogController extends BaseController {
             viewModel.put("logger", "");
         }
 
+        viewModel.put("allowSearch", allowSearch);
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);

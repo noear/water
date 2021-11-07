@@ -53,6 +53,11 @@
 
 
             <div class="center">
+                <input type="text"  name="time"  id="time"
+                       jt-laydate="datetime"
+                       placeholder="yyyy-MM-dd HH:mm:ss"
+                       autocomplete="off"
+                       style="width: 165px;"/>&nbsp;&nbsp;
                 <input type="text" class="w350"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId ${allowSearch?string('or $Key','')}" id="tagx"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
             </div>
@@ -66,13 +71,7 @@
                         <#list logs as m>
                             <option value="${m.logger}">${m.logger} (${m.row_num_today})</option>
                         </#list>
-                    </select>&nbsp;&nbsp;
-
-                    <input type="text"  name="time"  id="time"
-                           jt-laydate="datetime"
-                           placeholder="yyyy-MM-dd HH:mm:ss"
-                           autocomplete="off"
-                           style="width: 165px;"/>&nbsp;&nbsp;
+                    </select>
 
                     <script>
                         <#if log??>
