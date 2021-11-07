@@ -1,6 +1,7 @@
 package wateradmin.controller.log;
 
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.DateUtil;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
@@ -69,7 +70,7 @@ public class LogController extends BaseController {
             try {
                 long timestamp = 0;
                 if (TextUtils.isNotEmpty(time)) {
-                    timestamp = Datetime.parse(time.replace("+", " "), "yyyy-MM-dd HH:mm:ss.SSS").getTicks();
+                    timestamp = DateUtil.parse(time.replace("+", " ")).getTime();
                 }
 
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, startLogId, timestamp);
