@@ -1,0 +1,8 @@
+server.port: 18182
+
+solon.app:
+  name: "demoapi"
+  group: "demo"
+
+solon.cloud.water:
+  server: "waterapi"
