@@ -72,7 +72,7 @@
                            jt-laydate="datetime"
                            placeholder="yyyy-MM-dd HH:mm:ss"
                            autocomplete="off"
-                           style="width: 180px;"/>&nbsp;&nbsp;
+                           style="width: 165px;"/>&nbsp;&nbsp;
 
                     <script>
                         <#if log??>
