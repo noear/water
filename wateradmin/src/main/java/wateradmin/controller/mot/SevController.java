@@ -129,11 +129,16 @@ public class SevController extends BaseController {
 //            return viewModel.code(0,"没有权限！");
 //        }
 
+        ServiceModel sev = DbWaterRegApi.getServiceById(service_id);
         boolean result = DbWaterRegApi.deleteServiceById(service_id);
-        if (result){
-            viewModel.code(1,"删除成功！");
-        }else{
-            viewModel.code(0,"删除失败！");
+
+        //删除消费者记录
+        DbWaterRegApi.delServiceConsumer(sev.name, sev.address);
+
+        if (result) {
+            viewModel.code(1, "删除成功！");
+        } else {
+            viewModel.code(0, "删除失败！");
         }
 
         return viewModel;

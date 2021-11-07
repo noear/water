@@ -154,6 +154,13 @@ public class DbWaterRegApi {
 
     }
 
+    public static void delServiceConsumer(String consumer, String consumer_address) throws SQLException {
+        db().table("water_reg_consumer")
+                .whereEq("consumer", consumer)
+                .andEq("consumer_address", consumer_address)
+                .delete();
+    }
+
 
     //接口的三天的请求频率
     public static Map<String,List> getChartsForDate(String key, String field) throws SQLException {
