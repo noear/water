@@ -63,6 +63,8 @@ public class LogController extends BaseController {
 
         List list = new ArrayList<>();
 
+        boolean allowSearch = false;
+
 
         if (!TextUtils.isEmpty(logger)) {
             LoggerModel log = DbWaterCfgApi.getLogger(logger);
@@ -72,6 +74,8 @@ public class LogController extends BaseController {
                 if (TextUtils.isNotEmpty(time)) {
                     timestamp = DateUtil.parse(time.replace("+", " ")).getTime();
                 }
+
+                allowSearch = ProtocolHub.getLogSource(logger).allowSearch();
 
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, startLogId, timestamp);
             } catch (Exception ex) {
@@ -84,6 +88,7 @@ public class LogController extends BaseController {
             viewModel.put("logger", "");
         }
 
+        viewModel.put("allowSearch", allowSearch);
         viewModel.put("tag_name", tag_name);
         viewModel.put("list", list);
         viewModel.put("logs", loggers);

@@ -164,6 +164,11 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
+    public boolean allowSearch() {
+        return false;
+    }
+
+    @Override
     public void close() throws IOException {
         _db.close();
     }

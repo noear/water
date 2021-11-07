@@ -17,4 +17,6 @@ public interface LogSource extends Closeable {
     void create(String logger) throws Exception;
 
     long clear(String logger, int keep_days, int limit_rows) throws Exception;
+
+    boolean allowSearch();
 }

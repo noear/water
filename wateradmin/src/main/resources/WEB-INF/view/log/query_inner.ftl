@@ -53,7 +53,7 @@
 
 
             <div class="center">
-                <input type="text" class="w350"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId or $Key" id="tagx"/>&nbsp;&nbsp;
+                <input type="text" class="w350"  name="tagx" placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId or ${allowSearch?string('$Key','')}" id="tagx"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
             </div>
 

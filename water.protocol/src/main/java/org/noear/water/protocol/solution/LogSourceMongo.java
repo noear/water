@@ -178,6 +178,11 @@ public class LogSourceMongo implements LogSource {
         return count;
     }
 
+    @Override
+    public boolean allowSearch() {
+        return false;
+    }
+
     private void initIndex(String logger){
         _db.table(logger).orderByDesc("level").createIndex(true);
 

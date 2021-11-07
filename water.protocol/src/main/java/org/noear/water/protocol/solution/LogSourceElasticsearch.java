@@ -166,6 +166,11 @@ public class LogSourceElasticsearch implements LogSource {
         return 0;
     }
 
+    @Override
+    public boolean allowSearch() {
+        return true;
+    }
+
     private void addIndiceByDate(String logger, Datetime datetime, String dsl, String alias) throws IOException {
         String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
         if (_db.indiceExist(indiceName) == false) {
