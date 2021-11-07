@@ -81,7 +81,7 @@
                     </script>
 
                 </left>
-                <right>
+                <right class="sml">
                     <@stateselector stateKey="level" items="ALL,TRACE,DEBUG,INFO,WARN,ERROR"/>
                 </right>
             </div>
