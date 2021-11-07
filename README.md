@@ -61,7 +61,7 @@ solon.app:
   group: "water"
 
 solon.cloud.water:
-  server: "water"                   #WATER服务地址
+  server: "waterapi:9371"                   #WATER服务地址
   config:
     load: "test.properties"         #默认加载的配置
   log:
@@ -84,11 +84,11 @@ public class DemoApp {
                 chain.doFilter(ctx);
             } catch (Throwable e) {
                 //2.顺带记录个异常
-                log.error(e);
+                log.error("{}",e);
             } finally {
                 //3.获得接口响应时长
                 long milliseconds = System.currentTimeMillis() - start;
-                CloudClient.metric().addMeter(Solon.cfg().appName(), "path", c.pathNew(), milliseconds);
+                CloudClient.metric().addMeter(Solon.cfg().appName(), "path", ctx.pathNew(), milliseconds);
             }
         });
     }
@@ -96,9 +96,9 @@ public class DemoApp {
 
 @Slf4j
 @Controller
-class demo{
-    @CloudConfig(value = "water", autoRefreshed = true)  //配置服务的功能（注解模式）
-    DbContext waterDb;
+public class DemoController{
+    @CloudConfig(name = "demoDb", autoRefreshed = true)  //配置服务的功能（注解模式）
+    DbContext demoDb;
 
     @NamiClient            //RPC服务发现的功能（注解模式）
     RockService rockService;
@@ -111,10 +111,10 @@ class demo{
         log.error("{}\r\n{}","test","你好，日志服务"); //(tag,summary,content)
         
         //配置服务：使用配置的数据库上下文进行查询
-        var map = waterDb.table("bcf_user").limit(1).select("*").getMap();
+        Map map = demoDb.table("water_reg_service").limit(1).selectMap("*");
 
         //消息服务：发送消息
-        CloudClient.event().publish(new Event("test.order.start", "{\"order_id\":1}")); //（非注解模式）
+        CloudClient.event().publish(new Event("demo.test", "{\"order_id\":1}")); //（非注解模式）
 
         //Rpc发现服务：调用Rpc接口
         AppModel app = rockService.getAppById(12);
@@ -122,17 +122,20 @@ class demo{
 }
 
 //消息订阅：订阅消息并处理（根据：topic 进行订阅）
-@CloudEvent("test.order.end")
-public class msg_updatecache implements CloudEventHandler {
+@Slf4j
+@CloudEvent("demo.test")
+public class Event_demo_test implements CloudEventHandler {
     @Override
     public boolean handler(Event event) throws Exception {
         //处理消息...
+        log.info("我收到消息：" + event.content());
         return true;
     }
 }
 
+
 //配置订阅：关注配置的实时更新
-@CloudConfig("water")
+@CloudConfig("demoDb")
 public class TestConfigHandler implements CloudConfigHandler {
     @Override
     public void handler(Config config) {
@@ -141,11 +144,13 @@ public class TestConfigHandler implements CloudConfigHandler {
 }
 
 //分布式任务
-@CloudJob(name = "water_test_jost", cron7x = "0 1 * * * ?")
-public class TestJobHandler implements Handler {
+@CloudJob(name = "demo_test", cron7x = "0 1 * * * ?")
+public class Job_test implements CloudJobHandler {
+
     @Override
-    public void handler(Context ctx) {
+    public void handle(Context ctx) throws Throwable {
         //处理任务...
+        log.debug("我被调度了");
     }
 }
 
