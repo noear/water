@@ -1,7 +1,6 @@
-package wateraide.dso;
+package org.noear.water.protocol.model.log;
 
 import org.noear.water.model.LogLevel;
-import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.HtmlEncode;
 import org.noear.water.utils.TextUtils;
@@ -9,6 +8,7 @@ import org.noear.water.utils.TextUtils;
 /**
  * @author noear 2021/9/29 created
  */
+
 public class LogFormater {
     public static final LogFormater instance = new LogFormater();
 
@@ -57,6 +57,12 @@ public class LogFormater {
             buf.append("</a>");
         }
 
+        if (TextUtils.isNotEmpty(log.tag4)) {
+            buf.append("<a tagx='@@@@").append(log.tag4).append("'>");
+            buf.append("[@tag3:").append(log.tag4).append("]");
+            buf.append("</a>");
+        }
+
 
         if (TextUtils.isNotEmpty(log.class_name)) {
             buf.append(" ").append(log.class_name);
@@ -72,10 +78,6 @@ public class LogFormater {
         //内容
         buf.append(":<br/>");
 
-        if (TextUtils.isNotEmpty(log.summary)) {
-            buf.append(summaryHtml(log)).append("<br/>");
-        }
-
         buf.append(contentHtml(log));
 
         return buf.toString();
@@ -84,14 +86,6 @@ public class LogFormater {
 
     public String levelHtml(LogModel log) {
         return "<span class='level" + log.level + "'>[" + LogLevel.of(log.level).name() + "]</span>";
-    }
-
-    public String summaryHtml(LogModel log) {
-        if (log.summary == null) {
-            return "";
-        } else {
-            return HtmlEncode.encode(log.summary);
-        }
     }
 
     public String contentHtml(LogModel log) {
