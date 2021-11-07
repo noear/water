@@ -154,11 +154,14 @@ public class DbWaterRegApi {
 
     }
 
-    public static void delServiceConsumer(String consumer, String consumer_address) throws SQLException {
-        db().table("water_reg_consumer")
-                .whereEq("consumer", consumer)
-                .andEq("consumer_address", consumer_address)
-                .delete();
+    public static void delConsumer(String consumer_address) {
+        try {
+            db().table("water_reg_consumer")
+                    .whereEq("consumer_address", consumer_address)
+                    .delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 

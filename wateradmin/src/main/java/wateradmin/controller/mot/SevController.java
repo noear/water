@@ -133,7 +133,7 @@ public class SevController extends BaseController {
         boolean result = DbWaterRegApi.deleteServiceById(service_id);
 
         //删除消费者记录
-        DbWaterRegApi.delServiceConsumer(sev.name, sev.address);
+        DbWaterRegApi.delConsumer(sev.address);
 
         if (result) {
             viewModel.code(1, "删除成功！");
