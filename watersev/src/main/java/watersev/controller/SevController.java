@@ -252,10 +252,6 @@ public final class SevController implements IJob {
             return;
         }
 
-        if (DbWaterCfgApi.hasGateway(sev.name) == false) {
-            return;
-        }
-
         //通知网关，更新负载
         WaterClient.Notice.updateCache("upstream:" + sev.name);
     }
