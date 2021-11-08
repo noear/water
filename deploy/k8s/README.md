@@ -14,7 +14,6 @@
 运行 Water 助理服务（在本地或服务器上运行都可）
 
 ```shell
-# 也可以直接部署在k8s上
 docker run -it --rm -p 19371:8080 noearorg/wateraide
 ```
 
