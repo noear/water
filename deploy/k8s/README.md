@@ -15,7 +15,7 @@
 
 ```shell
 # 也可以直接部署在k8s上
-docker run -p 19371:8080 --name wateraide noearorg/wateraide
+docker run -it --rm -p 19371:8080 noearorg/wateraide
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
