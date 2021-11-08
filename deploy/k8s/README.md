@@ -38,21 +38,21 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
 * 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）
 * 添加 water/waterpaas 服务 x1+（镜像：noearorg/waterpaas:latest）
 * 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）
-* 添加 water/watertool 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
+* 添加 water/watersev-tool 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
 
     ```properties
     #添加环境变量：
     water.sss=tool
     ```
 
-* 添加 water/waterpln 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
+* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
 
     ```properties
     #添加环境变量：
     water.sss=pln
     ```
 
-* 添加 water/watermsg 服务 x1+（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-msg 服务 x1+（镜像：noearorg/watersev:latest）
 
     ```properties
     #添加环境变量：
