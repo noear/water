@@ -74,7 +74,7 @@
                            class="w150 sml"/>
 
                     <input type="text" name="tagx" id="tagx"
-                           class="w300 sml"
+                           class="w350 sml"
                            placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId ${allowSearch?string('or $Key','')}" />&nbsp;&nbsp;
                     <button type="submit">查询</button>
 
