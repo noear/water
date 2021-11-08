@@ -70,7 +70,7 @@ solon.app:
   group: "water"
 
 solon.cloud.water:
-  server: "waterapi:9371"                   #WATER服务地址
+  server: "waterapi:9371"           #WATER服务地址
   config:
     load: "test.properties"         #默认加载的配置
   log:
