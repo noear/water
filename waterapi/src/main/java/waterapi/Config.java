@@ -60,26 +60,31 @@ public class Config {
         if (_inited == false) {
             _inited = true;
 
-            Props prop = Solon.cfg().getProp("water.dataSource");
-            if (prop.size() < 3) {
-                prop = Solon.cfg().getProp("water.ds");
+            Props props = Solon.cfg().getProp("water.dataSource");
+            if (props.size() < 3) {
+                props = Solon.cfg().getProp("water.ds");
             }
 
-            String dbServer = prop.getProperty("server");
-            String dbSchema = prop.getProperty("schema");
+            String dbServer = props.getProperty("server");
+            String dbSchema = props.getProperty("schema");
 
             if (Utils.isEmpty(dbSchema)) {
                 dbSchema = "water";
-                prop.setProperty("schema", dbSchema);
+                props.setProperty("schema", dbSchema);
             }
 
             if (Utils.isNotEmpty(dbServer)) {
-                prop.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
+                props.setProperty("url", TML_JDBC_URL.replace(TML_MARK_SERVER, dbServer).replace(TML_MARK_SCHEMA, dbSchema));
+            }
+
+            String propsJson = ONode.stringify(props);
+            if(props.size() < 3) {
+                throw new IllegalArgumentException("Water db configuration error: " + propsJson);
             }
 
             //必须最先被初始化
-            System.out.println("[Water] start config water db...");
-            water = DsUtils.getDb(prop, true);
+            System.out.println("[Water] start config water db by: " + propsJson);
+            water = DsUtils.getDb(props, true);
             System.out.println("[Water] start config water paas db...");
             water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 

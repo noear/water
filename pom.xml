@@ -28,5 +28,7 @@
         <module>waterraas</module>
 
         <module>wateraide</module>
+
+        <module>_water_demo</module>
     </modules>
 </project>
