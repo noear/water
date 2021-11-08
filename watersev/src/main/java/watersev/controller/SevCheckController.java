@@ -50,7 +50,7 @@ public final class SevCheckController implements IJob {
     public void exec() throws Throwable {
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watersev", "watersev_lock", 5)) {
+        if (LockUtils.tryLock("watersev", "watersev_lock", 4)) {
             exec0();
         }
     }
