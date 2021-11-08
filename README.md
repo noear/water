@@ -41,6 +41,7 @@
 
 [[Water 教程二] 使用 Solon Coud + Water 初始开发体验](https://www.bilibili.com/video/BV1Xr4y1C76M/)
 
+[Water 教程三] Water 是个一站式的服务治理平台，认识一下
 
 ### (一) 使用
 
