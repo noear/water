@@ -124,7 +124,7 @@
                                     基于统一收集、统一查询界面的原则。提倡日志业务，记录日志的同时把上下文数据也带着。
                                 </div>
                                 <div class="mar10-t">
-                                    支持 MySql 或 MongoDB 或 ElasticSearch 三种持久化方案
+                                    支持 MySql 或 MongoDB 或 ElasticSearch（支持内容搜索） 三种持久化方案
                                 </div>
                             </n-l>
                             <br/>
@@ -135,7 +135,7 @@
                                 url=mongodb://water:1234@mongodb.water.io<br/>
                             </code>
                             <br/>
-                            <n-l>ElasticSearch 示例：</n-l>
+                            <n-l>ElasticSearch 示例：（支持内容搜索）</n-l>
                             <code>
                                 driverType=elasticsearch<br/>
                                 url=localhost:1212<br/>
