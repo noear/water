@@ -34,6 +34,14 @@
 * 日志持久化，支持：MySql、PostgreSQL、MongoDb、ElasticSearch、ClickHouse
 * 消息持久化，支持：MySql、PostgreSQL、MongoDb
 
+
+### 视频演示
+
+[[Water 教程一] 用 docker-compose 快速部署。轻松工作，早点下班哦：）](https://www.bilibili.com/video/BV1T44y1e7AS/)
+
+[[Water 教程二] 使用 Solon Coud + Water 初始开发体验](https://www.bilibili.com/video/BV1Xr4y1C76M/)
+
+
 ### (一) 使用
 
 #### 配置
@@ -164,13 +172,6 @@ public class Job_test implements CloudJobHandler {
 ### （三）部署
 
 [https://gitee.com/noear/water/tree/master/deploy](https://gitee.com/noear/water/tree/master/deploy)
-
-### （四）视频教程
-
-
-[[Water 教程一] 用 docker-compose 快速部署。轻松工作，早点下班哦：）](https://www.bilibili.com/video/BV1T44y1e7AS/)
-
-[[Water 教程二] 使用 Solon Coud + Water 初始开发体验](https://www.bilibili.com/video/BV1Xr4y1C76M/)
 
 
 
