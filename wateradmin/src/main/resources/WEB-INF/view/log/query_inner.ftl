@@ -50,20 +50,6 @@
 
     <toolbar>
         <form accept-charset="UTF-8">
-
-
-            <div class="center">
-                <input type="text"  name="time"  id="time"
-                       jt-laydate="datetime"
-                       placeholder="yyyy-MM-dd HH:mm:ss"
-                       autocomplete="off"
-                       class="w150 sml"/>&nbsp;&nbsp;
-                <input type="text" name="tagx" id="tagx"
-                       class="w300 sml"
-                       placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId ${allowSearch?string('or $Key','')}" />&nbsp;&nbsp;
-                <button type="submit">查询</button>
-            </div>
-
             <div>
                 <left>
 
@@ -80,6 +66,16 @@
                         $('#logger').val('${logger!}');
                         </#if>
                     </script>
+
+                    <input type="text"  name="time"  id="time"
+                           jt-laydate="datetime"
+                           placeholder="yyyy-MM-dd HH:mm:ss"
+                           autocomplete="off"
+                           class="w150 sml"/>&nbsp;&nbsp;
+                    <input type="text" name="tagx" id="tagx"
+                           class="w300 sml"
+                           placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId ${allowSearch?string('or $Key','')}" />&nbsp;&nbsp;
+                    <button type="submit">查询</button>
 
                 </left>
                 <right class="sml">
