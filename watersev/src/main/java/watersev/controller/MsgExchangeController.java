@@ -46,7 +46,7 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public String getName() {
-        return "zan";
+        return "msgexg";
     }
 
     @Override

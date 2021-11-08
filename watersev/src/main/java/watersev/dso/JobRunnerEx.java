@@ -13,15 +13,15 @@ public class JobRunnerEx extends JobRunner {
 
     @Override
     public boolean allow(JobEntity task) {
-        if("chk".equals(task.getName())){
+        if ("reg".equals(task.getName())) {
             return true;
         }
 
         boolean is_ok = (TextUtils.isEmpty(sss) || sss.indexOf(task.getName()) >= 0);
 
-        if(is_ok == false) {
+        if (is_ok == false) {
             if ("tool".equals(sss)) {
-                is_ok = ("zan,sub,sev,syn,mot".indexOf(task.getName()) >= 0);
+                is_ok = ("msgexg,msgchk,sevchk,syn,mot".indexOf(task.getName()) >= 0);
             }
         }
 

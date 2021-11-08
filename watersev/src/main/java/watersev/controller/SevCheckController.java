@@ -28,15 +28,15 @@ import java.util.List;
  * @author noear
  * */
 @Component
-public final class SevController implements IJob {
+public final class SevCheckController implements IJob {
 
-    public SevController() {
+    public SevCheckController() {
         DbWaterRegApi.initServiceState();
     }
 
     @Override
     public String getName() {
-        return "sev";
+        return "sevchk";
     }
 
     @Override

@@ -15,12 +15,12 @@ import watersev.Config;
  * @author noear
  * */
 @Component
-public class ChkController implements IJob {
+public class RegController implements IJob {
     private ONode _args;
 
     @Override
     public String getName() {
-        return "chk";
+        return "reg";
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.*;
 public final class MsgCheckController implements IJob {
     @Override
     public String getName() {
-        return "sub";
+        return "msgchk";
     }
 
     @Override
