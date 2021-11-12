@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
+import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,7 +59,7 @@ public class RegistryApi {
      * 注册
      */
     public void register(String tag, String service, String address, String meta, String check_url, int check_type, String alarm_mobile, String code_location, boolean is_unstable) {
-        if(tag == null){
+        if (tag == null) {
             tag = "";
         }
 
@@ -82,11 +83,21 @@ public class RegistryApi {
         }
     }
 
+    @Deprecated
+    public void unregister(String service, String address, String meta) {
+        unregister(null, service, address, meta);
+    }
+
     /**
      * 注销（用于对接外部框架）
      */
-    public void unregister(String service, String address, String meta) {
+    public void unregister(String tag, String service, String address, String meta) {
         Map<String, String> params = new HashMap<>();
+
+        if (TextUtils.isNotEmpty(tag)) {
+            params.put("tag", tag);
+        }
+
         params.put("service", service);
         params.put("address", address);
         params.put("meta", meta);
@@ -101,8 +112,18 @@ public class RegistryApi {
     /**
      * 设置启用状态
      */
+    @Deprecated
     public void set(String service, String address, String meta, boolean enabled) {
+        set(null, service, address, meta, enabled);
+    }
+
+    public void set(String tag, String service, String address, String meta, boolean enabled) {
         Map<String, String> params = new HashMap<>();
+
+        if (TextUtils.isNotEmpty(tag)) {
+            params.put("tag", tag);
+        }
+
         params.put("service", service);
         params.put("address", address);
         params.put("meta", meta);
@@ -118,20 +139,35 @@ public class RegistryApi {
     /**
      * 发现
      */
+    @Deprecated
     public DiscoverM discover(String service, String consumer, String consumer_address) {
-        return load0(service, consumer, consumer_address);
+        return discover(null, service, consumer, consumer_address);
+    }
+
+    public DiscoverM discover(String tag, String service, String consumer, String consumer_address) {
+        return load0(tag, service, consumer, consumer_address);
     }
 
     /**
      * 发现刷新
      */
+    @Deprecated
     public void discoverFlush(String service, String consumer, String consumer_address) {
-        DiscoverM d1 = load0(service, consumer, consumer_address);
-        noticeTry(service, d1);
+        discoverFlush(null, service, consumer, consumer_address);
     }
 
-    private DiscoverM load0(String service, String consumer, String consumer_address) {
+    public void discoverFlush(String tag, String service, String consumer, String consumer_address) {
+        DiscoverM d1 = load0(tag, service, consumer, consumer_address);
+        noticeTry(tag, service, d1);
+    }
+
+    private DiscoverM load0(String tag, String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
+
+        if (TextUtils.isNotEmpty(tag)) {
+            params.put("tag", tag);
+        }
+
         params.put("service", service);
         params.put("consumer", consumer);
         params.put("consumer_address", consumer_address);
@@ -172,7 +208,7 @@ public class RegistryApi {
     }
 
 
-    private void noticeTry(String service, DiscoverM discover) {
+    private void noticeTry(String tag, String service, DiscoverM discover) {
         Set<DiscoverHandler> tmp = _event.get(service);
 
         if (tmp != null) {
@@ -185,7 +221,12 @@ public class RegistryApi {
     /**
      * 订阅配置集
      */
+    @Deprecated
     public void subscribe(String service, DiscoverHandler callback) {
+        subscribe(null, service, callback);
+    }
+
+    public void subscribe(String tag, String service, DiscoverHandler callback) {
         Set<DiscoverHandler> tmp = _event.get(service);
         if (tmp == null) {
             tmp = new HashSet<>();
