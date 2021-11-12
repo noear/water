@@ -45,7 +45,7 @@
 </#if>
 
 <block>
-    代理网关: ${cfg.url!}
+    代理网关: ${cfg.agent!}
 </block>
 <block>
     负载策略: ${cfg.policy!}
