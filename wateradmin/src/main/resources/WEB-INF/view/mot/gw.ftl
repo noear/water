@@ -35,10 +35,10 @@
             <ul>
                 <#list sevs as m>
                     <#if m.gateway_id == gateway_id>
-                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}" class="sel">${m.tag}/${m.name}</li>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}" class="sel">${m.name}</li>
                     </#if>
                     <#if m.gateway_id != gateway_id>
-                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}">${m.tag}/${m.name}</li>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}">${m.name}</li>
                     </#if>
                 </#list>
             </ul>
