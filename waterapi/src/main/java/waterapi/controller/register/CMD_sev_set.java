@@ -5,8 +5,8 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
+import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
-import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
 import waterapi.dso.db.DbWaterRegApi;
@@ -23,38 +23,20 @@ import waterapi.dso.interceptor.Logging;
 @Whitelist
 @Controller
 public class CMD_sev_set extends UapiBase {
-    /**
-     * @param s 指令
-     */
+
+    @NotEmpty({"tag", "service", "address"})
     @Mapping("/sev/set/")
-    public Result cmd_exec(Context ctx, String s, String meta) throws Exception {
+    public Result cmd_exec(Context ctx, String tag, String service, String address, String meta) throws Exception {
         if (meta == null) {
             meta = ctx.param("note", "");
         }
 
-        if (TextUtils.isEmpty(s)) {
-            String service = ctx.param("service");
-            String address = ctx.param("address");
+        int enabled = ctx.paramAsInt("enabled", 9);
 
-            int enabled = ctx.paramAsInt("enabled", 9);
-
-            return exec0(ctx, service, address, meta, enabled);
-        } else {
-            // 为运维带来便利
-            // s=${service}@${ip:port},${enabled}
-            // curl http://water2/sev/set/?s=rockrpc@10.0.0.79:1013,1
-            //
-            String[] ss = s.split("@");
-            String[] ss2 = ss[1].split(",");
-
-            int enabled = Integer.parseInt(ss2[1]);
-
-            return exec0(ctx, ss[0], ss2[0], meta, enabled);
-        }
+        return exec0(tag, service, address, meta, enabled);
     }
 
-    private Result exec0(Context ctx, String service, String address, String meta, int enabled) throws Exception {
-
+    private Result exec0(String tag, String service, String address, String meta, int enabled) throws Exception {
         if (Utils.isEmpty(service)) {
             throw UapiCodes.CODE_13("s or service");
         }
@@ -63,8 +45,7 @@ public class CMD_sev_set extends UapiBase {
             throw UapiCodes.CODE_13("s or address");
         }
 
-
-        DbWaterRegApi.disableService(service, address, meta, enabled > 0);
+        DbWaterRegApi.disableService(tag, service, address, meta, enabled > 0);
 
         return Result.succeed();
     }

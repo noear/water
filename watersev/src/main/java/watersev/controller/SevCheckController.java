@@ -2,7 +2,7 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
-import org.noear.water.WaterClient;
+import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
@@ -10,7 +10,6 @@ import org.noear.water.utils.Timespan;
 import watersev.Config;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
-import watersev.dso.db.DbWaterCfgApi;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
 import watersev.utils.HttpUtilEx;
@@ -178,7 +177,7 @@ public final class SevCheckController implements IJob {
                 DbWaterRegApi.delConsumer(sev.address);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
-                LogUtil.warn(this, sev.address, sev.name,sev.name + "@" + sev.address, ex);
+                LogUtil.warn(this, sev.address, sev.name, sev.name + "@" + sev.address, ex);
             }
         }
     }
@@ -207,7 +206,7 @@ public final class SevCheckController implements IJob {
                     if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                         AlarmUtil.tryAlarm(sev, true, code);
                         //通知给网关
-                        gatewayNotice(sev);
+                        GatewayUtils.notice(sev.tag, sev.name);
                     }
                 } else {
                     TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
@@ -221,7 +220,7 @@ public final class SevCheckController implements IJob {
                         DbWaterRegApi.delConsumer(sev.address);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.warn(getName(), sev.address, sev.name,sev.name + "@" + sev.address, url2 + "，" + hint);
+                        LogUtil.warn(getName(), sev.address, sev.name, sev.name + "@" + sev.address, url2 + "，" + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
@@ -231,7 +230,7 @@ public final class SevCheckController implements IJob {
                             }
 
                             if (sev.check_error_num == 2) {
-                                gatewayNotice(sev);
+                                GatewayUtils.notice(sev.tag, sev.name);
                             }
                         }
                     }
@@ -243,16 +242,5 @@ public final class SevCheckController implements IJob {
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
             LogUtil.warn(this, sev.address, sev.name, sev.name + "@" + sev.address, ex);
         }
-    }
-
-
-    //通知负载更新
-    private void gatewayNotice(ServiceModel sev) {
-        if (sev.name.contains(":")) {
-            return;
-        }
-
-        //通知网关，更新负载
-        WaterClient.Notice.updateCache("upstream:" + sev.name);
     }
 }

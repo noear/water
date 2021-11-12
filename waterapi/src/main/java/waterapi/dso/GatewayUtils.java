@@ -1,5 +1,4 @@
-package org.noear.water.dso;
-
+package waterapi.dso;
 
 /**
  * @author noear 2021/11/12 created
@@ -10,12 +9,12 @@ public class GatewayUtils {
             return;
         }
 
-        NoticeUtils.updateCache("upstream:" + name);
+        MsgUtils.updateCache("upstream:" + name);
 
 //        if (TextUtils.isEmpty(tag)) {
 //            return;
 //        }
 
-//        NoticeUtils.updateCache("upstream:" + tag + "/" + name);
+//        MsgUtils.updateCache("upstream:" + tag + "/" + name);
     }
 }

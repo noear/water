@@ -4,10 +4,8 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
-import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,21 +81,13 @@ public class RegistryApi {
         }
     }
 
-    @Deprecated
-    public void unregister(String service, String address, String meta) {
-        unregister(null, service, address, meta);
-    }
-
     /**
      * 注销（用于对接外部框架）
      */
     public void unregister(String tag, String service, String address, String meta) {
         Map<String, String> params = new HashMap<>();
 
-        if (TextUtils.isNotEmpty(tag)) {
-            params.put("tag", tag);
-        }
-
+        params.put("tag", tag);
         params.put("service", service);
         params.put("address", address);
         params.put("meta", meta);
@@ -112,18 +102,10 @@ public class RegistryApi {
     /**
      * 设置启用状态
      */
-    @Deprecated
-    public void set(String service, String address, String meta, boolean enabled) {
-        set(null, service, address, meta, enabled);
-    }
-
     public void set(String tag, String service, String address, String meta, boolean enabled) {
         Map<String, String> params = new HashMap<>();
 
-        if (TextUtils.isNotEmpty(tag)) {
-            params.put("tag", tag);
-        }
-
+        params.put("tag", tag);
         params.put("service", service);
         params.put("address", address);
         params.put("meta", meta);
@@ -139,35 +121,14 @@ public class RegistryApi {
     /**
      * 发现
      */
-    @Deprecated
-    public DiscoverM discover(String service, String consumer, String consumer_address) {
-        return discover(null, service, consumer, consumer_address);
-    }
-
     public DiscoverM discover(String tag, String service, String consumer, String consumer_address) {
         return load0(tag, service, consumer, consumer_address);
-    }
-
-    /**
-     * 发现刷新
-     */
-    @Deprecated
-    public void discoverFlush(String service, String consumer, String consumer_address) {
-        discoverFlush(null, service, consumer, consumer_address);
-    }
-
-    public void discoverFlush(String tag, String service, String consumer, String consumer_address) {
-        DiscoverM d1 = load0(tag, service, consumer, consumer_address);
-        noticeTry(tag, service, d1);
     }
 
     private DiscoverM load0(String tag, String service, String consumer, String consumer_address) {
         Map<String, String> params = new HashMap<>();
 
-        if (TextUtils.isNotEmpty(tag)) {
-            params.put("tag", tag);
-        }
-
+        params.put("tag", tag);
         params.put("service", service);
         params.put("consumer", consumer);
         params.put("consumer_address", consumer_address);
@@ -208,31 +169,38 @@ public class RegistryApi {
     }
 
 
-    private void noticeTry(String tag, String service, DiscoverM discover) {
-        Set<DiscoverHandler> tmp = _event.get(service);
-
-        if (tmp != null) {
-            for (DiscoverHandler r : tmp) {
-                r.handler(discover);
-            }
-        }
-    }
+    /**
+     * 发现刷新
+     */
+//    public void discoverFlush(String tag, String service, String consumer, String consumer_address) {
+//        DiscoverM d1 = load0(tag, service, consumer, consumer_address);
+//        noticeTry(tag, service, d1);
+//    }
+//
+//    private void noticeTry(String tag, String service, DiscoverM discover) {
+//        String discoverKey = tag + "/" + service;
+//
+//        Set<DiscoverHandler> tmp = _event.get(discoverKey);
+//
+//        if (tmp != null) {
+//            for (DiscoverHandler r : tmp) {
+//                r.handler(discover);
+//            }
+//        }
+//    }
 
     /**
-     * 订阅配置集
-     */
-    @Deprecated
-    public void subscribe(String service, DiscoverHandler callback) {
-        subscribe(null, service, callback);
-    }
-
-    public void subscribe(String tag, String service, DiscoverHandler callback) {
-        Set<DiscoverHandler> tmp = _event.get(service);
-        if (tmp == null) {
-            tmp = new HashSet<>();
-            _event.put(service, tmp);
-        }
-
-        tmp.add(callback);
-    }
+     * 订阅服务
+     * */
+//    public void subscribe(String tag, String service, DiscoverHandler callback) {
+//        String discoverKey = tag + "/" + service;
+//
+//        Set<DiscoverHandler> tmp = _event.get(discoverKey);
+//        if (tmp == null) {
+//            tmp = new HashSet<>();
+//            _event.put(service, tmp);
+//        }
+//
+//        tmp.add(callback);
+//    }
 }

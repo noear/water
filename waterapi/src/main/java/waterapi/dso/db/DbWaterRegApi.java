@@ -4,6 +4,7 @@ import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.solon.core.handle.Context;
+import waterapi.dso.GatewayUtils;
 import waterapi.dso.IPUtils;
 import waterapi.dso.MsgUtils;
 import waterapi.Config;
@@ -73,12 +74,12 @@ public final class DbWaterRegApi {
 
             //新增节点时，添加负载通知
             if (service.contains(":") == false && check_type == 0) {
-                MsgUtils.updateCache("upstream:" + service);
+                GatewayUtils.notice(tag, service);
             }
         }
     }
 
-    public static boolean delService(String service, String address, String meta) throws SQLException {
+    public static boolean delService(String tag, String service, String address, String meta) throws SQLException {
         String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service")
@@ -87,7 +88,7 @@ public final class DbWaterRegApi {
 
         //通知负载更新
         if (service.contains(":") == false) {
-            MsgUtils.updateCache("upstream:" + service);
+            GatewayUtils.notice(tag, service);
         }
 
         return isOk;
@@ -102,7 +103,7 @@ public final class DbWaterRegApi {
                 .getItem(new ServiceModel());
     }
 
-    public static boolean disableService(String service, String address, String meta, boolean is_enabled) throws SQLException {
+    public static boolean disableService(String tag, String service, String address, String meta, boolean is_enabled) throws SQLException {
         String key = serviceMd5(service, address, meta);
 
         boolean isOk = db().table("water_reg_service")
@@ -112,7 +113,7 @@ public final class DbWaterRegApi {
 
         //通知负载更新
         if (service.contains(":") == false) {
-            MsgUtils.updateCache("upstream:" + service);
+            GatewayUtils.notice(tag, service);
         }
 
         return isOk;

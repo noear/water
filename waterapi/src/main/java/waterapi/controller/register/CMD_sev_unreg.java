@@ -22,9 +22,9 @@ import waterapi.dso.interceptor.Logging;
 @Controller
 public class CMD_sev_unreg extends UapiBase {
 
-    @NotEmpty({"service", "address"})
+    @NotEmpty({"tag", "service", "address"})
     @Mapping("/sev/unreg/")
-    public Result cmd_exec(Context ctx, String service, String address, String meta) throws Exception {
+    public Result cmd_exec(Context ctx, String tag, String service, String address, String meta) throws Exception {
 
         if (meta == null) {
             meta = ctx.param("note"); //旧的
@@ -34,7 +34,7 @@ public class CMD_sev_unreg extends UapiBase {
             meta = "";
         }
 
-        DbWaterRegApi.delService(service, address, meta);
+        DbWaterRegApi.delService(tag, service, address, meta);
 
         return Result.succeed();
     }
