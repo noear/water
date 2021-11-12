@@ -3,6 +3,7 @@ package wateradmin.controller.mot;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
@@ -14,6 +15,7 @@ import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,5 +94,18 @@ public class GwController extends BaseController {
         viewModel.set("csms", csms);
 
         return view("mot/gw_inner");
+    }
+
+    @Mapping("check")
+    public String check(String s, String upstream) throws IOException {
+        if (TextUtils.isNotEmpty(s) && TextUtils.isNotEmpty(upstream)) {
+            if (s.indexOf("@") > 0) {
+                String ca = s.split("@")[1];
+                String url = "http://" + ca + "/run/check/?upstream=" + upstream;
+                return HttpUtils.http(url).get();
+            }
+        }
+
+        return "";
     }
 }
