@@ -38,6 +38,7 @@ public class DbWaterCfgGatewayApi {
 
     public static List<GatewayModel> getGatewayList() throws SQLException {
         return db().table("water_cfg_gateway")
+                .orderByAsc("name")
                 .selectList("*", GatewayModel.class);
     }
 
