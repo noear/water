@@ -1,11 +1,15 @@
 package wateradmin.models.water_cfg;
 
+import lombok.Getter;
+
 import java.util.Date;
 
 /**
  * @author noear 2021/11/12 created
  */
+@Getter
 public class GatewayModel {
+    public int gateway_id;
     /** 标签 */
     public String tag;
     /** 名称 */

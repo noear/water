@@ -15,10 +15,10 @@
     <script>
 
         function save() {
-            var key = $("#key").val();
+            var name = $("#name").val();
 
-            if(!key){
-                top.layer.msg("服务代号不能为空！");
+            if(!name){
+                top.layer.msg("服务名不能为空！");
                 return;
             }
 
@@ -26,9 +26,10 @@
                 type: "POST",
                 url: "/cfg/gateway/ajax/save",
                 data: {
-                    ori_key: '${sev_key!}',
-                    sev_key: $("#key").val(),
-                    url: $("#url").val(),
+                    gateway_id: '${cfg.gateway_id!}',
+                    tag: $("#tag").val(),
+                    name: $("#name").val(),
+                    proxy: $("#proxy").val(),
                     policy: $("#policy").val(),
                     is_enabled:($('#is_enabled').prop("checked")?1:0)
                 },
@@ -37,8 +38,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            parent.location.href = "/cfg/gateway?tag=" + $("#key").val();
-                            //location.href = "/cfg/gateway/inner?sev_key=" + $("#key").val();
+                            parent.location.href = "/cfg/gateway?gateway_id=" + data.gateway_id;
                         }, 800);
                     }else{
                         top.layer.msg(data.msg);
@@ -68,27 +68,30 @@
     <form>
         <table>
             <tr>
-                <th>服务代号</th>
-                <td><input type="text" id="key" autofocus value="${(cfg!).service!}"/></td>
+                <th>tag</th>
+                <td><input type="text" id="tag" autofocus value="${cfg.tag!}"/></td>
             </tr>
             <tr>
-                <th>代理网关</th>
-                <td><input type="text" id="url" value="${(cfg!).url!}"/></td>
+                <th>name</th>
+                <td><input type="text" id="name" autofocus value="${cfg.name!}"/></td>
+            </tr>
+            <tr>
+                <th>代理</th>
+                <td><input type="text" id="proxy" value="${cfg.proxy!}"/></td>
             </tr>
             <tr>
                 <th>负载策略</th>
                 <td>
                     <select id="policy">
-                        <option value="polling" <#if ((cfg!).policy!) == 'polling'>selected</#if>>轮询</option>
-                        <option value="weight" <#if ((cfg!).policy!) == 'weight'>selected</#if>>权重轮询</option>
+                        <option value="polling" <#if (cfg.policy!) == 'polling'>selected</#if>>轮询</option>
+                        <option value="weight" <#if (cfg.policy!) == 'weight'>selected</#if>>权重轮询</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <th>启用</th>
                 <td>
-                    <switcher><label><input type="checkbox" id="is_enabled" value="1" ${(is_enabled = 1)?string("checked","")} /><a></a></label></switcher>
-
+                    <switcher><label><input type="checkbox" id="is_enabled" value="1" ${(cfg.is_enabled = 1)?string("checked","")} /><a></a></label></switcher>
                 </td>
             </tr>
         </table>

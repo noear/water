@@ -5,14 +5,14 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.db.DbWaterCfgApi;
+import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.water_cfg.GatewayModel;
 import wateradmin.models.water_reg.GatewayVoModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
-import wateradmin.models.water_cfg.ConfigModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,40 +26,35 @@ public class GwController extends BaseController {
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")
-    public ModelAndView gw(String tag) throws SQLException {
-        List<ConfigModel> sevs = DbWaterCfgApi.getGateways();
+    public ModelAndView gateway(int gateway_id) throws SQLException {
+        List<GatewayModel> sevs = DbWaterCfgGatewayApi.getGatewayList();
 
-        if (TextUtils.isEmpty(tag)) {
+        if (gateway_id == 0) {
             if (sevs.size() > 0) {
-                tag = sevs.get(0).key;
+                gateway_id = sevs.get(0).gateway_id;
             }
         }
 
         viewModel.set("sevs", sevs);
 
-        viewModel.set("sev_key", tag);
+        viewModel.set("gateway_id", gateway_id);
 
-        return view("mot/gw");
+        return view("cfg/gateway");
 
     }
 
     @Mapping("inner")
-    public ModelAndView gw_inner(String sev_key) throws SQLException {
+    public ModelAndView inner(int gateway_id) throws SQLException {
 
-        ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(SEV_CONFIG_TAG, sev_key);
-        String sev_tmp = cfg.getProp().getProperty("service");
+        GatewayModel cfg = DbWaterCfgGatewayApi.getGateway(gateway_id);
 
-        if (TextUtils.isEmpty(sev_tmp) == false) { //通过 cfg.user, 实现别名与实名的情况
-            sev_key = sev_tmp;
-        }
-
-        List<ServiceModel> sevs = DbWaterRegApi.getServicesByName(sev_key);
+        List<ServiceModel> sevs = DbWaterRegApi.getServicesByName(cfg.name);
 
         List<ServiceSpeedModel> sevPds = DbWaterOpsApi.getServiceSpeedByService(SEV_SERVER_TAG);
 
-        List<ServiceConsumerModel> csms = DbWaterRegApi.getServiceConsumers(sev_key);
+        List<ServiceConsumerModel> csms = DbWaterRegApi.getServiceConsumers(cfg.name);
 
-        List<ServiceSpeedModel> csmPds = DbWaterOpsApi.getServiceSpeedByService("_from", sev_key);
+        List<ServiceSpeedModel> csmPds = DbWaterOpsApi.getServiceSpeedByService("_from", cfg.name);
 
         List<GatewayVoModel> gtws = new ArrayList<>();
 
@@ -93,13 +88,10 @@ public class GwController extends BaseController {
             m.traffic_per = (m.traffic_num / pdsTotal) * 100;
         }
 
-        viewModel.set("is_enabled", cfg.is_enabled);
-        viewModel.set("sev_key", sev_key);
-        viewModel.set("cfg", cfg.getNode().toData());
+        viewModel.set("cfg", cfg);
         viewModel.set("gtws", gtws);
         viewModel.set("csms", csms);
 
-        return view("mot/gw_inner");
-
+        return view("cfg/gateway_inner");
     }
 }

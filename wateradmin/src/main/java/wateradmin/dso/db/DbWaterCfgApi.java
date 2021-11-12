@@ -1,6 +1,5 @@
 package wateradmin.dso.db;
 
-import org.noear.snack.ONode;
 import org.noear.water.WW;
 import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.Base64Utils;
@@ -367,62 +366,7 @@ public class DbWaterCfgApi {
                 .exists();
     }
 
-    public static boolean hasGateway(String name) {
-        try {
-            return db().table("water_cfg_properties")
-                    .whereEq("tag", "_gateway")
-                    .andEq("key", name)
-                    .exists();
-        }catch (Exception ex){
-            return false;
-        }
-    }
 
-    public static void addGateway(String tag, String key, String url, String policy, int is_enabled) throws SQLException {
-        ONode n = new ONode()
-                .set("url", url)
-                .set("service",key.trim())
-                .set("policy", policy);
-
-        db().table("water_cfg_properties")
-                .set("tag", tag.trim())
-                .set("key", key.trim())
-                .set("is_enabled", is_enabled)
-                .set("type", ConfigType.water_gateway)
-                .set("value", n.toJson())
-                .insert();
-    }
-
-    public static void updGateway(String tag, String ori_key, String key, String url, String policy, int is_enabled) throws SQLException {
-        ONode n = new ONode()
-                .set("url", url)
-                .set("service", key.trim())
-                .set("policy", policy);
-
-        //由 tag 决定，是否为gateway
-
-        db().table("water_cfg_properties")
-                .set("key", key.trim())
-                .set("value", n.toJson())
-                .set("is_enabled", is_enabled)
-                .set("type", ConfigType.water_gateway)
-                .whereEq("tag", tag.trim())
-                .andEq("key", ori_key.trim())
-                .update();
-
-        NoticeUtils.updateCache("upstream:" + ori_key);
-        if (ori_key.equals(key) == false) {
-            NoticeUtils.updateCache("upstream:" + key);
-        }
-    }
-
-
-    public static List<ConfigModel> getGateways() throws SQLException {
-        return db().table("water_cfg_properties")
-                .whereEq("type", ConfigType.water_gateway)
-                .select("tag,key,row_id,type,is_enabled")
-                .getList(ConfigModel.class);
-    }
 
     public static void delConfigByIds(int act, String ids) throws SQLException {
         List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());

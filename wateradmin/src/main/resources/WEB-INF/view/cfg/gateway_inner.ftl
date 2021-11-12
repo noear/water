@@ -39,7 +39,7 @@
 
 <#if is_admin == 1>
 <toolbar>
-    <a class='btn' href="/cfg/gateway/edit/${sev_key!}" >修改</a>
+    <a class='btn' href="/cfg/gateway/edit?gateway_id=${cfg.gateway_id!}" >修改</a>
     <a class='btn edit mar10-l' href="/cfg/gateway/add" >新增</a>
 </toolbar>
 </#if>
@@ -118,7 +118,7 @@
                 <td>${(c.row_id)!}</td>
                 <td class="left">${(c.consumer)!}@${c.consumer_address!}
                     <#if c.consumer_address?contains(":")>
-                    - <a class="t2" href="./check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a>
+                    - <a class="t2" href="./check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${cfg.tag!}/${cfg.name!}" target="_blank">检查</a>
                     </#if>
                 </td>
                 <td class="left">${(c.consumer_ip)!}</td>
