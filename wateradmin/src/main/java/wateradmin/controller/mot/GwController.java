@@ -39,7 +39,7 @@ public class GwController extends BaseController {
 
         viewModel.set("gateway_id", gateway_id);
 
-        return view("cfg/gateway");
+        return view("mot/gw");
 
     }
 
@@ -92,6 +92,6 @@ public class GwController extends BaseController {
         viewModel.set("gtws", gtws);
         viewModel.set("csms", csms);
 
-        return view("cfg/gateway_inner");
+        return view("mot/gw_inner");
     }
 }

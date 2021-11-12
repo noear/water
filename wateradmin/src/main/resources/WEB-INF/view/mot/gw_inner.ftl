@@ -12,7 +12,31 @@
         .line1{text-decoration:line-through;}
     </style>
 </head>
+<script>
+
+    <#if is_admin == 1>
+    function set_enabled(service_id, is_enabled, obj) {
+        $.ajax({
+            type: "POST",
+            url: "/cfg/gateway/ajax/enabled",
+            data: {
+                service_id: service_id,
+                is_enabled: is_enabled
+            },
+            success: function (data) {
+                if (1 == data.code) {
+                    location.reload();
+                }else{
+                    top.layer.msg(data.msg);
+                }
+            }
+        });
+    }
+    </#if>
+
+</script>
 <body>
+
 
 <block>
     代理网关: ${cfg.url!}
@@ -36,7 +60,7 @@
         </tr>
         </thead>
         <tbody id="tbody">
-        <#list gtws!! as gtw>
+        <#list gtws as gtw>
             <tr class="${(gtw.service.check_last_state=1)?string('t4 ',' ')}${(gtw.service.is_enabled=0)?string('line1 ',' ')}">
 
                 <td>${(gtw.service.service_id)!}</td>
@@ -73,9 +97,9 @@
                 <td>${(c.row_id)!}</td>
                 <td class="left">${(c.consumer)!}@${c.consumer_address!}
                     <#if c.consumer_address?contains(":")>
-                    - <a class="t2" href="/cfg/gateway/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${sev_key}" target="_blank">检查</a>
+                    - <a class="t2" href="./check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${cfg.tag!}/${cfg.name!}" target="_blank">检查</a>
                     </#if>
-                 </td>
+                </td>
                 <td class="left">${(c.consumer_ip)!}</td>
                 <td class="left">${c.traffic_per?string("00.00")}% (${c.traffic_num})</td>
                 <td>${(c.chk_fulltime)?string("MM-dd HH:mm:ss")}</td>

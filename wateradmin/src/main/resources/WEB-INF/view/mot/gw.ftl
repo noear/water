@@ -9,19 +9,19 @@
     <script src="${js}/lib.js"></script>
     <script>
         $(function () {
-            if ('${sev_key!}') {
-                $('#${sev_key!}').addClass('sel');
+            if ('${gateway_id!}') {
+                $('#e${gateway_id!}').addClass('sel');
             } else {
                 $('tree li:first').addClass('sel');
             }
 
         });
-        var tagName = '${sev_key!}';
-        function node_onclick(sev_key,obj) {
-            tagName = sev_key;
+        var gateway_id = '${gateway_id!}';
+        function node_onclick(tn,obj) {
+            gateway_id = tn;
             $('li.sel').removeClass('sel');
             $(obj).addClass("sel");
-            $("#table").attr('src',"/mot/gw/inner?sev_key=" + tagName);
+            $("#table").attr('src',"/mot/gw/inner?gateway_id=" + gateway_id);
         };
     </script>
     <style>
@@ -34,18 +34,18 @@
         <tree id="tree">
             <ul>
                 <#list sevs as m>
-                    <#if m.key == sev_key>
-                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.key}',this)" id="${m.key}" class="sel">${m.key}</li>
+                    <#if m.gateway_id == gateway_id>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}" class="sel">${m.tag}/${m.name}</li>
                     </#if>
-                    <#if m.key != sev_key>
-                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.key}',this)" id="${m.key}">${m.key}</li>
+                    <#if m.gateway_id != gateway_id>
+                        <li class="${(m.is_enabled=0)?string('line1 ','')}" onclick="node_onclick('${m.gateway_id}',this)" id="e${m.gateway_id}">${m.tag}/${m.name}</li>
                     </#if>
                 </#list>
             </ul>
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/mot/gw/inner?sev_key=${sev_key!}" frameborder="0" id="table"></iframe>
+        <iframe src="/mot/gw/inner?gateway_id=${gateway_id!}" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>
