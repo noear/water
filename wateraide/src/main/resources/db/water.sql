@@ -19,7 +19,21 @@ CREATE TABLE IF NOT EXISTS `water_cfg_broker` (
   PRIMARY KEY (`broker_id`) USING BTREE,
   UNIQUE KEY `UX_broker` (`broker`) USING BTREE,
   KEY `IX_tag` (`tag`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-消息协调器表';
+) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-消息协调器表';
+
+CREATE TABLE IF NOT EXISTS `water_cfg_gateway` (
+  `gateway_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '网关id',
+  `tag` varchar(40) NOT NULL COMMENT '标签',
+  `name` varchar(100) NOT NULL COMMENT '名称',
+  `agent` varchar(255) DEFAULT NULL COMMENT '代理',
+  `policy` varchar(100) DEFAULT NULL COMMENT '策略',
+  `is_enabled` int(11) NOT NULL DEFAULT '1',
+  `update_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
+  PRIMARY KEY (`gateway_id`) USING BTREE,
+  UNIQUE KEY `UX_name` (`name`) USING BTREE,
+  KEY `IX_tag` (`tag`) USING BTREE
+) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-网关';
+
 
 CREATE TABLE IF NOT EXISTS   `water_cfg_logger` (
   `logger_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '日志器ID',
@@ -41,7 +55,7 @@ CREATE TABLE IF NOT EXISTS   `water_cfg_logger` (
   PRIMARY KEY (`logger_id`) USING BTREE,
   UNIQUE KEY `UX_logger` (`logger`) USING BTREE,
   KEY `IX_tag` (`tag`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-日志记录器表';
+) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-日志记录器表';
 
 CREATE TABLE IF NOT EXISTS `water_cfg_properties`  (
   `row_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -92,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
     UNIQUE KEY `IX_subscribe` (`subscriber_key`,`topic_name`) USING BTREE,
     KEY `IX_topic_name` (`topic_name`) USING BTREE,
     KEY `IX_receive_url` (`receive_url`(40)) USING BTREE
-    ) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-订阅者表';
+) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-订阅者表';
 
 
 CREATE TABLE IF NOT EXISTS `water_msg_topic`  (

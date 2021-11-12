@@ -49,7 +49,7 @@ public class CMD_sev_discover extends UapiBase {
         String policy = null;
 
         if (cfg.gateway_id > 0 && cfg.is_enabled > 0) {
-            url = cfg.proxy;
+            url = cfg.agent;
             policy = cfg.policy;
         }
 
@@ -65,7 +65,7 @@ public class CMD_sev_discover extends UapiBase {
         ONode data = new ONode();
 
         data.set("url", url); //以后不再支持
-        data.set("proxy", url);
+        data.set("agent", url);
         data.set("policy", policy); //default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希) //default=polling
 
         data.getOrNew("list").addAll(list, (n, m) -> {

@@ -30,7 +30,6 @@ import java.util.List;
 @Mapping("/cfg/gateway")
 public class GatewayController extends BaseController {
 
-    private static final String SEV_CONFIG_TAG = "_gateway";
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")
@@ -139,10 +138,10 @@ public class GatewayController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @NotEmpty({"tag", "name"})
     @Mapping("ajax/save")
-    public ViewModel save(int gateway_id, String tag, String name, String proxy, String policy, int is_enabled) {
+    public ViewModel save(int gateway_id, String tag, String name, String agent, String policy, int is_enabled) {
 
         try {
-            gateway_id = DbWaterCfgGatewayApi.saveGateway(gateway_id, tag, name, proxy, policy, is_enabled);
+            gateway_id = DbWaterCfgGatewayApi.saveGateway(gateway_id, tag, name, agent, policy, is_enabled);
 
             viewModel.put("gateway_id", gateway_id);
             viewModel.code(1, "成功");

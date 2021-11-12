@@ -12,7 +12,7 @@ public class GatewayModel {
     /** 名称 */
     public String name;
     /** 代理 */
-    public String proxy;
+    public String agent;
     /** 策略 */
     public String policy;
     /**  */

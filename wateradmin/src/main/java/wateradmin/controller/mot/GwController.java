@@ -22,7 +22,6 @@ import java.util.List;
 @Mapping("/mot/gw")
 public class GwController extends BaseController {
 
-    private static final String SEV_CONFIG_TAG = "_gateway";
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")

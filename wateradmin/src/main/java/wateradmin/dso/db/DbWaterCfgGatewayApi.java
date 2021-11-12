@@ -18,11 +18,11 @@ public class DbWaterCfgGatewayApi {
     }
 
 
-    public static int saveGateway(int gatewayId, String tag, String name, String proxy, String policy, int is_enabled) throws SQLException {
+    public static int saveGateway(int gatewayId, String tag, String name, String agent, String policy, int is_enabled) throws SQLException {
         DbTableQuery tb = db().table("water_cfg_gateway")
                 .set("tag", tag.trim())
                 .set("name", name.trim())
-                .set("proxy", proxy.trim())
+                .set("agent", agent.trim())
                 .set("policy", policy.trim())
                 .set("is_enabled", is_enabled);
 

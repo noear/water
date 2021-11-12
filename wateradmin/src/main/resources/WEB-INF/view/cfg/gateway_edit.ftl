@@ -29,7 +29,7 @@
                     gateway_id: '${cfg.gateway_id!}',
                     tag: $("#tag").val(),
                     name: $("#name").val(),
-                    proxy: $("#proxy").val(),
+                    agent: $("#agent").val(),
                     policy: $("#policy").val(),
                     is_enabled:($('#is_enabled').prop("checked")?1:0)
                 },
@@ -77,7 +77,7 @@
             </tr>
             <tr>
                 <th>代理网关</th>
-                <td><input type="text" id="proxy" value="${cfg.proxy!}"/></td>
+                <td><input type="text" id="agent" value="${cfg.agent!}"/></td>
             </tr>
             <tr>
                 <th>负载策略</th>

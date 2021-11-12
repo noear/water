@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigType {
-    public static final int water_gateway = 9;
     public static final int db = 10;
     public static final int redis = 11;
     public static final int mangodb = 12;

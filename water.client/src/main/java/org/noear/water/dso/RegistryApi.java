@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.model.DiscoverM;
+import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -148,7 +149,11 @@ public class RegistryApi {
             if (data.isObject()) {
                 DiscoverM cfg = new DiscoverM();
 
-                cfg.url = data.get("url").getString();
+                cfg.agent = data.get("agent").getString();
+                if(TextUtils.isEmpty(cfg.agent)){
+                    cfg.agent = data.get("url").getString();
+                }
+
                 cfg.policy = data.get("policy").getString();
 
                 if (data.contains("list")) {

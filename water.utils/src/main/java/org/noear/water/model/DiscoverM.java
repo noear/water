@@ -7,7 +7,7 @@ public class DiscoverM {
     //策略
     public String policy;
     //有域网址
-    public String url;
+    public String agent;
     //服务列表
     public final List<DiscoverTargetM> list = new ArrayList<>();
 
