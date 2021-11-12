@@ -1,12 +1,9 @@
 package wateradmin.dso.db;
 
-import org.noear.snack.ONode;
+import org.noear.water.dso.GatewayUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
-import wateradmin.dso.ConfigType;
-import wateradmin.dso.NoticeUtils;
-import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.GatewayModel;
 
 import java.sql.SQLException;
@@ -41,7 +38,7 @@ public class DbWaterCfgGatewayApi {
 
         if (gatewayId > 0) {
             tb.whereEq("gateway_id", gatewayId).update();
-            NoticeUtils.updateCache("upstream:" + name);
+            GatewayUtils.notice(tag, name);
             return gatewayId;
         } else {
             return (int) tb.insert();

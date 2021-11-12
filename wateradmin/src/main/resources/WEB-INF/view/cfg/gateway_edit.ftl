@@ -68,15 +68,15 @@
     <form>
         <table>
             <tr>
-                <th>tag</th>
+                <th>tag*</th>
                 <td><input type="text" id="tag" autofocus value="${cfg.tag!}"/></td>
             </tr>
             <tr>
-                <th>name</th>
+                <th>name*</th>
                 <td><input type="text" id="name" autofocus value="${cfg.name!}"/></td>
             </tr>
             <tr>
-                <th>代理</th>
+                <th>代理网关</th>
                 <td><input type="text" id="proxy" value="${cfg.proxy!}"/></td>
             </tr>
             <tr>

@@ -5,8 +5,8 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.dso.NoticeUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.NoticeUtils;
 import wateradmin.viewModels.ViewModel;
 
 @Controller

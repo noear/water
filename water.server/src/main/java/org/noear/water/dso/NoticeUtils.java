@@ -1,6 +1,5 @@
-package wateradmin.dso;
+package org.noear.water.dso;
 
-import org.noear.solon.Solon;
 import org.noear.water.WaterClient;
 
 /**

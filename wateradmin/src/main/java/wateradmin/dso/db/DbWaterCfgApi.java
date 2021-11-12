@@ -1,6 +1,7 @@
 package wateradmin.dso.db;
 
 import org.noear.water.WW;
+import org.noear.water.dso.NoticeUtils;
 import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
@@ -9,7 +10,6 @@ import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ConfigType;
-import wateradmin.dso.NoticeUtils;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.BrokerModel;
 import wateradmin.models.water_cfg.ConfigModel;

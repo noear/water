@@ -1,12 +1,12 @@
 package wateradmin.dso.db;
 
+import org.noear.water.dso.GatewayUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
-import wateradmin.dso.NoticeUtils;
 import wateradmin.models.water.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
@@ -29,7 +29,7 @@ public class DbWaterRegApi {
                 .delete() > 0;
 
         //通知负载更新
-        upstreamNotice(m.name);
+        GatewayUtils.notice(m.tag, m.name);
 
         return isOk;
     }
@@ -44,19 +44,11 @@ public class DbWaterRegApi {
                 .update() > 0;
 
         //通知负载更新
-        upstreamNotice(m.name);
+        GatewayUtils.notice(m.tag, m.name);
 
         return isOk;
     }
 
-    //通知负载更新
-    private static void upstreamNotice(String sev){
-        if(sev.contains(":")){
-            return;
-        }
-
-        NoticeUtils.updateCache("upstream:"+sev);
-    }
 
     //重置服务
     public static int resetSev() throws SQLException {
@@ -111,12 +103,12 @@ public class DbWaterRegApi {
                 .selectList("*", ServiceModel.class);
     }
 
-    public static boolean udpService(Integer service_id,String name,String address,String note,Integer check_type,String check_url) throws SQLException {
-        if(TextUtils.isEmpty(name) || TextUtils.isEmpty(address)){
+    public static boolean udpService(Integer service_id, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
             return false;
         }
 
-        if(service_id == null){
+        if (service_id == null) {
             service_id = 0;
         }
 
@@ -124,14 +116,14 @@ public class DbWaterRegApi {
                 .table("water_reg_service")
                 .set("name", name)
                 .set("address", address)
-                .set("note",note)
+                .set("note", note)
                 .set("check_type", check_type)
                 .set("check_url", check_url);
 
 
         if (service_id == 0) {
             String key = IDUtils.guid();
-            query.set("check_last_time",new Date())
+            query.set("check_last_time", new Date())
                     .set("key", key).insert();
         } else {
             query.where("service_id = ?", service_id).update();
@@ -162,7 +154,7 @@ public class DbWaterRegApi {
 
 
     //接口的三天的请求频率
-    public static Map<String,List> getChartsForDate(String key, String field) throws SQLException {
+    public static Map<String, List> getChartsForDate(String key, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
@@ -171,11 +163,11 @@ public class DbWaterRegApi {
 
         Map<String, List> resp = new LinkedHashMap<>();
         List<ServiceRuntimeModel> threeDays = db().table("water_reg_service_runtime")
-                .whereEq("key",key)
+                .whereEq("key", key)
                 .and("log_date>=?", date2)
                 .groupBy("key,log_date,log_hour")
                 .orderBy("log_date DESC")
-                .selectList("log_date,log_hour, AVG("+field + ") val", ServiceRuntimeModel.class); //把字段as为val
+                .selectList("log_date,log_hour, AVG(" + field + ") val", ServiceRuntimeModel.class); //把字段as为val
 
         Map<Integer, ServiceRuntimeModel> list0 = new HashMap<>();
         Map<Integer, ServiceRuntimeModel> list1 = new HashMap<>();
@@ -214,13 +206,13 @@ public class DbWaterRegApi {
 
 
     //获取接口三十天响应速度情况
-    public static Map<String,List> getChartsForMonth(String key) throws SQLException {
-        Map<String,List> resp = new LinkedHashMap<>();
+    public static Map<String, List> getChartsForMonth(String key) throws SQLException {
+        Map<String, List> resp = new LinkedHashMap<>();
 
         int date30 = Datetime.Now().addDay(-30).getDate();
 
         List<ServiceRuntimeModel> list = db().table("water_reg_service_runtime")
-                .whereEq("key",key).andGte("log_date",date30)
+                .whereEq("key", key).andGte("log_date", date30)
                 .groupBy("key,log_date")
                 .orderBy("log_date DESC")
                 .limit(30)
