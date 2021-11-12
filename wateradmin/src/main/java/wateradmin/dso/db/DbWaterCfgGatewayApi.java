@@ -17,16 +17,6 @@ public class DbWaterCfgGatewayApi {
         return Config.water;
     }
 
-    public static boolean hasGateway(String tag, String name) {
-        try {
-            return db().table("water_cfg_gateway")
-                    .whereEq("tag", tag)
-                    .andEq("name", name)
-                    .selectExists();
-        } catch (Exception ex) {
-            return false;
-        }
-    }
 
     public static int saveGateway(int gatewayId, String tag, String name, String proxy, String policy, int is_enabled) throws SQLException {
         DbTableQuery tb = db().table("water_cfg_gateway")

@@ -23,23 +23,6 @@ public class DbWaterCfgApi {
     }
 
 
-    //获取配置项目
-    public static DbContext getDbContext(String sourceKey, DbContext defDb) throws SQLException {
-        if (sourceKey == null || sourceKey.indexOf(".") < 0) {
-            return defDb;
-        } else {
-            String[] ss = sourceKey.split("\\.");
-            ConfigModel cfg = getConfig(ss[0], ss[1]);
-
-            if (TextUtils.isEmpty(cfg.value)) {
-                return defDb;
-            } else {
-                return cfg.getDb();
-            }
-        }
-
-    }
-
     public static List<ConfigModel> getConfigByTag(String tag) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
@@ -214,17 +197,5 @@ public class DbWaterCfgApi {
                 .caching(CacheUtils.data)
                 .usingCache(10)
                 .selectList("*", BrokerVo.class);
-    }
-
-    public static boolean hasGateway(String name) {
-        try {
-            return db().table("water_cfg_properties")
-                    .whereEq("tag", "_gateway")
-                    .andEq("key", name)
-                    .andEq("is_enabled",1)
-                    .exists();
-        }catch (Exception ex){
-            return false;
-        }
     }
 }

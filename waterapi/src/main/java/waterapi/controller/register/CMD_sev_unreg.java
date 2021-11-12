@@ -22,7 +22,7 @@ import waterapi.dso.interceptor.Logging;
 @Controller
 public class CMD_sev_unreg extends UapiBase {
 
-    @NotEmpty({"tag", "service", "address"})
+    @NotEmpty({"service", "address"})
     @Mapping("/sev/unreg/")
     public Result cmd_exec(Context ctx, String tag, String service, String address, String meta) throws Exception {
 

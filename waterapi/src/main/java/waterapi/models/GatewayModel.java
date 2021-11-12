@@ -6,6 +6,7 @@ import java.util.Date;
  * @author noear 2021/11/12 created
  */
 public class GatewayModel {
+    public int gateway_id;
     /** 标签 */
     public String tag;
     /** 名称 */

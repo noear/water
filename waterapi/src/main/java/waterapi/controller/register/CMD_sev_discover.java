@@ -9,10 +9,10 @@ import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.db.DbWaterCfgGatewayApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.interceptor.Logging;
-import waterapi.models.ConfigModel;
+import waterapi.models.GatewayModel;
 import waterapi.models.ServiceModel;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class CMD_sev_discover extends UapiBase {
      */
     @NotEmpty("service")
     @Mapping("/sev/discover/")
-    public Result cmd_exec(Context ctx, String service, String consumer, String consumer_address) throws Exception {
+    public Result cmd_exec(Context ctx, String tag, String service, String consumer, String consumer_address) throws Exception {
 
         if (TextUtils.isNotEmpty(consumer) && TextUtils.isNotEmpty(consumer_address)) {
             //记录消费关系
@@ -44,32 +44,28 @@ public class CMD_sev_discover extends UapiBase {
 
         List<ServiceModel> list = DbWaterRegApi.getServiceList(service);
 
-        ConfigModel cfg = DbWaterCfgApi.getConfigNoCache("_gateway", service);
+        GatewayModel cfg = DbWaterCfgGatewayApi.getGatewayByName(service);
         String url = null;
         String policy = null;
 
-        if (TextUtils.isEmpty(cfg.value)) {
+        if (cfg.gateway_id > 0 && cfg.is_enabled > 0) {
+            url = cfg.proxy;
+            policy = cfg.policy;
+        }
+
+        if(url == null){
             url = "";
+        }
+
+        if (TextUtils.isEmpty(policy)) {
             policy = "default";
-        } else {
-            if (cfg.is_enabled == false) {
-                return Result.failure("No gateway is available");
-            }
-
-            ONode prop = cfg.getNode();
-
-            url = prop.get("url").getString();
-            policy = prop.get("policy").getString();
-
-            if (TextUtils.isEmpty(policy)) {
-                policy = "default";
-            }
         }
 
 
         ONode data = new ONode();
 
-        data.set("url", url);
+        data.set("url", url); //以后不再支持
+        data.set("proxy", url);
         data.set("policy", policy); //default(轮询),weight(权重),ip_hash(IP哈希),url_hash(URL哈希) //default=polling
 
         data.getOrNew("list").addAll(list, (n, m) -> {
