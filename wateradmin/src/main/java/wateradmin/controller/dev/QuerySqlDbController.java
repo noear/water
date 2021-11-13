@@ -175,7 +175,4 @@ public class QuerySqlDbController extends BaseController {
 
        return sb.toString();
    }
-
-
-
 }
