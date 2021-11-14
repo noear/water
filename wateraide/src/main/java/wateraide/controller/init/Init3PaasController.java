@@ -23,34 +23,26 @@ public class Init3PaasController {
 
     @Post
     @Mapping("/ajax/init/water_paas")
-    public Result ajax_connect(String config) throws Exception {
+    public Result ajax_connect(String config) {
         if (Config.water == null) {
             return Result.failure("未连接数据库，刷新再试...");
         }
 
         if (Utils.isEmpty(config)) {
-            return Result.failure("配置不能为空");
+            return Result.failure("出错，配置不能为空");
         }
 
         Properties props = Config.getProp(config);
 
         if (props.size() > 3) {
-            DbContext db = Config.getDb(props, false);
-
-            if (db == null) {
-                return Result.failure("连接失败");
-            } else {
-                try {
-                    tryInitSchema(db, config);
-                } catch (SQLException e) {
-                    EventBus.push(e);
-                    //如果失败，关掉数据源; 免得链接池
-                    db.close();
-                    return Result.failure("初始化失败..");
-                }
+            try (DbContext db = Config.getDb(props, true)) {
+                tryInitSchema(db, config);
+            } catch (Exception e) {
+                EventBus.push(e);
+                return Result.failure("出错，" + e.getLocalizedMessage());
             }
         } else {
-            return Result.failure("配置有问题...");
+            return Result.failure("出错，配置有问题...");
         }
 
         return Result.succeed(null, "配置成功");

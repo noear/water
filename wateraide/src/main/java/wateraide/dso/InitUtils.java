@@ -59,7 +59,7 @@ public class InitUtils {
         tryInitSchemaBySplitSql(db, sql);
 
         tryInitDataByTypeJsonSql(db, WaterCfgBrokerModel.class, "water_cfg_broker", "water");
-        tryInitDataByTypeJsonSql(db, WaterCfgLoggerModel.class, "water_cfg_gateway", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgGatewayModel.class, "water_cfg_gateway", "water");
         tryInitDataByTypeJsonSql(db, WaterCfgLoggerModel.class, "water_cfg_logger", "water");
         tryInitDataByTypeJsonSql(db, WaterCfgPropertiesModel.class, "water_cfg_properties", "water");
         tryInitDataByTypeJsonSql(db, WaterCfgWhitelistModel.class, "water_cfg_whitelist", "water");

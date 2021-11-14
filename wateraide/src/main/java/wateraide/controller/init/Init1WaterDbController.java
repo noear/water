@@ -4,6 +4,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Post;
+import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.water.WW;
@@ -23,7 +24,7 @@ import java.util.Properties;
 public class Init1WaterDbController {
     @Post
     @Mapping("/ajax/init/water")
-    public Result ajax_init(Context ctx) throws Exception {
+    public Result ajax_init(Context ctx) {
         if (Config.water == null) {
             return Result.failure("未连接数据库，刷新再试...");
         }
@@ -34,10 +35,16 @@ public class Init1WaterDbController {
         }
 
         if (Utils.isNotEmpty(config)) {
-            Properties props = Utils.buildProperties(config);
-            tryInitSchema(Config.water, props);
+            try {
+                Properties props = Utils.buildProperties(config);
+                tryInitSchema(Config.water, props);
+            } catch (Exception e) {
+                EventBus.push(e);
+                return Result.failure("出错，" + e.getLocalizedMessage());
+            }
+        } else {
+            return Result.failure("出错，缺少配置...");
         }
-
 
         //1.
         return Result.succeed(null, "初始化成功");

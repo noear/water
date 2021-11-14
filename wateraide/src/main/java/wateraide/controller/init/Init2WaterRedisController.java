@@ -21,7 +21,7 @@ public class Init2WaterRedisController {
 
     @Post
     @Mapping("/ajax/init/redis")
-    public Result ajax_init_redis(String config) throws Exception {
+    public Result ajax_init_redis(String config)  {
         if (Config.water == null) {
             return Result.failure("未连接数据库，刷新再试...");
         }
@@ -35,7 +35,7 @@ public class Init2WaterRedisController {
             });
         } catch (Exception e) {
             EventBus.push(e);
-            return Result.failure("连接失败");
+            return Result.failure("出错，连接失败");
         }
 
         Properties waterPro = Config.getCfg(WW.water, WW.water).getProp();
@@ -58,10 +58,14 @@ public class Init2WaterRedisController {
         bcfCfg.append("server.session.timeout=").append("7200").append("\n");
 
         //更新配置
-        DbWaterCfgApi.updConfig(WW.water, WW.water_redis, config);
-        DbWaterCfgApi.updConfig(WW.water, WW.water_cache, cacheCfg);
-        DbWaterCfgApi.updConfig("water_bcf", "bcf.yml", bcfCfg.toString());
-        DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "2");
+        try {
+            DbWaterCfgApi.updConfig(WW.water, WW.water_redis, config);
+            DbWaterCfgApi.updConfig(WW.water, WW.water_cache, cacheCfg);
+            DbWaterCfgApi.updConfig("water_bcf", "bcf.yml", bcfCfg.toString());
+            DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "2");
+        }catch (Exception e){
+            return Result.failure("出错，" + e.getLocalizedMessage());
+        }
 
         //2.
         return Result.succeed(null, "配置成功");
