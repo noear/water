@@ -40,7 +40,7 @@ public class Init1WaterDbController {
                 tryInitSchema(Config.water, props);
             } catch (Exception e) {
                 EventBus.push(e);
-                return Result.failure("出错，" + e.getLocalizedMessage());
+                return Result.failure("出错，连接失败");
             }
         } else {
             return Result.failure("出错，缺少配置...");
