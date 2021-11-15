@@ -49,6 +49,16 @@
 
 [Water 教程三] Water 是个一站式的服务治理平台，认识一下
 
+[Water 教程四] Water 的配置服务应用实战
+
+[Water 教程五] Water 的日志服务应用实战
+
+[Water 教程六] Water 的事件总线服务应用实战
+
+[Water 教程七] Water 的FaaS应用实战
+
+[Water 教程八] Water 的服务监控实战
+
 ### (一) 使用
 
 #### 配置
@@ -65,7 +75,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.5.61</version>
+    <version>1.5.67</version>
 </dependency>
 ```
 
