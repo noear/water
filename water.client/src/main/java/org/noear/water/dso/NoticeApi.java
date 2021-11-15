@@ -3,6 +3,7 @@ package org.noear.water.dso;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
+import org.noear.water.utils.Datetime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,9 @@ public class NoticeApi {
      */
     public void updateConfig(String tag, String name) {
         try {
-            WaterClient.Message.sendMessageAndTags(null, WW.msg_uconfig_topic, tag + "::" + name, tag);
+            //延时三秒
+            WaterClient.Message.sendMessageAndTags(null, null, WW.msg_uconfig_topic, tag + "::" + name,
+                    new Datetime().addSecond(3).getFulltime(), tag);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

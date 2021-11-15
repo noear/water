@@ -2,7 +2,6 @@ package waterapi.dso.db;
 
 import org.noear.water.model.ConfigM;
 import org.noear.water.protocol.model.message.BrokerVo;
-import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
@@ -26,11 +25,11 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getConfigByTag(String tag) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
-                .andEq("is_enabled",1)
-                .select("*")
-//                .caching(CacheUtil.data)
-//                .usingCache(5)
-                .getList(new ConfigModel());
+                .andEq("is_enabled", 1)
+                .caching(CacheUtils.data)
+                .cacheTag("config_" + tag)
+                .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
+                .selectList("*", ConfigModel.class);
     }
 
     public static ConfigM getConfigM(String tag, String key) {
@@ -68,6 +67,8 @@ public class DbWaterCfgApi {
                 .set("update_fulltime",new Date())
                 .where("tag=? AND `key`=?", tag, key)
                 .update();
+
+        CacheUtils.data.clear("config_" + tag);
     }
 
     public static void addConfig(String tag, String key, String value) throws SQLException {

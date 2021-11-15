@@ -57,6 +57,7 @@ public class CMD_cfg_set extends UapiBase {
 
             ProtocolHub.getMsgSource(null)
                     .addMessage(Utils.guid(), trace_id, Config.water_service_name, WW.msg_uconfig_topic, tag + "::" + key, null, false);
+
         }
 
         return Result.succeed();
