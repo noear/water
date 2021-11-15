@@ -32,12 +32,12 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
     water.ds.schema=water
     water.ds.server=mysql.water.io:3306
     water.ds.username=demo
-    water.ds.password=KHe85E4MYdeLBHSR
+    water.ds.password=123456
     ```
 
 * 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）
 * 添加 water/waterpaas 服务 x1+（镜像：noearorg/waterpaas:latest）
-* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）
+* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）；这个不需要，可以不部署
 * 添加 water/watersev-tool 服务 x1（镜像：noearorg/watersev:latest）；更新时，新停再启
 
     ```properties
