@@ -13,34 +13,43 @@ import java.security.SecureRandom;
 public class EncryptUtils {
     private static final char[] _hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    /** 生成sha1码 */
-    public static String sha1(String cleanData){
-        return sha1(cleanData,"utf-8");
+    /**
+     * 生成sha1码
+     */
+    public static String sha1(String cleanData) {
+        return sha1(cleanData, "utf-8");
     }
+
     public static String sha1(String cleanData, String chaerset) {
-        return hashEncode("SHA-1", cleanData,chaerset);
+        return hashEncode("SHA-1", cleanData, chaerset);
     }
 
-    /** 生成sha256码 */
-    public static String sha256(String cleanData){
-        return sha256(cleanData,"utf-8");
+    /**
+     * 生成sha256码
+     */
+    public static String sha256(String cleanData) {
+        return sha256(cleanData, "utf-8");
     }
+
     public static String sha256(String cleanData, String chaerset) {
-        return hashEncode("SHA-256", cleanData,chaerset);
+        return hashEncode("SHA-256", cleanData, chaerset);
     }
 
-    /** 生成md5码 */
-    public static String md5(String cleanData){
-        return md5(cleanData,"utf-8");
+    /**
+     * 生成md5码
+     */
+    public static String md5(String cleanData) {
+        return md5(cleanData, "utf-8");
     }
+
     public static String md5(String cleanData, String chaerset) {
-        return hashEncode("MD5", cleanData,chaerset);
+        return hashEncode("MD5", cleanData, chaerset);
     }
 
     public static String md5Bytes(byte[] bytes) {
         try {
             return do_hashEncode("MD5", bytes);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
@@ -54,12 +63,12 @@ public class EncryptUtils {
         return toX64(hmac(data, key, "HmacSHA256", null));
     }
 
-    public static byte[] hmac(String data, String key, String algorithm, String charset){
-        if(TextUtils.isEmpty(algorithm)){
+    public static byte[] hmac(String data, String key, String algorithm, String charset) {
+        if (TextUtils.isEmpty(algorithm)) {
             algorithm = "HmacSHA256";
         }
 
-        if(TextUtils.isEmpty(charset)) {
+        if (TextUtils.isEmpty(charset)) {
             charset = "UTF-8";
         }
 
@@ -76,15 +85,15 @@ public class EncryptUtils {
     //
     // aesEncrypt , aesDecrypt
     //
-    public static String aesEncrypt(String content, String password) throws Exception{
+    public static String aesEncrypt(String content, String password) throws Exception {
         return aesEncrypt(content, password, null);
     }
 
-    public static String aesEncrypt(String content, String password, String algorithm) throws Exception{
+    public static String aesEncrypt(String content, String password, String algorithm) throws Exception {
         return aesEncrypt(content, password, algorithm, null);
     }
 
-    public static String aesEncrypt(String content, String password, String algorithm, String offset) throws Exception{
+    public static String aesEncrypt(String content, String password, String algorithm, String offset) throws Exception {
         return aesEncrypt(content, password, algorithm, offset, null);
     }
 
@@ -102,10 +111,10 @@ public class EncryptUtils {
         SecretKeySpec secretKey = new SecretKeySpec(pswd, "AES");
         Cipher cipher = Cipher.getInstance(algorithm);
         if (TextUtils.isEmpty(offset)) {
-            cipher.init(1, secretKey);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         } else {
             IvParameterSpec iv = new IvParameterSpec(offset.getBytes(charset));
-            cipher.init(2, secretKey, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
         }
 
         byte[] encrypted = cipher.doFinal(content.getBytes(charset));
@@ -113,15 +122,15 @@ public class EncryptUtils {
 
     }
 
-    public static String aesDecrypt(String content, String password) throws Exception{
+    public static String aesDecrypt(String content, String password) throws Exception {
         return aesDecrypt(content, password, null);
     }
 
-    public static String aesDecrypt(String content, String password, String algorithm) throws Exception{
+    public static String aesDecrypt(String content, String password, String algorithm) throws Exception {
         return aesDecrypt(content, password, algorithm, null);
     }
 
-    public static String aesDecrypt(String content, String password, String algorithm, String offset) throws Exception{
+    public static String aesDecrypt(String content, String password, String algorithm, String offset) throws Exception {
         return aesDecrypt(content, password, algorithm, offset, null);
     }
 
@@ -141,10 +150,10 @@ public class EncryptUtils {
         //密码
         Cipher cipher = Cipher.getInstance(algorithm);
         if (TextUtils.isEmpty(offset)) {
-            cipher.init(2, secretKey);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
         } else {
             IvParameterSpec iv = new IvParameterSpec(offset.getBytes(charset));
-            cipher.init(2, secretKey, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
         }
 
         byte[] encrypted1 = Base64Utils.decodeByte(content); //(new Base64()).decode(content);
@@ -170,7 +179,7 @@ public class EncryptUtils {
     private static String byte2hex(byte[] b) {
         StringBuilder hs = new StringBuilder();
 
-        for(int n = 0; b != null && n < b.length; ++n) {
+        for (int n = 0; b != null && n < b.length; ++n) {
             String stmp = Integer.toHexString(b[n] & 255);
             if (stmp.length() == 1) {
                 hs.append('0');
@@ -186,20 +195,20 @@ public class EncryptUtils {
 
         try {
             byte[] btInput = cleanData.getBytes(chaerset);
-            return do_hashEncode(algorithm,btInput);
+            return do_hashEncode(algorithm, btInput);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    private static String do_hashEncode(String algorithm, byte[] btInput) throws Exception{
+    private static String do_hashEncode(String algorithm, byte[] btInput) throws Exception {
         MessageDigest mdInst = MessageDigest.getInstance(algorithm);
         mdInst.update(btInput);
         return toX16(mdInst.digest());
     }
 
-    public static String toX16(byte[] bytes){
+    public static String toX16(byte[] bytes) {
         int j = bytes.length;
         char[] str = new char[j * 2];
         int k = 0;
@@ -213,7 +222,7 @@ public class EncryptUtils {
         return new String(str);
     }
 
-    public static String toX64(byte[] bytes){
+    public static String toX64(byte[] bytes) {
         return Base64Utils.encodeByte(bytes);
     }
 
