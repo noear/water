@@ -422,6 +422,9 @@ public class DbWaterCfgApi {
 
     //编辑更新config。
     public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
+        if(value == null){
+            value = "";
+        }
 
         value = WW.cfg_data_header + Base64Utils.encode(value.trim());
 
