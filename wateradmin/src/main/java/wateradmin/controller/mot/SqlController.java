@@ -88,15 +88,21 @@ public class SqlController extends BaseController {
         }
 
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, startId, timestamp);
+
+        int pageSize = 50;
+        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, startId, timestamp);
 
 
         viewModel.put("refdate", Datetime.Now().addDay(-2).getDate());
-        viewModel.put("list", logs);
+
+        viewModel.put("pageSize", pageSize);
+        viewModel.put("list", list);
+        viewModel.put("listSize", list.size());
         viewModel.put("tag2s", tag2s);
         viewModel.put("tag_name", tag_name);
-        if (logs.size() > 0) {
-            viewModel.put("lastId", logs.get(logs.size() - 1).log_id);
+
+        if (list.size() > 0) {
+            viewModel.put("lastId", list.get(list.size() - 1).log_id);
         } else {
             viewModel.put("lastId", 0L);
         }

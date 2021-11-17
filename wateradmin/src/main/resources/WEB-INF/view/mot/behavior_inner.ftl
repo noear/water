@@ -12,7 +12,7 @@
         body > header agroup{font-size: 16px;}
     </style>
     <script>
-        function do_query(startId) {
+        function queryDo(startId) {
             if(!startId){
                 startId=0;
             }
@@ -21,7 +21,9 @@
                 tag_name:'${tag_name}',
                 tagx:$('#tagx').val(),
                 log_date:$('#log_date').val(),
-                path:$('#path').val()});
+                path:$('#path').val(),
+                startId:startId
+            });
         }
     </script>
 </head>
@@ -38,7 +40,7 @@
             账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
             log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.HH" id="log_date" class="w100"/>&nbsp;&nbsp;
             path：<input type="text"  id="path" placeholder="/"  id="path" class="w150"/>&nbsp;&nbsp;
-            <button type="button" onclick="do_query()">查询</button>
+            <button type="button" onclick="queryDo()">查询</button>
         </left>
         <right>
             <@stateselector items="ALL,SEL,UPD,INS,DEL"/>
@@ -69,9 +71,9 @@
             </tbody>
         </table>
     </datagrid>
-    <#if list?size gt 40>
+    <#if pageSize == listSize>
         <div class="center h40">
-            <a onclick="do_query(${lastId!0})" class="btn">下一页</a>
+            <a onclick="queryDo(${lastId!0})" class="btn">下一页</a>
         </div>
     </#if>
 </main>

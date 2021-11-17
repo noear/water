@@ -17,6 +17,14 @@
             location.href = "/log/query/inner?tag_name=${tag_name}";
         }
 
+        function queryDo(startId){
+            if(!startId){
+                startId=0;
+            }
+
+            UrlQueryByDic({startId:startId});
+        }
+
         $(function (){
             $(".log a").click(function (){
                 let tagx = $(this).attr('tagx');
@@ -94,6 +102,12 @@
             <br>
         </#list>
     </div>
+
+    <#if pageSize == listSize>
+        <div class="center h40">
+            <a onclick="queryDo(${lastId!0})" class="btn">下一页</a>
+        </div>
+    </#if>
 </main>
 
 </body>

@@ -4,6 +4,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.DateUtil;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.log.LogFormater;
+import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.TextUtils;
 
 import org.noear.solon.annotation.Controller;
@@ -60,7 +61,8 @@ public class LogController extends BaseController {
         ctx.cookieSet("wateradmin_log__tag_" + tag_name, logger);
 
 
-        List list = new ArrayList<>();
+        long pageSize = 50;
+        List<LogModel> list = new ArrayList<>();
         boolean allowSearch = false;
 
 
@@ -88,8 +90,16 @@ public class LogController extends BaseController {
 
         viewModel.put("allowSearch", allowSearch);
         viewModel.put("tag_name", tag_name);
+        viewModel.put("pageSize", pageSize);
         viewModel.put("list", list);
+        viewModel.put("listSize", list.size());
         viewModel.put("logs", loggers);
+
+        if (list.size() > 0) {
+            viewModel.put("lastId", list.get(list.size() - 1).log_id);
+        } else {
+            viewModel.put("lastId", 0L);
+        }
 
         viewModel.put("formater", LogFormater.instance);
 

@@ -49,7 +49,6 @@ public class BehaviorController extends BaseController {
         List<TagCountsM> tag2s = DbWaterLogApi.getSqlOperatorTags(logger, tag_name);
 
         String method = null;
-        int pageSize = 50;
 
         if (_state != null) {
             switch (_state) {
@@ -80,14 +79,17 @@ public class BehaviorController extends BaseController {
             }
         }
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, startId, timestamp);
+        int pageSize = 50;
+        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, startId, timestamp);
 
         viewModel.put("pageSize", pageSize);
-        viewModel.put("list", logs);
+        viewModel.put("listSize", list.size());
+        viewModel.put("list", list);
         viewModel.put("tag2s", tag2s);
         viewModel.put("tag_name", tag_name);
-        if (logs.size() > 0) {
-            viewModel.put("lastId", logs.get(logs.size() - 1).log_id);
+
+        if (list.size() > 0) {
+            viewModel.put("lastId", list.get(list.size() - 1).log_id);
         } else {
             viewModel.put("lastId", 0L);
         }
