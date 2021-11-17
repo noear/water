@@ -3,9 +3,7 @@ package wateradmin.dso.db;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.log.LogModel;
-import org.noear.weed.DbContext;
 import org.noear.water.utils.TextUtils;
-import wateradmin.Config;
 
 import java.util.List;
 
@@ -49,81 +47,20 @@ public class DbWaterLogApi {
         List<LogModel> logList = ProtocolHub.getLogSource(tableName).query(tableName, 0, 50, tagx.toString(), startLogId, timestamp);
 
         return logList;
-
-//        int start = (page - 1) * pageSize;
-//
-//        return db().table(tableName)
-//                .where("1 = 1")
-//                .build(tb -> {
-//                    if (!TextUtils.isEmpty(service)) {
-//                        tb.and("`service` = ?", service);
-//                    }
-//                    if (!TextUtils.isEmpty(method)) {
-//                        tb.and("`method` = ?", method);
-//                    }
-//
-//                    if (!TextUtils.isEmpty(operator)) {
-//                        tb.and("`operator` = ?", operator);
-//                    }
-//
-//                    if (!TextUtils.isEmpty(path)) {
-//                        tb.and("`path` = ?", path);
-//                    }
-//
-//                    if (seconds > 0) {
-//                        tb.and("`seconds` >= ?", seconds);
-//                    }
-//
-//                    if (log_date > 0) {
-//                        tb.and("log_date = ?", log_date);
-//                    }
-//
-//                    if (log_hour > 0) {
-//                        tb.and("log_hour = ?", log_hour);
-//                    }
-//                })
-//                .orderBy("log_id desc")
-//                .limit(start, pageSize)
-//                .select("*")
-//                .getList(new LogSqlModel());
     }
 
     public static List<TagCountsM> getSqlServiceTags(String tableName) throws Exception {
         return ProtocolHub.getLogSource(tableName)
                 .queryGroupCountBy(tableName, null, "service");
-//        return db().table(tableName)
-//                .where("1 = 1")
-//                .groupBy("`service`")
-//                .orderBy("`service` ASC")
-//                .select("`service` tag")
-//                .caching(CacheUtil.data).usingCache(60 * 3)
-//                .getList(TagCountsModel.class);
     }
 
     public static List<TagCountsM> getSqlSecondsTags(String tableName, String service) throws Exception {
         return ProtocolHub.getLogSource(tableName)
                 .queryGroupCountBy(tableName, service, "tag");//tag1=>seconds
-
-//        return db().table(tableName)
-//                .where("`service`=?", service)
-//                .groupBy("seconds")
-//                .orderBy("seconds ASC")
-//                .select("seconds tag")
-//                .caching(CacheUtil.data).usingCache(60 * 3)
-//                .getList(new LogSqlModel());
     }
 
     public static List<TagCountsM> getSqlOperatorTags(String tableName, String service) throws Exception {
-
         return ProtocolHub.getLogSource(tableName)
                 .queryGroupCountBy(tableName, service, "tag2");//tag3=>operator
-
-//        return db().table(tableName)
-//                .where("`service`=?", service)
-//                .groupBy("operator")
-//                .orderBy("operator ASC")
-//                .select("operator tag")
-//                .caching(CacheUtil.data).usingCache(60 * 3)
-//                .getList(TagCountsModel.class);
     }
 }

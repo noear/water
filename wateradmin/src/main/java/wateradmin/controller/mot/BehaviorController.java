@@ -45,7 +45,7 @@ public class BehaviorController extends BaseController {
      * state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER
      */
     @Mapping("behavior/inner")
-    public ModelAndView behavior_inner(String tag_name, String tagx, String log_date, String path, Integer _state) throws Exception {
+    public ModelAndView behavior_inner(String tag_name, String tagx, String log_date, String path, Integer _state, long startId) throws Exception {
         List<TagCountsM> tag2s = DbWaterLogApi.getSqlOperatorTags(logger, tag_name);
 
         String method = null;
@@ -80,12 +80,17 @@ public class BehaviorController extends BaseController {
             }
         }
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, 0, timestamp);
+        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, startId, timestamp);
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("list", logs);
         viewModel.put("tag2s", tag2s);
         viewModel.put("tag_name", tag_name);
+        if (logs.size() > 0) {
+            viewModel.put("lastId", logs.get(logs.size() - 1).log_id);
+        } else {
+            viewModel.put("lastId", 0L);
+        }
 
         return view("mot/behavior_inner");
     }

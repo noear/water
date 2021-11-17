@@ -12,7 +12,11 @@
         body > header agroup{font-size: 16px;}
     </style>
     <script>
-        function do_query() {
+        function do_query(startId) {
+            if(!startId){
+                startId=0;
+            }
+
             UrlQueryByDic({
                 tag_name:'${tag_name}',
                 tagx:$('#tagx').val(),
@@ -65,10 +69,11 @@
             </tbody>
         </table>
     </datagrid>
-    <div>
-        <a>上一页</a>
-        <a>下一页</a>
-    </div>
+    <#if list?size gt 40>
+        <div class="center h40">
+            <a onclick="do_query(${lastId!0})" class="btn">下一页</a>
+        </div>
+    </#if>
 </main>
 
 </body>

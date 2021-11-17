@@ -46,7 +46,7 @@ public class SqlController extends BaseController {
      * state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER
      */
     @Mapping("sql/inner")
-    public ModelAndView behavior_inner(String tag_name, String tagx, String log_date, Integer _state) throws Exception {
+    public ModelAndView behavior_inner(String tag_name, String tagx, String log_date, Integer _state, long startId) throws Exception {
         List<TagCountsM> tag2s = DbWaterLogApi.getSqlSecondsTags(logger, tag_name);
 
 
@@ -88,13 +88,18 @@ public class SqlController extends BaseController {
         }
 
 
-        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, 0, timestamp);
+        List<LogModel> logs = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, seconds, null, null, startId, timestamp);
 
 
         viewModel.put("refdate", Datetime.Now().addDay(-2).getDate());
         viewModel.put("list", logs);
         viewModel.put("tag2s", tag2s);
         viewModel.put("tag_name", tag_name);
+        if (logs.size() > 0) {
+            viewModel.put("lastId", logs.get(logs.size() - 1).log_id);
+        } else {
+            viewModel.put("lastId", 0L);
+        }
 
         return view("mot/sql_inner");
     }
