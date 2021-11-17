@@ -104,7 +104,7 @@
     </div>
 
     <#if pageSize == listSize>
-        <div class="center h40">
+        <div class="center mar15">
             <a onclick="queryDo(${lastId!0})" class="btn">下一页</a>
         </div>
     </#if>
