@@ -56,9 +56,7 @@ public final class SynController implements IJob {
         }
     }
 
-    private void exec0(){
-        Thread.currentThread().setName("water-syn");
-
+    private void exec0() {
         List<SynchronousModel> list = DbWaterApi.getSyncList();
 
         for (SynchronousModel task : list) {
@@ -67,8 +65,10 @@ public final class SynController implements IJob {
                 continue;
             }
 
+            Thread.currentThread().setName("syn-" + task.sync_id);
+
             //2.检查是否到已预设的时间
-            if(task.last_fulltime != null) {
+            if (task.last_fulltime != null) {
                 long seconds = new Timespan(task.last_fulltime).seconds();
                 if (task.interval > seconds) {
                     continue;
@@ -80,7 +80,7 @@ public final class SynController implements IJob {
                 long max_id = doExec(task);
                 if (max_id < 1) {
                     //3.1.如果执行失败//做特别的记录
-                    LogUtil.write(this, task.sync_id+"", task.getTitle(), "-1::maxid=" + max_id);
+                    LogUtil.write(this, task.sync_id + "", task.getTitle(), "-1::maxid=" + max_id);
                 }
 
                 //4.再次设定最后执行时间
@@ -89,8 +89,8 @@ public final class SynController implements IJob {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 //5.如果有异常；记录日志；并报警
-                LogUtil.write(this, task.sync_id+"", task.getTitle(), ex.getMessage());
-                LogUtil.error(this, task.sync_id+"", task.getTitle(), ex);
+                LogUtil.write(this, task.sync_id + "", task.getTitle(), ex.getMessage());
+                LogUtil.error(this, task.sync_id + "", task.getTitle(), ex);
 
                 AlarmUtil.tryAlarm(task, false, 0);
             }

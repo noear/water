@@ -88,7 +88,6 @@ public final class MsgCheckController implements IJob {
                         DbWaterMsgApi.delSubscriberByError(receive_url);
                     }
                 });
-
             }
         } catch (Exception e) {
             //设置出错状态

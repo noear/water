@@ -76,7 +76,7 @@ public final class MotController implements IJob {
      * @param task 监视任务
      */
     private void execDo(MonitorModel task) {
-        String threadName = WW.watersev_mot + "-" + task.monitor_id;
+        String threadName = "mot-" + task.monitor_id;
         Thread.currentThread().setName(threadName);
 
         if (LockUtils.tryLock(WW.watersev_mot, threadName, 59) == false) {

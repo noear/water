@@ -58,8 +58,6 @@ public final class SevCheckController implements IJob {
     }
 
     private void exec0() throws SQLException {
-        Thread.currentThread().setName("water-sev-chk");
-
         if (_init == false) {
             _init = true;
 
@@ -78,6 +76,8 @@ public final class SevCheckController implements IJob {
 
     //检测服务，并尝试报警
     private void check(ServiceModel sev) {
+        Thread.currentThread().setName("sev-c-" + sev.service_id);
+
         if (sev.check_type > 0) {
             //主到签到模式
             check_type1(sev);

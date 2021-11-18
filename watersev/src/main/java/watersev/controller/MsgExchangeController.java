@@ -164,7 +164,7 @@ public class MsgExchangeController implements IJob {
     }
 
     private void exchange(MsgBroker msgBroker, MessageModel msg) {
-        Thread.currentThread().setName("water-msg-e-" + msg.msg_id);
+        Thread.currentThread().setName("msg-e-" + msg.msg_id);
 
         try {
             long ntime = DisttimeUtils.currTime();
