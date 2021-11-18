@@ -11,6 +11,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
+import watersev.dso.CheckinUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
@@ -56,6 +57,8 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        CheckinUtil.checkin("watersev-" + getName());
+
         //控制集群内只有一个节点在跑
         if (getLock() == false) {
             return;
@@ -75,16 +78,12 @@ public class MsgExchangeController implements IJob {
             if (brokerHolder == null) {
                 //如果是第一次
                 brokerHolder = new BrokerHolder(msgBroker);
-                if (brokerHolder.msgBroker == null) {
-                    continue;
-                } else {
-                    brokerHolderMap.put(msgBroker.getName(), brokerHolder);
-                }
-            } else {
-                //如果之前有，检检是否已停?
-                if (brokerHolder.stoped == false) {
-                    break;
-                }
+                brokerHolderMap.put(msgBroker.getName(), brokerHolder);
+            }
+
+            //如果之前有，检检是否已停?
+            if (brokerHolder.started) {
+                break;
             }
 
             exec0(brokerHolder);
@@ -92,19 +91,19 @@ public class MsgExchangeController implements IJob {
     }
 
     private void exec0(BrokerHolder brokerHolder) {
-        brokerHolder.stoped = false;
+        brokerHolder.started = true;
 
         new Thread(() -> {
             try {
                 while (true) {
-                    if (execDo(brokerHolder.msgBroker) == false) {
+                    if (execDo(brokerHolder) == false) {
                         break;
                     }
                 }
             } catch (Throwable e) {
                 log.error("{}", e);
             } finally {
-                brokerHolder.stoped = true;
+                brokerHolder.started = false;
             }
         }).start();
     }

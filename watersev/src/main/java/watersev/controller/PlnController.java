@@ -43,6 +43,8 @@ public class PlnController implements IJob {
 
     @Override
     public void exec() throws Exception {
+        CheckinUtil.checkin("watersev-" + getName());
+
         JtRun.initAwait();
 
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();

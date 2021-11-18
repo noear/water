@@ -16,6 +16,7 @@ import org.noear.water.protocol.model.message.*;
 import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
+import watersev.dso.CheckinUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
@@ -53,11 +54,13 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public int getInterval() {
-        return 10; //让CPU稍微休息下
+        return 100; //让CPU稍微休息下
     }
 
     @Override
     public void exec() throws Exception {
+        CheckinUtil.checkin("watersev-" + getName());
+
         List<MsgBroker> list = null;
 
         if (Utils.isEmpty(jobMsgBroker)) {
@@ -72,16 +75,12 @@ public final class MsgDistributeController implements IJob {
             if (brokerHolder == null) {
                 //如果是第一次
                 brokerHolder = new BrokerHolder(msgBroker);
-                if (brokerHolder.msgBroker == null) {
-                    continue;
-                } else {
-                    brokerHolderMap.put(msgBroker.getName(), brokerHolder);
-                }
-            } else {
-                //如果之前有，检检是否已停?
-                if (brokerHolder.stoped == false) {
-                    break;
-                }
+                brokerHolderMap.put(msgBroker.getName(), brokerHolder);
+            }
+
+            //如果之前有，检检是否已停?
+            if (brokerHolder.started) {
+                break;
             }
 
             exec0(brokerHolder);
@@ -89,24 +88,24 @@ public final class MsgDistributeController implements IJob {
     }
 
     private void exec0(BrokerHolder brokerHolder) {
-        brokerHolder.stoped = false;
+        brokerHolder.started = true;
 
         new Thread(() -> {
             try {
 
-                brokerHolder.msgBroker.getQueue().pollGet(msg_id_str -> {
+                brokerHolder.getQueue().pollGet(msg_id_str -> {
                     if (TextUtils.isEmpty(msg_id_str)) {
                         return;
                     }
 
                     //改用线程池处理
-                    executor.execute(() -> distribute(brokerHolder.msgBroker, msg_id_str));
+                    executor.execute(() -> distribute(brokerHolder, msg_id_str));
                 });
 
             } catch (Throwable e) {
                 log.error("{}", e);
             } finally {
-                brokerHolder.stoped = true;
+                brokerHolder.started = false;
             }
         }).start();
     }

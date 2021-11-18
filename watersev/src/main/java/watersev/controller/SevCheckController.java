@@ -9,6 +9,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
 import watersev.Config;
 import watersev.dso.AlarmUtil;
+import watersev.dso.CheckinUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
@@ -47,6 +48,8 @@ public final class SevCheckController implements IJob {
 
     @Override
     public void exec() throws Throwable {
+        CheckinUtil.checkin("watersev-" + getName());
+
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
         if (LockUtils.tryLock("watersev", "watersev_lock", 4)) {

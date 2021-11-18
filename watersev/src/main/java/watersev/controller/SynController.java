@@ -11,6 +11,7 @@ import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import watersev.dso.AlarmUtil;
+import watersev.dso.CheckinUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.SqlUtil;
 import watersev.dso.db.DbWaterApi;
