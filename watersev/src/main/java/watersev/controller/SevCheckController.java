@@ -200,6 +200,8 @@ public final class SevCheckController implements IJob {
 
             String url2 = url;
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
+                Thread.currentThread().setName("sev-c-" + sev.service_id);
+
                 if (code >= 200 && code < 400) { //正常
                     DbWaterRegApi.udpService0(sev.service_id, 0, code + "");
 

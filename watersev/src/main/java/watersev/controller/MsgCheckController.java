@@ -81,6 +81,8 @@ public final class MsgCheckController implements IJob {
                  * hint:如果出错，提示信息?
                  */
                 HttpUtilEx.getStatusByAsync(checkUrl, (isOk, code, hint) -> {
+                    Thread.currentThread().setName(getName());
+
                     if (code >= 200 && code < 400) {
                         //成功
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
