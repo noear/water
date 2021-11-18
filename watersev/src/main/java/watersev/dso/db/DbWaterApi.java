@@ -46,8 +46,7 @@ public class DbWaterApi {
         try {
             return Config.water.table("water_tool_monitor")
                     .where("is_enabled=1")
-                    .select("*")
-                    .getList(new MonitorModel());
+                    .selectList("*", MonitorModel.class);
         } catch (Exception ex) {
             ex.printStackTrace();
 

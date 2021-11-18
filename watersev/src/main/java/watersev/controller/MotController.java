@@ -57,7 +57,7 @@ public final class MotController implements IJob {
                 continue;
             }
 
-            doExec(task);
+            execDo(task);
         }
     }
 
@@ -66,7 +66,7 @@ public final class MotController implements IJob {
      *
      * @param task 监视任务
      * */
-    private void doExec(MonitorModel task) {
+    private void execDo(MonitorModel task) {
         String threadName = "water-mot-" + task.monitor_id;
         Thread.currentThread().setName(threadName);
 
