@@ -14,12 +14,15 @@ import watersev.dso.MsgInitPlugin;
 import watersev.dso.db.DbWaterCfgApi;
 
 /**
- * 可以按三个服务进行部署：
+ * Watersev 会包函多个子服务，每个子服务会各自签到，会形成各自的服务集群。
  *
- * -sss=tool (msgexg,msgchk,sevchk,syn,mot)
+ * 部署时，可以按三个服务进行部署：（其中 tool 为虚拟的服务集）
+ *
+ * -sss=tool (=msgexg,msgchk,sevchk,syn,mot)
  * -sss=pln
  * -sss=msg
  *
+ * @author noear
  * */
 public class WatersevApp {
     public static void main(String[] args) throws Exception{
@@ -59,6 +62,7 @@ public class WatersevApp {
             //用于清除控制
             ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
 
+            //用于清除控制
             ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, Config.cache_data, DbWaterCfgApi::getBroker);
 
             ProtocolHub.heihei = new HeiheiImp();
