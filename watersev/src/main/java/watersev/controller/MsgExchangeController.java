@@ -102,7 +102,7 @@ public class MsgExchangeController implements IJob {
 
             //如果已开始，跳过
             if (brokerHolder.started) {
-                break;
+                continue;
             }
 
             exec0(brokerHolder);

@@ -113,7 +113,7 @@ public final class MsgDistributeController implements IJob {
 
             //如果之前有，检检是否已停?
             if (brokerHolder.started) {
-                break;
+                continue;
             }
 
             exec0(brokerHolder);
