@@ -86,7 +86,6 @@ public final class MsgCheckController implements IJob {
                     if (code >= 200 && code < 400) {
                         //成功
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
-                        LogUtil.write(this, "", "", receive_url + ", code=" + code);
                     } else {
                         //设置出错状态
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
