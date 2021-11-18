@@ -14,8 +14,9 @@ import java.util.concurrent.Executors;
 public class Config {
     public static final String water_service_name = "watersev";
 
-    public static final ICacheServiceEx cache_file = new LocalCache();
-    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
+    public static final ICacheServiceEx cache_file;
+//    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
+    public static final ICacheServiceEx cache_data;
 
     public static final DbContext water;
     public static final DbContext water_paas;
@@ -34,6 +35,9 @@ public class Config {
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
+
+        cache_file = new LocalCache();
+        cache_data = cfg("water_cache").getCh2().nameSet("cache_data");
     }
 
     public static void tryInit() {

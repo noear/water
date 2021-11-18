@@ -5,6 +5,7 @@ import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
@@ -20,13 +21,16 @@ import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
+import watersev.dso.db.DbWaterRegApi;
 import watersev.models.StateTag;
 import watersev.models.water_cfg.BrokerHolder;
+import watersev.utils.CallUtil;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * 消息派发器（分发给订阅者，并派发）（可集群，可多实例运行）
@@ -61,15 +65,30 @@ public final class MsgDistributeController implements IJob {
     public void exec() throws Exception {
         RegUtil.checkin("watersev-" + getName());
 
-        List<MsgBroker> list = null;
+        //获取集群节点列表（内部缓存1秒）
+        List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msg)
+                .stream()
+                .map(s -> s.address)//提取地址
+                .sorted() //排序，用于定位自己的索引位
+                .collect(Collectors.toList()); //转为List
 
-        if (Utils.isEmpty(jobMsgBroker)) {
-            list = ProtocolHub.getMsgBrokerList();
-        } else {
-            list = Arrays.asList(ProtocolHub.getMsgBroker(jobMsgBroker));
+        int sevSize = sevList.size();
+        int sevIndex = sevList.indexOf(Instance.local().address());
+
+        //如果没有节点数量，退出本次处理
+        if (sevIndex < 0 || sevSize == 0) {
+            return;
         }
 
-        for (MsgBroker msgBroker : list) {
+        List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
+
+        for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
+            if (broIndex % sevSize != sevIndex) {
+                //如果不是集群索引位，跳过（节点不会干相同的事!）
+                continue;
+            }
+
+            MsgBroker msgBroker = broList.get(broIndex);
             BrokerHolder brokerHolder = brokerHolderMap.get(msgBroker.getName());
 
             if (brokerHolder == null) {
@@ -88,28 +107,31 @@ public final class MsgDistributeController implements IJob {
     }
 
     private void exec0(BrokerHolder brokerHolder) {
-        brokerHolder.started = true;
-
-        new Thread(() -> {
-            try {
-
-                brokerHolder.getQueue().pollGet(msg_id_str -> {
-                    if (TextUtils.isEmpty(msg_id_str)) {
-                        return;
-                    }
-
-                    //改用线程池处理
-                    executor.execute(() -> distribute(brokerHolder, msg_id_str));
-                });
-
-            } catch (Throwable e) {
-                log.error("{}", e);
-            } finally {
-                brokerHolder.started = false;
-            }
-        }).start();
+        CallUtil.asynCall(() -> {
+            exec1(brokerHolder);
+        });
     }
 
+    private void exec1(BrokerHolder brokerHolder) {
+        try {
+            brokerHolder.started = true;
+
+            //引处，多节点同时也不会出问题
+            brokerHolder.getQueue().pollGet(msg_id_str -> {
+                if (TextUtils.isEmpty(msg_id_str)) {
+                    return;
+                }
+
+                //改用线程池处理
+                executor.execute(() -> distribute(brokerHolder, msg_id_str));
+            });
+
+        } catch (Throwable e) {
+            log.error("{}", e);
+        } finally {
+            brokerHolder.started = false;
+        }
+    }
 
     private void distribute(MsgBroker msgBroker, String msg_id_str) {
         Thread.currentThread().setName("water-msg-d-" + msg_id_str);

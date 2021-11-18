@@ -1,12 +1,10 @@
 package watersev.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.annotation.Inject;
+import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -16,16 +14,13 @@ import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
-import watersev.models.water_reg.ServiceSmpModel;
+import watersev.utils.CallUtil;
 
-import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * 消息交换器（从持久层转入队列）（可集群，建议只运行1个实例）
@@ -37,14 +32,10 @@ import java.util.concurrent.Executors;
 public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-
     final int _interval_def = 1000;
-    int _interval = 1000;
+    int _interval = 500;
 
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
-
-    @Inject("${water.job.msg.broker}")
-    String jobMsgBroker;
 
     @Override
     public String getName() {
@@ -60,29 +51,38 @@ public class MsgExchangeController implements IJob {
     public void exec() throws Exception {
         RegUtil.checkin("watersev-" + getName());
 
-        //控制集群内只有一个节点在跑
-        if (getLock() == false) {
+        //获取集群节点列表（内部缓存1秒）
+        List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msgexg)
+                .stream()
+                .map(s -> s.address)//提取地址
+                .sorted() //排序，用于定位自己的索引位
+                .collect(Collectors.toList()); //转为List
+
+        int sevSize = sevList.size();
+        int sevIndex = sevList.indexOf(Instance.local().address());
+
+        //如果没有节点数量，退出本次处理
+        if (sevIndex < 0 || sevSize == 0) {
             return;
         }
 
-        List<MsgBroker> list = null;
+        List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
 
-        if (Utils.isEmpty(jobMsgBroker)) {
-            list = ProtocolHub.getMsgBrokerList();
-        } else {
-            list = Arrays.asList(ProtocolHub.getMsgBroker(jobMsgBroker));
-        }
+        for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
+            if (broIndex % sevSize != sevIndex) {
+                //如果不是集群索引位，跳过（节点不会干相同的事!）//最坏的可能，有一个节点会少处理1秒
+                continue;
+            }
 
-        for (MsgBroker msgBroker : list) {
+            MsgBroker msgBroker = broList.get(broIndex);
             BrokerHolder brokerHolder = brokerHolderMap.get(msgBroker.getName());
 
             if (brokerHolder == null) {
-                //如果是第一次
                 brokerHolder = new BrokerHolder(msgBroker);
                 brokerHolderMap.put(msgBroker.getName(), brokerHolder);
             }
 
-            //如果之前有，检检是否已停?
+            //如果已开始，跳过
             if (brokerHolder.started) {
                 break;
             }
@@ -92,21 +92,30 @@ public class MsgExchangeController implements IJob {
     }
 
     private void exec0(BrokerHolder brokerHolder) {
-        brokerHolder.started = true;
+        String lockName = "broker-" + brokerHolder.getName();
 
-        new Thread(() -> {
-            try {
-                while (true) {
-                    if (execDo(brokerHolder) == false) {
-                        break;
-                    }
+        //todo:比任务轮询时间还长，可能不合适？
+        if (LockUtils.tryLock(WW.watersev_msgexg, lockName, 1)) {
+            CallUtil.asynCall(() -> {
+                exec1(brokerHolder);
+            });
+        }
+    }
+
+    private void exec1(BrokerHolder brokerHolder){
+        try {
+            brokerHolder.started = true;
+
+            while (true) {
+                if (execDo(brokerHolder) == false) {
+                    break;
                 }
-            } catch (Throwable e) {
-                log.error("{}", e);
-            } finally {
-                brokerHolder.started = false;
             }
-        }).start();
+        } catch (Throwable e) {
+            log.error("{}", e);
+        } finally {
+            brokerHolder.started = false;
+        }
     }
 
     private boolean execDo(MsgBroker msgBroker) throws Exception {
@@ -172,47 +181,6 @@ public class MsgExchangeController implements IJob {
                     .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
             LogUtil.writeForMsgByError(msg, ex);
-        }
-    }
-
-
-    //
-    // 进行锁控制
-    //
-    private final String lock_group = "watermsg";
-    private final String lock_key = "watermsg_exchange_lock";
-    private final String lock_master_key = "watermsg_exchange_lock_master";
-
-    private boolean getLock() throws SQLException {
-        //
-        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
-        //
-        if (LockUtils.tryLock(lock_group, lock_key, 1)) {
-            //获取当前集群节点id
-            String nodeId = WaterClient.localHost();
-            //获取主节点id
-            String masterNodeId = LockUtils.getClient().openAndGet(us -> us.key(lock_master_key).get());
-
-            if (TextUtils.isNotEmpty(masterNodeId)) {
-                if (nodeId.equals(masterNodeId)) {
-                    return true;
-                }
-
-                //如果有主节点，遍历集群是否在其中？
-                List<ServiceSmpModel> list = DbWaterRegApi.getWaterServiceList(WW.watersev_msgexg);
-                for (ServiceSmpModel sm : list) {
-                    if (sm.address.equals(masterNodeId)) {
-                        //如果找到了，看看是不是当前节点
-                        return nodeId.equals(masterNodeId);
-                    }
-                }
-            }
-
-            LockUtils.getClient().open(us -> us.key(lock_master_key).persist().set(nodeId));
-            return true;
-        } else {
-            //获取锁失败，不用管了
-            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 package watersev.dso.db;
 
+import org.noear.water.utils.CacheUtils;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.weed.DbContext;
 import watersev.Config;
@@ -46,6 +47,8 @@ public final class DbWaterRegApi {
                 .andEq("check_last_state", 0)
                 .andEq("check_type", 0) //检查方式（0被检查；1自己签到）
                 .andEq("name", subService)
+                .caching(Config.cache_data)
+                .usingCache(1)
                 .selectList("name,address,meta,check_last_state", ServiceSmpModel.class);
     }
 
