@@ -274,6 +274,8 @@ public final class MsgDistributeController implements IJob {
         //
         //锁一下，确保计数的线程安全
         //
+        Thread.currentThread().setName("msg-d-" + dist.msg_id);
+
         if (isOk) {
             if (msgBroker.getSource().setDistributionState(tag.msg, dist, MessageState.completed)) {//2
                 tag.value.incrementAndGet();
@@ -375,6 +377,8 @@ public final class MsgDistributeController implements IJob {
     }
 
     private boolean distributeResultLog(MessageModel msg, DistributionModel dist, boolean isOk, Response resp, Exception ex) throws IOException {
+        Thread.currentThread().setName("msg-d-" + msg.msg_id);
+
         dist._duration = new Timespan(dist._start_time).milliseconds();
 
         String text = null;
