@@ -75,13 +75,26 @@ public final class MsgDistributeController implements IJob {
             return;
         }
 
+        /**
+         * 如果 sevSize(3) > broSize(2) || sevSize(3) > broSize(1)。则：1(1),2(2),3(1) || 1(1),2(1),3(1)
+         * 如果 sevSize(1) < broSize(3) || sevSize(2) < broSize(3)。则：1(1),1(2),1(3) || 1(1),2(2),3(1)
+         * */
+
         List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
 
         for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
-            if (broIndex % sevSize != sevIndex) {
-                //如果不是集群索引位，跳过（节点不会干相同的事!）
-                continue;
+            if(sevSize > broList.size()){
+                if (broIndex % broList.size() != sevIndex % broList.size()) {//todo:超过服务顺位的，可让一个bro跑多个sev上
+                    //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    continue;
+                }
+            }else{
+                if (broIndex % sevSize != sevIndex) {
+                    //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    continue;
+                }
             }
+
 
             MsgBroker msgBroker = broList.get(broIndex);
             BrokerHolder brokerHolder = brokerHolderMap.get(msgBroker.getName());

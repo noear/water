@@ -66,12 +66,24 @@ public class MsgExchangeController implements IJob {
             return;
         }
 
+        /**
+         * 如果 sevSize(3) > broSize(2) || sevSize(3) > broSize(1)。则：1(1),2(2),3(1) || 1(1),2(1),3(1)
+         * 如果 sevSize(1) < broSize(3) || sevSize(2) < broSize(3)。则：1(1),1(2),1(3) || 1(1),2(2),3(1)
+         * */
+
         List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
 
         for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
-            if (broIndex % sevSize != sevIndex) {
-                //如果不是集群索引位，跳过（节点不会干相同的事!）//todo:最坏的可能，有一个节点会少处理1秒
-                continue;
+            if(sevSize > broList.size()){
+                if (broIndex % broList.size() != sevIndex) { //todo:超过服务顺位的，空一个sev（确保一个bro，不在多个sev上跑）
+                    //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    continue;
+                }
+            }else{
+                if (broIndex % sevSize != sevIndex) {
+                    //如果不是集群索引位，跳过（节点不会干相同的事!）//todo:最坏的可能，有一个节点会少处理1秒
+                    continue;
+                }
             }
 
             MsgBroker msgBroker = broList.get(broIndex);
