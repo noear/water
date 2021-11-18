@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
@@ -80,17 +81,15 @@ public final class SynController implements IJob {
                 long max_id = doExec(task);
                 if (max_id < 1) {
                     //3.1.如果执行失败//做特别的记录
-                    LogUtil.write(this, task.sync_id + "", task.getTitle(), "-1::maxid=" + max_id);
+                    LogUtil.info(this.getName(), task.sync_id + "", task.getTitle() + ", -1::maxid=" + max_id);
                 }
 
                 //4.再次设定最后执行时间
                 DbWaterApi.setSyncLastTime(task.sync_id);
 
             } catch (Exception ex) {
-                ex.printStackTrace();
                 //5.如果有异常；记录日志；并报警
-                LogUtil.write(this, task.sync_id + "", task.getTitle(), ex.getMessage());
-                LogUtil.error(this, task.sync_id + "", task.getTitle(), ex);
+                LogUtil.error(this.getName(), task.sync_id + "", task.getTitle() + "\n\n" + Utils.throwableToString(ex));
 
                 AlarmUtil.tryAlarm(task, false, 0);
             }
@@ -149,7 +148,7 @@ public final class SynController implements IJob {
 
             if (list.getRowCount() > 0) {
                 tdb.table(tsTable).insertList(list.getRows());
-                LogUtil.write(this, task.sync_id + "", task.getTitle(), "1::maxid=" + max_id);
+                LogUtil.info(this.getName(), task.sync_id + "", task.getTitle()+ ", 1::maxid=" + max_id);
             }
 
 
@@ -176,7 +175,7 @@ public final class SynController implements IJob {
 
             list = sdb.sql(sql).getDataList();
         } else {
-            LogUtil.write(this, task.sync_id+"", task.name + "（非安全代码）", -1+"::"+sql);
+            LogUtil.info(this.getName(), task.sync_id+"", task.name + " is unsafe code, -1+::"+sql);
         }
 
         if (list == null)
@@ -206,7 +205,7 @@ public final class SynController implements IJob {
                 tdb.table(tsTable).where(task.target_pk + "=?", key).update(item);
             }
 
-            LogUtil.write(this, task.sync_id+"", task.getTitle(), "1::maxid=" + max_id);
+            LogUtil.info(this.getName(), task.sync_id+"", task.getTitle()+", 1::maxid=" + max_id);
         }
 
         if (list.getRowCount() < block_size) {

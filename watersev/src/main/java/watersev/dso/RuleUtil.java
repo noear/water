@@ -1,5 +1,6 @@
 package watersev.dso;
 
+import org.noear.solon.Utils;
 import org.noear.water.utils.TextUtils;
 import watersev.utils.JsUtil;
 
@@ -16,7 +17,7 @@ public class RuleUtil {
 
             if (funcList.contains(fun)) {
                 func.append(fun).append(" = function(m)");
-            }else{
+            } else {
                 funcList.add(fun);
                 func.append("function ").append(fun).append("(m)");
             }
@@ -30,7 +31,7 @@ public class RuleUtil {
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.error("RuleUtil",null,"loadFunc::"+ code, ex);
+            LogUtil.error("RuleUtil", "", "loadFunc::" + code + "\n" + Utils.throwableToString(ex));
             return false;
         }
     }

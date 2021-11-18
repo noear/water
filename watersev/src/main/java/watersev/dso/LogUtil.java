@@ -42,7 +42,7 @@ public class LogUtil {
         }
     }
 
-    public static void writeForMsg(MessageModel msg, String broker , String content) {
+    public static void writeForMsg(MessageModel msg, String broker, String content) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(msg.msg_id)
@@ -132,106 +132,34 @@ public class LogUtil {
         }
     }
 
-
-    public static void write(IJob tag, String tag1, String summary, String content) {
-        write(tag.getName(), tag1, summary, content);
-    }
-
-    public static void write(String tag, String summary, String content) {
-        write(tag, null, summary, content);
-    }
-
-    public static void write(String tag, String tag1, String summary, String content) {
+    //==========================================================
+    //
+    //
+    public static void info(String tag, String tag1, String content) {
         MDC.put("tag0", tag);
         MDC.put("tag1", tag1);
 
-        log_sev.info("{}\r\n{}", summary, content);
+        log_sev.info(content);
     }
 
-    public static void error(IJob tag, String tag1, String summary, Throwable content) {
-        MDC.put("tag0", tag.getName());
-        MDC.put("tag1", tag1);
-
-        log_sev.error("{}\r\n{}", summary, content);
-    }
-
-    public static void error(String tag, String tag1, String summary, Throwable content) {
+    public static void warn(String tag, String tag1, String content) {
         MDC.put("tag0", tag);
         MDC.put("tag1", tag1);
 
-        log_sev.error("{}\r\n{}", summary, content);
+        log_sev.warn(content);
     }
 
-    public static void error(String tag, String tag1, String summary, String content) {
+    public static void error(String tag, String tag1, Throwable content) {
         MDC.put("tag0", tag);
         MDC.put("tag1", tag1);
 
-        log_sev.error("{}\r\n{}", summary, content);
+        log_sev.error("{}", content);
     }
 
-    public static void error(String tag, String tag1, String tag2, String summary, String content) {
-        MDC.put("tag0", tag);
-        MDC.put("tag1", tag1);
-        MDC.put("tag2", tag2);
-
-        log_sev.error("{}\r\n{}", summary, content);
-    }
-
-
-    public static void warn(IJob tag, String tag1, String summary, Throwable content) {
-        MDC.put("tag0", tag.getName());
-        MDC.put("tag1", tag1);
-
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-    public static void warn(IJob tag, String tag1, String tag2, String summary, Throwable content) {
-        MDC.put("tag0", tag.getName());
-        MDC.put("tag1", tag1);
-        MDC.put("tag2", tag2);
-
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-    public static void warn(IJob tag, String tag1,  String summary, String content) {
-        MDC.put("tag0", tag.getName());
-        MDC.put("tag1", tag1);
-
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-    public static void warn(String tag, String tag1, String summary, Throwable content) {
+    public static void error(String tag, String tag1, String content) {
         MDC.put("tag0", tag);
         MDC.put("tag1", tag1);
 
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-    public static void warn(String tag, String tag1, String summary, String content) {
-        MDC.put("tag0", tag);
-        MDC.put("tag1", tag1);
-
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-    public static void warn(String tag, String tag1, String tag2, String summary, String content) {
-        MDC.put("tag0", tag);
-        MDC.put("tag1", tag1);
-        MDC.put("tag2", tag2);
-
-        log_sev.warn("{}\r\n{}", summary, content);
-    }
-
-
-    public static void debug(IJob tag, String summary, String content) {
-        MDC.put("tag0", tag.getName());
-
-        log_sev.debug("{}\r\n{}", summary, content);
-    }
-
-    public static void debug(String tag, String summary, String content) {
-        MDC.put("tag0", tag);
-
-        log_sev.debug("{}\r\n{}", summary, content);
+        log_sev.error(content);
     }
 }

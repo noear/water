@@ -80,12 +80,10 @@ public class PlnController implements IJob {
         } catch (Exception ex) {
             long _times = timecount.stop().milliseconds();
 
-            //ex.printStackTrace();
-
             try {
                 DbWaterPaasApi.setPlanState(task, 8, "error");
             } catch (Throwable ex2) {
-                ex2.printStackTrace();
+                LogUtil.planError(this, task, _times, ex);
             }
 
             LogUtil.planError(this, task, _times, ex);

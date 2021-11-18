@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
@@ -81,7 +82,7 @@ public final class SevCheckController implements IJob {
         if (times < 10) {
             //对签到型的服务进行检查 (10s内，是否有签到过)
             //
-            DbWaterRegApi.udpService1(sev.service_id,  0);
+            DbWaterRegApi.udpService1(sev.service_id, 0);
 
             if (sev.check_error_num >= 2) {
                 //之前2次坏的，现在好了提示一下
@@ -98,7 +99,7 @@ public final class SevCheckController implements IJob {
                 //
                 // 如果稳定服务，则提示出错
                 //
-                DbWaterRegApi.udpService1(sev.service_id,  1);
+                DbWaterRegApi.udpService1(sev.service_id, 1);
 
                 if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                     //报警，30秒一次
@@ -164,7 +165,7 @@ public final class SevCheckController implements IJob {
                 DbWaterRegApi.delConsumer(sev.address);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
-                LogUtil.warn(this, sev.address, sev.name, sev.name + "@" + sev.address, ex);
+                LogUtil.warn(this.getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
             }
         }
     }
@@ -211,7 +212,7 @@ public final class SevCheckController implements IJob {
                         DbWaterRegApi.delConsumer(sev.address);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.warn(getName(), sev.address, sev.name, sev.name + "@" + sev.address, url2 + "，" + hint);
+                        LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
@@ -231,7 +232,7 @@ public final class SevCheckController implements IJob {
             TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
-            LogUtil.warn(this, sev.address, sev.name, sev.name + "@" + sev.address, ex);
+            LogUtil.warn(this.getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
         }
     }
 }

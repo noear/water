@@ -1,5 +1,6 @@
 package watersev.controller;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
@@ -51,12 +52,13 @@ public final class MsgCheckController implements IJob {
         Set<String> subs = new HashSet<>();
 
         for (SubscriberModel sev : list) {
-            //只检查IP的订阅（subs.subscriber_note 必不为空）
+            //只检查有订阅地址的
             //
             if (TextUtils.isEmpty(sev.receive_url)) {
                 continue;
             }
 
+            //对订阅地址汇总去重（减少检测次数）
             subs.add(sev.receive_url);
         }
 
@@ -72,7 +74,7 @@ public final class MsgCheckController implements IJob {
         try {
             String checkUrl = MsgUtils.getReceiveUrl2(receive_url); //可能会异常
 
-            if (checkUrl.startsWith("http://")) {
+            if (checkUrl.startsWith("http://") || checkUrl.startsWith("https://")) {
 
                 /**
                  * callback:
@@ -80,6 +82,8 @@ public final class MsgCheckController implements IJob {
                  * code:如果成功，状态码为何?
                  * hint:如果出错，提示信息?
                  */
+
+                //最多5秒会超时
                 HttpUtilEx.getStatusByAsync(checkUrl, (isOk, code, hint) -> {
                     Thread.currentThread().setName("job-" + getName());
 
@@ -91,7 +95,16 @@ public final class MsgCheckController implements IJob {
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
                         //尝试删除不稳定的出错订阅
                         DbWaterMsgApi.delSubscriberByError(receive_url);
-                        LogUtil.warn(this, "", "", receive_url + ", code=" + code);
+
+                        //构建日志内容
+                        StringBuilder buf = new StringBuilder();
+                        buf.append(receive_url).append(", code=").append(code);
+
+                        if (receive_url.startsWith("@")) {
+                            buf.append(", by check=").append(checkUrl);
+                        }
+
+                        LogUtil.warn(this.getName(), "", buf.toString());
                     }
                 });
             }
@@ -100,7 +113,7 @@ public final class MsgCheckController implements IJob {
             DbWaterMsgApi.setSubscriberState(receive_url, 1);
             //尝试删除不稳定的出错订阅
             DbWaterMsgApi.delSubscriberByError(receive_url);
-            LogUtil.error(this, "", receive_url, e);
+            LogUtil.error(this.getName(), "", receive_url + "::\n" + Utils.throwableToString(e));
         }
     }
 }

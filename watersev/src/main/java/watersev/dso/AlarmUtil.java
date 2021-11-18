@@ -44,8 +44,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("msg", alias, sb.toString());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil", null, "", ex);
+            LogUtil.error("AlarmUtil",  "", ex);
         }
     }
 
@@ -77,8 +76,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("sev", alias, sb.toString());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil", null, "", ex);
+            LogUtil.error("AlarmUtil",  "", ex);
         }
     }
 
@@ -98,8 +96,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("syn", alias, sb.toString());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil", null, "", ex);
+            LogUtil.error("AlarmUtil",  "", ex);
         }
     }
 
@@ -117,8 +114,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("pln", alias, sb.toString());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil", null, "", ex);
+            LogUtil.error("AlarmUtil",  "", ex);
         }
     }
 
@@ -153,8 +149,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("mot", alias, sb.toString());
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("AlarmUtil", null, "", ex);
+            LogUtil.error("AlarmUtil",  "", ex);
         }
     }
 
@@ -163,7 +158,7 @@ public class AlarmUtil {
             return;
         }
 
-        sb.append("\r\n\r\n");
+        sb.append("\n\n");
 
         if (TextUtils.isEmpty(alarm_sign) == false) {
             sb.append("[").append(alarm_sign).append("]");

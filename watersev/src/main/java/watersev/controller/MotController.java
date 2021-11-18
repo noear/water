@@ -3,6 +3,7 @@ package watersev.controller;
 import luffy.JtRun;
 import org.noear.snack.ONode;
 import org.noear.snack.core.Options;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
@@ -89,8 +90,7 @@ public final class MotController implements IJob {
 
             runTask(task);
         } catch (Throwable ex) {
-            ex.printStackTrace();
-            LogUtil.error(this, task.monitor_id + "", task.name, ex);
+            LogUtil.error(this.getName(), task.monitor_id + "", task.name + "::\n\n" + Utils.throwableToString(ex));
         } finally {
             ContextUtil.currentRemove();
         }
@@ -141,9 +141,9 @@ public final class MotController implements IJob {
         }
 
         if (isMatch) {
-            LogUtil.write(this, task.monitor_id + "", task.name, "match[error]==" + task.alarm_exp + "#" + task_tag + "（解发告警）\n" + model_json);
+            LogUtil.warn(this.getName(), task.monitor_id + "", task.name+", match[error]==" + task.alarm_exp + "#" + task_tag + "(alarm)\n" + model_json);
         } else {
-            LogUtil.write(this, task.monitor_id + "", task.name, "no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
+            LogUtil.info(this.getName(), task.monitor_id + "", task.name+ ", no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
         }
 
         if (isMatch) {
@@ -180,7 +180,7 @@ public final class MotController implements IJob {
         String sql = SqlUtil.preProcess(query);
 
         if (SqlUtil.isSafe(sql) == false) {
-            LogUtil.write(this, task.monitor_id + "", task.name + "（非安全代码）", "-1::" + sql);
+            LogUtil.warn(this.getName(), task.monitor_id + "", task.name + " is unsafe code::" + sql);
             return MotResult.failure();
         }
 
