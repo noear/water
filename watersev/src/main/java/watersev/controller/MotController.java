@@ -34,7 +34,7 @@ public final class MotController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 5;
+        return 1000 * 5; //实际是：60s 跑一次
     }
     int count;
 
@@ -42,7 +42,7 @@ public final class MotController implements IJob {
     public void exec() throws Exception {
         RegUtil.checkin("watersev-" + getName());
 
-        if (count % 12 > 0) { //60s, 跑一次
+        if (count % 12 > 0) { //60s 跑一次
             return;
         }
         count++;
@@ -61,11 +61,16 @@ public final class MotController implements IJob {
         }
     }
 
+    /**
+     * 会对每个监视任务进行分布式锁控制，故可以多实例集群部署
+     *
+     * @param task 监视任务
+     * */
     private void doExec(MonitorModel task) {
         String threadName = "water-mot-" + task.monitor_id;
         Thread.currentThread().setName(threadName);
 
-        if (LockUtils.tryLock("watermot", threadName, 59) == false) {
+        if (LockUtils.tryLock("watermot", threadName, 60) == false) {
             //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
             return;
         }
