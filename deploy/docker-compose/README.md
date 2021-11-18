@@ -28,5 +28,5 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
 **开始运行**
 
 ```shell
-docker-compose up water/docker-compose.yml
+docker-compose up
 ```
