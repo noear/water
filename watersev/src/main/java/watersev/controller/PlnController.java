@@ -13,12 +13,11 @@ import watersev.dso.db.DbWaterPaasApi;
 import watersev.models.water_paas.PaasFileModel;
 import watersev.utils.CallUtil;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 定时任务（可集群，建议只运行1个实例）
+ * 定时任务（可集群，可多实例运行）
  * <p>
  * 状态：(成功:9, 出错:8, 处理中:2, 待处理:1（立即执行）, 待处理:0）
  *
@@ -46,14 +45,6 @@ public class PlnController implements IJob {
     public void exec() throws Exception {
         JtRun.initAwait();
 
-        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
-        //
-        if (LockUtils.tryLock("waterpln", "waterpln_lock", 1)) {
-            exec0();
-        }
-    }
-
-    private void exec0() throws SQLException {
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
         System.out.println("查到任务数：" + list.size());
@@ -66,7 +57,15 @@ public class PlnController implements IJob {
     }
 
     private void doExec(PaasFileModel task) {
-        Thread.currentThread().setName("water-pln-" + task.file_id);
+        String threadName = "water-pln-" + task.file_id;
+        Thread.currentThread().setName(threadName);
+
+        if (LockUtils.tryLock("waterpln", threadName, 1) == false) {
+            //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
+           return;
+        }
+
+
 
         //2.1.计时开始
         Timecount timecount = new Timecount().start();
