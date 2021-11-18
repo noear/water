@@ -185,9 +185,9 @@
                 <tr title="状态代码：${msg.stateStr()}；变更时间：${msg.last_fulltime?string('MM-dd HH:mm:ss')}；跟踪标识：${msg.trace_id!}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${msg.msg_id}" /><a></a></label></checkbox></td>
                     <td>${msg.msg_id}</td>
-                    <td class="left">${msg.topic_name}
+                    <td class="left"><a onclick="$('#key').val('${msg.topic_name}');search();">${msg.topic_name}</a>
                     <#if msg.tags?? && msg.tags?length gt 0>
-                        - @${msg.tags!}
+                        - <a onclick="$('#key').val('@${msg.tags!}');search();">@${msg.tags!}</a>
                     </#if>
                     </td>
                     <td class="left break">${msg.content}</td>
