@@ -37,7 +37,7 @@ public class Config {
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 
         cache_file = new LocalCache();
-        cache_data = cfg("water_cache").getCh2().nameSet("cache_data");
+        cache_data = cfg("water_cache").getCh().nameSet("cache_data");
     }
 
     public static void tryInit() {
