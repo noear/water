@@ -85,14 +85,14 @@ public final class MsgDistributeController implements IJob {
         List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
 
         for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
-            if(sevSize > broList.size()){
+            if (sevSize > broList.size()) {
                 if (broIndex % broList.size() != sevIndex % broList.size()) {//todo:超过服务顺位的，可让一个bro跑多个sev上
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
                     LogUtil.warn(this, "", "",
                             "broIndex % broList.size() != sevIndex % broList.size()");
                     continue;
                 }
-            }else{
+            } else {
                 if (broIndex % sevSize != sevIndex) {
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
                     LogUtil.warn(this, "", "",
@@ -222,7 +222,7 @@ public final class MsgDistributeController implements IJob {
         } catch (Throwable ex) {
             msgBroker.getSource().setMessageRepet(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
-            LogUtil.writeForMsgByError(msg, ex);
+            LogUtil.writeForMsgByError(msg, msgBroker.getName(), ex);
         }
     }
 
@@ -343,7 +343,7 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-                            distributeResultLog(msg, dist, isOk, resp, ex);
+                            distributeResultLog(msgBroker, msg, dist, isOk, resp, ex);
                         });
 
                 //::2:: 进行异步http分发 //不等待 //状态设为已完成
@@ -364,19 +364,19 @@ public final class MsgDistributeController implements IJob {
                 HttpUtils.http(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
-                            boolean isOk2 = distributeResultLog(msg, dist, isOk, resp, ex);
+                            boolean isOk2 = distributeResultLog(msgBroker, msg, dist, isOk, resp, ex);
                             callback.run(msgBroker, tag, dist, isOk2);
                         });
             }
 
         } catch (Exception ex) {
-            LogUtil.writeForMsgByError(msg, dist, ex.getLocalizedMessage());
+            LogUtil.writeForMsgByError(msg, msgBroker.getName(), dist, ex.getLocalizedMessage());
 
             callback.run(msgBroker, tag, dist, false);
         }
     }
 
-    private boolean distributeResultLog(MessageModel msg, DistributionModel dist, boolean isOk, Response resp, Exception ex) throws IOException {
+    private boolean distributeResultLog(MsgBroker msgBroker, MessageModel msg, DistributionModel dist, boolean isOk, Response resp, Exception ex) throws IOException {
         Thread.currentThread().setName("msg-d-" + msg.msg_id);
 
         dist._duration = new Timespan(dist._start_time).milliseconds();
@@ -398,9 +398,9 @@ public final class MsgDistributeController implements IJob {
                 boolean isOk2 = "OK".equals(text);
 
                 if (isOk2) {
-                    LogUtil.writeForMsg(msg, dist, text);
+                    LogUtil.writeForMsg(msg, msgBroker.getName(), dist, text);
                 } else {
-                    LogUtil.writeForMsgByError(msg, dist, text);
+                    LogUtil.writeForMsgByError(msg, msgBroker.getName(), dist, text);
                 }
 
                 return isOk2;
@@ -412,9 +412,9 @@ public final class MsgDistributeController implements IJob {
                         text = code + " - " + text;
                     }
 
-                    LogUtil.writeForMsgByError(msg, dist, text);
+                    LogUtil.writeForMsgByError(msg, msgBroker.getName(), dist, text);
                 } else {
-                    LogUtil.writeForMsgByError(msg, dist, Utils.getFullStackTrace(ex));
+                    LogUtil.writeForMsgByError(msg, msgBroker.getName(), dist, Utils.getFullStackTrace(ex));
                 }
 
                 return false;

@@ -76,14 +76,14 @@ public class MsgExchangeController implements IJob {
         List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
 
         for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
-            if(sevSize > broList.size()){
+            if (sevSize > broList.size()) {
                 if (broIndex % broList.size() != sevIndex) { //todo:超过服务顺位的，空一个sev（确保一个bro，不在多个sev上跑）
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
                     LogUtil.warn(this, "", "",
                             "broIndex % broList.size() != sevIndex");
                     continue;
                 }
-            }else{
+            } else {
                 if (broIndex % sevSize != sevIndex) {
                     //如果不是集群索引位，跳过（节点不会干相同的事!）//todo:最坏的可能，有一个节点会少处理1秒
                     LogUtil.warn(this, "", "",
@@ -120,7 +120,7 @@ public class MsgExchangeController implements IJob {
         }
     }
 
-    private void exec1(BrokerHolder brokerHolder){
+    private void exec1(BrokerHolder brokerHolder) {
         try {
             brokerHolder.started = true;
 
@@ -180,7 +180,7 @@ public class MsgExchangeController implements IJob {
 
             exchangeDo(msgBroker, msg);
         } catch (Throwable ex) {
-            LogUtil.writeForMsgByError(msg, ex);
+            LogUtil.writeForMsgByError(msg, msgBroker.getName(), ex);
         }
     }
 
@@ -198,7 +198,7 @@ public class MsgExchangeController implements IJob {
             msgBroker.getSource()
                     .setMessageState(msg, MessageState.undefined);//0); //如果失败，重新设为0 //重新操作一次
 
-            LogUtil.writeForMsgByError(msg, ex);
+            LogUtil.writeForMsgByError(msg, msgBroker.getName(), ex);
         }
     }
 }

@@ -16,7 +16,7 @@ public class LogUtil {
     private static Logger log_sev = LoggerFactory.getLogger(WW.logger_water_log_sev);
     private static Logger log_paas = LoggerFactory.getLogger(WW.logger_water_log_paas);
 
-    public static void writeForMsg(MessageModel msg, DistributionModel dist, String content) {
+    public static void writeForMsg(MessageModel msg, String broker, DistributionModel dist, String content) {
         if (dist == null) {
             dist = new DistributionModel();
         }
@@ -33,6 +33,7 @@ public class LogUtil {
 
         MDC.put("tag0", msg.topic_name);
         MDC.put("tag1", String.valueOf(msg.msg_id));
+        MDC.put("tag3", broker);
 
         if (TextUtils.isEmpty(dist.receive_url)) {
             log_msg.info("{}\r\n{}", summary, content);
@@ -41,7 +42,7 @@ public class LogUtil {
         }
     }
 
-    public static void writeForMsg(MessageModel msg, String content) {
+    public static void writeForMsg(MessageModel msg, String broker , String content) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(msg.msg_id)
@@ -52,11 +53,12 @@ public class LogUtil {
 
         MDC.put("tag0", msg.topic_name);
         MDC.put("tag1", String.valueOf(msg.msg_id));
+        MDC.put("tag3", broker);
 
         log_msg.info("{}\r\n{}", summary, content);
     }
 
-    public static void writeForMsgByError(MessageModel msg, DistributionModel dist, String content) {
+    public static void writeForMsgByError(MessageModel msg, String broker, DistributionModel dist, String content) {
         if (dist == null) {
             dist = new DistributionModel();
         }
@@ -72,6 +74,7 @@ public class LogUtil {
 
         MDC.put("tag0", msg.topic_name);
         MDC.put("tag1", String.valueOf(msg.msg_id));
+        MDC.put("tag3", broker);
 
         if (TextUtils.isEmpty(dist.receive_url)) {
             log_msg.error("{}\r\n{}", summary, content);
@@ -81,7 +84,7 @@ public class LogUtil {
 
     }
 
-    public static void writeForMsgByError(MessageModel msg, Throwable ex) {
+    public static void writeForMsgByError(MessageModel msg, String broker, Throwable ex) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(msg.msg_id)
@@ -91,6 +94,7 @@ public class LogUtil {
 
         MDC.put("tag0", msg.topic_name);
         MDC.put("tag1", String.valueOf(msg.msg_id));
+        MDC.put("tag3", broker);
 
         log_msg.error("{}\r\n{}", sb, ex);
     }
