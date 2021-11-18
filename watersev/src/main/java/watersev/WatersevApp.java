@@ -16,9 +16,9 @@ import watersev.dso.db.DbWaterCfgApi;
 /**
  * 可以按三个服务进行部署：
  *
- * -sss=tool
+ * -sss=tool (msgexg,msgchk,sevchk,syn,mot)
  * -sss=pln
- * -sss=msg (-pool=n)?
+ * -sss=msg
  *
  * */
 public class WatersevApp {
