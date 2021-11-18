@@ -16,7 +16,7 @@ import org.noear.water.protocol.model.message.*;
 import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
-import watersev.dso.CheckinUtil;
+import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
@@ -59,7 +59,7 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        CheckinUtil.checkin("watersev-" + getName());
+        RegUtil.checkin("watersev-" + getName());
 
         List<MsgBroker> list = null;
 

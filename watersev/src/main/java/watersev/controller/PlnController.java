@@ -43,7 +43,7 @@ public class PlnController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        CheckinUtil.checkin("watersev-" + getName());
+        RegUtil.checkin("watersev-" + getName());
 
         JtRun.initAwait();
 

@@ -11,7 +11,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
-import watersev.dso.CheckinUtil;
+import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
@@ -57,7 +57,7 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        CheckinUtil.checkin("watersev-" + getName());
+        RegUtil.checkin("watersev-" + getName());
 
         //控制集群内只有一个节点在跑
         if (getLock() == false) {

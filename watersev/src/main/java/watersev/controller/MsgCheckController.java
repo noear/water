@@ -5,7 +5,6 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
-import watersev.dso.CheckinUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.utils.HttpUtilEx;
