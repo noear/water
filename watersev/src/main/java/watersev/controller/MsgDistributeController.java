@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.Response;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.annotation.Inject;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.core.event.EventBus;
 import org.noear.solon.core.handle.ContextEmpty;
@@ -45,11 +44,7 @@ import java.util.stream.Collectors;
 public final class MsgDistributeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
-
-    @Inject("${water.job.msg.broker}")
-    String jobMsgBroker;
 
     @Override
     public String getName() {
@@ -107,6 +102,9 @@ public final class MsgDistributeController implements IJob {
     }
 
     private void exec0(BrokerHolder brokerHolder) {
+        //
+        //引处，不需要再做索
+        //
         CallUtil.asynCall(() -> {
             exec1(brokerHolder);
         });

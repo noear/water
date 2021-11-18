@@ -70,7 +70,7 @@ public class MsgExchangeController implements IJob {
 
         for (int broIndex = 0; broIndex < broList.size(); broIndex++) {
             if (broIndex % sevSize != sevIndex) {
-                //如果不是集群索引位，跳过（节点不会干相同的事!）//最坏的可能，有一个节点会少处理1秒
+                //如果不是集群索引位，跳过（节点不会干相同的事!）//todo:最坏的可能，有一个节点会少处理1秒
                 continue;
             }
 
