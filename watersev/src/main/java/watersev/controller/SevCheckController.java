@@ -2,12 +2,12 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
-import watersev.Config;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.RegUtil;
@@ -52,7 +52,7 @@ public final class SevCheckController implements IJob {
 
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watersev", "watersev_lock", 4)) {
+        if (LockUtils.tryLock(WW.watersev_sevchk, WW.watersev_sevchk, 4)) {
             exec0();
         }
     }
@@ -115,7 +115,7 @@ public final class SevCheckController implements IJob {
                 if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                     //报警，30秒一次
                     //
-                    if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 30)) {
+                    if (LockUtils.tryLock(WW.watersev_sevchk, "sev-a-" + sev.service_id, 30)) {
                         AlarmUtil.tryAlarm(sev, false, 0);
                     }
                 }
@@ -228,7 +228,7 @@ public final class SevCheckController implements IJob {
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
                             //
-                            if (LockUtils.tryLock(Config.water_service_name, "sev_check_" + sev.service_id, 30)) {
+                            if (LockUtils.tryLock(WW.watersev_sevchk, "sev-a-" + sev.service_id, 30)) {
                                 AlarmUtil.tryAlarm(sev, false, code);
                             }
 

@@ -2,6 +2,7 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LockUtils;
@@ -50,7 +51,7 @@ public final class SynController implements IJob {
 
         //尝试获取锁（10秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watersyn", "watersyn_lock", 10)) {
+        if (LockUtils.tryLock(WW.watersev_syn, WW.watersev_syn, 9)) {
             exec0();
         }
     }

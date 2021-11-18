@@ -4,6 +4,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
@@ -59,12 +60,12 @@ public class PlnController implements IJob {
     }
 
     private void doExec(PaasFileModel task) {
-        String threadName = "water-pln-" + task.file_id;
+        String threadName = "pln-" + task.file_id;
         Thread.currentThread().setName(threadName);
 
-        if (LockUtils.tryLock("waterpln", threadName, 1) == false) {
+        if (LockUtils.tryLock(WW.watersev_pln, threadName, 1) == false) {
             //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
-           return;
+            return;
         }
 
         //2.1.计时开始

@@ -7,6 +7,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.LockUtils;
@@ -37,6 +38,7 @@ public final class MotController implements IJob {
     public int getInterval() {
         return 1000 * 5; //实际是：60s 跑一次
     }
+
     int count;
 
     @Override
@@ -72,12 +74,12 @@ public final class MotController implements IJob {
      * 会对每个监视任务进行分布式锁控制，故可以多实例集群部署
      *
      * @param task 监视任务
-     * */
+     */
     private void execDo(MonitorModel task) {
-        String threadName = "water-mot-" + task.monitor_id;
+        String threadName = WW.watersev_mot + "-" + task.monitor_id;
         Thread.currentThread().setName(threadName);
 
-        if (LockUtils.tryLock("watermot", threadName, 59) == false) {
+        if (LockUtils.tryLock(WW.watersev_mot, threadName, 59) == false) {
             //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
             return;
         }
@@ -161,7 +163,7 @@ public final class MotController implements IJob {
 
     /**
      * 基于 FaaS 运行
-     * */
+     */
     private MotResult getDataByFaas(String source, String query, MonitorModel task) throws Exception {
         Object tmp = JtRun.exec(query);
 
@@ -170,7 +172,7 @@ public final class MotController implements IJob {
 
     /**
      * 基于 Db Sql 运行
-     * */
+     */
     private MotResult getDataByDb(String source, String query, MonitorModel task) throws Exception {
         ConfigM cfg = WaterClient.Config.getByTagKey(source);
 

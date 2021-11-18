@@ -2,6 +2,7 @@ package watersev.controller;
 
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
@@ -34,11 +35,9 @@ public final class MsgCheckController implements IJob {
     public void exec() throws Exception {
         RegUtil.checkin("watersev-" + getName());
 
-        Thread.currentThread().setName("water-msg-chk");
-
         //尝试获取锁（4秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watermsg", "watermsg_sub_check_lock", 4)) {
+        if (LockUtils.tryLock(WW.watersev_msgchk, WW.watersev_msgchk, 4)) {
             exec0();
         }
     }
