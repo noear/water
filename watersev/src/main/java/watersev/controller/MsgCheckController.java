@@ -63,6 +63,9 @@ public final class MsgCheckController implements IJob {
         }
     }
 
+    /**
+     * 基于异常http检测
+     * */
     private void check_type0(String receive_url) {
         try {
             String checkUrl = MsgUtils.getReceiveUrl2(receive_url); //可能会异常

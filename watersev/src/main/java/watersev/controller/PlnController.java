@@ -67,8 +67,6 @@ public class PlnController implements IJob {
            return;
         }
 
-
-
         //2.1.计时开始
         Timecount timecount = new Timecount().start();
 
