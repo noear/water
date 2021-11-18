@@ -33,8 +33,8 @@ public class WW {
 
 
     public static final String watersev_mot = "watersev-mot";
-    public static final String watersev_msg = "watersev-msg";
     public static final String watersev_msgchk = "watersev-msgchk";
+    public static final String watersev_msgdis = "watersev-msgdis";
     public static final String watersev_msgexg = "watersev-msgexg";
     public static final String watersev_pln = "watersev-pln";
     public static final String watersev_sevchk = "watersev-sevchk";

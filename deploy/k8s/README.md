@@ -54,7 +54,7 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
     ```
 
 
-* 添加 water/watersev-msgdis 服务 x1+（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）
 
     ```properties
     #添加环境变量：
@@ -65,5 +65,5 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
 
     ```properties
     #添加环境变量：
-    water.sss=msgext
+    water.sss=msgexg
     ```
