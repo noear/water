@@ -22,7 +22,7 @@ import watersev.models.water.MonitorModel;
 import java.util.List;
 
 /**
- * 数据监视任务（可集群，建议只运行1个实例）
+ * 数据监视任务（可集群，可多实例运行）
  *
  * @author noear
  * */
@@ -44,12 +44,6 @@ public final class MotController implements IJob {
     public void exec() throws Exception {
         //尝试获取锁（60秒内只能调度一次）；避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watermot", "watermot_lock", 59)) {
-            exec0();
-        }
-    }
-
-    private void exec0() {
         List<MonitorModel> list = DbWaterApi.getMonitorList();
 
         for (MonitorModel task : list) {
@@ -62,7 +56,13 @@ public final class MotController implements IJob {
     }
 
     private void doExec(MonitorModel task) {
-        Thread.currentThread().setName("water-mot-" + task.monitor_id);
+        String threadName = "water-mot-" + task.monitor_id;
+        Thread.currentThread().setName(threadName);
+
+        if (LockUtils.tryLock("watermot", threadName, 59) == false) {
+            //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
+            return;
+        }
 
         try {
             ContextUtil.currentSet(new ContextEmpty());
