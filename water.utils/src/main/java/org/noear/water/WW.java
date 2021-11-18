@@ -31,6 +31,15 @@ public class WW {
     public static final String waterpaas = "waterpaas";
     public static final String waterraas = "waterraas";
 
+
+    public static final String watersev_mot = "watersev-mot";
+    public static final String watersev_msg = "watersev-msg";
+    public static final String watersev_msgchk = "watersev-msgchk";
+    public static final String watersev_msgexg = "watersev-msgexg";
+    public static final String watersev_pln = "watersev-pln";
+    public static final String watersev_sevchk = "watersev-sevchk";
+    public static final String watersev_syn = "watersev-syn";
+
     public static final String water_redis = "water_redis";
     public static final String water_redis_track = "water_redis_track";
     public static final String water_cache = "water_cache";

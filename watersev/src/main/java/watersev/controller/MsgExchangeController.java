@@ -5,6 +5,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.extend.schedule.IJob;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
@@ -198,22 +199,11 @@ public class MsgExchangeController implements IJob {
                 }
 
                 //如果有主节点，遍历集群是否在其中？
-                List<ServiceSmpModel> list = DbWaterRegApi.getWatermsgServiceList();
+                List<ServiceSmpModel> list = DbWaterRegApi.getWaterServiceList(WW.watersev_msgexg);
                 for (ServiceSmpModel sm : list) {
-                    if (sm.meta.contains("sss")) {
-                        if (sm.meta.contains("msg")) {
-                            //如果通过sss=msg，说明msg服务在跑
-                            if (sm.address.equals(masterNodeId)) {
-                                //如果找到了，看看是不是当前节点
-                                return nodeId.equals(masterNodeId);
-                            }
-                        }
-                    } else {
-                        //没有sss指定，说明所有服务在跑（包括：msg）
-                        if (sm.address.equals(masterNodeId)) {
-                            //如果找到了，看看是不是当前节点
-                            return nodeId.equals(masterNodeId);
-                        }
+                    if (sm.address.equals(masterNodeId)) {
+                        //如果找到了，看看是不是当前节点
+                        return nodeId.equals(masterNodeId);
                     }
                 }
             }
