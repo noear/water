@@ -48,7 +48,7 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public String getName() {
-        return "msg";
+        return "msgdis";
     }
 
     @Override

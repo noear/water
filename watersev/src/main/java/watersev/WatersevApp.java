@@ -16,11 +16,18 @@ import watersev.dso.db.DbWaterCfgApi;
 /**
  * Watersev 会包函多个子服务，每个子服务会各自签到，会形成各自的服务集群。
  *
- * 部署时，可以按三个服务进行部署：（其中 tool 为虚拟的服务集）
+ * 部署时，可以按三个服务进行部署：（其中 tool,tol 为虚拟的服务集）
  *
+ * #old
  * -sss=tool (=msgexg,msgchk,sevchk,syn,mot)
  * -sss=pln
  * -sss=msg
+ *
+ * #new
+ * -sss=tol (=msgchk,sevchk,syn,mot)
+ * -sss=pln
+ * -sss=msgdis
+ * -sss=msgexg
  *
  * @author noear
  * */
