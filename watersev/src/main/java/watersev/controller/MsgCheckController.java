@@ -6,6 +6,7 @@ import org.noear.water.WW;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
+import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.RegUtil;
 import watersev.dso.db.DbWaterMsgApi;
@@ -43,6 +44,8 @@ public final class MsgCheckController implements IJob {
     }
 
     private void exec0() throws SQLException {
+        Thread.currentThread().setName(getName());
+
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
         Set<String> subs = new HashSet<>();
@@ -64,7 +67,7 @@ public final class MsgCheckController implements IJob {
 
     /**
      * 基于异常http检测
-     * */
+     */
     private void check_type0(String receive_url) {
         try {
             String checkUrl = MsgUtils.getReceiveUrl2(receive_url); //可能会异常
@@ -81,11 +84,13 @@ public final class MsgCheckController implements IJob {
                     if (code >= 200 && code < 400) {
                         //成功
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
+                        LogUtil.write(this, "", "", receive_url + ", code=" + code);
                     } else {
                         //设置出错状态
                         DbWaterMsgApi.setSubscriberState(receive_url, code);
                         //尝试删除不稳定的出错订阅
                         DbWaterMsgApi.delSubscriberByError(receive_url);
+                        LogUtil.warn(this, "", "", receive_url + ", code=" + code);
                     }
                 });
             }
@@ -94,6 +99,7 @@ public final class MsgCheckController implements IJob {
             DbWaterMsgApi.setSubscriberState(receive_url, 1);
             //尝试删除不稳定的出错订阅
             DbWaterMsgApi.delSubscriberByError(receive_url);
+            LogUtil.error(this, "", receive_url, e);
         }
     }
 }

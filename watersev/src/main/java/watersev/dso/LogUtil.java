@@ -189,6 +189,13 @@ public class LogUtil {
         log_sev.warn("{}\r\n{}", summary, content);
     }
 
+    public static void warn(IJob tag, String tag1,  String summary, String content) {
+        MDC.put("tag0", tag.getName());
+        MDC.put("tag1", tag1);
+
+        log_sev.warn("{}\r\n{}", summary, content);
+    }
+
     public static void warn(String tag, String tag1, String summary, Throwable content) {
         MDC.put("tag0", tag);
         MDC.put("tag1", tag1);

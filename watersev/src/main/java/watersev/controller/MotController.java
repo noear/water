@@ -90,7 +90,6 @@ public final class MotController implements IJob {
             runTask(task);
         } catch (Throwable ex) {
             ex.printStackTrace();
-            LogUtil.write(this, task.monitor_id + "", task.name, ex.getMessage());
             LogUtil.error(this, task.monitor_id + "", task.name, ex);
         } finally {
             ContextUtil.currentRemove();

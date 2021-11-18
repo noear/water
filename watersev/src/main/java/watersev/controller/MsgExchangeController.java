@@ -63,6 +63,8 @@ public class MsgExchangeController implements IJob {
 
         //如果没有节点数量，退出本次处理
         if (sevIndex < 0 || sevSize == 0) {
+            LogUtil.warn(this, "", "",
+                    "sevIndex=" + sevIndex + ",sevSize=" + sevSize);
             return;
         }
 
@@ -77,11 +79,15 @@ public class MsgExchangeController implements IJob {
             if(sevSize > broList.size()){
                 if (broIndex % broList.size() != sevIndex) { //todo:超过服务顺位的，空一个sev（确保一个bro，不在多个sev上跑）
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    LogUtil.warn(this, "", "",
+                            "broIndex % broList.size() != sevIndex");
                     continue;
                 }
             }else{
                 if (broIndex % sevSize != sevIndex) {
                     //如果不是集群索引位，跳过（节点不会干相同的事!）//todo:最坏的可能，有一个节点会少处理1秒
+                    LogUtil.warn(this, "", "",
+                            "broIndex % sevSize != sevIndex");
                     continue;
                 }
             }

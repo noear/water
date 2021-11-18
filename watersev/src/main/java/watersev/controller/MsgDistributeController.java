@@ -72,6 +72,8 @@ public final class MsgDistributeController implements IJob {
 
         //如果没有节点数量，退出本次处理
         if (sevIndex < 0 || sevSize == 0) {
+            LogUtil.warn(this, "", "",
+                    "sevIndex=" + sevIndex + ",sevSize=" + sevSize);
             return;
         }
 
@@ -86,11 +88,15 @@ public final class MsgDistributeController implements IJob {
             if(sevSize > broList.size()){
                 if (broIndex % broList.size() != sevIndex % broList.size()) {//todo:超过服务顺位的，可让一个bro跑多个sev上
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    LogUtil.warn(this, "", "",
+                            "broIndex % broList.size() != sevIndex % broList.size()");
                     continue;
                 }
             }else{
                 if (broIndex % sevSize != sevIndex) {
                     //如果不是集群索引位，跳过（节点不会干相同的事!）
+                    LogUtil.warn(this, "", "",
+                            "broIndex % sevSize != sevIndex");
                     continue;
                 }
             }
