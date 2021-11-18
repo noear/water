@@ -30,10 +30,6 @@ import java.util.List;
 @Component
 public final class SevCheckController implements IJob {
 
-    public SevCheckController() {
-        DbWaterRegApi.initServiceState();
-    }
-
     @Override
     public String getName() {
         return "sevchk";
@@ -44,7 +40,6 @@ public final class SevCheckController implements IJob {
         return 1000 * 5;
     }
 
-    private boolean _init = false;
 
     @Override
     public void exec() throws Throwable {
@@ -58,14 +53,6 @@ public final class SevCheckController implements IJob {
     }
 
     private void exec0() throws SQLException {
-        if (_init == false) {
-            _init = true;
-
-            //第一次启动时重置所有服务状态
-            DbWaterRegApi.resetServiceState();
-        }
-
-
         //取出待处理的服务（已启用的服务）
         List<ServiceModel> list = DbWaterRegApi.getServiceList();
 
@@ -94,9 +81,10 @@ public final class SevCheckController implements IJob {
         if (times < 10) {
             //对签到型的服务进行检查 (10s内，是否有签到过)
             //
-            DbWaterRegApi.udpService1(sev.service_id, sev, 0);
+            DbWaterRegApi.udpService1(sev.service_id,  0);
 
-            if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
+            if (sev.check_error_num >= 2) {
+                //之前2次坏的，现在好了提示一下
                 AlarmUtil.tryAlarm(sev, true, 0);
             }
         } else {
@@ -110,7 +98,7 @@ public final class SevCheckController implements IJob {
                 //
                 // 如果稳定服务，则提示出错
                 //
-                DbWaterRegApi.udpService1(sev.service_id, sev, 1);
+                DbWaterRegApi.udpService1(sev.service_id,  1);
 
                 if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                     //报警，30秒一次
@@ -126,10 +114,6 @@ public final class SevCheckController implements IJob {
     //被动检测模式
     private void check_type0(ServiceModel sev) {
         if (TextUtils.isEmpty(sev.check_url)) {
-            return;
-        }
-
-        if (sev.state == 1 && new Timespan(sev.check_last_time).seconds() < 30) {
             return;
         }
 
@@ -159,11 +143,11 @@ public final class SevCheckController implements IJob {
 
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
+            //连上马上关闭，2秒超时
             SocketAddress socketAddress = new InetSocketAddress(uri.getHost(), uri.getPort());
             Socket socket = new Socket();
-
-
-            socket.connect(socketAddress, 1000);
+            socket.connect(socketAddress, 2000);
+            socket.close();
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
@@ -199,6 +183,8 @@ public final class SevCheckController implements IJob {
              */
 
             String url2 = url;
+
+            //最长5秒会回调
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
                 Thread.currentThread().setName("sev-c-" + sev.service_id);
 

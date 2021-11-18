@@ -65,10 +65,10 @@ public class AlarmUtil {
 
             if (isOk) {
                 sb.append("恢复：服务=").append(task.name).append("@")
-                        .append(task.address).append(task.note).append("，状态:").append(code);
+                        .append(task.address).append(task.meta).append("，状态:").append(code);
             } else {
                 sb.append("报警：服务=").append(task.name).append("@")
-                        .append(task.address).append(task.note).append("，状态:").append(code);
+                        .append(task.address).append(task.meta).append("，状态:").append(code);
             }
 
             buildSign(sb, task.alarm_sign);

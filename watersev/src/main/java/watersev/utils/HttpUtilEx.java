@@ -33,7 +33,7 @@ public class HttpUtilEx {
                 HttpURLConnection uConnection = (HttpURLConnection) u.openConnection();
                 try {
                     uConnection.setRequestMethod("HEAD"); //HEAD
-                    uConnection.setConnectTimeout(1000 * 3);//3秒超时
+                    uConnection.setConnectTimeout(1000 * 2);//2秒超时
                     uConnection.setReadTimeout(1000 * 3);//3秒超时
                     uConnection.connect();
                     int code = uConnection.getResponseCode();

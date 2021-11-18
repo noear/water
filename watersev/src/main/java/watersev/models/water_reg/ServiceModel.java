@@ -10,24 +10,42 @@ import java.util.Date;
  */
 public class ServiceModel implements IBinder {
     public long service_id;
+    /** md5(name+‘#’+address) */
     public String key;
+    /**  */
     public String tag;
+    /**  */
     public String name;
+    /** 版本号 */
+    public String ver;
+    /**  */
     public String address;
-    public String note;
+    /** 源信息 */
+    public String meta;
+    /**  */
     public String alarm_mobile;
+    /**  */
     public String alarm_sign;
-
+    /** 0:待检查；1检查中 */
     public int state;
-
+    /**  */
+    public String code_location;
+    /** 检查方式（0被检查；1自己签到） */
+    public int check_type;
+    /** 状态检查地址 */
     public String check_url;
-    public int check_type; // 0被动检查；2主动签到
-    public int check_error_num; // 0:ok, 1:error
-    public String check_last_note;
+    /** 最后检查时间 */
     public Date check_last_time;
-
-    public boolean is_enabled;
+    /** 最后检查状态（0：OK；1：error） */
+    public int check_last_state;
+    /** 最后检查描述 */
+    public String check_last_note;
+    /** 检测异常数量 */
+    public int check_error_num;
+    /** 是否为不稳定的 */
     public boolean is_unstable;
+    /** 是否为已启用 */
+    public boolean is_enabled;
 
     @Override
     public void bind(GetHandlerEx s) {
@@ -36,7 +54,7 @@ public class ServiceModel implements IBinder {
         tag = s.get("tag").value("");
         name = s.get("name").value(null);
         address = s.get("address").value("");
-        note = s.get("note").value("");
+        meta = s.get("meta").value("");
         alarm_mobile = s.get("alarm_mobile").value("");
         alarm_sign   = s.get("alarm_sign").value("");
 
