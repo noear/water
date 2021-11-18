@@ -46,7 +46,7 @@ public final class DbWaterRegApi {
                 .andEq("is_enabled", 1)
                 .andEq("check_last_state", 0)
                 .caching(Config.cache_data)
-                .usingCache(3)
+                .usingCache(1)
                 .selectList("name,address,meta,check_last_state", ServiceSmpModel.class);
     }
 
