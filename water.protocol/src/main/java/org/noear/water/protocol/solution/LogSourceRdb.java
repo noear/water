@@ -63,6 +63,9 @@ public class LogSourceRdb implements LogSource {
                 if (tags.length > 3 && tags[3].length() > 0) {
                     tb.andEq("tag3", tags[3]);
                 }
+                if (tags.length > 4 && tags[4].length() > 0) {
+                    tb.andEq("tag4", tags[4]);
+                }
             }
         }
 

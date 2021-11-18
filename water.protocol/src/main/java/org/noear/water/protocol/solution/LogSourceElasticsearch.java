@@ -63,6 +63,9 @@ public class LogSourceElasticsearch implements LogSource {
                     if (tags.length > 3 && tags[3].length() > 0) {
                         c.term("tag3", tags[3]);
                     }
+                    if (tags.length > 4 && tags[4].length() > 0) {
+                        c.term("tag4", tags[4]);
+                    }
                 }
             }
 
