@@ -44,7 +44,7 @@ public final class MsgCheckController implements IJob {
     }
 
     private void exec0() throws SQLException {
-        Thread.currentThread().setName(getName());
+        Thread.currentThread().setName("job-" + getName());
 
         //取出待处理的服务
         List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
@@ -81,7 +81,7 @@ public final class MsgCheckController implements IJob {
                  * hint:如果出错，提示信息?
                  */
                 HttpUtilEx.getStatusByAsync(checkUrl, (isOk, code, hint) -> {
-                    Thread.currentThread().setName(getName());
+                    Thread.currentThread().setName("job-" + getName());
 
                     if (code >= 200 && code < 400) {
                         //成功
