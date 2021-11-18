@@ -159,12 +159,18 @@ public final class MotController implements IJob {
         }
     }
 
+    /**
+     * 基于 FaaS 运行
+     * */
     private MotResult getDataByFaas(String source, String query, MonitorModel task) throws Exception {
         Object tmp = JtRun.exec(query);
 
         return MotResult.succeed(tmp);
     }
 
+    /**
+     * 基于 Db Sql 运行
+     * */
     private MotResult getDataByDb(String source, String query, MonitorModel task) throws Exception {
         ConfigM cfg = WaterClient.Config.getByTagKey(source);
 

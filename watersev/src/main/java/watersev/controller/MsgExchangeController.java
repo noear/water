@@ -67,8 +67,8 @@ public class MsgExchangeController implements IJob {
         }
 
         /**
-         * 如果 sevSize(3) > broSize(2) || sevSize(3) > broSize(1)。则：1(1),2(2),3(1) || 1(1),2(1),3(1)
-         * 如果 sevSize(1) < broSize(3) || sevSize(2) < broSize(3)。则：1(1),1(2),1(3) || 1(1),2(2),3(1)
+         * 如果 sevSize(3) > broSize(2) || sevSize(3) > broSize(1)。则：1(1),2(2),3( ) || 1(1),2( ),3( )
+         * 如果 sevSize(1) < broSize(3) || sevSize(2) < broSize(3)。则：1(1),1(2),1(3) || 1(1),2(2),3(3)
          * */
 
         List<MsgBroker> broList = ProtocolHub.getMsgBrokerList();
