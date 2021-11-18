@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * 写入时，先写到队列
- * 提交时，每次提交100条；消费完后暂停1秒
+ * 提交时，每次提交500条；消费完后暂停0.2秒
  *
+ * @author noear
  * */
 public class LogPipelineLocal extends EventPipeline<LogM> {
     private static LogPipelineLocal singleton = new LogPipelineLocal();
