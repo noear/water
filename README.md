@@ -53,7 +53,7 @@
 
 [[Water 教程五] Water 的日志服务应用及轻小快的设计](https://www.bilibili.com/video/BV1H44y1v7ES/)
 
-[Water 教程六] Water 的事件总线服务应用实战与设计分享
+[[Water 教程六] Water 的消息总线服务应用及内部架构设计概要](https://www.bilibili.com/video/bv1mM4y1A7kn)
 
 [Water 教程七] Water 的FaaS应用实战
 
