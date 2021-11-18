@@ -23,12 +23,15 @@ import java.util.Properties;
 public class MsgBrokerImpl implements MsgBroker {
     MsgSource source;
     MsgQueue queue;
+    String name;
     Logger log = LoggerFactory.getLogger(WW.logger_water_log_msg);
 
     /**
      * 新的配置
      */
     public MsgBrokerImpl(String name, ConfigM cfg, ICacheServiceEx cache) {
+        this.name = name;
+
         PropertiesM prop = cfg.getProp();
         PropertiesM storeProp = prop.getProp("store");
         PropertiesM queueProp = prop.getProp("queue");
@@ -67,7 +70,7 @@ public class MsgBrokerImpl implements MsgBroker {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
