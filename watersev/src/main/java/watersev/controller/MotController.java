@@ -77,7 +77,7 @@ public final class MotController implements IJob {
         String threadName = "water-mot-" + task.monitor_id;
         Thread.currentThread().setName(threadName);
 
-        if (LockUtils.tryLock("watermot", threadName, 60) == false) {
+        if (LockUtils.tryLock("watermot", threadName, 59) == false) {
             //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
             return;
         }
