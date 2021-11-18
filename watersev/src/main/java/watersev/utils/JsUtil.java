@@ -16,8 +16,6 @@ public class JsUtil {
         try {
             ExecutorFactory.exec(language, code, null);
         } catch (Exception ex) {
-            ex.printStackTrace();
-
             String md5 = EncryptUtils.md5(code);
 
             TagsMDC.tag0("JsUtil");
@@ -30,8 +28,6 @@ public class JsUtil {
         try {
             return ExecutorFactory.exec(language, code, null);
         } catch (Exception ex) {
-            ex.printStackTrace();
-
             String md5 = EncryptUtils.md5(code);
 
             TagsMDC.tag0("JsUtil");

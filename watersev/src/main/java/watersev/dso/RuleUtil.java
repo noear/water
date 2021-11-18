@@ -30,8 +30,7 @@ public class RuleUtil {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
-            LogUtil.error("RuleUtil", "", "loadFunc::" + code + "\n" + Utils.throwableToString(ex));
+            LogUtil.error("RuleUtil", "", "loadFunc::" + code + "::\n\n" + Utils.throwableToString(ex));
             return false;
         }
     }

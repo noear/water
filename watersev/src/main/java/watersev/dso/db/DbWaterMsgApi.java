@@ -90,7 +90,6 @@ public class DbWaterMsgApi {
                         .whereEq("receive_url", receive_url)
                         .update();
             } catch (Throwable ex) {
-                //ex.printStackTrace();
                 MDC.put("tag0", "setSubscriberState");
 
                 log_msg.error("{}\r\n{}", receive_url + "", ex);

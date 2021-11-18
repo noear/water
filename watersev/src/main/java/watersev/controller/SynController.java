@@ -89,7 +89,7 @@ public final class SynController implements IJob {
 
             } catch (Exception ex) {
                 //5.如果有异常；记录日志；并报警
-                LogUtil.error(this.getName(), task.sync_id + "", task.getTitle() + "\n\n" + Utils.throwableToString(ex));
+                LogUtil.error(this.getName(), task.sync_id + "", task.getTitle() + "::\n\n" + Utils.throwableToString(ex));
 
                 AlarmUtil.tryAlarm(task, false, 0);
             }

@@ -1,5 +1,6 @@
 package watersev.dso.db;
 
+import lombok.extern.slf4j.Slf4j;
 import watersev.Config;
 import watersev.models.water.MonitorModel;
 import watersev.models.water.SynchronousModel;
@@ -12,8 +13,8 @@ import java.util.List;
 /**
  * Created by noear on 2017/7/27.
  */
+@Slf4j
 public class DbWaterApi {
-
 
     //获取同步任务列表
     public static List<SynchronousModel> getSyncList() {
@@ -23,7 +24,7 @@ public class DbWaterApi {
                     .select("*")
                     .getList(new SynchronousModel());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
 
             return new ArrayList<>();
         }
@@ -48,7 +49,7 @@ public class DbWaterApi {
                     .where("is_enabled=1")
                     .selectList("*", MonitorModel.class);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
 
             return new ArrayList<>();
         }

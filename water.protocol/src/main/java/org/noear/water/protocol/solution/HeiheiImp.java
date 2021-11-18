@@ -73,7 +73,6 @@ public class HeiheiImp implements Heihei {
 
             return rst;
         } catch (Exception ex) {
-            ex.printStackTrace();
             log_heihei.error("{}", ex);
         }
 

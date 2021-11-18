@@ -113,7 +113,7 @@ public final class MsgCheckController implements IJob {
             DbWaterMsgApi.setSubscriberState(receive_url, 1);
             //尝试删除不稳定的出错订阅
             DbWaterMsgApi.delSubscriberByError(receive_url);
-            LogUtil.error(this.getName(), "", receive_url + "::\n" + Utils.throwableToString(e));
+            LogUtil.error(this.getName(), "", receive_url + "::\n\n" + Utils.throwableToString(e));
         }
     }
 }
