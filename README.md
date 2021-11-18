@@ -41,7 +41,7 @@
 * 消息持久化，支持：MySql、PostgreSQL、MongoDb
 
 
-### 视频演示
+### 视频教程
 
 [[Water 教程一] 用 docker-compose 快速部署。轻松工作，早点下班哦：）](https://www.bilibili.com/video/BV1T44y1e7AS/)
 
