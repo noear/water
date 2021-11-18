@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 服务检测（已支持 is_unstable）（可集群，建议只运行1个实例）
+ * 服务检测（已支持 is_unstable）（可集群，可多实例运行。同时间，只会有一个节点有效）
  *
  * @author noear
  * */
@@ -52,7 +52,7 @@ public final class SevCheckController implements IJob {
 
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock("watersev", "watersev_lock", 4)) {
+        if (LockUtils.tryLock("watersev", "watersev_lock", 5)) {
             exec0();
         }
     }

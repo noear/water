@@ -17,8 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 定时任务（可集群，可多实例运行）
- * <p>
+ * 定时任务（可集群，可多实例运行。会分散定时任务）
+ *
  * 状态：(成功:9, 出错:8, 处理中:2, 待处理:1（立即执行）, 待处理:0）
  *
  * @author noear
@@ -43,9 +43,9 @@ public class PlnController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.checkin("watersev-" + getName());
-
         JtRun.initAwait();
+
+        RegUtil.checkin("watersev-" + getName());
 
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * 消息订阅地址有效性检查（已支持 is_unstable）（可集群，建议只运行1个实例）
+ * 消息订阅地址有效性检查（已支持 is_unstable）（可集群，可多实例运行。同时间，只会有一个节点有效）
  *
  * @author noear
  */

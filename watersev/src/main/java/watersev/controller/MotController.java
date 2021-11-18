@@ -15,11 +15,12 @@ import org.noear.weed.DbContext;
 import watersev.dso.*;
 import watersev.dso.db.DbWaterApi;
 import watersev.models.water.MonitorModel;
+import watersev.utils.CallUtil;
 
 import java.util.List;
 
 /**
- * 数据监视任务（可集群，可多实例运行）
+ * 数据监视任务（可集群，可多实例运行。会分散监视任务）
  *
  * @author noear
  * */
@@ -57,8 +58,14 @@ public final class MotController implements IJob {
                 continue;
             }
 
-            execDo(task);
+            exec0(task);
         }
+    }
+
+    private void exec0(MonitorModel task) {
+        CallUtil.asynCall(() -> {
+            execDo(task);
+        });
     }
 
     /**

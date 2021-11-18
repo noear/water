@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
- * 消息交换器（从持久层转入队列）（可集群，建议只运行1个实例）
+ * 消息交换器（从持久层转入队列）（可集群，可多实例运行。会分散broker，便可能会空sev）
  *
  * @author noear
  * */
