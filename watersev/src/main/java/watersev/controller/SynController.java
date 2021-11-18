@@ -12,6 +12,7 @@ import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
+import watersev.dso.RegUtil;
 import watersev.dso.SqlUtil;
 import watersev.dso.db.DbWaterApi;
 import watersev.models.water.SynchronousModel;
@@ -33,11 +34,20 @@ public final class SynController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 10;
+        return 1000 * 5;
     }
+
+    int count;
 
     @Override
     public void exec() throws Exception {
+        RegUtil.checkin("watersev-" + getName());
+
+        if (count % 2 > 0) { //10s, 跑一次
+            return;
+        }
+        count++;
+
         //尝试获取锁（10秒内只能调度一次），避免集群切换时，多次运行
         //
         if (LockUtils.tryLock("watersyn", "watersyn_lock", 9)) {

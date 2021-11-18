@@ -34,11 +34,20 @@ public final class MotController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 60;
+        return 1000 * 5;
     }
+    int count;
 
     @Override
     public void exec() throws Exception {
+        RegUtil.checkin("watersev-" + getName());
+
+        if (count % 12 > 0) { //60s, 跑一次
+            return;
+        }
+        count++;
+
+
         //尝试获取锁（60秒内只能调度一次）；避免集群切换时，多次运行
         //
         List<MonitorModel> list = DbWaterApi.getMonitorList();
