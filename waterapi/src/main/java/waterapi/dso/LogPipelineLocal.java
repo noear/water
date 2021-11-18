@@ -20,7 +20,7 @@ public class LogPipelineLocal extends EventPipeline<LogM> {
     }
 
     private LogPipelineLocal() {
-        super(200, 200);
+        super(200, 500);
     }
 
     @Override
