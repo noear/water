@@ -30,6 +30,7 @@ import java.util.List;
  * */
 @Component
 public final class SevCheckController implements IJob {
+    static final String LOG_TAG = "sev";
 
     @Override
     public String getName() {
@@ -77,13 +78,13 @@ public final class SevCheckController implements IJob {
 
     /**
      * 主到签到模式
-     * */
+     */
     private void check_type1(ServiceModel sev) {
         long seconds = new Timespan(sev.check_last_time).seconds();
 
         if (seconds > 8) {
             //日志
-            LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
+            LogUtil.warn(LOG_TAG, sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
 
             //超过8秒的，说明有问题了 //默认5秒会签到
             if (sev.is_unstable && sev.check_error_num >= 2) {
@@ -92,7 +93,7 @@ public final class SevCheckController implements IJob {
                 //
                 DbWaterRegApi.delService(sev.service_id);
                 DbWaterRegApi.delConsumer(sev.address);
-                LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": had delete");
+                LogUtil.warn(LOG_TAG, sev.address, sev.name + "@" + sev.address + ": had delete");
             } else {
                 //
                 // 如果稳定服务，则提示出错
@@ -123,7 +124,7 @@ public final class SevCheckController implements IJob {
 
     /**
      * 被动检测模式
-     * */
+     */
     private void check_type0(ServiceModel sev) {
         if (TextUtils.isEmpty(sev.check_url)) {
             return;
@@ -176,7 +177,7 @@ public final class SevCheckController implements IJob {
                 DbWaterRegApi.delConsumer(sev.address);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
-                LogUtil.warn(this.getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+                LogUtil.warn(LOG_TAG, sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
             }
         }
     }
@@ -223,7 +224,7 @@ public final class SevCheckController implements IJob {
                         DbWaterRegApi.delConsumer(sev.address);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
+                        LogUtil.warn(LOG_TAG, sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
@@ -243,7 +244,7 @@ public final class SevCheckController implements IJob {
             TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
-            LogUtil.warn(this.getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
+            LogUtil.warn(LOG_TAG, sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
         }
     }
 }
