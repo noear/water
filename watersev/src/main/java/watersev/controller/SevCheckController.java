@@ -75,26 +75,24 @@ public final class SevCheckController implements IJob {
         }
     }
 
-    //主到签到模式
+    /**
+     * 主到签到模式
+     * */
     private void check_type1(ServiceModel sev) {
-        long times = new Timespan(sev.check_last_time).seconds();
+        long seconds = new Timespan(sev.check_last_time).seconds();
 
-        if (times < 10) {
-            //对签到型的服务进行检查 (10s内，是否有签到过)
-            //
-            DbWaterRegApi.udpService1(sev.service_id, 0);
+        if (seconds > 8) {
+            //日志
+            LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
 
-            if (sev.check_error_num >= 2) {
-                //之前2次坏的，现在好了提示一下
-                AlarmUtil.tryAlarm(sev, true, 0);
-            }
-        } else {
+            //超过8秒的，说明有问题了 //默认5秒会签到
             if (sev.is_unstable && sev.check_error_num >= 2) {
                 //
                 // 如果为非稳定服务，且出错2次以上；删掉
                 //
                 DbWaterRegApi.delService(sev.service_id);
                 DbWaterRegApi.delConsumer(sev.address);
+                LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": had delete");
             } else {
                 //
                 // 如果稳定服务，则提示出错
@@ -109,10 +107,23 @@ public final class SevCheckController implements IJob {
                     }
                 }
             }
+
+        } else {
+            //对签到型的服务进行检查
+            //
+            DbWaterRegApi.udpService1(sev.service_id, 0);
+
+            if (sev.check_error_num >= 2) {
+                //之前2次坏的，现在好了提示一下
+                AlarmUtil.tryAlarm(sev, true, 0);
+            }
+
         }
     }
 
-    //被动检测模式
+    /**
+     * 被动检测模式
+     * */
     private void check_type0(ServiceModel sev) {
         if (TextUtils.isEmpty(sev.check_url)) {
             return;
