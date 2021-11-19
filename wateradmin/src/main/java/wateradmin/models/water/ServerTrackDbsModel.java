@@ -26,6 +26,8 @@ public class ServerTrackDbsModel implements IBinder
     public double memory_usage;
     public double disk_usage;
 
+    public Date gmt_modified;
+
 	public void bind(GetHandlerEx s)
 	{
 		//1.source:数据源
@@ -41,6 +43,11 @@ public class ServerTrackDbsModel implements IBinder
         cpu_usage = s.get("cpu_usage").value(0d);
         memory_usage = s.get("memory_usage").value(0d);
         disk_usage = s.get("disk_usage").value(0d);
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
 	}
 	
 	public IBinder clone()

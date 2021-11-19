@@ -9,8 +9,7 @@ import java.util.*;
 /// 
 /// </summary>
 @Getter
-public class ServiceSpeedModel implements IBinder
-{
+public class ServiceSpeedModel implements IBinder {
     public String service;
     public String tag;
     public String name;
@@ -25,10 +24,11 @@ public class ServiceSpeedModel implements IBinder
     public Date last_updatetime;
     public long counts;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
+    public Date gmt_modified;
+
+    public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         service = s.get("service").value(null);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
@@ -42,14 +42,18 @@ public class ServiceSpeedModel implements IBinder
         total_num_slow5 = s.get("total_num_slow5").value(0L);
         last_updatetime = s.get("last_updatetime").value(null);
         counts = s.get("counts").value(0L);
-	}
-	
-	public IBinder clone()
-	{
-		return new ServiceSpeedModel();
-	}
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
+    }
+
+    public IBinder clone() {
+        return new ServiceSpeedModel();
+    }
 
     public boolean isHighlight() {
-        return average>1000;
+        return average > 1000;
     }
 }

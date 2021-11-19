@@ -31,7 +31,7 @@
             <td width="70px" sort="total_num_slow1">1s+<br/>次数</td>
             <td width="60px" sort="total_num_slow2">2s+<br/>次数</td>
             <td width="40px" sort="total_num_slow5">5s+<br/>次数</td>
-            <td width="80px" sort="last_updatetime">更新时间</td>
+            <td width="80px" sort="gmt_modified">更新时间</td>
             <td width="40px"></td>
         </tr>
         </thead>
@@ -46,7 +46,7 @@
                 <td style="text-align: right;">${m.total_num_slow1}</td>
                 <td style="text-align: right;">${m.total_num_slow2}</td>
                 <td style="text-align: right;">${m.total_num_slow5}</td>
-                <td>${m.last_updatetime?string('dd HH:mm')}</td>
+                <td>${m.gmt_modified?string('dd HH:mm')}</td>
                 <td><a href="/mot/speed/charts?tag=${m.tag}&name_md5=${m.name_md5?url}&service=${m.service}" style="color:blue;cursor:pointer;">详情</a></td>
             </tr>
         </#list>

@@ -33,7 +33,7 @@
                 <td sort="cpu_usage" width="70px">CPU</td>
                 <td sort="memory_usage" width="70px">内存</td>
                 <td sort="disk_usage" width="70px">硬盘</td>
-                <td sort="last_updatetime" sort="last_updatetime" width="100px">更新时间</td>
+                <td sort="gmt_modified"  width="100px">更新时间</td>
                 <td width="50px"></td>
             </tr>
             </thead>
@@ -45,7 +45,7 @@
                 <td class="right${(m.cpu_usage>50)?string(" t4","")}">${m.cpu_usage}%</td>
                 <td class="right${(m.memory_usage>70)?string(" t4","")}">${m.memory_usage}%</td>
                 <td class="right${(m.disk_usage>60)?string(" t4","")}">${m.disk_usage}%</td>
-                <td>${(m.last_updatetime?string('dd HH:mm:ss'))!}</td>
+                <td>${(m.gmt_modified?string('dd HH:mm:ss'))!}</td>
                 <td><a href="dbs/inner?instanceId=${m.iaas_key!}&type=${m.iaas_type!}&name=${m.name!}" class="t2">详情</a></td>
             </tr>
             </#list>

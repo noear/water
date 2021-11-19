@@ -33,7 +33,7 @@
                 <td sort="new_conect_num" width="70px">新建<br/>连接数</td>
                 <td sort="qps" width="70px">QPS</td>
                 <td sort="traffic_tx" width="70px">流量<br/>(kbs)</td>
-                <td sort="last_updatetime" width="100px">更新时间</td>
+                <td sort="gmt_modified" width="100px">更新时间</td>
                 <td width="50px"></td>
             </tr>
             </thead>
@@ -45,7 +45,7 @@
                     <td class="right">${m.new_conect_num}</td>
                     <td class="right">${m.qps}</td>
                     <td class="right">${m.traffic_tx}</td>
-                    <td>${m.last_updatetime?string('dd HH:mm:ss')}</td>
+                    <td>${m.gmt_modified?string('dd HH:mm:ss')}</td>
                     <td><a href="bls/inner?instanceId=${m.iaas_key}" class="t2">详情</a></td>
                 </tr>
             </#list>

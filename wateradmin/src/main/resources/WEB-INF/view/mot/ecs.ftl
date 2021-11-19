@@ -35,7 +35,7 @@
                 <td sort="broadband_usage" width="70px">带宽</td>
                 <td sort="disk_usage" width="70px">磁盘</td>
                 <td sort="tcp_num" width="70px">TCP</td>
-                <td sort="last_updatetime" width="100px">更新时间</td>
+                <td sort="gmt_modified" width="100px">更新时间</td>
                 <td width="50px"></td>
             </tr>
             </thead>
@@ -49,7 +49,7 @@
                     <td class="right${(m.broadband_usage>50)?string(" t4","")}">${m.broadband_usage}%</td>
                     <td class="right${(m.disk_usage>70)?string(" t4","")}">${m.disk_usage}%</td>
                     <td class="right">${m.tcp_num}</td>
-                    <td>${(m.last_updatetime?string('dd HH:mm:ss'))!}</td>
+                    <td>${(m.gmt_modified?string('dd HH:mm:ss'))!}</td>
                     <td><a href="ecs/inner?instanceId=${m.iaas_key}" class="t2">详情</a></td>
                 </tr>
             </#list>

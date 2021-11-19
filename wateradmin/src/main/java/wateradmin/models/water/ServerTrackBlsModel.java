@@ -26,10 +26,11 @@ public class ServerTrackBlsModel implements IBinder
     public long qps;
     public long traffic_tx;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
+    public Date gmt_modified;
+
+	public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         server_id = s.get("server_id").value(0);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
@@ -41,7 +42,12 @@ public class ServerTrackBlsModel implements IBinder
         new_conect_num = s.get("new_conect_num").value(0L);
         qps = s.get("qps").value(0L);
         traffic_tx = s.get("traffic_tx").value(0L);
-	}
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
+    }
 	
 	public IBinder clone()
 	{

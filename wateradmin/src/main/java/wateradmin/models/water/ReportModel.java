@@ -26,6 +26,8 @@ public class ReportModel implements IBinder {
     public String note;
     public String args;
 
+    public Date gmt_modified;
+
     public void bind(GetHandlerEx s) {
         row_id = s.get("row_id").value(0);
         tag = s.get("tag").value(null);
@@ -33,6 +35,11 @@ public class ReportModel implements IBinder {
         code = s.get("code").value(null);
         note = s.get("note").value(null);
         args = s.get("args").value(null);
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
     }
 
     public IBinder clone() {

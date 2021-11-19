@@ -28,6 +28,8 @@ public class ServerTrackEcsModel implements IBinder {
     public int sev_num;
     public String address_local;
 
+    public Date gmt_modified;
+
     public void bind(GetHandlerEx s) {
         //1.source:数据源
         //
@@ -47,6 +49,11 @@ public class ServerTrackEcsModel implements IBinder {
         sev_num = s.get("sev_num").value(0);
 
         address_local = s.get("address_local").value(null);
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
     }
 
     public IBinder clone() {
