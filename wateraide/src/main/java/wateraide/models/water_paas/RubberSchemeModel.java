@@ -12,7 +12,7 @@ import java.util.Date;
 public class RubberSchemeModel {
     /** 方案ID */
     @PrimaryKey
-    public int scheme_id;
+    public Integer scheme_id;
     /** 分类标签 */
     public String tag;
     /** 代号 */
@@ -22,7 +22,7 @@ public class RubberSchemeModel {
     /** 相关模型(tag/name) */
     public String related_model;
     /** 关联模型ID */
-    public int related_model_id;
+    public Integer related_model_id;
     /** 关联模型显示名 */
     public String related_model_display;
     /** 引用函数 */
@@ -32,13 +32,13 @@ public class RubberSchemeModel {
     /** 事件 */
     public String event;
     /** 下属工作流节点数据 */
-    public int node_count;
+    public Integer node_count;
     /** 下属规则数量 */
-    public int rule_count;
+    public Integer rule_count;
     /** 规则关系（0并且关系，1或者关系） */
-    public int rule_relation;
+    public Integer rule_relation;
     /** 是否启用 */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 最后更新时间 */
-    public long last_updatetime;
+    public Long last_updatetime;
 }

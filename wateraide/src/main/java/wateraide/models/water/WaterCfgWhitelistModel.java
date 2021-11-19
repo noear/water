@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 public class WaterCfgWhitelistModel {
     @PrimaryKey
-    public int row_id;
+    public Integer row_id;
     /** 分组标签 */
     public String tag;
     /** 名单类型 */
@@ -20,9 +20,9 @@ public class WaterCfgWhitelistModel {
     /** 备注 */
     public String note;
     /** 是否启用 */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 创建时间 */
-    public long gmt_create;
+    public Long gmt_create;
     /** 更新时间 */
-    public long gmt_modified;
+    public Long gmt_modified;
 }

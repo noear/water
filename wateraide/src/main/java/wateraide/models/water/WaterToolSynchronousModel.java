@@ -12,7 +12,7 @@ import java.util.Date;
 public class WaterToolSynchronousModel {
     /**  */
     @PrimaryKey
-    public int sync_id;
+    public Integer sync_id;
     /**  */
     public String tag;
     /**  */
@@ -20,9 +20,9 @@ public class WaterToolSynchronousModel {
     /**  */
     public String name;
     /** 0,增量同步；1,更新同步； */
-    public int type;
+    public Integer type;
     /** 间隔时间（秒） */
-    public int interval;
+    public Integer interval;
     /**  */
     public String target;
     /**  */
@@ -30,15 +30,15 @@ public class WaterToolSynchronousModel {
     /** 数据源模型 */
     public String source_model;
     /** 同步标识（用于临时存数据） */
-    public long task_tag;
+    public Long task_tag;
     /**  */
     public String alarm_mobile;
     /**  */
     public String alarm_sign;
     /**  */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 创建时间 */
-    public long gmt_create;
+    public Long gmt_create;
     /** 最后修改时间 */
-    public long gmt_modified;
+    public Long gmt_modified;
 }

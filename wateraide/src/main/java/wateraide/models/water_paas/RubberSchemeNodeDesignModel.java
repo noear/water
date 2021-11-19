@@ -10,9 +10,9 @@ import org.noear.weed.annotation.Table;
 public class RubberSchemeNodeDesignModel {
     /**  */
     @PrimaryKey
-    public int scheme_id;
+    public Integer scheme_id;
     /**  */
     public String details;
     /** 最后更新时间 */
-    public long last_updatetime;
+    public Long last_updatetime;
 }

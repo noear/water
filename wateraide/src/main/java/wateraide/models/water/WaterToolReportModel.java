@@ -12,7 +12,7 @@ import java.util.Date;
 public class WaterToolReportModel {
     /** 简报ID */
     @PrimaryKey
-    public int row_id;
+    public Integer row_id;
     /** 分类标签（外部根据标签查询） */
     public String tag;
     /** 查询名称 */
@@ -24,7 +24,7 @@ public class WaterToolReportModel {
     /**  */
     public String note;
     /** 创建时间 */
-    public long gmt_create;
+    public Long gmt_create;
     /** 最后修改时间 */
-    public long gmt_modified;
+    public Long gmt_modified;
 }

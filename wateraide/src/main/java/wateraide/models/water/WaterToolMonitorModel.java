@@ -10,7 +10,7 @@ import org.noear.weed.annotation.Table;
 public class WaterToolMonitorModel {
     /**  */
     @PrimaryKey
-    public int monitor_id;
+    public Integer monitor_id;
     /**  */
     public String tag;
     /** 监视项目key */
@@ -18,7 +18,7 @@ public class WaterToolMonitorModel {
     /** 监视项目名称 */
     public String name;
     /** 监视类型（0:数据预警；1:数据简报） */
-    public int type;
+    public Integer type;
     /** 数据源模型脚本 */
     public String source_query;
     /** 规则（输入m:{d:{},tag:''}） */
@@ -32,13 +32,13 @@ public class WaterToolMonitorModel {
     /** 报警信息产生的表达式 */
     public String alarm_exp;
     /** 报警次数 */
-    public int alarm_count;
+    public Integer alarm_count;
     /** 报警签名 */
     public String alarm_sign;
     /** 是否启用 */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 创建时间 */
-    public long gmt_create;
+    public Long gmt_create;
     /** 最后修改时间 */
-    public long gmt_modified;
+    public Long gmt_modified;
 }

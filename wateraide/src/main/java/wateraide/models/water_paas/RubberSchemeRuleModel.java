@@ -10,17 +10,17 @@ import org.noear.weed.annotation.Table;
 public class RubberSchemeRuleModel {
     /** 规则ID */
     @PrimaryKey
-    public int rule_id;
+    public Integer rule_id;
     /** 方案ID */
-    public int scheme_id;
+    public Integer scheme_id;
     /** 显示名 */
     public String name_display;
     /** 评估建议(0无,1交易放行,2审慎审核,3阻断交易) */
-    public int advice;
+    public Integer advice;
     /** 评估分值 */
-    public int score;
+    public Integer score;
     /** 排序 */
-    public int sort;
+    public Integer sort;
     /** 条件表达式（m.user_day(30),>,15,&&；left,op,right,ct） */
     public String expr;
     /**  */
@@ -28,7 +28,7 @@ public class RubberSchemeRuleModel {
     /**  */
     public String event;
     /** 状态，(0：禁用、1：启用) */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 最后更新时间 */
-    public long last_updatetime;
+    public Long last_updatetime;
 }

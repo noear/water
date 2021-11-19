@@ -14,7 +14,7 @@ import java.util.Date;
 public class WaterCfgGatewayModel {
     /** 网关id */
     @PrimaryKey
-    public int gateway_id;
+    public Integer gateway_id;
     /** 标签 */
     public String tag;
     /** 名称 */
@@ -24,9 +24,9 @@ public class WaterCfgGatewayModel {
     /** 策略 */
     public String policy;
     /**  */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 创建时间 */
-    public long gmt_create;
+    public Long gmt_create;
     /** 最后修改时间 */
-    public long gmt_modified;
+    public Long gmt_modified;
 }

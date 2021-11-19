@@ -13,7 +13,7 @@ public class RubberBlockModel {
 
     /**  */
     @PrimaryKey
-    public int block_id;
+    public Integer block_id;
     /** 分类标签 */
     public String tag;
     /** 代号 */
@@ -27,13 +27,13 @@ public class RubberBlockModel {
     /** 相关数据表 */
     public String related_tb;
     /**  */
-    public int is_editable;
+    public Integer is_editable;
     /**  */
-    public int is_enabled;
+    public Integer is_enabled;
     /** 数据结构({f1:'xx'}) */
     public String struct;
     /** 应用表达式 */
     public String app_expr;
     /** 最后更新时间 */
-    public long last_updatetime;
+    public Long last_updatetime;
 }
