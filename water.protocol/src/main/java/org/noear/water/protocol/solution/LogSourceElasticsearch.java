@@ -119,19 +119,20 @@ public class LogSourceElasticsearch implements LogSource {
             return;
         }
 
+        Datetime nowDatetime = Datetime.Now();
+
         for (LogM event : list) {
-            Datetime datetime = null;
+
             if (event.log_fulltime == null) {
-                datetime = new Datetime();
+                event.log_date = nowDatetime.getDate();
             } else {
-                datetime = new Datetime(event.log_fulltime);
+                event.log_date = new Datetime(event.log_fulltime).getDate();
             }
 
-            event.log_date = datetime.getDate();
             event.class_name = NameUtils.formatClassName(event.class_name);
         }
 
-        String indiceName = "water-" + logger + "-" + Datetime.Now().toString("yyyyMMdd");
+        String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd");
 
         _db.indice(indiceName).insertList(list);
     }

@@ -51,10 +51,10 @@
         "type": "text"
       },
       "log_date": {
-        "type":"long"
+        "type": "long"
       },
       "log_fulltime":{
-        "type":   "date"
+        "type": "long"
       }
     }
   },
