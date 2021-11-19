@@ -44,9 +44,9 @@ public class PlnController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        JtRun.initAwait();
-
         RegUtil.register("watersev-" + getName());
+
+        JtRun.initAwait();
 
         List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
 
