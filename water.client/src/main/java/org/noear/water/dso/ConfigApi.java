@@ -16,8 +16,8 @@ import java.util.*;
  * */
 public class ConfigApi {
 
-    private Map<String, ConfigSetM> _cfgs = Collections.synchronizedMap(new HashMap());
-    private Map<String, Set<ConfigHandler>> _event = new HashMap<>();
+    private Map<String, ConfigSetM> _cfgMap = Collections.synchronizedMap(new HashMap());
+    private Map<String, Set<ConfigHandler>> _cfgSubMap = new HashMap<>();
 
     protected final ApiCaller apiCaller;
     public ConfigApi(){
@@ -28,8 +28,8 @@ public class ConfigApi {
      * 重新加载一个tag的配置
      */
     public void reload(String tag) {
-        synchronized (_cfgs) {
-            if (_cfgs.containsKey(tag) == false) {
+        synchronized (_cfgMap) {
+            if (_cfgMap.containsKey(tag) == false) {
                 return;
             }
 
@@ -41,8 +41,8 @@ public class ConfigApi {
      * 加载一个tag的配置
      */
     public void load(String tag) {
-        synchronized (_cfgs) {
-            if (_cfgs.containsKey(tag)) {
+        synchronized (_cfgMap) {
+            if (_cfgMap.containsKey(tag)) {
                 return;
             }
 
@@ -61,12 +61,12 @@ public class ConfigApi {
             //
             // 如果加载失败，且已存在；直接返回
             //
-            if (_cfgs.containsKey(tag)) {
+            if (_cfgMap.containsKey(tag)) {
                 return;
             }
         }
 
-        _cfgs.put(tag, cfgSet);
+        _cfgMap.put(tag, cfgSet);
 
         //尝试通知订阅者
         noticeTry(tag, cfgSet);
@@ -80,7 +80,7 @@ public class ConfigApi {
      */
     public Properties getProperties(String tag) {
         load(tag);
-        return _cfgs.get(tag).getPropSet();
+        return _cfgMap.get(tag).getPropSet();
     }
 
     /**
@@ -98,11 +98,11 @@ public class ConfigApi {
     public ConfigM get(String tag, String key) {
         load(tag);
 
-        return _cfgs.get(tag).get(key);
+        return _cfgMap.get(tag).get(key);
     }
 
     private void noticeTry(String target, ConfigSetM cfgSet){
-        Set<ConfigHandler> tmp = _event.get(target);
+        Set<ConfigHandler> tmp = _cfgSubMap.get(target);
 
         if (tmp != null) {
             for (ConfigHandler r : tmp) {
@@ -115,17 +115,17 @@ public class ConfigApi {
      * 订阅配置集
      */
     public void subscribe(String tag, ConfigHandler callback) {
-        Set<ConfigHandler> tmp = _event.get(tag);
+        Set<ConfigHandler> tmp = _cfgSubMap.get(tag);
         if (tmp == null) {
             tmp = new HashSet<>();
-            _event.put(tag, tmp);
+            _cfgSubMap.put(tag, tmp);
         }
 
         tmp.add(callback);
 
         //如果已存在，及时通知
-        if (_cfgs.containsKey(tag)) {
-            callback.handler(_cfgs.get(tag));
+        if (_cfgMap.containsKey(tag)) {
+            callback.handler(_cfgMap.get(tag));
         }
     }
 
@@ -150,8 +150,8 @@ public class ConfigApi {
                 .post();
 
 
-        if (_cfgs.containsKey(tag)) {
-            _cfgs.get(tag).set(key, value);
+        if (_cfgMap.containsKey(tag)) {
+            _cfgMap.get(tag).set(key, value);
         }
     }
 }
