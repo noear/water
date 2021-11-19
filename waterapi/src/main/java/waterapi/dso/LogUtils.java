@@ -17,7 +17,7 @@ import java.util.Map;
 public class LogUtils {
     private static final Logger logger = LoggerFactory.getLogger(WW.logger_water_log_api);
 
-    public static void info(Context ctx) {
+    public static void info(Context ctx, Exception e) {
         try {
             String tag = ctx.path();
 
@@ -27,16 +27,21 @@ public class LogUtils {
 
             String _from = FromUtils.getFromName(ctx);
 
+            MDC.put("tag0", tag);
+            MDC.put("tag3", _from);
+
             StringBuilder content = new StringBuilder(200);
 
             content.append("> Param: ").append(ONode.stringify(ctx.paramMap()));
             content.append("\n\n");
-            content.append("< Body: ").append(ONode.stringify(ctx.result));
 
-            MDC.put("tag0", tag);
-            MDC.put("tag3", _from);
-
-            logger.info(content.toString());
+            if (e == null) {
+                content.append("< Body: ").append(ONode.stringify(ctx.result));
+                logger.info(content.toString());
+            } else {
+                content.append("< Error: ").append(Utils.throwableToString(e));
+                logger.error(content.toString());
+            }
         } catch (Exception ee) {
             //不能再转入别的日志了
             ee.printStackTrace();

@@ -1,18 +1,24 @@
 package waterapi.dso.interceptor;
 
+import org.noear.solon.core.aspect.Interceptor;
+import org.noear.solon.core.aspect.Invocation;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.Handler;
 import waterapi.dso.LogUtils;
 
-public class LoggingInterceptor implements Handler {
+public class LoggingInterceptor implements Interceptor {
     @Override
-    public void handle(Context ctx) throws Throwable {
-        //记录输入
-        //
-        try {
-            LogUtils.info(ctx);
-        } catch (Throwable ex) {
+    public Object doIntercept(Invocation inv) throws Throwable {
+        Context ctx = Context.current();
 
+        try{
+            Object tmp = inv.invoke();
+            ctx.result = tmp;
+            LogUtils.info(ctx, null);
+
+            return tmp;
+        }catch (Exception e){
+            LogUtils.info(ctx, e);
+            throw e;
         }
     }
 }
