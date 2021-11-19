@@ -92,11 +92,17 @@ public class ServerController extends BaseController {
     //跳转服务编辑页面
     @Mapping("server/edit")
     public ModelAndView serverEdit(String tag_name, Integer server_id) throws SQLException {
-        if(server_id == null){
+        if (server_id == null) {
             server_id = 0;
         }
 
         ServerModel server = DbWaterOpsApi.getServerByID(server_id);
+
+        if (server.server_id == 0) {
+            //默认为启用
+            server.is_enabled = 1;
+        }
+
 
         List<ServerModel> tags = DbWaterOpsApi.getServerTags();
         List<ConfigModel> accounts = DbWaterOpsApi.getIAASAccionts();
@@ -112,7 +118,7 @@ public class ServerController extends BaseController {
     //保存编辑
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/edit/ajax/save")
-    public ViewModel serverEditSave(Integer server_id, String tag, String name, String address, String address_local, Integer iaas_type, String iaas_key,  String iaas_account, String hosts_local, String note, Integer is_enabled, Integer env_type) throws SQLException {
+    public ViewModel serverEditSave(int server_id, String tag, String name, String address, String address_local, int iaas_type, String iaas_key,  String iaas_account, String hosts_local, String note, int is_enabled, int env_type) throws SQLException {
         boolean result = DbWaterOpsApi.updateServer(server_id, tag, name, address, address_local, iaas_type, iaas_key,  iaas_account, hosts_local, note, is_enabled, env_type);
 
         if (result) {
