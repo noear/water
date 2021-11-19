@@ -65,23 +65,23 @@ java -jar waterapi.jar --server.port=9371
 **服务器1台（2c4g）**
 
 ```
-#管理后台（如果要不限ip访问，添加参考：--white=0）
+#工具后台服务        
+java -jar watersev.jar --server.port=9372 --sss=tol   
+
+#管理后台（如果要限制ip访问，添加参考：--white=1）
 java -jar wateradmin.jar --server.port=9373
 
+#FaaS 接口运行服务           
+java -jar waterfaas.jar --server.port=9374
+
 #RaaS 运行服务（可选部署） 
-java -jar waterraas.jar --server.port=9374  
-
-#PaaS 接口运行服务           
-java -jar waterfaas.jar --server.port=9376   
-
-#工具后台服务        
-java -jar watersev.jar --server.port=9372 --sss=tool    
+java -jar waterraas.jar --server.port=9375      
 ```
 
 **服务器1台（2c8g）**
 
 ```
-#PaaS 定时任务运行服务
+#FaaS 定时任务运行服务
 java -jar watersev.jar --server.port=9372 --sss=pln   
 ```
 
@@ -90,10 +90,10 @@ java -jar watersev.jar --server.port=9372 --sss=pln
 
 ```
 #消息派发服务（部署4个运行实例）
-java -jar watersev.jar --server.port=9311 --sss=msg   
-java -jar watersev.jar --server.port=9312 --sss=msg   
-java -jar watersev.jar --server.port=9313 --sss=msg   
-java -jar watersev.jar --server.port=9314 --sss=msg   
+java -jar watersev.jar --server.port=9311 --sss=msgdis   
+java -jar watersev.jar --server.port=9312 --sss=msgdis   
+java -jar watersev.jar --server.port=9313 --sss=msgdis   
+java -jar watersev.jar --server.port=9314 --sss=msgdis   
 ```
 
 #### 2、 开发环境建议方案
@@ -101,20 +101,21 @@ java -jar watersev.jar --server.port=9314 --sss=msg
 **服务器1台（1c2g）**
 
 ```
+#工具后台服务        
+java -jar watersev.jar --server.port=9372 
+
 #接口服务
 java -jar waterapi.jar --server.port=9371
 
-#管理后台（如果要不限ip访问，添加参考：--white=0）
+#管理后台（如果要限制ip访问，添加参考：--white=1）
 java -jar wateradmin.jar --server.port=9373
 
+#FaaS 接口运行服务           
+java -jar waterfaas.jar --server.port=9374   
+
 #RaaS 运行服务（可选部署） 
-java -jar waterraas.jar --server.port=9374  
+java -jar waterraas.jar --server.port=9375  
 
-#PaaS 接口运行服务           
-java -jar waterfaas.jar --server.port=9376   
-
-#工具后台服务        
-java -jar watersev.jar --server.port=9372 
 ```
 
 ### 五、后续配置修改
@@ -132,9 +133,9 @@ java -jar watersev.jar --server.port=9372
 
 ### 附：补充说明
 
-* water 的访问控制，基于ip安全名单实现。如果不需要，可以通过启动参数关闭：
+* water 的访问控制，基于ip安全名单实现。如果需要，可以通过启动参数关闭：
 
-> --white=0
+> --white=1
 
 * water 管理抬台初始账号与密码
 
