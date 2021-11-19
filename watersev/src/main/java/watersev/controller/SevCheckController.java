@@ -80,6 +80,9 @@ public final class SevCheckController implements IJob {
     private void check_type1(ServiceModel sev) {
         long seconds = new Timespan(sev.check_last_time).seconds();
 
+        //临时用一下
+        LogUtil.info("sev", sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
+
         if (seconds < 10) {
             //对签到型的服务进行检查
             //
