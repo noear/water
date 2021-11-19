@@ -1,4 +1,4 @@
-package wateradmin.models.water;
+package wateradmin.models.water_mot;
 
 import lombok.Getter;
 import org.noear.weed.GetHandlerEx;

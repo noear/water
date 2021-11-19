@@ -124,7 +124,7 @@ public class DbLuffyApi {
         if (file_id > 0) {
             db().table("luffy_file")
                     .set("content", content)
-                    .set("update_fulltime", new Date())
+                    .set("update_fulltime", System.currentTimeMillis())
                     .whereEq("file_id", file_id)
                     .update();
 

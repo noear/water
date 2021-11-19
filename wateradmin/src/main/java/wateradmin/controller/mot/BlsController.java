@@ -16,7 +16,7 @@ import wateradmin.dso.wrap.aliyun.AliyunBlsUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.models.TagCountsModel;
 import org.noear.water.protocol.model.monitor.ELineModel;
-import wateradmin.models.water.ServerTrackBlsModel;
+import wateradmin.models.water_mot.ServerTrackBlsModel;
 import wateradmin.models.aliyun.BlsViewModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;

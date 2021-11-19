@@ -8,7 +8,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
-import wateradmin.models.water.ServiceRuntimeModel;
+import wateradmin.models.water_mot.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 
