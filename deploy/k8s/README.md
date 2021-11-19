@@ -37,16 +37,16 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
 
 * 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）
 * 添加 water/waterpaas 服务 x1+（镜像：noearorg/waterpaas:latest）
-* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）；不需要，可不部署
+* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）//不需要，可不部署
 
-* 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）//工具服务，包含： (msgchk,sevchk,syn,mot)
 
     ```properties
     #添加环境变量：
     water.sss=tol
     ```
 
-* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）//定时任务调度服务
 
     ```properties
     #添加环境变量：
@@ -54,14 +54,14 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
     ```
 
 
-* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）//消息派发服务
 
     ```properties
     #添加环境变量：
     water.sss=msgdis
     ```
 
-* 添加 water/watersev-msgexg 服务 x1+（镜像：noearorg/watersev:latest）
+* 添加 water/watersev-msgexg 服务 x1+（镜像：noearorg/watersev:latest）//消息交换服务
 
     ```properties
     #添加环境变量：
