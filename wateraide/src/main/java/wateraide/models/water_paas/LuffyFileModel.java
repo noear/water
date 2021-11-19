@@ -12,9 +12,9 @@ import java.util.Date;
 public class LuffyFileModel {
     /** 文件ID */
     @PrimaryKey
-    public Integer file_id;
+    public int file_id;
     /** 文件类型(0:api, 1:pln, 2:tml) */
-    public Integer file_type;
+    public int file_type;
     /** 分组村签 */
     public String tag;
     /** 标记 */
@@ -22,15 +22,15 @@ public class LuffyFileModel {
     /** 文件路径 */
     public String path;
     /** 排列（小的排前） */
-    public Integer rank;
+    public int rank;
     /** 是否静态 */
-    public Boolean is_staticize;
+    public boolean is_staticize;
     /** 是否可编辑 */
-    public Boolean is_editable;
+    public boolean is_editable;
     /** 是否禁用 */
-    public Boolean is_disabled;
+    public boolean is_disabled;
     /** 排除导入 */
-    public Boolean is_exclude;
+    public boolean is_exclude;
     /** 连接到 */
     public String link_to;
     /** 编辑模式 */
@@ -42,25 +42,25 @@ public class LuffyFileModel {
     /** 备注 */
     public String note;
     /** 计划状态 */
-    public Integer plan_state;
+    public int plan_state;
     /** 计划开始执行时间 */
-    public Long plan_begin_time;
+    public long plan_begin_time;
     /** 计划最后执行时间 */
-    public Long plan_last_time;
+    public long plan_last_time;
     /** 计划最后执行时间长度 */
-    public Long plan_last_timespan;
+    public long plan_last_timespan;
     /** 计划下次执行时间戳 */
-    public Long plan_next_time;
+    public long plan_next_time;
     /** 计划执行间隔 */
     public String plan_interval;
     /** 计划执行最多次数 */
-    public Integer plan_max;
+    public int plan_max;
     /** 计划执行累计次数 */
-    public Integer plan_count;
+    public int plan_count;
     /** 创建时间 */
-    public Date create_fulltime;
+    public long create_fulltime;
     /** 更新时间 */
-    public Date update_fulltime;
+    public long update_fulltime;
     /** 安全名单 */
     public String use_whitelist;
 }

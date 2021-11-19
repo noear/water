@@ -12,9 +12,9 @@ import java.util.Date;
 public class RubberBlockItemModel {
     /**  */
     @PrimaryKey
-    public Integer item_id;
+    public int item_id;
     /**  */
-    public Integer block_id;
+    public int block_id;
     /**  */
     public String name;
     /**  */
@@ -25,6 +25,6 @@ public class RubberBlockItemModel {
     public String f3;
     /**  */
     public String f4;
-    /**  */
-    public Date last_updatetime;
+    /** 最后更新时间 */
+    public long last_updatetime;
 }

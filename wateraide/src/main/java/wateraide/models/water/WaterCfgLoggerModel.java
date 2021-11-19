@@ -11,35 +11,37 @@ import java.util.Date;
 public class WaterCfgLoggerModel {
     /** 日志器ID */
     @PrimaryKey
-    public Integer logger_id;
+    public int logger_id;
     /** 分组标签 */
     public String tag;
     /** 日志器 */
     public String logger;
     /** 累积行数 */
-    public Long row_num;
+    public long row_num;
     /** 今日行数 */
-    public Long row_num_today;
+    public long row_num_today;
     /** 今日错误行数 */
-    public Long row_num_today_error;
+    public long row_num_today_error;
     /** 昨天行数 */
-    public Long row_num_yesterday;
+    public long row_num_yesterday;
     /** 昨天错误行数 */
-    public Long row_num_yesterday_error;
+    public long row_num_yesterday_error;
     /** 前天行数 */
-    public Long row_num_beforeday;
+    public long row_num_beforeday;
     /** 前天错误行数 */
-    public Long row_num_beforeday_error;
+    public long row_num_beforeday_error;
     /** 保留天数 */
-    public Integer keep_days;
+    public int keep_days;
     /** 数据源 */
     public String source;
     /** 备注 */
     public String note;
     /** 是否启用 */
-    public Integer is_enabled;
+    public int is_enabled;
     /** 是否报警 */
-    public Integer is_alarm;
-    /** 更新时间 */
-    public Date update_fulltime;
+    public int is_alarm;
+    /** 创建时间 */
+    public long gmt_create;
+    /** 最后修改时间 */
+    public long gmt_modified;
 }

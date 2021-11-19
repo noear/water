@@ -3,8 +3,6 @@ package wateraide.models.water_paas;
 import org.noear.weed.annotation.PrimaryKey;
 import org.noear.weed.annotation.Table;
 
-import java.util.Date;
-
 /**
  * @author noear 2021/11/3 created
  */
@@ -13,13 +11,13 @@ public class RubberSchemeNodeModel {
 
     /**  */
     @PrimaryKey
-    public Integer node_id;
+    public int node_id;
     /**  */
-    public Integer scheme_id;
+    public int scheme_id;
     /**  */
     public String node_key;
     /** 节点类型：0开始，1线，2执行节点，3排他网关，4并行网关，5汇聚网关，9结束 */
-    public Integer type;
+    public int type;
     /** 代号 */
     public String name;
     /** 上个节点ID（type=line时，才有值 ） */
@@ -35,7 +33,7 @@ public class RubberSchemeNodeModel {
     /**  */
     public String actor_display;
     /** 最后更新时间 */
-    public Date last_updatetime;
+    public long last_updatetime;
     /** 是否启用  0：未启用  1：启用  */
-    public Integer is_enabled;
+    public int is_enabled;
 }

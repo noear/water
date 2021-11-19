@@ -11,22 +11,24 @@ import java.util.Date;
 public class WaterCfgPropertiesModel {
     /**  */
     @PrimaryKey
-    public Integer row_id;
+    public int row_id;
     /** 分组标签 */
     public String tag;
     /** 属性key */
     public String key;
     /** 类型：0:未知，1:数据库；2:Redis；3:MangoDb；4:Memcached */
-    public Integer type;
+    public int type;
     /** 属性值 */
     public String value;
     /**  */
     public String edit_mode;
     /** 是否可编辑 */
-    public Boolean is_editable;
+    public boolean is_editable;
     /** 是否启用 */
-    public Integer is_enabled;
-    /** 更新时间 */
-    public Date update_fulltime;
+    public int is_enabled;
+    /** 创建时间 */
+    public long gmt_create;
+    /** 最后修改时间 */
+    public long gmt_modified;
 
 }

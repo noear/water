@@ -37,6 +37,8 @@ public class WaterToolSynchronousModel {
     public String alarm_sign;
     /**  */
     public int is_enabled;
-    /**  */
-    public Date last_fulltime;
+    /** 创建时间 */
+    public long gmt_create;
+    /** 最后修改时间 */
+    public long gmt_modified;
 }

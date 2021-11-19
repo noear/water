@@ -32,9 +32,13 @@ public class WaterToolMonitorModel {
     /** 报警信息产生的表达式 */
     public String alarm_exp;
     /** 报警次数 */
-    public Integer alarm_count;
+    public int alarm_count;
     /** 报警签名 */
     public String alarm_sign;
     /** 是否启用 */
-    public Integer is_enabled;
+    public int is_enabled;
+    /** 创建时间 */
+    public long gmt_create;
+    /** 最后修改时间 */
+    public long gmt_modified;
 }

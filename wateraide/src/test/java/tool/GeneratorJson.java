@@ -25,7 +25,7 @@ public class GeneratorJson {
     @Test
     public void generate() throws Exception {
         Props waterProp = Solon.cfg().getProp("water.ds");
-        //Props waterBcfProp = Solon.cfg().getProp("water.ds");
+
         Props waterPaasProp = Solon.cfg().getProp("water.ds");
         waterPaasProp.setProperty("schema", "water_paas");
 
@@ -37,15 +37,15 @@ public class GeneratorJson {
 
 
         //water
-//        buildTableJosn(waterDb, "water_cfg_broker", "water");
-//        buildTableJosn(waterDb, "water_cfg_gateway", "water");
-//        buildTableJosn(waterDb, "water_cfg_logger", "water");
-//        buildTableJosn(waterDb, "water_cfg_properties", "water");
-//        buildTableJosn(waterDb, "water_cfg_whitelist", "water");
+        buildTableJosn(waterDb, "water_cfg_broker", "water");
+        buildTableJosn(waterDb, "water_cfg_gateway", "water");
+        buildTableJosn(waterDb, "water_cfg_logger", "water");
+        buildTableJosn(waterDb, "water_cfg_properties", "water");
+        buildTableJosn(waterDb, "water_cfg_whitelist", "water");
 
-//        buildTableJosn(waterDb, "water_tool_monitor", "water");
-//        buildTableJosn(waterDb, "water_tool_report", "water");
-//        buildTableJosn(waterDb, "water_tool_synchronous", "water");
+        buildTableJosn(waterDb, "water_tool_monitor", "water");
+        buildTableJosn(waterDb, "water_tool_report", "water");
+        buildTableJosn(waterDb, "water_tool_synchronous", "water");
 
         //water_bcf
 //        buildTableJosn(waterDb, "bcf_config", "water_bcf");
@@ -60,15 +60,14 @@ public class GeneratorJson {
         //water_paas
         buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
 
-//        buildTableJosn(waterPaasDb, "rubber_actor", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_block", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_block", "water_paas");
 
-//        buildTableJosn(waterPaasDb, "rubber_model", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_model_field", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_scheme", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_scheme_node", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_scheme_node_design", "water_paas");
-//        buildTableJosn(waterPaasDb, "rubber_scheme_rule", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_model", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_model_field", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_scheme", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_scheme_node", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_scheme_node_design", "water_paas");
+        buildTableJosn(waterPaasDb, "rubber_scheme_rule", "water_paas");
     }
 
     private void buildTableJosn(DbContext db, String table, String schema) throws Exception {

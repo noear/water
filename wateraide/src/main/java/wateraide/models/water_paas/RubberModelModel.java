@@ -12,7 +12,7 @@ import java.util.Date;
 public class RubberModelModel {
     /** 模型ID */
     @PrimaryKey
-    public Integer model_id;
+    public int model_id;
     /** 分类标签 */
     public String tag;
     /** 代号 */
@@ -22,11 +22,11 @@ public class RubberModelModel {
     /** 相关数据库 */
     public String related_db;
     /**  */
-    public Integer field_count;
+    public int field_count;
     /** 构造表达式 */
     public String init_expr;
     /** 调试参数 */
     public String debug_args;
     /** 最后更新时间 */
-    public Date last_updatetime;
+    public long last_updatetime;
 }

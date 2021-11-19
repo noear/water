@@ -88,7 +88,6 @@ public class InitUtils {
 
         tryInitDataByTypeJsonSql(db, LuffyFileModel.class, "luffy_file", "water_paas");
 
-        tryInitDataByTypeJsonSql(db, RubberActorModel.class, "rubber_actor", "water_paas");
         tryInitDataByTypeJsonSql(db, RubberBlockModel.class, "rubber_block", "water_paas");
 
         tryInitDataByTypeJsonSql(db, RubberModelModel.class, "rubber_model", "water_paas");

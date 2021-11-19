@@ -25,6 +25,8 @@ public class WaterCfgGatewayModel {
     public String policy;
     /**  */
     public int is_enabled;
-    /** 最后更新时间 */
-    public Date update_fulltime;
+    /** 创建时间 */
+    public long gmt_create;
+    /** 最后修改时间 */
+    public long gmt_modified;
 }
