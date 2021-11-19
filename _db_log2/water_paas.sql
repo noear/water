@@ -17,4 +17,9 @@ ALTER TABLE `paas_etl`
     MODIFY COLUMN `last_transform_time` bigint NULL COMMENT '最后转换时间' AFTER `last_load_time`;
 
 
+ALTER  TABLE `paas_file` RENAME TO `luffy_file`;
+
+ALTER  TABLE `paas_etl` RENAME TO `luffy_etl`;
+
+
 
