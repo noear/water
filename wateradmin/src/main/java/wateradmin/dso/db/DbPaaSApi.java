@@ -185,8 +185,8 @@ public class DbPaaSApi {
                 .set("plan_last_timespan", wm.plan_last_timespan)
                 .set("plan_interval", wm.plan_interval)
                 .set("plan_max", wm.plan_max)
-                .set("create_fulltime", wm.create_fulltime)
-                .set("update_fulltime", wm.update_fulltime)
+                .set("create_fulltime", wm.create_fulltime.getTime())
+                .set("update_fulltime", wm.update_fulltime.getTime())
                 .set("use_whitelist", wm.use_whitelist);
 
         if (wm.plan_begin_time != null) {

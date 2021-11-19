@@ -25,6 +25,7 @@ public class DbWaterMsgApi {
         if (m.topic_id == 0) {
             m.topic_id = (int) (db().table("water_msg_topic")
                     .set("topic_name", topic)
+                    .set("gmt_create", System.currentTimeMillis())
                     .insert());
         }
 
@@ -99,7 +100,9 @@ public class DbWaterMsgApi {
                 .set("max_msg_num", max_msg_num)
                 .set("max_distribution_num", max_distribution_num)
                 .set("max_concurrency_num", max_concurrency_num)
-                .set("alarm_model", alarm_model);
+                .set("alarm_model", alarm_model)
+                .set("gmt_modified", System.currentTimeMillis());
+
         if (topic_id > 0) {
             return tb.where("topic_id = ?", topic_id).update() > 0;
         } else {
@@ -128,6 +131,7 @@ public class DbWaterMsgApi {
         return db().table("water_msg_subscriber")
                 .whereIn("subscriber_id", ids)
                 .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis())
                 .update() > 0;
     }
 

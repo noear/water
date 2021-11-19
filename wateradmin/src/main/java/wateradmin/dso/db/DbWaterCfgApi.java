@@ -90,22 +90,25 @@ public class DbWaterCfgApi {
 
     //设置logger。
     public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
-        DbTableQuery db = db().table("water_cfg_logger")
+        DbTableQuery tb = db().table("water_cfg_logger")
                 .set("tag", tag)
                 .set("logger", logger)
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("is_alarm", is_alarm)
-                .set("note", note);
+                .set("note", note)
+                .set("gmt_modified", System.currentTimeMillis());
+
         if (logger_id > 0) {
-            boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
+
+            boolean isOk = tb.where("logger_id = ?", logger_id).update() > 0;
 
             //发送通知消息
             NoticeUtils.updateCache("logger:" + logger);
 
             return isOk;
         } else {
-            return db.set("is_enabled", 1).insert() > 0;
+            return tb.set("is_enabled", 1).insert() > 0;
         }
     }
 
@@ -114,6 +117,7 @@ public class DbWaterCfgApi {
         db().table("water_cfg_logger")
                 .where("logger_id = ?", logger_id)
                 .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis())
                 .update();
     }
 
@@ -207,7 +211,9 @@ public class DbWaterCfgApi {
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("is_alarm", is_alarm)
-                .set("note", note);
+                .set("note", note)
+                .set("gmt_modified", System.currentTimeMillis());
+
         if (broker_id > 0) {
             boolean isOk = db.where("broker_id = ?", broker_id).update() > 0;
 
@@ -225,6 +231,7 @@ public class DbWaterCfgApi {
         db().table("water_cfg_broker")
                 .where("broker_id = ?", broker_id)
                 .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis())
                 .update();
     }
 
@@ -282,7 +289,8 @@ public class DbWaterCfgApi {
                 .set("tag", tag.trim())
                 .set("type", type.trim())
                 .set("value", value.trim())
-                .set("note", note);
+                .set("note", note)
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (row_id > 0) {
             return qr.whereEq("row_id", row_id).update() > 0;
@@ -306,6 +314,7 @@ public class DbWaterCfgApi {
                 .set("type", wm.type)
                 .set("value", wm.value)
                 .set("note", wm.note)
+                .set("gmt_modified", System.currentTimeMillis())
                 .insertBy("tag,type,value");
     }
 
@@ -327,6 +336,7 @@ public class DbWaterCfgApi {
         }else {
             db().table("water_cfg_whitelist")
                     .set("is_enabled", (act == 1 ? 1 : 0))
+                    .set("gmt_modified", System.currentTimeMillis())
                     .whereIn("row_id", list)
                     .update();
         }
@@ -382,6 +392,7 @@ public class DbWaterCfgApi {
         } else {
             db().table("water_cfg_properties")
                     .set("is_enabled", (act == 1 ? 1 : 0))
+                    .set("gmt_modified", System.currentTimeMillis())
                     .whereIn("row_id", list)
                     .update();
         }
@@ -435,8 +446,8 @@ public class DbWaterCfgApi {
                 .set("key", key.trim())
                 .set("type", type)
                 .set("edit_mode", edit_mode)
-                .set("update_fulltime", "$NOW()").usingExpr(true)
-                .set("value", value);
+                .set("value", value)
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (row_id > 0) {
             boolean isOk = db.where("row_id = ?", row_id).update() > 0;

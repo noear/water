@@ -26,6 +26,7 @@ public final class DbWaterMsgApi {
         if (ieExists == false) {
             db().table("water_msg_topic")
                     .set("topic_name", topic_name)
+                    .set("gmt_create", System.currentTimeMillis())
                     .insert();
         }
     }
@@ -54,7 +55,7 @@ public final class DbWaterMsgApi {
                 .set("receive_key", receive_key)//后面要改掉
                 .set("receive_way", receive_way)
                 .set("check_error_num", 0)
-                .set("log_fulltime", "$NOW()");
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (db().table("water_msg_subscriber")
                 .where("subscriber_key=?", key).and("topic_name=?", topic_name)
@@ -64,7 +65,8 @@ public final class DbWaterMsgApi {
                     .update();
         } else {
             return tq.set("topic_name", topic_name)
-                    .set("topic_name", topic_name).insert();
+                    .set("gmt_create", System.currentTimeMillis())
+                    .insert();
         }
     }
 }

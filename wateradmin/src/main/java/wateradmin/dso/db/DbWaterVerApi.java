@@ -64,7 +64,7 @@ public class DbWaterVerApi {
                     .set("log_user", Session.current().getUserName())
                     .set("log_ip", log_ip)
                     .set("log_date", now_time.getDate())
-                    .set("log_fulltime", now_time.getFulltime())
+                    .set("log_fulltime", now_time.getTicks())
                     .insert();
 
         } catch (Exception ex) {

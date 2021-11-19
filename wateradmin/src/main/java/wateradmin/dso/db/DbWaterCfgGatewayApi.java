@@ -24,7 +24,8 @@ public class DbWaterCfgGatewayApi {
                 .set("name", name.trim())
                 .set("agent", agent.trim())
                 .set("policy", policy.trim())
-                .set("is_enabled", is_enabled);
+                .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (gatewayId > 0) {
             tb.whereEq("gateway_id", gatewayId).update();

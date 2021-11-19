@@ -25,8 +25,7 @@ public final class DbWaterRegApi {
     public static List<ServiceModel> getServiceList(String name) throws SQLException {
         return db().table("water_reg_service")
                 .where("`name`=? AND is_enabled=1 AND check_last_state = 0", name)
-                .select("*")
-                .getList(new ServiceModel());
+                .selectList("*", ServiceModel.class);
     }
 
     //添加服务（key）
@@ -55,7 +54,7 @@ public final class DbWaterRegApi {
                 .set("check_type", check_type)
                 .set("code_location", code_location)
                 .set("check_last_state", 0) //最后检查状态（0：OK；1：error）
-                .set("check_last_time", "$NOW()")
+                .set("check_last_time", System.currentTimeMillis())
                 .set("check_last_note", "");
 
 
@@ -99,8 +98,7 @@ public final class DbWaterRegApi {
 
         return db().table("water_reg_service")
                 .whereEq("key", key)
-                .select("*")
-                .getItem(new ServiceModel());
+                .selectItem("*", ServiceModel.class);
     }
 
     public static boolean disableService(String tag, String service, String address, String meta, boolean is_enabled) throws SQLException {
@@ -128,7 +126,7 @@ public final class DbWaterRegApi {
                     .set("consumer", consumer)
                     .set("consumer_address", consumer_address)
                     .set("consumer_ip", IPUtils.getIP(Context.current()))
-                    .set("chk_fulltime", "$NOW()")
+                    .set("chk_fulltime", System.currentTimeMillis())
                     .upsertBy("service,consumer_address");
         } catch (Exception ex) {
             ex.printStackTrace();
