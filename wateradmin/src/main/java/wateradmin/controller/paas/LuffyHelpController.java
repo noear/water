@@ -11,6 +11,6 @@ import wateradmin.controller.BaseController;
 public class LuffyHelpController extends BaseController {
     @Mapping("")
     public void index(Context ctx){
-        ctx.redirect(Config.paas_uri() +"/water/paas/help/api/");
+        ctx.redirect(Config.faas_uri() +"/water/paas/help/api/");
     }
 }

@@ -21,8 +21,8 @@ public class Config {
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 
     //paas 根地址
-    public static String paas_uri() {
-        return cfg("paas_uri").getString();
+    public static String faas_uri() {
+        return cfg("faas_uri").getString();
     }
 
     //raas 根地址

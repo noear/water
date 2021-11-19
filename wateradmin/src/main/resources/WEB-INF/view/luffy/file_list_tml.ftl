@@ -194,7 +194,7 @@
                             <a class="t2" href='./edit?file_id=${m1.file_id}'>设置</a>
                             |
                             </#if>
-                            <a class="t2" href="${paas_uri}${m1.path!}?_debug=1" target="_blank">预览</a>
+                            <a class="t2" href="${faas_uri}${m1.path!}?_debug=1" target="_blank">预览</a>
                         </td>
                     </tr>
                 </#list>

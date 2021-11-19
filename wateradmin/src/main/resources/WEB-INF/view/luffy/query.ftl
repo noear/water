@@ -79,7 +79,7 @@
                             <a class="t2" href='./file/${m1.typeStr()}/edit?file_id=${m1.file_id}'>设置</a>
                             |
                             </#if>
-                            <a class="t2" href="${paas_uri}${m1.path!}" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
+                            <a class="t2" href="${faas_uri}${m1.path!}" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
                         </td>
                     </tr>
                 </#list>

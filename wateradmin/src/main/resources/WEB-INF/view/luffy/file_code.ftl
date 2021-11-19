@@ -47,7 +47,7 @@
             <#if is_admin = 1>
             <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em>
             </#if>
-            <a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
+            <a href="${faas_uri}${m1.path!}?_debug=1" class="code_run" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
         </left>
         <right class="col-6">
             <@versions table="luffy_file" keyName="file_id" keyValue="${m1.file_id}">

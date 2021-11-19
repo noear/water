@@ -48,7 +48,7 @@ public class BaseController {
         viewModel.put("is_admin", is_admin);
         viewModel.put("is_operator", is_operator);
 
-        viewModel.put("paas_uri", Config.paas_uri());
+        viewModel.put("faas_uri", Config.faas_uri());
         viewModel.put("raas_uri", Config.raas_uri());
 
 
