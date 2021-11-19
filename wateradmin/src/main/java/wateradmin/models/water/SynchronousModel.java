@@ -23,7 +23,6 @@ public class SynchronousModel implements IBinder
     public String alarm_mobile;
     public String alarm_sign;
     public int is_enabled;
-    public Date last_fulltime;
     public String tag;
     public long counts;
 
@@ -43,7 +42,6 @@ public class SynchronousModel implements IBinder
         alarm_mobile = s.get("alarm_mobile").value(null);
         alarm_sign = s.get("alarm_sign").value(null);
         is_enabled = s.get("is_enabled").value(0);
-        last_fulltime = s.get("last_fulltime").value(null);
         tag = s.get("tag").value(null);
         counts = s.get("counts").value(0L);
 	}

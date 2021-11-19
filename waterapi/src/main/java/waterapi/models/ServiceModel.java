@@ -26,9 +26,13 @@ public class ServiceModel implements IBinder {
         code_location = s.get("code_location").value("");
         check_type = s.get("state").intValue(0);
         check_url = s.get("check_url").value("");
-        check_last_time = s.get("check_last_time").getDate();
+        check_last_time = s.get("check_last_time").dateValue(null);
         check_last_state = s.get("check_last_state").intValue(0);
         check_last_note = s.get("check_last_note").value("");
+
+        if (check_last_time == null) {
+            check_last_time = new Date();
+        }
     }
 
     @Override

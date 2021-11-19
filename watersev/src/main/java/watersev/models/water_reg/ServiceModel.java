@@ -99,7 +99,7 @@ public class ServiceModel implements IBinder {
         check_url = s.get("check_url").value(null);
         check_type = s.get("check_type").value(0);
         check_error_num = s.get("check_error_num").value(0);
-        check_last_time = s.get("check_last_time").value(null);
+        check_last_time = s.get("check_last_time").dateValue(null);
         check_last_note = s.get("check_last_note").value("");
 
         is_enabled = s.get("is_enabled").intValue(0) > 0;

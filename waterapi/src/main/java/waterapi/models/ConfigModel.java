@@ -20,7 +20,7 @@ public class ConfigModel implements IBinder {
     public String key;
     public String value;
     public String edit_mode;
-    public Date update_fulltime;
+    public long gmt_modified;
     public boolean is_editable;
     public boolean is_enabled;
 
@@ -32,7 +32,7 @@ public class ConfigModel implements IBinder {
         edit_mode = s.get("edit_mode").value("");
         is_editable = s.get("is_editable").value(false);
         is_enabled = s.get("is_enabled").intValue(0) > 0;
-        update_fulltime = s.get("update_fulltime").value(null);
+        gmt_modified = s.get("gmt_modified").value(0L);
 
         if (value.startsWith(WW.cfg_data_header)) {
             value = Base64Utils.decode(value.substring(8));

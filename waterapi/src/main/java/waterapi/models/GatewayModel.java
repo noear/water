@@ -18,5 +18,5 @@ public class GatewayModel {
     /**  */
     public int is_enabled;
     /** 最后更新时间 */
-    public Date update_fulltime;
+    public long gmt_modified;
 }

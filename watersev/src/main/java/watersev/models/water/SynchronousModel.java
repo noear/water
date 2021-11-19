@@ -22,8 +22,6 @@ public class SynchronousModel implements IBinder {
 
     public long task_tag;
 
-    public Date last_fulltime;
-
     @Override
     public void bind(GetHandlerEx s) {
         sync_id = s.get("sync_id").value(0);
@@ -39,9 +37,6 @@ public class SynchronousModel implements IBinder {
 
         alarm_mobile = s.get("alarm_mobile").value("");
         alarm_sign   = s.get("alarm_sign").value("");
-
-        last_fulltime = s.get("last_fulltime").value(null);
-
     }
 
     @Override

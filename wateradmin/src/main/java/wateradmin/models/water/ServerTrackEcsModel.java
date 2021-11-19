@@ -27,7 +27,6 @@ public class ServerTrackEcsModel implements IBinder {
     public long tcp_num;
     public int sev_num;
     public String address_local;
-    public Date last_updatetime;
 
     public void bind(GetHandlerEx s) {
         //1.source:数据源
@@ -48,8 +47,6 @@ public class ServerTrackEcsModel implements IBinder {
         sev_num = s.get("sev_num").value(0);
 
         address_local = s.get("address_local").value(null);
-
-        last_updatetime = s.get("last_updatetime").value(null);
     }
 
     public IBinder clone() {

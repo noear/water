@@ -41,12 +41,7 @@ public class CMD_cfg_get extends UapiBase {
                 ONode n = nList.getNew(m1.key);
                 n.set("key", m1.key);
                 n.set("value", m1.value);
-
-                if (m1.update_fulltime == null) {
-                    n.set("lastModified", 0);
-                } else {
-                    n.set("lastModified", m1.update_fulltime.getTime());
-                }
+                n.set("lastModified", m1.gmt_modified);
             }
 
             //track

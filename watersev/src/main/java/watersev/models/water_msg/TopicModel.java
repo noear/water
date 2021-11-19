@@ -11,9 +11,6 @@ public class TopicModel implements IBinder {
 
     public int alarm_model; //报警模式：0=普通模式；1=不报警
 
-
-    public int distribution_count;
-
     @Override
     public void bind(GetHandlerEx s) {
         topic_id = s.get("topic_id").value(0);

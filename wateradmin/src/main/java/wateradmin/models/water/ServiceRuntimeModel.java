@@ -35,8 +35,6 @@ public class ServiceRuntimeModel {
     public int log_hour;
     /**  */
     public int log_minute;
-    /**  */
-    public Date log_fulltime;
 
 
     public long val;

@@ -19,7 +19,7 @@ public class ServiceSmpModel implements IBinder {
         name = s.get("name").value("");
         address = s.get("address").value("");
         meta = s.get("meta").value("");
-        check_last_time = s.get("check_last_time").value(null);
+        check_last_time = s.get("check_last_time").dateValue(null);
 
         if (check_last_time == null) {
             check_last_time = new Date();

@@ -17,3 +17,4 @@ solon.logging.logger:
     level: "WARN"
   "com.zaxxer.hikari.*":
     level: "WARN"
+
