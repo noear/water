@@ -38,6 +38,7 @@ public class LogUtils {
 
             logger.info(content.toString());
         } catch (Exception ee) {
+            //不能再转入别的日志了
             ee.printStackTrace();
         }
     }
@@ -63,6 +64,7 @@ public class LogUtils {
 
             logger.warn("{}\r\n{}", label.toJson(), content);
         } catch (Exception ee) {
+            //不能再转入别的日志了
             ee.printStackTrace();
         }
     }
@@ -94,6 +96,7 @@ public class LogUtils {
                 logger.error(sb.toString());
             }
         } catch (Exception ee) {
+            //不能再转入别的日志了
             ee.printStackTrace();
         }
     }
@@ -111,6 +114,7 @@ public class LogUtils {
 
             logger.error("{}\r\n{}", summary, ex);
         } catch (Exception ee) {
+            //不能再转入别的日志了
             ee.printStackTrace();
         }
     }
