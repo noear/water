@@ -10,6 +10,7 @@
 * 服务 wateradmin，清理吃掉异常的情况
 * 镜像 waterapi 端口改为：9371
 * 主库、PaaS库，时间改为 bigint
+* waterraas 端口改为：9375 （之前为：9376）
 
 #### 2.3.2
 * CacheUtils ，增加自动构建本地缓存（驱动类型为：local）
