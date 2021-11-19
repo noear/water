@@ -18,17 +18,20 @@ public class RebberActorModel implements IBinder
     public Date last_updatetime;
     public String note;
 
-	public void bind(GetHandlerEx s)
-	{
-		//1.source:数据源
-		//
+	public void bind(GetHandlerEx s) {
+        //1.source:数据源
+        //
         actor_id = s.get("actor_id").value(0);
         tag = s.get("tag").value(null);
         name = s.get("name").value(null);
         name_display = s.get("name_display").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
         note = s.get("note").value(null);
-	}
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
+    }
 	
 	public IBinder clone()
 	{

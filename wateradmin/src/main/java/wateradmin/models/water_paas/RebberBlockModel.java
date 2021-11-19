@@ -42,7 +42,11 @@ public class RebberBlockModel implements IBinder
         is_editable = s.get("is_editable").value(0);
         struct = s.get("struct").value(null);
         app_expr = s.get("app_expr").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
 	}
 	
 	public IBinder clone()

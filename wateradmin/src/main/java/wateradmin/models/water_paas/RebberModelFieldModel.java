@@ -33,10 +33,14 @@ public class RebberModelFieldModel implements IBinder
         name_display = s.get("name_display").value(null);
         note = s.get("note").value(null);
         expr = s.get("expr").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
         is_pk = s.get("is_pk").value(0);
 
         tag = s.get("tag").value(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
 	}
 	
 	public IBinder clone()

@@ -84,7 +84,7 @@ public class DbRubberApi {
                 .set("init_expr", init_expr)
                 .set("debug_args", debug_args)
                 .set("related_db", related_db)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         if (model_id > 0) {
             long isOk = tb.where("model_id = ?", model_id)
@@ -118,7 +118,7 @@ public class DbRubberApi {
                 .set("field_count", vm.model.field_count)
                 .set("init_expr", vm.model.init_expr)
                 .set("debug_args", vm.model.debug_args)
-                .set("last_updatetime", vm.model.last_updatetime)
+                .set("last_updatetime", vm.model.last_updatetime.getTime())
                 .insertBy("tag,name");
 
         if(model_id > 0) {
@@ -213,7 +213,7 @@ public class DbRubberApi {
                 .set("name", name)
                 .set("name_display", name_display)
                 .set("note", note)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         if (model_id > 0) {
             return tb.where("actor_id = ?", model_id)
@@ -276,7 +276,7 @@ public class DbRubberApi {
                 .set("related_block", related_block)
                 .set("debug_args", debug_args)
                 .set("is_enabled", 1)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         if (id != null && id != 0) {
             return tb.where("scheme_id = ?", id)
@@ -310,13 +310,14 @@ public class DbRubberApi {
                 .set("rule_count", vm.model.rule_count)
                 .set("rule_relation", vm.model.rule_relation)
                 .set("is_enabled", vm.model.is_enabled)
-                .set("last_updatetime", vm.model.last_updatetime)
+                .set("last_updatetime", vm.model.last_updatetime.getTime())
                 .insertBy("tag,name");
 
         if (scheme_id > 0) {
             db().table("rubber_scheme_node_design")
                     .set("scheme_id",scheme_id)
                     .set("details",vm.node_design.details)
+                    .set("last_updatetime", System.currentTimeMillis())
                     .insert();
 
             db().table("rubber_scheme_node").insertList(vm.nodes,(d, m)->{
@@ -464,7 +465,7 @@ public class DbRubberApi {
                 .set("expr", expr)
                 .set("note", note)
                 .set("is_pk", is_pk)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         boolean isOk = false;
         if (field_id > 0) {
@@ -641,7 +642,7 @@ public class DbRubberApi {
                 .set("expr", expr)
                 .set("is_enabled", is_enabled)
                 .set("expr_display", expr_display)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         boolean isOk = false;
         if (rule_id > 0) {
@@ -920,7 +921,7 @@ public class DbRubberApi {
                 .set("name", name)
                 .set("type", 2)
                 .set("tasks", tasks)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
 
         String actorname = "";
         String actor_display = "";
@@ -966,7 +967,7 @@ public class DbRubberApi {
                             tb.set("next_key", next_key);
                         }
                     })
-                    .set("last_updatetime", new Date())
+                    .set("last_updatetime", System.currentTimeMillis())
                     .insert() > 0;
         } else {
             return db().table("rubber_scheme_node")
@@ -985,7 +986,7 @@ public class DbRubberApi {
                             tb.set("next_key", next_key);
                         }
                     })
-                    .set("last_updatetime", new Date())
+                    .set("last_updatetime", System.currentTimeMillis())
                     .update() > 0;
         }
     }
@@ -1194,7 +1195,7 @@ public class DbRubberApi {
                 .set("name", name)
                 .set("type", 1)
                 .set("condition", condition)
-                .set("last_updatetime", new Date());
+                .set("last_updatetime", System.currentTimeMillis());
         RebberSchemeNodeModel node = getSchemeNodeByNodeKey(node_key, scheme_id);
         if (node.node_id > 0) {
             //update
@@ -1267,7 +1268,7 @@ public class DbRubberApi {
 
             return isOk;
         } else {
-            return tb.set("last_updatetime", new Date()).insert();
+            return tb.set("last_updatetime", System.currentTimeMillis()).insert();
         }
     }
 
@@ -1296,7 +1297,7 @@ public class DbRubberApi {
                 .set("related_tb", vm.related_tb)
                 .set("struct", vm.struct)
                 .set("app_expr", vm.app_expr)
-                .set("last_updatetime", vm.last_updatetime)
+                .set("last_updatetime", vm.last_updatetime.getTime())
                 .insertBy("tag,name");
 
         NoticeUtils.updateCache("block:" + vm.tag + "/" + vm.name);

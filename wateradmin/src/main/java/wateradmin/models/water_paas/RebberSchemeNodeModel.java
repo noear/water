@@ -40,8 +40,12 @@ public class RebberSchemeNodeModel implements IBinder
         tasks = s.get("tasks").value(null);
         actor = s.get("actor").value(null);
         actor_display = s.get("actor_display").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
         is_enabled = s.get("is_enabled").value(0);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
 	}
 	
 	public IBinder clone()
