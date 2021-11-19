@@ -12,4 +12,9 @@ ALTER TABLE `paas_file`
     MODIFY COLUMN `update_fulltime` bigint NULL COMMENT '更新时间' AFTER `create_fulltime`;
 
 
+ALTER TABLE `paas_etl`
+    MODIFY COLUMN `last_load_time` bigint NULL COMMENT '最后加载时间' AFTER `last_extract_time`,
+    MODIFY COLUMN `last_transform_time` bigint NULL COMMENT '最后转换时间' AFTER `last_load_time`;
+
+
 
