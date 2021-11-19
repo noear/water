@@ -14,7 +14,7 @@
 运行 Water 助理服务（在本地或服务器上运行都可）
 
 ```shell
-docker run -it --rm -p 19371:8080 noearorg/wateraide
+docker run -it --rm -p 19371:19371 noearorg/wateraide
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
@@ -25,7 +25,7 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
 
 新建域：water
 
-* 添加 water/waterapi 服务 x2+（镜像：noearorg/waterapi:latest）
+* 添加 water/waterapi 服务 x2+（镜像：noearorg/waterapi:latest）。镜像端口：9371
 
     ```properties
     #添加环境变量（换成初始化好的 Water DB 配置）：
@@ -35,18 +35,18 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
     water.ds.password=123456
     ```
 
-* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）
-* 添加 water/waterpaas 服务 x1+（镜像：noearorg/waterpaas:latest）
-* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）//不需要，可不部署
+* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）。镜像端口：8080
+* 添加 water/waterfaas 服务 x1+（镜像：noearorg/waterfaas:latest）。镜像端口：8080
+* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）。镜像端口：8080 //不需要，可不部署
 
-* 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）//工具服务，包含： (msgchk,sevchk,syn,mot)
+* 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //工具服务，包含： (msgchk,sevchk,syn,mot)
 
     ```properties
     #添加环境变量：
     water.sss=tol
     ```
 
-* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）//定时任务调度服务
+* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //定时任务调度服务
 
     ```properties
     #添加环境变量：
@@ -54,14 +54,14 @@ docker run -it --rm -p 19371:8080 noearorg/wateraide
     ```
 
 
-* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）//消息派发服务
+* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息派发服务
 
     ```properties
     #添加环境变量：
     water.sss=msgdis
     ```
 
-* 添加 water/watersev-msgexg 服务 x1+（镜像：noearorg/watersev:latest）//消息交换服务
+* 添加 water/watersev-msgexg 服务 x1+（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息交换服务
 
     ```properties
     #添加环境变量：

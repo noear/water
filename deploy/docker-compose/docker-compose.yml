@@ -2,7 +2,7 @@ version: '3'
 
 # 部署指南：
 # 1.运行 Water 助理 完成初始化
-#   > docker run -it --rm -p 19371:8080 noearorg/wateraide
+#   > docker run -it --rm -p 19371:19371 noearorg/wateraide
 # 2.把配置里的 water.ds.* 换成真实的 WaterDb，并启动
 # 3.管理后台地址 http://localhost:9373 做日常管理
 # 4.使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:8080
@@ -19,13 +19,12 @@ services:
       - water.ds.password={1234}
       - TZ=Asia/Shanghai
     ports:
-      - 9371:8080
+      - 9371:9371
   watersev:
     image: noearorg/watersev:latest
     container_name: watersev
     environment:
-      - solon.cloud.water.server=waterapi:8080
-      - solon.start.ping=waterapi:8080
+      - solon.start.ping=waterapi:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
@@ -35,8 +34,7 @@ services:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
     environment:
-      - solon.cloud.water.server=waterapi:8080
-      - solon.start.ping=waterapi:8080
+      - solon.start.ping=waterapi:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
@@ -46,8 +44,7 @@ services:
     image: noearorg/waterpaas:latest
     container_name: waterpaas
     environment:
-      - solon.cloud.water.server=waterapi:8080
-      - solon.start.ping=waterapi:8080
+      - solon.start.ping=waterapi:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
@@ -57,8 +54,7 @@ services:
     image: noearorg/waterraas:latest
     container_name: waterraas
     environment:
-      - solon.cloud.water.server=waterapi:8080
-      - solon.start.ping=waterapi:8080
+      - solon.start.ping=waterapi:9371
       - TZ=Asia/Shanghai
     depends_on:
       -  waterapi
