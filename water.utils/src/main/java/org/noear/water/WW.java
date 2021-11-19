@@ -56,7 +56,7 @@ public class WW {
     public static final String logger_water_log_bcf = "water_log_bcf";
     public static final String logger_water_log_sql_p = "water_log_sql_p"; //性能
     public static final String logger_water_log_sql_b = "water_log_sql_b"; // 行为
-    public static final String logger_water_log_paas = "water_log_paas";
+    public static final String logger_water_log_faas = "water_log_faas";
     public static final String logger_water_log_raas = "water_log_raas";
     public static final String logger_water_log_admin = "water_log_admin";
     public static final String logger_water_log_heihei = "water_log_heihei";

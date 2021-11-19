@@ -29,7 +29,7 @@ import java.util.List;
 @Controller
 @Mapping("/paas/file")
 public class FileController extends BaseController {
-    static Logger paasLog = LoggerFactory.getLogger("water_log_paas");
+    static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
     @Mapping("api/home")
     public ModelAndView api_home(String tag_name, String key) throws SQLException {

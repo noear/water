@@ -170,7 +170,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterfaas.WaterpaasApp</mainClass>
+                            <mainClass>waterfaas.WaterfaasApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

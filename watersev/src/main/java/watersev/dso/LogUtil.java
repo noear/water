@@ -14,7 +14,7 @@ import org.slf4j.MDC;
 public class LogUtil {
     private static Logger log_msg = LoggerFactory.getLogger(WW.logger_water_log_msg);
     private static Logger log_sev = LoggerFactory.getLogger(WW.logger_water_log_sev);
-    private static Logger log_paas = LoggerFactory.getLogger(WW.logger_water_log_paas);
+    private static Logger log_paas = LoggerFactory.getLogger(WW.logger_water_log_faas);
 
     public static void writeForMsg(MessageModel msg, String broker, DistributionModel dist, String content) {
         if (dist == null) {

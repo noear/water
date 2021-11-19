@@ -20,12 +20,12 @@ import java.util.Map;
  * 执行工厂适配器
  * */
 public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
-    static Logger log = LoggerFactory.getLogger("water_log_paas");
+    static Logger log = LoggerFactory.getLogger("water_log_faas");
 
     private String _defaultExecutor = "freemarker";
     private String _defLogTag = "_paas";
 
-    private final String water_log_paas = "water_log_paas"; //logger name
+    private final String water_log_faas = "water_log_faas"; //logger name
     private final String water_paas = "water_paas"; //config tag name
 
     public JtExecutorAdapter() {
@@ -55,7 +55,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
             }
         }
 
-        WaterClient.Log.append(water_log_paas, LogLevel.DEBUG, data);
+        WaterClient.Log.append(water_log_faas, LogLevel.DEBUG, data);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
         log.error("{}\r\n{}", msg, err);
 
-        //WaterClient.Log.append(water_log_paas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
+        //WaterClient.Log.append(water_log_faas, Level.ERROR, _defLogTag, file.tag, file.path, "", "", msg);
     }
 
     @Override
