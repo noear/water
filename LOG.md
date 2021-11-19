@@ -1,11 +1,11 @@
 #### 2.3.3 
 * 修复 EncryptUtils 类，还 iv 时，加密出错的问题
-* 服务 watersev，下属二级服务增加各自的签到
+* 服务 watersev，下属二级服务增加各自的签到。从而形成各自服务的服务名
 * 服务 watersev-pln，可自由集群，并让每个任务分布到集群中运行
 * 服务 watersev-mot，可自由集群，并让每个任务分布到集群中运行
 * 服务 watersev-msgexg，可自由集群，并分解borker到不同节点上
 * 服务 watersev-msgdis，可自由集群，并分解borker到不同节点上
-* 服务 watersev-sevchk，调整逻辑，需要启动时 reset 的情况
+* 服务 watersev-sevchk，取消启动时需要 reset 的逻辑
 * 服务 watersev，清理吃掉异常的情况
 * 服务 wateradmin，清理吃掉异常的情况
 
