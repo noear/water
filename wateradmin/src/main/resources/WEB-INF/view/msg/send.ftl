@@ -34,7 +34,7 @@
                     url:"/msg/send/ajax/dosend",
                     data:{"broker":broker, "topic":topic, "message":message, "tags":tags},
                     success:function(data){
-                        top.layer.msg(data.msg);
+                        top.layer.msg('操作成功');
                     }
                 });
                 top.layer.close(top.layer.index);
