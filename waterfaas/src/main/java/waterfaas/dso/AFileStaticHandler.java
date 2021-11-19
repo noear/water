@@ -1,4 +1,4 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 
 import org.noear.solon.core.handle.Context;

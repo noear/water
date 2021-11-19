@@ -9,8 +9,8 @@ import org.noear.luffy.dso.JtFun;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
-import waterpaas.Config;
-import waterpaas.dso.DbPaaSApi;
+import waterfaas.Config;
+import waterfaas.dso.DbPaaSApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;

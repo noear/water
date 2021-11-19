@@ -24,7 +24,7 @@
         <module>waterapi</module>
         <module>wateradmin</module>
         <module>watersev</module>
-        <module>waterpaas</module>
+        <module>waterfaas</module>
         <module>waterraas</module>
 
         <module>wateraide</module>

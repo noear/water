@@ -1,4 +1,4 @@
-package waterpaas.models;
+package waterfaas.models;
 
 import lombok.Getter;
 import org.noear.water.protocol.model.log.LoggerMeta;

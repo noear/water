@@ -1,4 +1,4 @@
-package waterpaas;
+package waterfaas;
 
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
@@ -10,21 +10,19 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
-import org.noear.water.protocol.solution.MsgBrokerImpl;
-import org.noear.water.utils.TextUtils;
-import waterpaas.controller.AppHandler;
-import waterpaas.controller.FrmInterceptor;
-import waterpaas.dso.DbWaterCfgApi;
-import waterpaas.dso.MsgInitPlugin;
+import waterfaas.controller.AppHandler;
+import waterfaas.controller.FrmInterceptor;
+import waterfaas.dso.DbWaterCfgApi;
+import waterfaas.dso.MsgInitPlugin;
 
 
-public class WaterpaasApp {
+public class WaterfaasApp {
     public static void main(String[] args) throws Exception{
 
         //开始
         JtRun.init();
 
-        SolonApp app = Solon.start(WaterpaasApp.class, args, (x) -> {
+        SolonApp app = Solon.start(WaterfaasApp.class, args, (x) -> {
             Config.tryInit(x);
 
             x.enableErrorAutoprint(false);

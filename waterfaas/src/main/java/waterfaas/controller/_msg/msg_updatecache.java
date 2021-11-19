@@ -1,4 +1,4 @@
-package waterpaas.controller._msg;
+package waterfaas.controller._msg;
 
 import org.noear.solon.cloud.CloudEventHandler;
 import org.noear.solon.cloud.annotation.CloudEvent;
@@ -9,9 +9,9 @@ import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
-import waterpaas.dso.AFileUtil;
-import waterpaas.dso.DbPaaSApi;
-import waterpaas.dso.RouteHelper;
+import waterfaas.dso.AFileUtil;
+import waterfaas.dso.DbPaaSApi;
+import waterfaas.dso.RouteHelper;
 
 /**
  * 实时更新FaaS代码

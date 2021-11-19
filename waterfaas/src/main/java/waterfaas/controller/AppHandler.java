@@ -1,4 +1,4 @@
-package waterpaas.controller;
+package waterfaas.controller;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
@@ -8,10 +8,10 @@ import org.noear.luffy.utils.TextUtils;
 import org.noear.solon.core.handle.Handler;
 import org.noear.water.WaterClient;
 import org.noear.water.model.MessageM;
-import waterpaas.Config;
-import waterpaas.dso.AFileStaticHandler;
-import waterpaas.dso.AFileUtil;
-import waterpaas.dso.RouteHelper;
+import waterfaas.Config;
+import waterfaas.dso.AFileStaticHandler;
+import waterfaas.dso.AFileUtil;
+import waterfaas.dso.RouteHelper;
 
 /**
  * 应用文件的代理，静态文件或动态文件（数据库安全）

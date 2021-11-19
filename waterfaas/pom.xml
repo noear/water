@@ -10,7 +10,7 @@
         <relativePath>../water-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>waterpaas</artifactId>
+    <artifactId>waterfaas</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -170,7 +170,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>waterpaas.WaterpaasApp</mainClass>
+                            <mainClass>waterfaas.WaterpaasApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -212,7 +212,7 @@
                         </resource>
                     </resources>
                     <volumes>
-                        <volume>/waterpaas_ext</volume>
+                        <volume>/waterfaas_ext</volume>
                     </volumes>
                 </configuration>
             </plugin>

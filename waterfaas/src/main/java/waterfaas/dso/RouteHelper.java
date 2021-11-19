@@ -1,4 +1,4 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 import java.util.HashSet;
 import java.util.List;

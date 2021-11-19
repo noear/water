@@ -1,4 +1,4 @@
-package waterpaas.models;
+package waterfaas.models;
 
 import org.noear.water.protocol.model.message.BrokerMeta;
 import org.noear.water.utils.EncryptUtils;

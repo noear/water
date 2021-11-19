@@ -1,4 +1,4 @@
-package waterpaas.utils;
+package waterfaas.utils;
 
 import org.noear.solon.Solon;
 import org.noear.water.utils.LocalUtils;

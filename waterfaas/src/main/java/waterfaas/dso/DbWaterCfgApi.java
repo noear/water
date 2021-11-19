@@ -1,10 +1,10 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.weed.DbContext;
-import waterpaas.Config;
-import waterpaas.models.BrokerModel;
-import waterpaas.models.LoggerModel;
+import waterfaas.Config;
+import waterfaas.models.BrokerModel;
+import waterfaas.models.LoggerModel;
 
 import java.util.List;
 

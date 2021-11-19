@@ -1,4 +1,4 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 import org.noear.solon.SolonApp;
 import org.noear.solon.core.Plugin;

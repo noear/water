@@ -1,4 +1,4 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;

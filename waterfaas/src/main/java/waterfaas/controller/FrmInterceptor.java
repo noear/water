@@ -1,4 +1,4 @@
-package waterpaas.controller;
+package waterfaas.controller;
 
 
 import org.noear.solon.core.handle.Context;
@@ -9,9 +9,9 @@ import org.noear.luffy.model.AFileModel;
 import org.noear.luffy.utils.ExceptionUtils;
 import org.noear.luffy.utils.TextUtils;
 import org.noear.solon.core.handle.Handler;
-import waterpaas.Config;
-import waterpaas.dso.AFileUtil;
-import waterpaas.dso.DbPaaSApi;
+import waterfaas.Config;
+import waterfaas.dso.AFileUtil;
+import waterfaas.dso.DbPaaSApi;
 
 import java.util.HashMap;
 import java.util.List;

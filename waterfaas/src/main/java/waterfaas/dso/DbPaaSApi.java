@@ -1,9 +1,9 @@
-package waterpaas.dso;
+package waterfaas.dso;
 
 import org.noear.luffy.model.AFileModel;
 import org.noear.luffy.utils.TextUtils;
 import org.noear.weed.DbContext;
-import waterpaas.Config;
+import waterfaas.Config;
 
 import java.util.ArrayList;
 import java.util.List;
