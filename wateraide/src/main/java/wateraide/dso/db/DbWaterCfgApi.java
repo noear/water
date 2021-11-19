@@ -262,7 +262,7 @@ public class DbWaterCfgApi {
                 .set("key", key.trim())
                 .set("type", type)
                 .set("edit_mode", edit_mode)
-                .set("update_fulltime", "$NOW()").usingExpr(true)
+                .set("gmt_modified", System.currentTimeMillis())
                 .set("value", value);
 
         if (row_id > 0) {
@@ -279,7 +279,7 @@ public class DbWaterCfgApi {
         value = WW.cfg_data_header + Base64Utils.encode(value.trim());
 
         DbTableQuery tb = db().table("water_cfg_properties")
-                .set("update_fulltime", "$NOW()").usingExpr(true)
+                .set("gmt_modified", System.currentTimeMillis())
                 .set("value", value)
                 .set("tag", tag)
                 .set("key", key);

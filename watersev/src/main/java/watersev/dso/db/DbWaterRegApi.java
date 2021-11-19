@@ -55,7 +55,7 @@ public final class DbWaterRegApi {
             db().table("water_reg_service").usingExpr(true)
                     .set("state", 0)
                     .set("check_last_state", check_state)
-                    .set("check_last_time", "$NOW()")
+                    .set("check_last_time", System.currentTimeMillis())
                     .set("check_last_note", check_note)
                     .build((tb) -> {
                         if (check_state == 0)

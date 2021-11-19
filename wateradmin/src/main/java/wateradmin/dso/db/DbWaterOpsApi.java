@@ -221,7 +221,7 @@ public class DbWaterOpsApi {
                 .set("disk_usage", m.disk)
                 .set("broadband_usage", m.broadband)
                 .set("tcp_num", m.tcp)
-                .set("last_updatetime", "$NOW()")
+                .set("gmt_modified", System.currentTimeMillis())
                 .upsertBy("iaas_key");
         }
     }
@@ -234,7 +234,7 @@ public class DbWaterOpsApi {
                 .set("new_conect_num", m.new_conect_num)
                 .set("qps", m.qps)
                 .set("traffic_tx", m.traffic_tx)
-                .set("last_updatetime", "$NOW()")
+                .set("gmt_modified", System.currentTimeMillis())
                 .upsertBy("iaas_key");
         }
     }
@@ -247,7 +247,7 @@ public class DbWaterOpsApi {
                 .set("cpu_usage", m.cpu_usage)
                 .set("memory_usage", m.memory_usage)
                 .set("disk_usage", m.disk_usage)
-                .set("last_updatetime", "$NOW()")
+                .set("gmt_modified", System.currentTimeMillis())
                 .upsertBy("iaas_key");
         }
     }
