@@ -17,7 +17,7 @@ import java.util.Map;
 public class LogUtils {
     private static final Logger logger = LoggerFactory.getLogger(WW.logger_water_log_api);
 
-    public static void info(Context ctx, Exception e) {
+    public static void info(Context ctx) {
         try {
             String tag = ctx.path();
 
@@ -34,15 +34,11 @@ public class LogUtils {
 
             content.append("> Param: ").append(ONode.stringify(ctx.paramMap()));
             content.append("\n\n");
+            content.append("< Body: ").append(ONode.stringify(ctx.result));
 
-            if (e == null) {
-                content.append("< Body: ").append(ONode.stringify(ctx.result));
-                logger.info(content.toString());
-            } else {
-                content.append("< Error: ").append(Utils.throwableToString(e));
-                logger.error(content.toString());
-            }
-        } catch (Exception ee) {
+            logger.info(content.toString());
+
+        } catch (Throwable ee) {
             //不能再转入别的日志了
             ee.printStackTrace();
         }
@@ -75,13 +71,16 @@ public class LogUtils {
     }
 
     public static void error(Context ctx, Throwable ex) {
-        if (ctx == null) {
-            return;
-        }
-
         try {
-            Command cmd = ctx.attr("weed_cmd");
+            if (ctx == null) {
+                MDC.put("tag0", "global");
+                logger.error("{}", ex);
+                return;
+            }
+
             String _from = FromUtils.getFromName(ctx);
+            Command cmd = ctx.attr("weed_cmd");
+            String param = ONode.stringify(ctx.paramMap());
 
             String tag = ctx.path();
 
@@ -89,35 +88,16 @@ public class LogUtils {
             MDC.put("tag3", _from);
 
             if (cmd == null) {
-                String summary = ONode.stringify(ctx.paramMap());
-
-                logger.error("{}\r\n{}", summary, ex);
+                logger.error("> Param: {}\n\n< Error: {}", param, ex);
             } else {
                 StringBuilder sb = new StringBuilder();
-                sb.append("::Sql= ").append(cmd.text).append("\n");
-                sb.append("::Args= ").append(ONode.stringify(cmd.paramMap())).append("\n\n");
-                sb.append("::Error= ").append(Utils.throwableToString(ex));
+                sb.append("> Param: ").append(param).append("\n");
+                sb.append("$ Sql: ").append(cmd.text).append("\n");
+                sb.append("$ Sql-Param: ").append(ONode.stringify(cmd.paramMap())).append("\n\n");
+                sb.append("< Error: ").append(Utils.throwableToString(ex));
 
                 logger.error(sb.toString());
             }
-        } catch (Exception ee) {
-            //不能再转入别的日志了
-            ee.printStackTrace();
-        }
-    }
-
-    public static void error(Context ctx, String tag, String tag1, String summary, Throwable ex) {
-        try {
-            String _from = null;
-            if (ctx != null) {
-                _from = FromUtils.getFromName(ctx);
-            }
-
-            MDC.put("tag0", tag);
-            MDC.put("tag1", tag1);
-            MDC.put("tag3", _from);
-
-            logger.error("{}\r\n{}", summary, ex);
         } catch (Exception ee) {
             //不能再转入别的日志了
             ee.printStackTrace();

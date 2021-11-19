@@ -15,10 +15,6 @@ public class ErrorListener implements EventListener<Throwable> {
     public void onEvent(Throwable err) {
         Context ctx = Context.current();
 
-        if (ctx == null) {
-            LogUtils.error(ctx, "global", "", "", err);
-        } else {
-            LogUtils.error(ctx, err);
-        }
+        LogUtils.error(ctx, err);
     }
 }
