@@ -27,7 +27,7 @@ public class RegUtil {
     }
 
     private static void checkinOne(String subService) {
-        String lockName = "watersev-sev-" + subService;
+        String lockName = "sev:" + subService + ":" + Instance.local().address();
         if (LockUtils.tryLock("watersev", lockName, 4) == false) {
             return;
         }
