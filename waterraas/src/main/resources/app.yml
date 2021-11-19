@@ -1,13 +1,13 @@
 solon.extend: "waterraas_ext"
 
-server.port: 9376
+server.port: 9375
 
 solon.app:
   name: "waterraas"
   group: "water"
 
 solon.cloud.water:
-  server: "waterapi"
+  server: "waterapi:9371"
   log:
     default: "water_log_raas"
   event:

@@ -9,7 +9,7 @@ solon.app:
   title: "WATER"
 
 solon.cloud.water:
-  server: "waterapi"
+  server: "waterapi:9371"
   log:
     default: "water_log_admin"
   event:

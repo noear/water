@@ -8,6 +8,7 @@
 * 服务 watersev-sevchk，取消启动时需要 reset 的逻辑
 * 服务 watersev，清理吃掉异常的情况
 * 服务 wateradmin，清理吃掉异常的情况
+* 镜像 waterapi 端口改为：9371
 
 #### 2.3.2
 * CacheUtils ，增加自动构建本地缓存（驱动类型为：local）
