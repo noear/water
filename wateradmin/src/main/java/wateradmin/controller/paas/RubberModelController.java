@@ -106,7 +106,7 @@ public class RubberModelController extends BaseController {
     }
 
     //数据模型保存编辑
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/edit/ajax/save")
     public JSONObject editSave(Integer model_id, String tag, String name, String name_display, String init_expr, String debug_args, String related_db) throws SQLException {
         JSONObject resp = new JSONObject();
@@ -124,7 +124,7 @@ public class RubberModelController extends BaseController {
     }
 
     //数据模型删除
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/edit/ajax/del")
     public ViewModel modelDel(Integer model_id) throws SQLException {
         boolean result = DbRubberApi.delModel(model_id);
@@ -179,7 +179,7 @@ public class RubberModelController extends BaseController {
 
 
     //数据模型字段保存编辑
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/field/edit/ajax/save")
     public JSONObject fieldEditSave(Integer model_id, Integer field_id, String name, String name_display,
                                     String expr, String note, Integer is_pk) throws SQLException {
@@ -198,7 +198,7 @@ public class RubberModelController extends BaseController {
     }
 
     //删除模型字段
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/field/del/ajax/save")
     public JSONObject fieldDelSave(Integer field_id, Integer model_id) throws SQLException {
         JSONObject resp = new JSONObject();
@@ -216,7 +216,7 @@ public class RubberModelController extends BaseController {
     }
 
     //数据模型字段另存为
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/edit/ajax/saveAs")
     public ViewModel modelEditSaveAs(String tag, Integer model_id, String name, String name_display, String debug_args, String init_expr, String related_db) throws SQLException {
         boolean result = DbRubberApi.saveAsModel(tag, model_id, name, name_display, debug_args, init_expr, related_db);
@@ -232,7 +232,7 @@ public class RubberModelController extends BaseController {
 
 
     //批量导出
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("model/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<RebberModelModel> tmpList = DbRubberApi.getModelByIds(ids);
@@ -257,13 +257,9 @@ public class RubberModelController extends BaseController {
 
 
     //批量导入
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("model/ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 

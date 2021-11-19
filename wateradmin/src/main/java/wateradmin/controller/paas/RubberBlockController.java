@@ -113,7 +113,7 @@ public class RubberBlockController extends BaseController {
     }
 
     //保存数据块编辑
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("block/edit/ajax/save")
     public ViewModel editSave(Integer block_id, String tag, String name, String name_display, String related_db, String related_tb,
                               String struct, String app_expr, Integer is_editable, String note) throws SQLException{
@@ -129,7 +129,7 @@ public class RubberBlockController extends BaseController {
         return viewModel;
     }
 
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("block/edit/ajax/del")
     public ViewModel del(Integer block_id) throws SQLException{
         if (Session.current().isAdmin() == false) {
@@ -165,7 +165,7 @@ public class RubberBlockController extends BaseController {
     }
 
     //d-block item编辑保存
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("block/item/edit/ajax/save")
     public ViewModel itemEditSave(Integer block_id,String item_key,String data) throws SQLException {
 
@@ -180,7 +180,7 @@ public class RubberBlockController extends BaseController {
 
 
     //批量导出
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("block/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
         List<RebberBlockModel> list = DbRubberApi.getBlockByIds(ids);
@@ -195,13 +195,9 @@ public class RubberBlockController extends BaseController {
 
 
     //批量导入
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("block/ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 

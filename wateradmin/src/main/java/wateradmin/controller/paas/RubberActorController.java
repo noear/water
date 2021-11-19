@@ -83,7 +83,7 @@ public class RubberActorController extends BaseController {
 
 
     //参与人员保存编辑
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("actor/edit/ajax/save")
     public JSONObject editSave(Integer actor_id, String tag, String name, String name_display, String note) throws SQLException{
         JSONObject resp = new JSONObject();
@@ -104,7 +104,7 @@ public class RubberActorController extends BaseController {
     }
 
     //参与人员删除
-    @AuthRoles(SessionRoles.role_operator)
+    @AuthRoles({SessionRoles.role_operator, SessionRoles.role_admin})
     @Mapping("actor/edit/ajax/del")
     public ViewModel editDel(Integer actor_id) throws SQLException{
         boolean result = DbRubberApi.delActor(actor_id);
