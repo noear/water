@@ -15,6 +15,7 @@
 * 表 paas_etl  更名：luffy_etl
 * 管理后台 /paas/ 开头的路径，改为 /luffy/开头
 * 配置 paas_uri 更名为：faas_uri
+* 监视 paas_file 更名为：luffy_file
 
 
 #### 2.3.3 
