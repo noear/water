@@ -10,7 +10,6 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
 import org.noear.water.protocol.model.message.MessageState;
 import org.noear.water.utils.*;
-import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
@@ -49,7 +48,7 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
         //获取集群节点列表（内部缓存1秒）
         List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msgexg)

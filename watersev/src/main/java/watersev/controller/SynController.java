@@ -14,7 +14,6 @@ import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
-import watersev.dso.RegUtil;
 import watersev.dso.SqlUtil;
 import watersev.dso.db.DbWaterApi;
 import watersev.models.water.SynchronousModel;
@@ -41,7 +40,7 @@ public final class SynController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
         //尝试获取锁（10秒内只能调度一次），避免集群切换时，多次运行
         //

@@ -42,7 +42,7 @@ public final class MotController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
 
         //尝试获取锁（60秒内只能调度一次）；避免集群切换时，多次运行

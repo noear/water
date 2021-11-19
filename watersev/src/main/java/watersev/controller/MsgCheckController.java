@@ -9,7 +9,6 @@ import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
-import watersev.dso.RegUtil;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.utils.HttpUtilEx;
 
@@ -35,7 +34,7 @@ public final class MsgCheckController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
         //尝试获取锁（4秒内只能调度一次），避免集群切换时，多次运行
         //

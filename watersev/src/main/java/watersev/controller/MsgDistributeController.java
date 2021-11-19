@@ -16,7 +16,6 @@ import org.noear.water.protocol.model.message.*;
 import org.noear.water.utils.*;
 import org.noear.water.utils.ext.Act4;
 import watersev.dso.AlarmUtil;
-import watersev.dso.RegUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
@@ -58,7 +57,7 @@ public final class MsgDistributeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
         //获取集群节点列表（内部缓存1秒）
         List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msgdis)

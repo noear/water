@@ -44,7 +44,7 @@ public class PlnController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.register("watersev-" + getName());
+        RegController.addService("watersev-" + getName());
 
         JtRun.initAwait();
 
