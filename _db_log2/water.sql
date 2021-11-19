@@ -56,8 +56,8 @@ ALTER TABLE `water_cfg_whitelist`
 ALTER TABLE `water_msg_subscriber`
     CHANGE COLUMN `log_fulltime` `gmt_modified` bigint NULL COMMENT '最后修改时间' AFTER `check_error_num`;
 
-ALTER TABLE ` water_msg_subscriber `
-    ADD COLUMN ` gmt_create ` bigint NULL COMMENT ''创建时间'' AFTER ` check_error_num `;
+ALTER TABLE `water_msg_subscriber`
+    ADD COLUMN `gmt_create` bigint NULL COMMENT '创建时间' AFTER `check_error_num`;
 
 ALTER TABLE `water_msg_topic`
     CHANGE COLUMN `create_fulltime` `gmt_create` bigint NULL COMMENT '创建时间' AFTER `alarm_model`;
