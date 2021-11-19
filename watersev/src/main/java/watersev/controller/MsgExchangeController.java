@@ -49,7 +49,7 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.checkin("watersev-" + getName());
+        RegUtil.register("watersev-" + getName());
 
         //获取集群节点列表（内部缓存1秒）
         List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msgexg)

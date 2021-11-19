@@ -43,7 +43,7 @@ public final class SevCheckController implements IJob {
 
     @Override
     public void exec() throws Throwable {
-        RegUtil.checkin("watersev-" + getName());
+        RegUtil.register("watersev-" + getName());
 
         //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
         //

@@ -35,7 +35,7 @@ public final class MsgCheckController implements IJob {
 
     @Override
     public void exec() throws Exception {
-        RegUtil.checkin("watersev-" + getName());
+        RegUtil.register("watersev-" + getName());
 
         //尝试获取锁（4秒内只能调度一次），避免集群切换时，多次运行
         //

@@ -6,14 +6,29 @@ import org.noear.solon.cloud.model.Instance;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.LockUtils;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author noear 2021/11/18 created
  */
 @Slf4j
 public class RegUtil {
-    public static void checkin(String subService) {
+    static Set<String> subServiceSet = new HashSet<>();
+
+    public static void register(String subService) {
+        subServiceSet.add(subService);
+    }
+
+    public static void checkin() {
+        for (String subService : subServiceSet) {
+            checkinOne(subService);
+        }
+    }
+
+    private static void checkinOne(String subService) {
         String lockName = "watersev-sev-" + subService;
-        if (LockUtils.tryLock("watersev", lockName, 5) == false) {
+        if (LockUtils.tryLock("watersev", lockName, 4) == false) {
             return;
         }
 
