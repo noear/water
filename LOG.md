@@ -9,8 +9,8 @@
 * 服务 wateradmin，清理吃掉异常的情况
 * 镜像 waterapi 端口改为：9371
 * 主库、PaaS库，时间改为 bigint
-* waterraas 端口改为：9375 （之前为：9376）
-* waterpaas 服务更名：waterfaas
+* 服务 waterraas 端口改为：9375 （之前为：9376）
+* 服务 waterpaas 服务更名：waterfaas
 * 表 paas_file 更名：luffy_file
 * 表 paas_etl  更名：luffy_etl
 

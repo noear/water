@@ -9,7 +9,7 @@ import java.util.Date;
  * @author noear 2021/11/3 created
  */
 @Table("luffy_etl")
-public class PaasEtlModel {
+public class LuffyEtlModel {
 
     /**  */
     @PrimaryKey

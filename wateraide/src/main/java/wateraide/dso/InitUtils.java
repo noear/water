@@ -86,7 +86,7 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water_paas.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, PaasFileModel.class, "luffy_file", "water_paas");
+        tryInitDataByTypeJsonSql(db, LuffyFileModel.class, "luffy_file", "water_paas");
 
         tryInitDataByTypeJsonSql(db, RubberActorModel.class, "rubber_actor", "water_paas");
         tryInitDataByTypeJsonSql(db, RubberBlockModel.class, "rubber_block", "water_paas");

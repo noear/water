@@ -9,7 +9,7 @@ import java.util.Date;
  * @author noear 2021/11/3 created
  */
 @Table("luffy_file")
-public class PaasFileModel {
+public class LuffyFileModel {
     /** 文件ID */
     @PrimaryKey
     public Integer file_id;
