@@ -28,7 +28,7 @@ public class WW {
     public static final String water = "water";
     public static final String waterapi = "waterapi";
     public static final String watersev = "watersev";
-    public static final String waterpaas = "waterpaas";
+    public static final String waterfaas = "waterfaas";
     public static final String waterraas = "waterraas";
 
 

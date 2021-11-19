@@ -22,14 +22,14 @@ public class PaasUtils {
             }
 
             //订阅
-            String receiver_url = "@" + WW.waterpaas + path;
+            String receiver_url = "@" + WW.waterfaas + path;
             String subscriber_key = EncryptUtils.md5(path);
 
             if (is_disabled) {
                 WaterClient.Message.unSubscribeTopic(null, subscriber_key, new String[]{topic});
             } else {
                 WaterClient.Message.subscribeTopic(null, subscriber_key, receiver_url,
-                        Config.waterpaas_secretKey, "", 0, false, new String[]{topic});
+                        Config.waterfaas_secretKey, "", 0, false, new String[]{topic});
             }
         }
     }

@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 2.0
  * */
 public class WaterProxy {
-    static final String SERVICE_WATER_PAAS = "waterpaas";
+    static final String SERVICE_WATER_PAAS = "waterfaas";
     static final String SERVICE_WATER_RAAS = "waterraas";
 
     public static String job(String service, String name) throws Exception {

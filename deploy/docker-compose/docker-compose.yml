@@ -40,9 +40,9 @@ services:
       -  waterapi
     ports:
       - 9373:8080
-  waterpaas:
-    image: noearorg/waterpaas:latest
-    container_name: waterpaas
+  waterfaas:
+    image: noearorg/waterfaas:latest
+    container_name: waterfaas
     environment:
       - solon.start.ping=waterapi:9371
       - TZ=Asia/Shanghai

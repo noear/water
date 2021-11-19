@@ -72,7 +72,7 @@ java -jar wateradmin.jar --server.port=9373
 java -jar waterraas.jar --server.port=9374  
 
 #PaaS 接口运行服务           
-java -jar waterpaas.jar --server.port=9376   
+java -jar waterfaas.jar --server.port=9376   
 
 #工具后台服务        
 java -jar watersev.jar --server.port=9372 --sss=tool    
@@ -111,7 +111,7 @@ java -jar wateradmin.jar --server.port=9373
 java -jar waterraas.jar --server.port=9374  
 
 #PaaS 接口运行服务           
-java -jar waterpaas.jar --server.port=9376   
+java -jar waterfaas.jar --server.port=9376   
 
 #工具后台服务        
 java -jar watersev.jar --server.port=9372 
@@ -123,7 +123,7 @@ java -jar watersev.jar --server.port=9372
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
-| water     | paas_uri     | 修改为waterpaas服务的http协议地址（优先用域名）     |
+| water     | faas_uri     | 修改为waterfaas服务的http协议地址（优先用域名）     |
 | water     | raas_uri     | 修改为waterraas服务的http协议地址（优先用域名）     |
 
 修改完成后，重启wateradmin服务（之后，就可以在wateradmin上调试paas和raas服务）。

@@ -35,7 +35,7 @@ public class Config {
         return "1".equals(cfg("enable_tag_checker").getString());
     }
 
-    public static String waterpaas_secretKey;
+    public static String waterfaas_secretKey;
 
     //================================
     //
@@ -51,7 +51,7 @@ public class Config {
     }
 
     public static void tryInit(SolonApp app) {
-        waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
+        waterfaas_secretKey = app.cfg().get("waterfaas.secretKey");
 
         //适配认证框架
         AuthUtil.adapter()

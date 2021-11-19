@@ -134,7 +134,7 @@ public class AppHandler implements Handler {
             if (debug == false) {
                 MessageM msg = new MessageM(ctx::param);
 
-                if (WaterClient.Message.checkMessage(msg, Config.waterpaas_secretKey) == false) {
+                if (WaterClient.Message.checkMessage(msg, Config.waterfaas_secretKey) == false) {
                     ctx.output("CHECK ERROR");
                     return;
                 } else {

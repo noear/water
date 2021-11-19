@@ -26,7 +26,7 @@ public class Config {
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 
-    public static String waterpaas_secretKey;
+    public static String waterfaas_secretKey;
 
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
@@ -37,7 +37,7 @@ public class Config {
 
         //WeedConfig.isUsingValueExpression = false;
 
-        waterpaas_secretKey = app.cfg().get("waterpaas.secretKey");
+        waterfaas_secretKey = app.cfg().get("waterfaas.secretKey");
     }
 
 

@@ -28,7 +28,7 @@ solon.logging.logger:
     level: "WARN"
 
 
-waterpaas.secretKey: "0zJt0J88TkIvqYgC"
+waterfaas.secretKey: "0zJt0J88TkIvqYgC"
 
 #water.log:
 #  gzip: 1
