@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Mapping("/paas/query")
+@Mapping("/luffy/query")
 public class LuffyQueryController extends BaseController {
     @Mapping("")
     public ModelAndView list(Context ctx) throws SQLException {
@@ -38,6 +38,6 @@ public class LuffyQueryController extends BaseController {
 
         viewModel.put("mlist", list);
 
-        return view("paas/query");
+        return view("luffy/query");
     }
 }

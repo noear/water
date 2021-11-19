@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@Mapping("/paas/file")
+@Mapping("/luffy/file")
 public class LuffyFileController extends BaseController {
     static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
@@ -60,7 +60,7 @@ public class LuffyFileController extends BaseController {
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
-        return view("paas/file");
+        return view("luffy/file");
     }
 
     @Mapping("api/list")
@@ -110,7 +110,7 @@ public class LuffyFileController extends BaseController {
         viewModel.put("state",state);
         viewModel.put("mlist", list);
 
-        return view("paas/file_list_"+type.name());
+        return view("luffy/file_list_"+type.name());
     }
 
     @Mapping("api/edit")
@@ -157,7 +157,7 @@ public class LuffyFileController extends BaseController {
         viewModel.put("m1", file);
         viewModel.put("whitelist", whitelist);
 
-        return view("paas/file_edit_" + type.name());
+        return view("luffy/file_edit_" + type.name());
     }
 
     @Mapping("api/ajax/save")
@@ -317,12 +317,12 @@ public class LuffyFileController extends BaseController {
         viewModel.put("code64", Base64Utils.encode(file.content));
 
         if(readonly != null){
-            return view("paas/file_code_readonly");
+            return view("luffy/file_code_readonly");
         }else{
             if("ftl".equals(edit_mode) || "velocity".equals(edit_mode)) {
-                return view("paas/file_code");
+                return view("luffy/file_code");
             }else{
-                return view("paas/file_code2");
+                return view("luffy/file_code2");
             }
         }
     }

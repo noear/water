@@ -13,6 +13,7 @@
 * 服务 waterpaas 服务更名：waterfaas
 * 表 paas_file 更名：luffy_file
 * 表 paas_etl  更名：luffy_etl
+* 管理后台 /paas/ 开头的路径，改为 /luffy/开头
 
 
 #### 2.3.3 

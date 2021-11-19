@@ -7,7 +7,7 @@ import wateradmin.Config;
 import wateradmin.controller.BaseController;
 
 @Controller
-@Mapping("/paas/help")
+@Mapping("/luffy/help")
 public class LuffyHelpController extends BaseController {
     @Mapping("")
     public void index(Context ctx){
