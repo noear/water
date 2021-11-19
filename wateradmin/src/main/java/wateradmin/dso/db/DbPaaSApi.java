@@ -185,7 +185,6 @@ public class DbPaaSApi {
                 .set("plan_last_timespan", wm.plan_last_timespan)
                 .set("plan_interval", wm.plan_interval)
                 .set("plan_max", wm.plan_max)
-                .set("create_fulltime", wm.create_fulltime.getTime())
                 .set("update_fulltime", wm.update_fulltime.getTime())
                 .set("use_whitelist", wm.use_whitelist);
 
@@ -193,7 +192,12 @@ public class DbPaaSApi {
             qr.set("plan_begin_time", wm.plan_begin_time.getTime());
         }
 
-        qr.insertBy("path");
+        if (qr.whereEq("path", wm.path).selectExists()) {
+            qr.update();
+        } else {
+            qr.set("create_fulltime", wm.create_fulltime.getTime());
+            qr.insert();
+        }
     }
 
     //批量删除

@@ -81,6 +81,7 @@ public class DbWaterMsgApi {
             try {
                 db().table("water_msg_subscriber").usingExpr(true)
                         .set("check_last_state", check_state)
+                        .set("gmt_modified", System.currentTimeMillis())
                         .build((tb) -> {
                             if (check_state == 200)
                                 tb.set("check_error_num", 0);
