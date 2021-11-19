@@ -42,21 +42,6 @@ public class LogUtil {
         }
     }
 
-    public static void writeForMsg(MessageModel msg, String broker, String content) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(msg.msg_id)
-                .append("#").append(msg.dist_count)
-                .append("#").append(msg.topic_name).append("=").append(msg.content);
-
-        String summary = sb.toString();
-
-        MDC.put("tag0", msg.topic_name);
-        MDC.put("tag1", String.valueOf(msg.msg_id));
-        MDC.put("tag3", broker);
-
-        log_msg.info("{}\r\n{}", summary, content);
-    }
 
     public static void writeForMsgByError(MessageModel msg, String broker, DistributionModel dist, String content) {
         if (dist == null) {
@@ -130,6 +115,19 @@ public class LogUtil {
         } else {
             log_paas.error("{}\r\n{}", sb, content);
         }
+    }
+
+    public static void sevWarn(String tag, String tag1, String content) {
+        MDC.put("tag0", tag);
+        MDC.put("tag1", tag1);
+
+        log_sev.warn(content);
+
+
+        MDC.put("tag0", "sev");//兼容旧的
+        MDC.put("tag1", tag1);
+
+        log_sev.warn(content);
     }
 
     //==========================================================
