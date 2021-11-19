@@ -112,30 +112,39 @@ public class CodeGenerationController extends BaseController {
 
             if (f.type.equals("tinyint(1)")) {
                 f.type = "boolean";
+                f.type2 = "Boolean";
                 f.def = "false";
             } else if (f.type.startsWith("int")) {
                 f.type = "int";
+                f.type2 = "Integer";
                 f.def = "0";
             } else if(f.type.startsWith("tinyint") || f.type.startsWith("smallint")){
                 f.type = "int";
+                f.type2 = "Integer";
                 f.def = "0";
             } else if (f.type.startsWith("bigint")) {
                 f.type = "long";
+                f.type2 = "Long";
                 f.def = "0L";
             } else if (f.type.startsWith("float")) {
                 f.type = "float";
+                f.type2 = "Float";
                 f.def = "0F";
             } else if (f.type.startsWith("double")) {
                 f.type = "double";
+                f.type2 = "Double";
                 f.def = "0D";
             } else if (f.type.startsWith("decimal")) {
                 f.type = "BigDecimal";
+                f.type2 = "BigDecimal";
                 f.def = "BigDecimal.ZERO";
             } else if (f.type.startsWith("datetime") || f.type.startsWith("date") || f.type.startsWith("time")) {
                 f.type = "Date";
+                f.type2 = "Date";
                 f.def = "null";
             } else {
                 f.type = "String";
+                f.type2 = "String";
                 f.def = "null";
             }
         }

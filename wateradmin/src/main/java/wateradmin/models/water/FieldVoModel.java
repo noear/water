@@ -8,6 +8,7 @@ import org.noear.weed.IBinder;
 public class FieldVoModel implements IBinder {
     public String field;
     public String type;
+    public String type2;
     public String key;
     public String comment;
     public String def;
@@ -16,6 +17,7 @@ public class FieldVoModel implements IBinder {
     public void bind(GetHandlerEx source) {
         field = source.get("Field").value(null);
         type = source.get("Type").value(null);
+        type2 = type;
         key = source.get("Key").value(null);
         comment = source.get("Comment").value(null);
     }
