@@ -80,7 +80,16 @@ public final class SevCheckController implements IJob {
     private void check_type1(ServiceModel sev) {
         long seconds = new Timespan(sev.check_last_time).seconds();
 
-        if (seconds > 8) {
+        if (seconds < 10) {
+            //对签到型的服务进行检查
+            //
+            DbWaterRegApi.udpService1(sev.service_id, 0);
+
+            if (sev.check_error_num >= 2) {
+                //之前2次坏的，现在好了提示一下
+                AlarmUtil.tryAlarm(sev, true, 0);
+            }
+        } else {
             //日志
             LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
 
@@ -106,17 +115,6 @@ public final class SevCheckController implements IJob {
                     }
                 }
             }
-
-        } else {
-            //对签到型的服务进行检查
-            //
-            DbWaterRegApi.udpService1(sev.service_id, 0);
-
-            if (sev.check_error_num >= 2) {
-                //之前2次坏的，现在好了提示一下
-                AlarmUtil.tryAlarm(sev, true, 0);
-            }
-
         }
     }
 

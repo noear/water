@@ -63,7 +63,7 @@ public final class MsgDistributeController implements IJob {
         //获取集群节点列表（内部缓存1秒）
         List<String> sevList = DbWaterRegApi.getWaterServiceList(WW.watersev_msgdis)
                 .stream()
-                .filter(s -> new Timespan(s.check_last_time).seconds() < 8)
+                .filter(s -> new Timespan(s.check_last_time).seconds() < 10)
                 .map(s -> s.address)//提取地址
                 .sorted() //排序，用于定位自己的索引位
                 .collect(Collectors.toList()); //转为List
