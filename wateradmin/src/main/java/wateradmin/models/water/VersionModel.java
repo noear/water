@@ -22,6 +22,7 @@ public class VersionModel implements IBinder {
     public String log_user;
     public String log_ip;
     public int log_date;
+    public Date log_fulltime;
 
     public void bind(GetHandlerEx s) {
         //1.source:数据源
@@ -35,6 +36,11 @@ public class VersionModel implements IBinder {
         log_user = s.get("log_user").value(null);
         log_ip = s.get("log_ip").value(null);
         log_date = s.get("log_date").value(0);
+        log_fulltime = s.get("log_fulltime").dateValue(null);
+
+        if (log_fulltime == null) {
+            log_fulltime = new Date();
+        }
     }
 
     public IBinder clone() {

@@ -62,8 +62,8 @@ public final class SynController implements IJob {
             Thread.currentThread().setName("syn-" + task.sync_id);
 
             //2.检查是否到已预设的时间
-            if (task.last_fulltime != null) {
-                long seconds = new Timespan(task.last_fulltime).seconds();
+            if (task.gmt_modified != null) {
+                long seconds = new Timespan(task.gmt_modified).seconds();
                 if (task.interval > seconds) {
                     continue;
                 }

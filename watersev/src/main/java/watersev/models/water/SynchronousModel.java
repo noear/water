@@ -20,6 +20,8 @@ public class SynchronousModel implements IBinder {
     public String alarm_mobile;
     public String alarm_sign;
 
+    public Date gmt_modified;
+
     public long task_tag;
 
     @Override
@@ -30,13 +32,19 @@ public class SynchronousModel implements IBinder {
         name = s.get("name").value("");
         interval = s.get("interval").value(0);
         target = s.get("target").value(null);
-        target_pk= s.get("target_pk").value(null);
+        target_pk = s.get("target_pk").value(null);
         source_model = s.get("source_model").value("");
         type = s.get("type").value(0);
         task_tag = s.get("task_tag").value(0l);
 
         alarm_mobile = s.get("alarm_mobile").value("");
-        alarm_sign   = s.get("alarm_sign").value("");
+        alarm_sign = s.get("alarm_sign").value("");
+
+        gmt_modified = s.get("gmt_modified").dateValue(null);
+
+        if (gmt_modified == null) {
+            gmt_modified = new Date();
+        }
     }
 
     @Override
