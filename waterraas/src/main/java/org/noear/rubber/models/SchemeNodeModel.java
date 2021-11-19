@@ -33,7 +33,11 @@ public class SchemeNodeModel implements IBinder
         condition = s.get("condition").value(null);
         tasks = s.get("tasks").value(null);
         actor = s.get("actor").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
     }
 
     public IBinder clone()

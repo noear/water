@@ -28,7 +28,11 @@ public class ModelModel implements IBinder
         name_display = s.get("name_display").value(null);
         related_db = s.get("related_db").value(null);
         init_expr = s.get("init_expr").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
     }
 
     public IBinder clone()

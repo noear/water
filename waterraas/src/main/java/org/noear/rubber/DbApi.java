@@ -210,7 +210,7 @@ public final class DbApi {
                 .set("request_id", request_id)
                 .set("scheme_tagname", scheme_tagname)
                 .set("args_json", args_json)
-                .set("start_fulltime", "$NOW()")
+                .set("start_fulltime", System.currentTimeMillis())
                 .set("start_date", now.getDate())
                 .set("log_date", now.getDate())
                 .set("policy", policy)
@@ -256,7 +256,7 @@ public final class DbApi {
                 .set("evaluation_json", evaluation_json.toJson())
                 .set("session_json", session_json)
                 .set("note_json", note_json.toJson())
-                .set("end_fulltime", response.end_time)
+                .set("end_fulltime", response.end_time.getTime())
                 .set("timespan", response.timespan())
                 .set("policy", response.request.policy)
                 .set("state", 2);
@@ -268,7 +268,7 @@ public final class DbApi {
             log_id = RcConfig.newLogID();
 
             tb.set("log_date", new Datetime(response.start_time).getDate());
-            tb.set("start_fulltime", response.start_time);
+            tb.set("start_fulltime", response.start_time.getTime());
             tb.set("start_date", time.getDate());
             tb.set("log_date", time.getDate());
             tb.set("log_id", log_id);

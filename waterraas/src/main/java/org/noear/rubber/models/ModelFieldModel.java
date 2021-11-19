@@ -23,7 +23,11 @@ public class ModelFieldModel implements IBinder{
         name_display = s.get("name_display").value(null);
         args = s.get("args").value(null);
         expr = s.get("expr").value(null);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
     }
 
     public IBinder clone() {

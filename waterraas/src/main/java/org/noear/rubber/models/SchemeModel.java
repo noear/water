@@ -40,7 +40,11 @@ public class SchemeModel implements IBinder
         rule_count = s.get("rule_count").value(0);
         rule_relation = s.get("rule_relation").value(0);
         is_enabled = s.get("is_enabled").value(0);
-        last_updatetime = s.get("last_updatetime").value(null);
+        last_updatetime = s.get("last_updatetime").dateValue(null);
+
+        if (last_updatetime == null) {
+            last_updatetime = new Date();
+        }
     }
 
     public IBinder clone()
