@@ -64,7 +64,7 @@ public class DbWaterCfgApi {
                 .set("tag", tag)
                 .set("key", key)
                 .set("value", value)
-                .set("update_fulltime",new Date())
+                .set("gmt_modified", System.currentTimeMillis())
                 .where("tag=? AND `key`=?", tag, key)
                 .update();
 
@@ -77,7 +77,7 @@ public class DbWaterCfgApi {
                 .set("key", key)
                 .set("value", value)
                 .set("is_editable",true)
-                .set("update_fulltime",new Date())
+                .set("gmt_modified", System.currentTimeMillis())
                 .insert();
     }
 
