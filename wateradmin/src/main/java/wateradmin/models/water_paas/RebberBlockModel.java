@@ -1,4 +1,4 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -14,7 +14,7 @@ import java.util.*;
 /// 
 /// </summary>
 @Getter
-public class BlockModel implements IBinder
+public class RebberBlockModel implements IBinder
 {
     public int block_id;
     public String tag;
@@ -47,7 +47,7 @@ public class BlockModel implements IBinder
 	
 	public IBinder clone()
 	{
-		return new BlockModel();
+		return new RebberBlockModel();
 	}
 
 	private transient JSONObject _cols = null;

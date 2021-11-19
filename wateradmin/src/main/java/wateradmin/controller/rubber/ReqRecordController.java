@@ -10,8 +10,8 @@ import org.noear.solon.auth.annotation.AuthRoles;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
-import wateradmin.models.water_rebber.CountModel;
-import wateradmin.models.water_rebber.LogRequestModel;
+import wateradmin.models.water_paas.RebberCountModel;
+import wateradmin.models.water_paas.RebberLogRequestModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -32,8 +32,8 @@ public class ReqRecordController extends BaseController {
         if (pageSize == null || pageSize == 0) {
             pageSize = 17;
         }
-        CountModel count = new CountModel();
-        List<LogRequestModel> models = DbRubberApi.getReuestList(page,pageSize,key,count);
+        RebberCountModel count = new RebberCountModel();
+        List<RebberLogRequestModel> models = DbRubberApi.getReuestList(page,pageSize,key,count);
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("rowCount", count.getCount());
@@ -97,7 +97,7 @@ public class ReqRecordController extends BaseController {
     //请求记录详情
     @Mapping("rerecord/detil")
     public ModelAndView detail(Long log_id) throws SQLException{
-        LogRequestModel log = DbRubberApi.getLogReqById(log_id);
+        RebberLogRequestModel log = DbRubberApi.getLogReqById(log_id);
         //JSONArray evaluation = DbRubberApi.getEvaluationResult(log.details_json);
         viewModel.put("log",log);
 

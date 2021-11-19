@@ -13,14 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.PaasUtils;
+import wateradmin.dso.FaasUtils;
 import wateradmin.dso.Session;
 import wateradmin.dso.TagUtil;
-import wateradmin.dso.db.DbPaaSApi;
+import wateradmin.dso.db.DbLuffyApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_paas.PaasFileModel;
-import wateradmin.models.water_paas.PaasFileType;
+import wateradmin.models.water_paas.LuffyFileModel;
+import wateradmin.models.water_paas.LuffyFileType;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -33,26 +33,26 @@ public class FileController extends BaseController {
 
     @Mapping("api/home")
     public ModelAndView api_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, PaasFileType.api, key);
+        return home(tag_name, LuffyFileType.api, key);
     }
 
     @Mapping("tml/home")
     public ModelAndView tml_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, PaasFileType.tml, key);
+        return home(tag_name, LuffyFileType.tml, key);
     }
 
     @Mapping("msg/home")
     public ModelAndView msg_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, PaasFileType.msg, key);
+        return home(tag_name, LuffyFileType.msg, key);
     }
 
     @Mapping("pln/home")
     public ModelAndView pln_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, PaasFileType.pln, key);
+        return home(tag_name, LuffyFileType.pln, key);
     }
 
-    private ModelAndView home(String tag_name, PaasFileType type, String key) throws SQLException {
-        List<TagCountsModel> tags = DbPaaSApi.getFileTags(type);
+    private ModelAndView home(String tag_name, LuffyFileType type, String key) throws SQLException {
+        List<TagCountsModel> tags = DbLuffyApi.getFileTags(type);
 
         BcfTagChecker.filter(tags, m -> m.tag);
 
@@ -65,25 +65,25 @@ public class FileController extends BaseController {
 
     @Mapping("api/list")
     public ModelAndView api_list(Context ctx) throws SQLException {
-        return list(ctx, PaasFileType.api);
+        return list(ctx, LuffyFileType.api);
     }
 
     @Mapping("pln/list")
     public ModelAndView pln_list(Context ctx) throws SQLException {
-        return list(ctx, PaasFileType.pln);
+        return list(ctx, LuffyFileType.pln);
     }
 
     @Mapping("msg/list")
     public ModelAndView msg_list(Context ctx) throws SQLException {
-        return list(ctx, PaasFileType.msg);
+        return list(ctx, LuffyFileType.msg);
     }
 
     @Mapping("tml/list")
     public ModelAndView tml_list(Context ctx) throws SQLException {
-        return list(ctx, PaasFileType.tml);
+        return list(ctx, LuffyFileType.tml);
     }
 
-    private ModelAndView list(Context ctx, PaasFileType type) throws SQLException {
+    private ModelAndView list(Context ctx, LuffyFileType type) throws SQLException {
         String tag_name = ctx.param("tag_name", "");
         String key = ctx.param("key", "");
         int act = ctx.paramAsInt("act",11);
@@ -94,13 +94,13 @@ public class FileController extends BaseController {
 
         key = Base64Utils.decode(key);
 
-        List<PaasFileModel> list = DbPaaSApi.getFileList(tag_name, type, (state == 1), key, act);
+        List<LuffyFileModel> list = DbLuffyApi.getFileList(tag_name, type, (state == 1), key, act);
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("tag", tag_name);
         viewModel.put("key", key);
 
-        if (type == PaasFileType.pln) {
+        if (type == LuffyFileType.pln) {
             viewModel.put("_m", "2");
         } else {
             viewModel.put("_m", "1");
@@ -115,31 +115,31 @@ public class FileController extends BaseController {
 
     @Mapping("api/edit")
     public ModelAndView api_edit(String tag, Integer file_id, Context ctx) throws SQLException {
-        return edit(tag, PaasFileType.api, file_id, ctx);
+        return edit(tag, LuffyFileType.api, file_id, ctx);
     }
 
     @Mapping("pln/edit")
     public ModelAndView pln_edit(String tag, Integer file_id, Context ctx) throws SQLException {
-        return edit(tag, PaasFileType.pln, file_id, ctx);
+        return edit(tag, LuffyFileType.pln, file_id, ctx);
     }
 
     @Mapping("msg/edit")
     public ModelAndView msg_edit(String tag, Integer file_id, Context ctx) throws SQLException {
-        return edit(tag, PaasFileType.msg, file_id, ctx);
+        return edit(tag, LuffyFileType.msg, file_id, ctx);
     }
 
     @Mapping("tml/edit")
     public ModelAndView tml_edit(String tag, Integer file_id, Context ctx) throws SQLException {
-        return edit(tag, PaasFileType.tml, file_id, ctx);
+        return edit(tag, LuffyFileType.tml, file_id, ctx);
     }
 
-    private ModelAndView edit(String tag, PaasFileType type, Integer file_id, Context ctx) throws SQLException {
-        PaasFileModel file = null;
+    private ModelAndView edit(String tag, LuffyFileType type, Integer file_id, Context ctx) throws SQLException {
+        LuffyFileModel file = null;
         if (file_id == null) {
             file_id = 0;
-            file = new PaasFileModel();
+            file = new LuffyFileModel();
         } else {
-            file = DbPaaSApi.getFile(file_id);
+            file = DbLuffyApi.getFile(file_id);
 
             if (file.tag != null) {
                 tag = file.tag;
@@ -176,9 +176,9 @@ public class FileController extends BaseController {
         String path = ctx.param("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
-        PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
+        FaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
 
-        return ajax_save(ctx, data, PaasFileType.api);
+        return ajax_save(ctx, data, LuffyFileType.api);
     }
 
     @Mapping("msg/ajax/save")
@@ -192,9 +192,9 @@ public class FileController extends BaseController {
         String path = ctx.param("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
-        PaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
+        FaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
 
-        return ajax_save(ctx, data, PaasFileType.msg);
+        return ajax_save(ctx, data, LuffyFileType.msg);
     }
 
     @Mapping("pln/ajax/save")
@@ -226,7 +226,7 @@ public class FileController extends BaseController {
 
         paasLog.warn("New setting: {}",ONode.stringify(ctx.paramMap()));
 
-        return ajax_save(ctx, data, PaasFileType.pln);
+        return ajax_save(ctx, data, LuffyFileType.pln);
     }
 
     @Mapping("tml/ajax/save")
@@ -236,10 +236,10 @@ public class FileController extends BaseController {
         data.set("content_type", ctx.param("content_type"));
         data.set("rank", ctx.paramAsInt("rank"));
 
-        return ajax_save(ctx, data, PaasFileType.tml);
+        return ajax_save(ctx, data, LuffyFileType.tml);
     }
 
-    public Object ajax_save(Context ctx, DataItem data, PaasFileType type) throws SQLException {
+    public Object ajax_save(Context ctx, DataItem data, LuffyFileType type) throws SQLException {
         data.set("label", ctx.param("label",""));
         data.set("tag", ctx.param("tag",""));
         data.set("path", ctx.param("path",""));
@@ -249,7 +249,7 @@ public class FileController extends BaseController {
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
         int file_id = ctx.paramAsInt("id", 0);
-        DbPaaSApi.setFile(file_id, data, type);
+        DbLuffyApi.setFile(file_id, data, type);
 
         return viewModel.code(1,"ok");
     }
@@ -257,7 +257,7 @@ public class FileController extends BaseController {
     @Mapping("{type}/ajax/del")
     public Object ajax_del(Context ctx, String type, Integer id) throws SQLException {
         if (id != null) {
-            DbPaaSApi.delFile(id);
+            DbLuffyApi.delFile(id);
         }
 
         return viewModel.code(1,"ok");
@@ -272,14 +272,14 @@ public class FileController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        DbPaaSApi.resetFilePlan(ids);
+        DbLuffyApi.resetFilePlan(ids);
 
         return viewModel.code(1, "ok");
     }
 
     @Mapping("{type}/code")
     public ModelAndView code(Context ctx, Integer file_id, Integer readonly) throws SQLException {
-        PaasFileModel file = DbPaaSApi.getFile(file_id);
+        LuffyFileModel file = DbLuffyApi.getFile(file_id);
 
         viewModel.put("id", file_id);
         viewModel.put("m1", file);
@@ -335,7 +335,7 @@ public class FileController extends BaseController {
 
         String fc = Base64Utils.decode(fc64);
 
-        DbPaaSApi.setFileContent(id, fc);
+        DbLuffyApi.setFileContent(id, fc);
 
         return viewModel.code(1,"ok");
     }
@@ -344,9 +344,9 @@ public class FileController extends BaseController {
     //批量导出
     @Mapping("{type}/ajax/export")
     public void exportDo(Context ctx, String type, String tag, String ids) throws Exception {
-        List<PaasFileModel> list = DbPaaSApi.getFilesByIds(PaasFileType.valueOf(type), ids);
+        List<LuffyFileModel> list = DbLuffyApi.getFilesByIds(LuffyFileType.valueOf(type), ids);
 
-        String jsonD = JsondUtils.encode("paas_file", list);
+        String jsonD = JsondUtils.encode("luffy_file", list);
 
         String filename2 = "water_paasfile_" + type +"_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
@@ -366,15 +366,15 @@ public class FileController extends BaseController {
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
-        if(entity == null || "paas_file".equals(entity.table) == false){
+        if(entity == null || "luffy_file".equals(entity.table) == false){
             return viewModel.code(0, "数据不对！");
         }
 
-        List<PaasFileModel> list = entity.data.toObjectList(PaasFileModel.class);
+        List<LuffyFileModel> list = entity.data.toObjectList(LuffyFileModel.class);
 
-        PaasFileType fileType = PaasFileType.valueOf(type);
+        LuffyFileType fileType = LuffyFileType.valueOf(type);
 
-        for (PaasFileModel m : list) {
+        for (LuffyFileModel m : list) {
             //支持跨tag导（路径自动改为新tag开头）
             if (m.path.indexOf(tag) < 0) {
                 int start = m.path.indexOf("/", 2);
@@ -382,12 +382,12 @@ public class FileController extends BaseController {
             }
 
             //订阅在先
-            if (fileType == PaasFileType.api || fileType == PaasFileType.msg) {
-                PaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
+            if (fileType == LuffyFileType.api || fileType == LuffyFileType.msg) {
+                FaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
             }
 
             //存入在后
-            DbPaaSApi.impFile(fileType, tag, m);
+            DbLuffyApi.impFile(fileType, tag, m);
         }
 
         return viewModel.code(1, "ok");
@@ -404,7 +404,7 @@ public class FileController extends BaseController {
             act = 0;
         }
 
-        DbPaaSApi.delFileByIds(PaasFileType.valueOf(type),act, ids);
+        DbLuffyApi.delFileByIds(LuffyFileType.valueOf(type),act, ids);
 
         return viewModel.code(1, "ok");
     }

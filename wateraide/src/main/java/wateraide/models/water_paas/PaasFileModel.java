@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * @author noear 2021/11/3 created
  */
-@Table("paas_file")
+@Table("luffy_file")
 public class PaasFileModel {
     /** 文件ID */
     @PrimaryKey

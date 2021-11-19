@@ -1,6 +1,6 @@
 package wateradmin.models.water_paas;
 
-public enum PaasFileType {
+public enum LuffyFileType {
     api(0),
     pln(1),
     tml(2),
@@ -8,7 +8,7 @@ public enum PaasFileType {
     all(9);
 
     public final int code;
-    PaasFileType(int code) {
+    LuffyFileType(int code) {
         this.code = code;
     }
 }

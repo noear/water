@@ -10,7 +10,7 @@ import org.noear.luffy.model.AFileModel;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterfaas.dso.AFileUtil;
-import waterfaas.dso.DbPaaSApi;
+import waterfaas.dso.DbLuffyApi;
 import waterfaas.dso.RouteHelper;
 
 /**
@@ -38,7 +38,7 @@ public class msg_updatecache implements CloudEventHandler {
                 String file_id = ss[1];
 
                 if (TextUtils.isNumeric(file_id)) {
-                    AFileModel file = DbPaaSApi.fileGet(Integer.parseInt(file_id));
+                    AFileModel file = DbLuffyApi.fileGet(Integer.parseInt(file_id));
 
                     if (TextUtils.isEmpty(file.path) == false) {
                         //

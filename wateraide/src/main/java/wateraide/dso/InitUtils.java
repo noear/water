@@ -23,7 +23,7 @@ public class InitUtils {
 
     static final String water_check_table = "water_cfg_properties";
     static final String water_bcf_check_table = "bcf_group";
-    static final String water_paas_check_table = "paas_file";
+    static final String water_paas_check_table = "luffy_file";
 
     public static boolean allowWaterInit(DbContext db) throws SQLException {
         return hasTable(db, water_check_table) == false;
@@ -86,7 +86,7 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water_paas.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, PaasFileModel.class, "paas_file", "water_paas");
+        tryInitDataByTypeJsonSql(db, PaasFileModel.class, "luffy_file", "water_paas");
 
         tryInitDataByTypeJsonSql(db, RubberActorModel.class, "rubber_actor", "water_paas");
         tryInitDataByTypeJsonSql(db, RubberBlockModel.class, "rubber_block", "water_paas");

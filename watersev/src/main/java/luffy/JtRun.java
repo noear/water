@@ -9,7 +9,7 @@ import org.noear.luffy.dso.JtFun;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
-import watersev.dso.DbPaaSApi;
+import watersev.dso.DbLuffyApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -79,12 +79,12 @@ public class JtRun {
             String tag = (String) map.get("tag");
             String label = (String) map.get("label");
             Boolean useCache = (Boolean) map.get("useCache");
-            return DbPaaSApi.fileGetPaths(tag, label, useCache);
+            return DbLuffyApi.fileGetPaths(tag, label, useCache);
         });
 
         JtFun.g.set("afile_get", (map) -> {
             String path = (String) map.get("path");
-            return DbPaaSApi.fileGet(path);
+            return DbLuffyApi.fileGet(path);
         });
 
         CallUtil.callLabel(null, "hook.start", false, Collections.EMPTY_MAP);

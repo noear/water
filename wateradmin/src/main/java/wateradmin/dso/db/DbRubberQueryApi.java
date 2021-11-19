@@ -3,10 +3,10 @@ package wateradmin.dso.db;
 import org.noear.weed.DbContext;
 import wateradmin.Config;
 import wateradmin.models.water.CodeQueryModel;
-import wateradmin.models.water_rebber.BlockModel;
-import wateradmin.models.water_rebber.ModelFieldModel;
-import wateradmin.models.water_rebber.ModelModel;
-import wateradmin.models.water_rebber.SchemeModel;
+import wateradmin.models.water_paas.RebberBlockModel;
+import wateradmin.models.water_paas.RebberModelFieldModel;
+import wateradmin.models.water_paas.RebberModelModel;
+import wateradmin.models.water_paas.RebberSchemeModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,12 +38,12 @@ public class DbRubberQueryApi {
 
     public static List<CodeQueryModel> queryModelInit(String code) throws SQLException{
         List<CodeQueryModel> result = new ArrayList<>();
-        List<ModelModel> list = db().table("rubber_model")
+        List<RebberModelModel> list = db().table("rubber_model")
                 .where("init_expr like ?", "%" + code + "%")
                 .limit(20)
                 .select("*")
-                .getList(new ModelModel());
-        for (ModelModel m:list) {
+                .getList(new RebberModelModel());
+        for (RebberModelModel m:list) {
             CodeQueryModel query = new CodeQueryModel();
             query.code_type = 0;
             query.name = m.name;
@@ -58,14 +58,14 @@ public class DbRubberQueryApi {
 
     public static List<CodeQueryModel> queryModelField(String code) throws SQLException {
         List<CodeQueryModel> result = new ArrayList<>();
-        List<ModelFieldModel> list = db().table("rubber_model_field f")
+        List<RebberModelFieldModel> list = db().table("rubber_model_field f")
                 .innerJoin("rubber_model m").on("f.model_id = m.model_id")
                 .where("f.expr like ?", "%" + code + "%")
                 .limit(20)
                 .select("f.*,m.tag")
-                .getList(new ModelFieldModel());
+                .getList(new RebberModelFieldModel());
 
-        for (ModelFieldModel m : list) {
+        for (RebberModelFieldModel m : list) {
             CodeQueryModel query = new CodeQueryModel();
             query.code_type = 1;
             query.name = "m:" + m.model_id + " / " + m.name;
@@ -82,12 +82,12 @@ public class DbRubberQueryApi {
 
     public static List<CodeQueryModel> querySchemeEvent(String code) throws SQLException{
         List<CodeQueryModel> result = new ArrayList<>();
-        List<SchemeModel> list = db().table("rubber_scheme")
+        List<RebberSchemeModel> list = db().table("rubber_scheme")
                 .where("event like ?", "%" + code + "%")
                 .limit(20)
                 .select("*")
-                .getList(new SchemeModel());
-        for (SchemeModel m:list) {
+                .getList(new RebberSchemeModel());
+        for (RebberSchemeModel m:list) {
             CodeQueryModel query = new CodeQueryModel();
             query.code_type = 2;
             query.name = m.name;
@@ -102,12 +102,12 @@ public class DbRubberQueryApi {
 
     public static List<CodeQueryModel> queryBlockScan(String code) throws SQLException{
         List<CodeQueryModel> result = new ArrayList<>();
-        List<BlockModel> list = db().table("rubber_block")
+        List<RebberBlockModel> list = db().table("rubber_block")
                 .where("app_expr like ?", "%" + code + "%")
                 .limit(20)
                 .select("*")
-                .getList(new BlockModel());
-        for (BlockModel m:list) {
+                .getList(new RebberBlockModel());
+        for (RebberBlockModel m:list) {
             CodeQueryModel query = new CodeQueryModel();
             query.code_type = 3;
             query.name = m.name;

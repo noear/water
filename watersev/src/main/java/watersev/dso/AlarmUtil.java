@@ -7,7 +7,7 @@ import watersev.Config;
 import watersev.dso.db.DbWaterCfgApi;
 import watersev.models.StateTag;
 import watersev.models.water.*;
-import watersev.models.water_paas.PaasFileModel;
+import watersev.models.water_paas.LuffyFileModel;
 import watersev.models.water_reg.ServiceModel;
 
 import java.sql.SQLException;
@@ -101,7 +101,7 @@ public class AlarmUtil {
     }
 
 
-    public static void tryAlarm(PaasFileModel task) {
+    public static void tryAlarm(LuffyFileModel task) {
         try {
             StringBuilder sb = new StringBuilder();
 

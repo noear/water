@@ -3,7 +3,7 @@ package watersev.controller;
 import org.noear.luffy.task.cron.CronExpressionPlus;
 import org.noear.luffy.task.cron.CronUtils;
 import org.noear.water.utils.Datetime;
-import watersev.models.water_paas.PaasFileModel;
+import watersev.models.water_paas.LuffyFileModel;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -14,7 +14,7 @@ import java.util.Date;
  * @author noear
  */
 public class PlnHelper {
-    public static PlnNext getNextTimeByCron(PaasFileModel task, Date baseTime) throws ParseException {
+    public static PlnNext getNextTimeByCron(LuffyFileModel task, Date baseTime) throws ParseException {
         PlnNext next = new PlnNext();
 
         CronExpressionPlus cron = CronUtils.get(task.plan_interval);
@@ -42,7 +42,7 @@ public class PlnHelper {
         return next;
     }
 
-    public static PlnNext getNextTimeBySimple(PaasFileModel task, Date baseTime) {
+    public static PlnNext getNextTimeBySimple(LuffyFileModel task, Date baseTime) {
         PlnNext next = new PlnNext();
 
         Datetime begin_time = new Datetime(task.plan_begin_time);

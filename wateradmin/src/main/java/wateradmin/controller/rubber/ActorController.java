@@ -14,7 +14,7 @@ import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_rebber.ActorModel;
+import wateradmin.models.water_paas.RebberActorModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -56,7 +56,7 @@ public class ActorController extends BaseController {
     //参与人员右侧列表
     @Mapping("actor/inner")
     public ModelAndView inner(String tag_name,String name) throws SQLException {
-        List<ActorModel> models = DbRubberApi.getActorList(tag_name,name);
+        List<RebberActorModel> models = DbRubberApi.getActorList(tag_name,name);
         viewModel.put("models",models);
         viewModel.put("tag_name", tag_name);
         viewModel.put("name",name);
@@ -74,7 +74,7 @@ public class ActorController extends BaseController {
     }
 
     @Mapping("actor/ajax/getactor")
-    public ActorModel getActorModel(Integer actor_id) throws SQLException{
+    public RebberActorModel getActorModel(Integer actor_id) throws SQLException{
         if(actor_id==null){
             actor_id=0;
         }

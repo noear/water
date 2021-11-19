@@ -1,4 +1,4 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
 import lombok.Getter;
 import org.noear.weed.*;
@@ -9,7 +9,7 @@ import java.util.*;
 /// 
 /// </summary>
 @Getter
-public class SchemeNodeModel implements IBinder
+public class RebberSchemeNodeModel implements IBinder
 {
     public int node_id;
     public String node_key;
@@ -46,6 +46,6 @@ public class SchemeNodeModel implements IBinder
 	
 	public IBinder clone()
 	{
-		return new SchemeNodeModel();
+		return new RebberSchemeNodeModel();
 	}
 }

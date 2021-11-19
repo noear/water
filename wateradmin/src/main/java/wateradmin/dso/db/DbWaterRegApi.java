@@ -125,7 +125,7 @@ public class DbWaterRegApi {
 
         if (service_id == 0) {
             String key = IDUtils.guid();
-            query.set("check_last_time", new Date())
+            query.set("check_last_time", System.currentTimeMillis())
                     .set("key", key).insert();
         } else {
             query.where("service_id = ?", service_id).update();

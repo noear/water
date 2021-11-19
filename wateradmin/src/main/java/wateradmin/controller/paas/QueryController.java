@@ -7,9 +7,9 @@ import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.db.DbPaaSApi;
-import wateradmin.models.water_paas.PaasFileModel;
-import wateradmin.models.water_paas.PaasFileType;
+import wateradmin.dso.db.DbLuffyApi;
+import wateradmin.models.water_paas.LuffyFileModel;
+import wateradmin.models.water_paas.LuffyFileType;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,11 +25,11 @@ public class QueryController extends BaseController {
 
         key = Base64Utils.decode(key);
 
-        List<PaasFileModel> list = null;
+        List<LuffyFileModel> list = null;
         if(TextUtils.isEmpty(key)){
             list = new ArrayList<>();
         }else{
-            list = DbPaaSApi.getFileList(null, PaasFileType.all, false, key, act);
+            list = DbLuffyApi.getFileList(null, LuffyFileType.all, false, key, act);
         }
 
 

@@ -6,15 +6,14 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.view.freemarker.RenderUtil;
-import org.noear.weed.wrap.TableWrap;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
-import wateradmin.dso.db.DbPaaSApi;
+import wateradmin.dso.db.DbLuffyApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water.FieldVoModel;
-import wateradmin.models.water_paas.PaasFileModel;
-import wateradmin.models.water_paas.PaasFileType;
+import wateradmin.models.water_paas.LuffyFileModel;
+import wateradmin.models.water_paas.LuffyFileType;
 import wateradmin.utils.UnderlineCamelUtil;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -49,7 +48,7 @@ public class CodeGenerationController extends BaseController {
 
         List<ConfigModel> cfgs = DbWaterCfgApi.getConfigsByType(tag, ConfigType.db);
 
-        List<PaasFileModel> tmls = DbPaaSApi.getFileList(TEMPLATE_TAG, PaasFileType.tml);
+        List<LuffyFileModel> tmls = DbLuffyApi.getFileList(TEMPLATE_TAG, LuffyFileType.tml);
 
         viewModel.set("cfgs", cfgs);
         viewModel.set("tmls", tmls);
@@ -141,7 +140,7 @@ public class CodeGenerationController extends BaseController {
             }
         }
 
-        PaasFileModel tml = DbPaaSApi.getFile(tml_id);
+        LuffyFileModel tml = DbLuffyApi.getFile(tml_id);
 
         model.put("fields", fields);
         model.put("table_camel", UnderlineCamelUtil.underline2Camel(tb, false));

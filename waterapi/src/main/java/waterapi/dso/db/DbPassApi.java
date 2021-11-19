@@ -24,7 +24,7 @@ public class DbPassApi {
         String code = String.format("return water.job('%s','%s');", service, name);
 
         //只支持新增导入
-        DbTableQuery qr = db().table("paas_file")
+        DbTableQuery qr = db().table("luffy_file")
                 .set("file_type", 1)
                 .set("tag", tag)
                 .set("label", "")

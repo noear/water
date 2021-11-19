@@ -3,12 +3,12 @@ package watersev.dso.db;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import watersev.Config;
-import watersev.models.water_paas.PaasFileModel;
+import watersev.models.water_paas.LuffyFileModel;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public final class DbWaterPaasApi {
+public final class DbWaterFaasApi {
     private static DbContext db() {
         return Config.water_paas; //此处要进行适配修改
     }
@@ -16,16 +16,16 @@ public final class DbWaterPaasApi {
     //===============
     //定时任务
     //
-    public static List<PaasFileModel> getPlanList() throws SQLException {
-        return db().table("paas_file")
+    public static List<LuffyFileModel> getPlanList() throws SQLException {
+        return db().table("luffy_file")
                 .whereEq("file_type", 1)
                 .andEq("is_disabled", 0)
                 .andLte("plan_last_timespan", System.currentTimeMillis())
-                .selectList("*", PaasFileModel.class);
+                .selectList("*", LuffyFileModel.class);
     }
 
-    public static void setPlanState(PaasFileModel plan, int state, String note) throws SQLException {
-        DbTableQuery qr = db().table("paas_file");
+    public static void setPlanState(LuffyFileModel plan, int state, String note) throws SQLException {
+        DbTableQuery qr = db().table("luffy_file");
 
         qr.set("plan_state", state)
                 .set("plan_count", plan.plan_count)
@@ -44,7 +44,7 @@ public final class DbWaterPaasApi {
     }
 
     public static void resetPlanState() throws SQLException {
-        db().table("paas_file")
+        db().table("luffy_file")
                 .set("plan_state", 9)
                 .where("plan_state=?", 2)
                 .update();

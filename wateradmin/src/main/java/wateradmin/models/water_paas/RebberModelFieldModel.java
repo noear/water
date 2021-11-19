@@ -1,4 +1,4 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
 import lombok.Getter;
 import org.noear.weed.*;
@@ -9,7 +9,7 @@ import java.util.*;
 /// 
 /// </summary>
 @Getter
-public class ModelFieldModel implements IBinder
+public class RebberModelFieldModel implements IBinder
 {
     public transient int field_id;
 
@@ -41,7 +41,7 @@ public class ModelFieldModel implements IBinder
 	
 	public IBinder clone()
 	{
-		return new ModelFieldModel();
+		return new RebberModelFieldModel();
 	}
 
 }

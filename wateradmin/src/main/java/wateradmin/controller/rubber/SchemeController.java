@@ -3,8 +3,6 @@ package wateradmin.controller.rubber;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.noear.snack.ONode;
-import org.noear.snack.core.TypeRef;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
@@ -19,7 +17,7 @@ import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_rebber.*;
+import wateradmin.models.water_paas.*;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -61,7 +59,7 @@ public class SchemeController extends BaseController {
         }
 
 
-        List<SchemeModel> schemes = DbRubberApi.getSchemeList(tag_name, name);
+        List<RebberSchemeModel> schemes = DbRubberApi.getSchemeList(tag_name, name);
         viewModel.put("schemes",schemes);
         viewModel.put("tag_name", tag_name);
         viewModel.put("name",name);
@@ -73,13 +71,13 @@ public class SchemeController extends BaseController {
     //跳转计算方案添加、修改
     @Mapping("scheme/edit")
     public ModelAndView toAddScheme(Integer scheme_id,String f) throws SQLException {
-        List<ModelModel> modelList = DbRubberApi.getModelList();
+        List<RebberModelModel> modelList = DbRubberApi.getModelList();
         viewModel.put("models",modelList);
-        SchemeModel schemeModel = null;
+        RebberSchemeModel schemeModel = null;
         if(scheme_id != null){
              schemeModel = DbRubberApi.getSchemeById(scheme_id);
         }else{
-            schemeModel = new SchemeModel();
+            schemeModel = new RebberSchemeModel();
         }
 
         viewModel.put("scheme", schemeModel);
@@ -111,7 +109,7 @@ public class SchemeController extends BaseController {
     //跳转计算方案事件编辑页面
     @Mapping("scheme/event/edit")
     public ModelAndView eventEdit(Integer scheme_id,String f) throws SQLException{
-        SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
+        RebberSchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
         viewModel.put("scheme",scheme);
 
         viewModel.put("f",f);
@@ -164,11 +162,11 @@ public class SchemeController extends BaseController {
     //跳转计算方案规则列表
     @Mapping("scheme/rule/design")
     public ModelAndView rule_inner(Integer scheme_id,String tag_name,String name_display,String name,String f) throws SQLException {
-        List<SchemeRuleModel> rules = DbRubberApi.getSchemeRuleListBySchemeId(scheme_id,name);
-        SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
+        List<RebberSchemeRuleModel> rules = DbRubberApi.getSchemeRuleListBySchemeId(scheme_id,name);
+        RebberSchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
 
         //控制，是否显示查询
-        ModelModel model = null;
+        RebberModelModel model = null;
         if (!Utils.isEmpty(scheme.related_model)){
             model = DbRubberApi.getModelFieldListByModelTagAndName(scheme.related_model);
             viewModel.put("related_db",model.related_db);
@@ -195,7 +193,7 @@ public class SchemeController extends BaseController {
             rule_id = 0;
         }
 
-        SchemeRuleModel rule = DbRubberApi.getSchemeRuleByRuleId(rule_id);
+        RebberSchemeRuleModel rule = DbRubberApi.getSchemeRuleByRuleId(rule_id);
 
         if(rule.rule_id>0){
             scheme_id = rule.scheme_id;
@@ -203,9 +201,9 @@ public class SchemeController extends BaseController {
 
         String expr = "[{}]";
         String leftList = "[]";
-        SchemeModel scheme = null;
-        ModelModel model = null;
-        List<BlockModel> functions = null;
+        RebberSchemeModel scheme = null;
+        RebberModelModel model = null;
+        List<RebberBlockModel> functions = null;
 
         if (scheme_id != null && scheme_id != 0){
             scheme = DbRubberApi.getSchemeById(scheme_id);
@@ -222,10 +220,10 @@ public class SchemeController extends BaseController {
 
             if (model != null){
                 if (model.model_id != 0){
-                    List<ModelFieldModel> fieldList = DbRubberApi.getFieldList(model.model_id, null);
+                    List<RebberModelFieldModel> fieldList = DbRubberApi.getFieldList(model.model_id, null);
                     List<JSONObject> list = new ArrayList<>();
 
-                    for (ModelFieldModel mode:
+                    for (RebberModelFieldModel mode:
                             fieldList) {
                         JSONObject item = new JSONObject();
                         item.put("name",mode.name);
@@ -236,7 +234,7 @@ public class SchemeController extends BaseController {
                 }
             }
         }
-        SchemeRuleModel schemeRule;
+        RebberSchemeRuleModel schemeRule;
         if (rule_id > 0){
              schemeRule = DbRubberApi.getSchemeRuleByRuleId(rule_id);
             JSONObject json = (JSONObject) JSON.parse(schemeRule.expr);
@@ -248,7 +246,7 @@ public class SchemeController extends BaseController {
             expr = JSON.toJSONString(list);
 
         }else{
-            schemeRule = new SchemeRuleModel();
+            schemeRule = new RebberSchemeRuleModel();
         }
 
         if(TextUtils.isEmpty(debug_args)){
@@ -362,13 +360,13 @@ public class SchemeController extends BaseController {
         for (String rule_key: exprResult.keySet()) {
             ruleids.add(new Integer(rule_key));
         }
-        List<SchemeRuleModel> schemeRuleModelList = DbRubberApi.getSchemeRuleByRuleIds(ruleids);
+        List<RebberSchemeRuleModel> schemeRuleModelList = DbRubberApi.getSchemeRuleByRuleIds(ruleids);
 
         for (String rule_key:
                 exprResult.keySet()) {
             JSONObject jsonObject = exprResult.getJSONObject(rule_key);
-            SchemeRuleModel rule = null;
-            for (SchemeRuleModel ruleModel:
+            RebberSchemeRuleModel rule = null;
+            for (RebberSchemeRuleModel ruleModel:
                     schemeRuleModelList) {
                 if (String.valueOf(ruleModel.rule_id).equals(rule_key)){
                     rule = ruleModel;
@@ -409,8 +407,8 @@ public class SchemeController extends BaseController {
     //计算方案-流程设计
     @Mapping("scheme/flow")
     public ModelAndView process(Integer scheme_id) throws SQLException{
-        SchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
-        SchemeNodeDesignModel design = DbRubberApi.getSchemeNodeDesign(scheme_id);
+        RebberSchemeModel scheme = DbRubberApi.getSchemeById(scheme_id);
+        RebberSchemeNodeDesignModel design = DbRubberApi.getSchemeNodeDesign(scheme_id);
         viewModel.put("scheme",scheme);
         viewModel.put("design",design);
 
@@ -427,9 +425,9 @@ public class SchemeController extends BaseController {
     @Mapping("scheme/flow/excute")
     public ModelAndView excuteLayer(String node_id,Integer scheme_id) throws SQLException{
 
-        SchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_id,scheme_id);
-        List<SchemeNodeRespModel> schemeNode = DbRubberApi.getSchemeNodeTask(node);
-        List<ActorModel> actors = DbRubberApi.getActorList(node);
+        RebberSchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_id,scheme_id);
+        List<RebberSchemeNodeRespModel> schemeNode = DbRubberApi.getSchemeNodeTask(node);
+        List<RebberActorModel> actors = DbRubberApi.getActorList(node);
 
         viewModel.put("schemeNode",schemeNode);
         viewModel.put("actors",actors);
@@ -456,12 +454,12 @@ public class SchemeController extends BaseController {
     @Mapping("scheme/flow/branch")
     public ModelAndView branchLayer(Integer scheme_id,String node_key) throws SQLException{
 
-        SchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_key,scheme_id);
+        RebberSchemeNodeModel node = DbRubberApi.getSchemeNodeByNodeKey(node_key,scheme_id);
 
         if (scheme_id != null && scheme_id != 0){
-            SchemeModel schemeInfo = DbRubberApi.getSchemeById(scheme_id);
-            ModelModel model = DbRubberApi.getModelFieldListByModelTagAndName(schemeInfo.related_model);
-            List<BlockModel> functions = new ArrayList<>();
+            RebberSchemeModel schemeInfo = DbRubberApi.getSchemeById(scheme_id);
+            RebberModelModel model = DbRubberApi.getModelFieldListByModelTagAndName(schemeInfo.related_model);
+            List<RebberBlockModel> functions = new ArrayList<>();
             if (schemeInfo != null){
                 if(!Utils.isEmpty(schemeInfo.related_block)){
                     functions = DbRubberApi.getBlocksByTagOrNameArray(schemeInfo.related_block);
@@ -471,10 +469,10 @@ public class SchemeController extends BaseController {
 
             if (model != null){
                 if (model.model_id != 0){
-                    List<ModelFieldModel> fieldList = DbRubberApi.getFieldList(model.model_id, null);
+                    List<RebberModelFieldModel> fieldList = DbRubberApi.getFieldList(model.model_id, null);
                     List<JSONObject> list = new ArrayList<>();
 
-                    for (ModelFieldModel mode:
+                    for (RebberModelFieldModel mode:
                             fieldList) {
                         JSONObject item = new JSONObject();
                         item.put("name",mode.name);
@@ -518,11 +516,11 @@ public class SchemeController extends BaseController {
     //批量导出
     @Mapping("scheme/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
-        List<SchemeModel> tmpList = DbRubberApi.getSchemeByIds(ids);
+        List<RebberSchemeModel> tmpList = DbRubberApi.getSchemeByIds(ids);
 
-        List<SchemeSerializeModel> list = new ArrayList<>(tmpList.size());
-        for (SchemeModel m1 : tmpList) {
-            SchemeSerializeModel vm = new SchemeSerializeModel();
+        List<RebberSchemeSerializeModel> list = new ArrayList<>(tmpList.size());
+        for (RebberSchemeModel m1 : tmpList) {
+            RebberSchemeSerializeModel vm = new RebberSchemeSerializeModel();
             vm.model = m1;
             vm.node_design = DbRubberApi.getSchemeNodeDesign(m1.scheme_id);
             vm.nodes = DbRubberApi.getSchemeNodeBySchemeId(m1.scheme_id);
@@ -554,10 +552,10 @@ public class SchemeController extends BaseController {
             return viewModel.code(0, "数据不对！");
         }
 
-        List<SchemeSerializeModel> list = entity.data.toObjectList(SchemeSerializeModel.class);
+        List<RebberSchemeSerializeModel> list = entity.data.toObjectList(RebberSchemeSerializeModel.class);
 
 
-        for (SchemeSerializeModel vm : list) {
+        for (RebberSchemeSerializeModel vm : list) {
             DbRubberApi.schemeImp(tag, vm);
         }
 

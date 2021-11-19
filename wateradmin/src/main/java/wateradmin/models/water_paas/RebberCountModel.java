@@ -1,6 +1,6 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
-public class CountModel {
+public class RebberCountModel {
 
     private long count;
 

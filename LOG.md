@@ -1,5 +1,4 @@
-#### 2.3.3 
-* 修复 EncryptUtils 类，还 iv 时，加密出错的问题
+#### 2.3.4
 * 服务 watersev，下属二级服务增加各自的签到。从而形成各自服务的服务名
 * 服务 watersev-pln，可自由集群，并让每个任务分布到集群中运行
 * 服务 watersev-mot，可自由集群，并让每个任务分布到集群中运行
@@ -11,6 +10,13 @@
 * 镜像 waterapi 端口改为：9371
 * 主库、PaaS库，时间改为 bigint
 * waterraas 端口改为：9375 （之前为：9376）
+* waterpaas 服务更名：waterfaas
+* 表 paas_file 更名：luffy_file
+* 表 paas_etl  更名：luffy_etl
+
+
+#### 2.3.3 
+* 修复 EncryptUtils 类，还 iv 时，加密出错的问题
 
 #### 2.3.2
 * CacheUtils ，增加自动构建本地缓存（驱动类型为：local）

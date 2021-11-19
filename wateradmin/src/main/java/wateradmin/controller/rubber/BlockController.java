@@ -1,8 +1,6 @@
 package wateradmin.controller.rubber;
 
 import com.alibaba.fastjson.JSONObject;
-import org.noear.snack.ONode;
-import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.auth.annotation.AuthRoles;
@@ -22,7 +20,7 @@ import wateradmin.dso.db.DbRubberApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
-import wateradmin.models.water_rebber.BlockModel;
+import wateradmin.models.water_paas.RebberBlockModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -66,7 +64,7 @@ public class BlockController extends BaseController {
         if(block_id>0){
             return blockEdit(block_id);
         }else {
-            List<BlockModel> blocks = DbRubberApi.getBlocks(tag_name);
+            List<RebberBlockModel> blocks = DbRubberApi.getBlocks(tag_name);
 
             viewModel.put("tag_name",tag_name);
             viewModel.put("blocks", blocks);
@@ -78,7 +76,7 @@ public class BlockController extends BaseController {
     //数据块items
     @Mapping("block/items")
     public ModelAndView blockItems(Integer block_id,String fname,String fval) throws Exception{
-        BlockModel block = DbRubberApi.getBlockById(block_id);
+        RebberBlockModel block = DbRubberApi.getBlockById(block_id);
 
         DataList list = DbRubberApi.getBlockItems(block, fname, fval);
 
@@ -103,7 +101,7 @@ public class BlockController extends BaseController {
         }
         viewModel.put("option_sources",option_sources);
 
-        BlockModel block = DbRubberApi.getBlockById(block_id);
+        RebberBlockModel block = DbRubberApi.getBlockById(block_id);
 
         if(TextUtils.isEmpty(block.app_expr)){
             block.app_expr = "return false;";
@@ -154,7 +152,7 @@ public class BlockController extends BaseController {
     @Mapping("block/item/edit")
     public ModelAndView itemsEdit(String item_key,Integer block_id) throws SQLException{
 
-        BlockModel block = DbRubberApi.getBlockById(block_id);
+        RebberBlockModel block = DbRubberApi.getBlockById(block_id);
         DataItem item = DbRubberApi.getBlockItem(block, item_key);
 
 
@@ -171,7 +169,7 @@ public class BlockController extends BaseController {
     @Mapping("block/item/edit/ajax/save")
     public ViewModel itemEditSave(Integer block_id,String item_key,String data) throws SQLException {
 
-        BlockModel block = DbRubberApi.getBlockById(block_id);
+        RebberBlockModel block = DbRubberApi.getBlockById(block_id);
         DbRubberApi.setBlockItem(block, item_key, JSONObject.parseObject(data));
 
         viewModel.put("code", 1);
@@ -185,7 +183,7 @@ public class BlockController extends BaseController {
     @AuthRoles(SessionRoles.role_operator)
     @Mapping("block/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
-        List<BlockModel> list = DbRubberApi.getBlockByIds(ids);
+        List<RebberBlockModel> list = DbRubberApi.getBlockByIds(ids);
 
         String jsonD = JsondUtils.encode("rubber_block", list);
 
@@ -211,10 +209,10 @@ public class BlockController extends BaseController {
             return viewModel.code(0, "数据不对！");
         }
 
-        List<BlockModel> list = entity.data.toObjectList(BlockModel.class);
+        List<RebberBlockModel> list = entity.data.toObjectList(RebberBlockModel.class);
 
 
-        for (BlockModel vm : list) {
+        for (RebberBlockModel vm : list) {
             DbRubberApi.blockImp(tag, vm);
         }
 

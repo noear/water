@@ -11,7 +11,7 @@ import org.noear.luffy.utils.TextUtils;
 import org.noear.solon.core.handle.Handler;
 import waterfaas.Config;
 import waterfaas.dso.AFileUtil;
-import waterfaas.dso.DbPaaSApi;
+import waterfaas.dso.DbLuffyApi;
 
 import java.util.HashMap;
 import java.util.List;
@@ -109,7 +109,7 @@ public class FrmInterceptor implements Handler {
         try {
             _cacheMap.clear();
 
-            List<AFileModel> list = DbPaaSApi.pathFilters();
+            List<AFileModel> list = DbLuffyApi.pathFilters();
             for (AFileModel c : list) {
                 if(TextUtils.isEmpty(c.note)){
                     continue;

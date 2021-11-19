@@ -57,8 +57,8 @@ public class ServiceConsumerModel implements IBinder {
         consumer_address = s.get("consumer_address").value("");
         consumer_ip = s.get("consumer_ip").value("");
         chk_last_state = s.get("chk_last_state").value(0);
-        chk_fulltime = s.get("chk_fulltime").value(null);
-        log_fulltime = s.get("log_fulltime").value(null);
+        chk_fulltime = s.get("chk_fulltime").dateValue(null);
+        log_fulltime = s.get("log_fulltime").dateValue(null);
         is_enabled = s.get("is_enabled").value(0);
     }
 

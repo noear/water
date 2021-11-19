@@ -10,8 +10,8 @@ import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import watersev.dso.*;
-import watersev.dso.db.DbWaterPaasApi;
-import watersev.models.water_paas.PaasFileModel;
+import watersev.dso.db.DbWaterFaasApi;
+import watersev.models.water_paas.LuffyFileModel;
 import watersev.utils.CallUtil;
 
 import java.util.Date;
@@ -48,18 +48,18 @@ public class PlnController implements IJob {
 
         JtRun.initAwait();
 
-        List<PaasFileModel> list = DbWaterPaasApi.getPlanList();
+        List<LuffyFileModel> list = DbWaterFaasApi.getPlanList();
 
         System.out.println("查到任务数：" + list.size());
 
-        for (PaasFileModel task : list) {
+        for (LuffyFileModel task : list) {
             CallUtil.asynCall(() -> {
                 doExec(task);
             });
         }
     }
 
-    private void doExec(PaasFileModel task) {
+    private void doExec(LuffyFileModel task) {
         String threadName = "pln-" + task.file_id;
         Thread.currentThread().setName(threadName);
 
@@ -81,7 +81,7 @@ public class PlnController implements IJob {
             long _times = timecount.stop().milliseconds();
 
             try {
-                DbWaterPaasApi.setPlanState(task, 8, "error");
+                DbWaterFaasApi.setPlanState(task, 8, "error");
             } catch (Throwable ex2) {
                 LogUtil.planError(this, task, _times, ex);
             }
@@ -94,7 +94,7 @@ public class PlnController implements IJob {
         }
     }
 
-    private void runTask(PaasFileModel task, Timecount timecount) throws Exception {
+    private void runTask(LuffyFileModel task, Timecount timecount) throws Exception {
 
         //1.1.检查次数
         if (task.plan_max > 0 && task.plan_count >= task.plan_max) {
@@ -148,10 +148,10 @@ public class PlnController implements IJob {
     }
 
 
-    private long runTaskDo(PaasFileModel task, Timecount timecount) throws Exception {
+    private long runTaskDo(LuffyFileModel task, Timecount timecount) throws Exception {
         //开始执行::
         task.plan_last_time = new Date();
-        DbWaterPaasApi.setPlanState(task, 2, "processing");
+        DbWaterFaasApi.setPlanState(task, 2, "processing");
 
         //2.执行
         JtRun.exec(task);
@@ -168,7 +168,7 @@ public class PlnController implements IJob {
             task.plan_next_time = plnNext.datetime;
         }
 
-        DbWaterPaasApi.setPlanState(task, 9, "OK");
+        DbWaterFaasApi.setPlanState(task, 9, "OK");
 
         LogUtil.planInfo(this, task, task.plan_last_timespan);
 

@@ -4,7 +4,7 @@ import org.noear.luffy.model.AFileModel;
 
 import java.util.Date;
 
-public class PaasFileModel extends AFileModel {
+public class LuffyFileModel extends AFileModel {
 
     public String alarm_sign;
     public String alarm_mobile;

@@ -1,8 +1,6 @@
 package wateradmin.controller.rubber;
 
 import com.alibaba.fastjson.JSONObject;
-import org.noear.snack.ONode;
-import org.noear.snack.core.TypeRef;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.auth.annotation.AuthRoles;
@@ -20,9 +18,9 @@ import wateradmin.dso.db.DbRubberApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
-import wateradmin.models.water_rebber.ModelFieldModel;
-import wateradmin.models.water_rebber.ModelModel;
-import wateradmin.models.water_rebber.ModelSerializeModel;
+import wateradmin.models.water_paas.RebberModelFieldModel;
+import wateradmin.models.water_paas.RebberModelModel;
+import wateradmin.models.water_paas.ModelSerializeModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -70,7 +68,7 @@ public class ModelController extends BaseController {
             return edit(model_id, f);
         }
 
-        List<ModelModel> models = DbRubberApi.getModelList(tag_name, name);
+        List<RebberModelModel> models = DbRubberApi.getModelList(tag_name, name);
         viewModel.put("models", models);
         viewModel.put("tag_name", tag_name);
         viewModel.put("name", name);
@@ -96,7 +94,7 @@ public class ModelController extends BaseController {
         viewModel.put("option_sources", option_sources);
 
 
-        ModelModel model = DbRubberApi.getModelById(model_id);
+        RebberModelModel model = DbRubberApi.getModelById(model_id);
         viewModel.put("model", model);
 
         if ("sponge".equals(f)) {
@@ -143,8 +141,8 @@ public class ModelController extends BaseController {
     //数据模型字段列表
     @Mapping("model/field")
     public ModelAndView field(Integer model_id, String name, String f) throws SQLException {
-        ModelModel model = DbRubberApi.getModelById(model_id);
-        List<ModelFieldModel> fields = DbRubberApi.getFieldList(model_id, name);
+        RebberModelModel model = DbRubberApi.getModelById(model_id);
+        List<RebberModelFieldModel> fields = DbRubberApi.getFieldList(model_id, name);
         viewModel.put("model", model);
         viewModel.put("fields", fields);
         viewModel.put("name", name);
@@ -162,8 +160,8 @@ public class ModelController extends BaseController {
             field_id = 0;
         }
 
-        ModelFieldModel field = DbRubberApi.getFieldById(field_id);
-        ModelModel model = DbRubberApi.getModelById(model_id);
+        RebberModelFieldModel field = DbRubberApi.getFieldById(field_id);
+        RebberModelModel model = DbRubberApi.getModelById(model_id);
 
         viewModel.put("field", field);
         viewModel.put("model_id", model_id);
@@ -237,10 +235,10 @@ public class ModelController extends BaseController {
     @AuthRoles(SessionRoles.role_operator)
     @Mapping("model/ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
-        List<ModelModel> tmpList = DbRubberApi.getModelByIds(ids);
+        List<RebberModelModel> tmpList = DbRubberApi.getModelByIds(ids);
 
         List<ModelSerializeModel> list = new ArrayList<>(tmpList.size());
-        for (ModelModel m1 : tmpList) {
+        for (RebberModelModel m1 : tmpList) {
             ModelSerializeModel vm = new ModelSerializeModel();
             vm.model = m1;
             vm.fields = DbRubberApi.getModelFieldListByModelId(m1.model_id);

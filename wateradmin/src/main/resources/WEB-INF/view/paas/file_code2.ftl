@@ -49,7 +49,7 @@
             <a href="${paas_uri}${m1.path!}?_debug=1" class="code_run" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
         </left>
         <right class="col-6">
-            <@versions table="paas_file" keyName="file_id" keyValue="${m1.file_id}">
+            <@versions table="luffy_file" keyName="file_id" keyValue="${m1.file_id}">
                 window.editor.setValue(m.content);
             </@versions>
         </right>

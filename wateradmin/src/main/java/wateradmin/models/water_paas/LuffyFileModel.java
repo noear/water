@@ -8,7 +8,7 @@ import org.noear.water.utils.TextUtils;
 import java.util.Date;
 
 @Getter
-public class PaasFileModel {
+public class LuffyFileModel {
     public transient int file_id;
     public int file_type;
     public String tag;

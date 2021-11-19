@@ -1,4 +1,4 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
 import lombok.Getter;
 import org.noear.snack.ONode;
@@ -12,7 +12,7 @@ import java.util.*;
 /// 
 /// </summary>
 @Getter
-public class LogRequestModel implements IBinder {
+public class RebberLogRequestModel implements IBinder {
     public long log_id;
     public String request_id;
     public String scheme_tagname;
@@ -50,7 +50,7 @@ public class LogRequestModel implements IBinder {
     }
 
     public IBinder clone() {
-        return new LogRequestModel();
+        return new RebberLogRequestModel();
     }
 
     public static String getEvaluationEnum(int evalua) {

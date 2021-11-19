@@ -58,7 +58,7 @@ public class GeneratorJson {
 
 
         //water_paas
-        buildTableJosn(waterPaasDb, "paas_file", "water_paas");
+        buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
 
 //        buildTableJosn(waterPaasDb, "rubber_actor", "water_paas");
 //        buildTableJosn(waterPaasDb, "rubber_block", "water_paas");

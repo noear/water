@@ -1,9 +1,9 @@
-package wateradmin.models.water_rebber;
+package wateradmin.models.water_paas;
 
 import lombok.Getter;
 
 @Getter
-public class SchemeNodeNameModel {
+public class RebberSchemeNodeNameModel {
 
     public String name;
     public String display_name;
