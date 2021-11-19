@@ -22,8 +22,8 @@ public class ErrorListener implements EventListener<Throwable> {
         } else {
             MDC.put("tag0", ctx.path());
 
-            String summary = ONode.stringify(ctx.paramMap());
-            log.error("{}\r\n{}", summary, ex);
+            String param = ONode.stringify(ctx.paramMap());
+            log.error("> Param: {}\n\n< Body: {}", param, ex);
         }
     }
 }

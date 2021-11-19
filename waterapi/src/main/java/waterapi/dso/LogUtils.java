@@ -64,7 +64,7 @@ public class LogUtils {
             MDC.put("tag3", _from);
 
             logger.warn("{}\r\n{}", label.toJson(), content);
-        } catch (Exception ee) {
+        } catch (Throwable ee) {
             //不能再转入别的日志了
             ee.printStackTrace();
         }
@@ -98,7 +98,7 @@ public class LogUtils {
 
                 logger.error(sb.toString());
             }
-        } catch (Exception ee) {
+        } catch (Throwable ee) {
             //不能再转入别的日志了
             ee.printStackTrace();
         }
