@@ -29,9 +29,9 @@ public class LogUtils {
 
             StringBuilder content = new StringBuilder(200);
 
-            content.append("> ").append(ONode.stringify(ctx.paramMap()));
+            content.append("> Param: ").append(ONode.stringify(ctx.paramMap()));
             content.append("\n\n");
-            content.append("< ").append(ONode.stringify(ctx.result));
+            content.append("< Body: ").append(ONode.stringify(ctx.result));
 
             MDC.put("tag0", tag);
             MDC.put("tag3", _from);
