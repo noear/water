@@ -1,5 +1,6 @@
 package wateradmin.controller.log;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.util.DateUtil;
 import org.noear.water.protocol.ProtocolHub;
@@ -20,6 +21,7 @@ import wateradmin.models.water_cfg.LoggerModel;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 @Mapping("/log/")
 public class LogController extends BaseController {
@@ -67,7 +69,7 @@ public class LogController extends BaseController {
 
 
         if (!TextUtils.isEmpty(logger)) {
-            LoggerModel log = DbWaterCfgApi.getLogger(logger);
+            LoggerModel loggerModel = DbWaterCfgApi.getLogger(logger);
 
             try {
                 long timestamp = 0;
@@ -79,11 +81,11 @@ public class LogController extends BaseController {
 
                 list = ProtocolHub.logQuerier.query(logger, level, 50, tagx, startLogId, timestamp);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error("{}",ex);
             }
 
-            viewModel.put("log", log);
-            viewModel.put("logger", log.logger);
+            viewModel.put("log", loggerModel);
+            viewModel.put("logger", loggerModel.logger);
         } else {
             viewModel.put("logger", "");
         }

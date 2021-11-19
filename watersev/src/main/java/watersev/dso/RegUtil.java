@@ -1,5 +1,6 @@
 package watersev.dso;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.water.WaterClient;
@@ -8,6 +9,7 @@ import org.noear.water.utils.LockUtils;
 /**
  * @author noear 2021/11/18 created
  */
+@Slf4j
 public class RegUtil {
     public static void checkin(String subService) {
         String lockName = "watersev-sev-" + subService;
@@ -22,7 +24,7 @@ public class RegUtil {
                     Instance.local().address(),
                     "", "", 1, "", is_unstable);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 }

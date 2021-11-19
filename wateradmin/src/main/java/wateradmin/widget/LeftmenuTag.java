@@ -6,6 +6,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.BcfUtil;
 import org.noear.bcf.models.BcfGroupModel;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component("view:leftmenu")
 public class LeftmenuTag implements TemplateDirectiveModel {
     @Override
@@ -26,7 +28,7 @@ public class LeftmenuTag implements TemplateDirectiveModel {
         try{
             build(env);
         }catch (Exception ex){
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

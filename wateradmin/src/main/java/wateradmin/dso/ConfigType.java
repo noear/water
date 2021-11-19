@@ -1,9 +1,11 @@
 package wateradmin.dso;
 
+import lombok.extern.slf4j.Slf4j;
 import wateradmin.models.water_cfg.EnumModel;
 
 import java.util.*;
 
+@Slf4j
 public class ConfigType {
     public static final int db = 10;
     public static final int redis = 11;
@@ -30,7 +32,7 @@ public class ConfigType {
                     });
 
                 }catch (Exception ex){
-                    ex.printStackTrace();
+                    log.error("{}",ex);
                 }
             }
         }

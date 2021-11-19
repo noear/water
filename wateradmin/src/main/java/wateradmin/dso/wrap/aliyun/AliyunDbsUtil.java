@@ -15,6 +15,7 @@ import com.aliyuncs.rds.model.v20140815.DescribeDBInstanceAttributeRequest;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstanceAttributeResponse;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesRequest;
 import com.aliyuncs.rds.model.v20140815.DescribeDBInstancesResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.water.protocol.model.monitor.EChartModel;
 import org.noear.water.protocol.model.monitor.ELineModel;
 import org.noear.water.protocol.model.monitor.ETimeType;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
+@Slf4j
 public class AliyunDbsUtil {
 
     //RDS请求监控对象初始化  连接数,CPU,内存,空间,QPS
@@ -324,7 +326,7 @@ public class AliyunDbsUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}",e);
         }
     }
 }

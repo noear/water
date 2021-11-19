@@ -2,6 +2,7 @@ package wateradmin.widget;
 
 import freemarker.core.Environment;
 import freemarker.template.*;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.NvMap;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 
 
+@Slf4j
 @Component("view:stateselector")
 public class StateSelectorTag implements TemplateDirectiveModel {
     @Override
@@ -18,7 +20,7 @@ public class StateSelectorTag implements TemplateDirectiveModel {
         try {
             build(env, map);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

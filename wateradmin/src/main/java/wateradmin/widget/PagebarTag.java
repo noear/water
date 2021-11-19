@@ -5,6 +5,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.handle.Context;
@@ -12,6 +13,7 @@ import org.noear.solon.core.handle.Context;
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 @Component("view:pagebar")
 public class PagebarTag implements TemplateDirectiveModel {
 
@@ -25,7 +27,7 @@ public class PagebarTag implements TemplateDirectiveModel {
         try {
             build(env, map);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

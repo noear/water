@@ -16,6 +16,7 @@ import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancerAttributeRequest;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancerAttributeResponse;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersRequest;
 import com.aliyuncs.slb.model.v20140515.DescribeLoadBalancersResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.water.protocol.model.monitor.EChartModel;
 import org.noear.water.protocol.model.monitor.ELineModel;
 import org.noear.water.protocol.model.monitor.ETimeType;
@@ -27,6 +28,7 @@ import wateradmin.models.water_cfg.ConfigModel;
 
 import java.util.*;
 
+@Slf4j
 public class AliyunBlsUtil {
 
 
@@ -91,26 +93,27 @@ public class AliyunBlsUtil {
     public static String getDataType(Integer type) {
         switch (type) {
             case 0:
-               return ("InstanceMaxConnection"); //并发连接数
+                return ("InstanceMaxConnection"); //并发连接数
 
             case 1:
-                return("InstanceNewConnection"); //新键连接数
+                return ("InstanceNewConnection"); //新键连接数
 
             case 2:
-                return("Qps"); //QPS
+                return ("Qps"); //QPS
 
             case 3:
-                return("InstanceTrafficTX"); //流量
+                return ("InstanceTrafficTX"); //流量
 
             case 4:
-                return("InstanceTrafficRX"); //流量流入
+                return ("InstanceTrafficRX"); //流量流入
 
             case 5:
-                return("InstanceInactiveConnection"); //实例非活跃
+                return ("InstanceInactiveConnection"); //实例非活跃
 
             case 6:
-                return("InstanceActiveConnection"); //实例活跃
-            default: return null;
+                return ("InstanceActiveConnection"); //实例活跃
+            default:
+                return null;
         }
     }
 
@@ -160,8 +163,8 @@ public class AliyunBlsUtil {
             Date dt = new Date(item.timestamp);
             model.name = getDataType(dataType);
 
-            if(dataType == 2) {
-                model.label = item.getPort()+"端口";
+            if (dataType == 2) {
+                model.label = item.getPort() + "端口";
             }
 
             List<String> timelist = new ArrayList<>();
@@ -226,10 +229,10 @@ public class AliyunBlsUtil {
             list.add(ecsViewModel);
         }
 
-        baseQuery(cfg,0, list);
-        baseQuery(cfg,1, list);
-        baseQuery(cfg,2, list);
-        baseQuery(cfg,3, list);
+        baseQuery(cfg, 0, list);
+        baseQuery(cfg, 1, list);
+        baseQuery(cfg, 2, list);
+        baseQuery(cfg, 3, list);
 
         return list;
     }
@@ -262,40 +265,40 @@ public class AliyunBlsUtil {
 
             List<AliyunResponse> list = JSON.parseArray(res, AliyunResponse.class);
 
-            if(list.size() == 0){
+            if (list.size() == 0) {
                 return;
             }
 
             //找到最新的 时间戳（有多个时间段）
 
             HashMap<String, Double> tmpHash = new HashMap<>();
-            HashMap<String,AliyunResponse> tmpCache = new HashMap<>();
+            HashMap<String, AliyunResponse> tmpCache = new HashMap<>();
             String tmpKey = null;
 
             for (AliyunResponse item : list) {
-                if(dataType == 2){ //qps
-                    tmpKey = item.instanceId+"_"+item.port;
+                if (dataType == 2) { //qps
+                    tmpKey = item.instanceId + "_" + item.port;
 
-                    if(tmpCache.containsKey(tmpKey)){
+                    if (tmpCache.containsKey(tmpKey)) {
                         continue;
-                    }else {
+                    } else {
                         tmpCache.put(tmpKey, item);
                     }
 
                     Double val = tmpHash.get(item.instanceId);
 
-                    if(val == null) {
+                    if (val == null) {
                         val = 0.0;
                     }
 
                     tmpHash.put(item.instanceId, item.average + val);
-                }else {
+                } else {
                     tmpHash.put(item.instanceId, item.average);
                 }
             }
 
             for (BlsTrackModel tmp : ecsModels) {
-                if(tmpHash.containsKey(tmp.instanceId)==false){
+                if (tmpHash.containsKey(tmp.instanceId) == false) {
                     continue;
                 }
 
@@ -315,7 +318,7 @@ public class AliyunBlsUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}", e);
         }
     }
 }

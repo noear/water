@@ -6,6 +6,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.bcf.BcfClient;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
@@ -22,6 +23,7 @@ import java.util.Map;
 /**
  * Created by noear on 14-9-10.
  */
+@Slf4j
 @Component("view:toolmenu")
 public class ToolmenuTag implements TemplateDirectiveModel {
     private String pack;
@@ -31,7 +33,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         try {
             build(env, map);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

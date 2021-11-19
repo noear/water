@@ -5,6 +5,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.NvMap;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IDUtils;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component("view:versions")
 public class VersionsTag implements TemplateDirectiveModel {
 
@@ -33,7 +35,7 @@ public class VersionsTag implements TemplateDirectiveModel {
         try {
             build(env, map, body);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

@@ -67,10 +67,6 @@ public class BaseController {
     * @prarm  url 可以是任何URL地址
     * */
     public void redirect(String url) {
-        try {
-            Context.current().redirect(url);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+        Context.current().redirect(url);
     }
 }

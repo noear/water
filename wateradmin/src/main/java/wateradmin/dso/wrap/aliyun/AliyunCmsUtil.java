@@ -13,6 +13,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.FormatType;
 import com.aliyuncs.profile.IClientProfile;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.water.protocol.model.monitor.ETimeType;
 import org.noear.water.utils.Datetime;
@@ -25,6 +26,7 @@ import wateradmin.models.water_cfg.ConfigModel;
 
 import java.util.*;
 
+@Slf4j
 public class AliyunCmsUtil {
 
     //阿里云时间转换 输入1525652700000L
@@ -192,10 +194,10 @@ public class AliyunCmsUtil {
             }
             return avageList;
         } catch (ServerException e) {
-            e.printStackTrace();
+            log.error("{}",e);
             return null;
         } catch (ClientException e) {
-            e.printStackTrace();
+            log.error("{}",e);
             return null;
         }
 
@@ -346,7 +348,7 @@ public class AliyunCmsUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}",e);
         }
     }
 }

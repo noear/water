@@ -92,8 +92,8 @@ public class JtRun {
         //再等0.5秒
         try {
             Thread.sleep(500);
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (InterruptedException ex){
+
         }
 
         initFuture.complete(1);

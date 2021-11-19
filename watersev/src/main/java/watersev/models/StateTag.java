@@ -1,6 +1,7 @@
 package watersev.models;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.water.protocol.model.message.MessageModel;
 import watersev.dso.db.DbWaterMsgApi;
 import watersev.models.water_msg.TopicModel;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by noear on 2017/7/18.
  */
+@Slf4j
 public final class StateTag {
     public final MessageModel msg;
 
@@ -30,7 +32,7 @@ public final class StateTag {
             try {
                 _topic = DbWaterMsgApi.getTopic(msg.topic_name);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error("{}", ex);
                 _topic = new TopicModel();
             }
         }

@@ -1,6 +1,6 @@
 package watersev.dso.db;
 
-import org.noear.water.utils.EncryptUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water_reg.ServiceModel;
@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by noear on 2017/7/18.
  */
+@Slf4j
 public final class DbWaterRegApi {
     public static DbContext db() {
         return Config.water;
@@ -42,7 +43,7 @@ public final class DbWaterRegApi {
                     .where("service_id=?", service_id)
                     .update();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 
@@ -65,7 +66,7 @@ public final class DbWaterRegApi {
                     .where("service_id=?", service_id)
                     .update();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 
@@ -87,7 +88,7 @@ public final class DbWaterRegApi {
                     .where("service_id=?", service_id)
                     .update();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 
@@ -97,7 +98,7 @@ public final class DbWaterRegApi {
                     .where("service_id=? AND is_unstable=1", service_id)
                     .delete();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 
@@ -107,7 +108,7 @@ public final class DbWaterRegApi {
                     .whereEq("consumer_address", consumer_address)
                     .delete();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}", ex);
         }
     }
 

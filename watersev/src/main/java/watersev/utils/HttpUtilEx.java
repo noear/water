@@ -40,17 +40,14 @@ public class HttpUtilEx {
 
                     callback.run(true, code, "");
                 } catch (Throwable e) {
-                    //e.printStackTrace();
                     callback.run(false, 0, e.getMessage());
                 }
 
             } catch (IOException e) {
-                //e.printStackTrace();
                 callback.run(false, 0, e.getMessage());
             }
 
         } catch (MalformedURLException e) {
-            //e.printStackTrace();
             callback.run(false, 0, "build url failed");
         }
     }

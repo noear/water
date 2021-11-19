@@ -5,6 +5,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.NvMap;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
@@ -14,6 +15,7 @@ import wateradmin.models.water_cfg.EnumModel;
 import java.io.IOException;
 import java.util.*;
 
+@Slf4j
 @Component("view:enum")
 public class EnumTag implements TemplateDirectiveModel {
     private String group;
@@ -43,7 +45,7 @@ public class EnumTag implements TemplateDirectiveModel {
                 String tagHtml = buildHtml();
                 env.getOut().write(tagHtml);
             }catch (Exception ex){
-                ex.printStackTrace();
+                log.error("{}",ex);
             }
         }
     }

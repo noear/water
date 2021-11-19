@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IDUtils;
@@ -14,6 +15,7 @@ import wateradmin.models.water_reg.ServiceModel;
 import java.sql.SQLException;
 import java.util.*;
 
+@Slf4j
 public class DbWaterRegApi {
     private static DbContext db() {
         return Config.water;
@@ -148,7 +150,7 @@ public class DbWaterRegApi {
                     .whereEq("consumer_address", consumer_address)
                     .delete();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 

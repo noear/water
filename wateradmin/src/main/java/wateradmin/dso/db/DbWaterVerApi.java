@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.Datetime;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DbWaterVerApi {
     private static DbContext db() {
         return Config.water;
@@ -66,7 +68,7 @@ public class DbWaterVerApi {
                     .insert();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("{}",ex);
         }
     }
 
