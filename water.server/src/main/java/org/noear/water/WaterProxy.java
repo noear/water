@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 2.0
  * */
 public class WaterProxy {
-    static final String SERVICE_WATER_PAAS = "waterfaas";
+    static final String SERVICE_WATER_FAAS = "waterfaas";
     static final String SERVICE_WATER_RAAS = "waterraas";
 
     public static String job(String service, String name) throws Exception {
@@ -84,16 +84,9 @@ public class WaterProxy {
     }
 
     public final static String faas(String path, Map<String, Object> args) throws Exception {
-        return call(SERVICE_WATER_PAAS, path, args);
+        return call(SERVICE_WATER_FAAS, path, args);
     }
 
-    /**
-     * 更名为FaaS
-     */
-    @Deprecated
-    public final static String paas(String path, Map<String, Object> args) throws Exception {
-        return faas(path, args);
-    }
 
     private static HttpUtils http(String url) {
         return HttpUtils.http(url);

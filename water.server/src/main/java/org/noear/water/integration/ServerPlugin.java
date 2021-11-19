@@ -6,7 +6,6 @@ import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
-import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
