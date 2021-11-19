@@ -14,7 +14,7 @@ import org.slf4j.MDC;
 public class LogUtil {
     private static Logger log_msg = LoggerFactory.getLogger(WW.logger_water_log_msg);
     private static Logger log_sev = LoggerFactory.getLogger(WW.logger_water_log_sev);
-    private static Logger log_paas = LoggerFactory.getLogger(WW.logger_water_log_faas);
+    private static Logger log_faas = LoggerFactory.getLogger(WW.logger_water_log_faas);
 
     public static void writeForMsg(MessageModel msg, String broker, DistributionModel dist, String content) {
         if (dist == null) {
@@ -97,7 +97,7 @@ public class LogUtil {
         MDC.put("tag1", plan.tag);
         MDC.put("tag2", plan.path);
 
-        log_paas.info(sb.toString());
+        log_faas.info(sb.toString());
     }
 
     public static void planError(IJob tag, AFileModel plan, long _times, Throwable content) {
@@ -111,9 +111,9 @@ public class LogUtil {
         MDC.put("tag2", plan.path);
 
         if (content instanceof HttpResultException) {
-            log_paas.error("{}\r\n{}", sb, content.getMessage());
+            log_faas.error("{}\r\n{}", sb, content.getMessage());
         } else {
-            log_paas.error("{}\r\n{}", sb, content);
+            log_faas.error("{}\r\n{}", sb, content);
         }
     }
 
