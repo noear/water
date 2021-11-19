@@ -73,7 +73,7 @@
                     <a class="t2" onclick="disableService('${m.service_id}',1)">启用</a>
                 </#if>
                 |
-                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sev@${m.address}" class="t2">日志</a>
+                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sevchk@${m.address}" class="t2">日志</a>
                 |
                 <a href="/mot/service/charts?key=${m.key}" class="t2">监控</a>
             </td>
