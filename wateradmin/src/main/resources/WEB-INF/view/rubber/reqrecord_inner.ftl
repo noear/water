@@ -46,8 +46,7 @@
         <table>
             <thead>
             <tr>
-                <td width="70px">No</td>
-                <td class="left">计算方案</td>
+                <td width="350px">No / 计算方案</td>
                 <td class="left">输入输出</td>
                 <td width="120px">请求时间</td>
                 <td width="80px">处理时间</td>
@@ -58,8 +57,10 @@
             <tbody id="tbody">
             <#list models as m>
             <tr>
-                <td title="${m.request_id}"><a href="${raas_uri!}/s/${m.scheme_tagname!}?request_id=${m.request_id}" class="t2" target="_blank">${m.log_id?c}</a></td>
-                <td class="left">${m.scheme_tagname!}::${m.policy!}</td>
+                <td title="${m.request_id}" class="left">
+                    <a href="${raas_uri!}/s/${m.scheme_tagname!}?request_id=${m.request_id}" class="t2" target="_blank">${m.log_id?c}</a>
+                    <div class="mar10-l">${m.scheme_tagname!}::${m.policy!}</div>
+                </td>
                 <td class="left break">
                     <div>输入：${m.args_json!}</div>
                     <div><note>输出：${m.node_str()!}</note></div>
