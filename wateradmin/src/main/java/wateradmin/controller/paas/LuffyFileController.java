@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/paas/file")
-public class FileController extends BaseController {
+public class LuffyFileController extends BaseController {
     static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
     @Mapping("api/home")

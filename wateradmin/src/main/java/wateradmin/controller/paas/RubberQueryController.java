@@ -1,4 +1,4 @@
-package wateradmin.controller.rubber;
+package wateradmin.controller.paas;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/rubber/")
-public class QueryController extends BaseController {
+public class RubberQueryController extends BaseController {
     //代码查询视图跳转
     @Mapping("query")
     public ModelAndView plan(Integer code_type,String code) throws SQLException {

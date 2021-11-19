@@ -1,4 +1,4 @@
-package wateradmin.controller.rubber;
+package wateradmin.controller.paas;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/rubber/")
-public class ReqRecordController extends BaseController {
+public class RubberReqRecordController extends BaseController {
 
     @Mapping("reqrecord")
     public ModelAndView reqRecord(Integer page, Integer pageSize,String key) throws SQLException{

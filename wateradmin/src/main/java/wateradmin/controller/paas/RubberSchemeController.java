@@ -1,4 +1,4 @@
-package wateradmin.controller.rubber;
+package wateradmin.controller.paas;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -27,7 +27,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/rubber/")
-public class SchemeController extends BaseController {
+public class RubberSchemeController extends BaseController {
 
     //获取计算方案分组列表
     @Mapping("scheme")

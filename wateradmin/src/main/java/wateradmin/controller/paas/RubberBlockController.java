@@ -1,4 +1,4 @@
-package wateradmin.controller.rubber;
+package wateradmin.controller.paas;
 
 import com.alibaba.fastjson.JSONObject;
 import org.noear.solon.core.handle.Context;
@@ -29,7 +29,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/rubber/")
-public class BlockController extends BaseController {
+public class RubberBlockController extends BaseController {
 
     //数据block
     @Mapping("block")

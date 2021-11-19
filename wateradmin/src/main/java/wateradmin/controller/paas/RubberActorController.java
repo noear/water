@@ -1,4 +1,4 @@
-package wateradmin.controller.rubber;
+package wateradmin.controller.paas;
 
 
 import com.alibaba.fastjson.JSONObject;
@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/rubber/")
-public class ActorController extends BaseController {
+public class RubberActorController extends BaseController {
 
     @Mapping("actor")
     public ModelAndView joiner(String tag_name,String name) throws SQLException {

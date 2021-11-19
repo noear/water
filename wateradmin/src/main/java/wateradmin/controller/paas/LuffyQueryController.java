@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/paas/query")
-public class QueryController extends BaseController {
+public class LuffyQueryController extends BaseController {
     @Mapping("")
     public ModelAndView list(Context ctx) throws SQLException {
         String key = ctx.param("key", "");

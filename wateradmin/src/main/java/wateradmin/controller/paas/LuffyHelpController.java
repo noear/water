@@ -8,7 +8,7 @@ import wateradmin.controller.BaseController;
 
 @Controller
 @Mapping("/paas/help")
-public class HelpController extends BaseController {
+public class LuffyHelpController extends BaseController {
     @Mapping("")
     public void index(Context ctx){
         ctx.redirect(Config.paas_uri() +"/water/paas/help/api/");
