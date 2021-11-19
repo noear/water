@@ -46,7 +46,7 @@
         <table>
             <thead>
             <tr>
-                <td width="350px">No / 计算方案</td>
+                <td width="280px">No / 计算方案</td>
                 <td class="left">输入输出</td>
                 <td width="120px">请求时间</td>
                 <td width="80px">处理时间</td>
