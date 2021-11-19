@@ -35,8 +35,8 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
     water.ds.password=123456
     ```
 
-* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）。镜像端口：8080
-* 添加 water/waterfaas 服务 x1+（镜像：noearorg/waterfaas:latest）。镜像端口：8080
+* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）。镜像端口：8080  //控制台
+* 添加 water/waterfaas 服务 x1+（镜像：noearorg/waterfaas:latest）。镜像端口：8080  //即时接口服务
 * 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）。镜像端口：8080 //不需要，可不部署
 
 * 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //工具服务，包含： (msgchk,sevchk,syn,mot)
