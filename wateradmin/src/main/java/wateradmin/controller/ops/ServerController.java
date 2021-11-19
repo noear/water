@@ -25,7 +25,9 @@ public class ServerController extends BaseController {
     @Mapping("server")
     public ModelAndView project(String tag_name) throws SQLException {
         List<ServerModel> tags = DbWaterOpsApi.getServerTags();
+
         viewModel.put("tags", tags);
+
         if (TextUtils.isEmpty(tag_name) == false) {
             viewModel.put("tag_name", tag_name);
         } else {
@@ -35,12 +37,13 @@ public class ServerController extends BaseController {
                 viewModel.put("tag_name", null);
             }
         }
+
         return view("ops/server");
     }
 
     @Mapping("server/inner")
-    public ModelAndView projectInner(String tag_name, Integer _state) throws SQLException {
-        if (_state != null) {
+    public ModelAndView projectInner(String tag_name, int _state) throws SQLException {
+        if (_state > 0) {
             viewModel.put("_state", _state);
             int state = _state;
             if (state == 0) {
@@ -49,19 +52,22 @@ public class ServerController extends BaseController {
                 _state = 0;
             }
         }
-        if (_state == null)
+
+        if (_state == 0) {
             _state = 1;
+        }
 
         List<ServerModel> list = DbWaterOpsApi.getServerByTagNameAndState(tag_name, _state);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
+
         return view("ops/server_inner");
     }
 
     //禁用 启用服务
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/disable")
-    public ViewModel disable(Integer server_id, Integer is_enabled) throws SQLException {
+    public ViewModel disable(int server_id, int is_enabled) throws SQLException {
         boolean result = DbWaterOpsApi.disableServer(server_id, is_enabled);
 
         if (result) {
@@ -76,7 +82,7 @@ public class ServerController extends BaseController {
     //删除 服务
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("server/delete")
-    public ViewModel delete(Integer server_id) throws SQLException {
+    public ViewModel delete(int server_id) throws SQLException {
         boolean result = DbWaterOpsApi.deleteServer(server_id);
 
         if (result) {
@@ -91,11 +97,7 @@ public class ServerController extends BaseController {
 
     //跳转服务编辑页面
     @Mapping("server/edit")
-    public ModelAndView serverEdit(String tag_name, Integer server_id) throws SQLException {
-        if (server_id == null) {
-            server_id = 0;
-        }
-
+    public ModelAndView serverEdit(String tag_name, int server_id) throws SQLException {
         ServerModel server = DbWaterOpsApi.getServerByID(server_id);
 
         if (server.server_id == 0) {
