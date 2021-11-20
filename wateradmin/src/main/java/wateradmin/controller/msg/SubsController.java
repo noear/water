@@ -75,7 +75,7 @@ public class SubsController extends BaseController {
 
         viewModel.put("list",list);
         viewModel.put("_state",_state);
-        return view("msg/subs");
+        return view("msg/subs_inner");
     }
 
     //ajax删除功能。
