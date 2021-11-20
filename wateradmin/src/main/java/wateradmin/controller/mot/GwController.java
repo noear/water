@@ -59,6 +59,10 @@ public class GwController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView inner( String tag_name, int gateway_id) throws SQLException {
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+            tag_name = null;
+        }
+
         List<GatewayModel> gats = DbWaterCfgGatewayApi.getGatewayList(tag_name, 1);
 
         if (gateway_id == 0) {
@@ -67,6 +71,7 @@ public class GwController extends BaseController {
             }
         }
 
+        viewModel.put("tag_name",tag_name);
         viewModel.set("gats", gats);
         viewModel.set("gateway_id", gateway_id);
 

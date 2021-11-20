@@ -51,6 +51,10 @@ public class SevController extends BaseController {
     //服务状态
     @Mapping("/service/inner")
     public ModelAndView inner(String tag_name, String name, Integer _state) throws SQLException {
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+            tag_name = null;
+        }
+
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
