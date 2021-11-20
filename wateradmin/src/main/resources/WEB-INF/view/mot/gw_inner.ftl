@@ -9,7 +9,9 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
-        .line1{text-decoration:line-through;}
+        .gats{padding-bottom: 15px; padding-top: 5px;}
+        .gats a{display: inline-block; background: #ebedf1; border-radius: 20px; padding: 2px 10px;}
+        .gats a.sel{background: #fff; border: 1px #ebedf1 solid;}
     </style>
 </head>
 <script>
@@ -34,8 +36,26 @@
     }
     </#if>
 
+    var gateway_id = '${gateway_id!}';
+    function node_onclick(tn,obj) {
+        gateway_id = tn;
+        $('li.sel').removeClass('sel');
+        $(obj).addClass("sel");
+        $("#table").attr('src',"/mot/gw/inner?gateway_id=" + gateway_id);
+    };
+
 </script>
 <body>
+
+<div class="gats">
+    <#list gats as m>
+        <#if m.gateway_id == gateway_id>
+            <a id="e${m.gateway_id}" class="sel">${m.name}</a>
+        <#else>
+            <a id="e${m.gateway_id}" href="/mot/gw/inner?gateway_id=${m.gateway_id}">${m.name}</a>
+        </#if>
+    </#list>
+</div>
 
 <block>
     代理网关: ${cfg.agent!}

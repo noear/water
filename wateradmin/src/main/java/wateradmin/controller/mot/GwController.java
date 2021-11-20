@@ -9,10 +9,13 @@ import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
+import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
 import wateradmin.models.water_reg.GatewayVoModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
@@ -32,25 +35,34 @@ public class GwController extends BaseController {
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")
-    public ModelAndView gateway(int gateway_id) throws SQLException {
-        List<GatewayModel> sevs = DbWaterCfgGatewayApi.getGatewayList(null, 1);
+    public ModelAndView gateway(String tag_name) throws SQLException {
+        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
 
-        if (gateway_id == 0) {
-            if (sevs.size() > 0) {
-                gateway_id = sevs.get(0).gateway_id;
-            }
-        }
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
 
-        viewModel.set("sevs", sevs);
+        tag_name = TagUtil.build(tag_name, tags);
 
-        viewModel.set("gateway_id", gateway_id);
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
 
         return view("mot/gw");
-
     }
 
     @Mapping("inner")
-    public ModelAndView inner(int gateway_id) throws SQLException {
+    public ModelAndView inner( String tag_name, int gateway_id) throws SQLException {
+        List<GatewayModel> gats = DbWaterCfgGatewayApi.getGatewayList(tag_name, 1);
+
+        if (gateway_id == 0) {
+            if (gats.size() > 0) {
+                gateway_id = gats.get(0).gateway_id;
+            }
+        }
+
+        viewModel.set("gats", gats);
+        viewModel.set("gateway_id", gateway_id);
+
+        //==================
 
         GatewayModel cfg = DbWaterCfgGatewayApi.getGateway(gateway_id);
 
