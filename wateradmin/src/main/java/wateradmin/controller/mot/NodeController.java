@@ -49,6 +49,6 @@ public class NodeController extends BaseController {
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(SEV_SERVER_TAG, name, null, sort);
         viewModel.put("speeds", speeds);
         viewModel.put("serviceName", "_service");
-        return view("mot/node");
+        return view("mot/node_inner");
     }
 }
