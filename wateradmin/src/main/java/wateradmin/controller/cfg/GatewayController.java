@@ -7,74 +7,35 @@ import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
-import org.noear.water.model.TagCountsM;
-import org.noear.water.utils.HttpUtils;
-import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
-import wateradmin.dso.SetsUtils;
 import wateradmin.dso.TagUtil;
-import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
-import wateradmin.dso.db.DbWaterOpsApi;
-import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
-import wateradmin.models.water_reg.GatewayVoModel;
-import wateradmin.models.water_reg.ServiceConsumerModel;
-import wateradmin.models.water_reg.ServiceModel;
-import wateradmin.models.water_reg.ServiceSpeedModel;
 import wateradmin.viewModels.ViewModel;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @Mapping("/cfg/gateway")
 public class GatewayController extends BaseController {
 
-    private static final String SEV_SERVER_TAG = "_service";
-
     @Mapping("")
-    public ModelAndView gateway(String tag_name,Integer _state) throws SQLException {
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
+    public ModelAndView gateway(String tag_name) throws SQLException {
+        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
 
-        if (_state == null) {
-            _state = 1;
-        }
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
 
-        if (SetsUtils.waterSettingScale() > 1) {
-            //中等以上模规
-            List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
+        tag_name = TagUtil.build(tag_name, tags);
 
-            //权限过滤
-            BcfTagChecker.filter(tags, m -> m.tag);
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
 
-            tag_name = TagUtil.build(tag_name,tags);
-
-            viewModel.put("tag_name", tag_name);
-            viewModel.put("tags", tags);
-
-            return view("cfg/gateway");
-        } else {
-            //小或中
-            List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(null, _state);
-
-            viewModel.put("list", list);
-
-            return view("cfg/gateway_inner");
-        }
+        return view("cfg/gateway");
     }
 
     @Mapping("inner")
@@ -91,10 +52,6 @@ public class GatewayController extends BaseController {
 
         if (_state == null) {
             _state = 1;
-        }
-
-        if (SetsUtils.waterSettingScale() <= 1) {
-            tag_name = null;
         }
 
         List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(tag_name, _state);
