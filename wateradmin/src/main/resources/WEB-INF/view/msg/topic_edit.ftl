@@ -18,7 +18,7 @@
             var max_concurrency_num = $('#max_concurrency_num').val();
             var alarm_model = $('#alarm_model').val();
 
-            if (!vm.tag) {
+            if (!tag) {
                 top.layer.msg("tag不能为空！");
                 return;
             }
