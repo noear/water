@@ -33,7 +33,7 @@ public class LogUtils {
             StringBuilder content = new StringBuilder(200);
 
             content.append("> Param: ").append(ONode.stringify(ctx.paramMap())).append("\n");
-            content.append("T Elapsed time: ").append(_times);
+            content.append("T Elapsed time: ").append(_times).append("ms");
             content.append("\n\n");
             content.append("< Body: ").append(ONode.stringify(ctx.result));
 
