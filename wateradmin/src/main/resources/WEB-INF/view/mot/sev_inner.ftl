@@ -138,8 +138,7 @@
                 <td class="left">地址</td>
                 <td width="50px">检测<br/>类型</td>
                 <td>检测路径</td>
-                <td width="70px">最后检<br/>测时间</td>
-                <td width="60px">最后检<br/>查状态</td>
+                <td width="100px">检测情况</td>
                 <#if is_admin == 1>
                     <td width="170px">操作</td>
                 <#else>
@@ -180,12 +179,13 @@
                         </a>
                     </#if>
                 </td>
-                <td style='${m.isAlarm()?string("color:red","")}'>${(m.check_last_time?string('HH:mm:ss'))!}</td>
-                <td>
+
+                <td style='${m.isAlarm()?string("color:red","")}'>
+                    ${(m.check_last_time?string('HH:mm:ss'))!}
                     <#if m.check_last_state == 0>
-                        ok
+                        - ok
                     <#else>
-                        no-${m.check_last_note!}
+                        - no - ${m.check_last_note!}
                     </#if>
                 </td>
 
