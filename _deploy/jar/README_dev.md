@@ -55,7 +55,7 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 #接口服务（如果要限制ip访问，添加参考：--white=1）
 java -jar waterapi.jar --server.port=9371
 
-#后台服务        
+#后台服务（工具、定时任务、消息交换机、消息派发机等服务...）        
 java -jar watersev.jar --server.port=9372 
 
 #管理控制台（如果要限制ip访问，添加参考：--white=1）
@@ -114,7 +114,7 @@ solon.cloud.water:
 127.0.0.1 mysql.water.io mysql.dev.io
 ```
 
-* 在linux下建议用配置成service，由 systemctl 命令管理（以waterapi、wateradmin为例）
+* 在linux下建议用配置成service，由 systemctl 命令管理（以 waterapi、wateradmin 为例）
 
 ```ini
 #

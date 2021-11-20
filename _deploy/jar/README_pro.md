@@ -11,7 +11,7 @@
 * jdk11：做为运行时用（一定要用JDK11）
 * nginx：做为反向代理使用
 
-> 建议使用 centos7+ 部署；生产环境最少 4台服务器；开发环境1台即可。
+> 建议使用 centos7+ 部署；生产环境最少 4台服务器。
 
 ## 二、初始化环境
 
@@ -55,7 +55,7 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 
 ```
 #接口服务
-#每台运行两个实例，共4个实例；外层配负载均衡
+#每台运行两个实例，共4个实例；外层配负载均衡（如果要限制ip访问，添加参考：--white=1）
 
 java -jar waterapi.jar --server.port=9370
 java -jar waterapi.jar --server.port=9371
@@ -65,10 +65,13 @@ java -jar waterapi.jar --server.port=9371
 **服务器1台（2c4g）**
 
 ```
-#工具后台服务        
+#后台服务（工具服务）        
 java -jar watersev.jar --server.port=9372 --sss=tol   
 
-#管理后台（如果要限制ip访问，添加参考：--white=1）
+#后台服务（消息交换机服务）        
+java -jar watersev.jar --server.port=9321 --sss=msgexg   
+
+#管理控制台（如果要限制ip访问，添加参考：--white=1）
 java -jar wateradmin.jar --server.port=9373
 
 #FaaS 接口运行服务           
@@ -96,44 +99,22 @@ java -jar watersev.jar --server.port=9313 --sss=msgdis
 java -jar watersev.jar --server.port=9314 --sss=msgdis   
 ```
 
-#### 2、 开发环境建议方案
-
-**服务器1台（1c2g）**
-
-```
-#工具后台服务        
-java -jar watersev.jar --server.port=9372 
-
-#接口服务
-java -jar waterapi.jar --server.port=9371
-
-#管理后台（如果要限制ip访问，添加参考：--white=1）
-java -jar wateradmin.jar --server.port=9373
-
-#FaaS 接口运行服务           
-java -jar waterfaas.jar --server.port=9374   
-
-#RaaS 运行服务（可选部署） 
-java -jar waterraas.jar --server.port=9375  
-
-```
-
 ### 五、后续配置修改
 
-成功进入wateradmin管理后台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
+成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
-| water     | faas_uri     | 修改为waterfaas服务的http协议地址（优先用域名）     |
-| water     | raas_uri     | 修改为waterraas服务的http协议地址（优先用域名）     |
+| water     | faas_uri     | 修改为 waterfaas 服务的http协议地址（优先用域名）     |
+| water     | raas_uri     | 修改为 waterraas 服务的http协议地址（优先用域名）     |
 
-修改完成后，重启wateradmin服务（之后，就可以在wateradmin上调试paas和raas服务）。
+修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 faas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
 
 ### 附：补充说明
 
-* water 的访问控制，基于ip安全名单实现。如果需要，可以通过启动参数关闭：
+* water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
 
 > --white=1
 
@@ -141,27 +122,19 @@ java -jar waterraas.jar --server.port=9375
 
 > 账号：admin 密码：bcf1234
 
-* 使用 nginx 为 waterapi 服务添加 `waterapi` 域 80 端口监听支持
-
-> 建议生产环境仅限内网访问
-
 * 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
 
 ```yaml
-127.0.0.1 water #ip为waterapi服务的地址
+127.0.0.1 waterapi #ip为waterapi服务的地址
 ```
-
-* 开发环境，且单机部署时，可以加这一批host记录
+在应用配置上添加：
 
 ```yaml
-127.0.0.1 waterapi 
-127.0.0.1 memcached.water.io memcached.dev.io 
-127.0.0.1 redis.water.io redis.dev.io
-127.0.0.1 mongo.dev.io
-127.0.0.1 mysql.water.io mysql.dev.io
+solon.cloud.water:
+  server: "waterapi:9371" #也可以是具体的ip+port（建议用域的方式）
 ```
 
-* 在linux下建议用配置成service，由 systemctl 命令管理（以waterapi、wateradmin为例）
+* 在linux下建议用配置成service，由 systemctl 命令管理（以 waterapi、wateradmin 为例）
 
 ```ini
 #
@@ -208,7 +181,7 @@ upstream waterapi{
     server 127.0.0.1:9371 weight=10;
 }
 server{
-    listen 80;
+    listen 9371;
     server_name waterapi;
     
     location / {
