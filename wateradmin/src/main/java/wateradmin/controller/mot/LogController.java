@@ -1,5 +1,6 @@
 package wateradmin.controller.mot;
 
+import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
 
@@ -8,7 +9,9 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.SetsUtils;
 import wateradmin.dso.db.DbWaterCfgApi;
+import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.LoggerModel;
 
@@ -17,11 +20,16 @@ import java.util.List;
 
 @Controller
 @Mapping("/mot/")
-public class Log2Controller extends BaseController {
+public class LogController extends BaseController {
 
     //日志统计
     @Mapping("log")
-    public ModelAndView logger(String tag_name) throws Exception {
+    public ModelAndView logger(Context ctx, String tag_name) throws Exception {
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+            ctx.redirect("/mot/log/inner");
+            return null;
+        }
+
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
         BcfTagChecker.filter(tags, m -> m.tag);
@@ -42,6 +50,10 @@ public class Log2Controller extends BaseController {
     //日志统计列表
     @Mapping("log/inner")
     public ModelAndView loggerInner(String tag_name,Integer _state, String sort) throws Exception {
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+            tag_name = null;
+        }
+
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;

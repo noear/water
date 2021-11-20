@@ -48,7 +48,7 @@
 
 <div class="tabs">
     <tabbar>
-        <#list gats as m>
+        <#list tabs as m>
             <#if m.gateway_id == gateway_id>
                 <a id="e${m.gateway_id}" class="btn sel">${m.name}</a>
             <#else>

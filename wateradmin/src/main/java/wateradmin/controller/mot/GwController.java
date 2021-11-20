@@ -72,7 +72,7 @@ public class GwController extends BaseController {
         }
 
         viewModel.put("tag_name",tag_name);
-        viewModel.set("gats", gats);
+        viewModel.set("tabs", gats);
         viewModel.set("gateway_id", gateway_id);
 
         //==================

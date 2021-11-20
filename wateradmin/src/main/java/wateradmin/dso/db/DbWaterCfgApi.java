@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import org.noear.solon.Utils;
 import org.noear.water.WW;
 import org.noear.water.dso.NoticeUtils;
 import org.noear.water.dso.WhitelistApi;
@@ -65,18 +66,16 @@ public class DbWaterCfgApi {
     //根据tag获取列表。
     public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
         return db().table("water_cfg_logger")
-                .where("tag = ?", tag_name)
-                .and("is_enabled = ?",is_enabled)
-                .build((tb)->{
-                    if(TextUtils.isEmpty(sort) == false){
-                        tb.orderBy(sort+" DESC");
-                    }else{
+                .whereEq("is_enabled", is_enabled)
+                .andIf(Utils.isNotEmpty(tag_name), "tag = ?", tag_name)
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(sort) == false) {
+                        tb.orderBy(sort + " DESC");
+                    } else {
                         tb.orderBy("logger ASC");
                     }
                 })
-                .select("*")
-                .getList(LoggerModel.class);
-
+                .selectList("*", LoggerModel.class);
     }
 
     //根据id获取logger。

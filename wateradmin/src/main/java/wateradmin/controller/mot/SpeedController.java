@@ -2,6 +2,8 @@ package wateradmin.controller.mot;
 
 import com.alibaba.fastjson.JSONObject;
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.TextUtils;
 
@@ -11,7 +13,12 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
+import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.SetsUtils;
+import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
+import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
 import wateradmin.viewModels.ViewModel;
@@ -27,23 +34,23 @@ public class SpeedController extends BaseController {
 
     //性能监控
     @Mapping("speed")
-    public ModelAndView speed(String serviceName) throws SQLException {
-        List<ServiceSpeedModel> services = DbWaterOpsApi.getSpeedServices();
-
-        services.removeIf(m->m.service.startsWith("_"));
-
-        BcfServiceChecker.filter(services, m -> m.service);
-
-        if (TextUtils.isEmpty(serviceName) == false) {
-            viewModel.put("serviceName", serviceName);
-        } else {
-            if (services.isEmpty() == false && services.size()>0) {
-                viewModel.put("serviceName", services.get(0).service);
-            } else {
-                viewModel.put("serviceName", null);
-            }
+    public ModelAndView speed(Context ctx, String tag_name) throws SQLException {
+        if (SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+            ctx.redirect("/mot/speed/inner");
+            return null;
         }
-        viewModel.put("services", services);
+
+
+        List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
+
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
+
+        tag_name = TagUtil.build(tag_name, tags);
+
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
+
         return view("mot/speed");
     }
 
@@ -53,6 +60,24 @@ public class SpeedController extends BaseController {
         if (tag == null) {
             tag = "";
         }
+
+        List<ServiceSpeedModel> tabs = DbWaterOpsApi.getSpeedServices();
+        tabs.removeIf(m->m.service.startsWith("_"));
+        BcfServiceChecker.filter(tabs, m -> m.service);
+        viewModel.put("tabs",tabs);
+
+
+        if(Utils.isEmpty(serviceName)){
+            if(tabs.size() > 0){
+                serviceName = tabs.get(0).service;
+            }
+        }
+
+        if(Utils.isEmpty(serviceName)){
+            return null;
+        }
+
+        /////////////
 
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(serviceName, tag, name, sort);
         List<TagCountsModel> tags = DbWaterOpsApi.getSpeedsServiceTags(serviceName);
