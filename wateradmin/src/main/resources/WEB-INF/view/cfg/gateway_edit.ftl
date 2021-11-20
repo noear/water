@@ -24,7 +24,7 @@
             }
 
             if(!name){
-                top.layer.msg("name不能为空！");
+                top.layer.msg("service不能为空！");
                 return;
             }
 
@@ -78,7 +78,7 @@
                 <td><input type="text" id="tag" autofocus value="${cfg.tag!}"/></td>
             </tr>
             <tr>
-                <th>name*</th>
+                <th>service*</th>
                 <td><input type="text" id="name" autofocus value="${cfg.name!}"/></td>
             </tr>
             <tr>

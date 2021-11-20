@@ -34,8 +34,7 @@
     <table>
         <thead>
         <tr>
-            <td width="100px" class="left">tag</td>
-            <td class="left">服务名称</td>
+            <td width="220px" class="left">service</td>
             <td class="left">代理网关</td>
             <td width="100px" class="left">负载策略</td>
             <#if is_admin == 1>
@@ -46,7 +45,6 @@
         <tbody id="tbody">
         <#list list as m1>
             <tr>
-                <td class="left">${m1.tag!}</td>
                 <td class="left">${m1.name!}</td>
                 <td class="left">${m1.agent!}</td>
                 <td class="left">${m1.policy!}</td>
