@@ -1,10 +1,12 @@
 package wateradmin.dso.db;
 
+import org.noear.solon.Utils;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_msg.TopicModel;
 
 import java.sql.SQLException;
@@ -41,11 +43,18 @@ public class DbWaterMsgApi {
                 .selectItem("*", SubscriberModel.class);
     }
 
+    public static List<TagCountsModel> getSubscriberTagList() throws SQLException {
+        return db().table("water_msg_subscriber")
+                .groupBy("tag")
+                .orderBy("tag asc")
+                .selectList("tag, count(*) counts", TagCountsModel.class);
+    }
 
     //查询订阅列表(全部列表以及查询功能)
-    public static List<SubscriberModel> getSubscriberList(String topic_name, int is_enabled) throws SQLException {
+    public static List<SubscriberModel> getSubscriberList(String tag_name,String topic_name, int is_enabled) throws SQLException {
         return db().table("water_msg_subscriber")
                 .where("is_enabled = ?", is_enabled)
+                .andIf(Utils.isNotEmpty(tag_name), "tag=?",tag_name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
                         tb.and("(topic_name like ? OR subscriber_note like ? )", "%" + topic_name + "%", "%" + topic_name + "%");

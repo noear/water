@@ -4,13 +4,15 @@ package wateradmin.controller.msg;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.*;
 import wateradmin.dso.db.DbWaterMsgApi;
+import wateradmin.models.ScaleType;
+import wateradmin.models.TagCountsModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -23,7 +25,32 @@ import java.util.stream.Collectors;
 public class SubsController extends BaseController {
     //订阅列表
     @Mapping("/msg/subs")
-    public ModelAndView subscriber(String topic_name,Integer _state) throws SQLException{
+    public ModelAndView subscriber(Context ctx, String tag_name) throws SQLException{
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+            ctx.redirect("/msg/subs/inner");
+            return null;
+        }
+
+        List<TagCountsModel> tags = DbWaterMsgApi.getSubscriberTagList();
+
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
+
+        tag_name = TagUtil.build(tag_name, tags);
+
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
+
+
+        return view("msg/subs");
+    }
+
+    //订阅列表
+    @Mapping("/msg/subs/inner")
+    public ModelAndView subs_inner(String tag_name, String topic_name,Integer _state) throws SQLException{
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+            tag_name = null;
+        }
 
         if (_state != null) {
             int state = _state;
@@ -36,7 +63,7 @@ public class SubsController extends BaseController {
         if (_state == null)
             _state = 1;
 
-        List<SubscriberModel> list2 = DbWaterMsgApi.getSubscriberList(topic_name,_state);
+        List<SubscriberModel> list2 = DbWaterMsgApi.getSubscriberList(tag_name,topic_name,_state);
         List<SubscriberModel> list = new ArrayList<>(list2.size());
         for(SubscriberModel m: list2) {
             if ("".equals(m.trClass())) {
