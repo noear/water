@@ -4,6 +4,7 @@ import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
+import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,21 @@ public class NoticeApi {
      * @param target 手机号（多个以,隔开；@alarm 表过报警名单），例：18121212,@alarm
      */
     public String heihei(String target, String msg) {
+        return heiheiDo(target, msg);
+    }
+
+    /**
+     * 嘿嘿通知（经Water服务端处理后再推送）
+     * */
+    public String heihei(String target, String msg, String sign) {
+        if (TextUtils.isEmpty(sign)) {
+            return heiheiDo(target, msg);
+        } else {
+            return heiheiDo(target, msg + "\n\n" + sign);
+        }
+    }
+
+    private String heiheiDo(String target, String msg) {
         Map<String, String> params = new HashMap<>();
         params.put("target", target);
         params.put("msg", msg);
