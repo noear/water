@@ -120,6 +120,7 @@ ALTER TABLE `water_tool_synchronous`
 ALTER TABLE `water_tool_versions`
     MODIFY COLUMN `log_fulltime` bigint NULL COMMENT '记录完整时间' AFTER `log_date`;
 
+-- 2021-11-21 (for 2.4.1)
 ALTER TABLE `water_msg_subscriber`
     ADD COLUMN `tag` varchar(40) NULL COMMENT '订阅者标签' AFTER `subscriber_note`,
     ADD COLUMN `name` varchar(255) NULL COMMENT '订阅者服务名' AFTER `tag`,
