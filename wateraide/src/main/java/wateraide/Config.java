@@ -21,6 +21,7 @@ public class Config {
         Utils.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
+    public static final String version = "v2.4.0";
     public static final ICacheServiceEx cache = new LocalCache();
 
     public static final String water_setup_step = "water_setup_step";

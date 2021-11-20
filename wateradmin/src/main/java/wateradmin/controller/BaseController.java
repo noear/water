@@ -53,6 +53,7 @@ public class BaseController {
 
 
         viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + Config.version);
+        viewModel.put("_version", Config.version);
 
         return viewModel.view(viewName + ".ftl");
     }
