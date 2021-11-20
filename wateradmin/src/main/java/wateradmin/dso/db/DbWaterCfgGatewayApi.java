@@ -39,11 +39,11 @@ public class DbWaterCfgGatewayApi {
         }
     }
 
-    public static List<TagCountsM> getGatewayTagList() throws SQLException {
+    public static List<TagCountsModel> getGatewayTagList() throws SQLException {
         return db().table("water_cfg_gateway")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .selectList("tag, count(*) counts", TagCountsM.class);
+                .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
 

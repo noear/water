@@ -11,12 +11,15 @@ import org.noear.water.model.TagCountsM;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.SetsUtils;
+import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
 import wateradmin.models.water_reg.GatewayVoModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
@@ -53,13 +56,12 @@ public class GatewayController extends BaseController {
 
         if (SetsUtils.waterSettingScale() > 1) {
             //中等以上模规
-            List<TagCountsM> tags = DbWaterCfgGatewayApi.getGatewayTagList();
+            List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
 
-            if(Utils.isEmpty(tag_name)){
-                if(tags.size() > 0){
-                    tag_name = tags.get(0).tag;
-                }
-            }
+            //权限过滤
+            BcfTagChecker.filter(tags, m -> m.tag);
+
+            tag_name = TagUtil.build(tag_name,tags);
 
             viewModel.put("tag_name", tag_name);
             viewModel.put("tags", tags);

@@ -15,10 +15,16 @@
     <script>
 
         function save() {
-            var name = $("#name").val();
+            let tag = $("#tag").val();
+            let name = $("#name").val();
+
+            if(!tag){
+                top.layer.msg("tag不能为空！");
+                return;
+            }
 
             if(!name){
-                top.layer.msg("服务名不能为空！");
+                top.layer.msg("name不能为空！");
                 return;
             }
 
@@ -27,8 +33,8 @@
                 url: "/cfg/gateway/ajax/save",
                 data: {
                     gateway_id: '${cfg.gateway_id!}',
-                    tag: $("#tag").val(),
-                    name: $("#name").val(),
+                    tag: tag,
+                    name: name,
                     agent: $("#agent").val(),
                     policy: $("#policy").val(),
                     is_enabled:($('#is_enabled').prop("checked")?1:0)
@@ -38,7 +44,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            location.href = "/cfg/gateway?gateway_id=" + data.gateway_id;
+                            location.href = "/cfg/gateway/inner?tag_name=" + tag;
                         }, 800);
                     }else{
                         top.layer.msg(data.msg);
