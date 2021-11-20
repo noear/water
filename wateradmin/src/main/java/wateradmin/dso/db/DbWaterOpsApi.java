@@ -302,8 +302,7 @@ public class DbWaterOpsApi {
 
         if (TextUtils.isNotEmpty(tag_name)) {
             qr.innerJoin("water_reg_service s")
-                    .on("ss.service='_service'")
-                    .and("ss.tag=s.name")
+                    .on("ss.service=s.name")
                     .andEq("s.tag", tag_name);
         }
 

@@ -65,6 +65,7 @@ public class SpeedController extends BaseController {
         tabs.removeIf(m -> m.tag.startsWith("_"));
         BcfServiceChecker.filter(tabs, m -> m.tag);
         viewModel.put("tabs", tabs);
+        viewModel.put("tag_name", tag_name);
 
 
         if (Utils.isEmpty(serviceName)) {

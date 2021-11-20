@@ -23,7 +23,7 @@
                 <#if m.tag == serviceName>
                     <a id="e${m.tag}" class="btn sel">${m.tag}</a>
                 <#else>
-                    <a id="e${m.tag}" class="btn" href="/mot/speed/inner?serviceName=${m.tag}">${m.tag}</a>
+                    <a id="e${m.tag}" class="btn" href="/mot/speed/inner?tag_name=${tag_name}&serviceName=${m.tag}">${m.tag}</a>
                 </#if>
             </#list>
         </tabbar>
