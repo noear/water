@@ -16,13 +16,15 @@ public class WhitelistValidatorImp extends WhitelistValidator {
     public Result validateOfContext(Context ctx, Whitelist anno, String name, StringBuilder tmp) {
         if (Solon.cfg().isWhiteMode()) {
             try {
-                String ip = ctx.realIp();
-                if (DbWaterCfgSafeApi.isWhitelistByIp(ip)) {
+                //token 验证
+                String token = ctx.header(WW.water_acl_token);
+                if (DbWaterCfgSafeApi.isWhitelistByToken(token)) {
                     return Result.succeed();
                 }
 
-                String token = ctx.header(WW.water_acl_token);
-                if (DbWaterCfgSafeApi.isWhitelistByToken(token)) {
+                //ip 验证
+                String ip = ctx.realIp();
+                if (DbWaterCfgSafeApi.isWhitelistByIp(ip)) {
                     return Result.succeed();
                 }
 

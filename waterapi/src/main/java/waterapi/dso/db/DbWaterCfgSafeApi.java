@@ -1,5 +1,6 @@
 package waterapi.dso.db;
 
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
@@ -71,6 +72,10 @@ public class DbWaterCfgSafeApi {
 
     //检查是否为Token白名单
     public static boolean isWhitelistByToken(String token) throws SQLException {
+        if(TextUtils.isEmpty(token)){
+            return false;
+        }
+
         return getTokenWhitelist().contains(token);
     }
 
