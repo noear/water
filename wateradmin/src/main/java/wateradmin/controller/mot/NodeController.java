@@ -46,6 +46,10 @@ public class NodeController extends BaseController {
 
     @Mapping("node/inner")
     public ModelAndView inner(String tag_name, String name, String sort) throws SQLException {
+        if (SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+            tag_name = null;
+        }
+
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(SEV_SERVER_TAG, name, null, sort);
         viewModel.put("speeds", speeds);
         viewModel.put("serviceName", "_service");
