@@ -37,6 +37,7 @@ class ApiCaller {
         }
 
         return HttpUtils.http(url)
+                .headerAdd(WW.water_acl_token, WaterClient.waterAclToken())
                 .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
                 .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
     }

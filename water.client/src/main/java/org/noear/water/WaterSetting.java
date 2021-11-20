@@ -34,6 +34,15 @@ public class WaterSetting {
     }
 
 
+    private static String _water_acl_token;
+    public static String water_acl_token(){
+        return _water_acl_token;
+    }
+    public static void water_acl_token(String token){
+        _water_acl_token = token;
+    }
+
+
     private static String _water_logger_def = null;
     public static String water_logger_def(){
         return _water_logger_def;

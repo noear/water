@@ -9,7 +9,6 @@ import org.noear.water.dso.*;
  * @since 2.0
  * */
 public final class WaterClient {
-
     private static String _localHost = null;
     private static String _localService = null;
     private static String _localServiceHost;
@@ -48,6 +47,10 @@ public final class WaterClient {
 
     public static String waterTraceId(){
         return WaterSetting.water_trace_id_supplier().get();
+    }
+
+    public static String waterAclToken(){
+        return WaterSetting.water_acl_token();
     }
 
     /**
