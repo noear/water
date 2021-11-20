@@ -364,7 +364,8 @@ public class DbWaterOpsApi {
         if (TextUtils.isNotEmpty(tag_name)) {
             qr.innerJoin("water_reg_service s")
                     .on("ss.service='_service'")
-                    .and("(ss.tag LIKE ? OR (ss.tag = s.name AND s.tag = ?))", tag_name + "%", tag_name);
+                    .and("ss.tag=s.name")
+                    .andEq("s.tag", tag_name);
         }
 
         List<ServiceSpeedModel> list = qr.whereEq("ss.service", "_service")
