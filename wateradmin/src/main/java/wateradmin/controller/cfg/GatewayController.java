@@ -93,6 +93,10 @@ public class GatewayController extends BaseController {
             _state = 1;
         }
 
+        if (SetsUtils.waterSettingScale() <= 1) {
+            tag_name = null;
+        }
+
         List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(tag_name, _state);
 
         viewModel.put("list", list);
