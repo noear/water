@@ -79,7 +79,8 @@ public class HeaderTag implements TemplateDirectiveModel {
             sb.append(temp);
         }
 
-        sb.append("<a class='logout' href='/'><i class='fa fa-fw fa-circle-o-notch'></i>退出</a>");
+        sb.append("<a class='split' href='/admin/'><i class='fa fa-cogs'></i></a>");
+        sb.append("<a class='split' href='/'><i class='fa fa-fw fa-circle-o-notch'></i>退出</a>");
         sb.append("</aside>");//new
 
         sb.append("</header>\n");
