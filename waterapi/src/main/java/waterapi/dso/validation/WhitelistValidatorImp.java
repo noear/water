@@ -8,8 +8,6 @@ import org.noear.solon.validation.annotation.WhitelistValidator;
 import org.noear.water.WW;
 import waterapi.dso.db.DbWaterCfgSafeApi;
 
-import java.sql.SQLException;
-
 public class WhitelistValidatorImp extends WhitelistValidator {
 
     @Override
