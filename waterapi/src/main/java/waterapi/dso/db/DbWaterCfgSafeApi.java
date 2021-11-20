@@ -1,11 +1,14 @@
 package waterapi.dso.db;
 
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
+import waterapi.models.WhitelistModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,33 +47,46 @@ public class DbWaterCfgSafeApi {
 
     //加载IP白名单到静态缓存里
     public static void loadWhitelist() throws SQLException {
-        _ip_whitelist = db().table("water_cfg_whitelist")
-                .whereEq("type", "ip")
-                .andEq("tag", "server")
+        List<WhitelistModel> whiteList = db().table("water_cfg_whitelist")
+                .whereEq("tag", "server")
                 .andEq("is_enabled", 1)
-                .select("value")
                 .caching(CacheUtils.data).usingCache(60)
-                .getArray("value");
+                .selectList("value", WhitelistModel.class);
 
-        _token_whitelist = db().table("water_cfg_whitelist")
-                .whereEq("type", "token")
-                .andEq("tag", "server")
-                .andEq("is_enabled", 1)
-                .select("value")
-                .caching(CacheUtils.data).usingCache(60)
-                .getArray("value");
+        List<String> ipList = new ArrayList<>();
+        List<String> tokenList = new ArrayList<>();
+        for (WhitelistModel w1 : whiteList) {
+            if (WW.whitelist_type_ip.equals(w1.type)) {
+                ipList.add(w1.value);
+            }
+
+            if (WW.whitelist_type_token.equals(w1.type)) {
+                tokenList.add(w1.value);
+            }
+        }
+
+        _ip_whitelist = ipList;
+        _token_whitelist = tokenList;
 
         String tmp = DbWaterCfgApi.getConfig("water", "whitelist_ignore_client", 60).value;
 
         _whitelist_ignore_client = "1".equals(tmp);
     }
 
-    //检查是否为IP白名单
+    /**
+     * 检查是否为IP白名单
+     * */
     public static boolean isWhitelistByIp(String ip) throws SQLException {
+        if(TextUtils.isEmpty(ip)){
+            return false;
+        }
+
         return getIpWhitelist().contains(ip);
     }
 
-    //检查是否为Token白名单
+    /**
+     * 检查是否为Token白名单
+     * */
     public static boolean isWhitelistByToken(String token) throws SQLException {
         if(TextUtils.isEmpty(token)){
             return false;
@@ -94,7 +110,8 @@ public class DbWaterCfgSafeApi {
 
                     }
                 })
-                .caching(CacheUtils.data).usingCache(60)
+                .caching(CacheUtils.data)
+                .usingCache(60)
                 .selectExists();
 
     }

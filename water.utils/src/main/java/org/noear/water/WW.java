@@ -1,9 +1,9 @@
 package org.noear.water;
 
 public class WW {
-    public static final String mime_glog="water/glog";
-    public static final String mime_gzip="application/x-gzip";
-    public static final String mime_json="application/json";
+    public static final String mime_glog = "water/glog";
+    public static final String mime_gzip = "application/x-gzip";
+    public static final String mime_json = "application/json";
     public static final String mime_ndjson = "application/x-ndjson";
 
     public static final String http_header_from = "Water-From";
@@ -19,6 +19,7 @@ public class WW {
     public static final String path_run_check = "/run/check/";
     public static final String path_run_stop = "/run/stop/";
     public static final String path_msg_receiver = "/msg/receive";
+
 
     public static final String water_host = "water.host";
     public static final String water_toekn = "water.token";
@@ -74,15 +75,21 @@ public class WW {
 
     /**
      * 主控组
-     * */
+     */
     public static final String whitelist_tag_master = "master";
     /**
      * 客户端组（一般用于检测管理后台客户端）
-     * */
+     */
     public static final String whitelist_tag_client = "client";
     /**
      * 服务端组（一般用于检测服务端IP）
-     * */
+     */
     public static final String whitelist_tag_server = "server";
+
+
+    public static final String whitelist_type_ip = "ip";
+    public static final String whitelist_type_domain = "domain";
+    public static final String whitelist_type_mobile = "mobile";
+    public static final String whitelist_type_token = "token";
 
 }

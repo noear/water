@@ -14,13 +14,13 @@ public class WhitelistValidatorImp extends WhitelistValidator {
     public Result validateOfContext(Context ctx, Whitelist anno, String name, StringBuilder tmp) {
         if (Solon.cfg().isWhiteMode()) {
             try {
-                //token 验证
+                //先 token 验证
                 String token = ctx.header(WW.water_acl_token);
                 if (DbWaterCfgSafeApi.isWhitelistByToken(token)) {
                     return Result.succeed();
                 }
 
-                //ip 验证
+                //再 ip 验证
                 String ip = ctx.realIp();
                 if (DbWaterCfgSafeApi.isWhitelistByIp(ip)) {
                     return Result.succeed();
