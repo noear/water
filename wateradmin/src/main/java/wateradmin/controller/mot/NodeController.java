@@ -6,7 +6,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.SetsUtils;
+import wateradmin.dso.OptionUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -24,7 +24,7 @@ public class NodeController extends BaseController {
     //性能监控
     @Mapping("node")
     public ModelAndView node(Context ctx, String tag_name) throws SQLException {
-        if (SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+        if (OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.redirect("/mot/node/inner");
             return null;
         }
@@ -46,7 +46,7 @@ public class NodeController extends BaseController {
 
     @Mapping("node/inner")
     public ModelAndView inner(String tag_name, String name, String sort) throws SQLException {
-        if (SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+        if (OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
 

@@ -26,7 +26,7 @@ public class SubsController extends BaseController {
     //订阅列表
     @Mapping("/msg/subs")
     public ModelAndView subscriber(Context ctx, String tag_name) throws SQLException{
-        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
             ctx.redirect("/msg/subs/inner");
             return null;
         }
@@ -48,7 +48,7 @@ public class SubsController extends BaseController {
     //订阅列表
     @Mapping("/msg/subs/inner")
     public ModelAndView subs_inner(String tag_name, String topic_name,Integer _state) throws SQLException{
-        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
 

@@ -11,7 +11,7 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
-import wateradmin.dso.SetsUtils;
+import wateradmin.dso.OptionUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
@@ -30,7 +30,7 @@ public class SevController extends BaseController {
     //服务状态
     @Mapping("/service")
     public ModelAndView sev(Context ctx, String tag_name) throws SQLException {
-        if (SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()) {
+        if (OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.redirect("/mot/service/inner");
             return null;
         }
@@ -51,7 +51,7 @@ public class SevController extends BaseController {
     //服务状态
     @Mapping("/service/inner")
     public ModelAndView inner(String tag_name, String name, Integer _state) throws SQLException {
-        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+        if(OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
 

@@ -12,7 +12,7 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
-import wateradmin.dso.SetsUtils;
+import wateradmin.dso.OptionUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -39,7 +39,7 @@ public class GwController extends BaseController {
 
     @Mapping("")
     public ModelAndView gateway(Context ctx, String tag_name) throws SQLException {
-        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+        if(OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()){
             ctx.redirect("/mot/gw/inner");
             return null;
         }
@@ -59,7 +59,7 @@ public class GwController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView inner( String tag_name, int gateway_id) throws SQLException {
-        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+        if(OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
 

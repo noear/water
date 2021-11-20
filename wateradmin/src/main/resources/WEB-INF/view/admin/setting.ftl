@@ -66,18 +66,34 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>服务数量规模</th>
+                        <th>服务注册数量规模</th>
                         <td>
                             <boxlist>
-                                <label><input type="radio" name="water.setting.scale" value="0" checked /><a>小</a></label>
-                                <label><input type="radio" name="water.setting.scale" value="1" /><a>中</a></label>
-                                <label><input type="radio" name="water.setting.scale" value="2" /><a>大</a></label>
+                                <label><input type="radio" name="water.option.service.scale" value="0" checked /><a>小</a></label>
+                                <label><input type="radio" name="water.option.service.scale" value="1" /><a>中</a></label>
+                                <label><input type="radio" name="water.option.service.scale" value="2" /><a>大</a></label>
                             </boxlist>
                             <n-l>
                                 会根据情况调整部分控制台界面布局
                             </n-l>
                             <script>
-                                $("input[name='water.setting.scale'][value=${sets["water.setting.scale"]!}]").attr("checked",true);
+                                $("input[name='water.option.service.scale'][value=${sets["water.option.service.scale"]!}]").attr("checked",true);
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>消息主题数量规模</th>
+                        <td>
+                            <boxlist>
+                                <label><input type="radio" name="water.option.topic.scale" value="0" checked /><a>小</a></label>
+                                <label><input type="radio" name="water.option.topic.scale" value="1" /><a>中</a></label>
+                                <label><input type="radio" name="water.option.topic.scale" value="2" /><a>大</a></label>
+                            </boxlist>
+                            <n-l>
+                                会根据情况调整部分控制台界面布局
+                            </n-l>
+                            <script>
+                                $("input[name='water.option.topic.scale'][value=${sets["water.option.topic.scale"]!}]").attr("checked",true);
                             </script>
                         </td>
                     </tr>
