@@ -209,3 +209,9 @@ ALTER TABLE `rubber_scheme_node_design`
 
 ## 三、升级镜像
 
+## 四、重新导入 water 下的定时任务
+
+```
+#删掉旧的后，重新导入
+water_paasfile_pln_water_20211120
+```
