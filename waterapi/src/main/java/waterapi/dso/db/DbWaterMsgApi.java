@@ -1,5 +1,6 @@
 package waterapi.dso.db;
 
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.*;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
@@ -18,6 +19,12 @@ public final class DbWaterMsgApi {
 
     //获取主题ID（没有则创建一个）
     public static void tryAddTopic(String topic_name) throws SQLException {
+        String tag = "";
+        if (topic_name.contains("/")) {
+            tag = topic_name.split("/")[0];
+            topic_name = topic_name.split("/")[1];
+        }
+
         boolean ieExists = db().table("water_msg_topic")
                 .whereEq("topic_name", topic_name)
                 .caching(CacheUtils.data)
@@ -25,6 +32,7 @@ public final class DbWaterMsgApi {
 
         if (ieExists == false) {
             db().table("water_msg_topic")
+                    .set("tag", tag)
                     .set("topic_name", topic_name)
                     .set("gmt_create", System.currentTimeMillis())
                     .insert();
@@ -44,7 +52,12 @@ public final class DbWaterMsgApi {
         topic_name = topic_name.trim();
 
         //注册主题
-        TopicPipelineLocal.singleton().add(topic_name);
+        if (TextUtils.isNotEmpty(tag)) {
+            TopicPipelineLocal.singleton().add(tag + "/" + topic_name);
+        } else {
+            TopicPipelineLocal.singleton().add(topic_name);
+        }
+
 
         DbTableQuery tq = db().table("water_msg_subscriber").usingExpr(true)
                 .set("alarm_mobile", alarm_mobile)
