@@ -6,7 +6,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.water.WaterClient;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
@@ -32,9 +32,10 @@ public class AdminController extends BaseController {
         Map<String, String> sets = new LinkedHashMap<>();
 
         sets.put("alarm_sign", cfg("water", "alarm_sign").value);
-        Properties props = cfg("water", "wateradmin.yml").getProp();
+
+        Properties props = cfg("water", WW.water_options).getProp();
         props.forEach((k, v) -> {
-            //water.setting.{*}
+            //water.option.{*}
             sets.put((String) k, (String) v);
         });
 
@@ -50,6 +51,9 @@ public class AdminController extends BaseController {
         if (TextUtils.isNotEmpty(json)) {
             ONode oNode = ONode.loadStr(json);
 
+            //for alarm_sign
+            DbWaterCfgApi.setConfigByTagName("water", "alarm_sign", oNode.get("alarm_sign").getString());
+
             //for water option
             StringBuilder options = new StringBuilder();
             oNode.forEach((k, v) -> {
@@ -57,18 +61,11 @@ public class AdminController extends BaseController {
                     options.append(k).append("=").append(v.getString()).append("\n");
                 }
             });
-            DbWaterCfgApi.setConfigByTagName("water", "wateradmin.yml", options.toString());
+            DbWaterCfgApi.setConfigByTagName("water", WW.water_options, options.toString());
 
-            //for user.newpwd
-            if (oNode.contains("user.newpwd")) {
-                String oldpwd = oNode.get("user.oldpwd").getString();
-                String newpwd = oNode.get("user.newpwd").getString();
-                String newpwd2 = oNode.get("user.newpwd2").getString();
 
-                if (newpwd.length() > 0 && newpwd.equals(newpwd2)) {
-                    BcfClient.setUserPassword(Session.current().getUserId(), oldpwd, newpwd);
-                }
-            }
+
+            //for bcf ldap
         }
 
         return new ViewModel().code(1);

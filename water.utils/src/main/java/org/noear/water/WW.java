@@ -54,6 +54,7 @@ public class WW {
     public static final String water_paas_request = "water_paas_request";
 
     public static final String water_acl_token = "Water-Access-Token";
+    public static final String water_options = "water_options";
 
     public static final String logger_water_log_api = "water_log_api";
     public static final String logger_water_log_sev = "water_log_sev";

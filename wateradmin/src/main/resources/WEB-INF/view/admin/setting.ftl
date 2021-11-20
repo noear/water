@@ -17,12 +17,6 @@
         function save(){
            let vm = formToMap("form");
 
-           if(vm["user.newpwd"]){
-               if(vm["user.newpwd"] != vm["user.newpwd2"]){
-                   alert("新密码的2次输出不一至");
-               }
-           }
-
             $.ajax({
                 type:"POST",
                 url:"/admin/ajax/save",
@@ -56,25 +50,7 @@
         <detail>
             <form>
                 <table>
-                    <tr><td colspan="2"> <h2>修改登录密码</h2> <hr/></td></tr>
-                    <tr>
-                        <th style="width: 150px;">旧密码</th>
-                        <td>
-                            <input type="password" id="user.oldpwd" class="txt">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th style="width: 150px;">新密码</th>
-                        <td>
-                            <input type="password" id="user.newpwd" class="txt">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>确认新密码</th>
-                        <td>
-                            <input type="password" id="user.newpwd2" class="txt">
-                        </td>
-                    </tr>
+
                     <tr><td colspan="2"> <h2>运行配置</h2> <hr/></td></tr>
 
                     <tr>
