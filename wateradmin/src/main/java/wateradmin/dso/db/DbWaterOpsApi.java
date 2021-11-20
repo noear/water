@@ -302,8 +302,8 @@ public class DbWaterOpsApi {
 
         if (TextUtils.isNotEmpty(tag_name)) {
             qr.innerJoin("water_reg_service s")
-                    .on("ss.service=s.name")
-                    .andEq("s.tag", tag_name);
+                    .append(" ON ss.service LIKE ?", tag_name + "%")
+                    .or("(ss.service = s.name AND s.tag = ?)", tag_name);
         }
 
         return qr.groupBy("ss.service")
