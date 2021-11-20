@@ -53,7 +53,7 @@ public class CloudLogServiceLocalImp implements CloudLogService {
             log.tag4 = logEvent.getMetainfo().get("tag4");
         }
 
-        if(logEvent.getLoggerName().contains(".")){
+        if (logEvent.getLoggerName().contains(".")) {
             log.class_name = logEvent.getLoggerName();
         }
 

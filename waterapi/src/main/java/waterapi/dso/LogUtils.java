@@ -17,7 +17,7 @@ import java.util.Map;
 public class LogUtils {
     private static final Logger logger = LoggerFactory.getLogger(WW.logger_water_log_api);
 
-    public static void info(Context ctx) {
+    public static void info(Context ctx, long _times) {
         try {
             String tag = ctx.path();
 
@@ -32,7 +32,8 @@ public class LogUtils {
 
             StringBuilder content = new StringBuilder(200);
 
-            content.append("> Param: ").append(ONode.stringify(ctx.paramMap()));
+            content.append("> Param: ").append(ONode.stringify(ctx.paramMap())).append("\n");
+            content.append("T Elapsed time: ").append(_times);
             content.append("\n\n");
             content.append("< Body: ").append(ONode.stringify(ctx.result));
 

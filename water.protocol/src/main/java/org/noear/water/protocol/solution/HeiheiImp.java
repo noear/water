@@ -4,6 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.WW;
 import org.noear.water.protocol.Heihei;
 import org.noear.water.utils.Base64Utils;
+import org.noear.water.utils.HttpResultException;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import org.slf4j.Logger;
@@ -72,6 +73,8 @@ public class HeiheiImp implements Heihei {
             log_heihei.info(text);
 
             return rst;
+        } catch (HttpResultException ex) {
+            log_heihei.warn("{}", ex.getLocalizedMessage());
         } catch (Exception ex) {
             log_heihei.error("{}", ex);
         }

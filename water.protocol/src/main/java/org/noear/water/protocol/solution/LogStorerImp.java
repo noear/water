@@ -1,5 +1,6 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.solon.Utils;
 import org.noear.solon.core.event.EventBus;
 import org.noear.water.model.LogM;
 import org.noear.water.protocol.LogStorer;
@@ -69,6 +70,20 @@ public class LogStorerImp implements LogStorer {
             } else {
                 if (log.tag3.length() > 99) {
                     log.tag3 = log.tag3.substring(0, 99);
+                }
+            }
+
+            if (log.tag4 == null) {
+                log.tag4 = "";
+            } else {
+                if (log.tag4.length() > 99) {
+                    log.tag4 = log.tag4.substring(0, 99);
+                }
+            }
+
+            if (Utils.isEmpty(log.tag4) && Utils.isNotEmpty(log.class_name)) {
+                if (log.class_name.contains(".")) {
+                    log.tag4 = log.class_name.substring(log.class_name.lastIndexOf("."));
                 }
             }
         }

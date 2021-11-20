@@ -59,7 +59,7 @@ public class LogFormater {
 
         if (TextUtils.isNotEmpty(log.tag4)) {
             buf.append("<a tagx='@@@@").append(log.tag4).append("'>");
-            buf.append("[@tag3:").append(log.tag4).append("]");
+            buf.append("[@tag4:").append(log.tag4).append("]");
             buf.append("</a>");
         }
 
