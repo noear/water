@@ -57,7 +57,7 @@
             <#if m.check_last_state == 0>
                 ok
             <#else>
-                err/${m.check_last_note!}
+                no-${m.check_last_note!}
             </#if>
         </td>
         <#if is_admin == 1>
