@@ -39,26 +39,21 @@
                     <tr>
                         <th>新密码</th>
                         <td>
-                            <input type="password" class="txt">
+                            <input type="password" id="user.newpwd" class="txt">
                         </td>
                     </tr>
                     <tr>
                         <th>确认新密码</th>
                         <td>
-                            <input type="password" class="txt">
+                            <input type="password" id="user.newpwd2" class="txt">
                         </td>
                     </tr>
                     <tr><td colspan="2"> <h2>运行配置</h2> <hr/></td></tr>
-                    <tr>
-                        <th>后台标题</th>
-                        <td>
-                            <input type="text">
-                        </td>
-                    </tr>
+
                     <tr>
                         <th>告警签名</th>
                         <td>
-                            <input type="text">
+                            <input id="alarm_sign" type="text">
                         </td>
                     </tr>
                     <tr>
