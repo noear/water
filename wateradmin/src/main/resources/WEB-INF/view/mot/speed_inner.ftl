@@ -20,10 +20,10 @@
     <div class="tabs">
         <tabbar>
             <#list tabs as m>
-                <#if m.service == serviceName>
-                    <a id="e${m.service}" class="btn sel">${m.service}</a>
+                <#if m.tag == serviceName>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}</a>
                 <#else>
-                    <a id="e${m.service}" class="btn" href="/mot/speed/inner?serviceName=${m.service}">${m.service}</a>
+                    <a id="e${m.tag}" class="btn" href="/mot/speed/inner?serviceName=${m.tag}">${m.tag}</a>
                 </#if>
             </#list>
         </tabbar>

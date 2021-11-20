@@ -297,11 +297,18 @@ public class DbWaterOpsApi {
     ////////////////////////////////////////////////////
 
     //获取性能监控服务标签
-    public static List<ServiceSpeedModel> getSpeedServices() throws SQLException {
-        return db().table("water_reg_service_speed")
-                   .groupBy("service")
-                   .select("service,count(*) counts")
-                   .getList(new ServiceSpeedModel());
+    public static List<TagCountsModel> getSpeedServices(String tag_name) throws SQLException {
+        DbTableQuery qr = db().table("water_reg_service_speed ss");
+
+        if (TextUtils.isNotEmpty(tag_name)) {
+            qr.innerJoin("water_reg_service s")
+                    .on("ss.service='_service'")
+                    .and("ss.tag=s.name")
+                    .andEq("s.tag", tag_name);
+        }
+
+        return qr.groupBy("ss.service")
+                .selectList("ss.service tag, count(*) counts", TagCountsModel.class);
     }
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service) throws SQLException {

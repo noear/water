@@ -56,24 +56,24 @@ public class SpeedController extends BaseController {
 
     //性能监控-列表
     @Mapping("speed/inner")
-    public ModelAndView speedList(String serviceName,String name, String sort, String tag) throws SQLException {
+    public ModelAndView speedList(String tag_name,String serviceName, String name, String sort, String tag) throws SQLException {
         if (tag == null) {
             tag = "";
         }
 
-        List<ServiceSpeedModel> tabs = DbWaterOpsApi.getSpeedServices();
-        tabs.removeIf(m->m.service.startsWith("_"));
-        BcfServiceChecker.filter(tabs, m -> m.service);
-        viewModel.put("tabs",tabs);
+        List<TagCountsModel> tabs = DbWaterOpsApi.getSpeedServices(tag_name);
+        tabs.removeIf(m -> m.tag.startsWith("_"));
+        BcfServiceChecker.filter(tabs, m -> m.tag);
+        viewModel.put("tabs", tabs);
 
 
-        if(Utils.isEmpty(serviceName)){
-            if(tabs.size() > 0){
-                serviceName = tabs.get(0).service;
+        if (Utils.isEmpty(serviceName)) {
+            if (tabs.size() > 0) {
+                serviceName = tabs.get(0).tag;
             }
         }
 
-        if(Utils.isEmpty(serviceName)){
+        if (Utils.isEmpty(serviceName)) {
             return null;
         }
 
@@ -101,7 +101,7 @@ public class SpeedController extends BaseController {
 
     //性能监控图标统计
     @Mapping("speed/charts")
-    public ModelAndView speedCharts(String tag,String name_md5,String service) throws SQLException {
+    public ModelAndView speedCharts(String tag, String name_md5, String service) throws SQLException {
         if (service == null) {
             service = "";
         }
@@ -127,26 +127,41 @@ public class SpeedController extends BaseController {
     }
 
     @Mapping("speed/charts/ajax/reqtate")
-    public ViewModel speedCharts_reqtate(String tag,String name_md5,String service, Integer type) throws SQLException{
+    public ViewModel speedCharts_reqtate(String tag, String name_md5, String service, Integer type) throws SQLException {
         String valField = "total_num";
-        if(type == null){type=0;}
-        switch (type){
-            case 0:valField ="total_num"; break;
-            case 1:valField ="total_num_slow1"; break;
-            case 2:valField ="total_num_slow2"; break;
-            case 3:valField ="total_num_slow5"; break;
-            case 4:valField ="average"; break;
-            case 5:valField ="fastest"; break;
-            case 6:valField ="slowest"; break;
+        if (type == null) {
+            type = 0;
+        }
+        switch (type) {
+            case 0:
+                valField = "total_num";
+                break;
+            case 1:
+                valField = "total_num_slow1";
+                break;
+            case 2:
+                valField = "total_num_slow2";
+                break;
+            case 3:
+                valField = "total_num_slow5";
+                break;
+            case 4:
+                valField = "average";
+                break;
+            case 5:
+                valField = "fastest";
+                break;
+            case 6:
+                valField = "slowest";
+                break;
         }
 
-        Map<String,List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
-        viewModel.put("speedReqTate",speedReqTate);
-        viewModel.put("tag",tag);
+        Map<String, List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, valField);
+        viewModel.put("speedReqTate", speedReqTate);
+        viewModel.put("tag", tag);
         viewModel.put("name", WaterClient.Track.getName(name_md5));
-        viewModel.put("name_md5",name_md5);
-        viewModel.put("service",service);
+        viewModel.put("name_md5", name_md5);
+        viewModel.put("service", service);
         return viewModel;
     }
-
 }
