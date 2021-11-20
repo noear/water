@@ -184,4 +184,27 @@ ALTER TABLE `rubber_scheme_node_design`
 
 ```
 
-## 二、升级镜像
+## 二、修改配置
+
+**Water 配置修改:**
+
+| 原配置名 | 调整为新配置名 | 
+| -------- | -------- | 
+| `water/paas_url`     | `water/faas_url`     |
+
+```sql
+
+```
+
+**Bcf 路径修改:**
+
+| 相关表 | 修改说明 | 
+| -------- | -------- | 
+| bcf_group     |  `/paas/` 开头的路径，改为： `/luffy/` 开头  |
+| bcf_resource     |  `/paas/` 开头的路径，改为： `/luffy/` 开头  |
+
+```sql
+
+```
+
+## 三、升级镜像
