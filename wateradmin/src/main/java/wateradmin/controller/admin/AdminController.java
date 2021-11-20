@@ -12,6 +12,6 @@ import wateradmin.controller.BaseController;
 public class AdminController extends BaseController {
     @Mapping("/admin")
     public ModelAndView home(){
-        return view("admin/setting.ftl");
+        return view("admin/setting");
     }
 }
