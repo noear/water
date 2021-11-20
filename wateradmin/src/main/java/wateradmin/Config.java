@@ -13,7 +13,7 @@ import org.noear.weed.WeedConfig;
 import wateradmin.dso.auth.AuthProcessorImpl;
 
 public class Config {
-    public static final String version = "2.4.0";
+    public static final String version = "v2.4.0";
 
     public static final DbContext water;
     public static final DbContext water_paas;
