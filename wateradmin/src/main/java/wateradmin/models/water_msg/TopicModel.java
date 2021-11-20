@@ -13,6 +13,7 @@ public class TopicModel implements IBinder
 {
     public int topic_id;
     public String topic_name;
+    public String tag;
     public int max_msg_num;
     public int max_distribution_num;
     public int max_concurrency_num;
@@ -25,6 +26,7 @@ public class TopicModel implements IBinder
 		//
         topic_id = s.get("topic_id").value(0);
         topic_name = s.get("topic_name").value(null);
+        tag = s.get("tag").value(null);
         max_msg_num = s.get("max_msg_num").value(0);
         max_distribution_num = s.get("max_distribution_num").value(0);
         max_concurrency_num = s.get("max_concurrency_num").value(0);

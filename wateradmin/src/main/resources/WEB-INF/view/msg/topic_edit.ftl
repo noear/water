@@ -102,7 +102,7 @@
             <table>
                 <tr>
                     <th>tag*</th>
-                    <td><input type="text" id="tag" autofocus value="${tag_name!}"/></td>
+                    <td><input type="text" id="tag" autofocus value="${topic.tag!}"/></td>
                 </tr>
                 <tr>
                     <th style="width: 150px;">主题名称</th>
