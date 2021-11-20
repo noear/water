@@ -38,7 +38,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            parent.location.href = "/cfg/gateway?gateway_id=" + data.gateway_id;
+                            location.href = "/cfg/gateway?gateway_id=" + data.gateway_id;
                         }, 800);
                     }else{
                         top.layer.msg(data.msg);

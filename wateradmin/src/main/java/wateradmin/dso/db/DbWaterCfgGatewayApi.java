@@ -1,9 +1,12 @@
 package wateradmin.dso.db;
 
+import org.noear.solon.Utils;
 import org.noear.water.dso.GatewayUtils;
+import org.noear.water.model.TagCountsM;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
 
 import java.sql.SQLException;
@@ -36,9 +39,18 @@ public class DbWaterCfgGatewayApi {
         }
     }
 
-
-    public static List<GatewayModel> getGatewayList() throws SQLException {
+    public static List<TagCountsM> getGatewayTagList() throws SQLException {
         return db().table("water_cfg_gateway")
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .selectList("tag, count(*) counts", TagCountsM.class);
+    }
+
+
+    public static List<GatewayModel> getGatewayList(String tag, int is_enabled) throws SQLException {
+        return db().table("water_cfg_gateway")
+                .whereEq("is_enabled", is_enabled)
+                .andIf(Utils.isNotEmpty(tag), "tag=?", tag)
                 .orderByAsc("name")
                 .selectList("*", GatewayModel.class);
     }
@@ -47,5 +59,14 @@ public class DbWaterCfgGatewayApi {
         return db().table("water_cfg_gateway")
                 .whereEq("gateway_id", gatewayId)
                 .selectItem("*", GatewayModel.class);
+    }
+
+    //设置启用状态
+    public static void setGatewayEnabled(int gatewayId, int is_enabled) throws SQLException {
+        db().table("water_cfg_gateway")
+                .whereEq("gateway_id", gatewayId)
+                .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis())
+                .update();
     }
 }

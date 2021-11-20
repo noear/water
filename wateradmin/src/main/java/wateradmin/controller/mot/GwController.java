@@ -1,11 +1,15 @@
 package wateradmin.controller.mot;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -14,6 +18,7 @@ import wateradmin.models.water_reg.GatewayVoModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
+import wateradmin.viewModels.ViewModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,7 +33,7 @@ public class GwController extends BaseController {
 
     @Mapping("")
     public ModelAndView gateway(int gateway_id) throws SQLException {
-        List<GatewayModel> sevs = DbWaterCfgGatewayApi.getGatewayList();
+        List<GatewayModel> sevs = DbWaterCfgGatewayApi.getGatewayList(null, 1);
 
         if (gateway_id == 0) {
             if (sevs.size() > 0) {
@@ -107,5 +112,21 @@ public class GwController extends BaseController {
         }
 
         return "";
+    }
+
+    @AuthRoles(SessionRoles.role_admin)
+    @NotZero("service_id")
+    @Mapping("ajax/enabled")
+    public ViewModel sev_enabled(long service_id, int is_enabled) {
+        try {
+            DbWaterRegApi.disableService(service_id, is_enabled);
+
+            viewModel.code(1, "成功");
+        } catch (Exception e) {
+            viewModel.code(0, Utils.throwableToString(e));
+        }
+
+        return viewModel;
+
     }
 }

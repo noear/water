@@ -14,7 +14,16 @@
         form > table td > h2{line-height: 40px;}
     </style>
     <script>
+        function save(){
+           let vm = formToMap("form");
+           alert(JSON.stringify(vm));
 
+           if(vm["user.newpwd"]){
+               if(vm["user.newpwd"] != vm["user.newpwd2"]){
+                   alert("修改的密码不一至");
+               }
+           }
+        }
     </script>
 </head>
 <body>
@@ -27,7 +36,7 @@
         <right class="form">
             <#if is_admin == 1>
                 <n>ctrl + s 可快捷保存</n>
-                <button type="button">保存</button>
+                <button type="button" onclick="save()">保存</button>
             </#if>
         </right>
     </toolbar>
@@ -53,7 +62,7 @@
                     <tr>
                         <th>告警签名</th>
                         <td>
-                            <input id="alarm_sign" type="text">
+                            <input id="alarm_sign" type="text" value="${sets["alarm_sign"]!}">
                         </td>
                     </tr>
                     <tr>
@@ -66,8 +75,11 @@
                                 <label><input type="radio" name="water.setting.scale" value="3" /><a>超大</a></label>
                             </boxlist>
                             <n-l>
-                                会根据情况调整控制台界面布局
+                                会根据情况调整部分控制台界面布局
                             </n-l>
+                            <script>
+                                $("input[name='water.setting.scale'][value=${sets["water.setting.scale"]!}]").attr("checked",true);
+                            </script>
                         </td>
                     </tr>
                 </table>

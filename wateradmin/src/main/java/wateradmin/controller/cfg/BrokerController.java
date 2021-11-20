@@ -132,9 +132,10 @@ public class BrokerController extends BaseController {
     }
 
     //日志启用/禁用
+    @AuthRoles(SessionRoles.role_admin)
     @NotZero("broker_id")
     @Mapping("broker/isEnable")
-    public ViewModel brokerDelete(Integer broker_id, int is_enabled) throws SQLException {
+    public ViewModel brokerEnable(Integer broker_id, int is_enabled) throws SQLException {
         DbWaterCfgApi.setBrokerEnabled(broker_id, is_enabled);
 
         return viewModel.code(1, "保存成功！");

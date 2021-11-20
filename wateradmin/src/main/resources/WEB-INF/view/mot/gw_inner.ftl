@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm10">
 <head>
-    <title>${app} - 网关配置</title>
+    <title>${app} - 网关监控</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
@@ -37,6 +37,12 @@
 </script>
 <body>
 
+<#if is_admin == 1>
+    <toolbar>
+        <a class='btn' href="/cfg/gateway/edit?gateway_id=${cfg.gateway_id!}" >修改</a>
+        <a class='btn edit mar10-l' href="/cfg/gateway/add" >新增</a>
+    </toolbar>
+</#if>
 
 <block>
     代理网关: ${cfg.agent!}
@@ -55,8 +61,15 @@
             <td>资源名称</td>
             <td width="80px">平均响应</td>
             <td width="100px">请求次数</td>
-            <td width="120px">最后状态</td>
-            <td width="120px">最后检查时间</td>
+
+            <#if is_admin == 1>
+                <td width="80px">最后状态</td>
+                <td width="120px">最后检查时间</td>
+                <td width="40px">操作</td>
+            <#else>
+                <td width="120px">最后状态</td>
+                <td width="120px">最后检查时间</td>
+            </#if>
         </tr>
         </thead>
         <tbody id="tbody">
@@ -70,7 +83,15 @@
                 <td>${(gtw.service.check_last_state=0)?string('ok','error')!}</td>
                 <td>${gtw.service.check_last_time?string("MM-dd HH:mm:ss")}</td>
 
-
+                <#if is_admin == 1>
+                    <td>
+                        <#if gtw.service.is_enabled == 1>
+                            <a class="t2" href="javascript:void(0);" onclick="set_enabled(${gtw.service.service_id}, 0, this);">禁用</a>
+                        <#else>
+                            <a class="t2" href="javascript:void(0);" onclick="set_enabled(${gtw.service.service_id}, 1, this);">启用</a>
+                        </#if>
+                    </td>
+                </#if>
             </tr>
         </#list>
         </tbody>
