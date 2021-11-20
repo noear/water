@@ -176,8 +176,6 @@ public class LuffyFileController extends BaseController {
         String path = ctx.param("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
-        FaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
-
         return ajax_save(ctx, data, LuffyFileType.api);
     }
 
@@ -189,10 +187,11 @@ public class LuffyFileController extends BaseController {
 
         //处理消息订阅
         String label = ctx.param("label", "");
+        String tag = ctx.param("tag", "");
         String path = ctx.param("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
-        FaasUtils.trySubscribe(file_id, label, path, is_disabled == 1);
+        FaasUtils.trySubscribe(file_id, label, tag, path, is_disabled == 1);
 
         return ajax_save(ctx, data, LuffyFileType.msg);
     }
@@ -366,7 +365,7 @@ public class LuffyFileController extends BaseController {
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
-        if(entity == null || "luffy_file".equals(entity.table) == false){
+        if (entity == null || "luffy_file".equals(entity.table) == false) {
             return viewModel.code(0, "数据不对！");
         }
 
@@ -383,7 +382,7 @@ public class LuffyFileController extends BaseController {
 
             //订阅在先
             if (fileType == LuffyFileType.api || fileType == LuffyFileType.msg) {
-                FaasUtils.trySubscribe(m.file_id, m.label, m.path, m.is_disabled);
+                FaasUtils.trySubscribe(m.file_id, m.label, m.tag, m.path, m.is_disabled);
             }
 
             //存入在后
