@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.Valid;
+import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
 import wateradmin.Config;
 import wateradmin.dso.Session;
@@ -52,8 +53,8 @@ public class BaseController {
         viewModel.put("raas_uri", Config.raas_uri());
 
 
-        viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + Config.version);
-        viewModel.put("_version", Config.version);
+        viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + WW.water_version);
+        viewModel.put("_version", WW.water_version);
 
         return viewModel.view(viewName + ".ftl");
     }

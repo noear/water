@@ -5,6 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
 import wateraide.Config;
 import wateraide.viewModels.ViewModel;
@@ -38,8 +39,8 @@ public class BaseController {
         viewModel.put("is_setup", 1);
 
 
-        viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + Config.version);
-        viewModel.put("_version", Config.version);
+        viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + WW.water_version);
+        viewModel.put("_version", WW.water_version);
         return viewModel.view(viewName + ".ftl");
     }
 

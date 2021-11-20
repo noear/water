@@ -11,10 +11,10 @@ import org.noear.bcf.BcfUtil;
 import org.noear.bcf.models.BcfGroupModel;
 import org.noear.bcf.models.BcfResourceModel;
 import org.noear.solon.Solon;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
-import wateradmin.Config;
 import wateradmin.dso.Session;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class HeaderTag implements TemplateDirectiveModel {
         StringBuffer sb = new StringBuffer();
         sb.append("<header>");
 
-        sb.append("<label title='").append(Config.version).append("'>"); //new
+        sb.append("<label title='").append(WW.water_version).append("'>"); //new
         sb.append(Solon.cfg().appTitle());
         sb.append("</label>\n");//new
 
