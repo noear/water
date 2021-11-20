@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import javafx.scene.chart.StackedBarChart;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -348,6 +349,28 @@ public class DbWaterOpsApi {
                    })
                    .select("*")
                    .getList(new ServiceSpeedModel());
+    }
+
+    //根据服务名和接口名获取性能监控列表
+    public static List<ServiceSpeedModel> getNodeSpeedsByName(String tag_name, String name, String sort) throws SQLException {
+        return db().table("water_reg_service_speed")
+                .where("service = ?", "_service")
+                .build(tb -> {
+                    if (TextUtils.isNotEmpty(tag_name)) {
+                        tb.andLk("name", tag_name + "%");
+                    }
+
+                    if (TextUtils.isNotEmpty(name)) {
+                        tb.andEq("tag", name);
+                    }
+
+                    if (TextUtils.isEmpty(sort)) {
+                        tb.orderBy("tag,name ASC");
+                    } else {
+                        tb.orderBy(sort + " DESC");
+                    }
+                })
+                .selectList("*", ServiceSpeedModel.class);
     }
 
     //获取接口名分组

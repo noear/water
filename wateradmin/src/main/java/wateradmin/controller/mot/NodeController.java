@@ -9,6 +9,7 @@ import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SetsUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
+import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_reg.ServiceSpeedModel;
@@ -20,8 +21,6 @@ import java.util.List;
 @Mapping("/mot/")
 public class NodeController extends BaseController {
 
-    private static final String SEV_SERVER_TAG = "_service";
-
     //性能监控
     @Mapping("node")
     public ModelAndView node(Context ctx, String tag_name) throws SQLException {
@@ -31,7 +30,8 @@ public class NodeController extends BaseController {
         }
 
 
-        List<TagCountsModel> tags = DbWaterOpsApi.getSpeedsServiceTags(SEV_SERVER_TAG);
+        List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
+
         //权限过滤
         BcfTagChecker.filter(tags, m -> m.tag);
 
@@ -50,7 +50,10 @@ public class NodeController extends BaseController {
             tag_name = null;
         }
 
-        List<ServiceSpeedModel> speeds = DbWaterOpsApi.getSpeedsByServiceAndName(SEV_SERVER_TAG, name, null, sort);
+        List<ServiceSpeedModel> speeds = DbWaterOpsApi.getNodeSpeedsByName(tag_name, name,  sort);
+
+
+        viewModel.put("tag_name", tag_name);
         viewModel.put("speeds", speeds);
         viewModel.put("serviceName", "_service");
         return view("mot/node_inner");
