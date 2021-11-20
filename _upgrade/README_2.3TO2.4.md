@@ -193,7 +193,7 @@ ALTER TABLE `rubber_scheme_node_design`
 | `water/paas_url`     | `water/faas_url`     |
 
 ```sql
-
+UPDATE water_cfg_properties SET `name`='faas_url' WHERE tag='water' AND `name`='paas_url';
 ```
 
 **Bcf 路径修改:**
@@ -204,7 +204,8 @@ ALTER TABLE `rubber_scheme_node_design`
 | bcf_resource     |  `/paas/` 开头的路径，改为： `/luffy/` 开头  |
 
 ```sql
-
+UPDATE bcf_group SET uri_path = REPLACE(uri_path,'/paas/','/luffy/') WHERE uri_path LIKE '/paas/%';
+UPDATE bcf_resource SET uri_path = REPLACE(uri_path,'/paas/','/luffy/') WHERE uri_path LIKE '/paas/%';
 ```
 
 ## 三、升级镜像
