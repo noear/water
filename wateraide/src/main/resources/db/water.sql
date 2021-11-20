@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
     `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订阅者KEY（由应用方传入）',
     `subscriber_note` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `tag` varchar(40) DEFAULT NULL COMMENT '订阅者标签',
-    `service` varchar(255) DEFAULT NULL COMMENT '订阅者服务名',
+    `name` varchar(255) DEFAULT NULL COMMENT '订阅者服务名',
     `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警手机号',
     `alarm_sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警签名',
     `topic_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主题名字',

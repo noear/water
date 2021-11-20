@@ -40,7 +40,7 @@ public final class DbWaterMsgApi {
     }
 
     //添加订阅者
-    public static long addSubscriber(String key, String note, String alarm_mobile, String topic_name, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws SQLException {
+    public static long addSubscriber(String key, String name, String tag, String alarm_mobile, String topic_name, String receive_url, String receive_key, int receive_way, boolean is_unstable) throws SQLException {
         topic_name = topic_name.trim();
 
         //注册主题
@@ -50,7 +50,9 @@ public final class DbWaterMsgApi {
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_unstable", (is_unstable ? 1 : 0))
                 .set("subscriber_key", key)
-                .set("subscriber_note", note)
+                .set("name", name)
+                .set("tag", tag)
+                .set("subscriber_note", name)
                 .set("receive_url", receive_url)
                 .set("receive_key", receive_key)//后面要改掉
                 .set("receive_way", receive_way)
