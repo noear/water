@@ -353,24 +353,30 @@ public class DbWaterOpsApi {
 
     //根据服务名和接口名获取性能监控列表
     public static List<ServiceSpeedModel> getNodeSpeedsByName(String tag_name, String name, String sort) throws SQLException {
-        return db().table("water_reg_service_speed")
-                .where("service = ?", "_service")
-                .build(tb -> {
-                    if (TextUtils.isNotEmpty(tag_name)) {
-                        tb.andLk("name", tag_name + "%");
-                    }
+        DbTableQuery qr = db().table("water_reg_service_speed ss");
 
+        if (TextUtils.isNotEmpty(tag_name)) {
+            qr.innerJoin("water_reg_service s")
+                    .on("ss.service='_service'")
+                    .and("ss.tag=s.name")
+                    .andEq("s.tag", tag_name);
+        }
+
+        List<ServiceSpeedModel> list = qr.whereEq("ss.service", "_service")
+                .build(tb -> {
                     if (TextUtils.isNotEmpty(name)) {
-                        tb.andEq("tag", name);
+                        tb.andEq("ss.tag", name);
                     }
 
                     if (TextUtils.isEmpty(sort)) {
-                        tb.orderBy("tag,name ASC");
+                        tb.orderBy("ss.tag,ss.name ASC");
                     } else {
-                        tb.orderBy(sort + " DESC");
+                        tb.orderBy("ss." + sort + " DESC");
                     }
                 })
-                .selectList("*", ServiceSpeedModel.class);
+                .selectList("ss.*", ServiceSpeedModel.class);
+
+        return list;
     }
 
     //获取接口名分组
