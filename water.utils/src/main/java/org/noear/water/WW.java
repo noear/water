@@ -21,6 +21,7 @@ public class WW {
     public static final String path_msg_receiver = "/msg/receive";
 
     public static final String water_host = "water.host";
+    public static final String water_toekn = "water.token";
     public static final String water_logger = "water.logger";
 
     public static final String water_log_store = "water_log_store";

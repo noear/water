@@ -66,16 +66,23 @@ public class WaterSetting {
 
 
     static {
+        //默认日志
         _water_logger_def = System.getProperty(WW.water_logger);
 
-        String host = System.getProperty(WW.water_host);
-
-        if(TextUtils.isEmpty(host)){
-            host = System.getProperty("solon.cloud.water.server");
+        //访问令牌
+        _water_acl_token = System.getProperty(WW.water_toekn);
+        if (TextUtils.isEmpty(_water_acl_token)) {
+            _water_acl_token = System.getProperty("solon.cloud.water.token");
         }
 
-        if (TextUtils.isEmpty(host) == false) {
-            _water_api_url = HostUtils.adjust(host);
+        //接口地址
+        _water_api_url = System.getProperty(WW.water_host);
+        if (TextUtils.isEmpty(_water_api_url)) {
+            _water_api_url = System.getProperty("solon.cloud.water.server");
+        }
+
+        if (TextUtils.isNotEmpty(_water_api_url)) {
+            _water_api_url = HostUtils.adjust(_water_api_url);
         }
 
         if (TextUtils.isEmpty(_water_api_url)) {
