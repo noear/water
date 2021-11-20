@@ -100,7 +100,7 @@ public class DbWaterRegApi {
                 .selectList("*", ServiceModel.class);
     }
 
-    public static boolean udpService(Integer service_id, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
+    public static boolean udpService(Integer service_id, String tag,String name, String address, String note, Integer check_type, String check_url) throws SQLException {
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
             return false;
         }
@@ -112,6 +112,7 @@ public class DbWaterRegApi {
         DbTableQuery query = db()
                 .table("water_reg_service")
                 .set("name", name)
+                .set("tag", tag)
                 .set("address", address)
                 .set("note", note)
                 .set("check_type", check_type)

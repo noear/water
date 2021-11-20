@@ -122,7 +122,7 @@
                 <button type="submit">查询</button>&nbsp;&nbsp;
                 <button onclick="autofresh();"  type="button" style="width: 100px;" id="fresh">开启自动刷新</button>
                 <#if is_operator == 1>
-                    <span class="w50"></span><a class="btn edit" href="service/edit">添加</a>
+                    <span class="w50"></span><a class="btn edit" href="/mot/service/edit">添加</a>
                 </#if>
             </left>
             <right>

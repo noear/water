@@ -13,8 +13,13 @@
         function saveEdit() {
             var vm = formToMap('form');
 
+            if(!vm.tag){
+                top.layer.msg("tag不能为空！");
+                return;
+            }
+
             if(!vm.name){
-                top.layer.msg("名字不能为空！");
+                top.layer.msg("name不能为空！");
                 return;
             }
 
@@ -68,8 +73,11 @@
         <form>
             <table>
                 <tr>
+                    <th>tag*</th>
+                    <td><input type="text" autofocus id="tag" value="${model.tag!}"/></td>
+                </tr>
                 <tr>
-                    <th>名称</th>
+                    <th>name*</th>
                     <td><input type="text" autofocus id="name" value="${model.name!}"/><n>（name | web:name）</n></td>
                 </tr>
                 <tr>
