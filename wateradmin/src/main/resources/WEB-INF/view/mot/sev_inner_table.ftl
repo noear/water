@@ -5,7 +5,7 @@
         <td class="left">地址</td>
         <td width="50px">检测<br/>类型</td>
         <td>检测路径</td>
-        <td width="100px">检测情况</td>
+        <td width="120px">检测情况</td>
         <#if is_admin == 1>
             <td width="170px">操作</td>
         <#else>
