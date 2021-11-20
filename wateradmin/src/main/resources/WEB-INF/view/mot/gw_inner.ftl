@@ -37,13 +37,6 @@
 </script>
 <body>
 
-<#if is_admin == 1>
-    <toolbar>
-        <a class='btn' href="/cfg/gateway/edit?gateway_id=${cfg.gateway_id!}" >修改</a>
-        <a class='btn edit mar10-l' href="/cfg/gateway/add" >新增</a>
-    </toolbar>
-</#if>
-
 <block>
     代理网关: ${cfg.agent!}
 </block>
