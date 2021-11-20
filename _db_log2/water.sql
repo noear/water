@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `water_cfg_gateway` (
     KEY `IX_tag` (`tag`) USING BTREE
 ) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-网关';
 
--- 2021-11-19
+-- 2021-11-19 (for 2.3.4)
 ALTER TABLE `water_cfg_broker`
     CHANGE COLUMN `update_fulltime` `gmt_modified` bigint NULL COMMENT '最后修改时间' AFTER `is_alarm`;
 

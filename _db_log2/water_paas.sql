@@ -1,5 +1,5 @@
 
--- 2021-11-19
+-- 2021-11-19 (for 2.3.4)
 ALTER TABLE `paas_etl`
     MODIFY COLUMN `e_last_exectime` bigint NULL AFTER `e_max_instance`,
     MODIFY COLUMN `t_last_exectime` bigint NULL AFTER `t_max_instance`,
