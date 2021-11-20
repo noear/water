@@ -39,7 +39,7 @@ public class GeneratorJson {
         //water
 //        buildTableJosn(waterDb, "water_cfg_broker", "water");
 //        buildTableJosn(waterDb, "water_cfg_gateway", "water");
-        buildTableJosn(waterDb, "water_cfg_logger", "water");
+//        buildTableJosn(waterDb, "water_cfg_logger", "water");
 //        buildTableJosn(waterDb, "water_cfg_properties", "water");
 //        buildTableJosn(waterDb, "water_cfg_whitelist", "water");
 
@@ -58,7 +58,7 @@ public class GeneratorJson {
 
 
         //water_paas
-//        buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
+        buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
 
 //        buildTableJosn(waterPaasDb, "rubber_block", "water_paas");
 
