@@ -84,7 +84,7 @@
             <tr>
                 <th>代理网关</th>
                 <td><input type="text" id="agent" value="${cfg.agent!}"/>
-                <n-l>比如在k8s环境，可以设为k8s svc；再比如指到某一个特点的节点上</n-l>
+                <n-l>比如在k8s环境，可以设为k8s svc；再比如指到某一个特点的节点上；或者指到本地用于调试</n-l>
                 </td>
             </tr>
             <tr>
