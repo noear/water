@@ -1,4 +1,4 @@
-# Water jar 模式，开发环境部署说明
+# Water jar 模式，开发环境部署参考
 
 ## 请在完整的看完文档后，再开始动手!!!
 
@@ -160,7 +160,7 @@ upstream waterapi{
     server 127.0.0.1:9371 weight=10;
 }
 server{
-    listen 80;
+    listen 9371;
     server_name waterapi;
     
     location / {
