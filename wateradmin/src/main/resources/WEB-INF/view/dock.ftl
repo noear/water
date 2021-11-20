@@ -10,7 +10,8 @@
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
-        body > header aside a{display:inline-block; height:100%; border-left:1px solid #444; padding:0 15px; }
+        body > header aside a{display:inline-block; height:100%; padding:0 15px; }
+        body > header aside .split{border-left:1px solid #444;}
     </style>
 </head>
 <body>

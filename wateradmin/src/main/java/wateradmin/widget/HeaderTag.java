@@ -81,8 +81,11 @@ public class HeaderTag implements TemplateDirectiveModel {
             sb.append("</a>");
         }
 
-        sb.append("<a href='/admin/'><i class='fa fa-cogs'></i></a>");
-        sb.append("<a href='/'><i class='fa fa-fw fa-circle-o-notch'></i>退出</a>");
+        if(Session.current().isAdmin()){
+            sb.append("<a class='split' href='/admin/@运行控制?@='><i class='fa fa-cogs'></i></a>");
+        }
+
+        sb.append("<a class='split' href='/'><i class='fa fa-fw fa-circle-o-notch'></i>退出</a>");
         sb.append("</aside>");//new
 
         sb.append("</header>\n");
