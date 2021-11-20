@@ -1,6 +1,7 @@
 package wateradmin.dso.db;
 
 import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.Utils;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.IDUtils;
@@ -60,10 +61,11 @@ public class DbWaterRegApi {
     }
 
     //获取service表中的数据。
-    public static List<ServiceModel> getServices(String name,int is_enabled) throws SQLException {
+    public static List<ServiceModel> getServices(String tag_name, String name,int is_enabled) throws SQLException {
         return db()
                 .table("water_reg_service")
                 .where("is_enabled = ?", is_enabled)
+                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(name) == false) {
                         if (name.startsWith("ip:")) {

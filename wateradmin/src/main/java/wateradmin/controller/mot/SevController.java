@@ -50,8 +50,7 @@ public class SevController extends BaseController {
 
     //服务状态
     @Mapping("/service/inner")
-    public ModelAndView inner(String name,Integer _state) throws SQLException {
-
+    public ModelAndView inner(String tag_name, String name,Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -66,11 +65,12 @@ public class SevController extends BaseController {
             _state = 1;
         }
 
+        List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state);
 
-        List<ServiceModel> services = DbWaterRegApi.getServices(name ,_state);
-
+        viewModel.put("tag_name", tag_name);
         viewModel.put("services", services);
-        viewModel.put("name",name);
+        viewModel.put("name", name);
+
         return view("mot/sev_inner");
     }
 
@@ -132,7 +132,7 @@ public class SevController extends BaseController {
 
     //页面自动刷新获取表单数据
     @Mapping("/service/ajax/service_table")
-    public ModelAndView manageS_table(String name,Integer _state, String _type) throws SQLException {
+    public ModelAndView manageS_table(String tag_name,String name, Integer _state, String _type) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -144,7 +144,7 @@ public class SevController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<ServiceModel> services = DbWaterRegApi.getServices(name, _state);
+        List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state);
         viewModel.put("services", services);
         return view("mot/sev_inner_table");
     }
@@ -153,11 +153,6 @@ public class SevController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/service/ajax/deleteService")
     public ViewModel deleteServiceById(Integer service_id) throws SQLException {
-//        boolean is_admin = Session.current().getIsAdmin()>0;
-//        if (is_admin == false) {
-//            return viewModel.code(0,"没有权限！");
-//        }
-
         ServiceModel sev = DbWaterRegApi.getServiceById(service_id);
         boolean result = DbWaterRegApi.deleteServiceById(service_id);
 
@@ -177,10 +172,6 @@ public class SevController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("/service/ajax/disable")
     public ViewModel disable(Integer service_id,Integer is_enabled) throws SQLException {
-//        boolean is_admin = Session.current().getIsAdmin()>0;
-//        if (is_admin == false) {
-//            return viewModel.code(0,"没有权限！");
-//        }
 
         boolean result = DbWaterRegApi.disableService(service_id,is_enabled);
         if (result){

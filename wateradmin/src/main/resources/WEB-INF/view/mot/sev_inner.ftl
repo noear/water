@@ -83,7 +83,7 @@
             var _state = ${_state};
             </#if>
 
-            $.get('/mot/service/ajax/service_table?name='+name+'&_state='+_state,function (rst) {
+            $.get('/mot/service/ajax/service_table?tag_name=${tag_name!}&name='+name+'&_state='+_state,function (rst) {
                 $('datagrid').empty();
                 $('datagrid').html(rst);
             })
