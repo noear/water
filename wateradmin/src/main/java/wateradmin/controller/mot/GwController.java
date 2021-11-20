@@ -4,6 +4,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
@@ -11,6 +12,7 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SetsUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
@@ -35,8 +37,13 @@ public class GwController extends BaseController {
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")
-    public ModelAndView gateway(String tag_name) throws SQLException {
-        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
+    public ModelAndView gateway(Context ctx, String tag_name) throws SQLException {
+        if(SetsUtils.waterSettingScale() < 2){
+            ctx.redirect("/mot/gw/inner");
+            return null;
+        }
+
+        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagListByEnabled();
 
         //权限过滤
         BcfTagChecker.filter(tags, m -> m.tag);

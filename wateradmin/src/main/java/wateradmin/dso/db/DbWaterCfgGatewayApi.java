@@ -46,6 +46,14 @@ public class DbWaterCfgGatewayApi {
                 .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
+    public static List<TagCountsModel> getGatewayTagListByEnabled() throws SQLException {
+        return db().table("water_cfg_gateway")
+                .whereEq("is_enabled", 1)
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .selectList("tag, count(*) counts", TagCountsModel.class);
+    }
+
 
     public static List<GatewayModel> getGatewayList(String tag, int is_enabled) throws SQLException {
         return db().table("water_cfg_gateway")
