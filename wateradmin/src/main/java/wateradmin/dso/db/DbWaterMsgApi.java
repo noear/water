@@ -63,10 +63,17 @@ public class DbWaterMsgApi {
                 .orderBy("topic_name asc")
                 .selectList("*", SubscriberModel.class);
     }
+    public static List<TagCountsModel> getTopicTagList() throws SQLException {
+        return db().table("water_msg_topic")
+                .groupBy("tag")
+                .orderBy("tag")
+                .selectList("tag,count(*) count", TagCountsModel.class);
+    }
 
-    public static List<TopicModel> getTopicList(String topic_name, String sort) throws SQLException {
+    public static List<TopicModel> getTopicList(String tag_name,String topic_name, String sort) throws SQLException {
         return db().table("water_msg_topic")
                 .where("1 = 1")
+                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
                         if (TextUtils.isNumeric(topic_name)) {
@@ -104,8 +111,9 @@ public class DbWaterMsgApi {
                 .selectItem("*", TopicModel.class);
     }
 
-    public static boolean updateTopic(String topic_name, int topic_id, int max_msg_num, int max_distribution_num, int max_concurrency_num, int alarm_model) throws SQLException {
+    public static boolean updateTopic(String tag,String topic_name, int topic_id, int max_msg_num, int max_distribution_num, int max_concurrency_num, int alarm_model) throws SQLException {
         DbTableQuery tb = db().table("water_msg_topic")
+                .set("tag", tag)
                 .set("max_msg_num", max_msg_num)
                 .set("max_distribution_num", max_distribution_num)
                 .set("max_concurrency_num", max_concurrency_num)

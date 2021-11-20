@@ -10,12 +10,18 @@
     <script src="${js}/layer.js"></script>
     <script>
         function saveEdit() {
+            var tag = $('#tag').val();
             var topic_name = $('#topic_name').val();
             var topic_id = ${topic.topic_id};
             var max_msg_num = $('#max_msg_num').val();
             var max_distribution_num = $('#max_distribution_num').val();
             var max_concurrency_num = $('#max_concurrency_num').val();
             var alarm_model = $('#alarm_model').val();
+
+            if (!vm.tag) {
+                top.layer.msg("tag不能为空！");
+                return;
+            }
 
             if(isNaN(max_msg_num)||max_msg_num<0){
                 top.layer.msg("最大消息数量必须为大于等于0的数字");
@@ -33,7 +39,7 @@
             $.ajax({
                 type:"POST",
                 url:"/msg/topic/edit/ajax/save",
-                data:{"topic_name":topic_name,"topic_id":topic_id,"max_msg_num":max_msg_num,"max_distribution_num":max_distribution_num,"max_concurrency_num":max_concurrency_num,"alarm_model":alarm_model},
+                data:{"tag":tag,"topic_name":topic_name,"topic_id":topic_id,"max_msg_num":max_msg_num,"max_distribution_num":max_distribution_num,"max_concurrency_num":max_concurrency_num,"alarm_model":alarm_model},
                 success:function (data) {
                     if (data.code == 1) {
                         top.layer.msg('操作成功');
@@ -94,6 +100,10 @@
     <detail>
         <form>
             <table>
+                <tr>
+                    <th>tag*</th>
+                    <td><input type="text" id="tag" autofocus value="${tag_name!}"/></td>
+                </tr>
                 <tr>
                     <th style="width: 150px;">主题名称</th>
                     <td><input type="text" id="topic_name" value="${topic.topic_name!}" ${(topic.topic_id>0)?string('disabled','')} /></td>

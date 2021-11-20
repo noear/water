@@ -19,7 +19,7 @@
             var vm = formToMap("form");
 
             if (!vm.tag) {
-                top.layer.msg("标签名称不能为空！");
+                top.layer.msg("tag不能为空！");
                 return;
             }
 

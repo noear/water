@@ -2,11 +2,15 @@ package wateradmin.controller.msg;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.MethodType;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
+import wateradmin.dso.*;
 import wateradmin.dso.db.DbWaterMsgApi;
+import wateradmin.models.ScaleType;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_msg.TopicModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -17,10 +21,34 @@ import java.util.List;
 public class TopicController extends BaseController {
     //主题列表
     @Mapping("/msg/topic")
-    public ModelAndView topic(String topic_name, String sort) throws SQLException {
-        List<TopicModel> list = DbWaterMsgApi.getTopicList(topic_name, sort);
-        viewModel.put("list",list);
+    public ModelAndView topic(Context ctx, String tag_name) throws SQLException {
+        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+            ctx.redirect("/msg/subs/inner");
+            return null;
+        }
+        List<TagCountsModel> tags = DbWaterMsgApi.getTopicTagList();
+
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
+
+        tag_name = TagUtil.build(tag_name, tags);
+
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
+
         return view("msg/topic");
+    }
+
+    //主题列表
+    @Mapping("/msg/topic")
+    public ModelAndView topic_inner(String tag_name, String topic_name, String sort) throws SQLException {
+        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+            tag_name = null;
+        }
+
+        List<TopicModel> list = DbWaterMsgApi.getTopicList(tag_name,topic_name, sort);
+        viewModel.put("list",list);
+        return view("msg/topic_inner");
     }
 
     //跳转主题添加页面
@@ -39,11 +67,12 @@ public class TopicController extends BaseController {
     }
 
     //保存主题编辑
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping("/msg/topic/edit/ajax/save")
-    public ViewModel topicEditSave(String topic_name, Integer topic_id, Integer max_msg_num, Integer max_distribution_num, Integer max_concurrency_num, Integer alarm_model) throws SQLException {
+    public ViewModel topicEditSave(String tag,String topic_name, Integer topic_id, Integer max_msg_num, Integer max_distribution_num, Integer max_concurrency_num, Integer alarm_model) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
         if (is_admin == 1) {
-            boolean result = DbWaterMsgApi.updateTopic(topic_name, topic_id, max_msg_num, max_distribution_num, max_concurrency_num, alarm_model);
+            boolean result = DbWaterMsgApi.updateTopic(tag,topic_name, topic_id, max_msg_num, max_distribution_num, max_concurrency_num, alarm_model);
             if (result) {
                 viewModel.code(1, "保存成功！");
             } else {
@@ -57,6 +86,7 @@ public class TopicController extends BaseController {
     }
 
     //删除主题
+    @AuthRoles(SessionRoles.role_admin)
     @Mapping(value = "/msg/topic/edit/ajax/del", method = MethodType.POST)
     public ViewModel topicEditDel(Integer topic_id) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
