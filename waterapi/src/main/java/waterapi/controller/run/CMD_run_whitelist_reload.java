@@ -6,6 +6,7 @@ import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.db.DbWaterCfgSafeApi;
 import waterapi.dso.interceptor.Logging;
 
 /**
@@ -22,7 +23,7 @@ public class CMD_run_whitelist_reload extends UapiBase {
     @Mapping("/run/whitelist/reload/")
     public Result cmd_exec() {
         try {
-            DbWaterCfgApi.loadWhitelist();
+            DbWaterCfgSafeApi.loadWhitelist();
 
             return Result.succeed();
         } catch (Exception ex) {

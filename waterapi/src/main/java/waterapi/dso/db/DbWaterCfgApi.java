@@ -9,8 +9,6 @@ import waterapi.models.ConfigModel;
 import waterapi.models.LoggerModel;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,62 +109,6 @@ public class DbWaterCfgApi {
                 .select("value ")
                 .caching(CacheUtils.data)
                 .getArray(0);
-    }
-
-    //获取IP白名单
-    private static List<String> _whitelist = null;
-    private static boolean _whitelist_ignore_client = false ;
-
-    private static synchronized List<String> getWhitelist() throws SQLException {
-        if (_whitelist == null) {
-            loadWhitelist();
-        }
-
-        return _whitelist;
-    }
-
-    public static boolean whitelistIgnoreClient(){
-        return _whitelist_ignore_client;
-    }
-
-    //加载IP白名单到静态缓存里
-    public static void loadWhitelist() throws SQLException {
-        _whitelist = db().table("water_cfg_whitelist")
-                .whereEq("type", "ip")
-                .andEq("tag", "server")
-                .andEq("is_enabled", 1)
-                .select("value")
-                .caching(CacheUtils.data).usingCache(60)
-                .getArray("value");
-
-        String tmp = getConfig("water", "whitelist_ignore_client", 60).value;
-
-        _whitelist_ignore_client = "1".equals(tmp);
-    }
-
-    //检查是否为IP白名单
-    public static boolean isWhitelist(String ip) throws SQLException {
-        return getWhitelist().contains(ip);
-    }
-
-    public static boolean isWhitelist(String tags, String type, String value) throws SQLException {
-        return db().table("water_cfg_whitelist")
-                .whereEq("type", type)
-                .andEq("value", value)
-                .andEq("is_enabled",1)
-                .build((tb)->{
-                    if(tags.length()  > 0){
-                        if(tags.indexOf(",") < 0){
-                            tb.andEq("tag", tags);
-                        }else{
-                            tb.andIn("tag", Arrays.asList(tags.split(",")));
-                        }
-
-                    }
-                })
-                .caching(CacheUtils.data).usingCache(60)
-                .selectExists();
-
     }
 
 

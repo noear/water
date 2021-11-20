@@ -100,6 +100,7 @@
                         <label><input type="radio" name="type" value="ip" /><a>ip</a></label>
                         <label><input type="radio" name="type" value="domain" /><a>domain</a></label>
                         <label><input type="radio" name="type" value="mobile" /><a>mobile</a></label>
+                        <label><input type="radio" name="type" value="token" /><a>token</a></label>
                     </boxlist>
                     <script>
                         valToForm("type","${m.type!'ip'}")

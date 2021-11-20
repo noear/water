@@ -6,7 +6,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.db.DbWaterCfgSafeApi;
 import waterapi.dso.interceptor.Logging;
 
 
@@ -27,12 +27,12 @@ public class CMD_run_whitelist_check extends UapiBase {
         String tags = ctx.param("tags", "");
 
         if (tags.contains("client")) {
-            if (DbWaterCfgApi.whitelistIgnoreClient()) {
+            if (DbWaterCfgSafeApi.whitelistIgnoreClient()) {
                 return "OK";
             }
         }
 
-        if (DbWaterCfgApi.isWhitelist(tags, type, value)) {
+        if (DbWaterCfgSafeApi.isWhitelist(tags, type, value)) {
             return ("OK");
         } else {
             return (value + ",not is whitelist!");

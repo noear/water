@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgApi;
+import waterapi.dso.db.DbWaterCfgSafeApi;
 
 /**
  * 运行检测
@@ -17,7 +18,7 @@ import waterapi.dso.db.DbWaterCfgApi;
 public class CMD_run_check extends UapiBase {
     @Mapping("/run/check/")
     public Result cmd_exec() throws Exception{
-        DbWaterCfgApi.loadWhitelist(); //检测服务时，就会进行白名单刷新
+        DbWaterCfgSafeApi.loadWhitelist(); //检测服务时，就会进行白名单刷新
 
         return Result.succeed();
     }
