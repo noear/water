@@ -3,13 +3,19 @@ package wateradmin.controller.mot;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SetsUtils;
+import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.ScaleType;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_reg.ServiceModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -23,7 +29,28 @@ public class SevController extends BaseController {
 
     //服务状态
     @Mapping("/service")
-    public ModelAndView index(String name,Integer _state, String _type) throws SQLException {
+    public ModelAndView sev(Context ctx, String tag_name) throws SQLException {
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
+            ctx.redirect("/mot/service/inner");
+            return null;
+        }
+
+        List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
+
+        //权限过滤
+        BcfTagChecker.filter(tags, m -> m.tag);
+
+        tag_name = TagUtil.build(tag_name, tags);
+
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("tags", tags);
+
+        return view("mot/sev");
+    }
+
+    //服务状态
+    @Mapping("/service/inner")
+    public ModelAndView inner(String name,Integer _state) throws SQLException {
 
         if (_state != null) {
             viewModel.put("_state", _state);
@@ -34,15 +61,17 @@ public class SevController extends BaseController {
                 _state = 0;
             }
         }
-        boolean is_web = "web".equals(_type);
-        if (_state == null)
-            _state = 1;
-        List<ServiceModel> services = DbWaterRegApi.getServices(name , is_web ,_state);
 
-        viewModel.put("is_web", is_web);
+        if (_state == null) {
+            _state = 1;
+        }
+
+
+        List<ServiceModel> services = DbWaterRegApi.getServices(name ,_state);
+
         viewModel.put("services", services);
         viewModel.put("name",name);
-        return view("mot/service");
+        return view("mot/sev_inner");
     }
 
     @Mapping("/service/status")
@@ -115,9 +144,9 @@ public class SevController extends BaseController {
         }
         if (_state == null)
             _state = 1;
-        List<ServiceModel> services = DbWaterRegApi.getServices(name,"web".equals(_type),_state);
+        List<ServiceModel> services = DbWaterRegApi.getServices(name, _state);
         viewModel.put("services", services);
-        return view("mot/service_table");
+        return view("mot/sev_inner_table");
     }
 
     //删除服务
@@ -174,7 +203,7 @@ public class SevController extends BaseController {
         viewModel.put("model", model);
         viewModel.put("service_id",service_id);
 
-        return view("mot/service_edit");
+        return view("mot/sev_edit");
     }
 
     @AuthRoles(SessionRoles.role_admin)
@@ -210,7 +239,7 @@ public class SevController extends BaseController {
         viewModel.put("service", sev.name);
         viewModel.put("address", sev.getAddress());
 
-        return view("mot/service_charts");
+        return view("mot/sev_charts");
     }
 
     // todo: 未完成

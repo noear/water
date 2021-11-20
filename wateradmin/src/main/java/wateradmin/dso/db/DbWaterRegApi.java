@@ -8,6 +8,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
+import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_mot.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
 import wateradmin.models.water_reg.ServiceModel;
@@ -51,27 +52,19 @@ public class DbWaterRegApi {
         return isOk;
     }
 
-
-    //重置服务
-    public static int resetSev() throws SQLException {
+    public static List<TagCountsModel> getServiceTagList() throws SQLException {
         return db().table("water_reg_service")
-                .where("state = ?", 1)
-                .set("state", 0)
-                .update();
+                .groupBy("tag")
+                .orderBy("tag asc")
+                .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
     //获取service表中的数据。
-    public static List<ServiceModel> getServices(String name, boolean is_web, int is_enabled) throws SQLException {
+    public static List<ServiceModel> getServices(String name,int is_enabled) throws SQLException {
         return db()
                 .table("water_reg_service")
                 .where("is_enabled = ?", is_enabled)
                 .build(tb -> {
-                    if (is_web) {
-                        tb.and("name LIKE ?", "web:%");
-                    } else {
-                        tb.and("name NOT LIKE ?", "web:%");
-                    }
-
                     if (TextUtils.isEmpty(name) == false) {
                         if (name.startsWith("ip:")) {
                             tb.and("address LIKE ?", name.substring(3) + "%");

@@ -83,7 +83,7 @@
             var _state = ${_state};
             </#if>
 
-            $.get('/mot/service/ajax/service_table?name='+name+'&_state='+_state+"&_type=${is_web?string('web','sev')}",function (rst) {
+            $.get('/mot/service/ajax/service_table?name='+name+'&_state='+_state,function (rst) {
                 $('datagrid').empty();
                 $('datagrid').html(rst);
             })
@@ -115,12 +115,6 @@
 </head>
 <body>
 <main>
-    <block>
-        <tabbar>
-            <button type="button" onclick="UrlQueryBy('_type','sev')" class="${is_web?string('','sel')}">服务</button>
-            <button type="button" onclick="UrlQueryBy('_type','web')" class="${is_web?string('sel','')}">网站</button>
-        </tabbar>
-    </block>
     <form>
         <toolbar>
             <left>
