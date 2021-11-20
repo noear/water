@@ -1,5 +1,5 @@
 
--- 2021.11.06
+-- 2021.11.06  (for 2.3.0)
 ALTER TABLE `water_msg_distribution`
     MODIFY COLUMN `log_fulltime` bigint NOT NULL COMMENT '分发时间' AFTER `log_date`;
 
