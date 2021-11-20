@@ -16,13 +16,25 @@
     <script>
         function save(){
            let vm = formToMap("form");
-           alert(JSON.stringify(vm));
 
            if(vm["user.newpwd"]){
                if(vm["user.newpwd"] != vm["user.newpwd2"]){
-                   alert("修改的密码不一至");
+                   alert("新密码的2次输出不一至");
                }
            }
+
+            $.ajax({
+                type:"POST",
+                url:"/admin/ajax/save",
+                data:{json: JSON.stringify(vm)},
+                success:function (data) {
+                    if(data.code == 1) {
+                        top.layer.msg('操作成功');
+                    }else{
+                        top.layer.msg(data.msg);
+                    }
+                }
+            });
         }
     </script>
 </head>
@@ -46,7 +58,13 @@
                 <table>
                     <tr><td colspan="2"> <h2>修改登录密码</h2> <hr/></td></tr>
                     <tr>
-                        <th>新密码</th>
+                        <th style="width: 150px;">旧密码</th>
+                        <td>
+                            <input type="password" id="user.oldpwd" class="txt">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 150px;">新密码</th>
                         <td>
                             <input type="password" id="user.newpwd" class="txt">
                         </td>

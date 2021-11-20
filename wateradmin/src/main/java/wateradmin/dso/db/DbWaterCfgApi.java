@@ -459,6 +459,26 @@ public class DbWaterCfgApi {
         }
     }
 
+    public static boolean setConfigByTagName(String tag, String key, String value) throws SQLException {
+        if (value == null) {
+            return false;
+        }
+
+        value = WW.cfg_data_header + Base64Utils.encode(value.trim());
+
+        DbTableQuery tb = db().table("water_cfg_properties")
+                .set("tag", tag.trim())
+                .set("key", key.trim())
+                .set("value", value)
+                .set("gmt_modified", System.currentTimeMillis());
+
+        tb.upsertBy("tag,key");
+
+        NoticeUtils.updateConfig(tag, key);
+
+        return true;
+    }
+
     public static void delConfig(Integer row_id) throws SQLException {
         if (row_id == null) {
             return;
