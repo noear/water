@@ -10,8 +10,7 @@
     <script src="${js}/layer.js"></script>
     <style>
         .gats{padding-bottom: 15px; padding-top: 5px;}
-        .gats a{display: inline-block; background: #ebedf1; border-radius: 20px; padding: 2px 10px;}
-        .gats a.sel{background: #fff; border: 1px #ebedf1 solid;}
+        .gats a.btn{border-radius: 10px; margin-right: 5px!important; }
     </style>
 </head>
 <script>
@@ -48,13 +47,15 @@
 <body>
 
 <div class="gats">
-    <#list gats as m>
-        <#if m.gateway_id == gateway_id>
-            <a id="e${m.gateway_id}" class="sel">${m.name}</a>
-        <#else>
-            <a id="e${m.gateway_id}" href="/mot/gw/inner?gateway_id=${m.gateway_id}">${m.name}</a>
-        </#if>
-    </#list>
+    <tabbar>
+        <#list gats as m>
+            <#if m.gateway_id == gateway_id>
+                <a id="e${m.gateway_id}" class="btn sel">${m.name}</a>
+            <#else>
+                <a id="e${m.gateway_id}" class="btn" href="/mot/gw/inner?gateway_id=${m.gateway_id}">${m.name}</a>
+            </#if>
+        </#list>
+    </tabbar>
 </div>
 
 <block>
