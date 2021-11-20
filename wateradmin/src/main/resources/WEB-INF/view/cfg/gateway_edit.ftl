@@ -83,7 +83,9 @@
             </tr>
             <tr>
                 <th>代理网关</th>
-                <td><input type="text" id="agent" value="${cfg.agent!}"/></td>
+                <td><input type="text" id="agent" value="${cfg.agent!}"/>
+                <n-l>比如在k8s环境，可以设为k8s svc；再比如指到某一个特点的节点上</n-l>
+                </td>
             </tr>
             <tr>
                 <th>负载策略</th>
