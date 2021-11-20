@@ -90,11 +90,11 @@
             <input type="hidden" id="row_id" value="${m.row_id!0}">
         <table>
             <tr>
-                <th>tag</th>
+                <th>tag*</th>
                 <td><input type="text" id="tag" value="${tag_name!}" autofocus/></td>
             </tr>
             <tr>
-                <th>type</th>
+                <th>type*</th>
                 <td>
                     <boxlist>
                         <label><input type="radio" name="type" value="ip" /><a>ip</a></label>
@@ -108,8 +108,10 @@
                 </td>
             </tr>
             <tr>
-                <th>value</th>
-                <td><input type="text" id="value" value="${m.value!}" /></td>
+                <th>value*</th>
+                <td><input type="text" id="value" value="${m.value!}" />
+                <n>（size lte 40）</n>
+                </td>
             </tr>
             <tr>
                 <th>note</th>
