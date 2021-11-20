@@ -67,7 +67,7 @@ public class DbWaterMsgApi {
         return db().table("water_msg_topic")
                 .groupBy("tag")
                 .orderBy("tag")
-                .selectList("tag,count(*) count", TagCountsModel.class);
+                .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
     public static List<TopicModel> getTopicList(String tag_name,String topic_name, String sort) throws SQLException {

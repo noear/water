@@ -23,7 +23,7 @@ public class TopicController extends BaseController {
     @Mapping("/msg/topic")
     public ModelAndView topic(Context ctx, String tag_name) throws SQLException {
         if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
-            ctx.redirect("/msg/subs/inner");
+            ctx.redirect("/msg/topic/inner");
             return null;
         }
         List<TagCountsModel> tags = DbWaterMsgApi.getTopicTagList();
@@ -40,13 +40,15 @@ public class TopicController extends BaseController {
     }
 
     //主题列表
-    @Mapping("/msg/topic")
+    @Mapping("/msg/topic/inner")
     public ModelAndView topic_inner(String tag_name, String topic_name, String sort) throws SQLException {
         if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
 
         List<TopicModel> list = DbWaterMsgApi.getTopicList(tag_name,topic_name, sort);
+
+        viewModel.put("tag_name", tag_name);
         viewModel.put("list",list);
         return view("msg/topic_inner");
     }
