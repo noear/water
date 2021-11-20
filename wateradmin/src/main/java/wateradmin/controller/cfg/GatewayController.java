@@ -36,7 +36,7 @@ public class GatewayController extends BaseController {
     private static final String SEV_SERVER_TAG = "_service";
 
     @Mapping("")
-    public ModelAndView gateway(Integer _state) throws SQLException {
+    public ModelAndView gateway(String tag_name,Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -55,6 +55,13 @@ public class GatewayController extends BaseController {
             //中等以上模规
             List<TagCountsM> tags = DbWaterCfgGatewayApi.getGatewayTagList();
 
+            if(Utils.isEmpty(tag_name)){
+                if(tags.size() > 0){
+                    tag_name = tags.get(0).tag;
+                }
+            }
+
+            viewModel.put("tag_name", tag_name);
             viewModel.put("tags", tags);
 
             return view("cfg/gateway");
@@ -69,7 +76,7 @@ public class GatewayController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView inner(String tag, Integer _state) throws SQLException {
+    public ModelAndView inner(String tag_name, Integer _state) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
             int state = _state;
@@ -84,7 +91,7 @@ public class GatewayController extends BaseController {
             _state = 1;
         }
 
-        List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(tag, _state);
+        List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(tag_name, _state);
 
         viewModel.put("list", list);
 
