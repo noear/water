@@ -52,7 +52,6 @@ public class NodeController extends BaseController {
 
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getNodeSpeedsByName(tag_name, name,  sort);
 
-
         viewModel.put("tag_name", tag_name);
         viewModel.put("speeds", speeds);
         viewModel.put("serviceName", "_service");
