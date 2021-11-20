@@ -9,8 +9,8 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
-        .gats{padding-bottom: 15px; padding-top: 5px;}
-        .gats a.btn{border-radius: 10px; margin-right: 5px!important; }
+        .tabs{padding-bottom: 15px; padding-top: 5px;}
+        .tabs a.btn{border-radius: 10px; margin-right: 5px!important; }
     </style>
 </head>
 <script>
@@ -46,7 +46,7 @@
 </script>
 <body>
 
-<div class="gats">
+<div class="tabs">
     <tabbar>
         <#list gats as m>
             <#if m.gateway_id == gateway_id>

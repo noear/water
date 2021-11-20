@@ -72,7 +72,6 @@
                                 <label><input type="radio" name="water.setting.scale" value="0" checked /><a>小</a></label>
                                 <label><input type="radio" name="water.setting.scale" value="1" /><a>中</a></label>
                                 <label><input type="radio" name="water.setting.scale" value="2" /><a>大</a></label>
-                                <label><input type="radio" name="water.setting.scale" value="3" /><a>超大</a></label>
                             </boxlist>
                             <n-l>
                                 会根据情况调整部分控制台界面布局

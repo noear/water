@@ -17,6 +17,7 @@ import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
+import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
 import wateradmin.models.water_reg.GatewayVoModel;
@@ -38,7 +39,7 @@ public class GwController extends BaseController {
 
     @Mapping("")
     public ModelAndView gateway(Context ctx, String tag_name) throws SQLException {
-        if(SetsUtils.waterSettingScale() < 2){
+        if(SetsUtils.waterSettingScale().ordinal() < ScaleType.medium.ordinal()){
             ctx.redirect("/mot/gw/inner");
             return null;
         }
