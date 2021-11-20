@@ -140,7 +140,6 @@
                 <td>检测路径</td>
                 <td width="70px">最后检<br/>测时间</td>
                 <td width="60px">最后检<br/>查状态</td>
-                <td width="60px">最后检<br/>查备注</td>
                 <#if is_admin == 1>
                     <td width="170px">操作</td>
                 <#else>
@@ -185,12 +184,10 @@
                 <td>
                     <#if m.check_last_state == 0>
                         ok
-                    </#if>
-                    <#if m.check_last_state == 1>
-                        error
+                    <#else>
+                        err/${m.check_last_note!}
                     </#if>
                 </td>
-                <td class="left">${m.check_last_note!}</td>
 
                 <td class="op">
                     <#if is_admin == 1>
