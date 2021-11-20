@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
 CREATE TABLE IF NOT EXISTS `water_msg_topic`  (
     `topic_id` int(11) NOT NULL AUTO_INCREMENT,
     `topic_name` varchar(40) DEFAULT NULL,
+    `tag` varchar(40) DEFAULT NULL COMMENT '标签',
     `max_msg_num` int(11) NOT NULL DEFAULT '0',
     `max_distribution_num` int(11) NOT NULL DEFAULT '0' COMMENT '最大派发次数（0不限）',
     `max_concurrency_num` int(11) NOT NULL DEFAULT '0' COMMENT '最大同时派发数(0不限）',
@@ -129,7 +130,8 @@ CREATE TABLE IF NOT EXISTS `water_msg_topic`  (
     `gmt_create` bigint(20) DEFAULT NULL COMMENT '创建时间',
     `gmt_modified` bigint(20) DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (`topic_id`) USING BTREE,
-    UNIQUE KEY `IX_topic` (`topic_name`) USING BTREE
+    UNIQUE KEY `IX_topic` (`topic_name`) USING BTREE,
+    KEY `IX_tag` (`tag`) USING BTREE
 ) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-消息-主题表' ROW_FORMAT = DYNAMIC;
 
 

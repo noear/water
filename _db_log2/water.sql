@@ -125,4 +125,6 @@ ALTER TABLE `water_msg_subscriber`
     ADD COLUMN `name` varchar(255) NULL COMMENT '订阅者服务名' AFTER `tag`,
     ADD INDEX `IX_tag`(`tag`) USING BTREE;
 
-
+ALTER TABLE `water_msg_topic`
+    ADD COLUMN `tag` varchar(40) NULL COMMENT '标签' AFTER `topic_name`,
+    ADD INDEX `IX_tag`(`tag`) USING BTREE;
