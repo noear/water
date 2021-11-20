@@ -118,6 +118,12 @@ ALTER TABLE `water_tool_synchronous`
 
 ALTER TABLE `water_tool_versions`
     MODIFY COLUMN `log_fulltime` bigint NULL COMMENT '记录完整时间' AFTER `log_date`;
+
+ALTER TABLE `water_msg_subscriber`
+    ADD COLUMN `tag` varchar(40) NULL COMMENT '订阅者标签' AFTER `subscriber_note`,
+    ADD COLUMN `service` varchar(255) NULL COMMENT '订阅者服务名' AFTER `tag`,
+    ADD INDEX `IX_tag`(`tag`) USING BTREE;    
+    
 ```
 
 #### 2) [water_paas] 库升级脚本：

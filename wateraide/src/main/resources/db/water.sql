@@ -95,6 +95,8 @@ CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
     `subscriber_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订阅者ID',
     `subscriber_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订阅者KEY（由应用方传入）',
     `subscriber_note` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `tag` varchar(40) DEFAULT NULL COMMENT '订阅者标签',
+    `service` varchar(255) DEFAULT NULL COMMENT '订阅者服务名',
     `alarm_mobile` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警手机号',
     `alarm_sign` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '报警签名',
     `topic_name` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '主题名字',
@@ -111,7 +113,8 @@ CREATE TABLE IF NOT EXISTS `water_msg_subscriber` (
     PRIMARY KEY (`subscriber_id`) USING BTREE,
     UNIQUE KEY `IX_subscribe` (`subscriber_key`,`topic_name`) USING BTREE,
     KEY `IX_topic_name` (`topic_name`) USING BTREE,
-    KEY `IX_receive_url` (`receive_url`(40)) USING BTREE
+    KEY `IX_receive_url` (`receive_url`(40)) USING BTREE,
+    KEY `IX_tag` (`tag`) USING BTREE
 ) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-消息-订阅者表';
 
 

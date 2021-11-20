@@ -8,7 +8,7 @@ import wateradmin.Config;
 import wateradmin.dso.db.DbLuffyApi;
 
 public class FaasUtils {
-    public static void trySubscribe(int file_id, String label, String path, boolean is_disabled) throws Exception {
+    public static void trySubscribe(int file_id, String label, String tag, String path, boolean is_disabled) throws Exception {
         if (label.startsWith("@") && TextUtils.isEmpty(path) == false) {
             String topic = label.substring(1);
             //尝试退订
@@ -28,7 +28,10 @@ public class FaasUtils {
             if (is_disabled) {
                 WaterClient.Message.unSubscribeTopic(null, subscriber_key, new String[]{topic});
             } else {
-                WaterClient.Message.subscribeTopic(null, subscriber_key, receiver_url,
+                WaterClient.Message.subscribeTopic(null, subscriber_key,
+                        WW.waterfaas,
+                        tag,
+                        receiver_url,
                         Config.waterfaas_secretKey, "", 0, false, new String[]{topic});
             }
         }

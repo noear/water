@@ -29,39 +29,30 @@ public class MessageApi {
     /**
      * 订阅
      *
-     * @param subscriber_key 订阅者key
-     * @param receive_url    接收地址
-     * @param receive_way    接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
-     * @param receive_key    接收密钥，签名用
-     */
-    public boolean subscribeTopic(String broker, String subscriber_key, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String[] topics) throws Exception {
-        return subscribeTopic(broker, subscriber_key, "", receive_url, receive_key, alarm_mobile, receive_way, is_unstable, topics);
-    }
-
-    /**
-     * 订阅
-     *
      * @param subscriber_key  订阅者key
-     * @param subscriber_note 订阅者简介
+     * @param subscriber_name 订阅者name
+     * @param subscriber_tag  订阅者tag
      * @param receive_url     接收地址
      * @param receive_way     接收方式 (0:http异步等待, 1:http同步等待, 2:http异步不等待)
      * @param receive_key     接收密钥
      * @param alarm_mobile    报警手机号
      * @param topics          主题（多个）
      */
-    public boolean subscribeTopic(String broker, String subscriber_key, String subscriber_note, String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String[] topics) throws Exception {
+    public boolean subscribeTopic(String broker, String subscriber_key, String subscriber_name, String subscriber_tag,  String receive_url, String receive_key, String alarm_mobile, int receive_way, boolean is_unstable, String[] topics) throws Exception {
         String topics_str = String.join(",", topics);
 
         Map<String, String> params = new HashMap<>();
         params.put("key", subscriber_key); //**此字段名将弃用。by 2020-09
-        params.put("note", subscriber_note); //**此字段名将弃用。by 2020-09
+        params.put("note", subscriber_name); //**此字段名将弃用。by 2020-09
 
         if (TextUtils.isNotEmpty(broker)) {
             params.put("broker", broker);
         }
 
         params.put("subscriber_key", subscriber_key);
-        params.put("subscriber_note", subscriber_note);
+        params.put("subscriber_note", subscriber_name);
+        params.put("subscriber_name", subscriber_name);
+        params.put("subscriber_tag", subscriber_tag);
 
         params.put("topic", topics_str);
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
