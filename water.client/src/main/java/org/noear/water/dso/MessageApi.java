@@ -53,8 +53,6 @@ public class MessageApi {
         params.put("subscriber_name", subscriber_name);
         params.put("subscriber_tag", subscriber_tag);
 
-        params.put("subscriber_note", subscriber_name);//**此字段名将弃用。by 2021-11
-
         params.put("topic", topics_str);
         params.put("receiver_url", receive_url); //**此字段名将弃用。by 2020-09
         params.put("receive_url", receive_url); //支持：http:// 或 @service

@@ -25,39 +25,43 @@ import waterapi.dso.interceptor.Logging;
 public class CMD_msg_subscribe extends UapiBase {
 
     /**
-     * @param key         订阅者唯一key
-     * @param note        订阅者描述
-     * @param is_unstable 是否为不稳定订阅者
-     * @param topic       消息主题(多个主题以","隔开)
-     * @param receive_url 接收地址url
-     * @param receive_way 接收方式(1,2,3)
-     * @param receive_key 接收密钥（消息包签名用）
+     * @param subscriber_key  订阅者 key
+     * @param subscriber_name 订阅者 name
+     * @param subscriber_tag  订阅者 tag
+     * @param is_unstable     是否为不稳定订阅者
+     * @param topic           消息主题(多个主题以","隔开)
+     * @param receive_url     接收地址url
+     * @param receive_way     接收方式(1,2,3)
+     * @param receive_key     接收密钥（消息包签名用）
      */
     @NotEmpty({"topic"})
     @Mapping("/msg/subscribe/")
-    public Result cmd_exec(Context ctx, String subscriber_key, String subscriber_name, String subscriber_tag,String note, int is_unstable, String topic, String receive_url, int receive_way, String receive_key) throws Exception {
+    public Result cmd_exec(Context ctx, String subscriber_key, String subscriber_name, String subscriber_tag, int is_unstable, String topic, String receive_url, int receive_way, String receive_key) throws Exception {
         if (receive_url == null) {
             receive_url = ctx.param("receiver_url"); //**兼容旧版变量名。by 2020.09
         }
 
+        //验证接收地址
         if (Utils.isEmpty(receive_url)) {
             throw UapiCodes.CODE_13("receive_url");
         }
 
         if (Utils.isEmpty(receive_key)) {
-            receive_key = ctx.param("access_key");
+            receive_key = ctx.param("access_key");  //**兼容旧版变量名。by 2020.09
         }
 
-        if(Utils.isEmpty(subscriber_key)){
-            subscriber_key = ctx.param("key");
-        }
-
-        if(Utils.isEmpty(subscriber_name)){
-            subscriber_name = ctx.param("note");
-        }
-
+        //验证接收签名密钥
         if (Utils.isEmpty(receive_key)) {
             throw UapiCodes.CODE_13("receive_key");
+        }
+
+
+        if (Utils.isEmpty(subscriber_key)) {
+            subscriber_key = ctx.param("key");  //**兼容旧版变量名。by 2020.09
+        }
+
+        if (Utils.isEmpty(subscriber_name)) {
+            subscriber_name = ctx.param("note");  //**兼容旧版变量名。by 2020.09
         }
 
 
