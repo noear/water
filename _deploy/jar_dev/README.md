@@ -9,7 +9,6 @@
 * mongodb：做为消息持久化用（也可以使用 mysql8）
 * elasticsearch：做为日志持久化用（也可以使用 mysql8 或 mongodb）
 * jdk11：做为运行时用（一定要用JDK11）
-* nginx：做为反向代理使用
 
 > 建议使用 centos7+ 部署；开发环境1台即可。
 
@@ -44,13 +43,13 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 **服务器1台（1c2g）**
 
 ```
-#主接口服务（如果要限制ip访问，添加参考：--white=1）
+#主接口服务（如果要限制 ip 或 token 访问，添加参考：--white=1）
 java -jar waterapi.jar --server.port=9371
 
 #后台服务（健康检测、数据监视、定时任务、消息交换、消息派发等等）        
 java -jar watersev.jar --server.port=9372 
 
-#管理控制台（如果要限制ip访问，添加参考：--white=1）
+#管理控制台（如果要限制 ip 或 token 访问，添加参考：--white=1）
 java -jar wateradmin.jar --server.port=9373
 
 #FaaS 运行服务           
@@ -65,24 +64,24 @@ java -jar waterraas.jar --server.port=9375
 
 ## 五、后续配置修改
 
-成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
+进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
 | water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
 | water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
-修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
+修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 faas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
 
 ## 附：补充说明
 
-* water 的访问控制，基于ip和token的安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
+* water 的访问控制，基于 ip 和 token 的安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
 
 > 示例：java -jar waterapi.jar --white=1
 
-* water 管理抬台初始账号与密码
+* water 管理控制台初始账号与密码
 
 > 账号：admin 密码：bcf1234
 
@@ -91,21 +90,12 @@ java -jar waterraas.jar --server.port=9375
 ```yaml
 127.0.0.1 waterapi #ip为waterapi服务的地址
 ```
-在应用配置上添加：
+
+然后，在应用配置上添加：
 
 ```yaml
 solon.cloud.water:
   server: "waterapi:9371" #也可以是具体的ip+port（建议用域的方式）
-```
-
-* 开发环境，且单机部署时，可以加这一批host记录
-
-```yaml
-127.0.0.1 waterapi 
-127.0.0.1 memcached.water.io memcached.dev.io 
-127.0.0.1 redis.water.io redis.dev.io
-127.0.0.1 mongo.dev.io
-127.0.0.1 mysql.water.io mysql.dev.io
 ```
 
 * 在linux下建议用配置成service，由 systemctl 命令管理（以 waterapi、wateradmin 为例）
@@ -147,21 +137,3 @@ WantedBy=multi-user.target
 # systemctl stop waterapi     #停止服务
 ```
 
-* nginx 配置示例
-
-```ini
-upstream waterapi{
-    server 127.0.0.1:9371 weight=10;
-}
-server{
-    listen 9371;
-    server_name waterapi;
-    
-    location / {
-        proxy_pass http://waterapi;
-        proxy_set_header  X-Real-IP  $remote_addr;
-        proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
-        proxy_set_header  Host $http_host;
-    }
-}
-```

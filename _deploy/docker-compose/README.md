@@ -33,7 +33,7 @@ docker-compose up
 
 ## 四、后续配置修改
 
-成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
+成功进入 wateradmin 管理控制台后，打开 "配置管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
@@ -43,3 +43,25 @@ docker-compose up
 修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
+
+
+
+## 附：补充说明
+
+* water 管理控制台初始账号与密码
+
+> 账号：admin 密码：bcf1234
+
+* 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
+
+```yaml
+127.0.0.1 waterapi #ip为waterapi服务的地址
+```
+
+然后，在应用配置上添加：
+
+```yaml
+solon.cloud.water:
+  server: "waterapi:9371" #也可以是具体的ip+port（建议用域的方式）
+```
+

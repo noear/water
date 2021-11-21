@@ -40,14 +40,13 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 3. 然后给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
 4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
-## 四、部署方案参考（建议配置成System Service进行控制）
+## 四、部署方案参考 - 生产环境
 
-#### 1、 生产环境建议方案
 **服务器2台（2c4g）**
 
 ```
-#接口服务
-#每台运行两个实例，共4个实例；外层配负载均衡（如果要限制ip访问，添加参考：--white=1）
+#主接口服务
+#每台运行两个实例，共4个实例；外层用 nginx 做负载均衡（如果要限制 ip 或 token 访问，添加参考：--white=1）
 
 java -jar waterapi.jar --server.port=9370
 java -jar waterapi.jar --server.port=9371
@@ -93,14 +92,14 @@ java -jar watersev.jar --server.port=9314 --sss=msgdis
 
 ## 五、后续配置修改
 
-成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
+进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
 | water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
 | water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
-修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
+修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 faas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
 
@@ -108,9 +107,9 @@ java -jar watersev.jar --server.port=9314 --sss=msgdis
 
 * water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
 
-> --white=1
+> 示例：java -jar waterapi.jar --white=1
 
-* water 管理抬台初始账号与密码
+* water 管理控制台初始账号与密码
 
 > 账号：admin 密码：bcf1234
 
@@ -119,7 +118,8 @@ java -jar watersev.jar --server.port=9314 --sss=msgdis
 ```yaml
 127.0.0.1 waterapi #ip为waterapi服务的地址
 ```
-在应用配置上添加：
+
+然后，在应用配置上添加：
 
 ```yaml
 solon.cloud.water:
