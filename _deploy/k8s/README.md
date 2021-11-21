@@ -23,47 +23,82 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 ## 三、开始部署服务
 
-新建域：water
+* 添加 water 域
 
-* 添加 water/waterapi 服务 x2+（镜像：noearorg/waterapi:latest）。镜像端口：9371
+* 添加 water/waterapi 服务（镜像：noearorg/waterapi:latest）。主接口
+  * 镜像端口：9371
+  * 建议2个副本起步
+  
 
-    ```properties
-    #添加环境变量（换成初始化好的 Water DB 配置）：
-    water.ds.schema=water
-    water.ds.server=mysql.water.io:3306
-    water.ds.username=demo
-    water.ds.password=123456
-    ```
+  ```properties
+  #添加环境变量（替换为初始化好的 Water DB 配置）：
+  water.ds.schema=water
+  water.ds.server=mysql.water.io:3306
+  water.ds.username=demo
+  water.ds.password=123456
+  ```
 
-* 添加 water/wateradmin 服务 x1（镜像：noearorg/wateradmin:latest）。镜像端口：8080  //控制台
-* 添加 water/waterfaas 服务 x1+（镜像：noearorg/waterfaas:latest）。镜像端口：8080  //即时接口服务
-* 添加 water/waterraas 服务 x1+（镜像：noearorg/waterraas:latest）。镜像端口：8080 //不需要，可不部署
+* 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:latest）。管理控制台
+  * 镜像端口：8080
+  * 建议1个副本即可
 
-* 添加 water/watersev-tol 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //工具服务，包含： (msgchk,sevchk,syn,mot)
+  
+* 添加 water/waterfaas 服务 （镜像：noearorg/waterfaas:latest）。即时接口服务
+  * 镜像端口：8080
+  * 建议1个副本起步
 
-    ```properties
-    #添加环境变量：
-    water.sss=tol
-    ```
-
-* 添加 water/watersev-pln 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //定时任务调度服务
-
-    ```properties
-    #添加环境变量：
-    water.sss=pln
-    ```
+  
+* 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）。规则计算服务
+  * 镜像端口：8080
+  * 建议1个副本起步（用不到的，可略过）
 
 
-* 添加 water/watersev-msgdis 服务 x1（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息派发服务
+* 添加 water/watersev-tol 服务（镜像：noearorg/watersev:latest）。工具服务，包含： (msgchk,sevchk,syn,mot)
+  * 镜像端口：8080
+  * 建议1个副本即可
 
-    ```properties
-    #添加环境变量：
-    water.sss=msgdis
-    ```
 
-* 添加 water/watersev-msgexg 服务 x1+（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息交换服务
+  ```properties
+  #添加环境变量：
+  water.sss=tol
+  ```
 
-    ```properties
-    #添加环境变量：
-    water.sss=msgexg
-    ```
+* 添加 water/watersev-pln 服务（镜像：noearorg/watersev:latest）。定时任务调度服务
+  * 镜像端口：8080
+  * 建议1个副本起步（如果定时任务多，2个起步）
+
+
+  ```properties
+  #添加环境变量：
+  water.sss=pln
+  ```
+
+
+* 添加 water/watersev-msgdis 服务（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息派发服务
+  * 建议副本数为 Msg bus broker 的数量两倍或以上（刚开始可2个起步）
+
+
+  ```properties
+  #添加环境变量：
+  water.sss=msgdis
+  ```
+
+* 添加 water/watersev-msgexg 服务（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息交换服务
+  * 建议副本数与 Msg bus broker 的数量相等（刚开始可1个起步）
+
+
+  ```properties
+  #添加环境变量：
+  water.sss=msgexg
+  ```
+
+
+## 四、补充说明
+
+* 如果其它服务跨域调用时，添加环境变量
+
+
+  ```properties
+  #添加环境变量，以 Solon Cloud 项目为例：
+  solon.cloud.water.server=watreapi.water:9371
+  ```
