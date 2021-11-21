@@ -25,7 +25,7 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 新建个目录：water，把 docker-compose.yml 放进去。然后修改相关的 water.ds. 数据源配置
 
-**进入water目录后，开始运行**
+**进入 water 目录后，开始运行**
 
 ```shell
 docker-compose up

@@ -52,7 +52,7 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
   
 * 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）。规则计算服务
   * 镜像端口：8080
-  * 建议1个副本起步（可选部署）
+  * 建议1个副本起步`（可选部署）`
   * 要配置外网访问地址，建议加域名
 
 
