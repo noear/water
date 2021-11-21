@@ -10,9 +10,15 @@
 
 
 
-#### 账号与权限管理：
+#### 账号与权限管理：（Bcf Studio ）
 
-请使用 Bcf Studio 桌面管理工具：[https://gitee.com/noear/bcf/tree/main/_studio](https://gitee.com/noear/bcf/tree/main/_studio)
+* Window7+：https://gitee.com/noear/bcf/tree/main/_studio
+
+
+#### 告警接收客户端：（嘿嘿）
+
+* iOS：https://testflight.apple.com/join/ZUhQctwS
+* Android：https://www.noear.org/app/heihei.apk
 
 
 
