@@ -15,21 +15,13 @@
 
 ## 二、初始化环境
 
-运行 Water 助理服务（在本地或服务器上运行都可）
+运行 Water 助理（在本地或服务器上运行都可）
 
 ```properties
 java -Dfile.encoding=utf-8 -jar wateraide.jar
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
-* 初始化完成后，进入 [安全名单] 添加相关服务器的ip
-
-| 名单列表 | 说明 |
-| -------- | -------- |
-| master     | 添加所有 water 服务器的ip（一般是内网ip）     |
-| server     | 添加所有会用到 water 服务的服务器的ip（一般是内网ip）     |
-| client     | 添加所有操作 water 后台的电脑的ip（一般是外网ip）     |
-
 * 完成操作后，关掉服务(有需要再启动，每次用完都关掉)
 
 ## 三、开始部署服务
@@ -48,7 +40,7 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 3. 然后给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
 4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
-### 四、部署方案参考（建议配置成System Service进行控制）
+## 四、部署方案参考（建议配置成System Service进行控制）
 
 #### 1、 生产环境建议方案
 **服务器2台（2c4g）**
@@ -99,16 +91,16 @@ java -jar watersev.jar --server.port=9313 --sss=msgdis
 java -jar watersev.jar --server.port=9314 --sss=msgdis   
 ```
 
-### 五、后续配置修改
+## 五、后续配置修改
 
 成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
-| water     | faas_uri     | 修改为 waterfaas 服务的http协议地址（优先用域名）     |
-| water     | raas_uri     | 修改为 waterraas 服务的http协议地址（优先用域名）     |
+| water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
+| water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
-修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 faas 和 raas 服务）。
+修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
 

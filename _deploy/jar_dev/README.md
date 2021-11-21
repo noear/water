@@ -15,21 +15,13 @@
 
 ## 二、初始化环境
 
-运行 Water 助理服务（在本地或服务器上运行都可）
+运行 Water 助理（在本地或服务器上运行都可）
 
 ```properties
 java -Dfile.encoding=utf-8 -jar wateraide.jar
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
-* 初始化完成后，进入 [安全名单] 添加相关服务器的ip
-
-| 名单列表 | 说明 |
-| -------- | -------- |
-| master     | 添加所有 water 服务器的ip（一般是内网ip）     |
-| server     | 添加所有会用到 water 服务的服务器的ip（一般是内网ip）     |
-| client     | 添加所有操作 water 后台的电脑的ip（一般是外网ip）     |
-
 * 完成操作后，关掉服务(有需要再启动，每次用完都关掉)
 
 ## 三、开始部署服务
@@ -44,18 +36,18 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 #### 2、部署流程说明
 
 1. 启动 waterapi.jar （端口为：9371）
-2. 然后，给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
-3. 再后，依次启动 wateradmin.jar、waterfass.jar、waterraas.jar、watersev.jar
+2. 给使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
+3. 依次启动 wateradmin.jar、waterfass.jar、waterraas.jar、watersev.jar
 
-### 四、部署方案参考-开发环境（建议配置成System Service进行控制）
+## 四、部署方案参考-开发环境
 
 **服务器1台（1c2g）**
 
 ```
-#接口服务（如果要限制ip访问，添加参考：--white=1）
+#主接口服务（如果要限制ip访问，添加参考：--white=1）
 java -jar waterapi.jar --server.port=9371
 
-#后台服务（工具、定时任务、消息交换机、消息派发机等服务...）        
+#后台服务（健康检测、数据监视、定时任务、消息交换、消息派发等等）        
 java -jar watersev.jar --server.port=9372 
 
 #管理控制台（如果要限制ip访问，添加参考：--white=1）
@@ -69,24 +61,26 @@ java -jar waterraas.jar --server.port=9375
 
 ```
 
-### 五、后续配置修改
+> 建议配置成 System Service 进行控制。后面附了补充说明
+
+## 五、后续配置修改
 
 成功进入 wateradmin 管理控制台后，打开 "管理管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
-| water     | faas_uri     | 修改为 waterfaas 服务的http协议地址（优先用域名）     |
-| water     | raas_uri     | 修改为 waterraas 服务的http协议地址（优先用域名）     |
+| water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
+| water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
-修改完成后，重启wateradmin服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
+修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
 
 > 其它一些配置，视情况进行调整。
 
-### 附：补充说明
+## 附：补充说明
 
-* water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
+* water 的访问控制，基于ip和token的安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
 
-> --white=1
+> 示例：java -jar waterapi.jar --white=1
 
 * water 管理抬台初始账号与密码
 
