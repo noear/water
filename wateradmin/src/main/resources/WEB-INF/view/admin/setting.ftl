@@ -87,47 +87,6 @@
                     </tr>
 
 
-                    <tr><td colspan="2"> <h2>LDAP登录配置</h2> <hr/></td></tr>
-                    <tr>
-                        <th>Url</th>
-                        <td>
-                            <input id="bcf.ldap.url" type="text" value="${sets["bcf.ldap.url"]!}" placeholder="ldap://127.0.0.1">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>BaseDn</th>
-                        <td>
-                            <input id="bcf.ldap.baseDn" type="text" value="${sets["bcf.ldap.baseDn"]!}" placeholder="DC=company,DC=com">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>用户名</th>
-                        <td>
-                            <input id="bcf.ldap.username" type="text" value="${sets["bcf.ldap.username"]!}" placeholder="cn=admin,dc=company,dc=com">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>密码</th>
-                        <td>
-                            <input id="bcf.ldap.paasword" type="text" value="${sets["bcf.ldap.paasword"]!}">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>用户过滤</th>
-                        <td>
-                            <input id="bcf.ldap.userFilter" type="text" value="${sets["bcf.ldap.userFilter"]!}" placeholder="cn=%s">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>分组过滤</th>
-                        <td>
-                            <input id="bcf.ldap.groupFilter" type="text" value="${sets["bcf.ldap.groupFilter"]!}" placeholder="cn=%s">
-                        </td>
-                    </tr>
-
-
                     <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
                     <tr>
                         <th>告警签名</th>
