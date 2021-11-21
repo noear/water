@@ -105,13 +105,13 @@ java -jar watersev.jar --server.port=9314 --sss=msgdis
 
 ### 附：补充说明
 
-* water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
-
-> 示例：java -jar waterapi.jar --white=1
-
 * water 管理控制台初始账号与密码
 
 > 账号：admin 密码：bcf1234
+
+* water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
+
+> 示例：java -jar waterapi.jar --white=1
 
 * 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
 

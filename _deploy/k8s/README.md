@@ -111,6 +111,10 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 ## 附：补充说明
 
+* water 管理控制台初始账号与密码
+
+> 账号：admin 密码：bcf1234
+
 * 如果其它服务跨域调用时，添加环境变量
 
 
@@ -118,24 +122,3 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
   #使用 water-solon-plugin 时，配置为：
   solon.cloud.water.server=watreapi.water:9371
   ```
-
-
-* water 的访问控制，基于 ip 和 token 的安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
-
-> 示例：java -jar waterapi.jar --white=1
-
-* water 管理控制台初始账号与密码
-
-> 账号：admin 密码：bcf1234
-
-* 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
-
-```yaml
-127.0.0.1 waterapi #ip为waterapi服务的地址
-```
-在应用配置上添加：
-
-```yaml
-solon.cloud.water:
-  server: "waterapi:9371" #也可以是具体的ip+port（建议用域的方式）
-```
