@@ -17,21 +17,19 @@
         <table>
             <thead>
             <tr>
-                <td width="100px" sort="">tag</td>
-                <td class="left">logger</td>
-                <td width="110px" sort="row_num_today">今日<br/>数量</td>
-                <td width="80px" sort="row_num_today_error">今日<br/>错误数量</td>
-                <td width="110px" sort="row_num_yesterday">昨日<br/>数量</td>
-                <td width="80px" sort="row_num_yesterday_error">昨日<br/>错误数量</td>
-                <td width="110px" sort="row_num_beforeday">前日数量</td>
-                <td width="80px" sort="row_num_beforeday_error">前日<br/>错误数量</td>
+                <td class="left" sort="">logger</td>
+                <td width="120px" sort="row_num_today">今日数量</td>
+                <td width="90px" sort="row_num_today_error">今日<br/>错误数量</td>
+                <td width="120px" sort="row_num_yesterday">昨日<br/>数量</td>
+                <td width="90px" sort="row_num_yesterday_error">昨日<br/>错误数量</td>
+                <td width="120px" sort="row_num_beforeday">前日数量</td>
+                <td width="90px" sort="row_num_beforeday_error">前日<br/>错误数量</td>
                 <td width="50px"></td>
             </tr>
             </thead>
             <tbody id="tbody">
             <#list loggers as m>
             <tr ${m.isHighlight()?string("class='t4'","")}>
-                <td>${m.tag}</td>
                 <td class="left"><a href="/log/query/inner?logger=${m.logger}&tag_name=${m.tag}" target="_parent">${m.logger}</a></td>
                 <td class="right">${m.row_num_today}</td>
                 <td class="right">${m.row_num_today_error}</td>
