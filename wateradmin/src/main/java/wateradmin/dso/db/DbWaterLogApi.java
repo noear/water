@@ -67,8 +67,8 @@ public class DbWaterLogApi {
                 .queryGroupCountBy(logger, group, service, "tag");//tag1=>seconds
     }
 
-    public static List<TagCountsM> getSqlOperatorTags(String logger, String service) throws Exception {
+    public static List<TagCountsM> getSqlOperatorTags(String logger, String group, String service) throws Exception {
         return ProtocolHub.getLogSource(logger)
-                .queryGroupCountBy(logger, null, service, "tag2");//tag3=>operator
+                .queryGroupCountBy(logger, group, service, "tag2");//tag3=>operator
     }
 }

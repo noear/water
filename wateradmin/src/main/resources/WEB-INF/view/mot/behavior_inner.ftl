@@ -18,7 +18,7 @@
             }
 
             UrlQueryByDic({
-                tag_name:'${tag_name}',
+                serviceName:'${serviceName!}',
                 tagx:$('#tagx').val(),
                 log_date:$('#log_date').val(),
                 path:$('#path').val(),
@@ -29,12 +29,25 @@
 </head>
 <body>
 
+<datalist id="datalist" >
+    <#list peratorList as m>
+        <option value="${m.tag}">${m.tag}</option>
+    </#list>
+</datalist>
+
 <main>
-    <datalist id="datalist" >
-        <#list tag2s as m>
-            <option value="${m.tag}">${m.tag}</option>
-        </#list>
-    </datalist>
+    <div class="tabs">
+        <tabbar>
+            <#list tabs as m>
+                <#if m.tag == serviceName>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}</a>
+                <#else>
+                    <a id="e${m.tag}" class="btn" href="/mot/behavior/inner?tag_name=${tag_name!}&serviceName=${m.tag}">${m.tag}</a>
+                </#if>
+            </#list>
+        </tabbar>
+    </div>
+
     <toolbar>
         <left>
             账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;

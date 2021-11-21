@@ -1,6 +1,7 @@
 package wateradmin.controller.mot;
 
 import org.noear.solon.Utils;
+import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.model.log.LogModel;
@@ -29,7 +30,12 @@ public class SqlController extends BaseController {
 
     //消息异常记录
     @Mapping("sql")
-    public ModelAndView sql(String tag_name) throws Exception {
+    public ModelAndView sql(Context ctx, String tag_name) throws Exception {
+        if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+            ctx.redirect("/mot/sql/inner");
+            return null;
+        }
+
         List<TagCountsM> tags = DbWaterLogApi.getSqlGroupsByLogger(logger);
 
         BcfServiceChecker.filter(tags, m -> m.tag);
