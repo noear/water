@@ -22,7 +22,7 @@ public class TopicController extends BaseController {
     //主题列表
     @Mapping("/msg/topic")
     public ModelAndView topic(Context ctx, String tag_name) throws SQLException {
-        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+        if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
             ctx.redirect("/msg/topic/inner");
             return null;
         }
@@ -42,7 +42,7 @@ public class TopicController extends BaseController {
     //主题列表
     @Mapping("/msg/topic/inner")
     public ModelAndView topic_inner(String tag_name, String topic_name, String sort) throws SQLException {
-        if(OptionUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+        if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
 

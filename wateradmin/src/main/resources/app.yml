@@ -15,7 +15,7 @@ solon.cloud.water:
   event:
     seal: "b5fZK49x71Rnn5Cl"
   config:
-    load: "water_bcf::bcf.yml,water_options"
+    load: "water_bcf::bcf.yml,water_settings"
 
 solon.logging.appender:
   console:

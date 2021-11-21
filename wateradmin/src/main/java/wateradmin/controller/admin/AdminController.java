@@ -33,9 +33,9 @@ public class AdminController extends BaseController {
 
         sets.put("alarm_sign", cfg("water", "alarm_sign").value);
 
-        Properties props = cfg("water", WW.water_options).getProp();
+        Properties props = cfg("water", WW.water_settings).getProp();
         props.forEach((k, v) -> {
-            //water.option.{*}
+            //water.setting.{*}
             sets.put((String) k, (String) v);
         });
 
@@ -57,11 +57,11 @@ public class AdminController extends BaseController {
             //for water option
             StringBuilder options = new StringBuilder();
             oNode.forEach((k, v) -> {
-                if (k.startsWith("water.option.")) {
+                if (k.startsWith("water.setting.")) {
                     options.append(k).append("=").append(v.getString()).append("\n");
                 }
             });
-            DbWaterCfgApi.setConfigByTagName("water", WW.water_options, options.toString());
+            DbWaterCfgApi.setConfigByTagName("water", WW.water_settings, options.toString());
 
 
 

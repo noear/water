@@ -9,7 +9,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.OptionUtils;
+import wateradmin.dso.SettingUtils;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
@@ -25,7 +25,7 @@ public class LogController extends BaseController {
     //日志统计
     @Mapping("log")
     public ModelAndView logger(Context ctx, String tag_name) throws Exception {
-        if(OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+        if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.redirect("/mot/log/inner");
             return null;
         }
@@ -50,7 +50,7 @@ public class LogController extends BaseController {
     //日志统计列表
     @Mapping("log/inner")
     public ModelAndView loggerInner(String tag_name,Integer _state, String sort) throws Exception {
-        if(OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+        if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
 

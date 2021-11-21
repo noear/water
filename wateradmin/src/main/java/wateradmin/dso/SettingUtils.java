@@ -6,14 +6,14 @@ import wateradmin.models.ScaleType;
 /**
  * @author noear 2021/11/20 created
  */
-public class OptionUtils {
+public class SettingUtils {
     /**
      * 服务注册数量规模
      * <p>
      * 参数：0上，1中，2大，3超大
      */
     public static ScaleType serviceScale() {
-        int scale = Solon.cfg().getInt("water.option.service.scale", 0);
+        int scale = Solon.cfg().getInt("water.setting.scale.service", 0);
 
         switch (scale) {
             case 1:
@@ -31,7 +31,7 @@ public class OptionUtils {
      * 参数：0上，1中，2大，3超大
      */
     public static ScaleType topicScale() {
-        int scale = Solon.cfg().getInt("water.option.topic.scale", 0);
+        int scale = Solon.cfg().getInt("water.setting.scale.topic", 0);
 
         switch (scale) {
             case 1:

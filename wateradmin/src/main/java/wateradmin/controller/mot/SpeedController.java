@@ -12,7 +12,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.OptionUtils;
+import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -33,7 +33,7 @@ public class SpeedController extends BaseController {
     //性能监控
     @Mapping("speed")
     public ModelAndView speed(Context ctx, String tag_name) throws SQLException {
-        if (OptionUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+        if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.redirect("/mot/speed/inner");
             return null;
         }
