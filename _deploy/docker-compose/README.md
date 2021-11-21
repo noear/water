@@ -33,14 +33,14 @@ docker-compose up
 
 ## 四、后续配置修改
 
-成功进入 wateradmin 管理控制台后，打开 "配置管理 / 属性配置"。 进一步修改配置：
+进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：
 
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
 | water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
 | water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
-修改完成后，重启 wateradmin 服务（之后，就可以在 wateradmin 上调试 paas 和 raas 服务）。
+修改完成后，可以在 wateradmin 上调试 paas 和 raas 服务。
 
 > 其它一些配置，视情况进行调整。
 
