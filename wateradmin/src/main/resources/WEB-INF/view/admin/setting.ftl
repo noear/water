@@ -11,6 +11,7 @@
     <style>
         body  detail{ width: 800px; margin: 0 auto;}
         form > table{width: 800px;}
+        form > table th{width: 150px;}
         form > table td > h2{line-height: 40px;}
     </style>
     <script>
@@ -71,7 +72,7 @@
                                 会根据情况调整部分控制台界面布局
                             </n-l>
                             <script>
-                                $("input[name='water.setting.scale.service'][value=${sets["water.setting.scale.service"]!}]").attr("checked",true);
+                                $("input[name='water.setting.scale.service'][value='${sets["water.setting.scale.service"]!}']").attr("checked",true);
                             </script>
                         </td>
                     </tr>
@@ -87,7 +88,7 @@
                                 会根据情况调整部分控制台界面布局
                             </n-l>
                             <script>
-                                $("input[name='water.setting.scale.topic'][value=${sets["water.setting.scale.topic"]!}]").attr("checked",true);
+                                $("input[name='water.setting.scale.topic'][value='${sets["water.setting.scale.topic"]!}']").attr("checked",true);
                             </script>
                         </td>
                     </tr>
