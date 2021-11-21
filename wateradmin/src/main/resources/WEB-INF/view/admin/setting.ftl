@@ -52,14 +52,8 @@
             <form>
                 <table>
 
-                    <tr><td colspan="2"> <h2>运行配置</h2> <hr/></td></tr>
+                    <tr><td colspan="2"> <h2>控制台</h2> <hr/></td></tr>
 
-                    <tr>
-                        <th>告警签名</th>
-                        <td>
-                            <input id="alarm_sign" type="text" value="${sets["alarm_sign"]!}">
-                        </td>
-                    </tr>
                     <tr>
                         <th>服务注册数量规模</th>
                         <td>
@@ -90,6 +84,16 @@
                             <script>
                                 $("input[name='water.setting.scale.topic'][value='${sets["water.setting.scale.topic"]!}']").attr("checked",true);
                             </script>
+                        </td>
+                    </tr>
+
+
+                    <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
+
+                    <tr>
+                        <th>告警签名</th>
+                        <td>
+                            <input id="alarm_sign" type="text" value="${sets["alarm_sign"]!}">
                         </td>
                     </tr>
                 </table>
