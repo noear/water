@@ -9,8 +9,8 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
-        .tabs{padding-bottom: 15px; padding-top: 5px;}
-        .tabs a.btn{margin-right: 5px!important; }
+        .tabs{padding-bottom: 10px;}
+        .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
 </head>
 <script>
