@@ -7,7 +7,6 @@
 #### 1) [water] 库升级脚本：
 
 ```sql
--- 2021-11-19 (for 2.4.0)
 ALTER TABLE `water_cfg_broker`
     CHANGE COLUMN `update_fulltime` `gmt_modified` bigint NULL COMMENT '最后修改时间' AFTER `is_alarm`;
 
