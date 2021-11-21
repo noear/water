@@ -1,13 +1,13 @@
 package wateradmin.dso;
 
 import org.noear.solon.core.handle.Context;
+import org.noear.water.model.TagCountsM;
 import org.noear.water.utils.TextUtils;
-import wateradmin.models.TagCountsModel;
 
 import java.util.List;
 
 public class TagUtil {
-    public static String build(String tag_name, List<TagCountsModel> tags) {
+    public static <T extends TagCountsM> String build(String tag_name, List<T> tags) {
         if (TextUtils.isEmpty(tag_name)) {
             tag_name = cookieGet();
         }
@@ -29,6 +29,7 @@ public class TagUtil {
             return tag_name;
         }
     }
+
 
     public static String cookieGet(){
         return Context.current().cookie("wateradmin_log__tag");

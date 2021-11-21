@@ -55,20 +55,24 @@ public class SpeedController extends BaseController {
     //性能监控-列表
     @Mapping("speed/inner")
     public ModelAndView speedList(String tag_name,String serviceName, String name, String sort, String tag) throws SQLException {
+        if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+            tag_name = null;
+        }
+
         if (tag == null) {
             tag = "";
         }
 
-        List<TagCountsModel> tabs = DbWaterOpsApi.getSpeedServices(tag_name);
-        tabs.removeIf(m -> m.tag.startsWith("_"));
-        BcfServiceChecker.filter(tabs, m -> m.tag);
-        viewModel.put("tabs", tabs);
+        List<TagCountsModel> services = DbWaterOpsApi.getSpeedServices(tag_name);
+        services.removeIf(m -> m.tag.startsWith("_"));
+        BcfServiceChecker.filter(services, m -> m.tag);
+        viewModel.put("tabs", services);
         viewModel.put("tag_name", tag_name);
 
 
         if (Utils.isEmpty(serviceName)) {
-            if (tabs.size() > 0) {
-                serviceName = tabs.get(0).tag;
+            if (services.size() > 0) {
+                serviceName = services.get(0).tag;
             }
         }
 

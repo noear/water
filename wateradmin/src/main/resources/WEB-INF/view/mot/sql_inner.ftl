@@ -11,6 +11,9 @@
 
     <style>
         body > header agroup{font-size: 16px;}
+
+        .tabs{padding-bottom: 15px; padding-top: 5px;}
+        .tabs a.btn{border-radius: 10px; margin-right: 5px!important; }
     </style>
     <script>
         function queryDo(startId) {
@@ -19,7 +22,7 @@
             }
 
             UrlQueryByDic({
-                tag_name:'${tag_name!}',
+                serviceName:'${serviceName!}',
                 tagx:$('#tagx').val(),
                 log_date:$('#log_date').val(),
                 startId:startId
@@ -29,12 +32,26 @@
 </head>
 <body>
 
+<datalist id="datalist">
+    <#list secondList as m>
+        <option value="${m.tag}">${m.tag}</option>
+    </#list>
+</datalist>
+
+
 <main>
-    <datalist id="datalist">
-        <#list tag2s as m>
-            <option value="${m.tag}">${m.tag}</option>
-        </#list>
-    </datalist>
+
+    <div class="tabs">
+        <tabbar>
+            <#list tabs as m>
+                <#if m.tag == serviceName>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}</a>
+                <#else>
+                    <a id="e${m.tag}" class="btn" href="/mot/sql/inner?tag_name=${tag_name!}&serviceName=${m.tag}">${m.tag}</a>
+                </#if>
+            </#list>
+        </tabbar>
+    </div>
 
     <toolbar>
         <left>

@@ -65,6 +65,14 @@ public class LogSourceMongo implements LogSource {
                 if (tags.length > 4 && tags[4].length() > 0) {
                     tb.andEq("tag4", tags[4]);
                 }
+
+                if (tags.length > 6 && tags[6].length() > 0) {
+                    tb.andEq("group", tags[6]);
+                }
+
+                if (tags.length > 7 && tags[7].length() > 0) {
+                    tb.andEq("service", tags[7]);
+                }
             }
         }
 
@@ -87,11 +95,21 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger, String service, String filed) throws Exception {
+    public List<TagCountsM> queryGroupCountBy(String logger, String group,String service, String filed) throws Exception {
         List<Document> filter = new ArrayList<>();
 
-        if (TextUtils.isNotEmpty(service)) {
-            filter.add(new Document("$match", new Document("service", service)));
+        if (TextUtils.isNotEmpty(group) || TextUtils.isNotEmpty(service)) {
+            List<Document> list = new ArrayList<>();
+
+            if (TextUtils.isNotEmpty(group)) {
+                list.add(new Document("group", group));
+            }
+
+            if (TextUtils.isNotEmpty(service)) {
+                list.add(new Document("service", service));
+            }
+
+            filter.add(new Document("$match", new Document("$and", list)));
         }
 
         filter.add(new Document("$group",

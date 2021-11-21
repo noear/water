@@ -66,6 +66,14 @@ public class LogSourceElasticsearch implements LogSource {
                     if (tags.length > 4 && tags[4].length() > 0) {
                         c.term("tag4", tags[4]);
                     }
+
+                    if (tags.length > 6 && tags[6].length() > 0) {
+                        c.term("group", tags[6]);
+                    }
+
+                    if (tags.length > 7 && tags[7].length() > 0) {
+                        c.term("service", tags[7]);
+                    }
                 }
             }
 
@@ -90,11 +98,20 @@ public class LogSourceElasticsearch implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger,String service, String filed) throws Exception {
+    public List<TagCountsM> queryGroupCountBy(String logger, String group, String service, String filed) throws Exception {
         EsIndiceQuery query = _db.indice(logger);
 
-        if (TextUtils.isNotEmpty(service)) {
-            query.where(w -> w.term("service", service));
+
+        if (TextUtils.isNotEmpty(group) || TextUtils.isNotEmpty(service)) {
+            query.where(w -> {
+                if (TextUtils.isNotEmpty(group)) {
+                    w.term("group", group);
+                }
+
+                if (TextUtils.isNotEmpty(service)) {
+                    w.term("service", service);
+                }
+            });
         }
 
         ONode oNode = query.aggs(a -> a.terms(filed))

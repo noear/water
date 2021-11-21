@@ -1,12 +1,12 @@
 package wateradmin.models;
 
-import lombok.Getter;
+import org.noear.water.model.TagCountsM;
 
-import java.io.Serializable;
 
-@Getter
-public class TagCountsModel implements Serializable {
-    public String tag;
-    public long counts;
+public class TagCountsModel extends TagCountsM {
     public String note;
+
+    public String getNote() {
+        return note;
+    }
 }

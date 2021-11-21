@@ -25,7 +25,7 @@ public class BehaviorController extends BaseController {
     //消息异常记录
     @Mapping("behavior")
     public ModelAndView behavior(String tag_name) throws Exception {
-        List<TagCountsM> tags = DbWaterLogApi.getSqlServiceTags(logger);
+        List<TagCountsM> tags = DbWaterLogApi.getSqlServicesByLogger(logger, null);
 
 
         BcfServiceChecker.filter(tags, m -> m.tag);
@@ -80,7 +80,7 @@ public class BehaviorController extends BaseController {
         }
 
         int pageSize = 50;
-        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, method, 0, tagx, path, startId, timestamp);
+        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, null, tag_name, method, 0, tagx, path, startId, timestamp);
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("listSize", list.size());

@@ -66,6 +66,14 @@ public class LogSourceRdb implements LogSource {
                 if (tags.length > 4 && tags[4].length() > 0) {
                     tb.andEq("tag4", tags[4]);
                 }
+
+                if (tags.length > 6 && tags[6].length() > 0) {
+                    tb.andEq("group", tags[6]);
+                }
+
+                if (tags.length > 7 && tags[7].length() > 0) {
+                    tb.andEq("service", tags[7]);
+                }
             }
         }
 
@@ -73,7 +81,7 @@ public class LogSourceRdb implements LogSource {
             tb.andEq("level", level);
         }
 
-        if(startLogId > 0){
+        if (startLogId > 0) {
             tb.andLte("log_id", startLogId);
         }
 
@@ -88,15 +96,23 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public List<TagCountsM> queryGroupCountBy(String logger, String service, String filed) throws Exception {
+    public List<TagCountsM> queryGroupCountBy(String logger, String group, String service, String filed) throws Exception {
         DbTableQuery query = _db.table(logger);
 
-        if (TextUtils.isNotEmpty(service)) {
-            query.whereEq("service", service);
+        if (TextUtils.isNotEmpty(group) || TextUtils.isNotEmpty(service)) {
+            query.whereTrue();
+
+            if (TextUtils.isNotEmpty(group)) {
+                query.andEq("group", group);
+            }
+
+            if (TextUtils.isNotEmpty(service)) {
+                query.andEq("service", service);
+            }
         }
 
         return query.groupBy(filed)
-                .selectList(filed + " tag, COUNT(*) counts", TagCountsM.class);
+                .selectList(_db.getDialect().columnFormat(filed) + " tag, COUNT(*) counts", TagCountsM.class);
     }
 
     @Override
@@ -122,7 +138,7 @@ public class LogSourceRdb implements LogSource {
                             .setDf("tag2", event.tag2, "")
                             .setDf("tag3", event.tag3, "")
                             .setDf("tag4", event.tag4, "")
-                            .set("weight",event.weight)
+                            .set("weight", event.weight)
                             .setDf("group", event.group, "")
                             .setDf("service", event.service, "")
                             .set("class_name", NameUtils.formatClassName(event.class_name))
