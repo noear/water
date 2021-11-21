@@ -37,8 +37,8 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 
 1. 启动 waterapi.jar
 2. [配置 nginx](#nginx)，完成 `waterapi` 域的监听，并转发给 waterapi.jar
-3. 然后给所有使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
-4. 再后依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
+3. 给使用 water 服务的机器，添加 `waterapi` host 记录（进 /etc/hosts 修改）
+4. 依次启动 wateradmin.jar、waterpass.jar、waterraas.jar、watersev.jar
 
 ## 四、部署方案参考 - 生产环境
 
