@@ -42,7 +42,23 @@ ALTER TABLE `water_cfg_logger`
 
 ALTER TABLE `water_cfg_broker`
     ADD UNIQUE INDEX `UX_broker`(`broker`) USING BTREE;
-    
+
+
+
+-- 2021-11-12
+CREATE TABLE IF NOT EXISTS `water_cfg_gateway` (
+    `gateway_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '网关id',
+    `tag` varchar(40) NOT NULL COMMENT '标签',
+    `name` varchar(100) NOT NULL COMMENT '名称',
+    `agent` varchar(255) DEFAULT NULL COMMENT '代理',
+    `policy` varchar(100) DEFAULT NULL COMMENT '策略',
+    `is_enabled` int(11) NOT NULL DEFAULT '1',
+    `update_fulltime` timestamp NULL DEFAULT NULL COMMENT '最后更新时间',
+    PRIMARY KEY (`gateway_id`) USING BTREE,
+    UNIQUE KEY `UX_name` (`name`) USING BTREE,
+    KEY `IX_tag` (`tag`) USING BTREE
+    ) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-配置-网关';
+
 ```
 
 2. water_msg 更新脚本
@@ -59,7 +75,19 @@ ALTER TABLE `water_msg_message_all`
 ALTER TABLE `water_msg_subscriber`
     DROP COLUMN `topic_id`,
     DROP INDEX `IX_subscribe`,
-    ADD UNIQUE INDEX `IX_subscribe`(`subscriber_key`, `topic_name`) USING BTREE;    
+    ADD UNIQUE INDEX `IX_subscribe`(`subscriber_key`, `topic_name`) USING BTREE;
+
+
+ALTER TABLE `water_msg_distribution`
+    MODIFY COLUMN `log_fulltime` bigint NOT NULL COMMENT '分发时间' AFTER `log_date`;
+
+ALTER TABLE `water_msg_message`
+    MODIFY COLUMN `log_fulltime` bigint NOT NULL COMMENT '记录时间' AFTER `log_date`,
+    MODIFY COLUMN `last_fulltime` bigint NULL COMMENT '最后变更时间' AFTER `last_date`;
+
+ALTER TABLE `water_msg_message_all`
+    MODIFY COLUMN `log_fulltime` bigint NOT NULL COMMENT '记录时间' AFTER `log_date`,
+    MODIFY COLUMN `last_fulltime` bigint NULL COMMENT '最后变更时间' AFTER `last_date`;
 ```
 
 3. water_msg 的表 [water_msg_subscriber], [water_msg_topic] 复制到 water 库
