@@ -11,7 +11,7 @@
 
     <style>
         .tabs{padding-bottom: 15px; padding-top: 5px;}
-        .tabs a.btn{border-radius: 10px; margin-right: 5px!important; }
+        .tabs a.btn{margin-right: 5px!important; }
     </style>
     <script>
         function queryDo(startId) {

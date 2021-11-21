@@ -31,7 +31,7 @@
         <tree id="tree">
             <ul>
                 <#list tags as m>
-                    <li onclick="node_onclick('${m.tag}',this)" id="${m.tag}">${m.tag} (${m.counts})</li>
+                    <li onclick="node_onclick('${m.tag!}',this)" id="${m.tag!}">${m.tag!} (${m.counts})</li>
                 </#list>
             </ul>
         </tree>
