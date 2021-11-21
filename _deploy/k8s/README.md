@@ -99,6 +99,6 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 
   ```properties
-  #添加环境变量，以 Solon Cloud 项目为例：
+  #使用 water-solon-plugin 时，配置为：
   solon.cloud.water.server=watreapi.water:9371
   ```
