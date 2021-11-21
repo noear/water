@@ -9,7 +9,8 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
     <style>
-        body > header agroup{font-size: 16px;}
+        .tabs{padding-bottom: 15px; padding-top: 5px;}
+        .tabs a.btn{border-radius: 10px; margin-right: 5px!important; }
     </style>
     <script>
         function queryDo(startId) {
