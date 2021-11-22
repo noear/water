@@ -24,7 +24,7 @@
 | | |
 | org.noear:waterapi | 构建：Water 服务端 |
 | org.noear:watersev | 构建：Water 后台服务（健康检测；数据监视；消息派发；定时任务等...） |
-| org.noear:wateradmin | 构建：Water 控制台 |
+| org.noear:wateradmin | 构建：Water 控制台（支持LDAP登录） |
 | org.noear:waterfaas | 构建：Water FaaS 服务，提供轻量级FaaS服务 |
 | org.noear:waterraas | 构建：Water RaaS 服务，提供轻量级规则计算服务 |
 
