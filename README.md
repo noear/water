@@ -49,15 +49,17 @@
 
 [[Water 教程三] Water 是个一站式的服务治理平台，认识一下](https://www.bilibili.com/video/BV1KQ4y1U7ef/)
 
-[[Water 教程四] Water 的配置服务应用及关键设计](https://www.bilibili.com/video/BV1tY411x7ja/)
+[[Water 教程四] 配置服务应用及关键设计](https://www.bilibili.com/video/BV1tY411x7ja/)
 
-[[Water 教程五] Water 的日志服务应用及轻小快的设计](https://www.bilibili.com/video/BV1H44y1v7ES/)
+[[Water 教程五] 日志服务应用及轻小快的客户端设计](https://www.bilibili.com/video/BV1H44y1v7ES/)
 
-[[Water 教程六] Water 的消息总线服务应用及内部架构设计概要](https://www.bilibili.com/video/bv1mM4y1A7kn)
+[[Water 教程六] 消息总线服务应用及内部架构设计概要](https://www.bilibili.com/video/bv1mM4y1A7kn)
 
-[Water 教程七] Water 的FaaS应用实战
+[Water 教程七] FaaS应用实战
 
-[Water 教程八] Water 的服务监控实战
+[Water 教程八] 服务监控与数剧监视实战
+
+[Water 教程九] 多账号管理及权限配置，还有LDAP
 
 ### (一) 使用
 
