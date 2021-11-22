@@ -381,7 +381,7 @@ public class DbWaterOpsApi {
                     }
                 })
                 .caching(CacheUtil.data)
-                .usingCache(5)
+                .usingCache(3)
                 .selectList("ss.*", ServiceSpeedModel.class);
 
         return list;

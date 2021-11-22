@@ -59,7 +59,7 @@ public class DbWaterRegApi {
                 .groupBy("tag")
                 .orderBy("tag asc")
                 .caching(CacheUtil.data)
-                .usingCache(5)
+                .usingCache(3)
                 .selectList("tag, count(*) counts", TagCountsModel.class);
     }
     public static List<TagCountsModel> getServiceNameList(String tag_name) throws SQLException {
@@ -68,7 +68,7 @@ public class DbWaterRegApi {
                 .groupBy("name")
                 .orderBy("name asc")
                 .caching(CacheUtil.data)
-                .usingCache(5)
+                .usingCache(3)
                 .selectList("name tag, count(*) counts", TagCountsModel.class);
     }
 
