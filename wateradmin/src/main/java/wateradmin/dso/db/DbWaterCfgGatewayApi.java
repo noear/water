@@ -77,4 +77,10 @@ public class DbWaterCfgGatewayApi {
                 .set("gmt_modified", System.currentTimeMillis())
                 .update();
     }
+
+    public static void delGateway(int gatewayId) throws SQLException {
+        db().table("water_cfg_gateway")
+                .whereEq("gateway_id", gatewayId)
+                .delete();
+    }
 }

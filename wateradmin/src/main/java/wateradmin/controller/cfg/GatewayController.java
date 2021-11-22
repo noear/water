@@ -96,9 +96,18 @@ public class GatewayController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @NotZero("gateway_id")
     @Mapping("ajax/enabled")
-    public ViewModel brokerEnable(int gateway_id, int is_enabled) throws SQLException {
+    public ViewModel enable(int gateway_id, int is_enabled) throws SQLException {
         DbWaterCfgGatewayApi.setGatewayEnabled(gateway_id, is_enabled);
 
-        return viewModel.code(1, "保存成功！");
+        return viewModel.code(1, "");
+    }
+
+    @AuthRoles(SessionRoles.role_admin)
+    @NotZero("gateway_id")
+    @Mapping("ajax/del")
+    public ViewModel del(int gateway_id) throws SQLException {
+        DbWaterCfgGatewayApi.delGateway(gateway_id);
+
+        return viewModel.code(1, "");
     }
 }

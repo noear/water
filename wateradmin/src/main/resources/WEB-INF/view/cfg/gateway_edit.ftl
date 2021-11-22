@@ -14,6 +14,8 @@
 
     <script>
 
+        let gateway_id = ${cfg.gateway_id!0};
+
         function save() {
             let tag = $("#tag").val();
             let name = $("#name").val();
@@ -32,7 +34,7 @@
                 type: "POST",
                 url: "/cfg/gateway/ajax/save",
                 data: {
-                    gateway_id: '${cfg.gateway_id!}',
+                    gateway_id: gateway_id,
                     tag: tag,
                     name: name,
                     agent: $("#agent").val(),
@@ -51,6 +53,38 @@
                     }
                 }
             });
+        }
+
+        function del(){
+            if(gateway_id < 1){
+                return;
+            }
+
+            let tag = $("#tag").val();
+
+            top.layer.confirm('确定删除', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    type:"POST",
+                    url:"/cfg/gateway/ajax/del",
+                    data:{
+                        "gateway_id":gateway_id
+                    },
+                    success:function(data){
+                        if(1==data.code) {
+                            top.layer.msg('操作成功');
+
+                            setTimeout(function () {
+                                location.href = "/cfg/gateway/inner?tag_name=" + tag;
+                            }, 800);
+                        }else{
+                            top.layer.msg(data.msg);
+                        }
+                    }
+                });
+                top.layer.close(top.layer.index);
+            });
         };
 
         $(function(){
@@ -66,6 +100,9 @@
     <right class="form">
         <n>ctrl + s 可快捷保存</n>
         <button type="button" onclick="save()">保存</button>
+        <#if is_admin == 1>
+            <button type="button" class="minor" onclick="del()">删除</button>
+        </#if>
     </right>
 </toolbar>
 
