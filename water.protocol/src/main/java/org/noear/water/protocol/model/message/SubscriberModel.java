@@ -1,7 +1,6 @@
 package org.noear.water.protocol.model.message;
 
 import lombok.Getter;
-import org.noear.water.utils.TextUtils;
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
 
@@ -12,7 +11,6 @@ import org.noear.weed.IBinder;
 public class SubscriberModel implements IBinder {
     public long subscriber_id; //在弹性容器里会无限增加
     public String subscriber_key;
-    public String subscriber_note;
 
     public String alarm_mobile;
     public String alarm_sign;
@@ -20,7 +18,7 @@ public class SubscriberModel implements IBinder {
     public String topic_name;
 
     public String receive_url;
-    public int    receive_way;
+    public int receive_way;
     public String receive_key;
 
     public int check_last_state;
@@ -34,10 +32,8 @@ public class SubscriberModel implements IBinder {
         subscriber_id = s.get("subscriber_id").longValue(0L);
         subscriber_key = s.get("subscriber_key").value("");
 
-        subscriber_note = s.get("subscriber_note").value("");
-
-        alarm_mobile= s.get("alarm_mobile").value("");
-        alarm_sign   = s.get("alarm_sign").value("");
+        alarm_mobile = s.get("alarm_mobile").value("");
+        alarm_sign = s.get("alarm_sign").value("");
 
         topic_name = s.get("topic_name").value("");
 
@@ -58,10 +54,6 @@ public class SubscriberModel implements IBinder {
     }
 
     public String trClass() {
-        if (TextUtils.isEmpty(subscriber_note)) {
-            return "";
-        }else{
-            return (check_last_state == 200) ? "" : "t4";
-        }
+        return (check_last_state == 200) ? "" : "t4";
     }
 }

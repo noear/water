@@ -57,7 +57,11 @@ public class DbWaterMsgApi {
                 .andIf(Utils.isNotEmpty(tag_name), "tag=?",tag_name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
-                        tb.and("(topic_name like ? OR subscriber_note like ? )", "%" + topic_name + "%", "%" + topic_name + "%");
+                        String key = "%" + topic_name + "%";
+                        tb.and().begin("topic_name LIKE ? ", key)
+                                .or("name LIKE ?", key)
+                                .or("receive_url LIKE ?", key)
+                                .end();
                     }
                 })
                 .orderBy("topic_name asc")
