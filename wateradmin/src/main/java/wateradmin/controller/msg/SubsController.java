@@ -47,8 +47,8 @@ public class SubsController extends BaseController {
 
     //订阅列表
     @Mapping("/msg/subs/inner")
-    public ModelAndView subs_inner(String tag_name, String topic_name,Integer _state) throws SQLException{
-        if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+    public ModelAndView subs_inner(String tag_name, String topic_name,Integer _state) throws SQLException {
+        if (SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
 
@@ -63,9 +63,9 @@ public class SubsController extends BaseController {
         if (_state == null)
             _state = 1;
 
-        List<SubscriberModel> list2 = DbWaterMsgApi.getSubscriberList(tag_name,topic_name,_state);
+        List<SubscriberModel> list2 = DbWaterMsgApi.getSubscriberList(tag_name, topic_name, _state);
         List<SubscriberModel> list = new ArrayList<>(list2.size());
-        for(SubscriberModel m: list2) {
+        for (SubscriberModel m : list2) {
             if ("".equals(m.trClass())) {
                 list.add(m);
             } else {
@@ -73,8 +73,9 @@ public class SubsController extends BaseController {
             }
         }
 
-        viewModel.put("list",list);
-        viewModel.put("_state",_state);
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("list", list);
+        viewModel.put("_state", _state);
         return view("msg/subs_inner");
     }
 
