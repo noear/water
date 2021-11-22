@@ -19,7 +19,7 @@
 ```yaml
 # 配置项 water_bcf/bcf.yml ，添加 ldap 连接配置：
 bcf.ldap:
-  url: "ldap://127.0.0.1:389"
+  url: "ldap://127.0.0.1"
   baseDn: "DC=company,DC=com"
   bindDn: "cn=admin,dc=company,dc=com"
   paasword: "123456"
