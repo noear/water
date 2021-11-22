@@ -1,5 +1,6 @@
 package wateradmin.controller.mot;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
@@ -48,6 +49,23 @@ public class NodeController extends BaseController {
     public ModelAndView inner(String tag_name, String name, String sort) throws SQLException {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
+        }
+
+        if(SettingUtils.serviceScale() == ScaleType.large){
+            List<TagCountsModel> nameList = DbWaterOpsApi.getNodeServiceNameList(tag_name);
+
+            if(Utils.isEmpty(name)){
+                if(nameList.size() > 0){
+                    name = nameList.get(0).tag;
+                }
+            }
+
+            viewModel.put("tag_name",tag_name);
+            viewModel.set("tabs", nameList);
+            viewModel.put("tabs_visible",true);
+            viewModel.set("name", name);
+        }else{
+            viewModel.put("tabs_visible",false);
         }
 
         List<ServiceSpeedModel> speeds = DbWaterOpsApi.getNodeSpeedsByName(tag_name, name,  sort);

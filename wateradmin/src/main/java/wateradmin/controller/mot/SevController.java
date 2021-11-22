@@ -1,6 +1,7 @@
 package wateradmin.controller.mot;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
@@ -54,6 +55,26 @@ public class SevController extends BaseController {
         if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()){
             tag_name = null;
         }
+
+
+        if(SettingUtils.serviceScale() == ScaleType.large){
+            List<TagCountsModel> nameList = DbWaterRegApi.getServiceNameList(tag_name);
+
+            if(Utils.isEmpty(name)){
+                if(nameList.size() > 0){
+                    name = nameList.get(0).tag;
+                }
+            }
+
+            viewModel.put("tag_name",tag_name);
+            viewModel.set("tabs", nameList);
+            viewModel.put("tabs_visible",true);
+            viewModel.set("name", name);
+        }else{
+            viewModel.put("tabs_visible",false);
+        }
+
+
 
         if (_state != null) {
             viewModel.put("_state", _state);

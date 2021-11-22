@@ -9,6 +9,7 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import wateradmin.Config;
+import wateradmin.dso.CacheUtil;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_mot.ServiceRuntimeModel;
 import wateradmin.models.water_reg.ServiceConsumerModel;
@@ -57,7 +58,18 @@ public class DbWaterRegApi {
         return db().table("water_reg_service")
                 .groupBy("tag")
                 .orderBy("tag asc")
+                .caching(CacheUtil.data)
+                .usingCache(5)
                 .selectList("tag, count(*) counts", TagCountsModel.class);
+    }
+    public static List<TagCountsModel> getServiceNameList(String tag_name) throws SQLException {
+        return db().table("water_reg_service")
+                .whereEq("tag",tag_name)
+                .groupBy("name")
+                .orderBy("name asc")
+                .caching(CacheUtil.data)
+                .usingCache(5)
+                .selectList("name tag, count(*) counts", TagCountsModel.class);
     }
 
     //获取service表中的数据。
@@ -76,6 +88,8 @@ public class DbWaterRegApi {
                     }
                 })
                 .orderBy("name asc")
+                .caching(CacheUtil.data)
+                .usingCache(5)
                 .selectList("*", ServiceModel.class);
     }
 

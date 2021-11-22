@@ -19,6 +19,8 @@
             display:none;
             font-size: small;
         }
+        .tabs{padding-bottom: 10px;}
+        .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
     <script>
         function deleteService(service_id) {
@@ -115,6 +117,20 @@
 </head>
 <body>
 <main>
+    <#if tabs_visible!false>
+    <div class="tabs">
+        <tabbar>
+            <#list tabs as m>
+                <#if m.tag == name>
+                    <a id="e${m.tag}" class="btn sel">${m.tag!}</a>
+                <#else>
+                    <a id="e${m.tag}" class="btn" href="/mot/service/inner?tag_name=${tag_name!}&name=${m.tag!}">${m.tag!}</a>
+                </#if>
+            </#list>
+        </tabbar>
+    </div>
+    </#if>
+
     <form>
         <toolbar>
             <left>
