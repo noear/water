@@ -42,6 +42,8 @@ java -Dfile.encoding=utf-8 -jar wateraide.jar
 
 ## 四、部署方案参考 - 生产环境
 
+注：下面会把 watersev.jar 拆为四种服务进行部署。
+
 **服务器2台（2c4g）**
 
 ```
