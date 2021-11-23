@@ -404,6 +404,7 @@ public class DbWaterOpsApi {
         }
 
         return qr.whereEq("ss.service", "_service")
+                .groupBy("ss.tag")
                 .caching(CacheUtil.data)
                 .usingCache(3)
                 .selectList("ss.tag tag, count(*) counts", TagCountsModel.class);

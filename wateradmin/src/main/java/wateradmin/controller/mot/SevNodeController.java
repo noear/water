@@ -58,18 +58,18 @@ public class SevNodeController extends BaseController {
         if (SettingUtils.serviceScale() == ScaleType.large) {
             List<TagCountsModel> nameList = DbWaterOpsApi.getNodeServiceNameList(tag_name);
 
-            if (nameList.size() == 0) {
-                return null;
-            }
+            if(nameList.size() > 0){
+                if (Utils.isEmpty(name)) {
+                    name = nameList.get(0).tag;
+                }
 
-            if (Utils.isEmpty(name)) {
-                name = nameList.get(0).tag;
+                viewModel.put("tag_name", tag_name);
+                viewModel.set("tabs", nameList);
+                viewModel.put("tabs_visible", true);
+                viewModel.set("name", name);
+            }else{
+                viewModel.put("tabs_visible", false);
             }
-
-            viewModel.put("tag_name", tag_name);
-            viewModel.set("tabs", nameList);
-            viewModel.put("tabs_visible", true);
-            viewModel.set("name", name);
         } else {
             viewModel.put("tabs_visible", false);
         }

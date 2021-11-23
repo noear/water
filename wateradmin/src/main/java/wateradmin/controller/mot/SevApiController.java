@@ -77,12 +77,10 @@ public class SevApiController extends BaseController {
         viewModel.put("tabs", services);
         viewModel.put("tag_name", tag_name);
 
-        if (services.size() == 0) {
-            return null;
-        }
-
         if (Utils.isEmpty(serviceName)) {
-            serviceName = services.get(0).tag;
+            if (services.size() > 0) {
+                serviceName = services.get(0).tag;
+            }
         }
 
         if (Utils.isEmpty(serviceName)) {
