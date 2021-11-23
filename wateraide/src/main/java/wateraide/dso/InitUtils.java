@@ -135,6 +135,14 @@ public class InitUtils {
         System.out.println(">>>>>>>>>>>>>>>>>>>>: " + fileName);
 
         String json = Utils.getResourceAsString(fileName);
+        if(Utils.isEmpty(json)){
+            return;
+        }
+
+        //增加 Base64 解码支持
+        if(json.startsWith("[") == false){
+            json = Base64Utils2.decode(json);
+        }
 
         ONode array = ONode.loadStr(json);
         List<T> dataItems = new ArrayList<>();
