@@ -50,11 +50,20 @@ public class DbWaterMsgApi {
                 .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
+    public static List<TagCountsModel> getSubscriberNameList(String tag_name) throws SQLException {
+        return db().table("water_msg_subscriber")
+                .whereEq("tag", tag_name)
+                .groupBy("name")
+                .orderBy("name asc")
+                .selectList("name tag, count(*) counts", TagCountsModel.class);
+    }
+
     //查询订阅列表(全部列表以及查询功能)
-    public static List<SubscriberModel> getSubscriberList(String tag_name,String topic_name, int is_enabled) throws SQLException {
+    public static List<SubscriberModel> getSubscriberList(String tag_name, String name,String topic_name, int is_enabled) throws SQLException {
         return db().table("water_msg_subscriber")
                 .where("is_enabled = ?", is_enabled)
-                .andIf(Utils.isNotEmpty(tag_name), "tag=?",tag_name)
+                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
+                .andIf(Utils.isNotEmpty(name), "name=?", name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
                         String key = "%" + topic_name + "%";
@@ -67,6 +76,7 @@ public class DbWaterMsgApi {
                 .orderBy("topic_name asc")
                 .selectList("*", SubscriberModel.class);
     }
+
     public static List<TagCountsModel> getTopicTagList() throws SQLException {
         return db().table("water_msg_topic")
                 .groupBy("tag")

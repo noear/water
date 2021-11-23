@@ -8,6 +8,10 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer.js"></script>
+    <style>
+        .tabs{padding-bottom: 10px;}
+        .tabs a.btn{margin: 0 5px 5px 5px!important;}
+    </style>
     <script>
         function deleteSubs(subscriber_id){
             var ids = "";
@@ -85,7 +89,6 @@
         };
 
         $(function(){
-
             $('#sel_all').change(function(){
                 var ckd= $(this).prop('checked');
                 $('[name=sel_id]').prop('checked',ckd);
@@ -95,6 +98,20 @@
 </head>
 <body>
 <main>
+    <#if tabs_visible!false>
+        <div class="tabs">
+            <tabbar>
+                <#list tabs as m>
+                    <#if m.tag == name>
+                        <a id="e${m.tag}" class="btn sel">${m.tag!}</a>
+                    <#else>
+                        <a id="e${m.tag}" class="btn" href="/mot/service/inner?tag_name=${tag_name!}&name=${m.tag!}">${m.tag!}</a>
+                    </#if>
+                </#list>
+            </tabbar>
+        </div>
+    </#if>
+
     <toolbar>
         <flex>
             <left class="col-3">
