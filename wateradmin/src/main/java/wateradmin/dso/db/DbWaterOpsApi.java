@@ -307,26 +307,30 @@ public class DbWaterOpsApi {
         }
 
         return qr.groupBy("ss.service")
+                .caching(CacheUtil.data)
+                .usingCache(3)
                 .selectList("ss.service tag, count(*) counts", TagCountsModel.class);
     }
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service) throws SQLException {
         return db().table("water_reg_service_speed")
-                   .where("service = ?", service)
-                   .select("*")
-                   .getList(new ServiceSpeedModel());
+                .where("service = ?", service)
+                .caching(CacheUtil.data)
+                .usingCache(3)
+                .selectList("*", ServiceSpeedModel.class);
     }
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service, String tag) throws SQLException {
         return db().table("water_reg_service_speed")
                 .where("service = ? AND tag=?", service,tag)
-                .select("*")
-                .getList(new ServiceSpeedModel());
+                .caching(CacheUtil.data)
+                .usingCache(3)
+                .selectList("*", ServiceSpeedModel.class);
     }
 
     //根据服务名和接口名获取性能监控列表
     public static List<ServiceSpeedModel> getSpeedsByServiceAndName(String service, String tag, String name, String sort) throws SQLException {
-        if(tag==null && name!=null) {
+        if (tag == null && name != null) {
             if (name.length() > 3 && name.endsWith("::")) {
                 tag = name.substring(0, name.length() - 2);
                 name = "";
@@ -334,27 +338,28 @@ public class DbWaterOpsApi {
         }
 
         String tag1 = tag;
-        String name1 =name;
+        String name1 = name;
 
         return db().table("water_reg_service_speed")
-                   .where("service = ?", service)
-                   .build(tb -> {
-                       if (TextUtils.isEmpty(tag1) == false) {
-                           tb.and("tag=?", tag1);
-                       }
+                .where("service = ?", service)
+                .build(tb -> {
+                    if (TextUtils.isEmpty(tag1) == false) {
+                        tb.and("tag=?", tag1);
+                    }
 
-                       if (!TextUtils.isEmpty(name1)) {
-                           tb.and("`name` like ?", "%" + name1 + "%");
-                       }
+                    if (!TextUtils.isEmpty(name1)) {
+                        tb.and("`name` like ?", "%" + name1 + "%");
+                    }
 
-                       if (TextUtils.isEmpty(sort)) {
-                           tb.orderBy("tag,name ASC");
-                       } else {
-                           tb.orderBy(sort + " DESC");
-                       }
-                   })
-                   .select("*")
-                   .getList(new ServiceSpeedModel());
+                    if (TextUtils.isEmpty(sort)) {
+                        tb.orderBy("tag,name ASC");
+                    } else {
+                        tb.orderBy(sort + " DESC");
+                    }
+                })
+                .caching(CacheUtil.data)
+                .usingCache(3)
+                .selectList("*", ServiceSpeedModel.class);
     }
 
     //根据服务名和接口名获取性能监控列表
@@ -399,7 +404,7 @@ public class DbWaterOpsApi {
 
         return qr.whereEq("ss.service", "_service")
                 .caching(CacheUtil.data)
-                .usingCache(5)
+                .usingCache(3)
                 .selectList("ss.tag tag, count(*) counts", TagCountsModel.class);
     }
 
@@ -408,6 +413,8 @@ public class DbWaterOpsApi {
         return db().table("water_reg_service_speed")
                 .where("service = ?", service)
                 .groupBy("tag")
+                .caching(CacheUtil.data)
+                .usingCache(3)
                 .selectList("tag, count(*) counts", TagCountsModel.class);
     }
 
@@ -426,8 +433,10 @@ public class DbWaterOpsApi {
                 .and("service = ?", service)
                 .and("log_date>=?", date2)
                 .orderBy("log_date DESC")
-                .select(field + " val,log_date,log_hour") //把字段as为val
-                .getList(new ServiceSpeedHourModel());
+                .caching(CacheUtil.data)
+                .usingCache(3)
+                .selectList(field + " val,log_date,log_hour", ServiceSpeedHourModel.class); //把字段as为val
+
 
         Map<Integer, ServiceSpeedHourModel> list0 = new HashMap<>();
         Map<Integer, ServiceSpeedHourModel> list1 = new HashMap<>();
@@ -467,16 +476,17 @@ public class DbWaterOpsApi {
 
     //获取接口三十天响应速度情况
     public static Map<String,List> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
-        Map<String,List> resp = new LinkedHashMap<>();
+        Map<String, List> resp = new LinkedHashMap<>();
 
         List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
-                                               .whereEq("tag", tag)
-                                               .andEq("name_md5", name_md5)
-                                               .andEq("service", service)
-                                               .orderBy("log_date DESC")
-                                               .limit(30)
-                                               .select("*")
-                                               .getList(new ServiceSpeedDateModel());
+                .whereEq("tag", tag)
+                .andEq("name_md5", name_md5)
+                .andEq("service", service)
+                .orderBy("log_date DESC")
+                .limit(30)
+                .caching(CacheUtil.data)
+                .usingCache(3)
+                .selectList("*", ServiceSpeedDateModel.class);
 
         Collections.sort(list, (o1, o2) -> (o1.log_date - o2.log_date));
 

@@ -135,11 +135,7 @@
                 <tr class="${sub.trClass()}">
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${sub.subscriber_id}" /><a></a></label></checkbox></td>
                     <td class="left break">${sub.topic_name}</td>
-                    <td class="left break">${sub.receive_url}
-                        <#if (sub.name!) != ''>
-                            （${sub.name}#${sub.check_last_state})
-                        </#if>
-                    </td>
+                    <td class="left break">${sub.receive_url}（${sub.name!}#${sub.check_last_state!})</td>
                     <td class="left">
                         <#if sub.receive_way==0>HTTP异步等待</#if>
                         <#if sub.receive_way==1>HTTP同步等待</#if>
