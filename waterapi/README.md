@@ -8,6 +8,7 @@ water.ds.username=demo
 water.ds.password=123456
 ```
 
+
 #### Jar 运行，可添加环境变量；或者系统属性；或者扩展配置文件：
 
 waterapi_ext/_db.properties
