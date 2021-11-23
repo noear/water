@@ -65,7 +65,7 @@ public final class DbWaterMsgApi {
                 .set("subscriber_key", key)
                 .set("name", name)
                 .set("tag", tag)
-                .set("subscriber_note", name)
+                .set("subscriber_note", name) //已弃用；by 2021-11。由 name 替代
                 .set("receive_url", receive_url)
                 .set("receive_key", receive_key)//后面要改掉
                 .set("receive_way", receive_way)

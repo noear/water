@@ -136,8 +136,8 @@
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${sub.subscriber_id}" /><a></a></label></checkbox></td>
                     <td class="left break">${sub.topic_name}</td>
                     <td class="left break">${sub.receive_url}
-                        <#if (sub.subscriber_note!) != ''>
-                            （${sub.subscriber_note}#${sub.check_last_state})
+                        <#if (sub.name!) != ''>
+                            （${sub.name}#${sub.check_last_state})
                         </#if>
                     </td>
                     <td class="left">
