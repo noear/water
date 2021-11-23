@@ -74,6 +74,7 @@ public class DbWaterMsgApi {
                     }
                 })
                 .orderBy("topic_name asc")
+                .limit(500) //在分页之前，挡一下（不分页，按规模调配后，基本也是够了）
                 .selectList("*", SubscriberModel.class);
     }
 

@@ -385,6 +385,7 @@ public class DbWaterOpsApi {
                         tb.orderBy("ss." + sort + " DESC");
                     }
                 })
+                .limit(500) //在分页之前，挡一下（不分页，按规模调配后，基本也是够了）
                 .caching(CacheUtil.data)
                 .usingCache(3)
                 .selectList("ss.*", ServiceSpeedModel.class);

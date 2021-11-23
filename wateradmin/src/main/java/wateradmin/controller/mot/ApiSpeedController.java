@@ -27,7 +27,7 @@ import java.util.Map;
 
 @Controller
 @Mapping("/mot/")
-public class SpeedController extends BaseController {
+public class ApiSpeedController extends BaseController {
 
 
     //性能监控

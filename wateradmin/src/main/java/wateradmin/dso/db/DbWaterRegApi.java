@@ -88,6 +88,7 @@ public class DbWaterRegApi {
                     }
                 })
                 .orderBy("name asc")
+                .limit(500) //在分页之前，挡一下（不分页，按规模调配后，基本也是够了）
                 .caching(CacheUtil.data)
                 .usingCache(5)
                 .selectList("*", ServiceModel.class);
