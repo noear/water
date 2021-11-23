@@ -84,35 +84,19 @@ public class PropController extends BaseController {
     @AuthRoles(SessionRoles.role_admin)
     @Mapping("edit/ajax/save")
     public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
-
-        boolean result = DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
-
-        if (result) {
-            viewModel.code(1, "保存成功");
-        } else {
-            viewModel.code(0, "保存失败");
-        }
-
-        return viewModel;
-    }
-
-    //编辑、保存功能。
-    @Mapping("edit/ajax/del")
-    public ViewModel del(Integer row_id) throws SQLException {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
-
-        DbWaterCfgApi.delConfig(row_id);
+        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
 
         return viewModel.code(1, "操作成功");
     }
 
+    //编辑、保存功能。
+    @AuthRoles(SessionRoles.role_admin)
+    @Mapping("edit/ajax/del")
+    public ViewModel del(Integer row_id) throws SQLException {
+        DbWaterCfgApi.delConfig(row_id);
 
-
+        return viewModel.code(1, "操作成功");
+    }
 
 
     //批量导出

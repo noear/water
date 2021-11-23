@@ -239,6 +239,12 @@
 
         </table>
     </form>
+
+    <div class="right" style="position: static; z-index: 1; bottom: 0px; left: 0px;">
+        <@versions table="water_cfg_properties" keyName="row_id" keyValue="${cfg.row_id}">
+            window.editor.setValue(m.content);
+        </@versions>
+    </div>
 </detail>
 
 </body>

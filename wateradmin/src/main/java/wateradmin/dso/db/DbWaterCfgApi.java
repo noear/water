@@ -431,8 +431,8 @@ public class DbWaterCfgApi {
 
 
     //编辑更新config。
-    public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
-        if(value == null){
+    public static void setConfig(long row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
+        if (value == null) {
             value = "";
         }
 
@@ -440,7 +440,6 @@ public class DbWaterCfgApi {
 
 
         DbTableQuery db = db().table("water_cfg_properties")
-                .set("row_id", row_id)
                 .set("tag", tag.trim())
                 .set("key", key.trim())
                 .set("type", type)
@@ -449,14 +448,15 @@ public class DbWaterCfgApi {
                 .set("gmt_modified", System.currentTimeMillis());
 
         if (row_id > 0) {
-            boolean isOk = db.where("row_id = ?", row_id).update() > 0;
+            db.where("row_id = ?", row_id).update();
             NoticeUtils.updateConfig(tag, key);
-            return isOk;
         } else {
-            boolean isOk = db.insert() > 0;
+            row_id = db.insert();
             NoticeUtils.updateConfig(tag, key);
-            return isOk;
         }
+
+        /** 记录历史版本 */
+        DbWaterVerApi.logVersion(db(), "water_cfg_properties", "row_id", row_id);
     }
 
     public static boolean setConfigByTagName(String tag, String key, String value) throws SQLException {
