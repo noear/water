@@ -52,34 +52,29 @@
             <form>
                 <table>
 
-                    <tr><td colspan="2"> <h2>控制台</h2> <hr/></td></tr>
+                    <tr><td colspan="2"> <h2>控制台</h2>
+                            <n>会根据情况调整部分控制台界面布局</n>
+                            <hr/></td></tr>
                     <tr>
-                        <th>服务注册数量规模</th>
+                        <th>服务数量规模</th>
                         <td>
                             <boxlist>
                                 <label><input type="radio" name="water.setting.scale.service" value="0" checked /><a>小</a></label>
                                 <label><input type="radio" name="water.setting.scale.service" value="1" /><a>中</a></label>
                                 <label><input type="radio" name="water.setting.scale.service" value="2" /><a>大</a></label>
                             </boxlist>
-                            <n-l>
-                                会根据情况调整部分控制台界面布局
-                            </n-l>
                             <script>
                                 $("input[name='water.setting.scale.service'][value='${sets["water.setting.scale.service"]!}']").attr("checked",true);
                             </script>
                         </td>
                     </tr>
                     <tr>
-                        <th>消息主题数量规模</th>
+                        <th>消息主题数量</th>
                         <td>
                             <boxlist>
-                                <label><input type="radio" name="water.setting.scale.topic" value="0" checked /><a>小</a></label>
-                                <label><input type="radio" name="water.setting.scale.topic" value="1" /><a>中</a></label>
-                                <label><input type="radio" name="water.setting.scale.topic" value="2" /><a>大</a></label>
+                                <label><input type="radio" name="water.setting.scale.topic" value="0" checked /><a>少</a></label>
+                                <label><input type="radio" name="water.setting.scale.topic" value="1" /><a>多</a></label>
                             </boxlist>
-                            <n-l>
-                                会根据情况调整部分控制台界面布局
-                            </n-l>
                             <script>
                                 $("input[name='water.setting.scale.topic'][value='${sets["water.setting.scale.topic"]!}']").attr("checked",true);
                             </script>
