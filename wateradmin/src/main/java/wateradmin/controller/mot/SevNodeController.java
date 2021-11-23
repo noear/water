@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/mot/")
-public class SevNodeSpeedController extends BaseController {
+public class SevNodeController extends BaseController {
 
     //性能监控
     @Mapping("node")
