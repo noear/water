@@ -12,6 +12,9 @@ public class SubscriberModel implements IBinder {
     public long subscriber_id; //在弹性容器里会无限增加
     public String subscriber_key;
 
+    public String tag;
+    public String name;
+
     public String alarm_mobile;
     public String alarm_sign;
 
@@ -31,6 +34,9 @@ public class SubscriberModel implements IBinder {
     public void bind(GetHandlerEx s) {
         subscriber_id = s.get("subscriber_id").longValue(0L);
         subscriber_key = s.get("subscriber_key").value("");
+
+        tag = s.get("tag").value("");
+        name = s.get("name").value("");
 
         alarm_mobile = s.get("alarm_mobile").value("");
         alarm_sign = s.get("alarm_sign").value("");
