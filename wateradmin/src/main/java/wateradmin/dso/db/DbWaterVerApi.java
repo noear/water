@@ -16,6 +16,9 @@ import wateradmin.models.water.VersionModel;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @Slf4j
 public class DbWaterVerApi {
@@ -27,6 +30,10 @@ public class DbWaterVerApi {
      * 备份表的数据版本
      */
     public static void logVersion(DbContext db, String table, String keyName, Object keyValue0) {
+        logVersion(db, table, keyName, keyValue0, null);
+    }
+
+    public static void logVersion(DbContext db, String table, String keyName, Object keyValue0, Consumer<Map<String, Object>> customize) {
 
         if (TextUtils.isEmpty(keyName) || keyValue0 == null) {
             return;
@@ -36,14 +43,18 @@ public class DbWaterVerApi {
 
 
         try {
-            DataItem data = db.table(table).whereEq(keyName, keyValue0).limit(1).select("*").getDataItem();
+            Map<String, Object> data = db.table(table).whereEq(keyName, keyValue0).limit(1).selectMap("*");
 
-            if (data == null || data.count() == 0) {
+            if (data == null || data.size() == 0) {
                 return;
             }
 
+            if (customize != null) {
+                customize.accept(data);
+            }
+
             Datetime now_time = Datetime.Now();
-            String data_json = ONode.stringify(data.getMap());
+            String data_json = ONode.stringify(data);
             String data_md5 = EncryptUtils.md5(data_json);
 
             String old_data_md5 = getLastVersionMd5(table, keyName, keyValue);
@@ -68,7 +79,7 @@ public class DbWaterVerApi {
                     .insert();
 
         } catch (Exception ex) {
-            log.error("{}",ex);
+            log.error("{}", ex);
         }
     }
 

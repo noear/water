@@ -431,12 +431,15 @@ public class DbWaterCfgApi {
 
 
     //编辑更新config。
-    public static void setConfig(long row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
-        if (value == null) {
-            value = "";
+    public static void setConfig(long row_id, String tag, String key, Integer type, String value0, String edit_mode) throws SQLException {
+        if (value0 == null) {
+            value0 = "";
+        } else {
+            value0 = value0.trim();
         }
 
-        value = WW.cfg_data_header + Base64Utils.encode(value.trim());
+        String value_org = value0;
+        String value = WW.cfg_data_header + Base64Utils.encode(value0);
 
 
         DbTableQuery db = db().table("water_cfg_properties")
@@ -456,7 +459,9 @@ public class DbWaterCfgApi {
         }
 
         /** 记录历史版本 */
-        DbWaterVerApi.logVersion(db(), "water_cfg_properties", "row_id", row_id);
+        DbWaterVerApi.logVersion(db(), "water_cfg_properties", "row_id", row_id, data -> {
+            data.put("value", value_org);
+        });
     }
 
     public static boolean setConfigByTagName(String tag, String key, String value) throws SQLException {

@@ -240,9 +240,9 @@
         </table>
     </form>
 
-    <div class="right" style="position: static; z-index: 1; bottom: 0px; left: 0px;">
+    <div class="right" style="position: absolute; z-index: 1; bottom: 10px; right: 10px;">
         <@versions table="water_cfg_properties" keyName="row_id" keyValue="${cfg.row_id}">
-            window.editor.setValue(m.content);
+            window.editor.setValue(m.value);
         </@versions>
     </div>
 </detail>
