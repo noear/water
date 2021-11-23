@@ -54,13 +54,21 @@ public class ApiSpeedController extends BaseController {
 
     //性能监控-列表
     @Mapping("speed/inner")
-    public ModelAndView speedList(String tag_name,String serviceName, String name, String sort, String tag) throws SQLException {
+    public ModelAndView speedList(String tag_name, String serviceName, String name, String sort, String tag) throws SQLException {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
 
         if (tag == null) {
             tag = "";
+        }
+
+        if (serviceName == null) {
+            serviceName = "";
+        }
+
+        if (name == null) {
+            name = "";
         }
 
         List<TagCountsModel> services = DbWaterOpsApi.getSpeedServices(tag_name);
