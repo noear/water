@@ -2,7 +2,9 @@ package org.noear.rubber.workflow;
 
 import java.util.List;
 
-//工作流运行器
+/**
+ * 工作流运行器
+ * */
 public class WorkflowRunner {
     public WorkflowRunner(Workflow workflow, WorkflowAdapter adapter) {
         this.workflow = workflow;

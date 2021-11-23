@@ -1,6 +1,8 @@
 package org.noear.rubber.workflow;
 
-//节点任务
+/**
+ * 节点任务
+ * */
 public class NodeTask {
     protected int _type;
     protected String _content;

@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//工作流对象
+/**
+ * 工作流对象
+ * */
 public class Workflow {
     private Node _start;
     private Map<String,Node> _nodes = new HashMap<>();

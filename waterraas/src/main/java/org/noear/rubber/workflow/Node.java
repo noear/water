@@ -18,7 +18,9 @@ import java.util.List;
 *
 * */
 
-//节点对象
+/**
+ * 节点对象
+ * */
 public class Node {
      private List<Node> _prveNodes, _nextNodes,_prveLines,_nextLines;
      private Condition _condition;

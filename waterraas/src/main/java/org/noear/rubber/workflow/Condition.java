@@ -2,7 +2,9 @@ package org.noear.rubber.workflow;
 
 import java.util.List;
 
-//条件（一般用于分支条件）
+/**
+ * 条件（一般用于分支条件）
+ * */
 public class Condition {
     private String _name;
     private List<ConditionItem> _items = null;

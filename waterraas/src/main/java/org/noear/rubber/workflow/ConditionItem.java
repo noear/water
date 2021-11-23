@@ -6,7 +6,9 @@ import org.noear.water.utils.TextUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-//条件荐（结构：左侧,操作符,右侧,连接符;...）
+/**
+ * 条件项（结构：左侧,操作符,右侧,连接符;...）
+ * */
 public class ConditionItem {
     protected String _left; //左侧
     protected String _operator;//运算符 //=，>，>=，<，<=，L(包含)，F(函数)

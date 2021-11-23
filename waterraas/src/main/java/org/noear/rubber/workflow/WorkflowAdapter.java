@@ -2,7 +2,9 @@ package org.noear.rubber.workflow;
 
 import java.util.List;
 
-//工作流适配器
+/**
+ * 工作流适配器
+ * */
 public interface WorkflowAdapter {
     //是否取消流程
     boolean is_cancel();
