@@ -105,7 +105,7 @@
                     <#if m.tag == name>
                         <a id="e${m.tag}" class="btn sel">${m.tag!}</a>
                     <#else>
-                        <a id="e${m.tag}" class="btn" href="/mot/service/inner?tag_name=${tag_name!}&name=${m.tag!}">${m.tag!}</a>
+                        <a id="e${m.tag}" class="btn" href="/msg/subs/inner?tag_name=${tag_name!}&name=${m.tag!}">${m.tag!}</a>
                     </#if>
                 </#list>
             </tabbar>
