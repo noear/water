@@ -1,7 +1,6 @@
 package wateradmin.controller.msg;
 
 import org.noear.solon.auth.annotation.AuthRoles;
-import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.WaterClient;
