@@ -8,9 +8,7 @@ import waterapi.dso.CacheUtils;
 import waterapi.models.WhitelistModel;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author noear 2021/11/20 created
@@ -21,11 +19,11 @@ public class DbWaterCfgSafeApi {
     }
 
     //获取IP白名单
-    private static List<String> _ip_whitelist = null;
-    private static List<String> _token_whitelist = null;
+    private static Set<String> _ip_whitelist = null;
+    private static Set<String> _token_whitelist = null;
     private static boolean _whitelist_ignore_client = false ;
 
-    private static synchronized List<String> getIpWhitelist() throws SQLException {
+    private static synchronized Set<String> getIpWhitelist() throws SQLException {
         if (_ip_whitelist == null) {
             loadWhitelist();
         }
@@ -33,7 +31,7 @@ public class DbWaterCfgSafeApi {
         return _ip_whitelist;
     }
 
-    private static synchronized List<String> getTokenWhitelist() throws SQLException {
+    private static synchronized Set<String> getTokenWhitelist() throws SQLException {
         if (_token_whitelist == null) {
             loadWhitelist();
         }
@@ -50,11 +48,12 @@ public class DbWaterCfgSafeApi {
         List<WhitelistModel> whiteList = db().table("water_cfg_whitelist")
                 .whereEq("tag", "server")
                 .andEq("is_enabled", 1)
-                .caching(CacheUtils.data).usingCache(60)
-                .selectList("value", WhitelistModel.class);
+                .caching(CacheUtils.data)
+                .usingCache(60)
+                .selectList("type,value", WhitelistModel.class);
 
-        List<String> ipList = new ArrayList<>();
-        List<String> tokenList = new ArrayList<>();
+        Set<String> ipList = new HashSet<>();
+        Set<String> tokenList = new HashSet<>();
         for (WhitelistModel w1 : whiteList) {
             if (WW.whitelist_type_ip.equals(w1.type)) {
                 ipList.add(w1.value);

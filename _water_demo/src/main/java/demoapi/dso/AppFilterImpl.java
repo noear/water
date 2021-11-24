@@ -25,7 +25,10 @@ public class AppFilterImpl implements Filter {
         TagsMDC.tag1(ctx.pathNew());
 
         if ("HEAD".equals(ctx.method()) == false) {
-            log.info("> Headers: {}\n> Params: {}", ctx.headerMap(), ctx.paramMap());
+            //排除water的路径
+            if (!ctx.path().startsWith("/run/") && !ctx.path().startsWith("/msg/")) {
+                log.info("> Headers: {}\n> Params: {}", ctx.headerMap(), ctx.paramMap());
+            }
         }
 
         try {
@@ -35,8 +38,12 @@ public class AppFilterImpl implements Filter {
             log.error("< Error: {}", e);
         } finally {
             String output = ctx.attr("output");
+
             if (Utils.isNotEmpty(output)) {
-                log.info("< Body: {}", output);
+                //排除water的路径
+                if (!ctx.path().startsWith("/run/") && !ctx.path().startsWith("/msg/")) {
+                    log.info("< Body: {}", output);
+                }
             }
 
             //3.获得接口响应时长
