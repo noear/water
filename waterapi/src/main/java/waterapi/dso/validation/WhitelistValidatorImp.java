@@ -15,7 +15,7 @@ public class WhitelistValidatorImp extends WhitelistValidator {
         if (Solon.cfg().isWhiteMode()) {
             try {
                 //先 token 验证
-                String token = ctx.header(WW.water_acl_token);
+                String token = ctx.header(WW.http_header_token);
                 if (DbWaterCfgSafeApi.isWhitelistByToken(token)) {
                     return Result.succeed();
                 }

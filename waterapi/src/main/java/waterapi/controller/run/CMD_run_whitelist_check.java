@@ -1,6 +1,5 @@
 package waterapi.controller.run;
 
-import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
@@ -40,7 +39,7 @@ public class CMD_run_whitelist_check extends UapiBase {
                 if (DbWaterCfgSafeApi.isWhitelistByToken(value)) {
                     return "OK";
                 } else {
-                    return "Invalid token!";
+                    return (value + ",not in token list!");
                 }
             }
 
@@ -49,7 +48,7 @@ public class CMD_run_whitelist_check extends UapiBase {
                 if (DbWaterCfgSafeApi.isWhitelistByIp(value)) {
                     return "OK";
                 } else {
-                    return "Invalid ip!";
+                    return (value + ",not in ip list!");
                 }
             }
         }
@@ -57,7 +56,7 @@ public class CMD_run_whitelist_check extends UapiBase {
         if (DbWaterCfgSafeApi.isWhitelist(tags, type, value)) {
             return ("OK");
         } else {
-            return (value + ",not in list!");
+            return (value + ",not in ip list!");
         }
     }
 }

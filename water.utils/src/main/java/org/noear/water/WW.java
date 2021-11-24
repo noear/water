@@ -10,6 +10,7 @@ public class WW {
 
     public static final String http_header_from = "Water-From";
     public static final String http_header_trace = "Water-Trace-Id";
+    public static final String http_header_token = "Water-Access-Token";
 
     public static final String msg_ucache_topic = "water.cache.update";
     public static final String msg_uconfig_topic = "water.config.update";
@@ -53,7 +54,6 @@ public class WW {
     public static final String water_paas = "water_paas";
     public static final String water_paas_request = "water_paas_request";
 
-    public static final String water_acl_token = "Water-Access-Token";
     public static final String water_settings = "water_settings";
 
     public static final String logger_water_log_api = "water_log_api";
