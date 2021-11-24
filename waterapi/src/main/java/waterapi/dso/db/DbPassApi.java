@@ -35,8 +35,8 @@ public class DbPassApi {
                 .set("is_disabled", 0)
                 .set("is_staticize", 0)
                 .set("plan_max", 0)
-                .set("create_fulltime", new Date())
-                .set("update_fulltime", new Date())
+                .set("create_fulltime", System.currentTimeMillis())
+                .set("update_fulltime", System.currentTimeMillis())
                 .set("use_whitelist", "");
 
         if (TextUtils.isNotEmpty(cron7x)) {
