@@ -111,7 +111,7 @@ public class DbWaterCfgSafeApi {
                     }
                 })
                 .caching(CacheUtils.data)
-                .usingCache(60)
+                .usingCache(60 * 3)
                 .selectExists();
 
     }

@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
+import org.noear.water.WW;
 import waterapi.controller.UapiBase;
 import waterapi.dso.db.DbWaterCfgSafeApi;
 import waterapi.dso.interceptor.Logging;
@@ -32,10 +33,30 @@ public class CMD_run_whitelist_check extends UapiBase {
             }
         }
 
+        if (WW.whitelist_tag_server.equals(tags)) {
+            //令牌验证
+            if (WW.whitelist_type_token.equals(type)) {
+                if (DbWaterCfgSafeApi.isWhitelistByToken(value)) {
+                    return "OK";
+                } else {
+                    return "Invalid token!";
+                }
+            }
+
+            //ip验证
+            if (WW.whitelist_type_ip.equals(type)) {
+                if (DbWaterCfgSafeApi.isWhitelistByIp(value)) {
+                    return "OK";
+                } else {
+                    return "Invalid ip!";
+                }
+            }
+        }
+
         if (DbWaterCfgSafeApi.isWhitelist(tags, type, value)) {
             return ("OK");
         } else {
-            return (value + ",not is whitelist!");
+            return (value + ",not in list!");
         }
     }
 }
