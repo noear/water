@@ -23,6 +23,10 @@ public class DemoController {
 
     @Mapping("/")
     public String test() throws SQLException {
+        if(demoDb == null){
+            return "no demo_db config!";
+        }
+
         //日志服务：写个日志
         log.info("你好，日志服务"); //(content)
         TagsMDC.tag0("demo");

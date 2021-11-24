@@ -5,4 +5,4 @@ solon.app:
   group: "demo"
 
 solon.cloud.water:
-  server: "waterapi"
+  server: "waterapi:9371"

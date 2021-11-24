@@ -2,6 +2,7 @@ package demoapi.dso;
 
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.core.handle.Context;
@@ -31,8 +32,13 @@ public class AppFilterImpl implements Filter {
             chain.doFilter(ctx);
         } catch (Throwable e) {
             //2.顺带记录个异常
-            log.error("{}", e);
+            log.error("< Error: {}", e);
         } finally {
+            String output = ctx.attr("output");
+            if (Utils.isNotEmpty(output)) {
+                log.info("< Body: {}", output);
+            }
+
             //3.获得接口响应时长
             long milliseconds = System.currentTimeMillis() - start;
             CloudClient.metric().addMeter(Solon.cfg().appName(), "path", ctx.pathNew(), milliseconds);
