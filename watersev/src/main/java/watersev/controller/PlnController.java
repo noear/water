@@ -6,12 +6,10 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.config.ServerConfig;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import watersev.dso.*;
-import watersev.dso.db.DbWaterCfgSafeApi;
 import watersev.dso.db.DbWaterFaasApi;
 import watersev.models.water_paas.LuffyFileModel;
 import watersev.utils.CallUtil;
@@ -49,8 +47,6 @@ public class PlnController implements IJob {
         RegController.addService("watersev-" + getName());
 
         JtRun.initAwait();
-
-        ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
 
         List<LuffyFileModel> list = DbWaterFaasApi.getPlanList();
 

@@ -13,7 +13,7 @@ import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import waterfaas.controller.AppHandler;
 import waterfaas.controller.FrmInterceptor;
 import waterfaas.dso.db.DbWaterCfgApi;
-import waterfaas.dso.MsgInitPlugin;
+import waterfaas.dso.AppInitPlugin;
 
 
 public class WaterfaasApp {
@@ -43,7 +43,7 @@ public class WaterfaasApp {
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
 
-            x.pluginAdd(-1, new MsgInitPlugin());
+            x.pluginAdd(-1, new AppInitPlugin());
         });
 
         app.before("**", MethodType.GET, FrmInterceptor.g());

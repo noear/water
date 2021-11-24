@@ -1,5 +1,7 @@
 package wateradmin.dso.db;
 
+import org.noear.water.WW;
+import org.noear.water.dso.NoticeUtils;
 import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -54,7 +56,7 @@ public class DbWaterCfgSafeApi {
             row_id = 0;
         }
 
-        if(value == null){
+        if (value == null) {
             return false;
         }
 
@@ -66,10 +68,16 @@ public class DbWaterCfgSafeApi {
                 .set("gmt_modified", System.currentTimeMillis());
 
         if (row_id > 0) {
-            return qr.whereEq("row_id", row_id).update() > 0;
+            qr.whereEq("row_id", row_id).update();
         } else {
-            return qr.insert() > 0;
+            qr.insert();
         }
+
+        if (WW.whitelist_tag_server.equals(tag)) {
+            NoticeUtils.updateCache("whitelist:server");
+        }
+
+        return true;
     }
 
     //批量导入

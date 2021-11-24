@@ -21,6 +21,7 @@ public class DbWaterCfgSafeApi {
                 .andEq("type", WW.whitelist_type_token)
                 .andEq("is_enabled", 1)
                 .caching(Config.cache_data)
+                .cacheTag("whitelist:server")
                 .usingCache(60)
                 .selectValue("value", "");
 

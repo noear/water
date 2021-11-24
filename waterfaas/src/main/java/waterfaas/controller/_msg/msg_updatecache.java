@@ -7,11 +7,13 @@ import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
+import org.noear.water.config.ServerConfig;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterfaas.dso.AFileUtil;
 import waterfaas.dso.db.DbLuffyApi;
 import waterfaas.dso.RouteHelper;
+import waterfaas.dso.db.DbWaterCfgSafeApi;
 
 /**
  * 实时更新FaaS代码
@@ -31,7 +33,7 @@ public class msg_updatecache implements CloudEventHandler {
         return true;
     }
 
-    private void handlerDo(String tag) throws Exception{
+    private void handlerDo(String tag) throws Exception {
         if (tag.indexOf(":") > 0) {
             String[] ss = tag.split(":");
             if ("paas".equals(ss[0])) {
@@ -72,6 +74,10 @@ public class msg_updatecache implements CloudEventHandler {
                     ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
                 }
                 return;
+            }
+
+            if ("whitelist".equals(ss[0])) {
+                ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
             }
         }
     }

@@ -7,10 +7,12 @@ import org.noear.solon.cloud.model.Event;
 import org.noear.solon.core.handle.Context;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
+import org.noear.water.config.ServerConfig;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.AFileUtil;
 import watersev.dso.DbLuffyApi;
+import watersev.dso.db.DbWaterCfgSafeApi;
 
 @CloudEvent(topic = "water.cache.update", level = EventLevel.instance)
 public class msg_updatecache implements CloudEventHandler {
@@ -62,6 +64,11 @@ public class msg_updatecache implements CloudEventHandler {
                 if (ProtocolHub.msgBrokerFactory != null) {
                     ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
                 }
+                return;
+            }
+
+            if ("whitelist".equals(ss[0])) {
+                ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
                 return;
             }
         }
