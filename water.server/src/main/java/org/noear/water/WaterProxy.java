@@ -16,10 +16,6 @@ public class WaterProxy {
     static final String SERVICE_WATER_FAAS = "waterfaas";
     static final String SERVICE_WATER_RAAS = "waterraas";
 
-    public static String job(String service, String name) throws Exception {
-        return HttpUtils.http(service, WW.path_run_job).data("name", name).post();
-    }
-
     /**
      * 调用_service接口，并尝试缓存控制
      */
@@ -90,6 +86,15 @@ public class WaterProxy {
 
     private static HttpUtils http(String url) {
         return HttpUtils.http(url);
+    }
+
+    public static String task(String service, String name) throws Exception {
+        return HttpUtils.http(service, WW.path_run_job).data("name", name).post();
+    }
+
+    @Deprecated
+    public static String job(String service, String name) throws Exception {
+        return task(service, name);
     }
 
     /**
