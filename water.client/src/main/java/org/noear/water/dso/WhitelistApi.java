@@ -81,18 +81,28 @@ public class WhitelistApi {
     public boolean existsOfClientAndServerIp(String value){
         return checkDo(tag_clientAndServer,"ip",value);
     }
+
     public boolean existsOfServerIp(String value){
         return checkDo(tag_server,"ip",value);
     }
+    public boolean existsOfServerToken(String value){
+        return checkDo(tag_server,"token",value);
+    }
+
     public boolean existsOfMasterIp(String value){
         return checkDo(tag_master,"ip",value);
     }
-
+    public boolean existsOfMasterToken(String value){
+        return checkDo(tag_master,"token",value);
+    }
 
     public boolean existsOfDomain(String tags, String value){
         return checkDo(tags,"domain",value);
     }
     public boolean existsOfMobile(String tags, String value){
         return checkDo(tags,"domain",value);
+    }
+    public boolean existsOfToken(String tags, String value){
+        return checkDo(tags,"token",value);
     }
 }
