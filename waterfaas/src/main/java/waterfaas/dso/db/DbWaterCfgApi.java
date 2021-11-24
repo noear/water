@@ -1,4 +1,4 @@
-package waterfaas.dso;
+package waterfaas.dso.db;
 
 import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.weed.DbContext;

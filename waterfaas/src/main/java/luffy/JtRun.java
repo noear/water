@@ -10,7 +10,7 @@ import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
 import waterfaas.Config;
-import waterfaas.dso.DbLuffyApi;
+import waterfaas.dso.db.DbLuffyApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;

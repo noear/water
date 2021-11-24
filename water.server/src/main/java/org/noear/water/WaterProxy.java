@@ -1,6 +1,7 @@
 package org.noear.water;
 
 import org.noear.solon.cloud.utils.http.HttpUtils;
+import org.noear.water.config.ServerConfig;
 import org.noear.water.model.LogLevel;
 import org.noear.weed.cache.CacheUsing;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 public class WaterProxy {
     static final String SERVICE_WATER_FAAS = "waterfaas";
     static final String SERVICE_WATER_RAAS = "waterraas";
+
 
     /**
      * 调用_service接口，并尝试缓存控制
@@ -89,7 +91,10 @@ public class WaterProxy {
     }
 
     public static String task(String service, String name) throws Exception {
-        return HttpUtils.http(service, WW.path_run_job).data("name", name).post();
+        return HttpUtils.http(service, WW.path_run_job)
+                .data("name", name)
+                .header("token", ServerConfig.taskToken)
+                .post();
     }
 
     @Deprecated

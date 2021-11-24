@@ -1,6 +1,7 @@
 package waterfaas.dso;
 
 import org.noear.luffy.model.AFileModel;
+import waterfaas.dso.db.DbLuffyApi;
 
 import java.util.HashMap;
 import java.util.Map;

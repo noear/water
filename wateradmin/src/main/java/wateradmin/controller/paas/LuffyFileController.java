@@ -17,7 +17,7 @@ import wateradmin.dso.FaasUtils;
 import wateradmin.dso.Session;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbLuffyApi;
-import wateradmin.dso.db.DbWaterCfgApi;
+import wateradmin.dso.db.DbWaterCfgSafeApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_paas.LuffyFileModel;
 import wateradmin.models.water_paas.LuffyFileType;
@@ -150,7 +150,7 @@ public class LuffyFileController extends BaseController {
             file.tag = tag;
         }
 
-        List<TagCountsModel> whitelist = DbWaterCfgApi.getWhitelistTags();
+        List<TagCountsModel> whitelist = DbWaterCfgSafeApi.getWhitelistTags();
 
         viewModel.put("id", file_id);
         viewModel.put("tag", tag);

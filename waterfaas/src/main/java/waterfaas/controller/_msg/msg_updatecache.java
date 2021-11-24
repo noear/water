@@ -10,7 +10,7 @@ import org.noear.luffy.model.AFileModel;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.utils.TextUtils;
 import waterfaas.dso.AFileUtil;
-import waterfaas.dso.DbLuffyApi;
+import waterfaas.dso.db.DbLuffyApi;
 import waterfaas.dso.RouteHelper;
 
 /**

@@ -12,7 +12,7 @@ import luffy.JtRun;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import waterfaas.controller.AppHandler;
 import waterfaas.controller.FrmInterceptor;
-import waterfaas.dso.DbWaterCfgApi;
+import waterfaas.dso.db.DbWaterCfgApi;
 import waterfaas.dso.MsgInitPlugin;
 
 

@@ -11,7 +11,7 @@ import org.noear.luffy.utils.TextUtils;
 import org.noear.solon.core.handle.Handler;
 import waterfaas.Config;
 import waterfaas.dso.AFileUtil;
-import waterfaas.dso.DbLuffyApi;
+import waterfaas.dso.db.DbLuffyApi;
 
 import java.util.HashMap;
 import java.util.List;

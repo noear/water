@@ -6,6 +6,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.BrokerVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import waterfaas.dso.db.DbWaterCfgApi;
 
 import java.util.List;
 
