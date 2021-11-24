@@ -1,5 +1,6 @@
 package org.noear.water.dso;
 
+import org.noear.water.WW;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterSetting;
 
@@ -15,32 +16,33 @@ import java.util.Map;
  * */
 public class WhitelistApi {
     protected final ApiCaller apiCaller;
-    public WhitelistApi(){
+
+    public WhitelistApi() {
         apiCaller = new ApiCaller(WaterAddress.getWhitelistApiUrl());
     }
 
     /**
      * 主控组
-     * */
+     */
     public static final String tag_master = "master";
     /**
      * 客户端组（一般用于检测管理后台客户端）
-     * */
+     */
     public static final String tag_client = "client";
     /**
      * 服务端组（一般用于检测服务端IP）
-     * */
+     */
     public static final String tag_server = "server";
 
     /**
      * 客户端组+服务端组
-     * */
+     */
     public static final String tag_clientAndServer = "client,server";
 
     /**
      * 检测，是否为白名单
      *
-     * @param tags   分组(多个以,隔开)
+     * @param tags  分组(多个以,隔开)
      * @param type  类型(ip,mobile,host)
      * @param value 值
      */
@@ -61,48 +63,53 @@ public class WhitelistApi {
         try {
             String val = WaterSetting.cacheLocal.getBy(10, cache_key, (us) -> checkDo0(tags, type, value));
             return "OK".equals(val);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
     }
 
-    public boolean exists(String tags, String type, String value){
-        return checkDo(tags,type,value);
+    public boolean exists(String tags, String type, String value) {
+        return checkDo(tags, type, value);
     }
 
-    public boolean existsOfIp(String tags,  String value){
-        return checkDo(tags,"ip",value);
+    public boolean existsOfIp(String tags, String value) {
+        return checkDo(tags, WW.whitelist_type_ip, value);
     }
 
-    public boolean existsOfClientIp(String value){
-        return checkDo(tag_client,"ip",value);
-    }
-    public boolean existsOfClientAndServerIp(String value){
-        return checkDo(tag_clientAndServer,"ip",value);
+    public boolean existsOfClientIp(String value) {
+        return checkDo(tag_client, WW.whitelist_type_ip, value);
     }
 
-    public boolean existsOfServerIp(String value){
-        return checkDo(tag_server,"ip",value);
-    }
-    public boolean existsOfServerToken(String value){
-        return checkDo(tag_server,"token",value);
+    public boolean existsOfClientAndServerIp(String value) {
+        return checkDo(tag_clientAndServer, WW.whitelist_type_ip, value);
     }
 
-    public boolean existsOfMasterIp(String value){
-        return checkDo(tag_master,"ip",value);
-    }
-    public boolean existsOfMasterToken(String value){
-        return checkDo(tag_master,"token",value);
+    public boolean existsOfServerIp(String value) {
+        return checkDo(tag_server, WW.whitelist_type_ip, value);
     }
 
-    public boolean existsOfDomain(String tags, String value){
-        return checkDo(tags,"domain",value);
+    public boolean existsOfServerToken(String value) {
+        return checkDo(tag_server, WW.whitelist_type_token, value);
     }
-    public boolean existsOfMobile(String tags, String value){
-        return checkDo(tags,"domain",value);
+
+    public boolean existsOfMasterIp(String value) {
+        return checkDo(tag_master, WW.whitelist_type_ip, value);
     }
-    public boolean existsOfToken(String tags, String value){
-        return checkDo(tags,"token",value);
+
+    public boolean existsOfMasterToken(String value) {
+        return checkDo(tag_master, WW.whitelist_type_token, value);
+    }
+
+    public boolean existsOfDomain(String tags, String value) {
+        return checkDo(tags, WW.whitelist_type_domain, value);
+    }
+
+    public boolean existsOfMobile(String tags, String value) {
+        return checkDo(tags, WW.whitelist_type_mobile, value);
+    }
+
+    public boolean existsOfToken(String tags, String value) {
+        return checkDo(tags, WW.whitelist_type_token, value);
     }
 }
