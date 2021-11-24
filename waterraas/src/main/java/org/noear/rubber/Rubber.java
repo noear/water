@@ -117,7 +117,7 @@ public class Rubber {
         RubberUtil.registerContext(context);
 
         try {
-            //2.4.1.//不需要计时
+            //2.4.1.不需要计时
             //2.4.2.加载模型
             context.loadModel(model_tagName);
 
