@@ -7,7 +7,7 @@
 为Java服务开发和治理，提供一站式解决方案（可以理解为微服务架构支持套件）。基于 Solon 框架开发，并支持完整的 Solon Cloud 规范；已在生产环境跑了4年。
 
 
-功能约等于：consul + rabbitmq + elk + prometheus + openFaas + quartz 等一些别的功能，并有机结合在一起。
+功能相当于：consul + rabbitmq + elk + prometheus + openFaas + quartz + 等等，并有机结合在一起。
 
 
 ## 开始
