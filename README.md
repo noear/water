@@ -10,9 +10,6 @@
 功能约等于：consul + rabbitmq + elk + prometheus + openFaas + quartz 等一些别的功能，并有机结合在一起。
 
 
-一直与 Solon 项目伴生成长。
-
-
 ## 开始
 
 ### 了解框架与构件
@@ -77,7 +74,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.5.68</version>
+    <version>1.6.1</version>
 </dependency>
 ```
 
