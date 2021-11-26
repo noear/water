@@ -16,7 +16,7 @@
  */
 ;(function () {
     // CommonJS
-    typeof(require) != 'undefined' ? SyntaxHighlighter = require('shCore').SyntaxHighlighter : null;
+    typeof(require) != 'undefined' ? SyntaxHighlighter = require('static/js/shCore').SyntaxHighlighter : null;
 
     function Brush() {
         var funcs = 'abs avg case cast coalesce convert count current_timestamp ' +
