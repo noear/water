@@ -11,4 +11,13 @@ public class AuthProcessorImpl extends GritAuthProcessor {
     protected long getSubjectId() {
         return Session.current().getSubjectId();
     }
+
+    @Override
+    public boolean verifyPath(String path, String method) {
+        if (path.contains("@") || path.contains("/ajax/pull")) {
+            return true;
+        }
+
+        return super.verifyPath(path, method);
+    }
 }
