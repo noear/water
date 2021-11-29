@@ -1,8 +1,6 @@
 package wateradmin;
 
 import org.noear.solon.Solon;
-import org.noear.solon.cloud.CloudClient;
-import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
@@ -30,10 +28,6 @@ public class WateradminApp {
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         });
-
-        //注册 gritapi 服务
-        Instance instance = new Instance("gritapi", Instance.local().address()).protocol("http");
-        CloudClient.discovery().register("grit", instance);
 
         PreheatUtils.preheat("/run/check/");
         PreheatUtils.preheat("/login");
