@@ -48,10 +48,10 @@ public class GeneratorJson {
 //        buildTableJosn(waterDb, "water_tool_synchronous", "water");
 
         //water_bcf
-        buildTableJosn(waterDb, "grit_resource", "grit");
-        buildTableJosn(waterDb, "grit_resource_linked", "grit");
-        buildTableJosn(waterDb, "grit_subject", "grit");
-        buildTableJosn(waterDb, "grit_subject_linked", "grit");
+//        buildTableJosn(waterDb, "grit_resource", "grit");
+//        buildTableJosn(waterDb, "grit_resource_linked", "grit");
+//        buildTableJosn(waterDb, "grit_subject", "grit");
+//        buildTableJosn(waterDb, "grit_subject_linked", "grit");
 
 
 

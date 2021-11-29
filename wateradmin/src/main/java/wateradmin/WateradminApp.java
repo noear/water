@@ -1,6 +1,8 @@
 package wateradmin;
 
 import org.noear.solon.Solon;
+import org.noear.solon.cloud.CloudClient;
+import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
@@ -12,7 +14,7 @@ import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         Solon.start(WateradminApp.class, args, x -> {
             Config.tryInit(x);
 
@@ -28,6 +30,9 @@ public class WateradminApp {
 
             ProtocolHub.monitoring = new MonitoringAliyun();
         });
+
+        Instance instance = new Instance("gritapi", Instance.local().address());
+        CloudClient.discovery().register("grit", instance);
 
         PreheatUtils.preheat("/run/check/");
         PreheatUtils.preheat("/login");
