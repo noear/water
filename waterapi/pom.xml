@@ -54,11 +54,6 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>grit.server</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
         </dependency>
 

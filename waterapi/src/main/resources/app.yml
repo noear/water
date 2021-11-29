@@ -18,3 +18,7 @@ solon.logging.logger:
   "com.zaxxer.hikari.*":
     level: "WARN"
 
+water.ds.schema: water
+water.ds.server: mysql.water.io:3306
+water.ds.username: demo
+water.ds.password: KHe85E4MYdeLBHSR

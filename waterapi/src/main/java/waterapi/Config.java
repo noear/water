@@ -109,12 +109,6 @@ public class Config {
 
             initWeedOnException();
 
-            ConfigM grit_cfg = cfg("grit", "grit.yml");
-            if (grit_cfg != null && TextUtils.isNotEmpty(grit_cfg.value)) {
-                Properties grit_prop = grit_cfg.getProp();
-                Solon.cfg().loadAdd(grit_prop);
-            }
-
             System.out.println("[Water] config completed.");
         }
     }
