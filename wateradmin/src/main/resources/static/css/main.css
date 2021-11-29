@@ -392,7 +392,7 @@ toper > right{text-align: right;float:right;}
     main > middle{width: 160px; }
     /*main > right{width:calc(100% - 180px);}*/
     main > right{width:calc(100% - 160px);}
-    main > left + middle + right {width: calc(100% - 340px); }
+    main > left + middle + right {width: calc(100% - 320px); }
     /*main > right.frm{width:calc(100% - 160px)!important;}*/
 
     main > article{width:calc(100% - 180px);}

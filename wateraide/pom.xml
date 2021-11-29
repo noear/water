@@ -63,6 +63,11 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>grit.server.ui-durian</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>water.protocol</artifactId>
         </dependency>
 
