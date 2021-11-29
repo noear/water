@@ -31,7 +31,8 @@ public class WateradminApp {
             ProtocolHub.monitoring = new MonitoringAliyun();
         });
 
-        Instance instance = new Instance("gritapi", Instance.local().address());
+        //注册 gritapi 服务
+        Instance instance = new Instance("gritapi", Instance.local().address()).protocol("http");
         CloudClient.discovery().register("grit", instance);
 
         PreheatUtils.preheat("/run/check/");
