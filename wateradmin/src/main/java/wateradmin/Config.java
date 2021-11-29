@@ -10,6 +10,7 @@ import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
+import wateradmin.dso.SessionRoles;
 import wateradmin.dso.auth.AuthProcessorImpl;
 
 public class Config {
@@ -58,6 +59,7 @@ public class Config {
                 .loginUrl("/login")
                 .addRule(r -> r.include("**").verifyIp().failure((c, t) -> c.output(c.realIp() + ", not whitelist")))
                 .addRule(r -> r.exclude("/login**").exclude(HealthHandler.HANDLER_PATH).exclude("/run/**").exclude("/msg/**").exclude("/_session/**").verifyPath())
+                .addRule(r -> r.include("/grit/**").verifyRoles(SessionRoles.role_admin))
                 .processor(new AuthProcessorImpl())
                 .failure((ctx, rst) -> {
                     ctx.outputAsJson(new ONode().set("code", 403).set("msg", "没有权限").toJson());
