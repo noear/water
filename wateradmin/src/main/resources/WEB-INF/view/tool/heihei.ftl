@@ -66,7 +66,7 @@
                 <tr>
                     <th></th>
                     <td>
-                        <@authRoles name="water_p_admin">
+                        <@authRoles name="water_role_admin">
                             <button type="button" onclick="debug()">发送</button>
                         </@authRoles>
                     </td>
