@@ -79,7 +79,7 @@ java -jar waterraas.jar --server.port=9375
 
 * water 管理控制台初始账号与密码
 
-> 账号：admin 密码：Grit1214
+> 账号：admin 密码：admin
 
 
 * water 的访问控制，基于 ip 和 token 的安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：

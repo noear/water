@@ -113,7 +113,7 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 * water 管理控制台初始账号与密码
 
-> 账号：admin 密码：Grit1214
+> 账号：admin 密码：admin
 
 * 如果其它服务跨域调用时，添加环境变量
 
