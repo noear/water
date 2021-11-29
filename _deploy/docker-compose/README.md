@@ -50,7 +50,7 @@ docker-compose up
 
 * water 管理控制台初始账号与密码
 
-> 账号：admin 密码：bcf1234
+> 账号：admin 密码：Grit1214
 
 * 在使用 water 的服务器上，添加 `waterapi` 域的 host 记录
 

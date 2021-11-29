@@ -109,7 +109,7 @@ java -jar watersev.jar --server.port=9314 --sss=msgdis
 
 * water 管理控制台初始账号与密码
 
-> 账号：admin 密码：bcf1234
+> 账号：admin 密码：Grit1214
 
 * water 的访问控制，基于ip安全名单实现（主要给 waterapi 加上）。如果需要，通过启动参数：
 
