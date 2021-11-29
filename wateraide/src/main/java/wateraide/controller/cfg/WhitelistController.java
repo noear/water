@@ -13,7 +13,7 @@ import wateraide.controller.BaseController;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
-import wateraide.models.water_cfg.WhitelistModel;
+import wateraide.models.view.water_cfg.WhitelistModel;
 import wateraide.viewModels.ViewModel;
 
 import java.sql.SQLException;

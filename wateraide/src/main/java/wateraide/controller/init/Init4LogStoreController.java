@@ -12,7 +12,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import wateraide.Config;
 import wateraide.dso.db.DbWaterCfgApi;
-import wateraide.models.water_cfg.LoggerModel;
+import wateraide.models.view.water_cfg.LoggerModel;
 
 import java.util.List;
 

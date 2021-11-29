@@ -2,7 +2,7 @@ package wateraide.dso;
 
 
 import wateraide.dso.db.DbWaterCfgApi;
-import wateraide.models.water_cfg.EnumModel;
+import wateraide.models.view.water_cfg.EnumModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

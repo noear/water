@@ -7,7 +7,7 @@ import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import wateraide.dso.db.DbWaterCfgApi;
-import wateraide.models.water_cfg.ConfigModel;
+import wateraide.models.view.water_cfg.ConfigModel;
 
 import java.sql.SQLException;
 import java.util.Properties;

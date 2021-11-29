@@ -12,7 +12,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import wateraide.Config;
 import wateraide.dso.db.DbWaterCfgApi;
-import wateraide.models.water_cfg.BrokerModel;
+import wateraide.models.view.water_cfg.BrokerModel;
 
 import java.util.List;
 

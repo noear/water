@@ -17,7 +17,7 @@ import wateraide.dso.BcfTagChecker;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
-import wateraide.models.water_cfg.LoggerModel;
+import wateraide.models.view.water_cfg.LoggerModel;
 
 import java.util.ArrayList;
 import java.util.List;

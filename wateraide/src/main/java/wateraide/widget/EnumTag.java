@@ -9,7 +9,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.core.NvMap;
 import org.noear.water.utils.TextUtils;
 import wateraide.dso.EnumUtil;
-import wateraide.models.water_cfg.EnumModel;
+import wateraide.models.view.water_cfg.EnumModel;
 
 import java.io.IOException;
 import java.util.Arrays;

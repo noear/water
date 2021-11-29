@@ -1,7 +1,7 @@
 package wateraide.dso;
 
 
-import wateraide.models.water_cfg.EnumModel;
+import wateraide.models.view.water_cfg.EnumModel;
 
 import java.util.HashMap;
 import java.util.List;

@@ -40,25 +40,23 @@ public class GeneratorJson {
 //        buildTableJosn(waterDb, "water_cfg_broker", "water");
 //        buildTableJosn(waterDb, "water_cfg_gateway", "water");
 //        buildTableJosn(waterDb, "water_cfg_logger", "water");
-//        buildTableJosn(waterDb, "water_cfg_properties", "water");
-        buildTableJosn(waterDb, "water_cfg_whitelist", "water");
+        buildTableJosn(waterDb, "water_cfg_properties", "water");
+//        buildTableJosn(waterDb, "water_cfg_whitelist", "water");
 
 //        buildTableJosn(waterDb, "water_tool_monitor", "water");
 //        buildTableJosn(waterDb, "water_tool_report", "water");
 //        buildTableJosn(waterDb, "water_tool_synchronous", "water");
 
         //water_bcf
-//        buildTableJosn(waterDb, "bcf_config", "water_bcf");
-//        buildTableJosn(waterDb, "bcf_group", "water_bcf");
-//        buildTableJosn(waterDb, "bcf_resource", "water_bcf");
-//        buildTableJosn(waterDb, "bcf_resource_linked", "water_bcf");
+        buildTableJosn(waterDb, "grit_resource", "grit");
+        buildTableJosn(waterDb, "grit_resource_linked", "grit");
+        buildTableJosn(waterDb, "grit_subject", "grit");
+        buildTableJosn(waterDb, "grit_subject_linked", "grit");
 
-//        buildTableJosn(waterDb, "bcf_user", "water_bcf");
-//        buildTableJosn(waterDb, "bcf_user_linked", "water_bcf");
 
 
         //water_paas
-        buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
+//        buildTableJosn(waterPaasDb, "luffy_file", "water_paas");
 
 //        buildTableJosn(waterPaasDb, "rubber_block", "water_paas");
 

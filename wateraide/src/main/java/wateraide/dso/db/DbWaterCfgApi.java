@@ -1,6 +1,5 @@
 package wateraide.dso.db;
 
-import org.noear.snack.ONode;
 import org.noear.water.WW;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
@@ -9,10 +8,10 @@ import org.noear.weed.DbTableQuery;
 import wateraide.Config;
 import wateraide.dso.ConfigType;
 import wateraide.models.TagCountsModel;
-import wateraide.models.water_cfg.BrokerModel;
-import wateraide.models.water_cfg.ConfigModel;
-import wateraide.models.water_cfg.LoggerModel;
-import wateraide.models.water_cfg.WhitelistModel;
+import wateraide.models.view.water_cfg.BrokerModel;
+import wateraide.models.view.water_cfg.ConfigModel;
+import wateraide.models.view.water_cfg.LoggerModel;
+import wateraide.models.view.water_cfg.WhitelistModel;
 
 import java.sql.SQLException;
 import java.util.Arrays;

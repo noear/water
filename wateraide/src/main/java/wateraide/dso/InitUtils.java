@@ -4,12 +4,12 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
-import wateraide.models.water.*;
-import wateraide.models.water_bcf.BcfConfigModel;
-import wateraide.models.water_bcf.BcfGroupModel;
-import wateraide.models.water_bcf.BcfResourceModel;
-import wateraide.models.water_bcf.BcfUserModel;
-import wateraide.models.water_paas.*;
+import wateraide.models.data.grit.GritResourceDo;
+import wateraide.models.data.grit.GritResourceLinkedDo;
+import wateraide.models.data.grit.GritSubjectDo;
+import wateraide.models.data.grit.GritSubjectLinkedDo;
+import wateraide.models.data.water.*;
+import wateraide.models.data.water_paas.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,44 +58,41 @@ public class InitUtils {
         String sql = Utils.getResourceAsString("db/water.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, WaterCfgBrokerModel.class, "water_cfg_broker", "water");
-        tryInitDataByTypeJsonSql(db, WaterCfgGatewayModel.class, "water_cfg_gateway", "water");
-        tryInitDataByTypeJsonSql(db, WaterCfgLoggerModel.class, "water_cfg_logger", "water");
-        tryInitDataByTypeJsonSql(db, WaterCfgPropertiesModel.class, "water_cfg_properties", "water");
-        tryInitDataByTypeJsonSql(db, WaterCfgWhitelistModel.class, "water_cfg_whitelist", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgBrokerDo.class, "water_cfg_broker", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgGatewayDo.class, "water_cfg_gateway", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgLoggerDo.class, "water_cfg_logger", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgPropertiesDo.class, "water_cfg_properties", "water");
+        tryInitDataByTypeJsonSql(db, WaterCfgWhitelistDo.class, "water_cfg_whitelist", "water");
 
-        tryInitDataByTypeJsonSql(db, WaterToolMonitorModel.class, "water_tool_monitor", "water");
-        tryInitDataByTypeJsonSql(db, WaterToolReportModel.class, "water_tool_report", "water");
-        tryInitDataByTypeJsonSql(db, WaterToolSynchronousModel.class, "water_tool_synchronous", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolMonitorDo.class, "water_tool_monitor", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolReportDo.class, "water_tool_report", "water");
+        tryInitDataByTypeJsonSql(db, WaterToolSynchronousDo.class, "water_tool_synchronous", "water");
     }
 
-    public static void tryInitWaterBcf(DbContext db) throws Exception {
-        String sql = Utils.getResourceAsString("db/water_bcf.sql");
+    public static void tryInitGrit(DbContext db) throws Exception {
+        String sql = Utils.getResourceAsString("db/grit.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, BcfConfigModel.class,"bcf_config", "water_bcf");
-        tryInitDataByTypeJsonSql(db, BcfGroupModel.class,"bcf_group", "water_bcf");
-        tryInitDataByTypeJsonSql(db, BcfResourceModel.class,"bcf_resource", "water_bcf");
-        tryInitDataByJsonSql(db, "bcf_resource_linked", "water_bcf");
-
-        tryInitDataByTypeJsonSql(db, BcfUserModel.class,"bcf_user", "water_bcf");
-        tryInitDataByJsonSql(db, "bcf_user_linked", "water_bcf");
+        tryInitDataByTypeJsonSql(db, GritResourceDo.class,"grit_resource", "grit");
+        tryInitDataByTypeJsonSql(db, GritResourceLinkedDo.class,"grit_resource_linked", "grit");
+        tryInitDataByTypeJsonSql(db, GritSubjectDo.class,"grit_subject", "grit");
+        tryInitDataByTypeJsonSql(db, GritSubjectLinkedDo.class,"grit_subject_linked", "grit");
     }
 
     public static void tryInitWaterPaas(DbContext db) throws Exception {
         String sql = Utils.getResourceAsString("db/water_paas.sql");
         tryInitSchemaBySplitSql(db, sql);
 
-        tryInitDataByTypeJsonSql(db, LuffyFileModel.class, "luffy_file", "water_paas");
+        tryInitDataByTypeJsonSql(db, LuffyFileDo.class, "luffy_file", "water_paas");
 
-        tryInitDataByTypeJsonSql(db, RubberBlockModel.class, "rubber_block", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberBlockDo.class, "rubber_block", "water_paas");
 
-        tryInitDataByTypeJsonSql(db, RubberModelModel.class, "rubber_model", "water_paas");
-        tryInitDataByTypeJsonSql(db, RubberModelFieldModel.class, "rubber_model_field", "water_paas");
-        tryInitDataByTypeJsonSql(db, RubberSchemeModel.class, "rubber_scheme", "water_paas");
-        tryInitDataByTypeJsonSql(db, RubberSchemeNodeModel.class, "rubber_scheme_node", "water_paas");
-        tryInitDataByTypeJsonSql(db, RubberSchemeNodeDesignModel.class, "rubber_scheme_node_design", "water_paas");
-        tryInitDataByTypeJsonSql(db, RubberSchemeRuleModel.class, "rubber_scheme_rule", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberModelDo.class, "rubber_model", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberModelFieldDo.class, "rubber_model_field", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeDo.class, "rubber_scheme", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeNodeDo.class, "rubber_scheme_node", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeNodeDesignDo.class, "rubber_scheme_node_design", "water_paas");
+        tryInitDataByTypeJsonSql(db, RubberSchemeRuleDo.class, "rubber_scheme_rule", "water_paas");
     }
 
 
