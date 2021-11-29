@@ -43,16 +43,16 @@ public class Init2WaterRedisController {
         String cacheCfg = "driverType=redis\n" + config + "\ndb=9";
 
         StringBuilder bcfCfg = new StringBuilder();
-        bcfCfg.append("bcf.cache.driverType=").append("redis").append("\n");
-        bcfCfg.append("bcf.cache.server=").append(props.getProperty("server")).append("\n");
-        bcfCfg.append("bcf.cache.password=").append(props.getProperty("password")).append("\n");
-        bcfCfg.append("bcf.cache.db=").append("9").append("\n");
+        bcfCfg.append("grit.cache.driverType=").append("redis").append("\n");
+        bcfCfg.append("grit.cache.server=").append(props.getProperty("server")).append("\n");
+        bcfCfg.append("grit.cache.password=").append(props.getProperty("password")).append("\n");
+        bcfCfg.append("grit.cache.db=").append("9").append("\n");
         bcfCfg.append("\n");
 
-        bcfCfg.append("bcf.db.schema=").append(waterPro.getProperty("schema")).append("\n");
-        bcfCfg.append("bcf.db.url=").append(waterPro.getProperty("url")).append("\n");
-        bcfCfg.append("bcf.db.password=").append(waterPro.getProperty("password")).append("\n");
-        bcfCfg.append("bcf.db.username=").append(waterPro.getProperty("username")).append("\n");
+        bcfCfg.append("grit.db.schema=").append(waterPro.getProperty("schema")).append("\n");
+        bcfCfg.append("grit.db.url=").append(waterPro.getProperty("url")).append("\n");
+        bcfCfg.append("grit.db.password=").append(waterPro.getProperty("password")).append("\n");
+        bcfCfg.append("grit.db.username=").append(waterPro.getProperty("username")).append("\n");
         bcfCfg.append("\n");
         bcfCfg.append("server.session.state.domain=").append("water.noear.org").append("\n");
         bcfCfg.append("server.session.timeout=").append("7200").append("\n");
@@ -61,7 +61,7 @@ public class Init2WaterRedisController {
         try {
             DbWaterCfgApi.updConfig(WW.water, WW.water_redis, config);
             DbWaterCfgApi.updConfig(WW.water, WW.water_cache, cacheCfg);
-            DbWaterCfgApi.updConfig("water_bcf", "bcf.yml", bcfCfg.toString());
+            DbWaterCfgApi.updConfig("grit", "grit.yml", bcfCfg.toString());
             DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "2");
         }catch (Exception e){
             return Result.failure("出错，" + e.getLocalizedMessage());

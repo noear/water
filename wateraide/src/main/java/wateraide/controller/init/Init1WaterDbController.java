@@ -59,8 +59,8 @@ public class Init1WaterDbController {
 
         db.setAllowMultiQueries(true);
 
+        InitUtils.tryInitGrit(db);
         InitUtils.tryInitWater(db);
-        InitUtils.tryInitWaterBcf(db);
 
         Config.checkProp(props);
 

@@ -54,6 +54,16 @@ public class InitUtils {
         return false;
     }
 
+    public static void tryInitGrit(DbContext db) throws Exception {
+        String sql = Utils.getResourceAsString("db/grit.sql");
+        tryInitSchemaBySplitSql(db, sql);
+
+        tryInitDataByTypeJsonSql(db, GritResourceDo.class,"grit_resource", "grit");
+        tryInitDataByTypeJsonSql(db, GritResourceLinkedDo.class,"grit_resource_linked", "grit");
+        tryInitDataByTypeJsonSql(db, GritSubjectDo.class,"grit_subject", "grit");
+        tryInitDataByTypeJsonSql(db, GritSubjectLinkedDo.class,"grit_subject_linked", "grit");
+    }
+
     public static void tryInitWater(DbContext db) throws Exception {
         String sql = Utils.getResourceAsString("db/water.sql");
         tryInitSchemaBySplitSql(db, sql);
@@ -69,15 +79,6 @@ public class InitUtils {
         tryInitDataByTypeJsonSql(db, WaterToolSynchronousDo.class, "water_tool_synchronous", "water");
     }
 
-    public static void tryInitGrit(DbContext db) throws Exception {
-        String sql = Utils.getResourceAsString("db/grit.sql");
-        tryInitSchemaBySplitSql(db, sql);
-
-        tryInitDataByTypeJsonSql(db, GritResourceDo.class,"grit_resource", "grit");
-        tryInitDataByTypeJsonSql(db, GritResourceLinkedDo.class,"grit_resource_linked", "grit");
-        tryInitDataByTypeJsonSql(db, GritSubjectDo.class,"grit_subject", "grit");
-        tryInitDataByTypeJsonSql(db, GritSubjectLinkedDo.class,"grit_subject_linked", "grit");
-    }
 
     public static void tryInitWaterPaas(DbContext db) throws Exception {
         String sql = Utils.getResourceAsString("db/water_paas.sql");
