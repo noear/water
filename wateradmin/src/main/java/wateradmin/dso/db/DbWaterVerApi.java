@@ -6,7 +6,6 @@ import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
@@ -17,7 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @Slf4j
@@ -72,7 +70,7 @@ public class DbWaterVerApi {
                     .set("key_value", keyValue)
                     .set("data", data_json)
                     .set("data_md5", data_md5)
-                    .set("log_user", Session.current().getUserName())
+                    .set("log_user", Session.current().getDisplayName())
                     .set("log_ip", log_ip)
                     .set("log_date", now_time.getDate())
                     .set("log_fulltime", now_time.getTicks())

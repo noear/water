@@ -1,6 +1,5 @@
 package wateradmin.controller.admin;
 
-import org.noear.bcf.BcfClient;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -9,7 +8,6 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionRoles;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -62,8 +60,6 @@ public class AdminController extends BaseController {
                 }
             });
             DbWaterCfgApi.setConfigByTagName("water", WW.water_settings, options.toString());
-
-
 
             //for bcf ldap
         }

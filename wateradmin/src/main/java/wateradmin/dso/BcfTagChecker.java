@@ -1,7 +1,7 @@
 package wateradmin.dso;
 
-import org.noear.bcf.BcfClient;
-import org.noear.bcf.models.BcfResourceModel;
+import org.noear.grit.client.GritClient;
+import org.noear.grit.model.domain.ResourceEntity;
 import org.noear.weed.ext.Fun1;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
@@ -16,16 +16,16 @@ public class BcfTagChecker {
     private Map<String,String> tmpCache = null;
 
     private void tryLoadTagByUser() throws SQLException {
-        if(tmpCache == null){
+        if (tmpCache == null) {
             tmpCache = new HashMap<>();
 
-            List<BcfResourceModel> list = BcfClient.getUserResourcesByPack(Session.current().getPUID(), "tag");
+            List<ResourceEntity> list = GritClient.global().auth()
+                    .getResListByGroup(Session.current().getSubjectId(), "tag");
 
             list.forEach((r) -> {
-                tmpCache.put(r.en_name, r.en_name);
+                tmpCache.put(r.display_name, r.display_name);
             });
         }
-
     }
 
     public boolean find(String tag) throws SQLException {

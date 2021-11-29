@@ -24,22 +24,22 @@
       $.ajax({
         url:"/login/ajax/check",
         data:$("form").serialize(),
-        success:function(data){
-          if(data.code==1){
-            location.href=data.url;
-          }
-          else
+        success: function (rst) {
+          if (rst.code == 200) {
+            location.href = rst.data;
+          } else {
             alert(data.msg);
+          }
         }
       });
       return false;
     }
 
     function checkKey() {
-      if (window.event.keyCode == 13)
+      if (window.event.keyCode == 13) {
         checkClick();
+      }
     }
-
 
     //自动跳到合适的登录面
     try {

@@ -77,7 +77,12 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>bcfclient-solon-plugin</artifactId>
+            <artifactId>grit.server.ui-durian</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>grit-solon-plugin</artifactId>
         </dependency>
 
         <dependency>

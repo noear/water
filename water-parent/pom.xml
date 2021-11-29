@@ -39,10 +39,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.6.1</solon.ver>
+        <solon.ver>1.6.2</solon.ver>
         <weed3.ver>3.4.9</weed3.ver>
         <snack3.ver>3.2.0</snack3.ver>
-        <bcf.ver>2.2.0</bcf.ver>
+        <grit.ver>1.0.0</grit.ver>
         <rock.ver>1.3.0</rock.ver>
         <redisx.ver>1.3.1</redisx.ver>
         <esearchx.ver>1.0.3</esearchx.ver>
@@ -246,14 +246,14 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>bcfclient</artifactId>
-                <version>${bcf.ver}</version>
+                <artifactId>grit.server.ui-durian</artifactId>
+                <version>${grit.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>bcfclient-solon-plugin</artifactId>
-                <version>${bcf.ver}</version>
+                <artifactId>grit-solon-plugin</artifactId>
+                <version>${grit.ver}</version>
             </dependency>
 
             <dependency>

@@ -1,79 +1,73 @@
 package wateradmin.dso;
 
-import org.noear.bcf.BcfClient;
-import org.noear.bcf.BcfSessionBase;
-import org.noear.bcf.models.BcfUserModel;
-import org.noear.solon.Solon;
-import wateradmin.Config;
+import org.noear.grit.client.GritClient;
+import org.noear.grit.model.domain.Subject;
+import org.noear.solon.extend.grit.SessionBase;
 
-public final class Session extends BcfSessionBase {
+public final class Session extends SessionBase {
     private static final Session _current = new Session();
+
     public static Session current() {
         return _current;
     }
 
 
-    @Override
-    public String service() {
-        return Solon.cfg().appName();
-    }
-
     //////////////////////////////////
     //当前项目的扩展
 
     @Override
-    public void loadModel(BcfUserModel user) throws Exception {
-        if (user == null) {
+    public void loadSubject(Subject subject) throws Exception {
+        if (subject == null || subject.subject_id == null) {
             return;
         }
 
-        setPUID(user.puid);
-        setUserId(user.user_id);
-        setUserName(user.cn_name);
+        setSubjectId(subject.subject_id);
+        setLoginName(subject.login_name);
+        setDisplayName(subject.display_name);
 
-        boolean is_admin = BcfClient.hasResourceByUser(user.puid, SessionRoles.role_admin);
-        boolean is_operator = BcfClient.hasResourceByUser(user.puid, SessionRoles.role_operator);
+        boolean is_admin = GritClient.global().auth().hasRole(subject.subject_id, SessionRoles.role_admin);
+        boolean is_operator = GritClient.global().auth().hasRole(subject.subject_id, SessionRoles.role_operator);
 
         if (is_admin) {
             is_operator = true;
         }
 
-        set(SessionRoles.role_admin, is_admin ? 1 : 0);
-        set(SessionRoles.role_operator, is_operator ? 1 : 0);
+        localSet(SessionRoles.role_admin, is_admin ? 1 : 0);
+        localSet(SessionRoles.role_operator, is_operator ? 1 : 0);
 
         setIsAdmin(is_admin ? 1 : 0);
         setIsOperator(is_operator ? 1 : 0);
     }
 
-    public final  boolean isAdmin() {
+    public boolean isAdmin() {
         return getIsAdmin() == 1;
     }
 
-    public final int getIsAdmin() {
-        return get("Is_Admin", 0);
+    public int getIsAdmin() {
+        return localGetAsInt("Is_Admin", 0);
     }
 
-    public final void setIsAdmin(int Is_Admin) {
-        set("Is_Admin", Is_Admin);
+    public void setIsAdmin(int Is_Admin) {
+        localSet("Is_Admin", Is_Admin);
     }
 
-    public final boolean isOperator() {
+    public boolean isOperator() {
         return getIsOperator() == 1;
     }
 
-    public final int getIsOperator() {
-        return get("Is_Operator", 0);
+    public int getIsOperator() {
+        return localGetAsInt("Is_Operator", 0);
     }
 
-    public final void setIsOperator(int is_Operator) {
-        set("Is_Operator", is_Operator);
+    public void setIsOperator(int is_Operator) {
+        localSet("Is_Operator", is_Operator);
     }
 
-    public final String getValidation() {
-        return get("Validation_String", null);
+    public String getValidation() {
+        return localGet("Validation_String", null);
     }
 
-    public final void setValidation(String validation) {
-        set("Validation_String", validation.toLowerCase());
+    public void setValidation(String validation) {
+        localSet("Validation_String", validation.toLowerCase());
     }
 }

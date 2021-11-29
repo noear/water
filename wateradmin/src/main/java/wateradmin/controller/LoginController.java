@@ -1,19 +1,19 @@
 package wateradmin.controller;
 
-import org.noear.bcf.BcfClient;
-import org.noear.bcf.BcfUtil;
-import org.noear.bcf.models.BcfResourceModel;
-import org.noear.bcf.models.BcfUserModel;
+import org.noear.grit.client.GritClient;
+import org.noear.grit.client.GritUtil;
+import org.noear.grit.model.domain.Resource;
+import org.noear.grit.model.domain.Subject;
+import org.noear.solon.Utils;
+import org.noear.solon.core.handle.Result;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
-import org.noear.water.utils.TextUtils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.MethodType;
 import wateradmin.dso.Session;
-import wateradmin.viewModels.ViewModel;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,7 +21,6 @@ import java.io.IOException;
 
 @Controller
 public class LoginController extends BaseController {
-
     @Mapping("/login") //视图 返回
     public ModelAndView login(Context ctx) {
         ctx.sessionClear();
@@ -40,11 +39,13 @@ public class LoginController extends BaseController {
     //$共享SESSOIN$::自动跳转
     @Mapping("/login/auto")
     public void login_auto() throws Exception {
-        int puid = Session.current().getPUID();
-        if (puid > 0) {
-            String def_url = BcfClient.getUserFirstResource(puid).uri_path;
-            if (TextUtils.isEmpty(def_url) == false) {
-                redirect(def_url);
+        long subjectId = Session.current().getSubjectId();
+
+        if (subjectId > 0) {
+            String link_uri = GritClient.global().auth().getUriFristBySpace(subjectId).link_uri;
+
+            if (Utils.isEmpty(link_uri) == false) {
+                redirect(link_uri);
                 return;
             }
         }
@@ -53,38 +54,32 @@ public class LoginController extends BaseController {
     }
 
     @Mapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
-    public ViewModel login_ajax_check(String userName, String passWord, String captcha) throws Exception {
+    public Result login_ajax_check(String userName, String passWord, String captcha) throws Exception {
 
         //验证码检查
         if (!captcha.toLowerCase().equals(Session.current().getValidation())) {
-            return viewModel.set("code", 0).set("msg", "提示：验证码错误！");
+            return Result.failure("提示：验证码错误！");
         }
 
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(passWord)) {
-            return viewModel.set("code", 0).set("msg", "提示：请输入账号和密码！");
+        if (Utils.isEmpty(userName) || Utils.isEmpty(passWord)) {
+            return Result.failure("提示：请输入账号和密码！");
         }
 
-        BcfUserModel user = BcfClient.login(userName, passWord);
+        Subject subject = GritClient.global().auth().login(userName, passWord);
 
-        if (user.puid == 0)
-            return viewModel.set("code", 0).set("msg", "提示：账号或密码不对！"); //set 直接返回；有利于设置后直接返回，不用另起一行
-        else {
+        if (subject.subject_id == null || subject.subject_id == 0) {
+            return Result.failure("提示：账号或密码不对！");
+        } else {
 
-            Session.current().loadModel(user);
+            Session.current().loadSubject(subject);
+            Resource res = GritClient.global().auth().getUriFristBySpace(subject.subject_id);
 
-            //新方案 //noear,20181120,(uadmin)
-            BcfResourceModel res = BcfClient.getUserFirstResource(user.puid);
-            String def_url = null;
-
-            if (TextUtils.isEmpty(res.uri_path)) {
-                return viewModel.set("code", 0)
-                        .set("msg", "提示：请联系管理员开通权限");
+            if (Utils.isEmpty(res.link_uri)) {
+                return Result.failure("提示：请联系管理员开通权限！");
             } else {
-                def_url = BcfUtil.buildBcfUnipath(res);
+                String resUrl = GritUtil.buildDockUri(res);
 
-                return viewModel.set("code", 1)
-                        .set("msg", "ok")
-                        .set("url", def_url);
+                return Result.succeed(resUrl);
             }
         }
     }
@@ -109,7 +104,5 @@ public class LoginController extends BaseController {
         // 图像输出
         ImageIO.setUseCache(false);
         ImageIO.write(bufferedImage, "jpeg", ctx.outputStream());
-
-
     }
 }
