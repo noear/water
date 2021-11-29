@@ -28,7 +28,7 @@
           if (rst.code == 200) {
             location.href = rst.data;
           } else {
-            alert(data.msg);
+            alert(rst.description);
           }
         }
       });
