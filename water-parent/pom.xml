@@ -252,6 +252,12 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>grit.server</artifactId>
+                <version>${grit.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>grit-solon-plugin</artifactId>
                 <version>${grit.ver}</version>
             </dependency>

@@ -18,6 +18,8 @@ import org.noear.weed.WeedConfig;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 
+import java.util.Properties;
+
 public class Config {
     static final String TML_MARK_SERVER = "${server}";
     static final String TML_MARK_SCHEMA = "${schema}";
@@ -78,7 +80,7 @@ public class Config {
             }
 
             String propsJson = ONode.stringify(props);
-            if(props.size() < 3) {
+            if (props.size() < 3) {
                 throw new IllegalArgumentException("Water db configuration error: " + propsJson);
             }
 
@@ -106,6 +108,12 @@ public class Config {
             water_msg_store = cfg(WW.water_msg_store);
 
             initWeedOnException();
+
+            ConfigM grit_cfg = cfg("grit", "grit.yml");
+            if (grit_cfg != null && TextUtils.isNotEmpty(grit_cfg.value)) {
+                Properties grit_prop = grit_cfg.getProp();
+                Solon.cfg().loadAdd(grit_prop);
+            }
 
             System.out.println("[Water] config completed.");
         }
@@ -156,8 +164,12 @@ public class Config {
     //
 
     public static ConfigM cfg(String key) {
+        return cfg(WW.water, key);
+    }
+
+    public static ConfigM cfg(String tag, String key) {
         try {
-            return DbWaterCfgApi.getConfigNoCache(WW.water, key)
+            return DbWaterCfgApi.getConfigNoCache(tag, key)
                     .toConfigM();
         } catch (Exception ex) {
             throw new RuntimeException("Config loading error: " + key, ex);
