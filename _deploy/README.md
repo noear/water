@@ -10,15 +10,13 @@
 
 
 
-#### 账号与权限管理：（Bcf Studio ）
-
-* Window7+：https://gitee.com/noear/bcf/tree/main/_studio
+#### 账号与权限管理：
 
 * 想要使用LDAP登录？
 
 ```yaml
-# 配置项 water_bcf/bcf.yml ，添加 ldap 连接配置：
-bcf.ldap:
+# 配置项 grit/grit.yml ，添加 ldap 连接配置：
+grit.ldap:
   url: "ldap://127.0.0.1"
   baseDn: "DC=company,DC=com"
   bindDn: "cn=admin,dc=company,dc=com"
