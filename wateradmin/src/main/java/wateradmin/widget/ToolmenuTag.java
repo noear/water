@@ -15,7 +15,6 @@ import org.noear.solon.core.handle.Context;
 import wateradmin.dso.Session;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,8 +38,8 @@ public class ToolmenuTag implements TemplateDirectiveModel {
 
         String groupCode = mapExt.get("pack");
 
-        Context request = Context.current();
-        String path = request.pathNew();
+        Context ctx = Context.current();
+        String path = ctx.pathNew();
         StringBuffer buf = new StringBuffer();
 
         Resource resourceGroup = GritClient.global().resource().getResourceByCode(groupCode);
@@ -53,7 +52,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
                     .getUriListByGroup(Session.current().getSubjectId(), resourceGroup.resource_id);
 
             for (Resource r : list) {
-                buildItem(request, buf, r.display_name, r.link_uri, path);
+                buildItem(ctx, buf, r.display_name, r.link_uri, path);
             }
 
             buf.append("</tabbar>");
@@ -63,8 +62,8 @@ public class ToolmenuTag implements TemplateDirectiveModel {
         }
     }
 
-    private void buildItem(Context request, StringBuffer sb, String title, String url, String cPath) {
-        String url2 = url + "?" + request.uri().getQuery();
+    private void buildItem(Context ctx, StringBuffer sb, String title, String url, String cPath) {
+        String url2 = url + "?" + ctx.uri().getQuery();
 
         if (cPath.indexOf(url) > 0) {
             sb.append("<button onclick=\"location='" + url2 + "'\" class='sel'>");
