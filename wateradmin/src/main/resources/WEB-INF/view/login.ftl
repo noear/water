@@ -53,7 +53,7 @@
           window.top.location.reload();
         }
       }
-    }catch (err){}
+    } catch (err){}
 
   </script>
 </head>

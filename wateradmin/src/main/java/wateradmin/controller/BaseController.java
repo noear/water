@@ -44,6 +44,7 @@ public class BaseController {
         viewModel.put("is_setup", 0);
 
 
+        //操作权限
         int is_admin = Session.current().getIsAdmin();
         int is_operator = Session.current().getIsOperator();
         if (is_admin == 1) {
