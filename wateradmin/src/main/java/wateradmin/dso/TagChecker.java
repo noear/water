@@ -7,23 +7,21 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 //不能用静态函数
-public class BcfTagChecker {
-    private Map<String,String> tmpCache = null;
+public class TagChecker {
+    private Set<String> tagCached = null;
 
     private void tryLoadTagByUser() throws SQLException {
-        if (tmpCache == null) {
-            tmpCache = new HashMap<>();
+        if (tagCached == null) {
+            tagCached = new HashSet<>();
 
             List<ResourceEntity> list = GritClient.global().auth()
                     .getResListByGroup(Session.current().getSubjectId(), "tag");
 
             list.forEach((r) -> {
-                tmpCache.put(r.display_name, r.display_name);
+                tagCached.add(r.display_name);
             });
         }
     }
@@ -39,11 +37,17 @@ public class BcfTagChecker {
 
         tryLoadTagByUser();
 
-        return tmpCache.containsKey(tag);
+        for (String tag0 : tagCached) {
+            if (tag.startsWith(tag0)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public static <T> void filter(List<T> list, Fun1<String,T> getter) throws SQLException{
-        if(Session.current().getIsAdmin()==1){
+    public static <T> void filter(List<T> list, Fun1<String, T> getter) throws SQLException {
+        if (Session.current().getIsAdmin() == 1) {
             return;
         }
 
@@ -51,16 +55,16 @@ public class BcfTagChecker {
             return;
         }
 
-        BcfTagChecker checker = new BcfTagChecker();
+        TagChecker checker = new TagChecker();
 
-        for(int i=0,len=list.size(); i<len; i++){
+        for (int i = 0, len = list.size(); i < len; i++) {
             String tag = getter.run(list.get(i));
 
-            if(TextUtils.isEmpty(tag)){
+            if (TextUtils.isEmpty(tag)) {
                 list.remove(i);
                 i--;
                 len--;
-            }else {
+            } else {
                 tag = tag.split("\\.|_")[0];
 
                 if (checker.find(tag) == false) {
@@ -71,25 +75,4 @@ public class BcfTagChecker {
             }
         }
     }
-
-    public static <T> void filterWaterTag(List<T> list, Fun1<String,T> getter) throws SQLException{
-        for(int i=0,len=list.size(); i<len; i++){
-            String tag = getter.run(list.get(i));
-
-            if(TextUtils.isEmpty(tag)){
-                list.remove(i);
-                i--;
-                len--;
-            }else {
-                tag = tag.split("\\.|_")[0];
-
-                if (tag.startsWith("water") == false) {
-                    list.remove(i);
-                    i--;
-                    len--;
-                }
-            }
-        }
-    }
-
 }

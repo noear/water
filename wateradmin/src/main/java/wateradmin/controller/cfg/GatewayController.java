@@ -8,7 +8,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
@@ -28,7 +28,7 @@ public class GatewayController extends BaseController {
         List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
 
         //权限过滤
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

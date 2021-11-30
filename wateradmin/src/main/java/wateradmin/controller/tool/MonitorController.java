@@ -8,7 +8,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterApi;
@@ -31,7 +31,7 @@ public class MonitorController extends BaseController {
     public ModelAndView MonitorIndex(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
         if (TextUtils.isEmpty(tag_name) == false) {

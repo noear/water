@@ -7,7 +7,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
 import wateraide.controller.BaseController;
-import wateraide.dso.BcfTagChecker;
+import wateraide.dso.TagChecker;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
@@ -24,7 +24,7 @@ public class PropController extends BaseController {
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
-        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
+        TagChecker.filterWaterTag(tags, m -> m.tag);
 
 
         tag_name = TagUtil.build(tag_name, tags);

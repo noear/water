@@ -11,7 +11,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -35,7 +35,7 @@ public class RubberModelController extends BaseController {
     public ModelAndView model(Integer model_id, Integer field_id, String tag_name, String name, String f) throws SQLException {
         List<TagCountsModel> tags = DbRubberApi.getModelTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags", tags);
         if (TextUtils.isEmpty(tag_name) == false) {

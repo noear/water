@@ -10,7 +10,7 @@ import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
@@ -47,7 +47,7 @@ public class GwController extends BaseController {
         List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagListByEnabled();
 
         //权限过滤
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

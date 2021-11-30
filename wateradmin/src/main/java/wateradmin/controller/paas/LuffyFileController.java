@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.FaasUtils;
 import wateradmin.dso.Session;
 import wateradmin.dso.TagUtil;
@@ -54,7 +54,7 @@ public class LuffyFileController extends BaseController {
     private ModelAndView home(String tag_name, LuffyFileType type, String key) throws SQLException {
         List<TagCountsModel> tags = DbLuffyApi.getFileTags(type);
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

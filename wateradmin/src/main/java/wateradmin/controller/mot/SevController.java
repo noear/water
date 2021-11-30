@@ -10,7 +10,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
@@ -39,7 +39,7 @@ public class SevController extends BaseController {
         List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
 
         //权限过滤
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

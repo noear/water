@@ -7,7 +7,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterApi;
@@ -28,7 +28,7 @@ public class DataSynController extends BaseController {
     public ModelAndView plan(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.syncGetTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags", tags);
         if (TextUtils.isEmpty(tag_name) == false) {

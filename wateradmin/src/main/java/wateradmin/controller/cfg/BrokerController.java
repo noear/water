@@ -10,7 +10,7 @@ import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.protocol.ProtocolHub;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagUtil;
@@ -34,7 +34,7 @@ public class BrokerController extends BaseController {
     public ModelAndView broker(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getBrokerTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

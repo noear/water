@@ -8,7 +8,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgSafeApi;
@@ -31,7 +31,7 @@ public class WhitelistController extends BaseController {
         List<TagCountsModel> tags = DbWaterCfgSafeApi.getWhitelistTags();
 
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
 
         tag_name = TagUtil.build(tag_name, tags);
@@ -48,7 +48,7 @@ public class WhitelistController extends BaseController {
         List<WhitelistModel> list = DbWaterCfgSafeApi.getWhitelistByTag(tag_name, key, state);
 
 
-        BcfTagChecker.filter(list, m -> m.tag);
+        TagChecker.filter(list, m -> m.tag);
 
 
         viewModel.put("list", list);

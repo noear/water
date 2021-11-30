@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 //不能用静态函数
-public class BcfTagChecker {
+public class TagChecker {
 
     public static <T> void filterWaterTag(List<T> list, Fun1<String, T> getter) throws SQLException {
         for (int i = 0, len = list.size(); i < len; i++) {

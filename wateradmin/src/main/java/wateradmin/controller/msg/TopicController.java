@@ -29,7 +29,7 @@ public class TopicController extends BaseController {
         List<TagCountsModel> tags = DbWaterMsgApi.getTopicTagList();
 
         //权限过滤
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

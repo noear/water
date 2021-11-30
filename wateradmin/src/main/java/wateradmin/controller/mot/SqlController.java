@@ -13,8 +13,8 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfServiceChecker;
 import wateradmin.dso.SettingUtils;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterLogApi;
 import wateradmin.models.ScaleType;
@@ -38,7 +38,7 @@ public class SqlController extends BaseController {
 
         List<TagCountsM> tags = DbWaterLogApi.getSqlGroupsByLogger(logger);
 
-        BcfServiceChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 
@@ -60,7 +60,6 @@ public class SqlController extends BaseController {
 
         List<TagCountsM> services = DbWaterLogApi.getSqlServicesByLogger(logger, tag_name);
 
-        //BcfServiceChecker.filter(services, m -> m.tag);
         if (Utils.isEmpty(serviceName)) {
             if (services.size() > 0) {
                 serviceName = services.get(0).tag;

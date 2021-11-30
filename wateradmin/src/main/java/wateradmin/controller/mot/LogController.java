@@ -8,7 +8,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.ScaleType;
@@ -32,7 +32,7 @@ public class LogController extends BaseController {
 
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         if (TextUtils.isEmpty(tag_name) == false) {
             viewModel.put("tag_name",tag_name);

@@ -8,7 +8,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -33,7 +33,7 @@ public class DDLController extends BaseController {
     public ModelAndView ddl(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(CFG_TYPE_DB);
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         if (!TextUtils.isEmpty(tag_name)) {
             viewModel.put("tag_name", tag_name);

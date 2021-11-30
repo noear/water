@@ -8,7 +8,7 @@ import org.noear.water.utils.*;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -27,7 +27,7 @@ public class PropController extends BaseController {
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
 
         tag_name = TagUtil.build(tag_name,tags);

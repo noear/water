@@ -13,7 +13,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbRubberApi;
@@ -36,7 +36,7 @@ public class RubberBlockController extends BaseController {
     public ModelAndView block(Integer block_id,String tag_name) throws SQLException{
 
         List<TagCountsModel> tags = DbRubberApi.getBlockTags();
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
 

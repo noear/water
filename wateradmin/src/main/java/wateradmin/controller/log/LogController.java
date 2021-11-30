@@ -12,7 +12,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -30,7 +30,7 @@ public class LogController extends BaseController {
     public ModelAndView index(String tag_name, Context ctx) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

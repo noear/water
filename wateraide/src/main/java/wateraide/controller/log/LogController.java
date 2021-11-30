@@ -13,7 +13,7 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import wateraide.Config;
 import wateraide.controller.BaseController;
-import wateraide.dso.BcfTagChecker;
+import wateraide.dso.TagChecker;
 import wateraide.dso.TagUtil;
 import wateraide.dso.db.DbWaterCfgApi;
 import wateraide.models.TagCountsModel;
@@ -48,7 +48,7 @@ public class LogController extends BaseController {
 
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
-        BcfTagChecker.filterWaterTag(tags, m -> m.tag);
+        TagChecker.filterWaterTag(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 

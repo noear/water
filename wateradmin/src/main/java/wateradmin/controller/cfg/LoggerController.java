@@ -10,7 +10,7 @@ import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
 import org.noear.water.protocol.ProtocolHub;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.BcfTagChecker;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -34,7 +34,7 @@ public class LoggerController extends BaseController {
     public ModelAndView logger(String tag_name) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
 
-        BcfTagChecker.filter(tags, m -> m.tag);
+        TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 
