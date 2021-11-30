@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.noear.solon.Utils;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
@@ -15,8 +15,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.Session;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbRubberApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_paas.*;
@@ -541,7 +540,7 @@ public class RubberSchemeController extends BaseController {
 
 
     //批量导入
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("scheme/ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         String jsonD = IOUtils.toString(file.content);

@@ -3,12 +3,12 @@ package wateradmin.controller.admin;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -21,12 +21,18 @@ import java.util.Properties;
 /**
  * @author noear 2021/11/20 created
  */
+@Mapping("admin")
 @Controller
 public class AdminController extends BaseController {
 
-    @AuthRoles(SessionRoles.role_admin)
-    @Mapping("/admin")
+    @Mapping("")
     public ModelAndView home() throws SQLException {
+        return view("admin/home");
+    }
+
+    @AuthPermissions(SessionPerms.admin)
+    @Mapping("setting")
+    public ModelAndView setting() throws SQLException {
         Map<String, String> sets = new LinkedHashMap<>();
 
         sets.put("alarm_sign", cfg("water", "alarm_sign").value);
@@ -43,9 +49,9 @@ public class AdminController extends BaseController {
         return view("admin/setting");
     }
 
-    @AuthRoles(SessionRoles.role_admin)
-    @Mapping("/admin/ajax/save")
-    public Object home_save(String json) throws Exception {
+    @AuthPermissions(SessionPerms.admin)
+    @Mapping("setting/ajax/save")
+    public Object setting_save(String json) throws Exception {
         if (TextUtils.isNotEmpty(json)) {
             ONode oNode = ONode.loadStr(json);
 

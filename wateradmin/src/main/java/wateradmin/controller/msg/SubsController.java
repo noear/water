@@ -5,14 +5,13 @@ package wateradmin.controller.msg;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.protocol.model.message.SubscriberModel;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.*;
 import wateradmin.dso.db.DbWaterMsgApi;
-import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.viewModels.ViewModel;
@@ -102,7 +101,7 @@ public class SubsController extends BaseController {
     }
 
     //ajax删除功能。
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/subs/ajax/delete")
     public ViewModel deleteSubscriber(String ids) throws SQLException {
         boolean result = DbWaterMsgApi.deleteSubs(idList(ids));
@@ -117,7 +116,7 @@ public class SubsController extends BaseController {
     }
 
     //订阅主题 启用/禁用功能。
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/subs/ajax/enabled")
     public ViewModel enabledSubscriber(String ids,Integer is_enabled) throws SQLException {
         boolean result = DbWaterMsgApi.enabledSubs(idList(ids), is_enabled);

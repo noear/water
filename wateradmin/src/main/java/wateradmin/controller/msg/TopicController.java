@@ -2,7 +2,7 @@ package wateradmin.controller.msg;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.MethodType;
@@ -69,7 +69,7 @@ public class TopicController extends BaseController {
     }
 
     //保存主题编辑
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/topic/edit/ajax/save")
     public ViewModel topicEditSave(String tag,String topic_name, Integer topic_id, Integer max_msg_num, Integer max_distribution_num, Integer max_concurrency_num, Integer alarm_model) throws SQLException {
         int is_admin = Session.current().getIsAdmin();
@@ -88,7 +88,7 @@ public class TopicController extends BaseController {
     }
 
     //删除主题
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping(value = "/msg/topic/edit/ajax/del", method = MethodType.POST)
     public ViewModel topicEditDel(Integer topic_id) throws SQLException {
         int is_admin = Session.current().getIsAdmin();

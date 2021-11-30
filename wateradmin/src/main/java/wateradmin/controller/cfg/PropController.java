@@ -1,7 +1,6 @@
 package wateradmin.controller.cfg;
 
-import org.noear.solon.Solon;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
@@ -11,7 +10,7 @@ import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.dso.TagUtil;
@@ -81,7 +80,7 @@ public class PropController extends BaseController {
     }
 
     //编辑、保存功能。
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
     public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
         DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
@@ -90,7 +89,7 @@ public class PropController extends BaseController {
     }
 
     //编辑、保存功能。
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/del")
     public ViewModel del(Integer row_id) throws SQLException {
         DbWaterCfgApi.delConfig(row_id);
@@ -114,7 +113,7 @@ public class PropController extends BaseController {
 
 
     //批量导入
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
@@ -138,7 +137,7 @@ public class PropController extends BaseController {
     }
 
     //批量处理
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {

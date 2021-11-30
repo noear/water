@@ -3,13 +3,13 @@ package wateradmin.controller.cfg;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
 import wateradmin.models.TagCountsModel;
@@ -74,7 +74,7 @@ public class GatewayController extends BaseController {
 
     }
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @NotEmpty({"tag", "name"})
     @Mapping("ajax/save")
     public ViewModel save(int gateway_id, String tag, String name, String agent, String policy, int is_enabled) {
@@ -93,7 +93,7 @@ public class GatewayController extends BaseController {
     }
 
     //日志启用/禁用
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @NotZero("gateway_id")
     @Mapping("ajax/enabled")
     public ViewModel enable(int gateway_id, int is_enabled) throws SQLException {
@@ -102,7 +102,7 @@ public class GatewayController extends BaseController {
         return viewModel.code(1, "");
     }
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @NotZero("gateway_id")
     @Mapping("ajax/del")
     public ViewModel del(int gateway_id) throws SQLException {

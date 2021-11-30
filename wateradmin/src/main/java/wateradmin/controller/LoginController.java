@@ -78,7 +78,6 @@ public class LoginController extends BaseController {
                 return Result.failure("提示：请联系管理员开通权限！");
             } else {
                 String resUrl = GritUtil.buildDockUri(res);
-
                 return Result.succeed(resUrl);
             }
         }

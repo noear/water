@@ -3,7 +3,7 @@ package wateradmin.controller.mot;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotZero;
@@ -11,7 +11,7 @@ import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgGatewayApi;
@@ -139,7 +139,7 @@ public class GwController extends BaseController {
         return "";
     }
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @NotZero("service_id")
     @Mapping("ajax/enabled")
     public ViewModel sev_enabled(long service_id, int is_enabled) {

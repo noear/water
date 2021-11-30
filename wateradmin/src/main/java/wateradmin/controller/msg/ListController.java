@@ -2,9 +2,9 @@ package wateradmin.controller.msg;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -12,7 +12,7 @@ import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.DisttimeUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.models.TagCountsModel;
@@ -58,7 +58,7 @@ public class ListController extends BaseController {
     }
 
     //派发功能ajax
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/ajax/distribute")
     public ViewModel distribute(String broker, String ids) throws Exception {
         boolean result = ProtocolHub.getMsgSource(broker).setMessageAsPending(idList(ids));
@@ -73,7 +73,7 @@ public class ListController extends BaseController {
     }
 
     //取消派发
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/ajax/cancelSend")
     public ViewModel cancelSend(String broker, String ids) throws Exception {
         boolean result = ProtocolHub.getMsgSource(broker).setMessageAsCancel(idList(ids));
@@ -88,7 +88,7 @@ public class ListController extends BaseController {
     }
 
     //异常记录中 修复订阅功能的ajax
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/ajax/repair")
     public ViewModel repairSubs(String broker, String ids) throws Exception {
         boolean error = false;

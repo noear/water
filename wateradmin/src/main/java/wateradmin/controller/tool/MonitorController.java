@@ -1,6 +1,6 @@
 package wateradmin.controller.tool;
 
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.water.utils.TextUtils;
 
 
@@ -10,7 +10,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
 import wateradmin.dso.Session;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -97,7 +97,7 @@ public class MonitorController extends BaseController {
     }
 
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("monitor/edit/ajax/save")
     public ViewModel save(Integer monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_sign, String alarm_exp, Integer is_enabled) throws SQLException {

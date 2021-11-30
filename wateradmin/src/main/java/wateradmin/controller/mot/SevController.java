@@ -4,14 +4,14 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.BcfTagChecker;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -175,7 +175,7 @@ public class SevController extends BaseController {
     }
 
     //删除服务
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/service/ajax/deleteService")
     public ViewModel deleteServiceById(Integer service_id) throws SQLException {
         ServiceModel sev = DbWaterRegApi.getServiceById(service_id);
@@ -194,7 +194,7 @@ public class SevController extends BaseController {
     }
 
     //启用 | 禁用 服务
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/service/ajax/disable")
     public ViewModel disable(Integer service_id, Integer is_enabled) throws SQLException {
 
@@ -222,7 +222,7 @@ public class SevController extends BaseController {
         return view("mot/sev_edit");
     }
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/service/edit/ajax/save")
     public ViewModel service_edit_ajax_save(Integer service_id, String tag, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
         boolean result = DbWaterRegApi.udpService(service_id, tag, name, address, note, check_type, check_url);

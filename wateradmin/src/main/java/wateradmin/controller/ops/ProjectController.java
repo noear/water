@@ -2,11 +2,11 @@ package wateradmin.controller.ops;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.solon.auth.annotation.AuthRoles;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterProjectApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_ops.ProjectModel;
@@ -65,7 +65,7 @@ public class ProjectController extends BaseController {
         return view("ops/project_edit");
     }
 
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/project/edit/ajax/save")
     public ViewModel saveEdit(int project_id, String tag, String name, String git_url, String note, int type, String developer) throws SQLException {
         long result = DbWaterProjectApi.updateProject(project_id, tag, name, note, git_url, type, developer);

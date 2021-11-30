@@ -25,15 +25,15 @@ public final class Session extends SessionBase {
         setLoginName(subject.login_name);
         setDisplayName(subject.display_name);
 
-        boolean is_admin = GritClient.global().auth().hasRole(subject.subject_id, SessionRoles.role_admin);
-        boolean is_operator = GritClient.global().auth().hasRole(subject.subject_id, SessionRoles.role_operator);
+        boolean is_admin = GritClient.global().auth().hasPermission(subject.subject_id, SessionPerms.admin);
+        boolean is_operator = GritClient.global().auth().hasPermission(subject.subject_id, SessionPerms.operator);
 
         if (is_admin) {
             is_operator = true;
         }
 
-        localSet(SessionRoles.role_admin, is_admin ? 1 : 0);
-        localSet(SessionRoles.role_operator, is_operator ? 1 : 0);
+        localSet(SessionPerms.admin, is_admin ? 1 : 0);
+        localSet(SessionPerms.operator, is_operator ? 1 : 0);
 
         setIsAdmin(is_admin ? 1 : 0);
         setIsOperator(is_operator ? 1 : 0);

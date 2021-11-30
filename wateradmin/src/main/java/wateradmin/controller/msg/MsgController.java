@@ -1,6 +1,6 @@
 package wateradmin.controller.msg;
 
-import org.noear.solon.auth.annotation.AuthRoles;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.WaterClient;
@@ -16,7 +16,7 @@ import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.SessionRoles;
+import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterMsgApi;
 import wateradmin.models.TagCountsModel;
@@ -102,7 +102,7 @@ public class MsgController extends BaseController {
     }
 
     @NotEmpty({"message", "topic"})
-    @AuthRoles(SessionRoles.role_admin)
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("/msg/send/ajax/dosend")
     public ViewModel sendMessage(String broker, String topic, String message, String tags) throws Exception {
 

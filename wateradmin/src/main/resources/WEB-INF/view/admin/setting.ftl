@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm10-y">
 <head>
-    <title>${app} - 运行设置</title>
+    <title>${app} - 设置</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
