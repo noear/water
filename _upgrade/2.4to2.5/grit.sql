@@ -11,7 +11,7 @@
  Target Server Version : 50616
  File Encoding         : 65001
 
- Date: 30/11/2021 09:26:19
+ Date: 30/11/2021 11:25:46
 */
 
 SET NAMES utf8mb4;
@@ -155,72 +155,86 @@ CREATE TABLE `grit_resource_linked`  (
   PRIMARY KEY (`link_id`) USING BTREE,
   UNIQUE INDEX `IX_grit_resource_linked__key`(`resource_id`, `subject_id`) USING BTREE,
   INDEX `IX_grit_resource_linked__subject_id`(`subject_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 266 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'grit-资源与主体连接表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 349 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'grit-资源与主体连接表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of grit_resource_linked
 -- ----------------------------
-INSERT INTO `grit_resource_linked` VALUES (205, 93, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (206, 94, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (207, 95, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (208, 15, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (209, 16, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (210, 17, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (211, 18, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (212, 19, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (213, 20, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (214, 21, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (215, 22, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (216, 23, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (217, 24, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (218, 25, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (219, 26, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (220, 27, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (221, 28, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (222, 29, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (223, 30, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (224, 31, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (225, 32, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (226, 39, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (227, 33, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (228, 34, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (229, 35, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (230, 38, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (231, 36, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (232, 37, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (233, 40, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (234, 41, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (235, 42, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (236, 43, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (237, 44, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (238, 45, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (239, 46, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (240, 47, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (241, 48, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (242, 49, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (243, 50, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (244, 51, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (245, 52, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (246, 53, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (247, 54, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (248, 55, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (249, 56, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (250, 57, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (251, 58, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (252, 59, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (253, 60, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (254, 61, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (255, 62, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (256, 63, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (257, 64, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (258, 65, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (259, 66, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (260, 67, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (261, 68, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (262, 69, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (263, 70, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (264, 71, 11, 0, 1638203839627);
-INSERT INTO `grit_resource_linked` VALUES (265, 72, 11, 0, 1638203839627);
+INSERT INTO `grit_resource_linked` VALUES (266, 97, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (267, 98, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (268, 99, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (269, 81, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (270, 82, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (271, 83, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (272, 84, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (273, 85, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (274, 86, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (275, 87, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (276, 88, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (277, 89, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (278, 90, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (279, 91, 11, 0, 1638240666572);
+INSERT INTO `grit_resource_linked` VALUES (288, 93, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (289, 94, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (290, 95, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (291, 15, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (292, 16, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (293, 17, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (294, 18, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (295, 19, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (296, 20, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (297, 21, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (298, 22, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (299, 23, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (300, 24, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (301, 25, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (302, 26, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (303, 27, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (304, 28, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (305, 29, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (306, 30, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (307, 31, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (308, 32, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (309, 39, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (310, 33, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (311, 34, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (312, 35, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (313, 38, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (314, 36, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (315, 37, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (316, 40, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (317, 41, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (318, 42, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (319, 43, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (320, 44, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (321, 45, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (322, 46, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (323, 47, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (324, 48, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (325, 49, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (326, 50, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (327, 51, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (328, 52, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (329, 53, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (330, 54, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (331, 55, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (332, 56, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (333, 57, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (334, 58, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (335, 59, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (336, 60, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (337, 61, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (338, 62, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (339, 63, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (340, 64, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (341, 65, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (342, 66, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (343, 67, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (344, 68, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (345, 69, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (346, 70, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (347, 71, 11, 0, 1638242109290);
+INSERT INTO `grit_resource_linked` VALUES (348, 72, 11, 0, 1638242109290);
 
 -- ----------------------------
 -- Table structure for grit_subject
