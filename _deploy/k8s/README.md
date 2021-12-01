@@ -27,6 +27,7 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 * 添加 water/waterapi 服务（镜像：noearorg/waterapi:latest）。主接口
   * 镜像端口：9371
+  * 对外端口：9371
   * 建议2个副本起步
   
 
@@ -40,24 +41,28 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 
 * 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:latest）。管理控制台
   * 镜像端口：8080
+  * 对外端口：8080 或其它
   * 建议1个副本即可
   * 要配置外网访问地址，建议加域名
 
   
 * 添加 water/waterfaas 服务 （镜像：noearorg/waterfaas:latest）。即时接口服务
   * 镜像端口：8080
+  * 对外端口：8080 或其它
   * 建议1个副本起步
   * 要配置外网访问地址，建议加域名
 
   
 * 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）。规则计算服务
   * 镜像端口：8080
+  * 对外端口：8080 或其它
   * 建议1个副本起步`（可选部署）`
   * 要配置外网访问地址，建议加域名
 
 
 * 添加 water/watersev-tol 服务（镜像：noearorg/watersev:latest）。工具服务，包含： (msgchk,sevchk,syn,mot)
   * 镜像端口：8080
+  * 对外端口：8080 或其它
   * 建议1个副本即可
 
 
