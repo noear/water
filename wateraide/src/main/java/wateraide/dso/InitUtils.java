@@ -22,19 +22,19 @@ import java.util.Map;
 public class InitUtils {
 
     static final String water_check_table = "water_cfg_properties";
-    static final String water_bcf_check_table = "bcf_group";
     static final String water_paas_check_table = "luffy_file";
+    static final String grit_check_table = "grit_resource";
 
     public static boolean allowWaterInit(DbContext db) throws SQLException {
         return hasTable(db, water_check_table) == false;
     }
 
-    public static boolean allowWaterBcfInit(DbContext db) throws SQLException {
-        return hasTable(db, water_bcf_check_table) == false;
-    }
-
     public static boolean allowWaterPaasInit(DbContext db) throws SQLException {
         return hasTable(db, water_paas_check_table) == false;
+    }
+
+    public static boolean allowGritInit(DbContext db) throws SQLException {
+        return hasTable(db, grit_check_table) == false;
     }
 
     /**
@@ -107,24 +107,6 @@ public class InitUtils {
                     db.exe(sqlItem);
                 }
             }
-        }
-    }
-
-    private static void tryInitDataByJsonSql(DbContext db, String table, String schema) throws Exception {
-        String fileName = "db/init/" + schema + "_" + table + ".json";
-        System.out.println(">>>>>>>>>>>>>>>>>>>>: " + fileName);
-
-        String json = Utils.getResourceAsString(fileName);
-
-
-        ONode array = ONode.loadStr(json);
-        List<DataItem> dataItems = new ArrayList<>();
-        for (ONode n1 : array.ary()) {
-            dataItems.add(new DataItem().setMap(n1.toObject(Map.class)));
-        }
-
-        if (dataItems.size() > 0) {
-            db.table(table).insertList(dataItems);
         }
     }
 
