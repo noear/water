@@ -96,6 +96,8 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
   ```
 
 
+**注：具体可参考yaml配置**
+
 ## 四、后续配置修改
 
 进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：

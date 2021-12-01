@@ -1,0 +1,61 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: waterfaas
+  namespace: water
+  labels:
+    app: waterfaas
+  annotations:
+    deployment.kubernetes.io/revision: '16'
+    kubesphere.io/creator: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: waterfaas
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: waterfaas
+      annotations:
+        kubesphere.io/restartedAt: '2021-12-01T05:42:16.210Z'
+    spec:
+      volumes:
+        - name: host-time
+          hostPath:
+            path: /etc/localtime
+            type: ''
+      containers:
+        - name: container-kl7m0n
+          image: 'registry.cn-hangzhou.aliyuncs.com/noearorg/waterfaas:latest'
+          ports:
+            - name: http-8080
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: TS
+              value: Asia/Shanghai
+          resources: {}
+          volumeMounts:
+            - name: host-time
+              readOnly: true
+              mountPath: /etc/localtime
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: default
+      serviceAccount: default
+      securityContext: {}
+      affinity: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
