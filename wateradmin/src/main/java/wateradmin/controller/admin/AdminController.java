@@ -1,6 +1,7 @@
 package wateradmin.controller.admin;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
@@ -70,6 +71,7 @@ public class AdminController extends BaseController {
             oNode.forEach((k, v) -> {
                 if (k.startsWith("water.setting.")) {
                     options.append(k).append("=").append(v.getString()).append("\n");
+                    Solon.cfg().setProperty(k, v.getString());
                 }
             });
             DbWaterCfgApi.setConfigByTagName("water", WW.water_settings, options.toString());
