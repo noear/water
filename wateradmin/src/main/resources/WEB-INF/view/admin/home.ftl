@@ -29,8 +29,13 @@
             <div onclick="$('main').toggleClass('smlmenu');if(window.onMenuHide){window.onMenuHide();}"><i class='fa fa-bars'></i></div>
             <items>
                 <a class='sel' href='/admin/setting' target="inner">设置</a>
-                <a href='/grit/subject/entity/s' target="inner">账号</a>
-                <a href='/grit/auth/s' target="inner">授权</a>
+                <#if subjectScale gt 0>
+                    <a href='/grit/subject/entity' target="inner">账号</a>
+                    <a href='/grit/auth' target="inner">授权</a>
+                <#else>
+                    <a href='/grit/subject/entity/s' target="inner">账号</a>
+                    <a href='/grit/auth/s' target="inner">授权</a>
+                </#if>
             </items>
         </menu>
     </left>

@@ -16,7 +16,7 @@
     </style>
     <script>
         function save(){
-           let vm = formToMap("form");
+            let vm = formToMap("form");
 
             $.ajax({
                 type:"POST",
@@ -48,50 +48,62 @@
         </right>
     </toolbar>
 
-        <detail>
-            <form>
-                <table>
+    <detail>
+        <form>
+            <table>
 
-                    <tr><td colspan="2"> <h2>控制台</h2>
-                            <n>会根据情况调整控制台的部分界面布局</n>
-                            <hr/></td></tr>
-                    <tr>
-                        <th>服务数量规模</th>
-                        <td>
-                            <boxlist>
-                                <label><input type="radio" name="water.setting.scale.service" value="0" checked /><a>小</a></label>
-                                <label><input type="radio" name="water.setting.scale.service" value="1" /><a>中</a></label>
-                                <label><input type="radio" name="water.setting.scale.service" value="2" /><a>大</a></label>
-                            </boxlist>
-                            <script>
-                                $("input[name='water.setting.scale.service'][value='${sets["water.setting.scale.service"]!}']").attr("checked",true);
-                            </script>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>消息主题数量</th>
-                        <td>
-                            <boxlist>
-                                <label><input type="radio" name="water.setting.scale.topic" value="0" checked /><a>少</a></label>
-                                <label><input type="radio" name="water.setting.scale.topic" value="1" /><a>多</a></label>
-                            </boxlist>
-                            <script>
-                                $("input[name='water.setting.scale.topic'][value='${sets["water.setting.scale.topic"]!}']").attr("checked",true);
-                            </script>
-                        </td>
-                    </tr>
+                <tr><td colspan="2"> <h2>控制台</h2>
+                        <n>会根据情况调整控制台的部分界面布局</n>
+                        <hr/></td></tr>
+                <tr>
+                    <th>服务数量规模</th>
+                    <td>
+                        <boxlist>
+                            <label><input type="radio" name="${name_service}" value="0" checked /><a>小</a></label>
+                            <label><input type="radio" name="${name_service}" value="1" /><a>中</a></label>
+                            <label><input type="radio" name="${name_service}" value="2" /><a>大</a></label>
+                        </boxlist>
+                        <script>
+                            $("input[name='${name_service}'][value='${sets[name_service]!}']").attr("checked",true);
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <th>消息主题数量</th>
+                    <td>
+                        <boxlist>
+                            <label><input type="radio" name="${name_topic}" value="0" checked /><a>少</a></label>
+                            <label><input type="radio" name="${name_topic}" value="1" /><a>多</a></label>
+                        </boxlist>
+                        <script>
+                            $("input[name='${name_topic}'][value='${sets[name_topic]!}']").attr("checked",true);
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <th>系统用户数量</th>
+                    <td>
+                        <boxlist>
+                            <label><input type="radio" name="${name_subject}" value="0" checked /><a>少</a></label>
+                            <label><input type="radio" name="${name_subject}" value="1" /><a>多</a></label>
+                        </boxlist>
+                        <script>
+                            $("input[name='${name_subject}'][value='${sets[name_subject]!}']").attr("checked",true);
+                        </script>
+                    </td>
+                </tr>
 
 
-                    <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
-                    <tr>
-                        <th>告警签名</th>
-                        <td>
-                            <input id="alarm_sign" type="text" value="${sets["alarm_sign"]!}">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </detail>
+                <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
+                <tr>
+                    <th>告警签名</th>
+                    <td>
+                        <input id="alarm_sign" type="text" value="${sets["alarm_sign"]!}">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </detail>
 </main>
 
 </body>

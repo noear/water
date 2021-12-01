@@ -9,6 +9,7 @@ import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionPerms;
+import wateradmin.dso.SettingUtils;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
@@ -27,6 +28,8 @@ public class AdminController extends BaseController {
 
     @Mapping("")
     public ModelAndView home() throws SQLException {
+
+        viewModel.put("subjectScale", SettingUtils.subjectScale().ordinal());
         return view("admin/home");
     }
 
@@ -43,6 +46,10 @@ public class AdminController extends BaseController {
             sets.put((String) k, (String) v);
         });
 
+
+        viewModel.put("name_topic","water.setting.scale.topic");
+        viewModel.put("name_service","water.setting.scale.service");
+        viewModel.put("name_subject","water.setting.scale.subject");
 
         viewModel.put("sets", sets);
 
