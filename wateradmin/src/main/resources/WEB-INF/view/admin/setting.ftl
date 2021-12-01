@@ -20,7 +20,7 @@
 
             $.ajax({
                 type:"POST",
-                url:"/admin/ajax/save",
+                url:"/admin/setting/ajax/save",
                 data:{json: JSON.stringify(vm)},
                 success:function (data) {
                     if(data.code == 1) {
