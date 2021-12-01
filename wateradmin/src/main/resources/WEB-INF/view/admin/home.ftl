@@ -30,10 +30,11 @@
             <items>
                 <a class='sel' href='/admin/setting' target="inner">设置</a>
                 <#if subjectScale gt 0>
-                    <a href='/grit/subject/entity' target="inner">账号</a>
+                    <a href='/grit/subject/group' target="inner">主体组</a>
+                    <a href='/grit/subject/entity' target="inner">主体</a>
                     <a href='/grit/auth' target="inner">授权</a>
                 <#else>
-                    <a href='/grit/subject/entity/s' target="inner">账号</a>
+                    <a href='/grit/subject/entity/s' target="inner">主体</a>
                     <a href='/grit/auth/s' target="inner">授权</a>
                 </#if>
             </items>
