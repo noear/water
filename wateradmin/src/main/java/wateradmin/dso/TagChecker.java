@@ -18,7 +18,7 @@ public class TagChecker {
             tagCached = new HashSet<>();
 
             List<ResourceEntity> list = GritClient.global().auth()
-                    .getResListByGroup(Session.current().getSubjectId(), "tag");
+                    .getResListByGroupCode(Session.current().getSubjectId(), "tag");
 
             list.forEach((r) -> {
                 tagCached.add(r.display_name);

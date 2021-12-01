@@ -42,7 +42,7 @@ public class LoginController extends BaseController {
         long subjectId = Session.current().getSubjectId();
 
         if (subjectId > 0) {
-            String link_uri = GritClient.global().auth().getUriFristBySpace(subjectId).link_uri;
+            String link_uri = GritClient.global().auth().getUriFrist(subjectId).link_uri;
 
             if (Utils.isEmpty(link_uri) == false) {
                 redirect(link_uri);
@@ -72,7 +72,7 @@ public class LoginController extends BaseController {
         } else {
 
             Session.current().loadSubject(subject);
-            Resource res = GritClient.global().auth().getUriFristBySpace(subject.subject_id);
+            Resource res = GritClient.global().auth().getUriFrist(subject.subject_id);
 
             if (Utils.isEmpty(res.link_uri)) {
                 return Result.failure("提示：请联系管理员开通权限！");
