@@ -8,7 +8,7 @@ version: '3'
 # 4.使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:9371
 
 # 补充说明：最后的 gritadmin 服务是权限管理系统（water 内置了个简化版的。构用的话可删掉它）
-# 1.权限管理地址 http://localhost:7282 做权限管理
+# 1.权限管理地址 http://localhost:7281 做权限管理
 
 services:
   waterapi:
@@ -72,4 +72,4 @@ services:
     depends_on:
       - waterapi
     ports:
-      - 7282:8080
+      - 7281:8080
