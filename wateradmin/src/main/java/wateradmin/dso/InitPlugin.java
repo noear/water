@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.SolonApp;
-import org.noear.solon.annotation.Component;
+import org.noear.solon.Utils;
 import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
@@ -19,18 +19,30 @@ import org.noear.weed.WeedConfig;
  * @author noear 2021/12/1 created
  */
 @Slf4j
-@Component
-public class BehaviorTrackInit implements Plugin {
-    boolean isErrorLogEnable = false;
-    boolean isTrackEnable = false;
-    boolean isDebugMode = false;
+public class InitPlugin implements Plugin {
+    boolean isDebugMode;
+    boolean isWeedStyle2;
+    boolean isTrackEnable;
+    boolean isErrorLogEnable;
 
     @Override
     public void start(SolonApp app) {
-        isErrorLogEnable = true;
-        isTrackEnable = Solon.cfg().isDebugMode();
-        isDebugMode = Solon.cfg().isDebugMode();
+        Utils.loadClass("com.mysql.jdbc.Driver");
+        Utils.loadClass("com.mysql.cj.jdbc.Driver");
 
+
+        isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
+
+        String style = Solon.cfg().get("srww.weed.print.style");
+        isWeedStyle2 = "sql".equals(style);
+        isTrackEnable = Solon.cfg().getBool("srww.weed.track.enable", isDebugMode);
+        isErrorLogEnable = Solon.cfg().getBool("srww.weed.error.log.enable", true);
+
+
+        initWeed();
+    }
+
+    private void initWeed() {
         initWeedForAdmin();
 
         WeedConfig.onException((cmd, err) -> {
@@ -56,7 +68,11 @@ public class BehaviorTrackInit implements Plugin {
         //admin 项目
         WeedConfig.onExecuteAft((cmd) -> {
             if (isDebugMode) {
-                log.debug(cmd.text + "\r\n" + ONode.stringify(cmd.paramMap()));
+                if (isWeedStyle2) {
+                    log.debug(cmd.toSqlString());
+                } else {
+                    log.debug(cmd.text + "\r\n" + ONode.stringify(cmd.paramMap()));
+                }
             }
 
             if (cmd.isLog < 0) {
