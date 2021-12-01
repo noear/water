@@ -67,7 +67,7 @@ services:
     container_name: gritadmin
     environment:
       - solon.start.ping=waterapi:9371
-      - gritadmin.password=SykSYLWN9WTpzCHq   #Grit 管理登录密码
+      - gritadmin.password=SykSYLWN9WTpzCHq   #Grit 管理密码
       - TZ=Asia/Shanghai
     depends_on:
       - waterapi
