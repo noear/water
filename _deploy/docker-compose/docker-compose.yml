@@ -7,6 +7,8 @@ version: '3'
 # 3.管理后台地址 http://localhost:9373 做日常管理
 # 4.使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:9371
 
+# 补充说明：最后的 gritadmin 服务是权限管理系统（water 内置了个简化版的。构用的话可删掉它）
+# 1.权限管理地址 http://localhost:7282 做权限管理
 
 services:
   waterapi:
@@ -60,3 +62,14 @@ services:
       -  waterapi
     ports:
       - 9375:8080
+  gritadmin:
+    image: noearorg/gritadmin:latest
+    container_name: gritadmin
+    environment:
+      - solon.start.ping=waterapi:9371
+      - gritadmin.password=SykSYLWN9WTpzCHq   #Grit 管理登录密码
+      - TZ=Asia/Shanghai
+    depends_on:
+      - waterapi
+    ports:
+      - 7282:8080
