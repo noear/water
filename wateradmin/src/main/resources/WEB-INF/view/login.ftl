@@ -71,7 +71,7 @@
   </flex>
   <br />
   <section>
-    <form>
+    <form method="post">
       <table>
         <tr><th width="70">账号：</th>
           <td colspan="2"><input type="text" name="userName" placeholder="用户名"/></td>

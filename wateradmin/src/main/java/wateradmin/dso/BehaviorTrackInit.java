@@ -14,11 +14,13 @@ import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
 /**
+ * 行为跟踪初始化
+ *
  * @author noear 2021/12/1 created
  */
 @Slf4j
 @Component
-public class WeedInit implements Plugin {
+public class BehaviorTrackInit implements Plugin {
     boolean isErrorLogEnable = false;
     boolean isTrackEnable = false;
     boolean isDebugMode = false;
@@ -54,9 +56,7 @@ public class WeedInit implements Plugin {
         //admin 项目
         WeedConfig.onExecuteAft((cmd) -> {
             if (isDebugMode) {
-
                 log.debug(cmd.text + "\r\n" + ONode.stringify(cmd.paramMap()));
-
             }
 
             if (cmd.isLog < 0) {
@@ -64,14 +64,18 @@ public class WeedInit implements Plugin {
             }
 
             Context ctx = Context.current();
-            String user_name = user_name(ctx);
-            int user_puid = user_puid(ctx);
 
+            if (ctx == null) {
+                return;
+            }
 
             String sqlUp = cmd.text.toUpperCase();
 
-            if (cmd.timespan() > 2000 || cmd.isLog > 0 || sqlUp.contains("INSERT INTO ")|| sqlUp.contains("UPDATE ") || sqlUp.contains("DELETE ")) {
-                WaterClient.Track.trackOfBehavior(service_name(), cmd, ctx.userAgent(), ctx.pathNew(), user_puid + "." + user_name, ctx.realIp());
+            if (cmd.timespan() > 2000 || cmd.isLog > 0 || sqlUp.contains("INSERT INTO ") || sqlUp.contains("UPDATE ") || sqlUp.contains("DELETE ")) {
+                String userDisplayName = getUserDisplayName(ctx);
+                String userId = getUserId(ctx);
+
+                WaterClient.Track.trackOfBehavior(Solon.cfg().appName(), cmd, ctx.userAgent(), ctx.pathNew(), userId + "." + userDisplayName, ctx.realIp());
             }
 
             if (isTrackEnable) {
@@ -80,29 +84,20 @@ public class WeedInit implements Plugin {
                     tag = "sql";
                 }
 
-                CloudClient.metric().addMeter(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                CloudClient.metric().addMeter(Solon.cfg().appName() + "_sql", tag, cmd.text, cmd.timespan());
                 //WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
             }
         });
     }
 
-    public String service_name() {
-        return Solon.cfg().appName();
-    }
-
     //用于作行为记录
-    public int user_puid(Context ctx) {
-        if (ctx != null) {
-            String tmp = ctx.attr("user_puid", "0");
-            return Integer.parseInt(tmp);
-        } else {
-            return 0;
-        }
+    public String getUserId(Context ctx) {
+        return ctx.attr("user_id", "0");
     }
 
-    public String user_name(Context ctx) {
+    public String getUserDisplayName(Context ctx) {
         if (ctx != null) {
-            return ctx.attr("user_name", null);
+            return ctx.attr("user_display_name", null);
         } else {
             return null;
         }
