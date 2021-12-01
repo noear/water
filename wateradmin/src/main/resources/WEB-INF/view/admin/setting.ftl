@@ -80,19 +80,6 @@
                         </script>
                     </td>
                 </tr>
-                <tr>
-                    <th>系统用户数量</th>
-                    <td>
-                        <boxlist>
-                            <label><input type="radio" name="${name_subject}" value="0" checked /><a>少</a></label>
-                            <label><input type="radio" name="${name_subject}" value="1" /><a>多</a></label>
-                        </boxlist>
-                        <script>
-                            $("input[name='${name_subject}'][value='${sets[name_subject]!}']").attr("checked",true);
-                        </script>
-                    </td>
-                </tr>
-
 
                 <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
                 <tr>
