@@ -59,8 +59,7 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
   * 建议1个副本起步`（可选部署）`
   * 要配置外网访问地址，建议加域名
 
-
-
+  
 * 添加 water/watersev-tol 服务（镜像：noearorg/watersev:latest）。工具服务，包含： (msgchk,sevchk,syn,mot)
   * 镜像端口：8080
   * 对外端口：8080 或其它
