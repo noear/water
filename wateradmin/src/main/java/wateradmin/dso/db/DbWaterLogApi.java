@@ -1,10 +1,12 @@
 package wateradmin.dso.db;
 
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.TextUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,10 @@ import java.util.List;
  * */
 public class DbWaterLogApi {
     public static List<LogModel> getSqlLogsByPage(String logger, String group, String service, String method, int seconds, String operator, String path, long startLogId, long timestamp) throws Exception {
+        if (TextUtils.isEmpty(service)) {
+            return new ArrayList<>();
+        }
+
         StringBuilder tagx = new StringBuilder();
         tagx.append(""); //tag0
         tagx.append("@"); //tag1
@@ -63,6 +69,10 @@ public class DbWaterLogApi {
     }
 
     public static List<TagCountsM> getSqlSecondsTags(String logger, String group, String service) throws Exception {
+        if (TextUtils.isEmpty(service)) {
+            return new ArrayList<>();
+        }
+
         return ProtocolHub.getLogSource(logger)
                 .queryGroupCountBy(logger, group, service, "tag");//tag1=>seconds
     }

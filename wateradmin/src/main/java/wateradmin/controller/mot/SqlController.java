@@ -19,6 +19,7 @@ import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterLogApi;
 import wateradmin.models.ScaleType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,9 +67,9 @@ public class SqlController extends BaseController {
             }
         }
 
-        if (Utils.isEmpty(serviceName)) {
-            return null;
-        }
+//        if (Utils.isEmpty(serviceName)) {
+//            return null;
+//        }
 
 
         viewModel.put("tabs", services);
@@ -78,34 +79,14 @@ public class SqlController extends BaseController {
 
         List<TagCountsM> secondList = DbWaterLogApi.getSqlSecondsTags(logger, tag_name, serviceName);
 
-
         int seconds = 0;
         if (TextUtils.isEmpty(tagx) == false) {
             seconds = Integer.parseInt(tagx);
         }
 
 
-        String method = null;
+        String method = getSqlMethod(_state);
 
-        if (_state != null) {
-            switch (_state) {
-                case 1:
-                    method = "SELECT";
-                    break;
-                case 2:
-                    method = "UPDATE";
-                    break;
-                case 3:
-                    method = "INSERT";
-                    break;
-                case 4:
-                    method = "DELETE";
-                    break;
-                case 5:
-                    method = "OTHER";
-                    break;
-            }
-        }
 
         long timestamp = 0;
         if (TextUtils.isNotEmpty(log_date)) {
@@ -117,9 +98,8 @@ public class SqlController extends BaseController {
         }
 
 
-
         int pageSize = 50;
-        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger,tag_name, serviceName, method, seconds, null, null, startId, timestamp);
+        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, serviceName, method, seconds, null, null, startId, timestamp);
 
 
         viewModel.put("refdate", Datetime.Now().addDay(-2).getDate());
@@ -137,5 +117,24 @@ public class SqlController extends BaseController {
         }
 
         return view("mot/sql_inner");
+    }
+
+    private String getSqlMethod(Integer _state) {
+        if (_state != null) {
+            switch (_state) {
+                case 1:
+                    return "SELECT";
+                case 2:
+                    return "UPDATE";
+                case 3:
+                    return "INSERT";
+                case 4:
+                    return "DELETE";
+                case 5:
+                    return "OTHER";
+            }
+        }
+
+        return null;
     }
 }

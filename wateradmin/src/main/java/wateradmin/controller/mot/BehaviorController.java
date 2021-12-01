@@ -65,9 +65,9 @@ public class BehaviorController extends BaseController {
             }
         }
 
-        if (Utils.isEmpty(serviceName)) {
-            return null;
-        }
+//        if (Utils.isEmpty(serviceName)) {
+//            return null;
+//        }
 
 
         viewModel.put("tabs", services);
@@ -77,27 +77,7 @@ public class BehaviorController extends BaseController {
 
         List<TagCountsM> peratorList = DbWaterLogApi.getSqlOperatorTags(logger, tag_name, serviceName);
 
-        String method = null;
-
-        if (_state != null) {
-            switch (_state) {
-                case 1:
-                    method = "SELECT";
-                    break;
-                case 2:
-                    method = "UPDATE";
-                    break;
-                case 3:
-                    method = "INSERT";
-                    break;
-                case 4:
-                    method = "DELETE";
-                    break;
-                case 5:
-                    method = "OTHER";
-                    break;
-            }
-        }
+        String method = getSqlMethod(_state);
 
         long timestamp = 0;
         if (TextUtils.isNotEmpty(log_date)) {
@@ -124,5 +104,24 @@ public class BehaviorController extends BaseController {
         }
 
         return view("mot/behavior_inner");
+    }
+
+    private String getSqlMethod(Integer _state) {
+        if (_state != null) {
+            switch (_state) {
+                case 1:
+                    return "SELECT";
+                case 2:
+                    return "UPDATE";
+                case 3:
+                    return "INSERT";
+                case 4:
+                    return "DELETE";
+                case 5:
+                    return "OTHER";
+            }
+        }
+
+        return null;
     }
 }
