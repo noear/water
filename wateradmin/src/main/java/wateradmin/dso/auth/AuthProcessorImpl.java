@@ -19,7 +19,7 @@ public class AuthProcessorImpl extends GritAuthProcessor {
         Context ctx = Context.current();
         if (ctx != null) {
             //跳过 grit rpc 服务
-            if (ctx.path().startsWith(GritClient.getRpcPath())) {
+            if (ctx.path().startsWith(GritClient.RPC_PATH)) {
                 return true;
             }
         }
@@ -32,7 +32,7 @@ public class AuthProcessorImpl extends GritAuthProcessor {
         Context ctx = Context.current();
         if (ctx != null) {
             //跳过 grit rpc 服务
-            if (ctx.path().startsWith(GritClient.getRpcPath())) {
+            if (ctx.path().startsWith(GritClient.RPC_PATH)) {
                 return true;
             }
         }
@@ -46,7 +46,7 @@ public class AuthProcessorImpl extends GritAuthProcessor {
             return true;
         }
 
-        if (path.startsWith(GritClient.getRpcPath())) {
+        if (path.startsWith(GritClient.RPC_PATH)) {
             return true;
         }
 
