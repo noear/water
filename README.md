@@ -187,7 +187,7 @@ public class Job_test implements CloudJobHandler {
 
 ### （三）部署
 
-[/noear/water/tree/master/_deploy](/noear/water/tree/master/_deploy)
+具体参考： [_deploy](_deploy)
 
 
 # 管理界面预览
