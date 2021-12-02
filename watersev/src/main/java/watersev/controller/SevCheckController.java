@@ -81,14 +81,14 @@ public final class SevCheckController implements IJob {
 
 
         if (seconds < 10) {
-            //日志
-            LogUtil.info(getName(), sev.address, sev.name + "@" + sev.address + ": since the last check-in time: " + seconds + "s" );
-
             //对签到型的服务进行检查
             //
             DbWaterRegApi.udpService1(sev.service_id, 0);
 
             if (sev.check_error_num >= 2) {
+                //日志
+                LogUtil.info(getName(), sev.address, sev.name + "@" + sev.address + ": since the last check-in time: " + seconds + "s" );
+
                 //之前2次坏的，现在好了提示一下
                 AlarmUtil.tryAlarm(sev, true, 0);
             }

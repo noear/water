@@ -7,9 +7,7 @@ import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 注册子服务
@@ -23,9 +21,11 @@ public class RegController implements IJob {
 
     /**
      * 添加子服务
-     * */
+     */
     public static void addService(String subService) {
-        subServiceSet.add(subService);
+        synchronized (subServiceSet) {
+            subServiceSet.add(subService);
+        }
     }
 
     @Override
@@ -38,12 +38,20 @@ public class RegController implements IJob {
         return 1000 * 5;
     }
 
+    private List<String> sevList = new ArrayList<>();
+
     @Override
     public void exec() throws Throwable {
-        Iterator<String> iterator = subServiceSet.iterator();
+        //线程安全处理
+        if (sevList.size() != subServiceSet.size()) {
+            sevList.clear();
+            synchronized (subServiceSet) {
+                sevList.addAll(subServiceSet);
+            }
+        }
 
-        while (iterator.hasNext()) {
-            checkinOne(iterator.next());
+        for (String sev : sevList) {
+            checkinOne(sev);
         }
     }
 
