@@ -31,6 +31,10 @@ docker run -it --rm -p 19371:19371 noearorg/wateraide
 docker-compose up
 ```
 
+**注意：**
+
+* 如何修改了 docker-compose.yml 配置，引入 networks，要把每个服务的ip固定下来
+
 ## 四、后续配置修改
 
 进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：

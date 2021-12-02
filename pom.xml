@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>water2_java</artifactId>
-    <version>project</version>
+    <artifactId>water</artifactId>
+    <version>dev</version>
     <packaging>pom</packaging>
 
     <name>root</name>
