@@ -64,10 +64,10 @@ public final class Session extends SessionBase {
     }
 
     public String getValidation() {
-        return localGet("Validation_String", null);
+        return localGet("validation_string", null);
     }
 
     public void setValidation(String validation) {
-        localSet("Validation_String", validation.toLowerCase());
+        localSet("validation_string", validation.toLowerCase());
     }
 }
