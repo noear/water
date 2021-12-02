@@ -9,7 +9,7 @@
     <version>dev</version>
     <packaging>pom</packaging>
 
-    <name>root</name>
+    <name>_root</name>
     <description>Java project for water2</description>
 
     <properties>
