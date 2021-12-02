@@ -187,11 +187,8 @@ public class Job_test implements CloudJobHandler {
 
 ### （三）部署
 
-[https://gitee.com/noear/water/tree/master/deploy](https://gitee.com/noear/water/tree/master/deploy)
+[/noear/water/tree/master/_deploy](/noear/water/tree/master/_deploy)
 
-
-
-> 相关材料未准备好...
 
 # 管理界面预览
 
