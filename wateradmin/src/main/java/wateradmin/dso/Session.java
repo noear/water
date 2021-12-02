@@ -2,7 +2,7 @@ package wateradmin.dso;
 
 import org.noear.grit.client.GritClient;
 import org.noear.grit.model.domain.Subject;
-import org.noear.solon.extend.grit.SessionBase;
+import org.noear.grit.solon.SessionBase;
 
 public final class Session extends SessionBase {
     private static final Session _current = new Session();

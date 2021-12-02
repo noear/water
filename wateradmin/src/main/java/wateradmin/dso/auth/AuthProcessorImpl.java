@@ -1,8 +1,8 @@
 package wateradmin.dso.auth;
 
 import org.noear.grit.client.GritClient;
+import org.noear.grit.solon.GritAuthProcessor;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.extend.grit.GritAuthProcessor;
 import wateradmin.dso.Session;
 
 /**

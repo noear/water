@@ -12,6 +12,7 @@
     <name>${project.artifactId}</name>
     <description>Java project for water</description>
     <url>https://github.com/noear/water</url>
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
