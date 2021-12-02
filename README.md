@@ -78,7 +78,7 @@
 </dependency>
 ```
 
-* application.yml / 配置说明
+* app.yml / 配置说明
 ```yml
 solon.app:
   name: "wateradmin"
@@ -87,7 +87,7 @@ solon.app:
 solon.cloud.water:
   server: "waterapi:9371"           #WATER服务地址
   config:
-    load: "test.properties"         #默认加载的配置
+    load: "test.yml"                #默认加载的配置
   log:
     default: "water_log_admin"      #默认日志记录器
 ```
