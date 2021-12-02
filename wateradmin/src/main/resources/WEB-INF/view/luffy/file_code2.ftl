@@ -61,7 +61,7 @@
 
         require.config({ paths: { 'vs': '//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs' }});
         require(['vs/editor/editor.main'], function() {
-            $.get("/luffy.d.txt?v=1",(rst)=>{
+            $.get("/_luffy.d.txt?v=1",(rst)=>{
                 monaco.languages.typescript.javascriptDefaults.addExtraLib(rst);
             });
 
