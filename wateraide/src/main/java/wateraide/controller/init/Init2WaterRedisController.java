@@ -56,6 +56,8 @@ public class Init2WaterRedisController {
         bcfCfg.append("\n");
         bcfCfg.append("server.session.state.domain=").append("water.noear.org").append("\n");
         bcfCfg.append("server.session.timeout=").append("7200").append("\n");
+        bcfCfg.append("\n");
+        bcfCfg.append("grit.token=").append("DLAWrz90wAc2MIqHZ9o8b3RaPWiHebez").append("\n");
 
         //更新配置
         try {
