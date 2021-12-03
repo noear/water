@@ -7,7 +7,6 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
-import org.noear.water.WW;
 import org.noear.water.WaterProxy;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
@@ -116,7 +115,7 @@ public class SevController extends BaseController {
         try {
             return WaterProxy.runStatus(addrees);
         } catch (Throwable ex) {
-            return "The service unsupported";
+            throw ex;
         }
     }
 
