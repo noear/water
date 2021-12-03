@@ -15,7 +15,7 @@
 
 ## 二、初始化环境
 
-运行 Water 助理（在本地或服务器上运行都可）
+运行 Water 助理工具（在本地或服务器上运行都可）
 
 ```properties
 java -Dfile.encoding=utf-8 -jar xwater.jar
