@@ -8,6 +8,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WW;
+import org.noear.water.WaterProxy;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -110,12 +111,10 @@ public class SevController extends BaseController {
             return "Not supported";
         }
 
-        String ca = s.split("@")[1];
-
-        String url = "http://" + ca + WW.path_run_status;
+        String addrees = s.split("@")[1];
 
         try {
-            return HttpUtils.http(url).get();
+            return WaterProxy.runStatus(addrees);
         } catch (Throwable ex) {
             return "The service unsupported";
         }
