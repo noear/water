@@ -14,17 +14,18 @@
 
 ### 了解框架与构件
 
-| 组件 | 说明 |
-| --- | --- |
-| org.noear:water.client | 框架：Water 客户端 |
+| 组件                          | 说明                                          |
+|-----------------------------|---------------------------------------------|
+| org.noear:water.client      | 框架：Water 客户端                                |
 | org.noear:water-solon-plugin | 框架：Water 客户端 for solon（也可用于 Spring Boot 项目） |
-| | |
-| org.noear:waterapi | 构建：Water 服务端 |
-| org.noear:watersev | 构建：Water 后台服务（健康检测；数据监视；消息派发；定时任务等...） |
-| org.noear:wateradmin | 构建：Water 控制台（支持LDAP登录） |
-| org.noear:waterfaas | 构建：Water FaaS 服务，提供轻量级FaaS服务 |
-| org.noear:waterraas | 构建：Water RaaS 服务，提供轻量级规则计算服务 |
-
+|                             |                                             |
+| org.noear:waterapi          | 构建：Water 服务端                                |
+| org.noear:watersev          | 构建：Water 后台服务（健康检测；数据监视；消息派发；定时任务等...）      |
+| org.noear:wateradmin        | 构建：Water 控制台（支持LDAP登录）                      |
+| org.noear:waterfaas         | 构建：Water FaaS 服务，提供轻量级FaaS服务                |
+| org.noear:waterraas         | 构建：Water RaaS 服务，提供轻量级规则计算服务                |
+|                             |                                             |
+| org.noear:xwater         | 构建：Water 助理工具                               |
 
 
 ### 控制台演示站
@@ -74,7 +75,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.6.2</version>
+    <version>1.6.4</version>
 </dependency>
 ```
 
