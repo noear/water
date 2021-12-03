@@ -157,4 +157,16 @@ public class DbWaterCfgSafeApi {
                 .exists();
     }
 
+    public static String getServerTokenOne() throws SQLException {
+        return db().table("water_cfg_whitelist")
+                .whereEq("tag", WW.whitelist_tag_server)
+                .andEq("type", WW.whitelist_type_token)
+                .andEq("is_enabled", 1)
+                .caching(CacheUtil.data)
+                .cacheTag("whitelist:server")
+                .usingCache(60)
+                .selectValue("value", "");
+
+    }
+
 }

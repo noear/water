@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * @author noear 2021/11/3 created
  */
-public class AppInitPlugin implements Plugin {
-    static Logger log = LoggerFactory.getLogger(AppInitPlugin.class);
+public class InitPlugin implements Plugin {
+    static Logger log = LoggerFactory.getLogger(InitPlugin.class);
 
     @Override
     public void start(SolonApp app) {

@@ -115,7 +115,7 @@ public class SevController extends BaseController {
         try {
             return WaterProxy.runStatus(addrees);
         } catch (Throwable ex) {
-            throw ex;
+            return "The service unsupported";
         }
     }
 
