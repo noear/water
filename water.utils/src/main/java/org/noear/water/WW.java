@@ -1,7 +1,7 @@
 package org.noear.water;
 
 public class WW {
-    public static final String water_version = "v2.5.0";
+    public static final String water_version = "v2.5.1";
 
     public static final String mime_glog = "water/glog";
     public static final String mime_gzip = "application/x-gzip";
@@ -17,11 +17,11 @@ public class WW {
 
     public static final String cfg_data_header = "#Data#: ";
 
-    public static final String path_run_job = "/run/job/";//for cloud job call
-    public static final String path_run_status = "/run/status/";
-    public static final String path_run_check = "/run/check/";
-    public static final String path_run_stop = "/run/stop/";
-    public static final String path_msg_receiver = "/msg/receive";
+    public static final String path_run_job = "/_run/job/";//for cloud job call
+    public static final String path_run_status = "/_run/status/";
+    public static final String path_run_check = "/_run/check/";
+    public static final String path_run_stop = "/_run/stop/";
+    public static final String path_run_msg = "/_run/msg";
 
 
     public static final String water_host = "water.host";

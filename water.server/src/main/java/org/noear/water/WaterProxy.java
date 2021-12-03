@@ -90,16 +90,30 @@ public class WaterProxy {
         return HttpUtils.http(url);
     }
 
-    public static String task(String service, String name) throws Exception {
+    public static String runJob(String service, String name) throws Exception {
         return HttpUtils.http(service, WW.path_run_job)
                 .data("name", name)
                 .header(WW.http_header_token, ServerConfig.taskToken)
                 .post();
     }
 
+    public static String runStatus(String addrees) throws Exception {
+        String url = "http://" + addrees + WW.path_run_status;
+        return HttpUtils.http(url)
+                .header(WW.http_header_token, ServerConfig.taskToken)
+                .get();
+    }
+
+    public static String runCheck(String addrees) throws Exception {
+        String url = "http://" + addrees + WW.path_run_check;
+        return HttpUtils.http(url)
+                .header(WW.http_header_token, ServerConfig.taskToken)
+                .get();
+    }
+
     @Deprecated
     public static String job(String service, String name) throws Exception {
-        return task(service, name);
+        return runJob(service, name);
     }
 
     /**
