@@ -28,7 +28,7 @@ public class Init1WaterDbController {
             return Result.failure("未连接数据库，刷新再试...");
         }
 
-        String config = ctx.cookie("WATERAIDE_TOKEN");
+        String config = ctx.cookie("XWATER_TOKEN");
         if (Utils.isNotEmpty(config)) {
             config = Base64Utils2.decode(config);
         }

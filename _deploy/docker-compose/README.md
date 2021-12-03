@@ -14,7 +14,7 @@
 运行 Water 助理（在本地或服务器上运行都可）
 
 ```shell 
-docker run -it --rm -p 19371:19371 noearorg/wateraide
+docker run -it --rm -p 19371:19371 noearorg/xwater
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作

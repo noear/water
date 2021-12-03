@@ -32,7 +32,7 @@ public class ConnectController {
             if (Config.water != null) {
                 //连接成功
                 String token = Base64Utils.encode(config);
-                ctx.cookieSet("WATERAIDE_TOKEN", token);
+                ctx.cookieSet("XWATER_TOKEN", token);
             }
         } else {
             return Result.failure("配置有问题...");
