@@ -57,7 +57,7 @@
             <#if m.check_last_state == 0>
                 - ok
             <#else>
-                - no - ${m.check_last_note!}
+                - no
             </#if>
         </td>
 
