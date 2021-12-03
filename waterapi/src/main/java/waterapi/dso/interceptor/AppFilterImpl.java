@@ -37,7 +37,7 @@ public class AppFilterImpl implements Filter {
             }
 
             //记性能
-            if (WW.path_run_check.equals(ctx.path()) == false) {
+            if (ctx.path().startsWith("_") == false) {
 
                 String _node = Config.getLocalHost();
                 String _from = FromUtils.getFrom(ctx);

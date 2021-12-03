@@ -104,13 +104,6 @@ public class WaterProxy {
                 .get();
     }
 
-    public static String runCheck(String addrees) throws Exception {
-        String url = "http://" + addrees + WW.path_run_check;
-        return HttpUtils.http(url)
-                .header(WW.http_header_token, ServerConfig.taskToken)
-                .get();
-    }
-
     @Deprecated
     public static String job(String service, String name) throws Exception {
         return runJob(service, name);

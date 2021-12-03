@@ -5,6 +5,7 @@ import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import luffy.JtRun;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
+import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import waterraas.controller.DebugController;
 import waterraas.controller.PreviewController;
@@ -54,6 +55,6 @@ public class WaterraasApp {
         }
 
 
-        PreheatUtils.preheat("/run/check/");
+        PreheatUtils.preheat(WW.path_run_check);
     }
 }

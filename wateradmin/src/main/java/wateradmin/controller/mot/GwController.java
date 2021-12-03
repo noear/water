@@ -7,6 +7,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotZero;
+import org.noear.water.WW;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -131,7 +132,7 @@ public class GwController extends BaseController {
         if (TextUtils.isNotEmpty(s) && TextUtils.isNotEmpty(upstream)) {
             if (s.indexOf("@") > 0) {
                 String ca = s.split("@")[1];
-                String url = "http://" + ca + "/run/check/?upstream=" + upstream;
+                String url = "http://" + ca + WW.path_run_check +"?upstream=" + upstream;
                 return HttpUtils.http(url).get();
             }
         }

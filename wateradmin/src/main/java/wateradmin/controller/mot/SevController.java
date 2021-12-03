@@ -7,6 +7,7 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.WW;
 import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -111,7 +112,7 @@ public class SevController extends BaseController {
 
         String ca = s.split("@")[1];
 
-        String url = "http://" + ca + "/run/status/";
+        String url = "http://" + ca + WW.path_run_status;
 
         try {
             return HttpUtils.http(url).get();

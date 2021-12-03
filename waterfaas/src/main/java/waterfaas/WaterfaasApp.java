@@ -5,6 +5,7 @@ import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
@@ -54,6 +55,6 @@ public class WaterfaasApp {
 
         JtRun.xfunInit();
 
-        PreheatUtils.preheat("/run/check/");
+        PreheatUtils.preheat(WW.path_run_check);
     }
 }

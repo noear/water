@@ -2,6 +2,7 @@ package waterapi;
 
 import org.noear.solon.Solon;
 import org.noear.solon.cloud.CloudManager;
+import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.track.TrackBuffer;
@@ -45,7 +46,7 @@ public class WaterapiApp {
 		});
 
 
-		PreheatUtils.preheat("/run/check/");
+		PreheatUtils.preheat(WW.path_run_check);
 		PreheatUtils.preheat("/cfg/get/?tag=water");
 	}
 }

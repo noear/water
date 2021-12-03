@@ -1,4 +1,4 @@
-package waterapi.controller.run;
+package waterapi.controller._run;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -16,7 +16,7 @@ import waterapi.dso.db.DbWaterCfgSafeApi;
  */
 @Controller
 public class CMD_run_check extends UapiBase {
-    @Mapping("/run/check/")
+    @Mapping("/_run/check/")
     public Result cmd_exec() throws Exception{
         DbWaterCfgSafeApi.loadWhitelist(); //检测服务时，就会进行白名单刷新
 

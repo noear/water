@@ -58,7 +58,7 @@ public class Config {
         AuthUtil.adapter()
                 .loginUrl("/login")
                 .addRule(r -> r.include("**").verifyIp().failure((c, t) -> c.output(c.realIp() + ", not whitelist")))
-                .addRule(r -> r.exclude("/login**").exclude(HealthHandler.HANDLER_PATH).exclude("/run/**").exclude("/msg/**").exclude("/_**").verifyPath())
+                .addRule(r -> r.exclude("/login**").exclude(HealthHandler.HANDLER_PATH).exclude("/_**").verifyPath())
                 .addRule(r -> r.include("/grit/ui/**").verifyPermissions(SessionPerms.admin))
                 .processor(new AuthProcessorImpl())
                 .failure((ctx, rst) -> {

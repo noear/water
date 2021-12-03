@@ -5,6 +5,7 @@ import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.event.EventBus;
+import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
@@ -37,7 +38,7 @@ public class WateradminApp {
         //尝试注册 gritapi 服务
         gritApiRegTry();
 
-        PreheatUtils.preheat("/run/check/");
+        PreheatUtils.preheat(WW.path_run_check);
         PreheatUtils.preheat("/login");
     }
 

@@ -1,4 +1,4 @@
-package waterapi.controller.run;
+package waterapi.controller._run;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -21,7 +21,7 @@ import waterapi.dso.interceptor.Logging;
 @Whitelist
 @Controller
 public class CMD_run_status extends UapiBase {
-    @Mapping("/run/status/")
+    @Mapping("/_run/status/")
     public Result cmd_exec() throws Exception {
         RuntimeStatus rs = RuntimeUtils.getStatus();
         rs.name = Config.water_service_name;

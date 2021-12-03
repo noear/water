@@ -1,4 +1,4 @@
-package waterapi.controller.run;
+package waterapi.controller._run;
 
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Controller
 public class CMD_run_check_http extends UapiBase {
-    @Mapping("/run/check/http/")
+    @Mapping("/_run/check/http/")
     public String run_check_http(Context ctx) {
         ONode data = new ONode();
 

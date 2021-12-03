@@ -26,7 +26,7 @@ public class AppFilterImpl implements Filter {
 
         if ("HEAD".equals(ctx.method()) == false) {
             //排除water的路径
-            if (!ctx.path().startsWith("/run/") && !ctx.path().startsWith("/msg/")) {
+            if (ctx.path().startsWith("/_") == false) {
                 log.info("> Headers: {}\n> Params: {}", ctx.headerMap(), ctx.paramMap());
             }
         }
@@ -41,7 +41,7 @@ public class AppFilterImpl implements Filter {
 
             if (Utils.isNotEmpty(output)) {
                 //排除water的路径
-                if (!ctx.path().startsWith("/run/") && !ctx.path().startsWith("/msg/")) {
+                if (ctx.path().startsWith("/_") == false) {
                     log.info("< Body: {}", output);
                 }
             }
