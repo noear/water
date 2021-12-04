@@ -1,4 +1,4 @@
-package waterapi.controller.run;
+package waterapi.controller.list;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -12,7 +12,7 @@ import waterapi.dso.interceptor.Logging;
 
 
 /**
- * 白名单检测（todo: 将弃用，移到 /list 下）
+ * 名单检测
  *
  * @author noear
  * @since 2017.07
@@ -21,9 +21,9 @@ import waterapi.dso.interceptor.Logging;
 @Logging
 @Whitelist
 @Controller
-public class CMD_run_whitelist_check extends UapiBase {
+public class CMD_list_check extends UapiBase {
     @NotEmpty({"type", "value"})
-    @Mapping("/run/whitelist/check/")
+    @Mapping("/list/check/")
     public String cmd_exec(Context ctx, String type, String value) throws Exception {
         String tags = ctx.param("tags", "");
 

@@ -1,4 +1,4 @@
-package waterapi.controller.run;
+package waterapi.controller._run;
 
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
@@ -12,7 +12,7 @@ import waterapi.controller.UapiBase;
 import waterapi.dso.interceptor.Logging;
 
 /**
- * 缓存更新（todo: 将弃用，移到 /_run 下，需要各方检查并修改）
+ * 缓存更新
  *
  * @author noear
  * @since 2021.10
@@ -23,7 +23,7 @@ import waterapi.dso.interceptor.Logging;
 public class CMD_run_cache_update extends UapiBase {
     static Logger log = LoggerFactory.getLogger(CMD_run_cache_update.class);
 
-    @Mapping("/run/cache/update/")
+    @Mapping("/_run/cache/update/")
     public Result cmd_exec(String tags) throws Exception {
         if (Utils.isNotEmpty(tags)) {
             for (String tag : tags.split(";")) {

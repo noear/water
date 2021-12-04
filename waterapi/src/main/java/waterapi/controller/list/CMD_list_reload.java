@@ -1,16 +1,15 @@
-package waterapi.controller.run;
+package waterapi.controller.list;
 
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterCfgSafeApi;
 import waterapi.dso.interceptor.Logging;
 
 /**
- * 白名单重新加载（todo: 将弃用，移到 /list 下）
+ * 名单重新加载
  *
  * @author noear
  * @since 2017.07
@@ -19,8 +18,8 @@ import waterapi.dso.interceptor.Logging;
 @Logging
 @Whitelist
 @Controller
-public class CMD_run_whitelist_reload extends UapiBase {
-    @Mapping("/run/whitelist/reload/")
+public class CMD_list_reload extends UapiBase {
+    @Mapping("/list/reload/")
     public Result cmd_exec() {
         try {
             DbWaterCfgSafeApi.loadWhitelist();
