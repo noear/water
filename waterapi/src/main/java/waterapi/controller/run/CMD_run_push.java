@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- * 嘿嘿推送
+ * 嘿嘿推送（todo: 将弃用，移到 /alarm 下，需要各方检查并修改）
  *
  * @author noear
  * @since 2017.07
