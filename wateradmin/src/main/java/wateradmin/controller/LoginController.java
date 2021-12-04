@@ -22,8 +22,8 @@ import java.io.IOException;
 @Controller
 public class LoginController extends BaseController {
     @Mapping("/login") //视图 返回
-    public ModelAndView login(Context ctx) {
-        ctx.sessionClear();
+    public ModelAndView login() {
+        Session.current().clear();
 
         return view("login");
     }
