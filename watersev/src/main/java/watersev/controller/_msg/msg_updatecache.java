@@ -1,5 +1,6 @@
 package watersev.controller._msg;
 
+import org.noear.solon.Utils;
 import org.noear.solon.cloud.CloudEventHandler;
 import org.noear.solon.cloud.annotation.CloudEvent;
 import org.noear.solon.cloud.annotation.EventLevel;
@@ -38,13 +39,13 @@ public class msg_updatecache implements CloudEventHandler {
                 if (TextUtils.isNumeric(file_id)) {
                     AFileModel file = DbLuffyApi.fileGet(Integer.parseInt(file_id));
 
-                    if (TextUtils.isEmpty(file.path) == false) {
+                    if (Utils.isNotEmpty(file.path)) {
+                        //更新代码缓存
                         String name = file.path.replace("/", "__");
                         AFileUtil.remove(file.path);
                         ExecutorFactory.del(name);
 
                         //处理hook.start
-                        //
                         if (label_hook_start.equals(file.label)) {
                             ExecutorFactory.execOnly(file, Context.current());
                         }
