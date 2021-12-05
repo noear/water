@@ -31,9 +31,6 @@ import java.util.stream.Collectors;
 public class MsgExchangeController implements IJob {
     static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    final int _interval_def = 1000;
-    int _interval = 500;
-
     Map<String, BrokerHolder> brokerHolderMap = new HashMap<>();
 
     @Override
@@ -43,7 +40,7 @@ public class MsgExchangeController implements IJob {
 
     @Override
     public int getInterval() {
-        return _interval;
+        return 500;
     }
 
     @Override
@@ -158,10 +155,8 @@ public class MsgExchangeController implements IJob {
         countDownLatch.await();
 
         if (msgList.size() > 0) {
-            _interval = _interval_def;
             return true;
         } else {
-            _interval = 500;
             return false;
         }
     }
