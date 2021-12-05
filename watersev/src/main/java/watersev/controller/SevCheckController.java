@@ -44,9 +44,9 @@ public final class SevCheckController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        //尝试获取锁（5秒内只能调度一次），避免集群切换时，多次运行
+        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock(WW.watersev_sevchk, WW.watersev_sevchk, 4)) {
+        if (LockUtils.tryLock(WW.watersev_sevchk, WW.watersev_sevchk, 1)) {
             exec0();
         }
     }

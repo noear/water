@@ -35,9 +35,9 @@ public final class MsgCheckController implements IJob {
     public void exec() throws Exception {
         RegController.addService("watersev-" + getName());
 
-        //尝试获取锁（4秒内只能调度一次），避免集群切换时，多次运行
+        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock(WW.watersev_msgchk, WW.watersev_msgchk, 4)) {
+        if (LockUtils.tryLock(WW.watersev_msgchk, WW.watersev_msgchk, 1)) {
             exec0();
         }
     }
