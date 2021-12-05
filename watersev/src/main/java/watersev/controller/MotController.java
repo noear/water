@@ -74,7 +74,7 @@ public final class MotController implements IJob {
         Thread.currentThread().setName(threadName);
 
         if (LockUtils.tryLock(WW.watersev_mot, threadName, 59) == false) {
-            //尝试获取锁（1秒内只能调度一次），避免集群，多次运行
+            //尝试获取锁（59秒内只能调度一次），避免集群，多次运行
             return;
         }
 
