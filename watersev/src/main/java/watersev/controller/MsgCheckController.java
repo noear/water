@@ -4,9 +4,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.protocol.model.message.SubscriberModel;
 import org.noear.water.utils.LockUtils;
-import org.noear.water.utils.TextUtils;
 import watersev.dso.LogUtil;
 import watersev.dso.MsgUtils;
 import watersev.dso.db.DbWaterMsgApi;
@@ -14,6 +12,7 @@ import watersev.utils.HttpUtilEx;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 消息订阅地址有效性检查（已支持 is_unstable）（可集群，可多实例运行。同时间，只会有一个节点有效）
@@ -47,19 +46,12 @@ public final class MsgCheckController implements IJob {
         Thread.currentThread().setName("job-" + getName());
 
         //取出待处理的服务
-        List<SubscriberModel> list = DbWaterMsgApi.getSubscriberListNoCache();
-        Set<String> subs = new HashSet<>();
-
-        for (SubscriberModel sev : list) {
-            //只检查有订阅地址的
-            //
-            if (TextUtils.isEmpty(sev.receive_url)) {
-                continue;
-            }
-
-            //对订阅地址汇总去重（减少检测次数）
-            subs.add(sev.receive_url);
-        }
+        Set<String> subs = DbWaterMsgApi
+                .getSubscriberListNoCache()
+                .stream()
+                .filter(s -> Utils.isNotEmpty(s.receive_url)) //只检查有订阅地址的
+                .map(s -> s.receive_url)
+                .collect(Collectors.toSet()); //对订阅地址汇总去重（减少检测次数）
 
         for (String url : subs) {
             check_type0(url);
