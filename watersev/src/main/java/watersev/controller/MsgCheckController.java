@@ -37,7 +37,7 @@ public final class MsgCheckController implements IJob {
 
         //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock(WW.watersev_msgchk, WW.watersev_msgchk, 1)) {
+        if (LockUtils.tryLock(WW.watersev_msgchk, WW.watersev_msgchk, 4)) {
             exec0();
         }
     }
