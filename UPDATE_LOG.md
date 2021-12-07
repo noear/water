@@ -2,6 +2,7 @@
 * /run/,/msg/ 开头的触发规则统一为：/_run/ 开头
 * wateraide 更名为：xwater
 * 增加运行时状态获取令牌安全模式
+* 取消 getDistributionListByMsg 接口缓存，不然会造成消息重派
 
 #### 2.5.0
 * 将权限系统切换为grit
