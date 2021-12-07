@@ -67,7 +67,7 @@ public class LogApi {
             return;
         }
 
-        if(log.level == 0){
+        if (log.level == 0) {
             log.level = LogLevel.ERROR.code;
         }
 
@@ -75,14 +75,17 @@ public class LogApi {
             log.trace_id = WaterClient.waterTraceId();
         }
 
-        log.from = WaterClient.localServiceHost();
-        log.thread_name = Thread.currentThread().getName();
+        if (TextUtils.isEmpty(log.from)) {
+            log.from = WaterClient.localServiceHost();
+        }
 
         if (log.log_date == 0) {
             Datetime datetime = Datetime.Now();
             log.log_date = datetime.getDate();
             log.log_fulltime = datetime.getFulltime();
         }
+
+        log.thread_name = Thread.currentThread().getName();
 
         LogPipeline.singleton().add(log);
     }
