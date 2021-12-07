@@ -40,7 +40,7 @@ public class DbWaterMsgApi {
 
         List<SubscriberModel> list = db().table("water_msg_subscriber")
                 .where("topic_name=? AND is_enabled=1", topic_name)
-                .caching(Config.cache_data).usingCache(30)
+                .caching(Config.cache_data).usingCache(10)
                 .selectList("*", SubscriberModel.class);
 
         list.forEach(m -> {

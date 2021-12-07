@@ -284,10 +284,10 @@ public class MsgSourceRdb implements MsgSource {
 
     //根据消息获取派发任务
     public List<DistributionModel> getDistributionListByMsg(long msg_id) throws SQLException {
+        //不能有缓存
         return _db.table("water_msg_distribution")
                 .whereEq("msg_id", msg_id).andIn("state", Arrays.asList(0, 1))
                 .hint("/*TDDL:MASTER*/")
-                .caching(_cache).usingCache(60)
                 .selectList("*", DistributionModel.class);
     }
 
