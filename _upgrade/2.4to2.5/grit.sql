@@ -1,22 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : @noear-mysql8
- Source Server Type    : MySQL
- Source Server Version : 50616
- Source Host           : 121.41.104.216:3306
- Source Schema         : water
-
- Target Server Type    : MySQL
- Target Server Version : 50616
- File Encoding         : 65001
-
- Date: 30/11/2021 11:25:46
-*/
-
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
 -- ----------------------------
 -- Table structure for grit_resource
 -- ----------------------------
@@ -287,4 +268,3 @@ CREATE TABLE `grit_subject_linked`  (
 -- Records of grit_subject_linked
 -- ----------------------------
 
-SET FOREIGN_KEY_CHECKS = 1;
