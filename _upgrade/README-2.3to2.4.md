@@ -211,3 +211,15 @@ UPDATE bcf_resource SET uri_path = REPLACE(uri_path,'/paas/','/luffy/') WHERE ur
 #删掉旧的后，重新导入
 water_paasfile_pln_water_20211120
 ```
+
+## 五、修改数据监视
+
+把 water/项目名称：服务监视情况 （数据预警） 的内容换成：
+
+```javascript
+--water/water::
+select count(*) num 
+from `water_reg_service` 
+where is_enabled=1 
+AND (check_last_state=1 OR check_last_time < unix_timestamp(SUBTIME(NOW(),'0:1:0')))
+```
