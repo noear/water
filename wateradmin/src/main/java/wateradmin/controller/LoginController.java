@@ -42,13 +42,21 @@ public class LoginController extends BaseController {
 
     //$共享SESSOIN$::自动跳转
     @Mapping("/login/auto")
-    public void login_auto() throws Exception {
+    public void login_auto(Context ctx) throws Exception {
         long subjectId = Session.current().getSubjectId();
 
         if (subjectId > 0) {
             String link_uri = GritClient.global().auth().getUriFrist(subjectId).link_uri;
 
             if (Utils.isEmpty(link_uri) == false) {
+                //日志一下
+                String userName = Session.current().getLoginName();
+
+                MDC.put("tag1", ctx.path());
+                MDC.put("tag2", userName);
+
+                log.info("userName={}, ip={}, 自动登录成功...", userName, ctx.realIp());
+
                 redirect(link_uri);
                 return;
             }
@@ -84,7 +92,7 @@ public class LoginController extends BaseController {
         if (Subject.isEmpty(subject)) {
             return Result.failure("提示：账号或密码不对！");
         } else {
-            log.info("userName={}, 登录成功...", userName);
+            log.info("userName={}, ip={}, 登录成功...", userName, ctx.realIp());
 
             //用户登录::成功
             Session.current().loadSubject(subject);
