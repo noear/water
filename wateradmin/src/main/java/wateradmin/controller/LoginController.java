@@ -7,6 +7,7 @@ import org.noear.grit.model.domain.Resource;
 import org.noear.grit.model.domain.Subject;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Result;
+import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
 import org.noear.solon.annotation.Controller;
@@ -59,21 +60,23 @@ public class LoginController extends BaseController {
     @Mapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
     public Result login_ajax_check(Context ctx,String userName, String passWord, String captcha) throws Exception {
 
-        //验证码检查
+        //空内容检查
         if (Utils.isEmpty(captcha)) {
             return Result.failure("提示：请输入验证码！");
         }
 
-        String captchaOfSessoin = Session.current().getValidation();
-        if (captcha.equalsIgnoreCase(captchaOfSessoin) == false) {
-            MDC.put("tag1", ctx.path());
-            log.info("userName={}, captcha={}, captchaOfSessoin={}", userName, captcha, captchaOfSessoin);
-
-            return Result.failure("提示：验证码错误！");
-        }
-
         if (Utils.isEmpty(userName) || Utils.isEmpty(passWord)) {
             return Result.failure("提示：请输入账号和密码！");
+        }
+
+        //验证码检查
+        MDC.put("tag1", ctx.path());
+        MDC.put("tag2", userName);
+
+        String captchaOfSessoin = Session.current().getValidation();
+        if (captcha.equalsIgnoreCase(captchaOfSessoin) == false) {
+            log.info("userName={}, captcha={}, captchaOfSessoin={}", userName, captcha, captchaOfSessoin);
+            return Result.failure("提示：验证码错误！");
         }
 
         Subject subject = GritClient.global().auth().login(userName, passWord);
@@ -81,7 +84,9 @@ public class LoginController extends BaseController {
         if (Subject.isEmpty(subject)) {
             return Result.failure("提示：账号或密码不对！");
         } else {
+            log.info("userName={}, 登录成功...", userName);
 
+            //用户登录::成功
             Session.current().loadSubject(subject);
             Resource res = GritClient.global().auth().getUriFrist(subject.subject_id);
 
