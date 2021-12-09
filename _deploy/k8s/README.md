@@ -40,29 +40,29 @@ docker run -it --rm -p 19371:19371 noearorg/xwater
   ```
 
 * 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:latest）。管理控制台
-  * 镜像端口：8080
-  * 对外端口：8080 或其它
+  * 镜像端口：9373
+  * 对外端口：9373 或其它
   * 建议1个副本即可
   * 要配置外网访问地址，建议加域名
 
   
 * 添加 water/waterfaas 服务 （镜像：noearorg/waterfaas:latest）。即时接口服务
-  * 镜像端口：8080
-  * 对外端口：8080 或其它
+  * 镜像端口：9374
+  * 对外端口：9374 或其它
   * 建议1个副本起步
   * 要配置外网访问地址，建议加域名
 
   
 * 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）。规则计算服务
-  * 镜像端口：8080
-  * 对外端口：8080 或其它
+  * 镜像端口：9375
+  * 对外端口：9375 或其它
   * 建议1个副本起步`（可选部署）`
   * 要配置外网访问地址，建议加域名
 
   
 * 添加 water/watersev-tol 服务（镜像：noearorg/watersev:latest）。工具服务，包含： (msgchk,sevchk,syn,mot)
-  * 镜像端口：8080
-  * 对外端口：8080 或其它
+  * 镜像端口：9372
+  * 对外端口：9372 或其它
   * 建议1个副本即可
 
 
@@ -72,7 +72,8 @@ docker run -it --rm -p 19371:19371 noearorg/xwater
   ```
 
 * 添加 water/watersev-pln 服务（镜像：noearorg/watersev:latest）。定时任务调度服务
-  * 镜像端口：8080
+  * 镜像端口：9372
+  * 对外端口：9372 或其它
   * 建议1个副本起步（如果定时任务多，2个起步）
 
 
@@ -82,7 +83,9 @@ docker run -it --rm -p 19371:19371 noearorg/xwater
   ```
 
 
-* 添加 water/watersev-msgdis 服务（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息派发服务
+* 添加 water/watersev-msgdis 服务（镜像：noearorg/watersev:latest）。消息派发服务
+  * 镜像端口：9372
+  * 对外端口：9372 或其它
   * 建议副本数为 Msg bus broker 的数量两倍或以上（刚开始可2个起步）
 
 
@@ -91,7 +94,9 @@ docker run -it --rm -p 19371:19371 noearorg/xwater
   water.sss=msgdis
   ```
 
-* 添加 water/watersev-msgexg 服务（镜像：noearorg/watersev:latest）。镜像端口：8080 //消息交换服务
+* 添加 water/watersev-msgexg 服务（镜像：noearorg/watersev:latest）。消息交换服务
+  * 镜像端口：9372
+  * 对外端口：9372 或其它
   * 建议副本数与 Msg bus broker 的数量相等（刚开始可1个起步）
 
 

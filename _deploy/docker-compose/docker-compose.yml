@@ -31,7 +31,7 @@ services:
     depends_on:
       -  waterapi
     ports:
-      - 9372:8080
+      - 9372:9372
   wateradmin:
     image: noearorg/wateradmin:latest
     container_name: wateradmin
@@ -41,7 +41,7 @@ services:
     depends_on:
       -  waterapi
     ports:
-      - 9373:8080
+      - 9373:9373
   waterfaas:
     image: noearorg/waterfaas:latest
     container_name: waterfaas
@@ -51,7 +51,7 @@ services:
     depends_on:
       -  waterapi
     ports:
-      - 9374:8080
+      - 9374:9374
   waterraas:
     image: noearorg/waterraas:latest
     container_name: waterraas
@@ -61,4 +61,4 @@ services:
     depends_on:
       -  waterapi
     ports:
-      - 9375:8080
+      - 9375:9375
