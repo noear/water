@@ -8,15 +8,16 @@
 
 ### 镜像列表
 
-| 镜像    | 端口    | 说明          |
-|-------|-------|-------------|
-| noearorg/waterapi | 9371  | 主接口服务       |
-| noearorg/watersev | 9372  | 批处理服务       |
-| noearorg/wateradmin | 9373  | 管理控制台       |
-| noearorg/waterfaas | 9374  | FaaS 即时接口服务 |
-| noearorg/waterraas | 9375  | 规则计算服务      |
-|  |       |             |
-| noearorg/xwater | 19371 | Water助理工具   |
+| 镜像    | 镜像端口    | 说明                 |
+|-------|-------|--------------------|
+| noearorg/waterapi | 9371  | 主接口服务              |
+| noearorg/watersev | 9372  | 批处理服务              |
+| noearorg/wateradmin | 9373  | 管理控制台              |
+| noearorg/waterfaas | 9374  | FaaS 即时接口服务        |
+| noearorg/waterraas | 9375  | 规则计算服务             |
+|  |       |                    |
+| noearorg/xwater | 19371 | Water助理工具（仅在需要时启用） |
+
 
 ### 账号与权限管理：
 
