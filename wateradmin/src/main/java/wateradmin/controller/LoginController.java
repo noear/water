@@ -1,5 +1,6 @@
 package wateradmin.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.grit.client.GritClient;
 import org.noear.grit.client.GritUtil;
 import org.noear.grit.model.domain.Resource;
@@ -13,12 +14,14 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.MethodType;
+import org.slf4j.MDC;
 import wateradmin.dso.Session;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+@Slf4j
 @Controller
 public class LoginController extends BaseController {
     @Mapping("/login") //视图 返回
@@ -54,10 +57,18 @@ public class LoginController extends BaseController {
     }
 
     @Mapping("/login/ajax/check")  // Map<,> 返回[json]  (ViewModel 是 Map<String,Object> 的子类)
-    public Result login_ajax_check(String userName, String passWord, String captcha) throws Exception {
+    public Result login_ajax_check(Context ctx,String userName, String passWord, String captcha) throws Exception {
 
         //验证码检查
-        if (!captcha.toLowerCase().equals(Session.current().getValidation())) {
+        if (Utils.isEmpty(captcha)) {
+            return Result.failure("提示：请输入验证码！");
+        }
+
+        String captchaOfSessoin = Session.current().getValidation();
+        if (captcha.equalsIgnoreCase(captchaOfSessoin) == false) {
+            MDC.put("tag1", ctx.path());
+            log.info("userName={}, captcha={}, captchaOfSessoin={}", userName, captcha, captchaOfSessoin);
+
             return Result.failure("提示：验证码错误！");
         }
 
