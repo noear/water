@@ -52,7 +52,7 @@
             <#if m.gateway_id == gateway_id>
                 <a id="e${m.gateway_id}" class="btn sel">${m.name}</a>
             <#else>
-                <a id="e${m.gateway_id}" class="btn" href="/mot/gw/inner?gateway_id=${m.gateway_id}">${m.name}</a>
+                <a id="e${m.gateway_id}" class="btn" href="/mot/gw/inner?gateway_id=${m.gateway_id}&tag_name=${tag_name!}">${m.name}</a>
             </#if>
         </#list>
     </tabbar>
