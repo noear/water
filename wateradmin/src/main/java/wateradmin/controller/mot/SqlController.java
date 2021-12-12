@@ -33,7 +33,7 @@ public class SqlController extends BaseController {
     @Mapping("sql")
     public ModelAndView sql(Context ctx, String tag_name) throws Exception {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/sql/inner");
+            ctx.forward("/mot/sql/inner");
             return null;
         }
 

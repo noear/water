@@ -31,7 +31,7 @@ public class BehaviorController extends BaseController {
     @Mapping("behavior")
     public ModelAndView behavior(Context ctx, String tag_name) throws Exception {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/behavior/inner");
+            ctx.forward("/mot/behavior/inner");
             return null;
         }
 

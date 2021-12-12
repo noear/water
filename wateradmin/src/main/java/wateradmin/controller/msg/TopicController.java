@@ -23,7 +23,7 @@ public class TopicController extends BaseController {
     @Mapping("/msg/topic")
     public ModelAndView topic(Context ctx, String tag_name) throws SQLException {
         if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
-            ctx.redirect("/msg/topic/inner");
+            ctx.forward("/msg/topic/inner");
             return null;
         }
         List<TagCountsModel> tags = DbWaterMsgApi.getTopicTagList();

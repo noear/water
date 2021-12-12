@@ -28,7 +28,7 @@ public class SubsController extends BaseController {
     @Mapping("/msg/subs")
     public ModelAndView subscriber(Context ctx, String tag_name) throws SQLException{
         if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
-            ctx.redirect("/msg/subs/inner");
+            ctx.forward("/msg/subs/inner");
             return null;
         }
 

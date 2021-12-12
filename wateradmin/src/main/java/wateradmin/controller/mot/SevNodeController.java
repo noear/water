@@ -26,7 +26,7 @@ public class SevNodeController extends BaseController {
     @Mapping("node")
     public ModelAndView node(Context ctx, String tag_name) throws SQLException {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/node/inner");
+            ctx.forward("/mot/node/inner");
             return null;
         }
 

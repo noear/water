@@ -42,16 +42,4 @@ public class BaseController {
         viewModel.put("_version", WW.water_version);
         return viewModel.view(viewName + ".ftl");
     }
-
-    /*
-     * @return 输出一个跳转视图
-     * @prarm  url 可以是任何URL地址
-     * */
-    public void redirect(String url) {
-        try {
-            Context.current().redirect(url);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }

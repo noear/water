@@ -33,7 +33,7 @@ public class SevApiController extends BaseController {
     @Mapping("speed")
     public ModelAndView speed(Context ctx, String tag_name) throws SQLException {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/speed/inner");
+            ctx.forward("/mot/speed/inner");
             return null;
         }
 

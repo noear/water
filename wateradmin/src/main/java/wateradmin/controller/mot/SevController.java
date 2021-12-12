@@ -33,7 +33,7 @@ public class SevController extends BaseController {
     @Mapping("/service")
     public ModelAndView sev(Context ctx, String tag_name) throws SQLException {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/service/inner");
+            ctx.forward("/mot/service/inner");
             return null;
         }
 

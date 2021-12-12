@@ -26,7 +26,7 @@ public class LogController extends BaseController {
     @Mapping("log")
     public ModelAndView logger(Context ctx, String tag_name) throws Exception {
         if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
-            ctx.redirect("/mot/log/inner");
+            ctx.forward("/mot/log/inner");
             return null;
         }
 

@@ -41,7 +41,7 @@ public class GwController extends BaseController {
     @Mapping("")
     public ModelAndView gateway(Context ctx, String tag_name) throws SQLException {
         if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()){
-            ctx.redirect("/mot/gw/inner");
+            ctx.forward("/mot/gw/inner");
             return null;
         }
 
