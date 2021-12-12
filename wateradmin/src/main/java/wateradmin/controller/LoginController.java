@@ -7,7 +7,6 @@ import org.noear.grit.model.domain.Resource;
 import org.noear.grit.model.domain.Subject;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Result;
-import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
 import org.noear.solon.annotation.Controller;
@@ -25,16 +24,16 @@ import java.io.IOException;
 @Slf4j
 @Controller
 public class LoginController extends BaseController {
+    @Mapping("/")
+    public void index(Context ctx) {
+        ctx.forward("/login");
+    }
+
     @Mapping("/login") //视图 返回
     public ModelAndView login() {
         Session.current().clear();
 
         return view("login");
-    }
-
-    @Mapping("/")
-    public void index() {
-        redirect("/login");
     }
     //-----------------
 
