@@ -17,7 +17,7 @@ public class LogFormater {
 
         //头
         buf.append("<span class='level").append(log.level).append("'>");
-        buf.append("[").append(LogLevel.of(log.level).name()).append("] ");
+        buf.append(LogLevel.of(log.level).name()).append(" ");
 
         Datetime log_fulltime = new Datetime(log.log_fulltime);
         buf.append("<a time='").append(log_fulltime.toString("yyyy-MM-dd HH:mm:ss.SSS")).append("'>");
