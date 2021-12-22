@@ -48,6 +48,7 @@
         .level4,.level4 a{color:orange;}
         .level3,.level3 a{color:green;}
         .level2,.level2 a{color:blue;}
+        .level1,.level1 a{color:fuchsia;}
 
         .log a{text-decoration:underline; cursor: default;}
     </style>
