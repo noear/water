@@ -1,3 +1,6 @@
+#### 2.5.3
+* 升级 solon, snack3（有兼容性变化）, weed3
+
 #### 2.5.2
 * 取消 getDistributionListByMsg 接口缓存，不然会造成消息重派
 * 修复行为记录时，没有记录行为者的ip问题（涉及water.client更新）
