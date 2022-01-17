@@ -204,6 +204,11 @@ public class LogSourceMongo implements LogSource {
         return false;
     }
 
+    @Override
+    public boolean allowHourShard() {
+        return false;
+    }
+
     private void initIndex(String logger){
         _db.table(logger).orderByDesc("level").createIndex(true);
 

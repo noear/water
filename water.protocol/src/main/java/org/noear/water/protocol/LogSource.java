@@ -18,5 +18,13 @@ public interface LogSource extends Closeable {
 
     long clear(String logger, int keep_days, int limit_rows) throws Exception;
 
+    /**
+     * 充许搜索
+     * */
     boolean allowSearch();
+
+    /**
+     * 充许以小时分片
+     * */
+    boolean allowHourShard();
 }

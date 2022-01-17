@@ -22,9 +22,12 @@ import java.util.List;
 public class LogSourceElasticsearch implements LogSource {
     final EsContext _db;
     final String _dsl;
+    final boolean _allowHourShard;
 
-    public LogSourceElasticsearch(EsContext db) {
+    public LogSourceElasticsearch(EsContext db, boolean allowHourShard) {
         _db = db;
+        _allowHourShard = allowHourShard;
+
         try {
             _dsl = Utils.getResourceAsString("water/water_log_es_dsl.json");
         } catch (Exception e) {
@@ -190,6 +193,11 @@ public class LogSourceElasticsearch implements LogSource {
     @Override
     public boolean allowSearch() {
         return true;
+    }
+
+    @Override
+    public boolean allowHourShard() {
+        return _allowHourShard;
     }
 
     private void addIndiceByDate(String logger, Datetime datetime, String dsl, String alias) throws IOException {

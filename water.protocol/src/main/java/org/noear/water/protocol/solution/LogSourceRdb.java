@@ -188,6 +188,11 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
+    public boolean allowHourShard() {
+        return false;
+    }
+
+    @Override
     public void close() throws IOException {
         _db.close();
     }

@@ -1,6 +1,8 @@
 package org.noear.water.protocol.solution;
 
+import org.noear.esearchx.EsContext;
 import org.noear.water.model.ConfigM;
+import org.noear.water.model.PropertiesM;
 import org.noear.water.protocol.*;
 import org.noear.water.protocol.model.log.LoggerEntity;
 import org.noear.water.protocol.model.log.LoggerMeta;
@@ -10,6 +12,7 @@ import org.noear.water.utils.ext.Fun1;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class LogSourceFactoryImpl implements LogSourceFactory {
     private static String _lock = "";
@@ -25,7 +28,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
     @Override
     public void updateSource(String logger) throws IOException {
-        if(TextUtils.isEmpty(logger)){
+        if (TextUtils.isEmpty(logger)) {
             return;
         }
 
@@ -130,7 +133,10 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
             return new LogSourceMongo(cfg.getMg(schema));
         } else if (cfg.value.contains("=elasticsearch")) {
-            return new LogSourceElasticsearch(cfg.getEs());
+            Properties props = cfg.getProp();
+            String tmp = props.getProperty("allowHourShard");
+            boolean allowHourShard = ("1".equals(tmp) || "true".equals(tmp));
+            return new LogSourceElasticsearch(new EsContext(props), allowHourShard);
         } else {
             return new LogSourceRdb(cfg.getDb(true));
         }
