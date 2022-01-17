@@ -152,9 +152,15 @@ public class LogSourceElasticsearch implements LogSource {
             event.class_name = NameUtils.formatClassName(event.class_name);
         }
 
-        String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd");
+        if (allowHourShard()) {
+            String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd_H");
 
-        _db.indice(indiceName).insertList(list);
+            _db.indice(indiceName).insertList(list);
+        } else {
+            String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd");
+
+            _db.indice(indiceName).insertList(list);
+        }
     }
 
     @Override
@@ -202,6 +208,17 @@ public class LogSourceElasticsearch implements LogSource {
 
     private void addIndiceByDate(String logger, Datetime datetime, String dsl, String alias) throws IOException {
         String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
+
+        if (allowHourShard()) {
+            for (int i = 0; i < 24; i++) {
+                addIndiceItemDo(indiceName + "_" + i, dsl, alias);
+            }
+        } else {
+            addIndiceItemDo(indiceName, dsl, alias);
+        }
+    }
+
+    private void addIndiceItemDo(String indiceName, String dsl, String alias) throws IOException {
         if (_db.indiceExist(indiceName) == false) {
             _db.indiceCreate(indiceName, dsl);
             _db.indiceAliases(a -> a.add(indiceName, alias));
@@ -210,7 +227,14 @@ public class LogSourceElasticsearch implements LogSource {
 
     private void removeIndiceByDate(String logger, Datetime datetime) throws IOException {
         String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
-        _db.indiceDrop(indiceName);
+
+        if (allowHourShard()) {
+            for (int i = 0; i < 24; i++) {
+                _db.indiceDrop(indiceName + "_" + i);
+            }
+        } else {
+            _db.indiceDrop(indiceName);
+        }
     }
 
     @Override
