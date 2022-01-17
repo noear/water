@@ -228,12 +228,12 @@ public class LogSourceElasticsearch implements LogSource {
     private void removeIndiceByDate(String logger, Datetime datetime) throws IOException {
         String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
 
+        _db.indiceDrop(indiceName);
+
         if (allowHourShard()) {
             for (int i = 0; i < 24; i++) {
                 _db.indiceDrop(indiceName + "_" + i);
             }
-        } else {
-            _db.indiceDrop(indiceName);
         }
     }
 
