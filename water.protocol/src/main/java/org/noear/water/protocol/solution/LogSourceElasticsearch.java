@@ -160,6 +160,10 @@ public class LogSourceElasticsearch implements LogSource {
 
     @Override
     public void create(String logger, int keep_days) throws Exception {
+        if (keep_days < 1) {
+            keep_days = 15; //默认处理
+        }
+
         String indiceAliasName = "water-" + logger;
         String templateName = indiceAliasName = "-tml";
         String policyName = indiceAliasName = "-policy";

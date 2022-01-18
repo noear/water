@@ -46,7 +46,7 @@ public class Init4LogStoreController {
                 if (Utils.isEmpty(logger.source)) {
                     ProtocolHub.logSourceFactory
                             .getSource(logger.logger)
-                            .create(logger.logger);
+                            .create(logger.logger, 15);
                 }
             }
 
