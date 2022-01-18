@@ -152,7 +152,7 @@ public class LogSourceRdb implements LogSource {
     }
 
     @Override
-    public void create(String logger) throws Exception {
+    public void create(String logger, int keep_days) throws Exception {
         if (_db.getType() == DbType.ClickHouse) {
             String sql = _chTml.replace("${logger}", logger);
             _db.exe(sql);
@@ -187,10 +187,6 @@ public class LogSourceRdb implements LogSource {
         return false;
     }
 
-    @Override
-    public boolean allowHourShard() {
-        return false;
-    }
 
     @Override
     public void close() throws IOException {

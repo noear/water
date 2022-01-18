@@ -14,7 +14,7 @@ public interface LogSource extends Closeable {
 
     void writeAll(String logger, List<LogM> list) throws Exception;
 
-    void create(String logger) throws Exception;
+    void create(String logger, int keep_days) throws Exception;
 
     long clear(String logger, int keep_days, int limit_rows) throws Exception;
 
@@ -22,9 +22,4 @@ public interface LogSource extends Closeable {
      * 充许搜索
      * */
     boolean allowSearch();
-
-    /**
-     * 充许以小时分片
-     * */
-    boolean allowHourShard();
 }

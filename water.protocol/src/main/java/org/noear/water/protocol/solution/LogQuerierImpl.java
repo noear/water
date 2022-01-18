@@ -19,9 +19,9 @@ public class LogQuerierImpl implements LogQuerier {
     }
 
     @Override
-    public void create(String logger) throws Exception {
+    public void create(String logger, int keep_days) throws Exception {
         ProtocolHub.getLogSource(logger)
-                .create(logger);
+                .create(logger, keep_days);
     }
 
     @Override

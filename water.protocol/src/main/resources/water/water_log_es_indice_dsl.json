@@ -55,6 +55,10 @@
       },
       "log_fulltime":{
         "type": "long"
+      },
+      "@timestamp":{
+        "type": "date",
+        "format": "date_optional_time||epoch_millis"
       }
     }
   },

@@ -178,7 +178,7 @@ public class LogSourceMongo implements LogSource {
     }
 
     @Override
-    public void create(String logger) throws Exception {
+    public void create(String logger, int keep_days) throws Exception {
 
     }
 
@@ -201,11 +201,6 @@ public class LogSourceMongo implements LogSource {
 
     @Override
     public boolean allowSearch() {
-        return false;
-    }
-
-    @Override
-    public boolean allowHourShard() {
         return false;
     }
 

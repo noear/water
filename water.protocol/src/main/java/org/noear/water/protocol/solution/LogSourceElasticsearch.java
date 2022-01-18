@@ -21,15 +21,15 @@ import java.util.List;
  */
 public class LogSourceElasticsearch implements LogSource {
     final EsContext _db;
-    final String _dsl;
-    final boolean _allowHourShard;
+    final String _indice_dsl;
+    final String _policy_dsl;
 
-    public LogSourceElasticsearch(EsContext db, boolean allowHourShard) {
+    public LogSourceElasticsearch(EsContext db) {
         _db = db;
-        _allowHourShard = allowHourShard;
 
         try {
-            _dsl = Utils.getResourceAsString("water/water_log_es_dsl.json");
+            _indice_dsl = Utils.getResourceAsString("water/water_log_es_indice_dsl.json");
+            _policy_dsl = Utils.getResourceAsString("water/water_log_es_policy_dsl.json");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -152,46 +152,35 @@ public class LogSourceElasticsearch implements LogSource {
             event.class_name = NameUtils.formatClassName(event.class_name);
         }
 
-        if (allowHourShard()) {
-            String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd_H");
 
-            _db.indice(indiceName).insertList(list);
-        } else {
-            String indiceName = "water-" + logger + "-" + nowDatetime.toString("yyyyMMdd");
+        String streamName = "water-" + logger;
 
-            _db.indice(indiceName).insertList(list);
-        }
+        _db.indice(streamName).insertList(list);
     }
 
     @Override
-    public void create(String logger) throws Exception {
-        Datetime today = Datetime.Now();
-
+    public void create(String logger, int keep_days) throws Exception {
         String indiceAliasName = "water-" + logger;
+        String templateName = indiceAliasName = "-tml";
+        String policyName = indiceAliasName = "-policy";
 
-        //添加今天的记录器
-        addIndiceByDate(logger, today, _dsl, indiceAliasName);
-        //添加明天的记录器
-        addIndiceByDate(logger, today.addDay(1), _dsl, indiceAliasName);
+        //创建或修改策略（主要是时间可能会变化）
+        ONode policyDslNode = ONode.loadStr(_policy_dsl);
+        policyDslNode.select("policy.phases.delete").get("min_age").val(keep_days + "d");
+        _db.policyCreate(policyName, policyDslNode.toJson());
+
+        //创建模板（如果存在，则不管）
+        if (_db.templateExist(templateName) == false) {
+            ONode indiceDslNode = ONode.loadStr(_indice_dsl);
+            indiceDslNode.getOrNew("index_patterns").add(indiceAliasName + "*");
+            _db.templateCreate(templateName, indiceDslNode.toJson());
+        }
     }
 
     @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
-        Datetime today = Datetime.Now();
-
-        String indiceAliasName = "water-" + logger;
-
-        //添加今天的记录器
-        addIndiceByDate(logger, today, _dsl, indiceAliasName);
-        //添加明天的记录器
-        addIndiceByDate(logger, today.addDay(1), _dsl, indiceAliasName);
-
-        today.addDay(-1); //回到今天
-        today.addDay(-keep_days);
-
-        for (int i = 0; i < 10; i++) {
-            removeIndiceByDate(logger, today.addDay(-1));
-        }
+        //尝试做修补
+        create(logger, keep_days);
 
         return 0;
     }
@@ -201,42 +190,6 @@ public class LogSourceElasticsearch implements LogSource {
         return true;
     }
 
-    @Override
-    public boolean allowHourShard() {
-        return _allowHourShard;
-    }
-
-    private void addIndiceByDate(String logger, Datetime datetime, String dsl, String alias) throws IOException {
-        String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
-
-        if (allowHourShard()) {
-            for (int i = 0; i < 24; i++) {
-                addIndiceItemDo(indiceName + "_" + i, dsl, alias);
-            }
-        } else {
-            addIndiceItemDo(indiceName, dsl, alias);
-        }
-    }
-
-    private void addIndiceItemDo(String indiceName, String dsl, String alias) throws IOException {
-        if (_db.indiceExist(indiceName) == false) {
-            _db.indiceCreate(indiceName, dsl);
-            _db.indiceAliases(a -> a.add(indiceName, alias));
-        }
-    }
-
-    private void removeIndiceByDate(String logger, Datetime datetime) throws IOException {
-        String indiceName = "water-" + logger + "-" + datetime.toString("yyyyMMdd");
-
-        //可能之前有建，尝试删一下
-        _db.indiceDrop(indiceName);
-
-        if (allowHourShard()) {
-            for (int i = 0; i < 24; i++) {
-                _db.indiceDrop(indiceName + "_" + i);
-            }
-        }
-    }
 
     @Override
     public void close() throws IOException {

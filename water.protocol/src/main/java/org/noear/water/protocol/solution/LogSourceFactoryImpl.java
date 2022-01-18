@@ -133,10 +133,7 @@ public class LogSourceFactoryImpl implements LogSourceFactory {
 
             return new LogSourceMongo(cfg.getMg(schema));
         } else if (cfg.value.contains("=elasticsearch")) {
-            Properties props = cfg.getProp();
-            String tmp = props.getProperty("allowHourShard");
-            boolean allowHourShard = ("1".equals(tmp) || "true".equals(tmp));
-            return new LogSourceElasticsearch(new EsContext(props), allowHourShard);
+            return new LogSourceElasticsearch(cfg.getEs());
         } else {
             return new LogSourceRdb(cfg.getDb(true));
         }

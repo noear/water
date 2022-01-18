@@ -120,7 +120,7 @@ public class LoggerController extends BaseController {
 
         if (result) {
             try {
-                ProtocolHub.logQuerier.create(logger);
+                ProtocolHub.logQuerier.create(logger, keep_days);
                 viewModel.code(1, "保存成功！");
             } catch (SQLNonTransientConnectionException e) {
                 viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
