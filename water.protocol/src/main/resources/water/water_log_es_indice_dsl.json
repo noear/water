@@ -1,4 +1,9 @@
 {
+  "settings" : {
+    "number_of_shards":5,
+    "number_of_replicas":1,
+    "refresh_interval": "3s"
+  },
   "mappings": {
     "properties": {
       "logger": {
@@ -61,10 +66,5 @@
         "format": "date_optional_time||epoch_millis"
       }
     }
-  },
-  "settings" : {
-    "number_of_shards":5,
-    "number_of_replicas":1,
-    "refresh_interval": "3s"
   }
 }

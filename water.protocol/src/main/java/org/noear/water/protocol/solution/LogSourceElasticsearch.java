@@ -175,9 +175,17 @@ public class LogSourceElasticsearch implements LogSource {
 
         //创建模板（如果存在，则不管）
         if (_db.templateExist(templateName) == false) {
-            ONode indiceDslNode = ONode.loadStr(_indice_dsl);
-            indiceDslNode.getOrNew("index_patterns").add(indiceAliasName + "*");
-            _db.templateCreate(templateName, indiceDslNode.toJson());
+            ONode tmlDslNode = ONode.loadStr(_indice_dsl);
+            //设定匹配模式
+            tmlDslNode.getOrNew("index_patterns").val(indiceAliasName + "-*");
+            //设定别名
+            tmlDslNode.getOrNew("aliases").getOrNew(indiceAliasName).asObject();
+            //设定策略
+            tmlDslNode.get("settings").get("index.lifecycle.name").val(policyName);
+            //设定翻转别名
+            tmlDslNode.get("settings").get("index.lifecycle.rollover_alias").val(indiceAliasName);
+
+            _db.templateCreate(templateName, tmlDslNode.toJson());
         }
     }
 
