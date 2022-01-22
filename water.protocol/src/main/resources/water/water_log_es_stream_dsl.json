@@ -1,6 +1,7 @@
 {
   "index_patterns": "water-log-*",
   "data_stream": {},
+  "priority": 500,
   "template": {
     "settings": {
       "number_of_shards": 5,
