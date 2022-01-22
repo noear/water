@@ -173,8 +173,8 @@ public class LogSourceElasticsearch implements LogSource {
 
         String streamPatterns = "water." + logger + ".*";
         String streamName = "water." + logger + ".stream";
-        String templateName = streamName + "-tml";
-        String policyName = streamName + "-policy";
+        String templateName = "water." + logger + ".tml";
+        String policyName = "water." + logger + ".policy";
 
         //创建或修改策略（主要是时间可能会变化）
         ONode policyDslNode = ONode.loadStr(_policy_dsl);
@@ -193,6 +193,9 @@ public class LogSourceElasticsearch implements LogSource {
 
             _db.templateCreate(templateName, tmlDslNode.toJson());
         }
+
+        //如果有同名索引则删掉 //否则数据流不会自动创建
+        _db.indiceDrop(streamName);
     }
 
     @Override
