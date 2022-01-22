@@ -47,9 +47,8 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_logger")
                     .where("logger = ?", logger)
                     .limit(1)
-                    .select("*")
-                    .getItem(LoggerModel.class);
-        }catch (Exception ex){
+                    .selectItem("*", LoggerModel.class);
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -88,7 +87,7 @@ public class DbWaterCfgApi {
     }
 
     //设置logger。
-    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
+    public static void setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
         DbTableQuery tb = db().table("water_cfg_logger")
                 .set("tag", tag)
                 .set("logger", logger)
@@ -99,15 +98,12 @@ public class DbWaterCfgApi {
                 .set("gmt_modified", System.currentTimeMillis());
 
         if (logger_id > 0) {
-
-            boolean isOk = tb.where("logger_id = ?", logger_id).update() > 0;
+            tb.where("logger_id = ?", logger_id).update();
 
             //发送通知消息
             NoticeUtils.updateCache("logger:" + logger);
-
-            return isOk;
         } else {
-            return tb.set("is_enabled", 1).insert() > 0;
+            tb.set("is_enabled", 1).insert();
         }
     }
 

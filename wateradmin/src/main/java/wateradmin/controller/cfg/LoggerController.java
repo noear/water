@@ -102,17 +102,13 @@ public class LoggerController extends BaseController {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
+        DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
 
-        if (result) {
-            try {
-                ProtocolHub.logQuerier.create(logger, keep_days);
-                viewModel.code(1, "保存成功！");
-            } catch (SQLNonTransientConnectionException e) {
-                viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
-            }
-        } else {
-            viewModel.code(0, "保存失败！");
+        try {
+            ProtocolHub.logQuerier.create(logger, keep_days);
+            viewModel.code(1, "保存成功！");
+        } catch (SQLNonTransientConnectionException e) {
+            viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
         }
 
         return viewModel;

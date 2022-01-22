@@ -40,7 +40,7 @@ public class LogSourceElasticsearch implements LogSource {
             return new ArrayList<>();
         }
 
-        String streamName = "water-" + logger + "-stream";
+        String streamName = "water." + logger + ".stream";
 
         EsQuery eq = _db.stream(streamName).where(c -> {
             c.filter(); //用过滤，不打分
@@ -101,7 +101,7 @@ public class LogSourceElasticsearch implements LogSource {
 
     @Override
     public List<TagCountsM> queryGroupCountBy(String logger, String group, String service, String filed) throws Exception {
-        String streamName = "water-" + logger + "-stream";
+        String streamName = "water." + logger + ".stream";
 
         EsQuery query = _db.stream(streamName);
 
@@ -160,7 +160,7 @@ public class LogSourceElasticsearch implements LogSource {
         }
 
 
-        String streamName = "water-" + logger + "-stream";
+        String streamName = "water." + logger + ".stream";
 
         _db.stream(streamName).insertList(docs);
     }
@@ -171,8 +171,8 @@ public class LogSourceElasticsearch implements LogSource {
             keep_days = 15; //默认处理
         }
 
-        String streamPatterns = "water-" + logger + "-*";
-        String streamName = "water-" + logger + "-stream";
+        String streamPatterns = "water." + logger + ".*";
+        String streamName = "water." + logger + ".stream";
         String templateName = streamName + "-tml";
         String policyName = streamName + "-policy";
 
