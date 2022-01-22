@@ -176,12 +176,12 @@ public class LogSourceElasticsearch implements LogSource {
         String templateName = "water." + logger + ".tml";
         String policyName = "water." + logger + ".policy";
 
-        //创建或修改策略（主要是时间可能会变化）
+        //1.创建或修改策略（主要是时间可能会变化）
         ONode policyDslNode = ONode.loadStr(_policy_dsl);
         policyDslNode.select("policy.phases.delete").get("min_age").val(keep_days + "d");
         _db.policyCreate(policyName, policyDslNode.toJson());
 
-        //创建模板（如果存在，则不管）
+        //2.创建模板（如果存在，则不管）
         if (_db.templateExist(templateName) == false) {
             ONode tmlDslNode = ONode.loadStr(_stream_dsl);
             //设定匹配模式
@@ -194,7 +194,7 @@ public class LogSourceElasticsearch implements LogSource {
             _db.templateCreate(templateName, tmlDslNode.toJson());
         }
 
-        //如果有同名索引则删掉 //否则数据流不会自动创建
+        //3.如果有同名索引则删掉 //否则数据流不会自动创建
         _db.indiceDrop(streamName);
     }
 
