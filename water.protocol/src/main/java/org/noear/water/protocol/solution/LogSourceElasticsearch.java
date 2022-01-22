@@ -195,7 +195,9 @@ public class LogSourceElasticsearch implements LogSource {
         }
 
         //3.如果有同名索引则删掉 //否则数据流不会自动创建
-        _db.indiceDrop(streamName);
+        if (_db.indiceExist(streamName)) {
+            _db.indiceDrop(streamName);
+        }
     }
 
     @Override
