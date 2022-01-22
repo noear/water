@@ -112,8 +112,8 @@ public class LoggerController extends BaseController {
             NoticeUtils.updateCache("logger:" + logger);
 
             viewModel.code(1, "保存成功！");
-        } catch (SQLNonTransientConnectionException e) {
-            viewModel.code(0, "创建结构失败（连接异常或没有权限）！");
+        } catch (Exception e) {
+            viewModel.code(0, "创建结构失败（" + e.getLocalizedMessage() + "）！");
         }
 
         return viewModel;
