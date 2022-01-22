@@ -1,7 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.esearchx.EsContext;
-import org.noear.esearchx.EsIndiceQuery;
+import org.noear.esearchx.EsQuery;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.model.LogM;
@@ -21,14 +21,14 @@ import java.util.List;
  */
 public class LogSourceElasticsearch implements LogSource {
     final EsContext _db;
-    final String _indice_dsl;
+    final String _stream_dsl;
     final String _policy_dsl;
 
     public LogSourceElasticsearch(EsContext db) {
         _db = db;
 
         try {
-            _indice_dsl = Utils.getResourceAsString("water/water_log_es_indice_dsl.json");
+            _stream_dsl = Utils.getResourceAsString("water/water_log_es_stream_dsl.json");
             _policy_dsl = Utils.getResourceAsString("water/water_log_es_policy_dsl.json");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -41,9 +41,9 @@ public class LogSourceElasticsearch implements LogSource {
             return new ArrayList<>();
         }
 
-        String indiceAliasName = "water-" + logger;
+        String streamName = "water." + logger+".stream";
 
-        EsIndiceQuery eq = _db.indice(indiceAliasName).where(c -> {
+        EsQuery eq = _db.stream(streamName).where(c -> {
             c.filter(); //用过滤，不打分
 
             if (TextUtils.isNotEmpty(tagx)) {
@@ -102,7 +102,9 @@ public class LogSourceElasticsearch implements LogSource {
 
     @Override
     public List<TagCountsM> queryGroupCountBy(String logger, String group, String service, String filed) throws Exception {
-        EsIndiceQuery query = _db.indice(logger);
+        String streamName = "water." + logger+".stream";
+
+        EsQuery query = _db.stream(streamName);
 
 
         if (TextUtils.isNotEmpty(group) || TextUtils.isNotEmpty(service)) {
@@ -153,9 +155,9 @@ public class LogSourceElasticsearch implements LogSource {
         }
 
 
-        String streamName = "water-" + logger;
+        String streamName = "water." + logger + ".stream";
 
-        _db.indice(streamName).insertList(list);
+        _db.stream(streamName).insertList(list);
     }
 
     @Override
@@ -164,9 +166,10 @@ public class LogSourceElasticsearch implements LogSource {
             keep_days = 15; //默认处理
         }
 
-        String indiceAliasName = "water-" + logger;
-        String templateName = indiceAliasName = "-tml";
-        String policyName = indiceAliasName = "-policy";
+        String streamPatterns = "water." + logger + ".*";
+        String streamName = "water." + logger + ".stream";
+        String templateName = streamName + "-tml";
+        String policyName = streamName + "-policy";
 
         //创建或修改策略（主要是时间可能会变化）
         ONode policyDslNode = ONode.loadStr(_policy_dsl);
@@ -175,15 +178,13 @@ public class LogSourceElasticsearch implements LogSource {
 
         //创建模板（如果存在，则不管）
         if (_db.templateExist(templateName) == false) {
-            ONode tmlDslNode = ONode.loadStr(_indice_dsl);
+            ONode tmlDslNode = ONode.loadStr(_stream_dsl);
             //设定匹配模式
-            tmlDslNode.getOrNew("index_patterns").val(indiceAliasName + "-*");
-            //设定别名
-            tmlDslNode.getOrNew("aliases").getOrNew(indiceAliasName).asObject();
+            tmlDslNode.getOrNew("index_patterns").val(streamPatterns);
             //设定策略
-            tmlDslNode.get("settings").get("index.lifecycle.name").val(policyName);
+            tmlDslNode.get("template").get("settings").get("index.lifecycle.name").val(policyName);
             //设定翻转别名
-            tmlDslNode.get("settings").get("index.lifecycle.rollover_alias").val(indiceAliasName);
+            tmlDslNode.get("template").get("settings").get("index.lifecycle.rollover_alias").val(streamName);
 
             _db.templateCreate(templateName, tmlDslNode.toJson());
         }
@@ -191,8 +192,7 @@ public class LogSourceElasticsearch implements LogSource {
 
     @Override
     public long clear(String logger, int keep_days, int limit_rows) throws Exception {
-        //尝试做修补
-        create(logger, keep_days);
+        //根据策略自动清除
 
         return 0;
     }
