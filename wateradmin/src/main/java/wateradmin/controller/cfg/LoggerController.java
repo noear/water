@@ -8,6 +8,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.NotZero;
+import org.noear.water.dso.NoticeUtils;
 import org.noear.water.protocol.ProtocolHub;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.TagChecker;
@@ -105,7 +106,11 @@ public class LoggerController extends BaseController {
         DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
 
         try {
+            //尝试建记录器
             ProtocolHub.logQuerier.create(logger, keep_days);
+            //发送通知消息
+            NoticeUtils.updateCache("logger:" + logger);
+
             viewModel.code(1, "保存成功！");
         } catch (SQLNonTransientConnectionException e) {
             viewModel.code(0, "创建结构失败（连接异常或没有权限）！");

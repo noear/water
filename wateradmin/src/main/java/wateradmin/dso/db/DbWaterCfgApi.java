@@ -99,9 +99,6 @@ public class DbWaterCfgApi {
 
         if (logger_id > 0) {
             tb.where("logger_id = ?", logger_id).update();
-
-            //发送通知消息
-            NoticeUtils.updateCache("logger:" + logger);
         } else {
             tb.set("is_enabled", 1).insert();
         }
