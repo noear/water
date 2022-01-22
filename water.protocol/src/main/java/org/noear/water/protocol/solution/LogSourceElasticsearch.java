@@ -13,8 +13,7 @@ import org.noear.water.utils.NameUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author noear 2021/10/20 created
@@ -142,6 +141,7 @@ public class LogSourceElasticsearch implements LogSource {
         }
 
         Datetime nowDatetime = Datetime.Now();
+        List<ONode> docs = new ArrayList<>();
 
         for (LogM event : list) {
 
@@ -152,12 +152,17 @@ public class LogSourceElasticsearch implements LogSource {
             }
 
             event.class_name = NameUtils.formatClassName(event.class_name);
+
+            ONode doc = ONode.loadObj(event).build(n -> {
+                n.set("@timestamp", event.log_fulltime);
+            });
+            docs.add(doc);
         }
 
 
         String streamName = "water." + logger + ".stream";
 
-        _db.stream(streamName).insertList(list);
+        _db.stream(streamName).insertList(docs);
     }
 
     @Override
