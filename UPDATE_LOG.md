@@ -1,5 +1,5 @@
 #### 2.5.5
-* 日是志的 es 方案改为 data steam 模式
+* 日志服务的 es 方案改为 data steam 模式
 
 #### 2.5.4
 * 升级 redis，支持 user 配置（无用的user要去掉了）
