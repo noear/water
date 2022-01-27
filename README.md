@@ -9,6 +9,8 @@
 
 功能相当于：consul + rabbitmq + elk + prometheus + openFaas + quartz + 等等，并有机结合在一起。
 
+或者约等于：nacos + rocketmq + PlumeLog + prometheus + magic-api + xxl-job + 等等，并有机结合在一起。
+
 
 ## 开始
 
