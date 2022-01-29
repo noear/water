@@ -176,10 +176,24 @@ public class LogSourceElasticsearch implements LogSource {
         String templateName = "water." + logger + ".tml";
         String policyName = "water." + logger + ".policy";
 
+        String keepDaysStr = keep_days + "d";
+
         //1.创建或修改策略（主要是时间可能会变化）
-        ONode policyDslNode = ONode.loadStr(_policy_dsl);
-        policyDslNode.select("policy.phases.delete").get("min_age").val(keep_days + "d");
-        _db.policyCreate(policyName, policyDslNode.toJson());
+        if (_db.policyExist(policyName)) {
+            //尝试修改
+            String policy_dsl_show = _db.policyShow(policyName);
+            ONode policyDslNode = new ONode().set("policy", ONode.load(policy_dsl_show).select(policyName + ".policy"));
+            ONode minAgeNode = policyDslNode.select("policy.phases.delete.min_age");
+            if (keepDaysStr.equals(minAgeNode.getString()) == false) {
+                minAgeNode.val(keepDaysStr);
+                _db.policyCreate(policyName, policyDslNode.toJson());
+            }
+        } else {
+            //尝试创建
+            ONode policyDslNode = ONode.loadStr(_policy_dsl);
+            policyDslNode.select("policy.phases.delete.min_age").val(keepDaysStr);
+            _db.policyCreate(policyName, policyDslNode.toJson());
+        }
 
         //2.创建模板（如果存在，则不管）
         if (_db.templateExist(templateName) == false) {
