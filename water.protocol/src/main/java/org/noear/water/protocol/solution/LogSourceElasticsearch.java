@@ -182,7 +182,7 @@ public class LogSourceElasticsearch implements LogSource {
         if (_db.policyExist(policyName)) {
             //尝试修改
             String policy_dsl_show = _db.policyShow(policyName);
-            ONode policyDslNode = new ONode().set("policy", ONode.load(policy_dsl_show).select(policyName + ".policy"));
+            ONode policyDslNode = new ONode().set("policy", ONode.load(policy_dsl_show).get(policyName).get("policy"));
             ONode minAgeNode = policyDslNode.select("policy.phases.delete.min_age");
             if (keepDaysStr.equals(minAgeNode.getString()) == false) {
                 //如果时间不相等，则改掉
