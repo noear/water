@@ -8,7 +8,7 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/clipboard.min.js"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
 
 </head>
 <body>

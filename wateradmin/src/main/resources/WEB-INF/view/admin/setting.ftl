@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
     <style>
         body  detail{ width: 800px; margin: 0 auto;}
         form > table{width: 800px;}

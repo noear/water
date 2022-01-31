@@ -15,7 +15,7 @@
         datagrid tbody td {text-align: left;}
     </style>
     <script src="${js}/lib.js"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
     <script>
         var Id = 0;
         function editSQL(type) {

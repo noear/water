@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/lib.js"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
     <script src="${js}/laydate/laydate.js"></script>
     <script>
         function queryForm() {

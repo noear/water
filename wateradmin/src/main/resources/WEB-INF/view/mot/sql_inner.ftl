@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
 
     <style>
         .tabs{padding-bottom: 10px;}

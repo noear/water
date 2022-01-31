@@ -7,7 +7,7 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/base64.js" ></script>
     <script src="${js}/jtadmin.js?v=4"></script>
-    <script src="${js}/layer.js"></script>
+    <script src="${js}/layer/layer.js"></script>
     <script src="//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs/loader.js" ></script>
 
     <style>
