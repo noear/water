@@ -96,8 +96,8 @@ public class WaterProxy {
 
     public static String runJob(String service, String name, Map<String, Object> args) throws Exception {
         return HttpUtils.http(service, WW.path_run_job)
-                .data("name", name)//兼容旧写法
                 .data(args)
+                .data("name", name)//兼容旧写法
                 .header(WW.http_header_job, name)
                 .header(WW.http_header_token, ServerConfig.taskToken)
                 .post();
