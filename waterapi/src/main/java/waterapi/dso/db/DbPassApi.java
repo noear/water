@@ -21,7 +21,7 @@ public class DbPassApi {
     public static void addJob(String tag, String service, String name, String cron7x, String description, Date nTime) throws SQLException {
 
         String path = String.format("/%s/_%s/_%s", tag, service, name).replace("-", "_");
-        String code = String.format("return water.job('%s','%s');", service, name);
+        String code = String.format("return water.job('%s','%s',{});", service, name);
 
         //只支持新增导入
         DbTableQuery qr = db().table("luffy_file")
