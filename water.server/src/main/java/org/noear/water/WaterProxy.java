@@ -97,6 +97,14 @@ public class WaterProxy {
                 .post();
     }
 
+    public static String runJob(String service, String name, Map<String, Object> args) throws Exception {
+        return HttpUtils.http(service, WW.path_run_job)
+                .data(args)
+                .data("name", name)
+                .header(WW.http_header_token, ServerConfig.taskToken)
+                .post();
+    }
+
     public static String runStatus(String addrees) throws Exception {
         String url = "http://" + addrees + WW.path_run_status;
         return HttpUtils.http(url)
@@ -111,7 +119,7 @@ public class WaterProxy {
 
     /**
      * 给FaaS用
-     * */
+     */
     public static void logTrace(String logger, Map<String, Object> map) {
         WaterClient.Log.append(logger, LogLevel.TRACE, map);
     }
