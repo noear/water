@@ -8,6 +8,8 @@ public class WW {
     public static final String mime_json = "application/json";
     public static final String mime_ndjson = "application/x-ndjson";
 
+
+    public static final String http_header_job = "Water-Job-Name";
     public static final String http_header_from = "Water-From";
     public static final String http_header_trace = "Water-Trace-Id";
     public static final String http_header_token = "Water-Access-Token";
