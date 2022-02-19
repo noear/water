@@ -132,8 +132,8 @@
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="50px">ID</td>
                 <td width="100px">type</td>
-                <td width="250px">value</td>
-                <td>note</td>
+                <td>value</td>
+                <td width="200px">note</td>
                 <td width="60px">操作</td>
             </tr>
             </thead>
