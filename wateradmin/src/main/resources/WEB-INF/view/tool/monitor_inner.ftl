@@ -40,7 +40,7 @@
                     <#if is_admin == 1>
                         <td width="80"></td>
                     <#else>
-                        <td width="40"></td>
+                        <td width="60"></td>
                     </#if>
                 </tr>
                 </thead>

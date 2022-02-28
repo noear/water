@@ -78,7 +78,7 @@
         <tbody id="tbody">
         <#list brokers as broker>
             <tr ${broker.isHighlight()?string("class='t4'","")}>
-                <td class="left"><a href="/log/query/inner?broker=${broker.broker}&tag_name=${broker.tag}" target="_parent">${broker.broker}</a></td>
+                <td class="left">${broker.broker}</td>
                 <td class="center">${broker.keep_days}</td>
                 <td class="right">${broker.row_num_today}</td>
                 <td class="right">${broker.row_num_today_error}</td>
