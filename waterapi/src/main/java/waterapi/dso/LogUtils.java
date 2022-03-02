@@ -76,6 +76,7 @@ public class LogUtils {
         try {
             if (ctx == null) {
                 MDC.put("tag0", "global");
+                MDC.put("tag1", ex.getClass().getSimpleName());
                 logger.error("{}", ex);
                 return;
             }
@@ -87,6 +88,7 @@ public class LogUtils {
             String tag = ctx.path();
 
             MDC.put("tag0", tag);
+            MDC.put("tag1", ex.getClass().getSimpleName());
             MDC.put("tag3", _from);
 
             if (cmd == null) {

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.event.EventListener;
 import org.noear.solon.logging.utils.TagsMDC;
+import org.slf4j.MDC;
 
 /**
  * 异常监听
@@ -14,8 +15,10 @@ import org.noear.solon.logging.utils.TagsMDC;
 @Component
 public class ErrorListener implements EventListener<Throwable> {
     @Override
-    public void onEvent(Throwable err) {
+    public void onEvent(Throwable ex) {
         TagsMDC.tag0("global");
-        log.error("{}", err);
+        TagsMDC.tag1(ex.getClass().getSimpleName());
+
+        log.error("{}", ex);
     }
 }

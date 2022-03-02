@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.core.event.EventListener;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.slf4j.MDC;
 
 /**
@@ -17,10 +18,12 @@ public class ErrorListener implements EventListener<Throwable> {
         Context ctx = Context.current();
 
         if (ctx == null) {
-            MDC.put("tag0", "global");
+            TagsMDC.tag0("global");
+            TagsMDC.tag1(ex.getClass().getSimpleName());
             log.error("{}", ex);
         } else {
-            MDC.put("tag0", ctx.path());
+            TagsMDC.tag0(ctx.path());
+            TagsMDC.tag1(ex.getClass().getSimpleName());
 
             String param = ONode.stringify(ctx.paramMap());
             log.error("> Param: {}\n\n< Body: {}", param, ex);
