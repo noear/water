@@ -33,6 +33,9 @@
                 <br/>
                 <a href='/grit/ui/subject/entity/s' target="inner">账号</a>
                 <a href='/grit/ui/auth/s' target="inner">授权</a>
+                <br/>
+                <br/>
+                <a href='/admin/about' target="inner">关于</a>
             </items>
         </menu>
     </left>

@@ -34,6 +34,12 @@ public class AdminController extends BaseController {
         return view("admin/home");
     }
 
+    @Mapping("about")
+    public ModelAndView about() throws SQLException {
+
+        return view("admin/about");
+    }
+
     @AuthPermissions(SessionPerms.admin)
     @Mapping("setting")
     public ModelAndView setting() throws SQLException {
