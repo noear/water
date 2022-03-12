@@ -29,9 +29,9 @@
 
     <detail>
         <table>
-            <tr><td>版本：</td><td>${_version!}</td></tr>
-            <tr><td>协议：</td><td>Apache-2.0</td></tr>
-            <tr><td>描述：</td><td>为分布式服务开发和治理，提供一站式解决方案（或者，支持套件）</td></tr>
+            <tr><td width="120px">软件版本：</td><td>${_version!}</td></tr>
+            <tr><td>授权协议：</td><td>Apache-2.0</td></tr>
+            <tr><td>能力描述：</td><td>为分布式服务开发和治理，提供一站式解决方案（或者，支持套件）</td></tr>
         </table>
     </detail>
 </main>
