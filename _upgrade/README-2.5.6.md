@@ -5,7 +5,7 @@
 * 然后马上导入 2.5.6/water_paasfile_api_sdk_water_20220312.jsond
 
 
-### 2.升级 sponge_track 的统计 sql(符合 mysql 5.7 的模式)
+### 2.升级 sponge_track 的统计 sql(没有安装sponge的，跳过)
 
 * 删除 [定时任务/sponge_track] 下的内容
 * 然后马上导入 2.5.6/water_paasfile_pln_sponge_track_20220312.jsond
