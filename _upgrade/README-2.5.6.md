@@ -1,7 +1,7 @@
 
 ### 1.water job 支持传递参数
 
-* 禁用 [即时接口/sdk_water] 下的内容 
+* 禁用 [即时接口/sdk_water] 下的内容（被禁用的内容，可被jsond文件更新）
 * 然后导入 water_paasfile_api_sdk_water_20220312.jsond
 
 
