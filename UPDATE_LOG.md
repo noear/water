@@ -7,6 +7,7 @@
 
 #### 2.5.6
 * water job 支持传递参数
+* 升级 sponge_track 的统计 sql(符合 mysql 5.7 的模式)
 
 #### 2.5.5
 * 日志服务的 es 方案改为 data steam 模式
