@@ -29,6 +29,6 @@
 
         <module>xwater</module>
 
-        <module>_water_demo</module>
+        <module>demo/demoapi</module>
     </modules>
 </project>
