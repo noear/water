@@ -2,7 +2,7 @@ package wateradmin.dso.db;
 
 import org.noear.weed.DbContext;
 import wateradmin.Config;
-import wateradmin.models.water.CodeQueryModel;
+import wateradmin.models.water_paas.CodeQueryModel;
 import wateradmin.models.water_paas.RebberBlockModel;
 import wateradmin.models.water_paas.RebberModelFieldModel;
 import wateradmin.models.water_paas.RebberModelModel;

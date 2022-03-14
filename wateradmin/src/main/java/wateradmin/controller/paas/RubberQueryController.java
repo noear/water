@@ -6,7 +6,7 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.db.DbRubberQueryApi;
-import wateradmin.models.water.CodeQueryModel;
+import wateradmin.models.water_paas.CodeQueryModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
