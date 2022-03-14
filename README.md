@@ -187,9 +187,9 @@ public class Job_test implements CloudJobHandler {
 
 ```
 
-### （二）代码示例
+### （二）代码演示
 
-[https://gitee.com/noear/water_demo](https://gitee.com/noear/water_demo)
+[https://gitee.com/noear/water-examples](https://gitee.com/noear/water-examples)
 
 ### （三）部署
 
