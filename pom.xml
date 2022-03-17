@@ -25,7 +25,6 @@
         <module>wateradmin</module>
         <module>watersev</module>
         <module>waterfaas</module>
-        <module>waterraas</module>
 
         <module>xwater</module>
 
