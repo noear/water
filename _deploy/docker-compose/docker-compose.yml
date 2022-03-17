@@ -52,13 +52,3 @@ services:
       -  waterapi
     ports:
       - 9374:9374
-  waterraas:
-    image: noearorg/waterraas:latest
-    container_name: waterraas
-    environment:
-      - solon.start.ping=waterapi:9371
-      - TZ=Asia/Shanghai
-    depends_on:
-      -  waterapi
-    ports:
-      - 9375:9375

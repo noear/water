@@ -14,7 +14,6 @@
 | noearorg/watersev:2.5.7       | 9372  | 批处理服务              |
 | noearorg/wateradmin:2.5.7     | 9373  | 管理控制台              |
 | noearorg/waterfaas:2.5.7      | 9374  | FaaS 即时接口服务        |
-| noearorg/waterraas:2.5.7      | 9375  | 规则计算服务             |
 |                         |       |                    |
 | noearorg/xwater:2.5.7         | 19371 | Water助理工具（仅在需要时启用） |
 

@@ -51,14 +51,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater
   * 对外端口：9374 或其它
   * 建议1个副本起步
   * 要配置外网访问地址，建议加域名
-
   
-* 添加 water/waterraas 服务（镜像：noearorg/waterraas:latest）。规则计算服务
-  * 镜像端口：9375
-  * 对外端口：9375 或其它
-  * 建议1个副本起步`（可选部署）`
-  * 要配置外网访问地址，建议加域名
-
   
 * 添加 water/watersev-tol 服务（镜像：noearorg/watersev:latest）。工具服务，包含： (msgchk,sevchk,syn,mot)
   * 镜像端口：9372
