@@ -34,10 +34,17 @@ public class AdminController extends BaseController {
         return view("admin/home");
     }
 
+
     @Mapping("about")
     public ModelAndView about() throws SQLException {
-
         return view("admin/about");
+    }
+
+
+    @AuthPermissions(SessionPerms.admin)
+    @Mapping("grit")
+    public ModelAndView grit() throws SQLException {
+        return view("admin/grit");
     }
 
     @AuthPermissions(SessionPerms.admin)
