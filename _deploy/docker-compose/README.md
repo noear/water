@@ -42,7 +42,6 @@ docker-compose up
 | 配置组 | 配置键 | 说明 |
 | -------- | -------- | -------- |
 | water     | faas_uri     | 修改为 waterfaas 服务的外网http协议地址（优先用域名）     |
-| water     | raas_uri     | 修改为 waterraas 服务的外网http协议地址（优先用域名）     |
 
 修改完成后，可以在 wateradmin 上调试 paas 和 raas 服务。
 
