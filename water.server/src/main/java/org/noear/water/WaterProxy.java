@@ -15,7 +15,7 @@ import java.util.Map;
  * */
 public class WaterProxy {
     static final String SERVICE_WATER_FAAS = "waterfaas";
-    static final String SERVICE_WATER_RAAS = "waterraas";
+    static final String SERVICE_WATER_RAAS = "rubber-api";
 
 
     /**
