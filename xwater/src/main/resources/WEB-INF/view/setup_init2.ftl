@@ -108,7 +108,7 @@
                     <tr>
                         <td></td><td>
                             <n-l>
-                                对应配置：water/water_redis，water/water_cache， water_bcf/bcf.yml
+                                对应配置：water/water_redis，water/water_cache， grit/grit.yml
                             </n-l>
                         </td>
                     </tr>
