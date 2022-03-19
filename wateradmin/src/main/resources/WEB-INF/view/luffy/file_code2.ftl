@@ -14,16 +14,6 @@
     <style>
         html,body{margin:0px;padding:0px;overflow:hidden;}
         main{margin:10px;}
-
-        .btn2 { background-color: #fd6721; color: #fff; border: none; min-width: 120px; height:30px; font-size: 12px; }
-        .btn2:hover { background-color: #fd7f38; }
-        .btn2:disabled { background-color: #aaa; }
-
-        .btn3{ background-color: #f7f7f7; color: #333; border: 1px solid #ddd; min-width: 100px;  height:30px; font-size: 12px; }
-        .btn3:hover { background-color: #fefefe; color: #333;}
-        .btn3:disabled { background-color: #aaa; color: #333;}
-
-
         main > pre{border:1px solid #C9C9C9; margin: 0px;}
 
         em{color:#999;font-style:normal;}
@@ -47,12 +37,12 @@
     <pre id="editor" style="height: calc(100vh - 80px); "></pre>
 
     <flex style="margin-top: 18px;">
-        <left class="col-6">
+        <left class="col-6 form">
             <#if is_admin = 1>
-                <button class="btn2" type="button" onclick="file_save()">保存 <u>S</u></button>
+                <button type="button" onclick="file_save()">保存 <u>S</u></button>
             </#if>
             <#if is_operator = 1>
-            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn3 mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
+            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
             </#if>
         </left>
         <right class="col-6">
