@@ -86,6 +86,12 @@ public class DbLuffyApi {
                 .getItem(LuffyFileModel.class);
     }
 
+    public static LuffyFileModel getFileByPath(String path) throws SQLException {
+        return db().table("luffy_file")
+                .whereEq("path", path)
+                .selectItem("*", LuffyFileModel.class);
+    }
+
     public static int delFile(int file_id) throws SQLException {
         return db().table("luffy_file")
                 .where("file_id=?", file_id)
@@ -116,7 +122,7 @@ public class DbLuffyApi {
             //更知:缓存更新
             NoticeUtils.updateCache("paas:" + file_id);
         } else {
-            file_id = db().table("luffy_file").insert(data);
+            db().table("luffy_file").insert(data);
         }
     }
 
