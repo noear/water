@@ -39,7 +39,7 @@ if(ver_old < 2){
         tmpRes.remove("resource_id");
 
         db2.table('grit_resource')
-        .setMap(tmpRes).set('display_name','$').set('order_index',20).set('link_uri','').set("guid", XUtil.guid())
+        .setMap(tmpRes).set('display_name','$').set('order_index',20).set('link_uri','').set('resource_pid',9).set("guid", XUtil.guid())
         .usingNull(false)
         .usingExpr(false)
         .insert();
