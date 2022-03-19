@@ -92,6 +92,12 @@ public class DbLuffyApi {
                 .selectItem("*", LuffyFileModel.class);
     }
 
+    public static DataItem getFileDataByPath(String path) throws SQLException {
+        return db().table("luffy_file")
+                .whereEq("path", path)
+                .selectDataItem("*");
+    }
+
     public static int delFile(int file_id) throws SQLException {
         return db().table("luffy_file")
                 .where("file_id=?", file_id)

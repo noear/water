@@ -2,7 +2,7 @@ package wateradmin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
-import org.noear.solon.core.event.EventBus;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DataItem;
 import wateradmin.dso.db.DbLuffyApi;
@@ -19,13 +19,15 @@ public class Upgrade {
         try {
             update_init();
         } catch (Throwable e) {
-            log.error("尝试升级失败：{}", e);
+            TagsMDC.tag0("upgrade");
+            log.error("Upgrade attempt failed: {}", e);
         }
 
         try {
             update_upgrade();
         } catch (Throwable e) {
-            log.error("尝试升级失败：{}", e);
+            TagsMDC.tag0("upgrade");
+            log.error("Upgrade attempt failed: {}", e);
         }
     }
 
@@ -60,19 +62,17 @@ public class Upgrade {
             //立即执行
             DbLuffyApi.resetFilePlan(String.valueOf(file.file_id));
         } else {
-            file = DbLuffyApi.getFileByPath("/water/speed_sync");
+            DataItem dataItem = DbLuffyApi.getFileDataByPath("/water/speed_sync");
 
-            file.path = "/water/_upgrade";
-            file.plan_interval = "1h";
-            file.plan_begin_time = Datetime.Now().addDay(-1).getFulltime();
-            file.plan_last_time = null;
-            file.plan_last_timespan = 0;
-            file.plan_state = 1;
-            file.content = waterUpgradeNew;
-            DataItem dataItem = new DataItem();
-            dataItem.setEntity(file);
             dataItem.remove("file_id");
-            dataItem.remove("_is_day_task");
+            dataItem.remove("plan_last_time");
+
+            dataItem.set("path", "/water/_upgrade");
+            dataItem.set("plan_interval", "1h");
+            dataItem.set("plan_begin_time", Datetime.Now().addDay(-1).getTicks());
+            dataItem.set("plan_last_timespan", 0);
+            dataItem.set("plan_state", 1);
+            dataItem.set("content", waterUpgradeNew);
 
             DbLuffyApi.setFile(0, dataItem, LuffyFileType.pln);
         }
