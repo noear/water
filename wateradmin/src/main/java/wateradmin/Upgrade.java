@@ -19,13 +19,13 @@ public class Upgrade {
         try {
             update_init();
         } catch (Throwable e) {
-            EventBus.push(e);
+            log.error("尝试升级失败：{}", e);
         }
 
         try {
             update_upgrade();
         } catch (Throwable e) {
-            EventBus.push(e);
+            log.error("尝试升级失败：{}", e);
         }
     }
 
@@ -72,6 +72,7 @@ public class Upgrade {
             DataItem dataItem = new DataItem();
             dataItem.setEntity(file);
             dataItem.remove("file_id");
+            dataItem.remove("_is_day_task");
 
             DbLuffyApi.setFile(0, dataItem, LuffyFileType.pln);
         }
