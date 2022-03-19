@@ -32,7 +32,12 @@ public class WateradminApp {
             ProtocolHub.monitoring = new MonitoringAliyun();
         });
 
+        //尝试预热
         PreheatUtils.preheat(WW.path_run_check);
         PreheatUtils.preheat("/login");
+
+
+        //尝试升级
+        Upgrade.tryUpdate();
     }
 }

@@ -9,7 +9,6 @@ import wateradmin.dso.db.DbLuffyApi;
 import wateradmin.models.water_paas.LuffyFileModel;
 import wateradmin.models.water_paas.LuffyFileType;
 
-import java.time.LocalDate;
 
 /**
  * @author noear 2022/3/19 created
@@ -57,6 +56,9 @@ public class Upgrade {
             if (waterUpgradeNewMd5.equals(fileContentMd5) == false) {
                 DbLuffyApi.setFileContent(file.file_id, waterUpgradeNew);
             }
+
+            //立即执行
+            DbLuffyApi.resetFilePlan(String.valueOf(file.file_id));
         } else {
             file = DbLuffyApi.getFileByPath("/water/speed_sync");
 
@@ -64,6 +66,8 @@ public class Upgrade {
             file.plan_interval = "1h";
             file.plan_begin_time = Datetime.Now().addDay(-1).getFulltime();
             file.plan_last_time = null;
+            file.plan_last_timespan = 0;
+            file.plan_state = 1;
             file.content = waterUpgradeNew;
             DataItem dataItem = new DataItem();
             dataItem.setEntity(file);
