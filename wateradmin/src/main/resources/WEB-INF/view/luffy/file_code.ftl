@@ -43,7 +43,7 @@
             <button type="button" onclick="file_save()">保存 <u>S</u></button>
             </#if>
             <#if is_operator = 1>
-            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
+            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
             </#if>
         </left>
         <right class="col-6">
