@@ -22,7 +22,6 @@
         main > pre{border:1px solid #C9C9C9; margin: 0px;}
 
         em{color:#999;font-style:normal;}
-        .code_run{color:#999;text-decoration : none}
     </style>
     <script>
         var base64 = new Base64();
@@ -45,10 +44,10 @@
     <flex style="margin-top: 18px;">
         <left class="col-6">
             <#if is_admin = 1>
-            <button class="btn2" type="button" onclick="file_save()">保存</button><em>（或 ctrl + s）</em>
+            <button class="btn2" type="button" onclick="file_save()">保存 <u>S</u></button>
             </#if>
             <#if is_operator = 1>
-            <a href="${faas_uri}${m1.path!}?_debug=1" class="code_run" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
+            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
             </#if>
         </left>
         <right class="col-6">
