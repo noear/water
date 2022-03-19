@@ -72,6 +72,8 @@ public class Upgrade {
             dataItem.set("plan_begin_time", Datetime.Now().addDay(-1).getTicks());
             dataItem.set("plan_last_timespan", 0);
             dataItem.set("plan_state", 1);
+            dataItem.set("plan_max", 0);
+            dataItem.set("plan_count", 0);
             dataItem.set("content", waterUpgradeNew);
 
             DbLuffyApi.setFile(0, dataItem, LuffyFileType.pln);
