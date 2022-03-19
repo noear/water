@@ -9,22 +9,24 @@ if(!ver_old_str){
 let ver_new = 1;
 let ver_old = parseInt(ver_old_str);
 
-if(ver_old >= ver_new){
-    return 'No upgrade';
-}
+// if(ver_old >= ver_new){
+//     return 'No upgrade';
+// }
 
 //2.开始更新
 
 //for 2.5.8
-if(ver_old < 1){
+if(ver_old < 2){
     let db2 = water.db('water/water');
     //::规则计算
     let tmpRes = db2.table('grit_resource').whereEq('display_name','规则计算').limit(1).selectMap('*');
-    let idList = db2.table('grit_resource').whereEq('resource_pid', tmpRes.resource_id).selectArray('resource_id');
-    if(idList.size() > 0){
-        db2.table('grit_resource_linked').whereIn('resource_id',idList).delete();
-        db2.table('grit_resource').whereEq('resource_pid',tmpRes.resource_id).delete();
-        db2.table('grit_resource').whereEq('resource_id',tmpRes.resource_id).delete();
+    if(tmpRes.resource_id){
+        let idList = db2.table('grit_resource').whereEq('resource_pid', tmpRes.resource_id).selectArray('resource_id');
+        if(idList.size() > 0){
+            db2.table('grit_resource_linked').whereIn('resource_id',idList).delete();
+            db2.table('grit_resource').whereEq('resource_pid',tmpRes.resource_id).delete();
+            db2.table('grit_resource').whereEq('resource_id',tmpRes.resource_id).delete();
+        }
     }
 
     //::Ops
@@ -34,10 +36,10 @@ if(ver_old < 1){
                  .update();
 
     if(rst){ //如果更新成功
-        tmpMap.remove("resource_id");
+        tmpRes.remove("resource_id");
 
         db2.table('grit_resource')
-        .setMap(tmpMap).set('display_name','$').set('order_index',20).set('link_uri','').set("guid", XUtil.guid())
+        .setMap(tmpRes).set('display_name','$').set('order_index',20).set('link_uri','').set("guid", XUtil.guid())
         .usingNull(false)
         .usingExpr(false)
         .insert();
