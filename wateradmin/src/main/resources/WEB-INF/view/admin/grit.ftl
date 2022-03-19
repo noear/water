@@ -4,7 +4,7 @@
 <head>
     <title>${title!}</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="${css}/font-awesome-4.7.0/css/font-awesome.min.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="${js}/lib.js" ></script>
