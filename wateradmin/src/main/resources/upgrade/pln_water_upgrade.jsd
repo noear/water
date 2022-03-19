@@ -9,15 +9,16 @@ if(!ver_old_str){
 let ver_new = 1;
 let ver_old = parseInt(ver_old_str);
 
-// if(ver_old >= ver_new){
-//     return 'No upgrade';
-// }
+if(ver_old >= ver_new){
+    return 'No upgrade';
+}
 
 //2.开始更新
 
 //for 2.5.8
 if(ver_old < 1){
     let db2 = water.db('water/water');
+
     //::规则计算
     let tmpRes = db2.table('grit_resource').whereEq('display_name','规则计算').limit(1).selectMap('*');
     if(tmpRes.resource_id){
