@@ -30,6 +30,7 @@ solon.logging.logger:
 
 waterfaas.secretKey: "0zJt0J88TkIvqYgC"
 
+
 #water.log:
 #  gzip: 1
 #  level: 2
