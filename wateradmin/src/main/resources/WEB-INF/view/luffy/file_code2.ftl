@@ -8,7 +8,8 @@
     <script src="${js}/base64.js" ></script>
     <script src="${js}/jtadmin.js?v=4"></script>
     <script src="${js}/layer/layer.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs/loader.js" ></script>
+    <script src="${js}/monaco-editor/min/vs/loader.js" ></script>
+<#--    <script src="//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs/loader.js" ></script>-->
 
     <style>
         html,body{margin:0px;padding:0px;overflow:hidden;}
@@ -17,6 +18,11 @@
         .btn2 { background-color: #fd6721; color: #fff; border: none; min-width: 120px; height:30px; font-size: 12px; }
         .btn2:hover { background-color: #fd7f38; }
         .btn2:disabled { background-color: #aaa; }
+
+        .btn3{ background-color: #f7f7f7; color: #333; border: 1px solid #ddd; min-width: 100px;  height:30px; font-size: 12px; }
+        .btn3:hover { background-color: #fefefe; color: #333;}
+        .btn3:disabled { background-color: #aaa; color: #333;}
+
 
         main > pre{border:1px solid #C9C9C9; margin: 0px;}
 
@@ -46,7 +52,7 @@
                 <button class="btn2" type="button" onclick="file_save()">保存 <u>S</u></button>
             </#if>
             <#if is_operator = 1>
-            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
+            <a href="${faas_uri}${m1.path!}?_debug=1" class="btn3 mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">debug</a>
             </#if>
         </left>
         <right class="col-6">
@@ -60,7 +66,8 @@
     <script>
         var code64 = "${code64}";
 
-        require.config({ paths: { 'vs': '//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs' }});
+        //require.config({ paths: { 'vs': '//cdn.jsdelivr.net/npm/monaco-editor@0.25.2/min/vs' }});
+        require.config({ paths: { 'vs': '${js}/monaco-editor/min/vs' }});
         require(['vs/editor/editor.main'], function() {
             $.get("/_luffy.d.txt?v=1",(rst)=>{
                 monaco.languages.typescript.javascriptDefaults.addExtraLib(rst);
