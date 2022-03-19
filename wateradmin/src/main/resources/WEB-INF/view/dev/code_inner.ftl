@@ -8,8 +8,8 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer/layer.js"></script>
-    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
-    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
+    <script src="${js}/ace/ace.js" ></script>
+    <script src="${js}/ace/ext-language_tools.js"></script>
     <style>
         .header {height: 50px;}
         .header li {display: inline-block;padding-left: 10px;padding-right: 10px;}

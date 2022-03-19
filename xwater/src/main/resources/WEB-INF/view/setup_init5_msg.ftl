@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
-    <script src="//mirror.noear.org/lib/ace/ace.js" ></script>
-    <script src="//mirror.noear.org/lib/ace/ext-language_tools.js"></script>
+    <script src="${js}/ace/ace.js" ></script>
+    <script src="${js}/ace/ext-language_tools.js"></script>
     <style>
         body > header label{background-color: #222;}
         pre{border:1px solid #C9C9C9;}

@@ -1,6 +1,6 @@
 ﻿/*
 durian ui
-ver:1.0.65
+ver:1.0.66
 author:noear
 */
 *,*::before, *::after { box-sizing: border-box; }
@@ -268,9 +268,9 @@ detail form th,detail .form th{text-align:right;padding-right:5px;} /*font-weigh
 detail button,.form button,.form a.btn { background-color: #fd6721; color: #fff; border: none; min-width: 100px!important; line-height:30px!important;height:30px!important; font-size: 12px; }
 detail button:hover,.form button:hover,.form a.btn:hover { background-color: #fd7f38; }
 detail button:disabled,.form button:disabled { background-color: #aaa; }
-detail button.minor,.form .minor{ background-color: #f7f7f7; color: #333; border: 1px solid #ddd; min-width: 100px;  height:30px; font-size: 12px; }
-detail button.minor:hover,.form .minor:hover { background-color: #fefefe; color: #333;}
-detail button.minor:disabled,.form .minor:disabled { background-color: #aaa; color: #333;}
+detail button.minor,.form .minor{ background-color: #f7f7f7!important; color: #333!important; border: 1px solid #ddd!important; min-width: 100px;  height:30px; font-size: 12px; }
+detail button.minor:hover,.form .minor:hover { background-color: #fefefe!important; color: #333!important;}
+detail button.minor:disabled,.form .minor:disabled { background-color: #aaa!important; color: #333!important;}
 .form button,.form a.btn,.form .minor{margin-left:10px!important; min-width:0px!important; width:auto!important; padding:0 20px!important;}
 
 
