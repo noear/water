@@ -19,21 +19,21 @@ if(ver_old >= ver_new){
 if(ver_old < 1){
     let db2 = water.db('water/water');
     //::规则计算
-    let idList = db2.table('grit_resource').whereEq('resource_pid',117).selectArray('resource_id');
+    let tmpRes = db2.table('grit_resource').whereEq('display_name','规则计算').limit(1).selectMap('*');
+    let idList = db2.table('grit_resource').whereEq('resource_pid', tmpRes.resource_id).selectArray('resource_id');
     if(idList.size() > 0){
         db2.table('grit_resource_linked').whereIn('resource_id',idList).delete();
-        db2.table('grit_resource').whereEq('resource_pid',117).delete();
-        db2.table('grit_resource').whereEq('resource_id',117).delete();
+        db2.table('grit_resource').whereEq('resource_pid',tmpRes.resource_id).delete();
+        db2.table('grit_resource').whereEq('resource_id',tmpRes.resource_id).delete();
     }
 
     //::Ops
+    tmpRes = db2.table('grit_resource').whereEq('display_name','计算资源').limit(1).selectMap('*');
     let rst = db2.table('grit_resource').set('link_uri','/cfg/server').set('resource_pid',9).set('order_index',21)
-                 .whereEq('resource_id',129).andNeq('resource_pid',9)
+                 .whereEq('resource_id',tmpRes.resource_id).andNeq('resource_pid',9)
                  .update();
 
     if(rst){ //如果更新成功
-        let tmpMap = db2.table('grit_resource').whereEq('resource_id',129).selectMap('*');
-
         tmpMap.remove("resource_id");
 
         db2.table('grit_resource')
@@ -52,6 +52,9 @@ if(ver_old < 1){
 
     //::Dev
     db2.table('grit_resource').set('display_name','开发助手').whereEq('resource_id',12).update();
+
+    //::FaaS
+    db2.table('grit_resource').set('display_name','函数计算').whereEq('resource_id',10).update();
 }
 
 //3.设定版本
