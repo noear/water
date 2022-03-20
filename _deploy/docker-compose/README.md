@@ -6,7 +6,7 @@
 
 * mysql 8.x：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
 * redis 5.x+：做为分布式锁、数据临时队列用
-* mongodb 4.x：做为消息持久化用（也可以使用 mysql8）
+* mongodb 4.x+：做为消息持久化用（也可以使用 mysql8）
 * elasticsearch 7.9+：做为日志持久化用（也可以使用 mysql8 或 mongodb）
 
 ## 二、初始化环境
@@ -14,7 +14,7 @@
 运行 Water 助理工具（在本地或服务器上运行都可）
 
 ```shell 
-docker run -it --rm -p 19371:19371 noearorg/xwater
+docker run -it --rm -p 19371:19371 noearorg/xwater:2.5.8
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作

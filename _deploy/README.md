@@ -22,7 +22,7 @@
 
 * mysql 8.x：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
 * redis 5.x+：做为分布式锁、数据临时队列用等
-* mongodb 4.x：做为消息持久化用（也可以使用 mysql8）
+* mongodb 4.x+：做为消息持久化用（也可以使用 mysql8）
 * elasticsearch 7.9+：做为日志持久化用（也可以使用 mysql8 或 mongodb）
 
 ### 账号与权限管理：
