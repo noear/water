@@ -64,7 +64,7 @@ public class DbWaterVerApi {
 
             Context ctx = Context.current();
             String log_ip = (ctx == null ? "" : ctx.realIp());
-            String log_user = (ctx == null ? "NotHttp" : Session.current().getDisplayName());
+            String log_user = (ctx == null ? "system" : Session.current().getDisplayName());
 
             db().table("water_tool_versions")
                     .set("table", table)
