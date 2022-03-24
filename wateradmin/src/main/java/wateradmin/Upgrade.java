@@ -17,21 +17,21 @@ import wateradmin.models.water_paas.LuffyFileType;
 public class Upgrade {
     public static void tryUpdate() {
         try {
-            update_init();
+            api_water_init();
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
             log.error("Upgrade attempt failed: {}", e);
         }
 
         try {
-            update_upgrade();
+            pln_water_upgrade();
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
             log.error("Upgrade attempt failed: {}", e);
         }
     }
 
-    private static void update_init() throws Throwable {
+    private static void api_water_init() throws Throwable {
         //for "api::/sdk_water/_init.jsx"
         String waterInitNew = Utils.getResourceAsString("upgrade/api_water_init.jsd");
         String waterInitNewMd5 = Utils.md5(waterInitNew);
@@ -46,7 +46,7 @@ public class Upgrade {
         }
     }
 
-    private static void update_upgrade() throws Throwable {
+    private static void pln_water_upgrade() throws Throwable {
         //for "pln::/water/_upgrade"
         String waterUpgradeNew = Utils.getResourceAsString("upgrade/pln_water_upgrade.jsd");
         String waterUpgradeNewMd5 = Utils.md5(waterUpgradeNew);

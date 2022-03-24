@@ -62,7 +62,8 @@ public class DbWaterVerApi {
                 return;
             }
 
-            String log_ip = Context.current().realIp();
+            Context ctx = Context.current();
+            String log_ip = (ctx == null ? "" : ctx.realIp());
 
             db().table("water_tool_versions")
                     .set("table", table)
