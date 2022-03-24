@@ -115,7 +115,7 @@ public class PropController extends BaseController {
     //批量导入
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
-    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
+    public ViewModel importDo(String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }

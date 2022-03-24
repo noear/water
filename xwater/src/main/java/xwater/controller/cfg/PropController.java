@@ -115,7 +115,7 @@ public class PropController extends BaseController {
 
     //批量导入
     @Mapping("ajax/import")
-    public ViewModel importDo(Context ctx, String tag, UploadedFile file) throws Exception {
+    public ViewModel importDo(String tag, UploadedFile file) throws Exception {
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
