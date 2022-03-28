@@ -14,6 +14,7 @@ import org.noear.weed.DbContext;
 import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
+import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.water_cfg.ConfigModel;
 
@@ -133,9 +134,9 @@ public class QuerySqlDbController extends BaseController {
        }
 
        //记录日志
-       TagsMDC.tag0(ctx.path());
-       TagsMDC.tag1("dev_query_sqldb");
-       TagsMDC.tag2(db);
+       TagsMDC.tag0("dev_query_sqldb");
+       TagsMDC.tag1(db);
+       TagsMDC.tag2(Session.current().getDisplayName());
        log.info(code_raw);
 
        //返回

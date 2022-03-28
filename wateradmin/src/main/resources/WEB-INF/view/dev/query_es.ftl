@@ -83,7 +83,7 @@
 <body>
 
 <button id="btn_query"><i class="fa fa-play fa-2x"></i></button>
-<a id="btn_history" href="/log/query/inner?tag_name=water&logger=water_log_admin&level=0&tagx=@dev_query_es"><i class="fa fa-history fa-2x"></i></a>
+<a id="btn_history" href="/log/query/inner?tag_name=water&logger=water_log_admin&level=0&tagx=dev_query_es"><i class="fa fa-history fa-2x"></i></a>
 
 <main>
     <left>

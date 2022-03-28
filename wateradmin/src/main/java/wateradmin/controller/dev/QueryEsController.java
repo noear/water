@@ -16,6 +16,7 @@ import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
+import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.utils.JsonFormatTool;
 import wateradmin.models.water_cfg.ConfigModel;
@@ -112,9 +113,9 @@ public class QueryEsController extends BaseController {
 
 
             //记录日志
-            TagsMDC.tag0(ctx.path());
-            TagsMDC.tag1("dev_query_es");
-            TagsMDC.tag2(cfg_str);
+            TagsMDC.tag0("dev_query_es");
+            TagsMDC.tag1(cfg_str);
+            TagsMDC.tag2(Session.current().getDisplayName());
             log.info(code_raw);
 
             //返回

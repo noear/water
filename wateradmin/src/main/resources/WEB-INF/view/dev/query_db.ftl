@@ -42,7 +42,7 @@
         <pre id="code" type="text" style="width: 100%; height: 90px;">--tag/key::
 select * from tb limit 1</pre>
         <button id="btn_query"><i class="fa fa-play fa-2x"></i></button>
-        <a id="btn_history" href="/log/query/inner?tag_name=water&logger=water_log_admin&level=0&tagx=@dev_query_sqldb"><i class="fa fa-history fa-2x"></i></a>
+        <a id="btn_history" href="/log/query/inner?tag_name=water&logger=water_log_admin&level=0&tagx=dev_query_sqldb"><i class="fa fa-history fa-2x"></i></a>
     </div>
     <datagrid>
         <div id="query_rst" style="overflow-x: scroll"></div>
