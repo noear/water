@@ -3,12 +3,15 @@ package wateradmin.controller.dev;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import lombok.extern.slf4j.Slf4j;
 import org.noear.esearchx.EsCommand;
 import org.noear.esearchx.EsContext;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WW;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
@@ -21,6 +24,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 //非单例
+@Slf4j
 @Controller
 @Mapping("/dev/query_es")
 public class QueryEsController extends BaseController {
@@ -34,8 +38,8 @@ public class QueryEsController extends BaseController {
     }
 
     @Mapping(value = "ajax/do")
-    public String query_do(String code) {
-        String tmp = query_exec(code);
+    public String query_do(Context ctx,String code) {
+        String tmp = query_exec(ctx, code);
         if (tmp != null && tmp.startsWith("{")) {
             return JsonFormatTool.formatJson(tmp);
         } else {
@@ -43,7 +47,7 @@ public class QueryEsController extends BaseController {
         }
     }
 
-    public String query_exec(String code) {
+    public String query_exec(Context ctx, String code) {
         ONode node = new ONode();
         //1.对不良条件进行过滤
         if (TextUtils.isEmpty(code)) {
@@ -103,7 +107,18 @@ public class QueryEsController extends BaseController {
             cmd.dsl = json.toString();
             cmd.dslType = WW.mime_json;
 
-            return esx.execAsBody(cmd);
+            String rstJson = esx.execAsBody(cmd);
+
+
+            //记录日志
+            TagsMDC.tag0(ctx.path());
+            TagsMDC.tag1("dev_query_es");
+            TagsMDC.tag2(cfg_str);
+            log.info(code);
+
+
+            //返回
+            return rstJson;
         } catch (Exception ex) {
             return JSON.toJSONString(ex,
                     SerializerFeature.BrowserCompatible,

@@ -1,13 +1,17 @@
 package wateradmin.controller.dev;
 
+import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DataItem;
 import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
+import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.ConfigType;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -21,6 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //非单例
+@Slf4j
 @Controller
 @Mapping("/dev/query_db")
 public class QuerySqlDbController extends BaseController {
@@ -36,7 +41,7 @@ public class QuerySqlDbController extends BaseController {
    static Pattern limit_exp = Pattern.compile("\\s+limit\\s+(\\d+,)?(\\d+)");
 
    @Mapping(value = "ajax/do")
-   public String query_do(String code) {
+   public String query_do(Context ctx, String code) {
 
        //1.对不良条件进行过滤
        if (TextUtils.isEmpty(code))
@@ -94,7 +99,7 @@ public class QuerySqlDbController extends BaseController {
 
        //2.开始查询数据
        try {
-           return exec_sql(code,is_ddl);
+           return exec_sql(ctx, code, is_ddl);
        } catch (Exception ex) {
            StringBuilder sb = new StringBuilder();
            sb.append("<p>");
@@ -104,28 +109,36 @@ public class QuerySqlDbController extends BaseController {
        }
    }
 
-   private String exec_sql(String code, boolean is_ddl) throws SQLException{
+   private String exec_sql(Context ctx, String code, boolean is_ddl) throws SQLException {
        String db = code.split("::")[0];
        String sql = code.split("::")[1];
 
-       if(db.indexOf("water/water")>=0 && sql.toLowerCase().indexOf("water_cfg_properties") > 0){
+       if (db.indexOf("water/water") >= 0 && sql.toLowerCase().indexOf("water_cfg_properties") > 0) {
            return "只支持业务库查询";
        }
 
-       DbContext dbContext =   DbWaterCfgApi.getConfigByTagName(db).getDb();
+       DbContext dbContext = DbWaterCfgApi.getConfigByTagName(db).getDb();
 
        DataList list = dbContext.sql(sql).log(true).getDataList();
+       String html = "";
 
        //3.构建输出内容
-       if(list != null && list.getRowCount()>0) {
-           if(is_ddl){
-               return buildDDL(list);
-           }else{
-               return buildData(list);
+       if (list != null && list.getRowCount() > 0) {
+           if (is_ddl) {
+               html = buildDDL(list);
+           } else {
+               html = buildData(list);
            }
        }
 
-       return "";
+       //记录日志
+       TagsMDC.tag0(ctx.path());
+       TagsMDC.tag1("dev_query_sqldb");
+       TagsMDC.tag2(db);
+       log.info(code);
+
+       //返回
+       return html;
    }
 
    private String buildDDL(DataList list){
