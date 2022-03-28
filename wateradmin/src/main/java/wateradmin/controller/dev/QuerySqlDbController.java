@@ -47,6 +47,7 @@ public class QuerySqlDbController extends BaseController {
        if (TextUtils.isEmpty(code))
            return "没有代码";
 
+       String code_raw = code;
        code = code.trim();
        if(code.startsWith("--")){
            code = code.substring(2);
@@ -99,7 +100,7 @@ public class QuerySqlDbController extends BaseController {
 
        //2.开始查询数据
        try {
-           return exec_sql(ctx, code, is_ddl);
+           return exec_sql(ctx, code, is_ddl, code_raw);
        } catch (Exception ex) {
            StringBuilder sb = new StringBuilder();
            sb.append("<p>");
@@ -109,7 +110,7 @@ public class QuerySqlDbController extends BaseController {
        }
    }
 
-   private String exec_sql(Context ctx, String code, boolean is_ddl) throws SQLException {
+   private String exec_sql(Context ctx, String code, boolean is_ddl, String code_raw) throws SQLException {
        String db = code.split("::")[0];
        String sql = code.split("::")[1];
 
@@ -135,7 +136,7 @@ public class QuerySqlDbController extends BaseController {
        TagsMDC.tag0(ctx.path());
        TagsMDC.tag1("dev_query_sqldb");
        TagsMDC.tag2(db);
-       log.info(code);
+       log.info(code_raw);
 
        //返回
        return html;

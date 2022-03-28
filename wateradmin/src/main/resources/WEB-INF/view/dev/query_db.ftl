@@ -15,9 +15,11 @@
         datagrid tbody td { text-align: left;}
         datagrid, pre{ border: 1px solid #C9C9C9; margin: 0px; padding: 0px;}
 
-        #btn_query{position: absolute; z-index: 2; top: 42px; right: 20px; border: none;background: transparent; color:green;outline: none;}
+        #btn_query{position: absolute; z-index: 2; top: 22px; right: 20px; border: none;background: transparent; color:green;outline: none;}
         #btn_query:hover{opacity: 0.8;}
 
+        #btn_history{position: absolute; z-index: 2; top: 62px; right: 20px; border: none;background: transparent; color:#888;outline: none;}
+        #btn_history:hover{opacity: 0.8;}
     </style>
     <script>
     $(function () {
@@ -39,6 +41,7 @@
         <pre id="code" type="text" style="width: 100%; height: 90px;">--tag/key::
 select * from tb limit 1</pre>
         <button id="btn_query"><i class="fa fa-play fa-2x"></i></button>
+        <button id="btn_history"><i class="fa fa-history fa-2x"></i></button>
     </div>
     <datagrid>
         <div id="query_rst" style="overflow-x: scroll"></div>

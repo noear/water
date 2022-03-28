@@ -57,6 +57,7 @@ public class QueryEsController extends BaseController {
         if (code.indexOf("#") < 0)
             return node.val("请指定配置").toJson();
 
+        String code_raw = code;
         String[] ss = code.trim().split("\n");
 
         if (ss.length < 3) {
@@ -114,8 +115,7 @@ public class QueryEsController extends BaseController {
             TagsMDC.tag0(ctx.path());
             TagsMDC.tag1("dev_query_es");
             TagsMDC.tag2(cfg_str);
-            log.info(code);
-
+            log.info(code_raw);
 
             //返回
             return rstJson;

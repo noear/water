@@ -17,6 +17,9 @@
 
         #btn_query{position: absolute; z-index: 2; top: 20px; left: calc(50vw - 50px); border: none;background: transparent; color:green;outline: none;}
         #btn_query:hover{opacity: 0.8;}
+
+        #btn_history{position: absolute; z-index: 2; top: 60px; left: calc(50vw - 50px); border: none;background: transparent; color:#888;outline: none;}
+        #btn_history:hover{opacity: 0.8;}
     </style>
     <style>
         pre{border:1px solid #C9C9C9;}
@@ -79,6 +82,7 @@
 <body>
 
 <button id="btn_query"><i class="fa fa-play fa-2x"></i></button>
+<#--<button id="btn_history"><i class="fa fa-history fa-2x"></i></button>-->
 
 <main>
     <left>
