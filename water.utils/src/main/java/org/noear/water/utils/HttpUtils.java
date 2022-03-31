@@ -25,6 +25,7 @@ public class HttpUtils {
         return temp;
     };
 
+    //用于跑定时任务调度
     private final static OkHttpClient httpClient = new OkHttpClient.Builder()
             .connectTimeout(60 * 5, TimeUnit.SECONDS)
             .writeTimeout(60 * 5, TimeUnit.SECONDS)
