@@ -175,6 +175,10 @@ public class DbLuffyApi {
             return;
         }
 
+        if(wm.create_fulltime == null){
+            wm.create_fulltime = new Date();
+        }
+
         DataItem item = new DataItem();
         item.setEntity(wm);
         item.remove("file_id");
