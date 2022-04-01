@@ -128,6 +128,10 @@ public class DbWaterRegApi {
             return false;
         }
 
+        if (tag == null) {
+            tag = "";
+        }
+
         if (service_id == null) {
             service_id = 0;
         }
