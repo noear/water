@@ -64,9 +64,11 @@ public class DbWaterMsgApi {
                 .where("is_enabled = ?", is_enabled);
 
         if ("_".equals(tag_name)) {
-            qr.and("tag=?", "");
+            qr.andEq("tag", "");
         } else {
-            qr.andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name);
+            if (Utils.isNotEmpty(tag_name)) {
+                qr.andEq("tag", tag_name);
+            }
         }
 
         return qr.andIf(Utils.isNotEmpty(name), "name=?", name)
@@ -96,10 +98,13 @@ public class DbWaterMsgApi {
                 .where("1 = 1");
 
         if ("_".equals(tag_name)) {
-            qr.and("tag=?", "");
+            qr.andEq("tag", "");
         } else {
-            qr.andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name);
+            if (Utils.isNotEmpty(tag_name)) {
+                qr.andEq("tag", tag_name);
+            }
         }
+
         return qr.build(tb -> {
             if (TextUtils.isEmpty(topic_name) == false) {
                 if (TextUtils.isNumeric(topic_name)) {
