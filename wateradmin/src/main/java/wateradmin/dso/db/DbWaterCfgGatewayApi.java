@@ -55,11 +55,19 @@ public class DbWaterCfgGatewayApi {
     }
 
 
-    public static List<GatewayModel> getGatewayList(String tag, int is_enabled) throws SQLException {
-        return db().table("water_cfg_gateway")
-                .whereEq("is_enabled", is_enabled)
-                .andIf(Utils.isNotEmpty(tag), "tag=?", tag)
-                .orderByAsc("name")
+    public static List<GatewayModel> getGatewayList(String tag_name, int is_enabled) throws SQLException {
+        DbTableQuery qr = db().table("water_cfg_gateway")
+                .whereEq("is_enabled", is_enabled);
+
+        if ("_".equals(tag_name)) {
+            qr.andEq("tag", "");
+        } else {
+            if (Utils.isNotEmpty(tag_name)) {
+                qr.andEq("tag", tag_name);
+            }
+        }
+
+        return qr.orderByAsc("name")
                 .selectList("*", GatewayModel.class);
     }
 

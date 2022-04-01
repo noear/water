@@ -74,11 +74,19 @@ public class DbWaterRegApi {
 
     //获取service表中的数据。
     public static List<ServiceModel> getServices(String tag_name, String name,int is_enabled) throws SQLException {
-        return db()
+        DbTableQuery qr = db()
                 .table("water_reg_service")
-                .where("is_enabled = ?", is_enabled)
-                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
-                .build(tb -> {
+                .where("is_enabled = ?", is_enabled);
+
+        if ("_".equals(tag_name)) {
+            qr.andEq("tag", "");
+        } else {
+            if (Utils.isNotEmpty(tag_name)) {
+                qr.andEq("tag", tag_name);
+            }
+        }
+
+        return qr.build(tb -> {
                     if (TextUtils.isEmpty(name) == false) {
                         if (name.startsWith("ip:")) {
                             tb.and("address LIKE ?", name.substring(3) + "%");

@@ -1,6 +1,7 @@
 package wateradmin.dso.db;
 
 import javafx.scene.chart.StackedBarChart;
+import org.noear.solon.Utils;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -301,9 +302,14 @@ public class DbWaterOpsApi {
         DbTableQuery qr = db().table("water_reg_service_speed ss");
 
         if (TextUtils.isNotEmpty(tag_name)) {
-            qr.innerJoin("water_reg_service s")
-                    .append(" ON ss.service LIKE ?", tag_name + "%")
-                    .or("(ss.service = s.name AND s.tag = ?)", tag_name);
+            if ("_".equals(tag_name)) {
+                qr.innerJoin("water_reg_service s")
+                        .on("(ss.service = s.name AND s.tag = '')");
+            } else {
+                qr.innerJoin("water_reg_service s")
+                        .append(" ON ss.service LIKE ?", tag_name + "%")
+                        .or("(ss.service = s.name AND s.tag = ?)", tag_name);
+            }
         }
 
         return qr.groupBy("ss.service")
@@ -367,10 +373,17 @@ public class DbWaterOpsApi {
         DbTableQuery qr = db().table("water_reg_service_speed ss");
 
         if (TextUtils.isNotEmpty(tag_name)) {
-            qr.innerJoin("water_reg_service s")
-                    .on("ss.service='_service'")
-                    .and("ss.tag=s.name")
-                    .andEq("s.tag", tag_name);
+            if ("_".equals(tag_name)) {
+                qr.innerJoin("water_reg_service s")
+                        .on("ss.service='_service'")
+                        .and("ss.tag=s.name")
+                        .andEq("s.tag", "");
+            } else {
+                qr.innerJoin("water_reg_service s")
+                        .on("ss.service='_service'")
+                        .and("ss.tag=s.name")
+                        .andEq("s.tag", tag_name);
+            }
         }
 
         List<ServiceSpeedModel> list = qr.whereEq("ss.service", "_service")

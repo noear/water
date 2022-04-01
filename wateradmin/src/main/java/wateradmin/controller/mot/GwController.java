@@ -50,6 +50,13 @@ public class GwController extends BaseController {
         //权限过滤
         TagChecker.filter(tags, m -> m.tag);
 
+        //处理空标签
+        tags.forEach(t -> {
+            if (Utils.isEmpty(t.tag)) {
+                t.tag = "_";
+            }
+        });
+
         tag_name = TagUtil.build(tag_name, tags);
 
         viewModel.put("tag_name", tag_name);
