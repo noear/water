@@ -72,14 +72,14 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client</artifactId>
-    <version>2.5.8</version>
+    <version>2.5.9</version>
 </dependency>
 
 <!-- solon cloud 集成版本 （也可用于 Spring Boot 项目） -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-plugin</artifactId>
-    <version>1.6.34</version>
+    <version>1.6.35</version>
 </dependency>
 ```
 

@@ -1,5 +1,6 @@
 package wateradmin.controller.msg;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
@@ -22,7 +23,7 @@ public class TopicController extends BaseController {
     //主题列表
     @Mapping("/msg/topic")
     public ModelAndView topic(Context ctx, String tag_name) throws SQLException {
-        if(SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()){
+        if (SettingUtils.topicScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.forward("/msg/topic/inner");
             return null;
         }
@@ -30,6 +31,13 @@ public class TopicController extends BaseController {
 
         //权限过滤
         TagChecker.filter(tags, m -> m.tag);
+
+        //处理空标签
+        tags.forEach(t -> {
+            if (Utils.isEmpty(t.tag)) {
+                t.tag = "_";
+            }
+        });
 
         tag_name = TagUtil.build(tag_name, tags);
 

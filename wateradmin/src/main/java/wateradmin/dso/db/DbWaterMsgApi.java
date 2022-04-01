@@ -60,10 +60,16 @@ public class DbWaterMsgApi {
 
     //查询订阅列表(全部列表以及查询功能)
     public static List<SubscriberModel> getSubscriberList(String tag_name, String name,String topic_name, int is_enabled) throws SQLException {
-        return db().table("water_msg_subscriber")
-                .where("is_enabled = ?", is_enabled)
-                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
-                .andIf(Utils.isNotEmpty(name), "name=?", name)
+        DbTableQuery qr = db().table("water_msg_subscriber")
+                .where("is_enabled = ?", is_enabled);
+
+        if ("_".equals(tag_name)) {
+            qr.and("tag=?", "");
+        } else {
+            qr.andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name);
+        }
+
+        return qr.andIf(Utils.isNotEmpty(name), "name=?", name)
                 .build(tb -> {
                     if (TextUtils.isEmpty(topic_name) == false) {
                         String key = "%" + topic_name + "%";
@@ -86,26 +92,31 @@ public class DbWaterMsgApi {
     }
 
     public static List<TopicModel> getTopicList(String tag_name,String topic_name, String sort) throws SQLException {
-        return db().table("water_msg_topic")
-                .where("1 = 1")
-                .andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name)
-                .build(tb -> {
-                    if (TextUtils.isEmpty(topic_name) == false) {
-                        if (TextUtils.isNumeric(topic_name)) {
-                            tb.andEq("topic_id", Integer.parseInt(topic_name));
-                        } else {
-                            tb.andLk("topic_name", "%" + topic_name + "%");
-                        }
-                    }
+        DbTableQuery qr = db().table("water_msg_topic")
+                .where("1 = 1");
+
+        if ("_".equals(tag_name)) {
+            qr.and("tag=?", "");
+        } else {
+            qr.andIf(Utils.isNotEmpty(tag_name), "tag=?", tag_name);
+        }
+        return qr.build(tb -> {
+            if (TextUtils.isEmpty(topic_name) == false) {
+                if (TextUtils.isNumeric(topic_name)) {
+                    tb.andEq("topic_id", Integer.parseInt(topic_name));
+                } else {
+                    tb.andLk("topic_name", "%" + topic_name + "%");
+                }
+            }
 
 
-                    if (TextUtils.isEmpty(sort)) {
-                        tb.orderBy("topic_name ASC");
-                    } else {
-                        tb.orderBy("stat_msg_day_num DESC,topic_name ASC");
-                    }
+            if (TextUtils.isEmpty(sort)) {
+                tb.orderBy("topic_name ASC");
+            } else {
+                tb.orderBy("stat_msg_day_num DESC,topic_name ASC");
+            }
 
-                }).selectList("*", TopicModel.class);
+        }).selectList("*", TopicModel.class);
     }
 
 
