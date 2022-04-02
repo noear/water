@@ -25,19 +25,42 @@ public class HttpUtils {
         return temp;
     };
 
+    private final static OkHttpClient httpShortClient = new OkHttpClient.Builder()
+            .connectTimeout(10 , TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .dispatcher(okhttp_dispatcher.get())
+            .build();
+
     //用于跑定时任务调度
-    private final static OkHttpClient httpClient = new OkHttpClient.Builder()
-            .connectTimeout(60 * 5, TimeUnit.SECONDS)
+    private final static OkHttpClient httpLongClient = new OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(60 * 5, TimeUnit.SECONDS)
             .readTimeout(60 * 5, TimeUnit.SECONDS)
             .dispatcher(okhttp_dispatcher.get())
             .build();
 
     public static HttpUtils http(String url) {
-        return new HttpUtils(url);
+        //默认为长时间
+        return new HttpUtils(url, httpLongClient);
+    }
+
+    /**
+     * 短时间处理
+     * */
+    public static HttpUtils shortHttp(String url) {
+        return new HttpUtils(url, httpShortClient);
+    }
+
+    /**
+     * 长时间处理
+     * */
+    public static HttpUtils longHttp(String url) {
+        return new HttpUtils(url, httpLongClient);
     }
 
 
+    private OkHttpClient _client;
     private Charset _charset;
     private Map<String, String> _cookies;
     private RequestBody _body;
@@ -50,8 +73,25 @@ public class HttpUtils {
     private Act3Ex<Boolean, Response, Exception> _callback;
     private boolean _callAsync;
 
-    public HttpUtils(String url) {
+    public HttpUtils(String url, OkHttpClient client) {
+        _client = client;
         _builder = new Request.Builder().url(url);
+    }
+
+    /**
+     * 短时间处理
+     * */
+    public HttpUtils asShortHttp(){
+        _client = httpShortClient;
+        return this;
+    }
+
+    /**
+     * 长时间处理
+     * */
+    public HttpUtils asLongHttp(){
+        _client = httpLongClient;
+        return this;
     }
 
     //@XNote("设置multipart")
@@ -292,7 +332,7 @@ public class HttpUtils {
         }
 
         if (_callAsync) {
-            httpClient.newCall(_builder.build()).enqueue(new Callback() {
+            _client.newCall(_builder.build()).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.printStackTrace();
@@ -309,7 +349,7 @@ public class HttpUtils {
 
             return null;
         } else {
-            Call call = httpClient.newCall(_builder.build());
+            Call call = _client.newCall(_builder.build());
             return call.execute();
         }
     }

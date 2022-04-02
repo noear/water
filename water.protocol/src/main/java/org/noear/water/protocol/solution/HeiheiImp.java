@@ -64,7 +64,7 @@ public class HeiheiImp implements Heihei {
         MDC.put("tag0", tag);
 
         try {
-            String rst = HttpUtils.http(apiUrl)
+            String rst = HttpUtils.shortHttp(apiUrl)
                     .headers(headers)
                     .bodyTxt(message, "application/json")
                     .post();

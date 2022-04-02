@@ -29,7 +29,7 @@ public class JPushUtils {
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Basic " + author);
 
-        return HttpUtils.http(apiUrl)
+        return HttpUtils.shortHttp(apiUrl)
                 .headers(headers)
                 .bodyTxt(message, "application/json")
                 .post();

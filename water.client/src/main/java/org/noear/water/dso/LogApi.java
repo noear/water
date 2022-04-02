@@ -24,7 +24,7 @@ public class LogApi {
     protected final ApiCaller apiCaller;
 
     public LogApi() {
-        apiCaller = new ApiCaller(WaterAddress.getLogApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getLogApiUrl()).asLongHttp();
     }
 
 

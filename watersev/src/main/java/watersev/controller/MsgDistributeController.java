@@ -337,7 +337,7 @@ public final class MsgDistributeController implements IJob {
             String receive_url2 = MsgUtils.getReceiveUrl2(dist.receive_url);
 
             if (dist.receive_way == 2 || dist.receive_way == 3) {
-                HttpUtils.http(receive_url2)
+                HttpUtils.longHttp(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
                             distributeResultLog(msgBroker, msg, dist, isOk, resp, ex);
@@ -358,7 +358,7 @@ public final class MsgDistributeController implements IJob {
                 //::0,1
                 //
                 //3.2.0.进行异步http分发
-                HttpUtils.http(receive_url2)
+                HttpUtils.longHttp(receive_url2)
                         .header(WW.http_header_trace, msg.trace_id)
                         .data(params).postAsync((isOk, resp, ex) -> {
                             boolean isOk2 = distributeResultLog(msgBroker, msg, dist, isOk, resp, ex);

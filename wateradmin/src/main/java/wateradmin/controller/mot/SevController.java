@@ -155,7 +155,7 @@ public class SevController extends BaseController {
         }
 
         try {
-            return HttpUtils.http(url).get();
+            return HttpUtils.shortHttp(url).get();
         } catch (Throwable ex) {
             return "The service unsupported";
         }

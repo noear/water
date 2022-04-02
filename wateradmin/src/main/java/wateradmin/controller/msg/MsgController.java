@@ -81,7 +81,7 @@ public class MsgController extends BaseController {
         map.put("sgin", sgin);
 
         try {
-            String result = HttpUtils.http(url).data(map).post();
+            String result = HttpUtils.longHttp(url).data(map).post();
 
             return viewModel.code(1, result);
         } catch (Exception ex) {

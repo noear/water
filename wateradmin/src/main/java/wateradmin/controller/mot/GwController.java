@@ -140,7 +140,7 @@ public class GwController extends BaseController {
             if (s.indexOf("@") > 0) {
                 String ca = s.split("@")[1];
                 String url = "http://" + ca + WW.path_run_check +"?upstream=" + upstream;
-                return HttpUtils.http(url).get();
+                return HttpUtils.shortHttp(url).get();
             }
         }
 
