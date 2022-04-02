@@ -28,7 +28,7 @@ public class HttpUtils {
     private final static OkHttpClient httpShortClient = new OkHttpClient.Builder()
             .connectTimeout(10 , TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
             .dispatcher(okhttp_dispatcher.get())
             .build();
 
