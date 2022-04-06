@@ -24,7 +24,7 @@ public class msg_updatecache implements CloudEventHandler {
     static final String label_hook_start = "hook.start";
 
     @Override
-    public boolean handler(Event event) throws Throwable {
+    public boolean handle(Event event) throws Throwable {
         for (String tag : event.content().split(";")) {
             if (TextUtils.isEmpty(tag) == false) {
                 handlerDo(tag);
