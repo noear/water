@@ -44,7 +44,11 @@ public class SevApiController extends BaseController {
         TagChecker.filter(tags, m -> m.tag);
 
         //处理空标签
-        tags.removeIf(m->Utils.isEmpty(m.tag));
+        tags.forEach(t -> {
+            if (Utils.isEmpty(t.tag)) {
+                t.tag = "_";
+            }
+        });
 
         tag_name = TagUtil.build(tag_name, tags);
 

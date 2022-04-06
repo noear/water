@@ -40,9 +40,9 @@
         </left>
         <right>
             <selector>
-                <a class="${(''=tag)?string('sel','')}" href="?serviceName=${serviceName}&tag=">all</a>
+                <a class="${(''=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=">all</a>
                 <#list tags as t>
-                    <a class="${(t.tag=tag)?string('sel','')}" href="?serviceName=${serviceName}&tag=${t.tag}">${t.tag}(${t.counts})</a>
+                    <a class="${(t.tag=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=${t.tag}">${t.tag}(${t.counts})</a>
                 </#list>
             </selector>
         </right>
