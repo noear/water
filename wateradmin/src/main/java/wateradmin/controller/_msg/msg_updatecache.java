@@ -18,7 +18,7 @@ import org.noear.water.utils.TextUtils;
 public class msg_updatecache implements CloudEventHandler {
 
     @Override
-    public boolean handler(Event event) throws Throwable {
+    public boolean handle(Event event) throws Throwable {
         for (String tag : event.content().split(";")) {
             if (TextUtils.isEmpty(tag) == false) {
                 handlerDo(tag);
