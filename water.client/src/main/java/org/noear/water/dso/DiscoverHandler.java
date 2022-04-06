@@ -10,5 +10,5 @@ import org.noear.water.model.DiscoverM;
  */
 @FunctionalInterface
 public interface DiscoverHandler {
-    void handler(DiscoverM discover);
+    void handle(DiscoverM discover);
 }

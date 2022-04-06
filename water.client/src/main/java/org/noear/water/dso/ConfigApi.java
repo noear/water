@@ -106,7 +106,7 @@ public class ConfigApi {
 
         if (tmp != null) {
             for (ConfigHandler r : tmp) {
-                r.handler(cfgSet);
+                r.handle(cfgSet);
             }
         }
     }
@@ -125,7 +125,7 @@ public class ConfigApi {
 
         //如果已存在，及时通知
         if (_cfgMap.containsKey(tag)) {
-            callback.handler(_cfgMap.get(tag));
+            callback.handle(_cfgMap.get(tag));
         }
     }
 

@@ -10,5 +10,5 @@ import org.noear.water.model.ConfigSetM;
  * */
 @FunctionalInterface
 public interface ConfigHandler {
-    void handler(ConfigSetM cfgSet);
+    void handle(ConfigSetM cfgSet);
 }

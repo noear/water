@@ -19,5 +19,5 @@ import org.noear.water.model.MessageM;
  * @since 2.0
  * */
 public interface MessageHandler {
-    boolean handler(MessageM msg) throws Throwable;
+    boolean handle(MessageM msg) throws Throwable;
 }

@@ -328,7 +328,7 @@ public class MessageApi {
             return "CHECK ERROR";
         }
 
-        boolean isOk = consumer.handler(msg);
+        boolean isOk = consumer.handle(msg);
 
         return isOk ? "OK" : "ERROR";
     }
