@@ -1,6 +1,6 @@
 ﻿/*
 durian ui
-ver:1.0.66
+ver:1.0.67
 author:noear
 */
 *,*::before, *::after { box-sizing: border-box; }
@@ -27,6 +27,7 @@ img { border: none; }
 a {color: #000;}
 t {display:inline;}
 button a{text-decoration:none;}
+button i.fa, a.btn i.fa{width:15px; margin-right:5px;}
 input:focus { outline:none;}
 textarea:focus { outline:none;}
 note,n{display: inline; color:#999;}
@@ -127,7 +128,7 @@ left menu.style2 div{border: #111 1px solid;border-top: #111 1px solid;}
 
 fieldset{border:1px solid #c9c9c9; border-radius: 5px;}
 
-tree {background-color: #eaedf1; display: block; overflow: auto; height: 100%; overflow-x: hidden; overflow-y: auto;}
+tree {background-color: #eaedf1; display: block; overflow: auto; height: 100vh; overflow-x: hidden; overflow-y: auto;}
 tree ul{margin-bottom: 10px;}
 tree ul label{display: block; font-weight: bold; height: 40px; line-height: 40px; padding-left: 20px; overflow: hidden;}
 tree ul li{height: 40px; line-height: 40px; padding-left: 20px; overflow: hidden;}
@@ -158,6 +159,7 @@ selector, .selector { display: inline-block; padding: 0 2px; vertical-align: mid
 selector > *, .selector .stateItem { margin: 2px; padding:0 2px; display: inline-block;  height: 18px;  line-height: 18px; position: relative; top:-2px; font-size:12px;}
 selector > *.sel, .selector .selected { background-color: #0066cc; color: #fff; }
 selector a{text-decoration:none;}
+
 
 .btn-group{position: relative; display:inline-block;}
 .btn-group .btn-dropdown{display: none; background: #D9DEE4; box-shadow: 0 3px 5px rgba(0, 0, 0, .125);}
@@ -252,6 +254,12 @@ selector a{text-decoration:none;}
 .ln80{line-height:80px;}
 .ln90{line-height:90px;}
 
+.rad1{border-radius:1px;}
+.rad2{border-radius:2px;}
+.rad3{border-radius:3px;}
+.rad4{border-radius:4px;}
+.rad5{border-radius:5px;}
+
 .sml{font-size:small}
 .big{font-size:large}
 
@@ -273,9 +281,9 @@ detail form th,detail .form th{text-align:right;padding-right:5px;} /*font-weigh
 detail button,.form button,.form a.btn { background-color: #fd6721; color: #fff; border: none; min-width: 100px!important; line-height:30px!important;height:30px!important; font-size: 12px; }
 detail button:hover,.form button:hover,.form a.btn:hover { background-color: #fd7f38; }
 detail button:disabled,.form button:disabled { background-color: #aaa; }
-detail button.minor,.form .minor{ background-color: #f7f7f7!important; color: #333!important; border: 1px solid #ddd!important; min-width: 100px;  height:30px; font-size: 12px; }
-detail button.minor:hover,.form .minor:hover { background-color: #fefefe!important; color: #333!important;}
-detail button.minor:disabled,.form .minor:disabled { background-color: #aaa!important; color: #333!important;}
+detail button.minor,.form .minor{ background-color: #f7f7f7; color: #333; border: 1px solid #ddd; min-width: 100px;  height:30px; font-size: 12px; }
+detail button.minor:hover,.form .minor:hover { background-color: #fefefe; color: #333;}
+detail button.minor:disabled,.form .minor:disabled { background-color: #aaa; color: #333;}
 .form button,.form a.btn,.form .minor{margin-left:10px!important; min-width:0px!important; width:auto!important; padding:0 20px!important;}
 
 
