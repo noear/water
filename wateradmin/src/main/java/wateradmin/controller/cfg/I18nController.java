@@ -323,6 +323,9 @@ public class I18nController extends BaseController {
             return viewModel.code(0, "提示：缺少元信息配置");
         }
 
+        i18n.remove(_i18n_bundle);
+        i18n.remove(_i18n_lang);
+
 
         if (lang == null) {
             lang = "";

@@ -17,6 +17,7 @@
             var fromData = new FormData();
             fromData.append("file", file);
             fromData.append("tag","${tag_name!}");
+            fromData.append("bundle","${bundle!}");
 
             $.ajax({
                 type:"POST",
@@ -37,14 +38,15 @@
             });
         }
 
-        function exp() {
+        function exp(fmt) {
             var vm = formToMap(".sel_from");
             if(!vm.sel_id){
                 alert("请选择..");
                 return;
             }
 
-            window.open("ajax/export?tag=${tag_name!}&ids=" + vm.sel_id, "_blank");
+            let baseUrl = "ajax/export?tag=${tag_name!}&bundle=${bundle!}";
+            window.open(baseUrl + "&fmt=" + fmt + "&ids=" + vm.sel_id, "_blank");
         }
 
         function del(act,hint){
