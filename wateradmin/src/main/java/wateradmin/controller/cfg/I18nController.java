@@ -3,18 +3,21 @@ package wateradmin.controller.cfg;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
-import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.*;
+import org.noear.water.utils.Datetime;
+import org.noear.water.utils.IOUtils;
+import org.noear.water.utils.JsondEntity;
+import org.noear.water.utils.JsondUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
-import wateradmin.dso.db.DbWaterCfgSafeApi;
-import wateradmin.models.TagCountsModel;
+import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
-import wateradmin.models.water_cfg.WhitelistModel;
+import wateradmin.dso.db.DbWaterCfgI18nApi;
+import wateradmin.models.TagCountsModel;
+import wateradmin.models.water_cfg.I18nModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -22,13 +25,12 @@ import java.util.List;
 
 
 @Controller
-@Mapping("/cfg/whitelist")
-public class WhitelistController extends BaseController {
+@Mapping("/cfg/i18n")
+public class I18nController extends BaseController {
 
-    //IP白名单列表
     @Mapping("")
     public ModelAndView home(String tag_name) throws Exception {
-        List<TagCountsModel> tags = DbWaterCfgSafeApi.getWhitelistTags();
+        List<TagCountsModel> tags = DbWaterCfgI18nApi.getI18nTags();
 
 
         TagChecker.filter(tags, m -> m.tag);
@@ -38,14 +40,14 @@ public class WhitelistController extends BaseController {
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
-        return view("cfg/whitelist");
+        return view("cfg/i18n");
     }
 
     @Mapping("inner")
     public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
         int state = ctx.paramAsInt("state", 1);
 
-        List<WhitelistModel> list = DbWaterCfgSafeApi.getWhitelistByTag(tag_name, key, state);
+        List<I18nModel> list = DbWaterCfgI18nApi.getI18nListByTag(tag_name, key, state);
 
 
         TagChecker.filter(list, m -> m.tag);
@@ -56,18 +58,17 @@ public class WhitelistController extends BaseController {
         viewModel.put("state", state);
         viewModel.put("key", key);
 
-        return view("cfg/whitelist_inner");
+        return view("cfg/i18n_inner");
     }
 
-    //跳转ip白名单新增页面
     @Mapping("edit")
-    public ModelAndView whitelistAdd(Integer id, String tag_name) throws SQLException {
-        WhitelistModel model = null;
+    public ModelAndView edit(Integer id, String tag_name) throws SQLException {
+        I18nModel model = null;
         if (id != null) {
-            model = DbWaterCfgSafeApi.getWhitelist(id);
+            model = DbWaterCfgI18nApi.getI18n(id);
             viewModel.put("m", model);
         } else {
-            model = new WhitelistModel();
+            model = new I18nModel();
             viewModel.put("m", model);
         }
 
@@ -76,21 +77,18 @@ public class WhitelistController extends BaseController {
         }
 
         viewModel.put("tag_name", tag_name);
-        return view("cfg/whitelist_edit");
+        return view("cfg/i18n_edit");
     }
 
-    //保存ip白名单新增
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveWhitelistAdd(Integer row_id, String tag, String type, String value, String note) throws Exception {
+    public ViewModel saveDo(Integer row_id, String tag, String bundle, String lang ,String name, String value) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgSafeApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note);
+        boolean result = DbWaterCfgI18nApi.setI18n(row_id, tag, bundle, lang, name, value);
         if (result) {
-            DbWaterCfgSafeApi.reloadWhitelist();
-
             viewModel.code(1, "操作成功");
         } else {
             viewModel.code(0, "操作失败");
@@ -100,18 +98,15 @@ public class WhitelistController extends BaseController {
     }
 
 
-    //删除IP白名单记录
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/del")
-    public ViewModel saveWhitelistDel(Integer row_id) throws Exception {
+    public ViewModel delDo(Integer row_id) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgSafeApi.delWhitelist(row_id);
+        boolean result = DbWaterCfgI18nApi.delI18n(row_id);
         if (result) {
-            DbWaterCfgSafeApi.reloadWhitelist();
-
             viewModel.code(1, "删除成功");
         } else {
             viewModel.code(0, "删除失败");
@@ -120,23 +115,19 @@ public class WhitelistController extends BaseController {
         return viewModel;
     }
 
-
-    //批量导出
     @Mapping("ajax/export")
     public void exportDo(Context ctx, String tag, String ids) throws Exception {
-        List<WhitelistModel> list = DbWaterCfgSafeApi.getWhitelistByIds(ids);
+        List<I18nModel> list = DbWaterCfgI18nApi.getI18nByIds(ids);
 
-        String jsonD = JsondUtils.encode("water_cfg_whitelist", list);
+        String jsonD = JsondUtils.encode("water_cfg_i18n", list);
 
-        String filename2 = "water_whitelist_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
+        String filename2 = "water_cfg_i18n_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
 
         ctx.output(jsonD);
     }
 
-
-    //批量导入
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
@@ -146,20 +137,19 @@ public class WhitelistController extends BaseController {
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
-        if (entity == null || "water_cfg_whitelist".equals(entity.table) == false) {
+        if (entity == null || "water_cfg_i18n".equals(entity.table) == false) {
             return viewModel.code(0, "数据不对！");
         }
 
-        List<WhitelistModel> list = entity.data.toObjectList(WhitelistModel.class);
+        List<I18nModel> list = entity.data.toObjectList(I18nModel.class);
 
-        for (WhitelistModel m : list) {
-            DbWaterCfgSafeApi.impWhitelist(tag, m);
+        for (I18nModel m : list) {
+            DbWaterCfgI18nApi.impI18n(tag, m);
         }
 
         return viewModel.code(1, "ok");
     }
 
-    //批量删除
     @Mapping("ajax/batch")
     public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
@@ -170,7 +160,7 @@ public class WhitelistController extends BaseController {
             act = 0;
         }
 
-        DbWaterCfgSafeApi.delWhitelistByIds(act, ids);
+        DbWaterCfgI18nApi.delI18nByIds(act, ids);
 
         return viewModel.code(1, "ok");
     }
