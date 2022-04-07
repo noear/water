@@ -42,8 +42,8 @@
         function save() {
             var vm = formToMap("#form");
 
-            if (!vm.value || !vm.type) {
-                top.layer.msg("type 或 value 不能为空！");
+            if (!vm.tag || !vm.bundle || !vm.name) {
+                top.layer.msg("tag 或 bundle 或 name 不能为空！");
                 return;
             }
 
@@ -74,7 +74,7 @@
 <main>
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">安全名单</a></h2> / 编辑
+            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">国际化捆</a></h2> / 编辑
         </left>
         <right class="form">
             <n>ctrl + s 可快捷保存</n>
@@ -94,30 +94,21 @@
                 <td><input type="text" id="tag" value="${tag_name!}" autofocus/></td>
             </tr>
             <tr>
-                <th>type*</th>
-                <td>
-                    <boxlist>
-                        <label><input type="radio" name="type" value="ip" /><a>ip</a></label>
-                        <label><input type="radio" name="type" value="domain" /><a>domain</a></label>
-                        <label><input type="radio" name="type" value="mobile" /><a>mobile</a></label>
-                        <label><input type="radio" name="type" value="token" /><a>token</a></label>
-                    </boxlist>
-                    <script>
-                        valToForm("type","${m.type!'ip'}")
-                    </script>
-                </td>
+                <th>bundle*</th>
+                <td><input type="text" id="bundle" value="${m.bundle!}" /></td>
             </tr>
             <tr>
-                <th>value*</th>
-                <td><input type="text" id="value" value="${m.value!}" />
-                <n>（size lte 40）</n>
-                </td>
+                <th>lang</th>
+                <td><input type="text" id="lang" value="${m.lang!}" /></td>
             </tr>
             <tr>
-                <th>note</th>
-                <td><input type="text" id="note" value="${m.note!}" /></td>
+                <th>name*</th>
+                <td><input type="text" id="name" value="${m.name!}" /></td>
             </tr>
-
+            <tr>
+                <th>value</th>
+                <td><input type="text" class="longtxt" id="value" value="${m.value!}" /></td>
+            </tr>
         </table>
         </form>
     </detail>

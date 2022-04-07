@@ -42,8 +42,8 @@
         function save() {
             var vm = formToMap("#form");
 
-            if (!vm.value || !vm.type) {
-                top.layer.msg("type 或 value 不能为空！");
+            if (!vm.tag || !vm.access_key || !vm.access_secret_key) {
+                top.layer.msg("tag 或 access_key 或 access_secret_key 不能为空！");
                 return;
             }
 
@@ -74,7 +74,7 @@
 <main>
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">安全名单</a></h2> / 编辑
+            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">访问密钥</a></h2> / 编辑
         </left>
         <right class="form">
             <n>ctrl + s 可快捷保存</n>
@@ -94,28 +94,24 @@
                 <td><input type="text" id="tag" value="${tag_name!}" autofocus/></td>
             </tr>
             <tr>
-                <th>type*</th>
-                <td>
-                    <boxlist>
-                        <label><input type="radio" name="type" value="ip" /><a>ip</a></label>
-                        <label><input type="radio" name="type" value="domain" /><a>domain</a></label>
-                        <label><input type="radio" name="type" value="mobile" /><a>mobile</a></label>
-                        <label><input type="radio" name="type" value="token" /><a>token</a></label>
-                    </boxlist>
-                    <script>
-                        valToForm("type","${m.type!'ip'}")
-                    </script>
-                </td>
+                <th>name</th>
+                <td><input type="text" id="name" value="${m.name!}" /></td>
             </tr>
             <tr>
-                <th>value*</th>
-                <td><input type="text" id="value" value="${m.value!}" />
-                <n>（size lte 40）</n>
-                </td>
+                <th>access_key*</th>
+                <td><input type="text" class="longtxt" id="access_key" value="${m.access_key!}" /></td>
             </tr>
             <tr>
-                <th>note</th>
-                <td><input type="text" id="note" value="${m.note!}" /></td>
+                <th>access_secret_key*</th>
+                <td><input type="text" class="longtxt" id="access_secret_key" value="${m.access_secret_key!}" /></td>
+            </tr>
+            <tr>
+                <th>access_secret_salt</th>
+                <td><input type="text" class="longtxt" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td><input type="text" class="longtxt" id="description" value="${m.description!}" /></td>
             </tr>
 
         </table>
