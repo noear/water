@@ -110,8 +110,8 @@
         <div class="center">
             <form>
                 <input type="hidden" name="tag_name" value="${tag_name!}">
-                <input type="hidden" name="state" value="${state!}">
-                <a class="w60">关键字：</a><input type="text"  name="key" placeholder="value"  value="${key!}"class="w350"/>&nbsp;&nbsp;
+                <input type="hidden" name="bundle" value="${bundle!}">
+                <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w250"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
                 <#if is_admin == 1>
                     <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
