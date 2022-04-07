@@ -99,7 +99,9 @@
             </tr>
             <tr>
                 <th>access_key*</th>
-                <td><input type="text" class="longtxt" id="access_key" value="${m.access_key!}" /></td>
+                <td><input type="text" class="longtxt" id="access_key" value="${m.access_key!}" />
+                    <n>（size lte 40）</n>
+                </td>
             </tr>
             <tr>
                 <th>access_secret_key*</th>

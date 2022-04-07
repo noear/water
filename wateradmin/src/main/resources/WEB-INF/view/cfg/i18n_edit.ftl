@@ -95,7 +95,9 @@
             </tr>
             <tr>
                 <th>bundle*</th>
-                <td><input type="text" id="bundle" value="${m.bundle!}" /></td>
+                <td><input type="text" id="bundle" value="${m.bundle!}" />
+                    <n>（size lte 40）</n>
+                </td>
             </tr>
             <tr>
                 <th>lang</th>
