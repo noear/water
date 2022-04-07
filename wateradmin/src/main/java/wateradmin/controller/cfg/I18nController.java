@@ -1,6 +1,7 @@
 package wateradmin.controller.cfg;
 
 import org.noear.snack.ONode;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
@@ -40,19 +41,52 @@ public class I18nController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
-        int state = ctx.paramAsInt("state", 1);
+    public ModelAndView innerDo(Context ctx, String tag_name,String bundle, String name, String lang) throws Exception {
+        List<TagCountsModel> bundles = DbWaterCfgI18nApi.getI18nBundles(tag_name);
+        if (TextUtils.isEmpty(bundle)) {
+            if (bundles.size() > 0) {
+                bundle = bundles.get(0).tag;
+            }
+        }
 
-        List<I18nModel> list = DbWaterCfgI18nApi.getI18nListByTag(tag_name, key, state);
+
+        List<TagCountsModel> langs = DbWaterCfgI18nApi.getI18nLangsByBundle(tag_name, bundle);
+        for (TagCountsModel m : langs) {
+            if (TextUtils.isEmpty(m.tag)) {
+                m.tag = "default";
+            }
+        }
+
+        if (Utils.isEmpty(lang) || "default".equals(lang)) {
+            lang = ctx.cookie("lang");
+        }
+
+        if (Utils.isEmpty(lang) || "default".equals(lang)) {
+            if (langs.size() > 0) {
+                lang = langs.get(0).tag;
+            }
+        }
+
+        List<I18nModel> list = DbWaterCfgI18nApi.getI18nListByTag(tag_name, bundle, name, lang);
+
+        if (TextUtils.isEmpty(lang)) {
+            lang = "default";
+        }
+
+        ctx.cookieSet("lang", lang);
 
 
         TagChecker.filter(list, m -> m.tag);
 
 
+        viewModel.put("lang", lang);
+        viewModel.put("langs", langs);
+        viewModel.put("bundles", bundles);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
-        viewModel.put("key", key);
+        viewModel.put("bundle", bundle);
+        viewModel.put("name", name);
+        viewModel.put("tag_name", tag_name);
 
         return view("cfg/i18n_inner");
     }
@@ -72,8 +106,10 @@ public class I18nController extends BaseController {
             tag_name = model.tag;
         }
 
-        List<I18nModel> langs =  DbWaterCfgI18nApi.getI18nByName(tag_name, model.bundle, model.name);
-
+        List<I18nModel> langs = DbWaterCfgI18nApi.getI18nByName(tag_name, model.bundle, model.name);
+        if (langs.size() == 0) {
+            langs.add(new I18nModel());
+        }
 
         List<EnumModel> lang_type = EnumUtil.get("lang_type");
 

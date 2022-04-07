@@ -159,6 +159,11 @@ selector > *, .selector .stateItem { margin: 2px; padding:0 2px; display: inline
 selector > *.sel, .selector .selected { background-color: #0066cc; color: #fff; }
 selector a{text-decoration:none;}
 
+.btn-group{position: relative; display:inline-block;}
+.btn-group .btn-dropdown{display: none; background: #D9DEE4; box-shadow: 0 3px 5px rgba(0, 0, 0, .125);}
+.btn-group .btn-dropdown .btn-link{display:block;cursor: default; line-height:1.5em;}
+.btn-group:hover .btn-dropdown{display: inline-block; position:absolute; z-index:99; left:0px; top:40px; }
+
 
 .op{color: #999}
 

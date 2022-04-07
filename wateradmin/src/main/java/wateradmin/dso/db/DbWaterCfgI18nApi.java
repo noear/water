@@ -30,23 +30,56 @@ public class DbWaterCfgI18nApi {
     }
 
     //获取ip白名单列表
-    public static List<I18nModel> getI18nListByTag(String tag_name, String name, int state) throws SQLException {
-        return db().table("water_cfg_i18n")
-                .whereEq("is_enabled", state == 1)
-                .build(tb -> {
-                    if (tag_name != null) {
-                        tb.andEq("tag", tag_name);
-                    }
+    public static List<I18nModel> getI18nListByTag(String tag, String bundle,String name, String lang) throws SQLException {
+        if (lang == null) {
+            lang = "";
+        }
 
-                    if (TextUtils.isEmpty(name) == false) {
-                        tb.andLk("name", name + "%");
+        if ("default".equals(lang)) {
+            lang = "";
+        }
+
+        if (TextUtils.isEmpty(bundle)) {
+            return new ArrayList<>();
+        }
+
+        return db().table("water_cfg_i18n")
+                .whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .andEq("lang", lang)
+                .build((tb) -> {
+                    if (name != null) {
+                        tb.andEq("name", name);
                     }
                 })
-                .select("*")
-                .getList(I18nModel.class);
+                .orderBy("name ASC")
+                .selectList("*", I18nModel.class);
     }
 
-    //新增ip白名单
+
+    public static List<TagCountsModel> getI18nLangsByBundle(String tag, String bundle) throws SQLException {
+        if (TextUtils.isEmpty(bundle)) {
+            return new ArrayList<>();
+        }
+
+        return db().table("water_cfg_i18n")
+                .whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .groupBy("lang")
+                .orderBy("lang ASC")
+                .select("lang tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
+    public static List<TagCountsModel> getI18nBundles(String tag) throws SQLException {
+        return db().table("water_cfg_i18n")
+                .whereEq("tag", tag)
+                .groupBy("bundle")
+                .orderBy("bundle ASC")
+                .select("bundle tag,count(*) counts")
+                .getList(TagCountsModel.class);
+    }
+
     public static boolean setI18n(String tag, String bundle, String name, String nameOld, String lang , String value) throws SQLException {
         value = value.replace("\\\\", "\\");
         value = value.replace("\\n", "\n");

@@ -87,11 +87,27 @@
             })
         });
     </script>
+    <style>
+        .tabs{padding-bottom: 10px;}
+        .tabs a.btn{margin: 0 5px 5px 5px!important;}
+    </style>
 </head>
 <body>
 <main>
+    <div class="tabs">
+        <tabbar>
+            <#list bundles as m>
+                <#if m.tag == bundle>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}(${m.counts})</a>
+                <#else>
+                    <a id="e${m.tag}" class="btn" href="/cfg/i18n/inner?tag_name=${tag_name!}&bundle=${m.tag}">${m.tag}(${m.counts})</a>
+                </#if>
+            </#list>
+        </tabbar>
+    </div>
+
     <toolbar>
-        <left>
+        <div class="center">
             <form>
                 <input type="hidden" name="tag_name" value="${tag_name!}">
                 <input type="hidden" name="state" value="${state!}">
@@ -101,29 +117,34 @@
                     <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}">新增</a>
                 </#if>
             </form>
-            <#if is_admin == 1 && is_setup !=1 >
-                <div>
-                    <a class="w60"></a><file>
-                        <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
+        </div>
+        <div>
+            <left>
+                <#if is_admin == 1>
+                    <file>
+                        <label><input id="imp_file" type="file" accept=".yml,.json,.properties,.jsond"/><a class="btn minor w80">导入</a></label>
                     </file>
 
-                    <button type='button' class="minor w80 mar10-l" onclick="exp()" >导出</button>
-
-                    <#if state==1>
-                        <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>
-                    <#else>
-                        <button type='button' class="minor mar10-l" onclick="del(1,'启用')" >启用</button>
-                        <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
-                    </#if>
-                </div>
-            </#if>
-        </left>
-        <right>
-            <selector>
-                <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
-                <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
-            </selector>
-        </right>
+                    <div class="btn-group">
+                        <a class="btn minor w80 mar10-l" >导出</a>
+                        <div class="btn-dropdown mar10-l w150">
+                            <a class="btn-link mar10" onclick="exp('yml')">导出为 Yml</a>
+                            <a class="btn-link mar10" onclick="exp('json')">导出为 Json</a>
+                            <a class="btn-link mar10" onclick="exp('properties')">导出为 Properties</a>
+                            <hr class="mar10-l mar10-r"/>
+                            <a class="btn-link mar10" onclick="exp('jsond')">导出为 JsonD</a>
+                        </div>
+                    </div>
+                </#if>
+            </left>
+            <right>
+                <selector>
+                    <#list langs as l>
+                        <a class='noline ${(l.tag == lang)?string("sel","") }' href="./inner?lang=${l.tag}&tag_name=${tag_name!}&bundle=${bundle!}">${l.tag}(${l.counts})</a>
+                    </#list>
+                </selector>
+            </right>
+        </div>
     </toolbar>
     <datagrid class="list">
         <table>
