@@ -117,7 +117,7 @@
 <main>
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">国际化捆</a></h2> / 编辑
+            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">国际化包</a></h2> / 编辑
         </left>
         <right class="form">
             <n>ctrl + s 可快捷保存</n>
