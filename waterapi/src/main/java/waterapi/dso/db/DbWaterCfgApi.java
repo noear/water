@@ -1,6 +1,8 @@
 package waterapi.dso.db;
 
+import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
+import org.noear.water.model.KeyM;
 import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.weed.DbContext;
 import waterapi.Config;
@@ -140,5 +142,17 @@ public class DbWaterCfgApi {
                 .caching(CacheUtils.data)
                 .usingCache(10)
                 .selectList("*", BrokerVo.class);
+    }
+
+    public static KeyM getKey(String access_key) throws SQLException {
+        if(Utils.isEmpty(access_key)){
+            return new KeyM();
+        }
+
+        return db().table("water_cfg_key")
+                .where("access_key = ?", access_key)
+                .caching(CacheUtils.data)
+                .usingCache(10)
+                .selectItem("*", KeyM.class);
     }
 }

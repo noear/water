@@ -21,8 +21,29 @@ public class KeyApi {
 
     Map<String, KeyM> keyMap = Collections.synchronizedMap(new HashMap());
 
+    /**
+     * 获取密钥
+     * */
     public KeyM getKey(String accessKey) throws IOException {
-        String json = apiCaller.http("/cfg/key/get/")
+        KeyM keyM = keyMap.get(accessKey);
+
+        if (keyM == null) {
+            synchronized (accessKey.intern()) {
+                keyM = keyMap.get(accessKey);
+
+                if (keyM == null) {
+                    keyM = loadKey(accessKey);
+                }
+                keyMap.put(accessKey, keyM);
+            }
+        }
+
+        return keyM;
+    }
+
+    protected KeyM loadKey(String accessKey) throws IOException {
+
+        String json = apiCaller.http("/key/get/")
                 .data("accessKey", accessKey)
                 .post();
 

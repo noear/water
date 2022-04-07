@@ -1,6 +1,8 @@
 package org.noear.water.model;
 
-public class KeyM {
+import java.io.Serializable;
+
+public class KeyM implements Serializable {
     /** 访问Key */
     public String access_key;
     /** 访问密钥 */

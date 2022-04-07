@@ -4,6 +4,7 @@
 * ConfigHandler::handler 更名为 handle
 * DiscoverHandler::handler 更名为 handle
 * MessageHandler::handler 更名为 handle
+* WaterClient.job 更名为 Job
 
 #### 2.5.9
 * 添加查询记录和可复用选择

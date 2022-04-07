@@ -59,6 +59,11 @@ public final class WaterClient {
     public final static ConfigApi Config = new ConfigApi();
 
     /**
+     * 密钥服务接口
+     * */
+    public final static KeyApi Key = new KeyApi();
+
+    /**
      * 消息服务接口
      * */
     public final static MessageApi Message = new MessageApi();
@@ -91,5 +96,5 @@ public final class WaterClient {
     /**
      * 任务接口
      * */
-    public final static JobApi job = new JobApi();
+    public final static JobApi Job = new JobApi();
 }
