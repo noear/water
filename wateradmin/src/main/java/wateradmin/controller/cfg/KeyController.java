@@ -67,7 +67,7 @@ public class KeyController extends BaseController {
         if(model.row_id == 0){
             model.access_key = Utils.guid();
             model.access_secret_key = RandomUtils.code(24);
-            model.access_secret_salt = RandomUtils.code(8);
+            model.access_secret_salt = RandomUtils.code(16);
         }
 
         if (model.tag != null) {
