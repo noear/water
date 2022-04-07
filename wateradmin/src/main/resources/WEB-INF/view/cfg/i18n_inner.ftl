@@ -130,9 +130,9 @@
             <thead>
             <tr>
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                <td width="150px">键值</td>
-                <td width="80px">语言</td>
-                <td>描述信息</td>
+                <td width="150px" class="left">键值</td>
+                <td width="80px" class="left">语言</td>
+                <td class="left">描述信息</td>
                 <td width="60px">操作</td>
             </tr>
             </thead>

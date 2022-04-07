@@ -127,7 +127,7 @@ public class DbWaterCfgI18nApi {
         if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(name)) {
             return new ArrayList<>();
         } else {
-            return db().table("appx_ex_i18n")
+            return db().table("water_cfg_i18n")
                     .whereEq("tag", tag).andEq("bundle", bundle).andEq("name", name)
                     .selectList("lang,value", I18nModel.class);
         }
