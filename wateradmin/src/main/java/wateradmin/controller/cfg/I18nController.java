@@ -59,6 +59,12 @@ public class I18nController extends BaseController {
 
         if (Utils.isEmpty(lang) || "default".equals(lang)) {
             lang = ctx.cookie("lang");
+        } else {
+            String lang1 = lang;
+            TagCountsModel lang2 = langs.stream().filter(m -> m.tag.equals(lang1)).findFirst().get();
+            if (lang2 == null) {
+                lang = null;
+            }
         }
 
         if (Utils.isEmpty(lang) || "default".equals(lang)) {
