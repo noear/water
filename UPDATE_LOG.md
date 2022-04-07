@@ -1,6 +1,9 @@
-#### 2.5.9
+#### 2.6.0
 * 添加密钥配置
 * 添加国际化配置
+* ConfigHandler::handler 更名为 handle
+* DiscoverHandler::handler 更名为 handle
+* MessageHandler::handler 更名为 handle
 
 #### 2.5.9
 * 添加查询记录和可复用选择
