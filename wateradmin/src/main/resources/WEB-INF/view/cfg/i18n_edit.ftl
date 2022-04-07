@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
         var nameOld = "${model.name!}";
+        var tagOld = "${tag_name!}";
         var viewModel = {items: ${langs}};
 
         function del(){
@@ -48,7 +49,11 @@
                         if(1==data.code) {
                             top.layer.msg('操作成功');
                             setTimeout(function () {
-                                parent.location.href = "/cfg/i18n?tag_name=" + vm.tag;
+                                if(window.tagOld){
+                                    location.href="/cfg/i18n/inner?tag_name="+viewModel.tag+"&bundle="+bundle;
+                                }else{
+                                    parent.location.href = "/cfg/i18n?tag_name=" + vm.tag;
+                                }
                             }, 800);
                         }else{
                             top.layer.msg(data.msg);
@@ -90,7 +95,11 @@
                     if(data.code==1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
-                            parent.location.href="/cfg/i18n?tag_name="+viewModel.tag;
+                            if(window.tagOld){
+                                location.href="/cfg/i18n/inner?tag_name="+viewModel.tag+"&bundle="+bundle;
+                            }else{
+                                parent.location.href="/cfg/i18n?tag_name="+viewModel.tag;
+                            }
                         },800);
                     }else{
                         top.layer.msg(data.msg);
