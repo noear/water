@@ -139,7 +139,7 @@
             </tr>
             <tr>
                 <th>语言包名</th>
-                <td><input type="text" id="bundle" value="${model.bundle!}" /></td>
+                <td><input type="text" id="bundle" value="${bundle!}" /></td>
             </tr>
             <tr>
                 <th>键值</th>

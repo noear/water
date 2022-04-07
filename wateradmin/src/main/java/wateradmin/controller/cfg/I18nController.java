@@ -100,7 +100,7 @@ public class I18nController extends BaseController {
     }
 
     @Mapping("edit")
-    public ModelAndView edit(Integer id, String tag_name) throws SQLException {
+    public ModelAndView edit(Integer id, String tag_name, String bundle) throws SQLException {
         I18nModel model = null;
         if (id != null) {
             model = DbWaterCfgI18nApi.getI18n(id);
@@ -114,6 +114,10 @@ public class I18nController extends BaseController {
             tag_name = model.tag;
         }
 
+        if (model.bundle != null) {
+            bundle = model.bundle;
+        }
+
         List<I18nModel> langs = DbWaterCfgI18nApi.getI18nByName(tag_name, model.bundle, model.name);
         if (langs.size() == 0) {
             langs.add(new I18nModel());
@@ -124,6 +128,7 @@ public class I18nController extends BaseController {
         viewModel.put("lang_type", lang_type);
         viewModel.put("langs", ONode.stringify(langs));
         viewModel.put("tag_name", tag_name);
+        viewModel.put("bundle", bundle);
         return view("cfg/i18n_edit");
     }
 

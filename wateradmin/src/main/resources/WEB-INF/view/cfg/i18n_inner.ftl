@@ -114,7 +114,7 @@
                 <a class="w60">关键字：</a><input type="text"  name="key" placeholder="value"  value="${key!}"class="w350"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>
                 <#if is_admin == 1>
-                    <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}">新增</a>
+                    <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
                 </#if>
             </form>
         </div>
