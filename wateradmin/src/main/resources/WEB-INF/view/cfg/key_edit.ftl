@@ -98,20 +98,20 @@
                 <td><input type="text" id="name" value="${m.name!}" /></td>
             </tr>
             <tr>
-                <th>access_key*</th>
+                <th>description</th>
+                <td><input type="text" class="longtxt" id="description" value="${m.description!}" /></td>
+            </tr>
+            <tr>
+                <th>access_key</th>
                 <td><input disabled="disabled" type="text" id="access_key" value="${m.access_key!}" /></td>
             </tr>
             <tr>
-                <th>access_secret_key*</th>
-                <td><input disabled="disabled" type="text" class="longtxt" id="access_secret_key" value="${m.access_secret_key!}" /></td>
+                <th>access_secret_key</th>
+                <td><input disabled="disabled" type="text" id="access_secret_key" value="${m.access_secret_key!}" /></td>
             </tr>
             <tr>
                 <th>access_secret_salt</th>
-                <td><input disabled="disabled" type="text" class="longtxt" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
-            </tr>
-            <tr>
-                <th>description</th>
-                <td><input type="text" class="longtxt" id="description" value="${m.description!}" /></td>
+                <td><input disabled="disabled" type="text" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
             </tr>
 
         </table>
