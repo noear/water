@@ -296,10 +296,12 @@ public class I18nController extends BaseController {
 
         List<I18nModel> list = entity.data.toObjectList(I18nModel.class);
 
-        for (I18nModel m : list) {
-            if (bundle == null) {
+        if (Utils.isEmpty(bundle)) {
+            for (I18nModel m : list) {
                 DbWaterCfgI18nApi.impI18n(tag, m.bundle, m.name, m.lang, m.value);
-            } else {
+            }
+        } else {
+            for (I18nModel m : list) {
                 DbWaterCfgI18nApi.impI18n(tag, bundle, m.name, m.lang, m.value);
             }
         }
