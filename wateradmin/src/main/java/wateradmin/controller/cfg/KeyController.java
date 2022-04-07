@@ -106,10 +106,6 @@ public class KeyController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/del")
     public ViewModel delDo(Integer row_id) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
-
         boolean result = DbWaterCfgKeyApi.delKey(row_id);
         if (result) {
             viewModel.code(1, "删除成功");
@@ -133,12 +129,9 @@ public class KeyController extends BaseController {
         ctx.output(jsonD);
     }
 
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 

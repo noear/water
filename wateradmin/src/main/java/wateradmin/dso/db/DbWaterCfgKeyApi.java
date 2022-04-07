@@ -91,7 +91,7 @@ public class DbWaterCfgKeyApi {
                 .set("name", wm.name)
                 .set("description", wm.description)
                 .set("gmt_modified", System.currentTimeMillis())
-                .insertBy("tag,bundle,lang,name");
+                .insertBy("access_key");
     }
 
     //删除
