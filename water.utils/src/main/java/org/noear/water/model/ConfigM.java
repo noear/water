@@ -1,15 +1,11 @@
 package org.noear.water.model;
 
-import com.zaxxer.hikari.HikariDataSource;
 import org.noear.esearchx.EsContext;
 import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
-import org.noear.snack.core.exts.ClassWrap;
-import org.noear.snack.core.exts.FieldWrap;
 import org.noear.water.WaterProps;
 import org.noear.water.utils.*;
 import org.noear.weed.DbContext;
-import org.noear.weed.DbDataSource;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
 import org.noear.weed.cache.SecondCache;
@@ -20,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public final class ConfigM {
+public final class ConfigM{
     public final String key;
     public final long lastModified;
     public final String value;

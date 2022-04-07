@@ -2,8 +2,10 @@ package waterapi.dso.db;
 
 import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
+import org.noear.water.model.I18nM;
 import org.noear.water.model.KeyM;
 import org.noear.water.protocol.model.message.BrokerVo;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import waterapi.Config;
 import waterapi.dso.CacheUtils;
@@ -11,6 +13,7 @@ import waterapi.models.ConfigModel;
 import waterapi.models.LoggerModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ public class DbWaterCfgApi {
     }
 
     public static ConfigM getConfigM(String tag, String key) {
-        return getConfig(tag,key).toConfigM();
+        return getConfig(tag, key).toConfigM();
     }
 
     public static ConfigModel getConfig(String tag, String key) {
@@ -76,7 +79,7 @@ public class DbWaterCfgApi {
                 .set("tag", tag)
                 .set("key", key)
                 .set("value", value)
-                .set("is_editable",true)
+                .set("is_editable", true)
                 .set("gmt_modified", System.currentTimeMillis())
                 .insert();
     }
@@ -84,7 +87,7 @@ public class DbWaterCfgApi {
     public static ConfigModel getConfigNoCache(String tag, String key) throws SQLException {
         return db().table("water_cfg_properties")
                 .where("tag=? AND `key`=?", tag, key)
-                .andEq("is_enabled",1)
+                .andEq("is_enabled", 1)
                 .select("*")
                 .getItem(new ConfigModel());
     }
@@ -93,10 +96,10 @@ public class DbWaterCfgApi {
     //获取账号的手机号（用于报警）
     public static List<String> getAlarmMobiles() throws SQLException {
         return Config.water.table("water_cfg_whitelist")
-                .whereEq("type","mobile")
-                .andEq("tag","_alarm")
-                .andEq("is_enabled",1)
-                .andNeq("value","")
+                .whereEq("type", "mobile")
+                .andEq("tag", "_alarm")
+                .andEq("is_enabled", 1)
+                .andNeq("value", "")
                 .select("value ")
                 .caching(CacheUtils.data)
                 .getArray(0);
@@ -120,7 +123,7 @@ public class DbWaterCfgApi {
                     .select("*")
                     .caching(CacheUtils.data).usingCache(60)
                     .getItem(LoggerModel.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -132,7 +135,7 @@ public class DbWaterCfgApi {
                     .limit(1)
                     .select("*")
                     .getItem(BrokerVo.class);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -145,7 +148,7 @@ public class DbWaterCfgApi {
     }
 
     public static KeyM getKey(String access_key) throws SQLException {
-        if(Utils.isEmpty(access_key)){
+        if (Utils.isEmpty(access_key)) {
             return new KeyM();
         }
 
@@ -154,5 +157,26 @@ public class DbWaterCfgApi {
                 .caching(CacheUtils.data)
                 .usingCache(10)
                 .selectItem("*", KeyM.class);
+    }
+
+    public static List<I18nM> getI18nListByTag(String tag, String bundle, String lang) throws SQLException {
+        if (lang == null) {
+            lang = "";
+        }
+
+        if ("default".equals(lang)) {
+            lang = "";
+        }
+
+        if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(tag)) {
+            return new ArrayList<>();
+        }
+
+        return db().table("water_cfg_i18n")
+                .whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .andEq("lang", lang)
+                .orderBy("name ASC")
+                .selectList("name,value", I18nM.class);
     }
 }

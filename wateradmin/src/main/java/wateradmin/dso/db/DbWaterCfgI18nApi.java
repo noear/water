@@ -21,7 +21,6 @@ public class DbWaterCfgI18nApi {
         return Config.water;
     }
 
-    //获取白名单表tag
     public static List<TagCountsModel> getI18nTags() throws SQLException {
         return db().table("water_cfg_i18n")
                 .groupBy("tag")
@@ -29,7 +28,6 @@ public class DbWaterCfgI18nApi {
                 .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
-    //获取ip白名单列表
     public static List<I18nModel> getI18nListByTag(String tag, String bundle,String name, String lang) throws SQLException {
         if (lang == null) {
             lang = "";

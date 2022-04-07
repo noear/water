@@ -64,6 +64,11 @@ public final class WaterClient {
     public final static KeyApi Key = new KeyApi();
 
     /**
+     * 国际化服务接口
+     * */
+    public final static I18nApi I18n = new I18nApi();
+
+    /**
      * 消息服务接口
      * */
     public final static MessageApi Message = new MessageApi();
