@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>${app} - 安全名单</title>
+    <title>${app} - 访问密钥</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>

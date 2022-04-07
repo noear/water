@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm10">
 <head>
-    <title>${app} - 安全名单</title>
+    <title>${app} - 多语言包</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
@@ -118,7 +118,7 @@
 <main>
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">国际化包</a></h2> / 编辑
+            <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">多语言包</a></h2> / 编辑
         </left>
         <right class="form">
             <n>ctrl + s 可快捷保存</n>
