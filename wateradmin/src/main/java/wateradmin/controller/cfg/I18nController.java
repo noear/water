@@ -1,22 +1,18 @@
 package wateradmin.controller.cfg;
 
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsondEntity;
-import org.noear.water.utils.JsondUtils;
+import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
-import wateradmin.dso.SessionPerms;
-import wateradmin.dso.TagChecker;
-import wateradmin.dso.TagUtil;
+import wateradmin.dso.*;
 import wateradmin.dso.db.DbWaterCfgI18nApi;
 import wateradmin.models.TagCountsModel;
+import wateradmin.models.water_cfg.EnumModel;
 import wateradmin.models.water_cfg.I18nModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -76,6 +72,13 @@ public class I18nController extends BaseController {
             tag_name = model.tag;
         }
 
+        List<I18nModel> langs =  DbWaterCfgI18nApi.getI18nByName(tag_name, model.bundle, model.name);
+
+
+        List<EnumModel> lang_type = EnumUtil.get("lang_type");
+
+        viewModel.put("lang_type", lang_type);
+        viewModel.put("langs", ONode.stringify(langs));
         viewModel.put("tag_name", tag_name);
         return view("cfg/i18n_edit");
     }

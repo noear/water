@@ -8,6 +8,7 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.I18nModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -120,6 +121,16 @@ public class DbWaterCfgI18nApi {
         return db().table("water_cfg_i18n")
                 .where("row_id = ?", row_id)
                 .selectItem("*", I18nModel.class);
+    }
+
+    public static List<I18nModel> getI18nByName(String tag,String bundle, String name) throws SQLException {
+        if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(name)) {
+            return new ArrayList<>();
+        } else {
+            return db().table("appx_ex_i18n")
+                    .whereEq("tag", tag).andEq("bundle", bundle).andEq("name", name)
+                    .selectList("lang,value", I18nModel.class);
+        }
     }
 
     public static List<I18nModel> getI18nByIds(String ids) throws SQLException {

@@ -8,14 +8,31 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
         function del(){
-            var row_id = ${m.row_id!0};
-            if(row_id < 1){
+            if(!nameOld){
                 return;
             }
 
-            var vm = formToMap("#form");
+            if(!confirm("确定要删除吗？")){
+                return;
+            }
+
+            var bundle = $('#bundle').val().trim();
+            var name = $('#name').val().trim();
+
+            viewModel.tag = $('#tag').val().trim();
+
+            if (!bundle) {
+                top.layer.msg("语言包名不能为空！");
+                return;
+            }
+
+            if (!name) {
+                top.layer.msg("状态码不能为空！");
+                return;
+            }
 
             top.layer.confirm('确定删除', {
                 btn: ['确定','取消'] //按钮
@@ -23,7 +40,7 @@
                 $.ajax({
                     type:"POST",
                     url:"/cfg/i18n/ajax/del",
-                    data:{"row_id":row_id},
+                    data:{"tag":viewModel.tag, "bundle":bundle, "name":name, "nameOld":nameOld},
                     success:function(data){
                         if(1==data.code) {
                             top.layer.msg('操作成功');
@@ -39,23 +56,40 @@
             });
         };
 
-        function save() {
-            var vm = formToMap("#form");
+        var nameOld = "${model.name}";
+        var viewModel = {items: ${langs}};
 
-            if (!vm.tag || !vm.bundle || !vm.name) {
-                top.layer.msg("tag 或 bundle 或 name 不能为空！");
+        function save() {
+            var bundle = $('#bundle').val().trim();
+            var name = $('#name').val().trim();
+            var items = JSON.stringify(viewModel.items);
+
+            viewModel.tag = $('#tag').val().trim();
+
+            if(viewModel.items.length <1){
+                top.layer.msg("描述配置不能为空！");
+                return;
+            }
+
+            if (!bundle) {
+                top.layer.msg("语言包名不能为空！");
+                return;
+            }
+
+            if (!name) {
+                top.layer.msg("键值不能为空！");
                 return;
             }
 
             $.ajax({
                 type:"POST",
                 url:"/cfg/i18n/edit/ajax/save",
-                data:vm,
+                data:{"tag":viewModel.tag, "bundle":bundle, "name":name, "nameOld":nameOld, "items":items},
                 success:function (data) {
                     if(data.code==1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
-                            parent.location.href="/cfg/i18n?tag_name="+vm.tag;
+                            parent.location.href="/cfg/i18n?tag_name="+viewModel.tag;
                         },800);
                     }else{
                         top.layer.msg(data.msg);
@@ -68,8 +102,17 @@
             ctl_s_save_bind(document,save);
         })
     </script>
+    <style>
+        #app li{margin-bottom: 4px;}
+    </style>
 </head>
 <body>
+
+<datalist id="lang_list">
+    <#list lang_type as m1>
+        <option value="${m1.value}">${m1.title}</option>
+    </#list>
+</datalist>
 
 <main>
     <toolbar class="blockquote">
@@ -94,27 +137,47 @@
                 <td><input type="text" id="tag" value="${tag_name!}" autofocus/></td>
             </tr>
             <tr>
-                <th>bundle*</th>
-                <td><input type="text" id="bundle" value="${m.bundle!}" />
-                    <n>（size lte 40）</n>
-                </td>
+                <th>语言包名</th>
+                <td><input type="text" id="bundle" value="${m.bundle!}" /></td>
             </tr>
             <tr>
-                <th>lang</th>
-                <td><input type="text" id="lang" value="${m.lang!}" /></td>
-            </tr>
-            <tr>
-                <th>name*</th>
+                <th>键值</th>
                 <td><input type="text" id="name" value="${m.name!}" /></td>
             </tr>
             <tr>
-                <th>value</th>
-                <td><input type="text" class="longtxt" id="value" value="${m.value!}" /></td>
+                <th class="top" style="padding-top: 45px;">描述配置</th>
+                <td id="app">
+                    <div>
+                        <left><n class="w100" style="display: inline-block">语言</n></left>
+                        <right><n class="longtxt" style="display: inline-block">描述</n></right>
+                    </div>
+                    <ul>
+                        <li v-for="m in items">
+                            <left><input class="w100" type="text" list="lang_list" autocomplete="off" v-model="m.lang"></left>
+                            <right><input type="text" class="longtxt" v-model="m.value"/></right>
+                        </li>
+                    </ul>
+                    <div>
+                        <button type="button" @click="add" class="minor">添加</button>
+                    </div>
+                </td>
             </tr>
         </table>
         </form>
     </detail>
 </main>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: viewModel,
+        methods:{
+            add: function (){
+                this.items.push({lang:"",value:""})
+            }
+        }
+    })
+</script>
 
 </body>
 </html>
