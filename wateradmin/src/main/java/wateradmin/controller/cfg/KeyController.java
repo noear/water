@@ -1,5 +1,6 @@
 package wateradmin.controller.cfg;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
@@ -74,6 +75,10 @@ public class KeyController extends BaseController {
 
         if (model.tag != null) {
             tag_name = model.tag;
+        }
+
+        if (model.access_key == null) {
+            model.access_key = Utils.guid();
         }
 
         viewModel.put("tag_name", tag_name);

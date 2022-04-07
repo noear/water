@@ -130,10 +130,9 @@
             <thead>
             <tr>
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                <td width="50px">ID</td>
-                <td width="100px">type</td>
-                <td>value</td>
-                <td width="200px">note</td>
+                <td width="150px">键值</td>
+                <td width="80px">语言</td>
+                <td>描述信息</td>
                 <td width="60px">操作</td>
             </tr>
             </thead>
@@ -142,10 +141,9 @@
             <#list list as m>
                 <tr>
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
-                    <td>${m.row_id}</td>
-                    <td class="left">${m.type!}</td>
+                    <td class="left">${m.name}</td>
+                    <td class="left">${m.lang!}</td>
                     <td class="left">${m.value!}</td>
-                    <td class="left">${m.note!}</td>
                     <#if is_admin == 1>
                         <td><a class="t2" href="/cfg/i18n/edit?id=${m.row_id}">编辑</a></td>
                     </#if>
