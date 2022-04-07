@@ -62,10 +62,10 @@ public class I18nController extends BaseController {
         I18nModel model = null;
         if (id != null) {
             model = DbWaterCfgI18nApi.getI18n(id);
-            viewModel.put("m", model);
+            viewModel.put("model", model);
         } else {
             model = new I18nModel();
-            viewModel.put("m", model);
+            viewModel.put("model", model);
         }
 
         if (model.tag != null) {
@@ -85,19 +85,24 @@ public class I18nController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo(Integer row_id, String tag, String bundle, String lang ,String name, String value) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
+    public ViewModel saveDo( String tag, String bundle, String name, String nameOld, String items) throws Exception {
+        List<I18nModel> itemList = ONode.loadStr(items).toObjectList(I18nModel.class);
+
+        boolean result = true;
+
+        for (I18nModel m : itemList) {
+            if (TextUtils.isEmpty(m.lang) && TextUtils.isEmpty(m.value)) {
+                continue;
+            }
+
+            result = result && DbWaterCfgI18nApi.setI18n(tag, bundle, name, nameOld, m.lang, m.value);
         }
 
-        boolean result = DbWaterCfgI18nApi.setI18n(row_id, tag, bundle, lang, name, value);
         if (result) {
-            viewModel.code(1, "操作成功");
+            return viewModel.code(1, "操作成功");
         } else {
-            viewModel.code(0, "操作失败");
+            return viewModel.code(0, "操作失败");
         }
-
-        return viewModel;
     }
 
 

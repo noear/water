@@ -47,30 +47,30 @@ public class DbWaterCfgI18nApi {
     }
 
     //新增ip白名单
-    public static boolean setI18n(Integer i18n_id, String tag, String bundle, String lang ,String name, String value) throws SQLException {
-        if (i18n_id == null) {
-            i18n_id = 0;
-        }
+    public static boolean setI18n(String tag, String bundle, String name, String nameOld, String lang , String value) throws SQLException {
+        value = value.replace("\\\\", "\\");
+        value = value.replace("\\n", "\n");
 
-        if (value == null) {
-            return false;
-        }
+        DbTableQuery tb = db().table("water_cfg_i18n")
+                .set("tag", tag)
+                .set("bundle", bundle)
+                .set("name", name)
+                .set("lang", lang)
+                .set("value", value);
 
-        DbTableQuery qr = db().table("water_cfg_i18n")
-                .set("tag", tag.trim())
-                .set("bundle", bundle.trim())
-                .set("lang", lang.trim())
-                .set("name", name.trim())
-                .set("value", value.trim())
-                .set("gmt_modified", System.currentTimeMillis());
+        boolean isOk = true;
 
-        if (i18n_id > 0) {
-            qr.whereEq("i18n_id", i18n_id).update();
+        if (TextUtils.isNotEmpty(nameOld) && tb.whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .andEq("name", nameOld)
+                .andEq("lang", lang)
+                .selectExists()) {
+            isOk = tb.update() > 0;
         } else {
-            qr.insert();
+            isOk = tb.insert() > 0;
         }
 
-        return true;
+        return isOk;
     }
 
     //批量导入

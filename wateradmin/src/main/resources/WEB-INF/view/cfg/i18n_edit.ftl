@@ -56,7 +56,7 @@
             });
         };
 
-        var nameOld = "${model.name}";
+        var nameOld = "${model.name!}";
         var viewModel = {items: ${langs}};
 
         function save() {
@@ -130,7 +130,7 @@
 
     <detail>
         <form id="form">
-            <input type="hidden" id="row_id" value="${m.row_id!0}">
+            <input type="hidden" id="row_id" value="${model.row_id!0}">
         <table>
             <tr>
                 <th>tag*</th>
@@ -138,11 +138,11 @@
             </tr>
             <tr>
                 <th>语言包名</th>
-                <td><input type="text" id="bundle" value="${m.bundle!}" /></td>
+                <td><input type="text" id="bundle" value="${model.bundle!}" /></td>
             </tr>
             <tr>
                 <th>键值</th>
-                <td><input type="text" id="name" value="${m.name!}" /></td>
+                <td><input type="text" id="name" value="${model.name!}" /></td>
             </tr>
             <tr>
                 <th class="top" style="padding-top: 45px;">描述配置</th>
