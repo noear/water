@@ -15,15 +15,21 @@ import wateradmin.dso.db.DbWaterCfgI18nApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.EnumModel;
 import wateradmin.models.water_cfg.I18nModel;
+import wateradmin.utils.JsonFormatTool;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 
 @Controller
 @Mapping("/cfg/i18n")
 public class I18nController extends BaseController {
+    String _i18n_lang = "_i18n.lang";
+    String _i18n_bundle = "_i18n.bundle";
 
     @Mapping("")
     public ModelAndView home(String tag_name) throws Exception {
@@ -41,7 +47,7 @@ public class I18nController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name,String bundle, String name, String lang) throws Exception {
+    public ModelAndView innerDo(Context ctx, String tag_name, String bundle, String name, String lang) throws Exception {
         List<TagCountsModel> bundles = DbWaterCfgI18nApi.getI18nBundles(tag_name);
         if (TextUtils.isEmpty(bundle)) {
             if (bundles.size() > 0) {
@@ -134,7 +140,7 @@ public class I18nController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo( String tag, String bundle, String name, String nameOld, String items) throws Exception {
+    public ViewModel saveDo(String tag, String bundle, String name, String nameOld, String items) throws Exception {
         List<I18nModel> itemList = ONode.loadStr(items).toObjectList(I18nModel.class);
 
         boolean result = true;
@@ -155,9 +161,25 @@ public class I18nController extends BaseController {
     }
 
 
+    @Mapping("ajax/batch")
+    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
+        if (Session.current().isAdmin() == false) {
+            return viewModel.code(0, "没有权限！");
+        }
+
+        if (act == null) {
+            act = 0;
+        }
+
+        DbWaterCfgI18nApi.delI18nByIds(act, ids);
+
+        return viewModel.code(1, "ok");
+    }
+
+
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/del")
-    public ViewModel delDo(String tag ,String bundle, String name,  String nameOld) throws Exception {
+    public ViewModel delDo(String tag, String bundle, String name, String nameOld) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
@@ -173,20 +195,94 @@ public class I18nController extends BaseController {
     }
 
     @Mapping("ajax/export")
-    public void exportDo(Context ctx, String tag, String ids) throws Exception {
+    public void exportDo(Context ctx, String tag, String bundle, String fmt, String ids) throws Exception {
         List<I18nModel> list = DbWaterCfgI18nApi.getI18nByIds(ids);
+        String filename = "water_cfg_i18n_" + tag + "_" + bundle + "_" + Datetime.Now().getDate();
 
-        String jsonD = JsondUtils.encode("water_cfg_i18n", list);
+        if(list.size() == 0){
+            return;
+        }
 
-        String filename2 = "water_cfg_i18n_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
-        ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
+        if ("jsond".equals(fmt)) {
+            String data = JsondUtils.encode("water_cfg_i18n", list);
+            String filename2 = filename + ".jsond";
 
-        ctx.output(jsonD);
+            ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
+            ctx.output(data);
+            return;
+        }
+
+        Map<String, String> i18nMap = new LinkedHashMap<>();
+        for (I18nModel m1 : list) {
+            i18nMap.put(m1.name, m1.value);
+        }
+
+        if(i18nMap.containsKey(_i18n_bundle) == false) {
+            i18nMap.put(_i18n_bundle, bundle);
+        }
+
+        if(i18nMap.containsKey(_i18n_lang) == false){
+            i18nMap.put(_i18n_lang, list.get(0).lang);
+        }
+
+        if ("json".equals(fmt)) {
+            String data = JsonFormatTool.formatJson(ONode.stringify(i18nMap));//格式化一下好看些
+            String filename2 = filename + ".json";
+
+            ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
+            ctx.output(data);
+            return;
+        }
+
+        if ("properties".equals(fmt)) {
+            StringBuilder data = new StringBuilder();
+            i18nMap.forEach((name, value)->{
+                data.append(name).append("=").append(value.replace("\n", "\\n")).append("\n");
+            });
+
+            String filename2 = filename + ".properties";
+
+            ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
+            ctx.output(data.toString());
+            return;
+        }
+
+        if ("yml".equals(fmt)) {
+            StringBuilder data = new StringBuilder();
+            i18nMap.forEach((name, value)-> {
+                data.append(name);
+                if (value.contains("'")) { // 如果有单引号，则用双引号
+                    data.append(": \"").append(value.replace("\n", "\\n")).append("\"\n");
+                } else {
+                    data.append(": '").append(value.replace("\n", "\\n")).append("'\n");
+                }
+            });
+
+            String filename2 = filename + ".yml";
+
+            ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
+            ctx.output(data.toString());
+            return;
+        }
     }
 
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
-    public ViewModel importDo(String tag, UploadedFile file) throws Exception {
+    public ViewModel importDo(String tag, String bundle, UploadedFile file) throws Exception {
+        if (Session.current().isAdmin() == false) {
+            return viewModel.code(0, "没有权限！");
+        }
+
+        if ("jsond".equals(file.extension)) {
+            return importFileForJsond(tag, bundle, file);
+        } else {
+            return importFileForProfile(tag, bundle, file);
+        }
+    }
+
+
+    private ViewModel importFileForJsond(String tag, String bundle, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -201,24 +297,45 @@ public class I18nController extends BaseController {
         List<I18nModel> list = entity.data.toObjectList(I18nModel.class);
 
         for (I18nModel m : list) {
-            DbWaterCfgI18nApi.impI18n(tag, m);
+            if (bundle == null) {
+                DbWaterCfgI18nApi.impI18n(tag, m.bundle, m.name, m.lang, m.value);
+            } else {
+                DbWaterCfgI18nApi.impI18n(tag, bundle, m.name, m.lang, m.value);
+            }
         }
 
         return viewModel.code(1, "ok");
     }
 
-    @Mapping("ajax/batch")
-    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
+    private ViewModel importFileForProfile(String tag, String bundle, UploadedFile file) throws Exception {
+        String i18nStr = Utils.transferToString(file.content, "UTF-8");
+        Properties i18n = Utils.buildProperties(i18nStr);
+
+        //初始化 _i18n.lang (_开头可以排序在前)
+        String lang = i18n.getProperty(_i18n_lang);
+
+        //初始化 _i18n.bundle
+        if (Utils.isEmpty(bundle)) {
+            bundle = i18n.getProperty(_i18n_bundle);
         }
 
-        if (act == null) {
-            act = 0;
+        if (Utils.isEmpty(bundle)) {
+            return viewModel.code(0, "提示：缺少元信息配置");
         }
 
-        DbWaterCfgI18nApi.delI18nByIds(act, ids);
 
-        return viewModel.code(1, "ok");
+        if (lang == null) {
+            lang = "";
+        }
+
+        for (Object k : i18n.keySet()) {
+            if (k instanceof String) {
+                String name = (String) k;
+                DbWaterCfgI18nApi.impI18n(tag, bundle, name, lang, i18n.getProperty(name));
+            }
+        }
+
+
+        return viewModel.code(1, "导入成功");
     }
 }

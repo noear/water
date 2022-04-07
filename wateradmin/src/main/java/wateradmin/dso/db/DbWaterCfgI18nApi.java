@@ -107,22 +107,18 @@ public class DbWaterCfgI18nApi {
     }
 
     //批量导入
-    public static void impI18n(String tag, I18nModel wm) throws SQLException {
-        if (TextUtils.isEmpty(tag) == false) {
-            wm.tag = tag;
-        }
-
-        if (TextUtils.isEmpty(wm.tag) || TextUtils.isEmpty(wm.value)) {
+    public static void impI18n(String tag, String bundle, String name, String lang, String value) throws SQLException {
+        if (TextUtils.isEmpty(tag) || TextUtils.isEmpty(bundle) || TextUtils.isEmpty(name)) {
             return;
         }
 
         db().table("water_cfg_i18n")
                 .set("tag", tag.trim())
-                .set("bundle", wm.bundle)
-                .set("lang", wm.lang)
-                .set("name", wm.name)
-                .set("value", wm.value)
-                .set("gmt_modified", System.currentTimeMillis())
+                .set("bundle", bundle.trim())
+                .set("lang", lang.trim())
+                .set("name", name.trim())
+                .set("value", value)
+                .set("gmt_create", System.currentTimeMillis())
                 .insertBy("tag,bundle,lang,name");
     }
 
