@@ -108,12 +108,12 @@ public class I18nController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/del")
-    public ViewModel delDo(Integer row_id) throws Exception {
+    public ViewModel delDo(String tag ,String bundle, String name,  String nameOld) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgI18nApi.delI18n(row_id);
+        boolean result = DbWaterCfgI18nApi.delI18n(tag, bundle, nameOld);
         if (result) {
             viewModel.code(1, "删除成功");
         } else {

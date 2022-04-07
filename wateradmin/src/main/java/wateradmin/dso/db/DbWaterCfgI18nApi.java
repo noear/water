@@ -100,6 +100,17 @@ public class DbWaterCfgI18nApi {
                 .delete() > 0;
     }
 
+    public static boolean delI18n(String tag ,String bundle, String name) throws SQLException {
+        DbTableQuery tb = db().table("water_cfg_i18n")
+                .whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .andEq("name", name);
+
+        boolean isOk = tb.delete() > 0;
+
+        return isOk;
+    }
+
     //批量删除
     public static void delI18nByIds(int act, String ids) throws SQLException {
         List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());

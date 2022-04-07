@@ -10,6 +10,9 @@
     <script src="${js}/layer/layer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script>
+        var nameOld = "${model.name!}";
+        var viewModel = {items: ${langs}};
+
         function del(){
             if(!nameOld){
                 return;
@@ -56,8 +59,6 @@
             });
         };
 
-        var nameOld = "${model.name!}";
-        var viewModel = {items: ${langs}};
 
         function save() {
             var bundle = $('#bundle').val().trim();
