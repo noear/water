@@ -119,6 +119,10 @@ public class DbWaterCfgKeyApi {
     }
 
     public static KeyModel getKey(int row_id) throws SQLException {
+        if(row_id == 0){
+            return new KeyModel();
+        }
+
         return db().table("water_cfg_key")
                 .where("row_id = ?", row_id)
                 .selectItem("*", KeyModel.class);

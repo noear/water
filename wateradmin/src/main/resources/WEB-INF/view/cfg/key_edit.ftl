@@ -99,15 +99,15 @@
             </tr>
             <tr>
                 <th>access_key*</th>
-                <td><input type="text" id="access_key" value="${m.access_key!}" /></td>
+                <td><input disabled="disabled" type="text" id="access_key" value="${m.access_key!}" /></td>
             </tr>
             <tr>
                 <th>access_secret_key*</th>
-                <td><input type="text" class="longtxt" id="access_secret_key" value="${m.access_secret_key!}" /></td>
+                <td><input disabled="disabled" type="text" class="longtxt" id="access_secret_key" value="${m.access_secret_key!}" /></td>
             </tr>
             <tr>
                 <th>access_secret_salt</th>
-                <td><input type="text" class="longtxt" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
+                <td><input disabled="disabled" type="text" class="longtxt" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
             </tr>
             <tr>
                 <th>description</th>

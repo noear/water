@@ -7,10 +7,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
-import org.noear.water.utils.Datetime;
-import org.noear.water.utils.IOUtils;
-import org.noear.water.utils.JsondEntity;
-import org.noear.water.utils.JsondUtils;
+import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
@@ -63,22 +60,18 @@ public class KeyController extends BaseController {
     }
 
     @Mapping("edit")
-    public ModelAndView edit(Integer id, String tag_name) throws SQLException {
-        KeyModel model = null;
-        if (id != null) {
-            model = DbWaterCfgKeyApi.getKey(id);
-            viewModel.put("m", model);
-        } else {
-            model = new KeyModel();
-            viewModel.put("m", model);
+    public ModelAndView edit(int id, String tag_name) throws SQLException {
+        KeyModel model = DbWaterCfgKeyApi.getKey(id);
+        viewModel.put("m", model);
+
+        if(model.row_id == 0){
+            model.access_key = Utils.guid();
+            model.access_secret_key = RandomUtils.code(64);
+            model.access_secret_salt = RandomUtils.code(8);
         }
 
         if (model.tag != null) {
             tag_name = model.tag;
-        }
-
-        if (model.access_key == null) {
-            model.access_key = Utils.guid();
         }
 
         viewModel.put("tag_name", tag_name);
