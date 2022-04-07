@@ -90,89 +90,89 @@
     <style>
         .tabs{padding-bottom: 10px;}
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
+
+        .btn-link:hover{text-decoration: underline;}
     </style>
 </head>
 <body>
-<main>
-    <div class="tabs">
-        <tabbar>
-            <#list bundles as m>
-                <#if m.tag == bundle>
-                    <a id="e${m.tag}" class="btn sel">${m.tag}(${m.counts})</a>
-                <#else>
-                    <a id="e${m.tag}" class="btn" href="/cfg/i18n/inner?tag_name=${tag_name!}&bundle=${m.tag}">${m.tag}(${m.counts})</a>
-                </#if>
-            </#list>
-        </tabbar>
+<div class="tabs">
+    <tabbar>
+        <#list bundles as m>
+            <#if m.tag == bundle>
+                <a id="e${m.tag}" class="btn sel">${m.tag}(${m.counts})</a>
+            <#else>
+                <a id="e${m.tag}" class="btn" href="/cfg/i18n/inner?tag_name=${tag_name!}&bundle=${m.tag}">${m.tag}(${m.counts})</a>
+            </#if>
+        </#list>
+    </tabbar>
+</div>
+
+<toolbar>
+    <div class="center">
+        <form>
+            <input type="hidden" name="tag_name" value="${tag_name!}">
+            <input type="hidden" name="bundle" value="${bundle!}">
+            <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w250"/>&nbsp;&nbsp;
+            <button type="submit">查询</button>
+            <#if is_admin == 1>
+                <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
+            </#if>
+        </form>
     </div>
+    <div>
+        <left>
+            <#if is_admin == 1>
+                <file>
+                    <label><input id="imp_file" type="file" accept=".yml,.json,.properties,.jsond"/><a class="btn minor w80">导入</a></label>
+                </file>
 
-    <toolbar>
-        <div class="center">
-            <form>
-                <input type="hidden" name="tag_name" value="${tag_name!}">
-                <input type="hidden" name="bundle" value="${bundle!}">
-                <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w250"/>&nbsp;&nbsp;
-                <button type="submit">查询</button>
-                <#if is_admin == 1>
-                    <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
-                </#if>
-            </form>
-        </div>
-        <div>
-            <left>
-                <#if is_admin == 1>
-                    <file>
-                        <label><input id="imp_file" type="file" accept=".yml,.json,.properties,.jsond"/><a class="btn minor w80">导入</a></label>
-                    </file>
-
-                    <div class="btn-group">
-                        <a class="btn minor w80 mar10-l" >导出</a>
-                        <div class="btn-dropdown mar10-l w150">
-                            <a class="btn-link mar10" onclick="exp('yml')">导出为 Yml</a>
-                            <a class="btn-link mar10" onclick="exp('json')">导出为 Json</a>
-                            <a class="btn-link mar10" onclick="exp('properties')">导出为 Properties</a>
-                            <hr class="mar10-l mar10-r"/>
-                            <a class="btn-link mar10" onclick="exp('jsond')">导出为 JsonD</a>
-                        </div>
+                <div class="btn-group">
+                    <a class="btn minor w80 mar10-l" >导出</a>
+                    <div class="btn-dropdown mar10-l w150">
+                        <a class="btn-link mar10" onclick="exp('yml')">导出为 Yml</a>
+                        <a class="btn-link mar10" onclick="exp('json')">导出为 Json</a>
+                        <a class="btn-link mar10" onclick="exp('properties')">导出为 Properties</a>
+                        <hr class="mar10-l mar10-r"/>
+                        <a class="btn-link mar10" onclick="exp('jsond')">导出为 JsonD</a>
                     </div>
-                </#if>
-            </left>
-            <right>
-                <selector>
-                    <#list langs as l>
-                        <a class='noline ${(l.tag == lang)?string("sel","") }' href="./inner?lang=${l.tag}&tag_name=${tag_name!}&bundle=${bundle!}">${l.tag}(${l.counts})</a>
-                    </#list>
-                </selector>
-            </right>
-        </div>
-    </toolbar>
-    <datagrid class="list">
-        <table>
-            <thead>
-            <tr>
-                <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                <td width="150px" class="left">键值</td>
-                <td width="80px" class="left">语言</td>
-                <td class="left">描述信息</td>
-                <td width="60px">操作</td>
-            </tr>
-            </thead>
-            <tbody id="tbody" class="sel_from" >
+                </div>
+            </#if>
+        </left>
+        <right>
+            <selector>
+                <#list langs as l>
+                    <a class='noline ${(l.tag == lang)?string("sel","") }' href="./inner?lang=${l.tag}&tag_name=${tag_name!}&bundle=${bundle!}">${l.tag}(${l.counts})</a>
+                </#list>
+            </selector>
+        </right>
+    </div>
+</toolbar>
+<datagrid class="list">
+    <table>
+        <thead>
+        <tr>
+            <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
+            <td width="150px" class="left">键值</td>
+            <td width="80px" class="left">语言</td>
+            <td class="left">描述信息</td>
+            <td width="60px">操作</td>
+        </tr>
+        </thead>
+        <tbody id="tbody" class="sel_from" >
 
-            <#list list as m>
-                <tr>
-                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
-                    <td class="left">${m.name}</td>
-                    <td class="left">${m.lang!}</td>
-                    <td class="left">${m.value!}</td>
-                    <#if is_admin == 1>
-                        <td><a class="t2" href="/cfg/i18n/edit?id=${m.row_id}">编辑</a></td>
-                    </#if>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
-    </datagrid>
-</main>
+        <#list list as m>
+            <tr>
+                <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
+                <td class="left">${m.name}</td>
+                <td class="left">${m.lang!}</td>
+                <td class="left">${m.value!}</td>
+                <#if is_admin == 1>
+                    <td><a class="t2" href="/cfg/i18n/edit?id=${m.row_id}">编辑</a></td>
+                </#if>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</datagrid>
 </body>
 </html>
