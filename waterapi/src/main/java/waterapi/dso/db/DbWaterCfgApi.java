@@ -172,16 +172,16 @@ public class DbWaterCfgApi {
     }
 
     public static List<I18nM> getI18nListByTag(String tag, String bundle, String lang) throws SQLException {
+        if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(tag)) {
+            return new ArrayList<>();
+        }
+
         if (lang == null) {
             lang = "";
         }
 
         if ("default".equals(lang)) {
             lang = "";
-        }
-
-        if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(tag)) {
-            return new ArrayList<>();
         }
 
         return db().table("water_cfg_i18n")

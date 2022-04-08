@@ -25,7 +25,7 @@ public class DbWaterCfgI18nApi {
         return db().table("water_cfg_i18n")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .selectList("tag,count(*) counts", TagCountsModel.class);
+                .selectList("tag", TagCountsModel.class);
     }
 
     public static List<I18nModel> getI18nListByTag(String tag, String bundle,String name, String lang) throws SQLException {
@@ -166,7 +166,9 @@ public class DbWaterCfgI18nApi {
             return new ArrayList<>();
         } else {
             return db().table("water_cfg_i18n")
-                    .whereEq("tag", tag).andEq("bundle", bundle).andEq("name", name)
+                    .whereEq("tag", tag)
+                    .andEq("bundle", bundle)
+                    .andEq("name", name)
                     .selectList("lang,value", I18nModel.class);
         }
     }
