@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.DownloadedFile;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
@@ -80,12 +81,12 @@ public class KeyController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String name, String description) throws Exception {
+    public ViewModel saveDo(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgKeyApi.setKey(row_id, tag, access_key, access_secret_key,access_secret_salt, name, description);
+        boolean result = DbWaterCfgKeyApi.setKey(row_id, tag, access_key, access_secret_key,access_secret_salt, label, description);
         if (result) {
             viewModel.code(1, "操作成功");
         } else {

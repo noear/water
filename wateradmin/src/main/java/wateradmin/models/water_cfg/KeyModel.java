@@ -14,8 +14,8 @@ public class KeyModel {
     public String access_secret_salt;
     /** 分组标签 */
     public String tag;
-    /** 名称 */
-    public String name;
+    /** 标记 */
+    public String label;
     /** 描述 */
     public String description;
     /** 是否启用 */

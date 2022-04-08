@@ -29,7 +29,7 @@ public class DbWaterCfgKeyApi {
     }
 
     //获取ip白名单列表
-    public static List<KeyModel> getKeyListByTag(String tag_name, String name, int state) throws SQLException {
+    public static List<KeyModel> getKeyListByTag(String tag_name, String label, int state) throws SQLException {
         return db().table("water_cfg_key")
                 .whereEq("is_enabled", state == 1)
                 .build(tb -> {
@@ -37,8 +37,8 @@ public class DbWaterCfgKeyApi {
                         tb.andEq("tag", tag_name);
                     }
 
-                    if (TextUtils.isEmpty(name) == false) {
-                        tb.andLk("name", name + "%");
+                    if (TextUtils.isEmpty(label) == false) {
+                        tb.andLk("label", label + "%");
                     }
                 })
                 .select("*")
@@ -46,7 +46,7 @@ public class DbWaterCfgKeyApi {
     }
 
     //新增ip白名单
-    public static boolean setKey(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String name, String description) throws SQLException {
+    public static boolean setKey(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws SQLException {
         if (row_id == null) {
             row_id = 0;
         }
@@ -60,7 +60,7 @@ public class DbWaterCfgKeyApi {
                 .set("access_key", access_key)
                 .set("access_secret_key", access_secret_key)
                 .set("access_secret_salt", access_secret_salt)
-                .set("name", name)
+                .set("label", label)
                 .set("description", description)
                 .set("gmt_modified", System.currentTimeMillis());
 
@@ -88,7 +88,7 @@ public class DbWaterCfgKeyApi {
                 .set("access_key", wm.access_key)
                 .set("access_secret_key", wm.access_secret_key)
                 .set("access_secret_salt", wm.access_secret_salt)
-                .set("name", wm.name)
+                .set("label", wm.label)
                 .set("description", wm.description)
                 .set("gmt_modified", System.currentTimeMillis())
                 .insertBy("access_key");

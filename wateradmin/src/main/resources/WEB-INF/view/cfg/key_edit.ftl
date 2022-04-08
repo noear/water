@@ -94,8 +94,8 @@
                 <td><input type="text" id="tag" value="${tag_name!}" autofocus/></td>
             </tr>
             <tr>
-                <th>name</th>
-                <td><input type="text" id="name" value="${m.name!}" /></td>
+                <th>label</th>
+                <td><input type="text" id="label" value="${m.label!}" /></td>
             </tr>
             <tr>
                 <th>description</th>

@@ -131,8 +131,8 @@
             <tr>
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="50px">ID</td>
-                <td width="100px" class="left">name</td>
                 <td width="300px" class="left">access_key</td>
+                <td width="100px" class="left">label</td>
                 <td class="left">description</td>
                 <td width="60px">操作</td>
             </tr>
@@ -143,8 +143,8 @@
                 <tr>
                     <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
                     <td>${m.row_id}</td>
-                    <td class="left">${m.name!}</td>
                     <td class="left">${m.access_key!}</td>
+                    <td class="left">${m.label!}</td>
                     <td class="left">${m.description!}</td>
                     <#if is_admin == 1>
                         <td><a class="t2" href="/cfg/key/edit?id=${m.row_id}">编辑</a></td>
