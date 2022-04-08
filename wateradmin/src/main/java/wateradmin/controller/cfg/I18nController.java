@@ -8,6 +8,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
+import org.noear.water.dso.NoticeUtils;
 import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.*;
@@ -162,7 +163,7 @@ public class I18nController extends BaseController {
 
 
     @Mapping("ajax/batch")
-    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
+    public ViewModel batchDo(String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限！");
         }
@@ -288,15 +289,25 @@ public class I18nController extends BaseController {
 
         List<I18nModel> list = entity.data.toObjectList(I18nModel.class);
 
-        if (Utils.isEmpty(bundle)) {
-            for (I18nModel m : list) {
-                DbWaterCfgI18nApi.impI18n(tag, m.bundle, m.name, m.lang, m.value);
-            }
-        } else {
-            for (I18nModel m : list) {
-                DbWaterCfgI18nApi.impI18n(tag, bundle, m.name, m.lang, m.value);
-            }
+        if (list.size() == 0) {
+            return viewModel.code(0, "数据为空！");
         }
+
+        //确定 bundle, lang
+        String lang = list.get(0).lang;
+        if (lang == null) {
+            lang = "";
+        }
+        if (Utils.isEmpty(bundle)) {
+            bundle = list.get(0).bundle;
+        }
+
+        for (I18nModel m : list) {
+            DbWaterCfgI18nApi.impI18n(tag, bundle, m.name, m.lang, m.value);
+        }
+
+        //通知更新
+        NoticeUtils.updateI18nCache(tag, bundle, lang);
 
         return viewModel.code(1, "ok");
     }
@@ -332,6 +343,8 @@ public class I18nController extends BaseController {
             }
         }
 
+        //通知更新
+        NoticeUtils.updateI18nCache(tag, bundle, lang);
 
         return viewModel.code(1, "导入成功");
     }

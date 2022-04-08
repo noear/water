@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import org.noear.water.dso.NoticeUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -100,6 +101,9 @@ public class DbWaterCfgI18nApi {
         } else {
             isOk = tb.insert() > 0;
         }
+
+        //通知更新
+        NoticeUtils.updateI18nCache(tag, bundle, lang);
 
         return isOk;
     }
