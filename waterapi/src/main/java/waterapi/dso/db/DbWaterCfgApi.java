@@ -155,7 +155,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_key")
                 .where("access_key = ?", access_key)
                 .caching(CacheUtils.data)
-                .usingCache(10)
+                .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
                 .selectItem("*", KeyM.class);
     }
 
@@ -167,7 +167,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_key")
                 .where("key_id = ?", key_id)
                 .caching(CacheUtils.data)
-                .usingCache(10)
+                .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
                 .selectItem("*", KeyM.class);
     }
 
@@ -189,6 +189,8 @@ public class DbWaterCfgApi {
                 .andEq("bundle", bundle)
                 .andEq("lang", lang)
                 .orderBy("name ASC")
+                .caching(CacheUtils.data)
+                .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
                 .selectList("name,value", I18nM.class);
     }
 }

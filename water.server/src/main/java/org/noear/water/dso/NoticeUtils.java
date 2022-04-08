@@ -16,7 +16,7 @@ public class NoticeUtils {
 
     public static void updateI18nCache(String tag, String bundle, String lang) {
         String cacheKey = String.format("i18n:%s:%s:%s", tag, bundle, lang);
-        WaterClient.Notice.updateCache(cacheKey);
+        WaterClient.Notice.updateCacheByDelay(3, cacheKey);
     }
 
     public static String heihei(String target, String msg) {

@@ -73,6 +73,24 @@ public class NoticeApi {
     }
 
     /**
+     * 通知缓存更新
+     */
+    public void updateCacheByDelay(int delay, String... cacheTags) {
+        //tags以;隔开
+        StringBuilder sb = new StringBuilder();
+        for (String tag : cacheTags) {
+            sb.append(tag).append(";");
+        }
+
+        try {
+            WaterClient.Message.sendMessageAndTags(null, null, WW.msg_ucache_topic, sb.toString(),
+                    new Datetime().addSecond(3).getFulltime(), WaterClient.localService());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
      * 通知配置更新
      */
     public void updateConfig(String tag, String name) {
