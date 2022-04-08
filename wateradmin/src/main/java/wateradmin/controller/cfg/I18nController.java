@@ -329,7 +329,7 @@ public class I18nController extends BaseController {
         }
 
         i18n.remove(_i18n_bundle);
-        i18n.remove(_i18n_lang);
+//        i18n.remove(_i18n_lang);
 
 
         if (lang == null) {
