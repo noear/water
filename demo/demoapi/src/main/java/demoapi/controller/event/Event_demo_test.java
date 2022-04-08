@@ -15,7 +15,7 @@ import org.noear.solon.logging.utils.TagsMDC;
 @CloudEvent("demo.test")
 public class Event_demo_test implements CloudEventHandler {
     @Override
-    public boolean handler(Event event) throws Exception {
+    public boolean handle(Event event) throws Exception {
         //处理消息...
         TagsMDC.tag0("msg");
 
