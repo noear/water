@@ -5,7 +5,6 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.DownloadedFile;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
@@ -65,7 +64,7 @@ public class KeyController extends BaseController {
         KeyModel model = DbWaterCfgKeyApi.getKey(id);
         viewModel.put("m", model);
 
-        if(model.row_id == 0){
+        if(model.key_id == 0){
             model.access_key = Utils.guid();
             model.access_secret_key = RandomUtils.code(24);
             model.access_secret_salt = RandomUtils.code(16);
@@ -81,12 +80,12 @@ public class KeyController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws Exception {
+    public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgKeyApi.setKey(row_id, tag, access_key, access_secret_key,access_secret_salt, label, description);
+        boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key,access_secret_salt, label, description);
         if (result) {
             viewModel.code(1, "操作成功");
         } else {
@@ -99,8 +98,8 @@ public class KeyController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/del")
-    public ViewModel delDo(Integer row_id) throws Exception {
-        boolean result = DbWaterCfgKeyApi.delKey(row_id);
+    public ViewModel delDo(Integer key_id) throws Exception {
+        boolean result = DbWaterCfgKeyApi.delKey(key_id);
         if (result) {
             viewModel.code(1, "删除成功");
         } else {

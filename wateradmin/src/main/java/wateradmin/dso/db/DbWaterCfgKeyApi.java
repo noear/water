@@ -46,9 +46,9 @@ public class DbWaterCfgKeyApi {
     }
 
     //新增ip白名单
-    public static boolean setKey(Integer row_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws SQLException {
-        if (row_id == null) {
-            row_id = 0;
+    public static boolean setKey(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws SQLException {
+        if (key_id == null) {
+            key_id = 0;
         }
 
         if (access_key == null) {
@@ -64,8 +64,8 @@ public class DbWaterCfgKeyApi {
                 .set("description", description)
                 .set("gmt_modified", System.currentTimeMillis());
 
-        if (row_id > 0) {
-            qr.whereEq("row_id", row_id).update();
+        if (key_id > 0) {
+            qr.whereEq("key_id", key_id).update();
         } else {
             qr.insert();
         }
@@ -95,9 +95,9 @@ public class DbWaterCfgKeyApi {
     }
 
     //删除
-    public static boolean delKey(int row_id) throws SQLException {
+    public static boolean delKey(int key_id) throws SQLException {
         return db().table("water_cfg_key")
-                .where("row_id = ?", row_id)
+                .where("key_id = ?", key_id)
                 .delete() > 0;
     }
 
@@ -107,24 +107,24 @@ public class DbWaterCfgKeyApi {
 
         if (act == 9) {
             db().table("water_cfg_key")
-                    .whereIn("row_id", list)
+                    .whereIn("key_id", list)
                     .delete();
         } else {
             db().table("water_cfg_key")
                     .set("is_enabled", (act == 1 ? 1 : 0))
                     .set("gmt_modified", System.currentTimeMillis())
-                    .whereIn("row_id", list)
+                    .whereIn("key_id", list)
                     .update();
         }
     }
 
-    public static KeyModel getKey(int row_id) throws SQLException {
-        if(row_id == 0){
+    public static KeyModel getKey(int key_id) throws SQLException {
+        if(key_id == 0){
             return new KeyModel();
         }
 
         return db().table("water_cfg_key")
-                .where("row_id = ?", row_id)
+                .where("key_id = ?", key_id)
                 .selectItem("*", KeyModel.class);
     }
 
@@ -135,7 +135,7 @@ public class DbWaterCfgKeyApi {
                 .collect(Collectors.toList());
 
         return db().table("water_cfg_key")
-                .whereIn("row_id", list)
+                .whereIn("key_id", list)
                 .selectList("*", KeyModel.class);
     }
 

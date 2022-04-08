@@ -141,13 +141,13 @@
 
             <#list list as m>
                 <tr>
-                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
-                    <td>${m.row_id}</td>
+                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.key_id}" /><a></a></label></checkbox></td>
+                    <td>${m.key_id}</td>
                     <td class="left">${m.access_key!}</td>
                     <td class="left">${m.label!}</td>
                     <td class="left">${m.description!}</td>
                     <#if is_admin == 1>
-                        <td><a class="t2" href="/cfg/key/edit?id=${m.row_id}">编辑</a></td>
+                        <td><a class="t2" href="/cfg/key/edit?id=${m.key_id}">编辑</a></td>
                     </#if>
                 </tr>
             </#list>

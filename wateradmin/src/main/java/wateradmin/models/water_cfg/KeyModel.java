@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class KeyModel {
-    /** 应用ID */
-    public int row_id;
-    /** 应用标识-guid */
+    /** 密钥ID */
+    public int key_id;
+    /** 访问键 */
     public String access_key;
-    /** 应用密钥 */
+    /** 访问密钥 */
     public String access_secret_key;
-    /** 应用密钥盐 */
+    /** 访问密钥盐 */
     public String access_secret_salt;
     /** 分组标签 */
     public String tag;

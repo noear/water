@@ -10,8 +10,8 @@
     <script src="${js}/layer/layer.js"></script>
     <script>
         function del(){
-            var row_id = ${m.row_id!0};
-            if(row_id < 1){
+            var key_id = ${m.key_id!0};
+            if(key_id < 1){
                 return;
             }
 
@@ -23,7 +23,7 @@
                 $.ajax({
                     type:"POST",
                     url:"/cfg/key/ajax/del",
-                    data:{"row_id":row_id},
+                    data:{"key_id":key_id},
                     success:function(data){
                         if(1==data.code) {
                             top.layer.msg('操作成功');
@@ -87,7 +87,7 @@
 
     <detail>
         <form id="form">
-            <input type="hidden" id="row_id" value="${m.row_id!0}">
+            <input type="hidden" id="key_id" value="${m.key_id!0}">
         <table>
             <tr>
                 <th>tag*</th>
