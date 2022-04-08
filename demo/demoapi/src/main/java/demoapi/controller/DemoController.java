@@ -6,9 +6,13 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.annotation.CloudConfig;
 import org.noear.solon.cloud.model.Event;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.i18n.I18nUtil;
 import org.noear.solon.logging.utils.TagsMDC;
+import org.noear.water.WaterClient;
 import org.noear.weed.DbContext;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -23,7 +27,7 @@ public class DemoController {
 
     @Mapping("/")
     public String test() throws SQLException {
-        if(demoDb == null){
+        if (demoDb == null) {
             return "no demo_db config!";
         }
 
@@ -39,5 +43,15 @@ public class DemoController {
         CloudClient.event().publish(new Event("demo.test", "{\"order_id\":1}")); //（非注解模式）
 
         return "OK";
+    }
+
+    @Mapping("i18n")
+    public String i18n(Context ctx) {
+        return I18nUtil.getMessage(ctx, "title");
+    }
+
+    @Mapping("key")
+    public Object key() throws IOException {
+        return WaterClient.Key.getKeyByAccessKey("1a82e91344e04b4cb158321e74ec4547");
     }
 }
