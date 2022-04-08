@@ -34,7 +34,7 @@ public class I18nApi {
                 map = i18nMap.get(i18nKey);
 
                 if (map == null) {
-                    map = loadKey(tag, bundle, lang);
+                    map = loadDo(tag, bundle, lang);
                 }
                 i18nMap.put(i18nKey, map);
             }
@@ -45,19 +45,19 @@ public class I18nApi {
 
     /**
      * 刷新
-     * */
-    public void refresh(String tag, String bundle, String lang) throws IOException {
-
-        Map map = loadKey(tag, bundle, lang);
+     */
+    public Map getI18nNoCache(String tag, String bundle, String lang) throws IOException {
+        Map map = loadDo(tag, bundle, lang);
 
         if (map.size() > 0) {
             String i18nKey = String.format("%s:%s:%s", tag, bundle, lang);
             i18nMap.put(i18nKey, map);
         }
+
+        return map;
     }
 
-    protected Map<String, String> loadKey(String tag, String bundle, String lang) throws IOException {
-
+    protected Map<String, String> loadDo(String tag, String bundle, String lang) throws IOException {
         String json = apiCaller.http("/i18n/get/")
                 .data("tag", tag)
                 .data("bundle", bundle)

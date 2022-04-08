@@ -33,7 +33,7 @@ public class KeyApi {
                 keyM = keyMap.get(accessKey);
 
                 if (keyM == null) {
-                    keyM = loadKey(accessKey, 0);
+                    keyM = loadDo(accessKey, 0);
                 }
 
                 keyMap2.put(keyM.key_id, keyM);
@@ -55,7 +55,7 @@ public class KeyApi {
                 keyM = keyMap.get(keyId);
 
                 if (keyM == null) {
-                    keyM = loadKey("", keyId);
+                    keyM = loadDo("", keyId);
                 }
 
                 keyMap2.put(keyId, keyM);
@@ -70,14 +70,14 @@ public class KeyApi {
      * 刷新密钥
      */
     public void refresh(String accessKey, int orKeyId) throws IOException {
-        KeyM keyM = loadKey(accessKey, orKeyId);
+        KeyM keyM = loadDo(accessKey, orKeyId);
         if (keyM.key_id > 0) {
             keyMap2.put(keyM.key_id, keyM);
             keyMap.put(keyM.access_key, keyM);
         }
     }
 
-    protected KeyM loadKey(String accessKey, int orKeyId) throws IOException {
+    protected KeyM loadDo(String accessKey, int orKeyId) throws IOException {
 
         String json = apiCaller.http("/key/get/")
                 .data("accessKey", accessKey)
