@@ -159,6 +159,18 @@ public class DbWaterCfgApi {
                 .selectItem("*", KeyM.class);
     }
 
+    public static KeyM getKeyById(int key_id) throws SQLException {
+        if (key_id == 0) {
+            return new KeyM();
+        }
+
+        return db().table("water_cfg_key")
+                .where("key_id = ?", key_id)
+                .caching(CacheUtils.data)
+                .usingCache(10)
+                .selectItem("*", KeyM.class);
+    }
+
     public static List<I18nM> getI18nListByTag(String tag, String bundle, String lang) throws SQLException {
         if (lang == null) {
             lang = "";

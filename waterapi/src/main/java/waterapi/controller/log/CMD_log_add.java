@@ -38,7 +38,7 @@ public class CMD_log_add extends UapiBase {
      */
     @NotEmpty("logger")
     @Mapping("/log/add/")
-    public Result cmd_exec(Context ctx, String logger, int level, String summary, String content,
+    public Result cmd_exec(Context ctx, String logger, int level, String content,
                            String from, String trace_id) throws Exception {
 
         String log_fulltime_str = ctx.param("log_fulltime");
