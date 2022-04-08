@@ -20,11 +20,12 @@ public class KeyApi {
     }
 
     Map<String, KeyM> keyMap = Collections.synchronizedMap(new HashMap());
+    Map<Integer, KeyM> keyMap2 = Collections.synchronizedMap(new HashMap());
 
     /**
      * 获取密钥
-     * */
-    public KeyM getKey(String accessKey) throws IOException {
+     */
+    public KeyM getKeyByAccessKey(String accessKey) throws IOException {
         KeyM keyM = keyMap.get(accessKey);
 
         if (keyM == null) {
@@ -32,8 +33,10 @@ public class KeyApi {
                 keyM = keyMap.get(accessKey);
 
                 if (keyM == null) {
-                    keyM = loadKey(accessKey);
+                    keyM = loadKey(accessKey, 0);
                 }
+
+                keyMap2.put(keyM.key_id, keyM);
                 keyMap.put(accessKey, keyM);
             }
         }
@@ -41,10 +44,44 @@ public class KeyApi {
         return keyM;
     }
 
-    protected KeyM loadKey(String accessKey) throws IOException {
+    /**
+     * 获取密钥
+     */
+    public KeyM getKeyById(Integer keyId) throws IOException {
+        KeyM keyM = keyMap2.get(keyId);
+
+        if (keyM == null) {
+            synchronized (keyId) {
+                keyM = keyMap.get(keyId);
+
+                if (keyM == null) {
+                    keyM = loadKey("", keyId);
+                }
+
+                keyMap2.put(keyId, keyM);
+                keyMap.put(keyM.access_key, keyM);
+            }
+        }
+
+        return keyM;
+    }
+
+    /**
+     * 重新加载key
+     * */
+    public void reloadKey(String accessKey, int orKeyId) throws IOException {
+        KeyM keyM = loadKey(accessKey, orKeyId);
+        if (keyM.key_id > 0) {
+            keyMap2.put(keyM.key_id, keyM);
+            keyMap.put(keyM.access_key, keyM);
+        }
+    }
+
+    protected KeyM loadKey(String accessKey, int orKeyId) throws IOException {
 
         String json = apiCaller.http("/key/get/")
                 .data("accessKey", accessKey)
+                .data("keyId", String.valueOf(orKeyId))
                 .post();
 
         ONode oNode = ONode.loadStr(json);
