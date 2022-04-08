@@ -67,9 +67,9 @@ public class KeyApi {
     }
 
     /**
-     * 重新加载key
-     * */
-    public void reloadKey(String accessKey, int orKeyId) throws IOException {
+     * 刷新密钥
+     */
+    public void refresh(String accessKey, int orKeyId) throws IOException {
         KeyM keyM = loadKey(accessKey, orKeyId);
         if (keyM.key_id > 0) {
             keyMap2.put(keyM.key_id, keyM);

@@ -60,10 +60,7 @@
                         $('#message').val(data.message);
                         $('#sgin').val(data.sign);
 
-                        $("#msgForm").ajaxSubmit(function(data) {
-                            // 提交成功后处理，message为提交页面的返回内容
-                            top.layer.msg(data);
-                        });
+                        $("#msgForm").submit();
                     }
                 });
 
@@ -130,7 +127,7 @@
             </detail>
 
     </main>
-    <form id="msgForm"  method="post" style="display: none;">
+    <form id="msgForm"  method="post" target="_blank" style="display: none;">
         <input name="id" id="id">
         <input name="key" id="key">
         <input name="topic" id="topic">

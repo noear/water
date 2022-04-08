@@ -43,6 +43,19 @@ public class I18nApi {
         return map;
     }
 
+    /**
+     * 刷新
+     * */
+    public void refresh(String tag, String bundle, String lang) throws IOException {
+
+        Map map = loadKey(tag, bundle, lang);
+
+        if (map.size() > 0) {
+            String i18nKey = String.format("%s:%s:%s", tag, bundle, lang);
+            i18nMap.put(i18nKey, map);
+        }
+    }
+
     protected Map<String, String> loadKey(String tag, String bundle, String lang) throws IOException {
 
         String json = apiCaller.http("/i18n/get/")
