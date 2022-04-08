@@ -13,7 +13,6 @@ import org.noear.solon.logging.utils.TagsMDC;
 /**
  * @author noear 2021/11/7 created
  */
-
 @Slf4j
 @Component
 public class AppFilterImpl implements Filter {
