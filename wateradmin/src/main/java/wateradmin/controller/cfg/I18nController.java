@@ -29,8 +29,8 @@ import java.util.Properties;
 @Controller
 @Mapping("/cfg/i18n")
 public class I18nController extends BaseController {
-    String _i18n_lang = "_i18n.lang";
-    String _i18n_bundle = "_i18n.bundle";
+    static final String _i18n_lang = "_i18n.lang";
+    static final String _i18n_bundle = "_i18n.bundle";
 
     @Mapping("")
     public ModelAndView home(String tag_name) throws Exception {
@@ -329,7 +329,7 @@ public class I18nController extends BaseController {
         }
 
         i18n.remove(_i18n_bundle);
-//        i18n.remove(_i18n_lang);
+        i18n.remove(_i18n_lang);
 
 
         if (lang == null) {
