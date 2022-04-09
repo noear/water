@@ -5,6 +5,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DataItem;
+import org.noear.weed.DbContext;
 import wateradmin.dso.db.DbLuffyApi;
 import wateradmin.models.water_paas.LuffyFileModel;
 import wateradmin.models.water_paas.LuffyFileType;
@@ -28,6 +29,14 @@ public class Upgrade {
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
             log.error("Upgrade attempt failed: {}", e);
+        }
+
+        try {
+            String sql = Utils.getResourceAsString("upgrade/water.sql");
+            tryInitSchemaBySplitSql(Config.water, sql);
+        } catch (Throwable e) {
+            TagsMDC.tag0("upgrade");
+            log.error("Upgrade water schema failed: {}", e);
         }
     }
 
@@ -77,6 +86,18 @@ public class Upgrade {
             dataItem.set("content", waterUpgradeNew);
 
             DbLuffyApi.setFile(0, dataItem, LuffyFileType.pln);
+        }
+    }
+
+    private static void tryInitSchemaBySplitSql(DbContext db, String sql) throws Exception {
+        if (Utils.isNotEmpty(sql)) {
+            for (String sqlItem : sql.split(";")) {
+                sqlItem = sqlItem.trim();
+
+                if (Utils.isNotEmpty(sqlItem)) {
+                    db.exe(sqlItem);
+                }
+            }
         }
     }
 }
