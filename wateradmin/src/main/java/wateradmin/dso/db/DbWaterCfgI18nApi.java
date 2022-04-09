@@ -114,6 +114,9 @@ public class DbWaterCfgI18nApi {
             return;
         }
 
+        value = value.replace("\\\\", "\\");
+        value = value.replace("\\n", "\n");
+
         DbTableQuery qr = db().table("water_cfg_i18n")
                 .set("value", value)
                 .set("gmt_modified", System.currentTimeMillis());
