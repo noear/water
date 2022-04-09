@@ -40,7 +40,6 @@ grit.ldap:
   groupFilter: "cn=%s"
 ```
 
-
 ### 告警接收客户端：（嘿嘿）
 
 * iOS：https://testflight.apple.com/join/ZUhQctwS
