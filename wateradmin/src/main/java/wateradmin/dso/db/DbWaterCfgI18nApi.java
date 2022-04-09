@@ -115,11 +115,8 @@ public class DbWaterCfgI18nApi {
         }
 
         DbTableQuery qr = db().table("water_cfg_i18n")
-                .set("tag", tag.trim())
-                .set("bundle", bundle.trim())
-                .set("lang", lang.trim())
-                .set("name", name.trim())
-                .set("value", value);
+                .set("value", value)
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (qr.whereEq("tag", tag)
                 .andEq("bundle", bundle)
@@ -127,10 +124,13 @@ public class DbWaterCfgI18nApi {
                 .andEq("lang", lang)
                 .selectExists()) {
 
-            qr.set("gmt_modified", System.currentTimeMillis())
-                    .update();
+            qr.update();
         } else {
-            qr.set("gmt_create", System.currentTimeMillis())
+            qr.set("tag", tag)
+                    .set("bundle", bundle)
+                    .set("lang", lang)
+                    .set("name", name)
+                    .set("gmt_create", System.currentTimeMillis())
                     .insert();
         }
     }
