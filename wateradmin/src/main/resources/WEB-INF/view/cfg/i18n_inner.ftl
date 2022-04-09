@@ -167,7 +167,7 @@
                 <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
                 <td class="left">${m.name}</td>
                 <td class="left">${m.lang!}</td>
-                <td class="left">${m.value!}</td>
+                <td class="left break">${m.value!}</td>
                 <#if is_admin == 1>
                     <td><a class="t2" href="/cfg/i18n/edit?id=${m.row_id}">编辑</a></td>
                 </#if>
