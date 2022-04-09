@@ -142,22 +142,26 @@ public class I18nController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
     public ViewModel saveDo(String tag, String bundle, String name, String nameOld, String items) throws Exception {
-        List<I18nModel> itemList = ONode.loadStr(items).toObjectList(I18nModel.class);
+        try {
+            List<I18nModel> itemList = ONode.loadStr(items).toObjectList(I18nModel.class);
 
-        boolean result = true;
+            boolean result = true;
 
-        for (I18nModel m : itemList) {
-            if (TextUtils.isEmpty(m.lang) && TextUtils.isEmpty(m.value)) {
-                continue;
+            for (I18nModel m : itemList) {
+                if (TextUtils.isEmpty(m.lang) && TextUtils.isEmpty(m.value)) {
+                    continue;
+                }
+
+                result = result && DbWaterCfgI18nApi.setI18n(tag, bundle, name, nameOld, m.lang, m.value);
             }
 
-            result = result && DbWaterCfgI18nApi.setI18n(tag, bundle, name, nameOld, m.lang, m.value);
-        }
-
-        if (result) {
-            return viewModel.code(1, "操作成功");
-        } else {
-            return viewModel.code(0, "操作失败");
+            if (result) {
+                return viewModel.code(1, "操作成功");
+            } else {
+                return viewModel.code(0, "操作失败");
+            }
+        } catch (Throwable e) {
+            return viewModel.code(0, e.getLocalizedMessage());
         }
     }
 
@@ -267,10 +271,14 @@ public class I18nController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, String bundle, UploadedFile file) throws Exception {
-        if ("jsond".equals(file.extension)) {
-            return importFileForJsond(tag, bundle, file);
-        } else {
-            return importFileForProfile(tag, bundle, file);
+        try {
+            if ("jsond".equals(file.extension)) {
+                return importFileForJsond(tag, bundle, file);
+            } else {
+                return importFileForProfile(tag, bundle, file);
+            }
+        } catch (Throwable e) {
+            return viewModel.code(0, e.getLocalizedMessage());
         }
     }
 

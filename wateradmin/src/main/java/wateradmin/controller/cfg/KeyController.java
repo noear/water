@@ -85,14 +85,18 @@ public class KeyController extends BaseController {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key,access_secret_salt, label, description);
-        if (result) {
-            viewModel.code(1, "操作成功");
-        } else {
-            viewModel.code(0, "操作失败");
-        }
+        try {
+            boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key, access_secret_salt, label, description);
+            if (result) {
+                viewModel.code(1, "操作成功");
+            } else {
+                viewModel.code(0, "操作失败");
+            }
 
-        return viewModel;
+            return viewModel;
+        } catch (Throwable e) {
+            return viewModel.code(0, e.getLocalizedMessage());
+        }
     }
 
 
@@ -125,20 +129,24 @@ public class KeyController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
-        String jsonD = IOUtils.toString(file.content);
-        JsondEntity entity = JsondUtils.decode(jsonD);
+        try {
+            String jsonD = IOUtils.toString(file.content);
+            JsondEntity entity = JsondUtils.decode(jsonD);
 
-        if (entity == null || "water_cfg_key".equals(entity.table) == false) {
-            return viewModel.code(0, "数据不对！");
+            if (entity == null || "water_cfg_key".equals(entity.table) == false) {
+                return viewModel.code(0, "数据不对！");
+            }
+
+            List<KeyModel> list = entity.data.toObjectList(KeyModel.class);
+
+            for (KeyModel m : list) {
+                DbWaterCfgKeyApi.impKey(tag, m);
+            }
+
+            return viewModel.code(1, "ok");
+        } catch (Throwable e) {
+            return viewModel.code(0, e.getLocalizedMessage());
         }
-
-        List<KeyModel> list = entity.data.toObjectList(KeyModel.class);
-
-        for (KeyModel m : list) {
-            DbWaterCfgKeyApi.impKey(tag, m);
-        }
-
-        return viewModel.code(1, "ok");
     }
 
     @Mapping("ajax/batch")
