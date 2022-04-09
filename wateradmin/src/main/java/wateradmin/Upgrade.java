@@ -93,9 +93,8 @@ public class Upgrade {
         if (Utils.isNotEmpty(sql)) {
             for (String sqlItem : sql.split(";")) {
                 sqlItem = sqlItem.trim();
-
                 if (Utils.isNotEmpty(sqlItem)) {
-                    db.exe(sqlItem);
+                    db.sql(sqlItem).log(false).execute();
                 }
             }
         }

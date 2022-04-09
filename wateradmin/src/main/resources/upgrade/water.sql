@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `water_cfg_i18n` (
-    `row_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '国际化id',
+    `row_id` int(11) NOT NULL AUTO_INCREMENT,
     `tag` varchar(40) NOT NULL COMMENT '分组标签',
-    `bundle` varchar(40) NOT NULL COMMENT '捆名',
+    `bundle` varchar(40) NOT NULL COMMENT '语言包名',
     `lang` varchar(40) NOT NULL COMMENT '语言',
     `name` varchar(100) NOT NULL COMMENT '名称',
     `value` varchar(5000) DEFAULT NULL COMMENT '值 ',
