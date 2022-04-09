@@ -25,7 +25,7 @@ public class LogPipelineLocal extends EventPipeline<LogM> {
     }
 
     @Override
-    protected void handler(List<LogM> logEvents) {
+    protected void handle(List<LogM> logEvents) {
         try {
             ProtocolHub.logStorer.writeAll(logEvents);
         } catch (Throwable ex) {

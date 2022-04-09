@@ -30,7 +30,7 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
         TaskUtils.run(this);
     }
 
-    protected abstract void handler(List<Event> events);
+    protected abstract void handle(List<Event> events);
 
     //
     //
@@ -89,7 +89,7 @@ public abstract class EventPipeline<Event> implements TaskUtils.ITask {
             collectDo(list);
 
             if (list.size() > 0) {
-                handler(list);
+                handle(list);
             } else {
                 break;
             }

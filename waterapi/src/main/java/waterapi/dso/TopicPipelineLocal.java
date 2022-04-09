@@ -27,7 +27,7 @@ public class TopicPipelineLocal extends EventPipeline<String> {
     Set<String> topicSet = new HashSet<>();
 
     @Override
-    protected void handler(List<String> topicEvents) {
+    protected void handle(List<String> topicEvents) {
         try {
             for (String topicName : topicEvents) {
                 if (topicSet.contains(topicName) == false) {

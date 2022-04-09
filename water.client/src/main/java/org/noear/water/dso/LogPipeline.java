@@ -25,7 +25,7 @@ public class LogPipeline extends EventPipeline<LogM> {
     }
 
     @Override
-    protected void handler(List<LogM> logEvents) {
+    protected void handle(List<LogM> logEvents) {
         WaterClient.Log.appendAll(logEvents, true);
     }
 }
