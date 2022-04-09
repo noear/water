@@ -2,7 +2,7 @@ package waterapi.dso.db;
 
 import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
-import org.noear.water.model.I18nM;
+import waterapi.models.I18nModel;
 import org.noear.water.model.KeyM;
 import org.noear.water.protocol.model.message.BrokerVo;
 import org.noear.water.utils.TextUtils;
@@ -171,7 +171,7 @@ public class DbWaterCfgApi {
                 .selectItem("*", KeyM.class);
     }
 
-    public static List<I18nM> getI18nListByTag(String tag, String bundle, String lang) throws SQLException {
+    public static List<I18nModel> getI18nListByTag(String tag, String bundle, String lang) throws SQLException {
         if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(tag)) {
             return new ArrayList<>();
         }
@@ -191,6 +191,6 @@ public class DbWaterCfgApi {
                 .orderBy("name ASC")
                 .caching(CacheUtils.data)
                 .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
-                .selectList("name,value", I18nM.class);
+                .selectList("name,value", I18nModel.class);
     }
 }

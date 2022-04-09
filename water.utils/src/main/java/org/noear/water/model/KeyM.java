@@ -16,27 +16,27 @@ public class KeyM implements Serializable {
     /** 标记 */
     private String label;
 
-    public int getKeyId() {
+    public int key_id() {
         return key_id;
     }
 
-    public String getAccessKey() {
+    public String access_key() {
         return access_key;
     }
 
-    public String getAccessSecretKey() {
+    public String access_secret_key() {
         return access_secret_key;
     }
 
-    public String getAccessSecretSalt() {
+    public String access_secret_salt() {
         return access_secret_salt;
     }
 
-    public String getTag() {
+    public String tag() {
         return tag;
     }
 
-    public String getLabel() {
+    public String label() {
         return label;
     }
 }
