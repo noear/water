@@ -4,7 +4,15 @@ import java.io.Serializable;
 
 public class I18nM implements Serializable {
     /** 名称 */
-    public String name;
+    private String name;
     /** 值  */
-    public String value;
+    private String value;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

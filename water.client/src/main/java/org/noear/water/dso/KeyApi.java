@@ -36,7 +36,7 @@ public class KeyApi {
                     keyM = loadDo(accessKey, 0);
                 }
 
-                keyMap2.put(keyM.key_id, keyM);
+                keyMap2.put(keyM.getKeyId(), keyM);
                 keyMap.put(accessKey, keyM);
             }
         }
@@ -59,7 +59,7 @@ public class KeyApi {
                 }
 
                 keyMap2.put(keyId, keyM);
-                keyMap.put(keyM.access_key, keyM);
+                keyMap.put(keyM.getAccessKey(), keyM);
             }
         }
 
@@ -71,9 +71,9 @@ public class KeyApi {
      */
     public void refresh(String accessKey, int orKeyId) throws IOException {
         KeyM keyM = loadDo(accessKey, orKeyId);
-        if (keyM.key_id > 0) {
-            keyMap2.put(keyM.key_id, keyM);
-            keyMap.put(keyM.access_key, keyM);
+        if (keyM.getKeyId() > 0) {
+            keyMap2.put(keyM.getKeyId(), keyM);
+            keyMap.put(keyM.getAccessKey(), keyM);
         }
     }
 

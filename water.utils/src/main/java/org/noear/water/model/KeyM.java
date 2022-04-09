@@ -4,15 +4,39 @@ import java.io.Serializable;
 
 public class KeyM implements Serializable {
     /** 密钥ID */
-    public int key_id;
+    private int key_id;
     /** 访问键 */
-    public String access_key;
+    private String access_key;
     /** 访问密钥 */
-    public String access_secret_key;
+    private String access_secret_key;
     /** 访问密钥盐 */
-    public String access_secret_salt;
+    private String access_secret_salt;
     /** 分组标签 */
-    public String tag;
+    private String tag;
     /** 标记 */
-    public String label;
+    private String label;
+
+    public int getKeyId() {
+        return key_id;
+    }
+
+    public String getAccessKey() {
+        return access_key;
+    }
+
+    public String getAccessSecretKey() {
+        return access_secret_key;
+    }
+
+    public String getAccessSecretSalt() {
+        return access_secret_salt;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }
