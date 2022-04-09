@@ -123,6 +123,22 @@ public class DemoApp {
     }
 }
 
+@Configuration
+public class DemoConfig {
+
+    @Bean
+    public DataSource db1(@CloudConfig("demoDb") HikariDataSource ds) {
+        //配置一个数据源
+        return ds;
+    }
+    
+    @Bean
+    public I18nBundleFactory i18nBundleFactory(){
+        //将国际化服务，切换为云端接口
+        return new CloudI18nBundleFactory();
+    }
+}
+
 @Slf4j
 @Controller
 public class DemoController{
