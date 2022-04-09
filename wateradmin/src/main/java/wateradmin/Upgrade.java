@@ -3,6 +3,8 @@ package wateradmin;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
 import org.noear.solon.logging.utils.TagsMDC;
+import org.noear.water.WaterClient;
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
@@ -37,6 +39,18 @@ public class Upgrade {
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
             log.error("Upgrade water schema failed: {}", e);
+        }
+
+        try {
+            ConfigM lang_type = WaterClient.Config.get("_system", "lang_type");
+            if (lang_type == null || Utils.isEmpty(lang_type.value)) {
+                String txt = Utils.getResourceAsString("upgrade/lang_type.txt");
+                if (Utils.isNotEmpty(txt)) {
+                    WaterClient.Config.set("_system", "lang_type", txt);
+                }
+            }
+        } catch (Throwable e) {
+
         }
     }
 
