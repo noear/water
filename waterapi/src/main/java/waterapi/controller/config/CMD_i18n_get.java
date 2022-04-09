@@ -29,7 +29,7 @@ public class CMD_i18n_get extends UapiBase {
     public Result cmd_exec(String tag, String bundle, String lang) throws Throwable {
         List<I18nM> list = DbWaterCfgApi.getI18nListByTag(tag, bundle, lang);
         Map<String, String> map = new HashMap<>();
-        list.forEach((m) -> map.put(m.name, m.value));
+        list.forEach((m) -> map.put(m.getName(), m.getValue()));
 
         return Result.succeed(map);
     }

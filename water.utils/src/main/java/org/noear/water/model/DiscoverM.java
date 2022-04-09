@@ -12,6 +12,6 @@ public class DiscoverM {
     public final List<DiscoverTargetM> list = new ArrayList<>();
 
     public void add(String protocol, String address, String meta, int w) {
-        list.add(new DiscoverTargetM(protocol, address, meta,1));
+        list.add(new DiscoverTargetM(protocol, address, meta,w));
     }
 }
