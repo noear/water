@@ -114,14 +114,25 @@ public class DbWaterCfgI18nApi {
             return;
         }
 
-        db().table("water_cfg_i18n")
+        DbTableQuery qr = db().table("water_cfg_i18n")
                 .set("tag", tag.trim())
                 .set("bundle", bundle.trim())
                 .set("lang", lang.trim())
                 .set("name", name.trim())
-                .set("value", value)
-                .set("gmt_create", System.currentTimeMillis())
-                .insertBy("tag,bundle,lang,name");
+                .set("value", value);
+
+        if (qr.whereEq("tag", tag)
+                .andEq("bundle", bundle)
+                .andEq("name", name)
+                .andEq("lang", lang)
+                .selectExists()) {
+
+            qr.set("gmt_modified", System.currentTimeMillis())
+                    .update();
+        } else {
+            qr.set("gmt_create", System.currentTimeMillis())
+                    .insert();
+        }
     }
 
     //删除
