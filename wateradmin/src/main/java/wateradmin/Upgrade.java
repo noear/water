@@ -19,6 +19,7 @@ import wateradmin.models.water_paas.LuffyFileType;
 @Slf4j
 public class Upgrade {
     public static void tryUpdate() {
+        //for v1:2.4.8
         try {
             api_water_init();
         } catch (Throwable e) {
@@ -33,6 +34,7 @@ public class Upgrade {
             log.error("Upgrade attempt failed: {}", e);
         }
 
+        //for v2:2.5.0
         try {
             String sql = Utils.getResourceAsString("upgrade/water.sql");
             tryInitSchemaBySplitSql(Config.water, sql);
