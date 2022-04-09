@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 1;
+let ver_new = 2;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -58,6 +58,32 @@ if(ver_old < 1){
 
     //::FaaS
     db2.table('grit_resource').set('display_name','函数计算').whereEq('resource_id',10).update();
+}
+
+if(ver_old < 2){
+    let db2 = water.db('water/water');
+    //::安全名单
+    let tmlRes = db2.table('grit_resource').whereEq('display_name','安全名单').limit(1).selectMap('*');
+    tmlRes.remove("resource_id");
+
+    //::访问密钥
+    if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/key').selectExists() == false){
+        db2.table('grit_resource')
+            .setMap(tmlRes).set('display_name','访问密钥').set('order_index',12).set('link_uri','/cfg/key').set("guid", XUtil.guid())
+            .usingNull(false)
+            .usingExpr(false)
+            .insert();
+    }
+
+    //::多语言包
+    if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/i18n').selectExists() == false){
+        db2.table('grit_resource')
+            .setMap(tmlRes).set('display_name','多语言包').set('order_index',13).set('link_uri','/cfg/i18n').set("guid", XUtil.guid())
+            .usingNull(false)
+            .usingExpr(false)
+            .insert();
+    }
+
 }
 
 //3.设定版本
