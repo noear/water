@@ -9,7 +9,7 @@ import org.noear.water.model.MessageM;
  * @WaterMessage("test.hello")
  * public class TestMessage implements MessageHandler {
  *     @Override
- *     public boolean handler(MessageM msg) throws Throwable {
+ *     public boolean handle(MessageM msg) throws Throwable {
  *         return true;
  *     }
  * }

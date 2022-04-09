@@ -171,7 +171,7 @@ public class DemoController{
 @CloudEvent("demo.test")
 public class Event_demo_test implements CloudEventHandler {
     @Override
-    public boolean handler(Event event) throws Exception {
+    public boolean handle(Event event) throws Exception {
         //处理消息...
         log.info("我收到消息：" + event.content());
         return true;
@@ -183,7 +183,7 @@ public class Event_demo_test implements CloudEventHandler {
 @CloudConfig("demoDb")
 public class TestConfigHandler implements CloudConfigHandler {
     @Override
-    public void handler(Config config) {
+    public void handle(Config config) {
 
     }
 }
