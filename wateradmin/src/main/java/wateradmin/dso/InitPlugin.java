@@ -75,16 +75,16 @@ public class InitPlugin implements Plugin {
     private void initWeedForAdmin() {
         //admin 项目
         WeedConfig.onExecuteAft((cmd) -> {
+            if (cmd.isLog < 0) {
+                return;
+            }
+
             if (isDebugMode) {
                 if (isWeedStyle2) {
                     log.debug(cmd.toSqlString());
                 } else {
                     log.debug(cmd.text + "\r\n" + ONode.stringify(cmd.paramMap()));
                 }
-            }
-
-            if (cmd.isLog < 0) {
-                return;
             }
 
             Context ctx = Context.current();
