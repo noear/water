@@ -8,7 +8,7 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="${js}/vue.js"></script>
     <script>
         var nameOld = "${model.name!}";
         var tagOld = "${tag_name!}";
