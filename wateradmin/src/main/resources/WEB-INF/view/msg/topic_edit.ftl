@@ -44,7 +44,7 @@
                     if (data.code == 1) {
                         top.layer.msg('操作成功');
                         setTimeout(function(){
-                            parent.location.href = "/msg/topic";
+                            location.href = "/msg/topic/inner?tag_name="+tag;
                         },800);
                     } else {
                         top.layer.msg(data.msg);
@@ -58,6 +58,8 @@
                 return;
             }
 
+            var tag = $('#tag').val();
+
             $.ajax({
                 type:"POST",
                 url:"/msg/topic/edit/ajax/del",
@@ -66,7 +68,7 @@
                     if (data.code == 1) {
                         top.layer.msg('操作成功');
                         setTimeout(function(){
-                            parent.location.href = "/msg/topic";
+                            location.href = "/msg/topic/inner?tag_name="+tag;
                         },800);
                     } else {
                         top.layer.msg(data.msg);
