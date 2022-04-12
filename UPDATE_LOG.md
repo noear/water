@@ -1,11 +1,11 @@
 #### 2.6.1
 * 客户端增加多集群支持
-* 优化日志数据监控的线图显示
-* 修复保存主题后界面错乱的问题
 
 #### 2.6.0
 * 添加密钥配置
 * 添加国际化配置
+* 优化日志数据监控的线图显示
+* 修复保存主题后界面错乱的问题
 * ConfigHandler::handler 更名为 handle
 * DiscoverHandler::handler 更名为 handle
 * MessageHandler::handler 更名为 handle
