@@ -31,7 +31,6 @@ public class CMD_log_add extends UapiBase {
     /**
      * @param logger   日志记录器name
      * @param level    日志级别
-     * @param summary  摘要
      * @param content  内容
      * @param from     来自
      * @param trace_id 链跟跟踪ID
