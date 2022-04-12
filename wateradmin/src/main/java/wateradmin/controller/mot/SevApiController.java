@@ -125,6 +125,7 @@ public class SevApiController extends BaseController {
 
         Map<String, List> speedReqTate = DbWaterOpsApi.getSpeedForDate(tag, name_md5, service, "total_num");
         Map<String, List> speeds = DbWaterOpsApi.getSpeedForMonth(tag, name_md5, service);
+
         viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
         viewModel.put("speeds", ONode.stringify(speeds));
         viewModel.put("tag", tag);
@@ -137,6 +138,8 @@ public class SevApiController extends BaseController {
         } else {
             if ("_watersrt".equals(service)) {
                 return view("mot/speed_charts3");
+            } else if ("_waterlog".equals(service)) {
+                return view("mot/speed_charts_log");
             } else {
                 return view("mot/speed_charts2");
             }
