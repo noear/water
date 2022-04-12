@@ -110,6 +110,8 @@ public class SevApiController extends BaseController {
         } else {
             if ("_watersrt".equals(serviceName)) {
                 return view("mot/speed_inner3");
+            } else if ("_waterlog".equals(serviceName)) {
+                return view("mot/speed_inner_log");
             } else {
                 return view("mot/speed_inner2");
             }
