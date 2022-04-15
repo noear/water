@@ -18,6 +18,7 @@
 | noearorg/xwater:2.6.1         | 19371 | Water助理工具（仅在需要时启用） |
 
 
+
 ### 环境要求（请准备好）
 
 * mysql 8.x：做为主库（字符集：utf8mb4，排序集：utf8mb4_general_ci）
