@@ -17,6 +17,7 @@ public class WaterAddress {
     private static LoadBalanceM logApiUrl;
 
      static {
+         //可触发 WaterSetting 的初始化
          defApiUrl = new LoadBalanceM(WaterSetting.water_api_url().split(","));
 
          cfgApiUrl = defApiUrl;
