@@ -16,14 +16,14 @@ public class WaterAddress {
     private static LoadBalanceM msgApiUrl;
     private static LoadBalanceM logApiUrl;
 
-    public static void init(String url) {
-        defApiUrl = new LoadBalanceM(url.split(","));
+     static {
+         defApiUrl = new LoadBalanceM(WaterSetting.water_api_url().split(","));
 
-        cfgApiUrl = defApiUrl;
-        regApiUrl = defApiUrl;
-        msgApiUrl = defApiUrl;
-        logApiUrl = defApiUrl;
-    }
+         cfgApiUrl = defApiUrl;
+         regApiUrl = defApiUrl;
+         msgApiUrl = defApiUrl;
+         logApiUrl = defApiUrl;
+     }
 
     /**
      * 默认服务地址

@@ -60,6 +60,10 @@ public class WaterSetting {
         }
     }
 
+    private static String _water_api_url;
+    public static String water_api_url(){
+        return _water_api_url;
+    }
 
     static {
         //默认日志
@@ -84,8 +88,6 @@ public class WaterSetting {
         if (TextUtils.isEmpty(_water_api_url)) {
             throw new RuntimeException("System.getProperty(\"water.host\") is null, please configure!");
         }
-
-        WaterAddress.init(_water_api_url);
     }
 
     public static final ExecutorService pools = Executors.newCachedThreadPool();
