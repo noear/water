@@ -11,20 +11,25 @@ import java.util.function.Supplier;
  * @author noear 2022/4/15 created
  */
 public class LoadBalanceM implements Supplier<String> {
-    private final List<String> nodes = new ArrayList<>();
+    private final String[] nodes;
     private final int count;
 
     private int index;
     private static final int indexMax = 99999999;
 
     public LoadBalanceM(String... servers) {
+        List<String> nodeList = new ArrayList<>();
+
         for (String server : servers) {
             if (TextUtils.isNotEmpty(server)) {
-                nodes.add(HostUtils.adjust(server));
+                nodeList.add(HostUtils.adjust(server));
             }
         }
 
-        count = nodes.size();
+
+        count = nodeList.size();
+        nodes = new String[count];
+        nodeList.toArray(nodes);
     }
 
     @Override
@@ -32,14 +37,14 @@ public class LoadBalanceM implements Supplier<String> {
         if (count == 0) {
             return null;
         } else if (count == 1) {
-            return nodes.get(0);
+            return nodes[0];
         } else {
             //这里不需要原子性，快就好
             if (index > indexMax) {
                 index = 0;
             }
 
-            return nodes.get(index++ % count);
+            return nodes[index++ % count];
         }
     }
 }
