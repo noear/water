@@ -76,7 +76,7 @@ public class WaterSetting {
         }
 
         //接口地址
-        String _water_api_url = System.getProperty(WW.water_host);
+        _water_api_url = System.getProperty(WW.water_host);
         if (TextUtils.isEmpty(_water_api_url)) {
             _water_api_url = System.getProperty("solon.cloud.water.server");
         }
