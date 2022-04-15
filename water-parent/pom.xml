@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>water-parent</artifactId>
-    <version>2.6.0</version>
+    <version>2.6.1</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -44,12 +44,12 @@
 
         <snack3.ver>3.2.20</snack3.ver>
         <weed3.ver>3.4.22</weed3.ver>
-        <grit.ver>1.1.0</grit.ver>
+        <grit.ver>1.1.1</grit.ver>
         <rock.ver>2.1.1</rock.ver>
         <redisx.ver>1.4.1</redisx.ver>
         <esearchx.ver>1.0.11</esearchx.ver>
 
-        <water.ver>2.6.0</water.ver>
+        <water.ver>2.6.1</water.ver>
 
         <luffy.ver>1.1.16</luffy.ver>
 
