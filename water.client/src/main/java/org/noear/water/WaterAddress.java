@@ -10,15 +10,17 @@ import org.noear.water.utils.TextUtils;
  * @since 2.0
  */
 public class WaterAddress {
+    private static LoadBalanceM defApiUrl;
     private static LoadBalanceM cfgApiUrl;
+    private static LoadBalanceM regApiUrl;
     private static LoadBalanceM msgApiUrl;
     private static LoadBalanceM logApiUrl;
-    private static LoadBalanceM defApiUrl;
 
     public static void init(String url) {
         defApiUrl = new LoadBalanceM(url.split(","));
 
         cfgApiUrl = defApiUrl;
+        regApiUrl = defApiUrl;
         msgApiUrl = defApiUrl;
         logApiUrl = defApiUrl;
     }
@@ -51,6 +53,21 @@ public class WaterAddress {
         }
 
         cfgApiUrl = new LoadBalanceM(url.split(","));
+    }
+
+    /**
+     * 配置服务地址
+     */
+    public static LoadBalanceM getRegApiUrl() {
+        return regApiUrl;
+    }
+
+    public static void setRegApiUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        regApiUrl = new LoadBalanceM(url.split(","));
     }
 
     /**
