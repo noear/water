@@ -20,7 +20,7 @@ public class RegistryApi {
     protected final ApiCaller apiCaller;
 
     public RegistryApi() {
-        apiCaller = new ApiCaller(WaterAddress.getRegistryApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getDefApiUrl());
     }
 
     private Map<String, Set<DiscoverHandler>> _event = new HashMap<>();

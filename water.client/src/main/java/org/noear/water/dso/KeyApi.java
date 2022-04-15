@@ -16,7 +16,7 @@ public class KeyApi {
     protected final ApiCaller apiCaller;
 
     public KeyApi() {
-        apiCaller = new ApiCaller(WaterAddress.getConfigApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getCfgApiUrl());
     }
 
     Map<String, KeyM> keyMap = Collections.synchronizedMap(new HashMap());

@@ -20,7 +20,7 @@ public class JobApi {
     protected final ApiCaller apiCaller;
 
     public JobApi() {
-        apiCaller = new ApiCaller(WaterAddress.getJobApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getDefApiUrl());
     }
 
 

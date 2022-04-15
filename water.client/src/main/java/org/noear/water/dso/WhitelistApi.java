@@ -18,7 +18,7 @@ public class WhitelistApi {
     protected final ApiCaller apiCaller;
 
     public WhitelistApi() {
-        apiCaller = new ApiCaller(WaterAddress.getWhitelistApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getDefApiUrl());
     }
 
     /**

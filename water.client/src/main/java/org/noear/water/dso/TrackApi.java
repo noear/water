@@ -22,7 +22,7 @@ public class TrackApi {
     protected final ApiCaller apiCaller;
 
     public TrackApi() {
-        apiCaller = new ApiCaller(WaterAddress.getTrackApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getDefApiUrl());
     }
 
     //db:5

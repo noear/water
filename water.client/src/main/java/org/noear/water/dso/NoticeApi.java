@@ -19,7 +19,7 @@ public class NoticeApi {
     protected final ApiCaller apiCaller;
 
     public NoticeApi() {
-        apiCaller = new ApiCaller(WaterAddress.getNoticeApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getDefApiUrl());
     }
 
     /**

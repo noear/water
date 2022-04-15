@@ -2,6 +2,7 @@ package org.noear.water.dso;
 
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.model.LoadBalanceM;
 import org.noear.water.utils.HttpUtils;
 
 import java.io.ByteArrayInputStream;
@@ -15,11 +16,11 @@ import java.util.Map;
  * @since 2.0
  * */
 class ApiCaller {
-    private String server;
+    private LoadBalanceM urlLb;
     private boolean asLongHttp;
 
-    public ApiCaller(String server) {
-        this.server = server;
+    public ApiCaller(LoadBalanceM serverLb) {
+        urlLb = serverLb;
         asLongHttp = false;
     }
 
@@ -35,6 +36,8 @@ class ApiCaller {
 
     public HttpUtils http(String path) {
         String url;
+        String server = urlLb.get();
+
         if (server.endsWith("/")) {
             if (path.startsWith("/")) {
                 url = server + path.substring(1);

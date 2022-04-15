@@ -22,7 +22,7 @@ public class MessageApi {
     protected final ApiCaller apiCaller;
 
     public MessageApi() {
-        apiCaller = new ApiCaller(WaterAddress.getMessageApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getMsgApiUrl());
     }
 
 

@@ -1,6 +1,7 @@
 package org.noear.water;
 
-import org.noear.water.utils.HostUtils;
+import org.noear.water.model.LoadBalanceM;
+import org.noear.water.utils.TextUtils;
 
 /**
  * Water 内部服务地址
@@ -9,76 +10,76 @@ import org.noear.water.utils.HostUtils;
  * @since 2.0
  */
 public class WaterAddress {
-    private static String configApiUrl = WaterSetting.water_api_url();
-    private static String messageApiUrl = WaterSetting.water_api_url();
-    private static String logApiUrl = WaterSetting.water_api_url();
-    private static String registryApiUrl = WaterSetting.water_api_url();
-    private static String trackApiUrl = WaterSetting.water_api_url();
-    private static String noticeApiUrl = WaterSetting.water_api_url();
-    private static String whitelistApiUrl = WaterSetting.water_api_url();
-    private static String jobApiUrl = WaterSetting.water_api_url();
+    private static LoadBalanceM cfgApiUrl;
+    private static LoadBalanceM msgApiUrl;
+    private static LoadBalanceM logApiUrl;
+    private static LoadBalanceM defApiUrl;
 
-    public static String getConfigApiUrl() {
-        return configApiUrl;
+    public static void init(String url) {
+        defApiUrl = new LoadBalanceM(url.split(","));
+
+        cfgApiUrl = defApiUrl;
+        msgApiUrl = defApiUrl;
+        logApiUrl = defApiUrl;
     }
 
-    public static void setConfigApiUrl(String url) {
-        configApiUrl = HostUtils.adjust(url);
+    /**
+     * 默认服务地址
+     */
+    public static LoadBalanceM getDefApiUrl() {
+        return defApiUrl;
     }
 
-    public static String getMessageApiUrl() {
-        return messageApiUrl;
+    public static void setDefApiUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        defApiUrl = new LoadBalanceM(url.split(","));
     }
 
-    public static void setMessageApiUrl(String url) {
-        messageApiUrl = HostUtils.adjust(url);
+    /**
+     * 配置服务地址
+     */
+    public static LoadBalanceM getCfgApiUrl() {
+        return cfgApiUrl;
     }
 
-    public static String getLogApiUrl() {
+    public static void setCfgApiUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        cfgApiUrl = new LoadBalanceM(url.split(","));
+    }
+
+    /**
+     * 消息服务地址
+     */
+    public static LoadBalanceM getMsgApiUrl() {
+        return msgApiUrl;
+    }
+
+    public static void setMsgApiUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
+
+        msgApiUrl = new LoadBalanceM(url.split(","));
+    }
+
+    /**
+     * 日志服务地址
+     */
+    public static LoadBalanceM getLogApiUrl() {
         return logApiUrl;
     }
 
     public static void setLogApiUrl(String url) {
-        logApiUrl = HostUtils.adjust(url);
-    }
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
 
-    public static String getRegistryApiUrl() {
-        return registryApiUrl;
-    }
-
-    public static void setRegistryApiUrl(String url) {
-        registryApiUrl = HostUtils.adjust(url);
-    }
-
-    public static String getTrackApiUrl() {
-        return trackApiUrl;
-    }
-
-    public static void setTrackApiUrl(String url) {
-        trackApiUrl = HostUtils.adjust(url);
-    }
-
-    public static String getNoticeApiUrl() {
-        return noticeApiUrl;
-    }
-
-    public static void setNoticeApiUrl(String url) {
-        noticeApiUrl = HostUtils.adjust(url);
-    }
-
-    public static String getWhitelistApiUrl() {
-        return whitelistApiUrl;
-    }
-
-    public static void setWhitelistApiUrl(String url) {
-        whitelistApiUrl = HostUtils.adjust(url);
-    }
-
-    public static String getJobApiUrl() {
-        return jobApiUrl;
-    }
-
-    public static void setJobApiUrl(String url) {
-        jobApiUrl = HostUtils.adjust(url);
+        logApiUrl = new LoadBalanceM(url.split(","));
     }
 }

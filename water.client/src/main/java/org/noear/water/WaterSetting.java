@@ -48,10 +48,6 @@ public class WaterSetting {
         return _water_logger_def;
     }
 
-    private static String _water_api_url = null;
-    protected static String water_api_url(){
-        return _water_api_url;
-    }
 
     //trace_id_supplier
     private static Supplier<String> _water_trace_id_supplier = ()->"";
@@ -76,7 +72,7 @@ public class WaterSetting {
         }
 
         //接口地址
-        _water_api_url = System.getProperty(WW.water_host);
+        String _water_api_url = System.getProperty(WW.water_host);
         if (TextUtils.isEmpty(_water_api_url)) {
             _water_api_url = System.getProperty("solon.cloud.water.server");
         }
@@ -88,6 +84,8 @@ public class WaterSetting {
         if (TextUtils.isEmpty(_water_api_url)) {
             throw new RuntimeException("System.getProperty(\"water.host\") is null, please configure!");
         }
+
+        WaterAddress.init(_water_api_url);
     }
 
     public static final ExecutorService pools = Executors.newCachedThreadPool();

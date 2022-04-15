@@ -21,7 +21,7 @@ public class ConfigApi {
 
     protected final ApiCaller apiCaller;
     public ConfigApi(){
-        apiCaller = new ApiCaller(WaterAddress.getConfigApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getCfgApiUrl());
     }
 
     /**

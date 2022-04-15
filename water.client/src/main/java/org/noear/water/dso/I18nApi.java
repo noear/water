@@ -16,7 +16,7 @@ public class I18nApi {
     protected final ApiCaller apiCaller;
 
     public I18nApi() {
-        apiCaller = new ApiCaller(WaterAddress.getConfigApiUrl());
+        apiCaller = new ApiCaller(WaterAddress.getCfgApiUrl());
     }
 
     Map<String, Map> i18nMap = Collections.synchronizedMap(new HashMap());
