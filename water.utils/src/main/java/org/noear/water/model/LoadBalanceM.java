@@ -31,6 +31,8 @@ public class LoadBalanceM implements Supplier<String> {
     public String get() {
         if (count == 0) {
             return null;
+        } else if (count == 1) {
+            return nodes.get(0);
         } else {
             //这里不需要原子性，快就好
             if (index > indexMax) {
