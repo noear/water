@@ -1,11 +1,16 @@
 #### 2.6.1
 * 客户端增加多地址集群支持
+* solon 升级为：1.7.2
+* grit 升级为：1.1.1
+* redisx 升级为：1.4.1
+* weed3 升级为：3.4.22
+* snack3 升级为：3.2.20
 
 #### 2.6.0
-* 添加密钥配置
-* 添加国际化配置
+* 添加密钥配置模块
+* 添加国际化配置模块
 * 优化日志数据监控的线图显示
-* 修复保存主题后界面错乱的问题
+* 修复保存消息主题后界面错乱的问题
 * ConfigHandler::handler 更名为 handle
 * DiscoverHandler::handler 更名为 handle
 * MessageHandler::handler 更名为 handle
