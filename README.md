@@ -10,10 +10,10 @@
 为Java服务开发和治理，提供一站式解决方案（可以理解为微服务架构支持套件）。基于 Solon 框架开发，并支持完整的 Solon Cloud 规范；已在生产环境跑了4年。
 
 
-功能相当于：consul + rabbitmq + elk + prometheus + openFaas + quartz + 等等，并有机结合在一起。
+功能相当于：consul + rabbitmq + elk + prometheus + openFaas + quartz + 等等，并有机结合在一起。 或者约等于：nacos + rocketmq + PlumeLog + prometheus + magic-api + xxl-job + 等等，并有机结合在一起。
 
-或者约等于：nacos + rocketmq + PlumeLog + prometheus + magic-api + xxl-job + 等等，并有机结合在一起。
 
+对 k8s 友好，支持 ip 漂移、支持 k8s service 映射。
 
 ## 开始
 
