@@ -489,7 +489,7 @@ public class MsgSourceMongo implements MsgSource {
     @Override
     public long reset(int seconds) throws SQLException {
         if (seconds < 10) {
-            seconds = 30;
+            seconds = 10;
         }
 
         initIndex();
