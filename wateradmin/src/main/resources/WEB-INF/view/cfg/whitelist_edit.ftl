@@ -117,7 +117,14 @@
                 <th>note</th>
                 <td><input type="text" id="note" value="${m.note!}" /></td>
             </tr>
-
+            <tr>
+                <th>是否启用</th>
+                <td>
+                    <switcher>
+                        <label><input id="is_enabled" value="1" type="checkbox" ${(m.is_enabled = 1)?string("checked","")}><a></a></label>
+                    </switcher>
+                </td>
+            </tr>
         </table>
         </form>
     </detail>

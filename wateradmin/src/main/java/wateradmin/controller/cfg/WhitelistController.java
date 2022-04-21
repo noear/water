@@ -68,6 +68,7 @@ public class WhitelistController extends BaseController {
             viewModel.put("m", model);
         } else {
             model = new WhitelistModel();
+            model.is_enabled = 1;
             viewModel.put("m", model);
         }
 
@@ -82,12 +83,12 @@ public class WhitelistController extends BaseController {
     //保存ip白名单新增
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveWhitelistAdd(Integer row_id, String tag, String type, String value, String note) throws Exception {
+    public ViewModel saveWhitelistAdd(Integer row_id, String tag, String type, String value, String note, int is_enabled) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgSafeApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note);
+        boolean result = DbWaterCfgSafeApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note, is_enabled);
         if (result) {
             DbWaterCfgSafeApi.reloadWhitelist();
 
