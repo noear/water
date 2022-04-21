@@ -11,7 +11,7 @@
 
     </script>
     <style>
-        .des td{text-decoration:line-through;color:#888;}
+        .dis td{text-decoration:line-through;color:#888;}
     </style>
 </head>
 <body>
