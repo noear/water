@@ -58,7 +58,7 @@
             <td>资源地址</td>
             <td width="45px">环境<br/>类型</td>
             <#if is_admin == 1>
-                <td width="80px">操作</td>
+                <td width="50px">操作</td>
             </#if>
         </tr>
         </thead>
@@ -77,13 +77,7 @@
                 <td>${m.env_type_str()}</td>
                 <#if is_admin == 1>
                     <td class="op">
-                        <a href="/ops/server/edit?server_id=${m.server_id}" class="t2">编辑</a> |
-                        <#if m.is_enabled == 0>
-                            <a onclick="disable('${m.server_id}',1)" class="t2">启用</a>
-                        </#if>
-                        <#if m.is_enabled == 1>
-                            <a onclick="disable('${m.server_id}',0)" class="t2">禁用</a>
-                        </#if>
+                        <a href="/ops/server/edit?server_id=${m.server_id}" class="t2">编辑</a>
                     </td>
                 </#if>
             </tr>
