@@ -56,6 +56,10 @@ public class ConfigModel  implements IBinder{
         update_fulltime = s.get("update_fulltime").value(null);
     }
 
+    public boolean isEnabled() {
+        return is_enabled > 0;
+    }
+
     @Override
     public IBinder clone() {
         return new ConfigModel();

@@ -49,6 +49,10 @@ public class LoggerModel implements LoggerMeta {
         return (row_num_today_error > 0);
     }
 
+    public boolean isEnabled() {
+        return is_enabled > 0;
+    }
+
     public String logger_md5() {
         return "%7Bmd5%7D" + EncryptUtils.md5(logger);
     }

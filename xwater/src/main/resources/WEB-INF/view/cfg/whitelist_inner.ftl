@@ -8,7 +8,11 @@
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script>
+
     </script>
+    <style>
+        .des{text-decoration:line-through}
+    </style>
 </head>
 <body>
 <main>
@@ -53,7 +57,7 @@
             <tbody id="tbody" class="sel_from" >
 
             <#list list as m>
-                <tr>
+                <tr class="${broker.isEnabled()?string("", "dis")}">
                     <td>${m.row_id}</td>
                     <td class="left">${m.type!}</td>
                     <td class="left">${m.value!}</td>

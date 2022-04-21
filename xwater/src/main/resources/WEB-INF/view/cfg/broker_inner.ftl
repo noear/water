@@ -9,6 +9,7 @@
     <script src="${js}/layer/layer.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
+        .des{text-decoration:line-through}
     </style>
 </head>
 <script>
@@ -44,7 +45,7 @@
         </thead>
         <tbody id="tbody">
         <#list brokers as broker>
-            <tr ${broker.isHighlight()?string("class='t4'","")}>
+            <tr class="${broker.isHighlight()?string("t4","")} ${broker.isEnabled()?string("", "dis")}" >
                 <td class="left"><a href="/log/query/inner?broker=${broker.broker}&tag_name=${broker.tag}" target="_parent">${broker.broker}</a></td>
                 <td class="center">${broker.keep_days}</td>
                 <td class="right">${broker.row_num_today}</td>

@@ -9,7 +9,7 @@
     <script src="${js}/layer/layer.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-
+        .des{text-decoration:line-through}
     </style>
 </head>
 <script>
@@ -44,7 +44,7 @@
         </thead>
         <tbody id="tbody">
         <#list loggers as logger>
-            <tr ${logger.isHighlight()?string("class='t4'","")}>
+            <tr class="${logger.isHighlight()?string("t4","")} ${broker.isEnabled()?string("", "dis")}" >
                 <td class="left"><a href="/log/query/inner?logger=${logger.logger}&tag_name=${logger.tag}" target="_parent">${logger.logger}</a></td>
                 <td class="center">${logger.keep_days}</td>
                 <td class="right">${logger.row_num_today}</td>

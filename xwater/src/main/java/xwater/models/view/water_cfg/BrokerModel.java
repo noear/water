@@ -50,6 +50,10 @@ public class BrokerModel implements BrokerMeta {
         return (row_num_today_error > 0);
     }
 
+    public boolean isEnabled() {
+        return is_enabled > 0;
+    }
+
     @Override
     public int getKeepDays() {
         return keep_days;

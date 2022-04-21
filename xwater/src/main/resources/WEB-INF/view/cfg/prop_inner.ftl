@@ -9,7 +9,7 @@
     <script src="${js}/layer/layer.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-
+        .des{text-decoration:line-through}
     </style>
 </head>
 <script>
@@ -64,7 +64,7 @@
         </thead>
         <tbody id="tbody" class="sel_from">
         <#list list as cfg>
-            <tr>
+            <tr class="${broker.isEnabled()?string("", "dis")}">
                 <td class="left">${cfg.key!}
                     <#if cfg.type != 0>
                         <n-l>::${cfg.type_str()}</n-l>

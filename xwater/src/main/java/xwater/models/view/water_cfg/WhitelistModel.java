@@ -23,4 +23,8 @@ public class WhitelistModel {
     public int is_enabled;
     /** 更新时间 */
     public Date update_fulltime;
+
+    public boolean isEnabled() {
+        return is_enabled > 0;
+    }
 }
