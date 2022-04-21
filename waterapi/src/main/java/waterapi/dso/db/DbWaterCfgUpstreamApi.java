@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author noear
  */
-public class DbWaterCfgGatewayApi {
+public class DbWaterCfgUpstreamApi {
     private static DbContext db() {
         return Config.water;
     }

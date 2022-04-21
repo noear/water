@@ -9,7 +9,7 @@ import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Whitelist;
 import org.noear.water.utils.TextUtils;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgGatewayApi;
+import waterapi.dso.db.DbWaterCfgUpstreamApi;
 import waterapi.dso.db.DbWaterRegApi;
 import waterapi.dso.interceptor.Logging;
 import waterapi.models.GatewayModel;
@@ -44,7 +44,7 @@ public class CMD_sev_discover extends UapiBase {
 
         List<ServiceModel> list = DbWaterRegApi.getServiceList(service);
 
-        GatewayModel cfg = DbWaterCfgGatewayApi.getGatewayByName(service);
+        GatewayModel cfg = DbWaterCfgUpstreamApi.getGatewayByName(service);
         String url = null;
         String policy = null;
 
