@@ -21,6 +21,7 @@ import wateradmin.models.water_reg.ServiceSpeedModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -105,7 +106,9 @@ public class SevApiController extends BaseController {
         viewModel.put("tag", tag);
         viewModel.put("serviceName", serviceName);
 
-        if ("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".indexOf(serviceName) < 0) {
+        List<String> otherList = Arrays.asList("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".split(","));
+
+        if (otherList.contains(serviceName) == false) {
             return view("mot/speed_inner");
         } else {
             if ("_watersrt".equals(serviceName)) {
@@ -135,7 +138,9 @@ public class SevApiController extends BaseController {
         viewModel.put("name_md5", name_md5);
         viewModel.put("service", service);
 
-        if ("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".indexOf(service) < 0) {
+       List<String> otherList = Arrays.asList("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".split(","));
+
+        if (otherList.contains(service) == false) {
             return view("mot/speed_charts");
         } else {
             if ("_watersrt".equals(service)) {
