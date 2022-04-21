@@ -23,22 +23,6 @@
                     <a class="btn edit mar10-l" href="/cfg/whitelist/edit?tag_name=${tag_name!}">新增</a>
                 </#if>
             </form>
-            <#if is_admin == 1 && is_setup !=1 >
-                <div>
-                    <a class="w60"></a><file>
-                        <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
-                    </file>
-
-                    <button type='button' class="minor w80 mar10-l" onclick="exp()" >导出</button>
-
-                    <#if state==1>
-                        <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>
-                    <#else>
-                        <button type='button' class="minor mar10-l" onclick="del(1,'启用')" >启用</button>
-                        <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
-                    </#if>
-                </div>
-            </#if>
         </left>
         <right>
         </right>
