@@ -11,7 +11,7 @@
 
     </script>
     <style>
-        .des{text-decoration:line-through}
+        .des{text-decoration:line-through;color:#888;}
     </style>
 </head>
 <body>
