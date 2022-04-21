@@ -67,7 +67,7 @@
                 时间
             </td>
             <td width="90px">操作人</td>
-            <td class="left">PATH/代码</td>
+            <td class="left">路径/代码</td>
             </thead>
             <tbody>
             <#list list as log>
