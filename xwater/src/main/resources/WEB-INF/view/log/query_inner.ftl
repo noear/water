@@ -54,7 +54,7 @@
 
                     <input type="hidden" name="tag_name" value="${tag_name}">
                     <select id="logger" name="logger" onchange="queryForm();">
-                        <option value="">选择服务日志</option>
+                        <option value="">选择日志器</option>
                         <#list logs as m>
                             <option value="${m.logger}">${m.logger} (${m.row_num_today})</option>
                         </#list>
