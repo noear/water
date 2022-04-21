@@ -94,23 +94,31 @@
 </script>
 <body>
 <toolbar>
-    <left>
-        <form>
-            <input type="hidden"  name="tag_name" value="${tag_name!}"/>
-            <input type="hidden"  name="state" value="${state!}"/>
-            <a class="w60">关键字：</a><input type="text"  name="key" placeholder="key" value="${key!}" class="w350"/>
-            <button type="submit">查询</button>
-            <#if is_admin == 1>
-                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
-            </#if>
-        </form>
-
-        <#if is_admin == 1 && is_setup !=1 >
-            <div><a class="w60"></a><file>
-                    <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
+    <flex>
+        <left class="col-3">
+        </left>
+        <middle class="col-6 center">
+            <form>
+                <input type="hidden"  name="tag_name" value="${tag_name!}"/>
+                <input type="hidden"  name="state" value="${state!}"/>
+                <input type="text"  name="key" placeholder="key" value="${key!}" class="w250"/>
+                <button type="submit">查询</button>
+                <#if is_admin == 1>
+                    <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
+                </#if>
+            </form>
+        </middle>
+        <right class="col-3">
+        </right>
+    </flex>
+    <flex>
+        <left class="col-6">
+            <#if is_admin == 1 && is_setup !=1 >
+                <file>
+                    <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
                 </file>
 
-                <button type='button' class="minor w80 mar10-l" onclick="exp('${tag_name!}')" >导出</button>
+                <button type='button' class="minor mar10-l" onclick="exp('${tag_name!}')" >导出</button>
 
                 <#if state==1>
                     <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>
@@ -118,15 +126,15 @@
                     <button type='button' class="minor mar10-l" onclick="del(1,'启用')" >启用</button>
                     <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
                 </#if>
-            </div>
-        </#if>
-    </left>
-    <right>
-        <selector>
-            <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
-            <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
-        </selector>
-    </right>
+            </#if>
+        </left>
+        <right class="col-6">
+            <selector>
+                <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
+                <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
+            </selector>
+        </right>
+    </flex>
 </toolbar>
 <datagrid class="list">
     <table>
