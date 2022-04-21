@@ -153,6 +153,7 @@ public class MsgSourceRdb implements MsgSource {
 
     public void setMessageRouteState(MessageModel msg, boolean dist_routed) {
         try {
+            //不需要记录最后时间
             _db.table("water_msg_message")
                     .set("dist_routed", dist_routed)
                     .whereEq("msg_id", msg.msg_id)
