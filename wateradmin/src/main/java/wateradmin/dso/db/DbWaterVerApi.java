@@ -99,8 +99,7 @@ public class DbWaterVerApi {
                 .and("`key_value`=?", keyValue)
                 .orderBy("commit_id DESC")
                 .limit(10)
-                .select("*")
-                .getList(new VersionModel());
+                .selectList("*", VersionModel.class);
     }
 
     public static VersionModel getVersionByCommit(int commit_id) throws SQLException {
@@ -108,9 +107,8 @@ public class DbWaterVerApi {
         return db().table("water_tool_versions")
                 .where("`commit_id` = ?", commit_id)
                 .limit(1)
-                .select("*")
                 .caching(CacheUtil.data)
-                .getItem(new VersionModel());
+                .selectItem("*", VersionModel.class);
     }
 
     /**

@@ -29,7 +29,7 @@ public class DbWaterCfgI18nApi {
                 .selectList("tag", TagCountsModel.class);
     }
 
-    public static List<I18nModel> getI18nListByTag(String tag, String bundle,String name, String lang) throws SQLException {
+    public static List<I18nModel> getI18nListByTag(String tag, String bundle, String name, String lang) throws SQLException {
         if (lang == null) {
             lang = "";
         }
@@ -66,8 +66,7 @@ public class DbWaterCfgI18nApi {
                 .andEq("bundle", bundle)
                 .groupBy("lang")
                 .orderBy("lang ASC")
-                .select("lang tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("lang tag,count(*) counts", TagCountsModel.class);
     }
 
     public static List<TagCountsModel> getI18nBundles(String tag) throws SQLException {
@@ -75,11 +74,10 @@ public class DbWaterCfgI18nApi {
                 .whereEq("tag", tag)
                 .groupBy("bundle")
                 .orderBy("bundle ASC")
-                .select("bundle tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("bundle tag,count(*) counts", TagCountsModel.class);
     }
 
-    public static boolean setI18n(String tag, String bundle, String name, String nameOld, String lang , String value) throws SQLException {
+    public static boolean setI18n(String tag, String bundle, String name, String nameOld, String lang, String value) throws SQLException {
         value = value.replace("\\\\", "\\");
         value = value.replace("\\n", "\n");
 
@@ -145,7 +143,7 @@ public class DbWaterCfgI18nApi {
                 .delete() > 0;
     }
 
-    public static boolean delI18n(String tag ,String bundle, String name) throws SQLException {
+    public static boolean delI18n(String tag, String bundle, String name) throws SQLException {
         DbTableQuery tb = db().table("water_cfg_i18n")
                 .whereEq("tag", tag)
                 .andEq("bundle", bundle)
@@ -179,7 +177,7 @@ public class DbWaterCfgI18nApi {
                 .selectItem("*", I18nModel.class);
     }
 
-    public static List<I18nModel> getI18nByName(String tag,String bundle, String name) throws SQLException {
+    public static List<I18nModel> getI18nByName(String tag, String bundle, String name) throws SQLException {
         if (TextUtils.isEmpty(bundle) || TextUtils.isEmpty(name)) {
             return new ArrayList<>();
         } else {

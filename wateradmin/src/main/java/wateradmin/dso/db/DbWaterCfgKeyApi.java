@@ -41,12 +41,11 @@ public class DbWaterCfgKeyApi {
                         tb.andLk("label", label + "%");
                     }
                 })
-                .select("*")
-                .getList(KeyModel.class);
+                .selectList("*", KeyModel.class);
     }
 
     //新增ip白名单
-    public static boolean setKey(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws SQLException {
+    public static boolean setKey(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt, String label, String description) throws SQLException {
         if (key_id == null) {
             key_id = 0;
         }
@@ -119,7 +118,7 @@ public class DbWaterCfgKeyApi {
     }
 
     public static KeyModel getKey(int key_id) throws SQLException {
-        if(key_id == 0){
+        if (key_id == 0) {
             return new KeyModel();
         }
 
@@ -138,5 +137,4 @@ public class DbWaterCfgKeyApi {
                 .whereIn("key_id", list)
                 .selectList("*", KeyModel.class);
     }
-
 }

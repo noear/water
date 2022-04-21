@@ -15,7 +15,7 @@ import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
-import wateradmin.dso.db.DbWaterCfgGatewayApi;
+import wateradmin.dso.db.DbWaterCfgUpstreamApi;
 import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
@@ -45,7 +45,7 @@ public class GwController extends BaseController {
             return null;
         }
 
-        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagListByEnabled();
+        List<TagCountsModel> tags = DbWaterCfgUpstreamApi.getGatewayTagListByEnabled();
 
         //权限过滤
         TagChecker.filter(tags, m -> m.tag);
@@ -71,7 +71,7 @@ public class GwController extends BaseController {
             tag_name = null;
         }
 
-        List<GatewayModel> gats = DbWaterCfgGatewayApi.getGatewayList(tag_name, 1);
+        List<GatewayModel> gats = DbWaterCfgUpstreamApi.getGatewayList(tag_name, 1);
 
         if (gateway_id == 0) {
             if (gats.size() > 0) {
@@ -85,7 +85,7 @@ public class GwController extends BaseController {
 
         //==================
 
-        GatewayModel cfg = DbWaterCfgGatewayApi.getGateway(gateway_id);
+        GatewayModel cfg = DbWaterCfgUpstreamApi.getGateway(gateway_id);
 
         List<ServiceModel> sevs = DbWaterRegApi.getServicesByName(cfg.name);
 

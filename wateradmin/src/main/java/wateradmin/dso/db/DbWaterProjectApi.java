@@ -18,8 +18,7 @@ public class DbWaterProjectApi {
     public static List<TagCountsModel> getProjectTags() throws SQLException {
         return db().table("water_ops_project")
                 .groupBy("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
     public static List<ProjectModel> getProjectByTagName(String tag, Integer is_enabled) throws SQLException {
@@ -27,18 +26,15 @@ public class DbWaterProjectApi {
                 .where("tag = ?", tag)
                 .and("is_enabled = ?", is_enabled)
                 .orderBy("`name` ASC")
-                .select("*")
-                .getList(new ProjectModel());
+                .selectList("*", ProjectModel.class);
     }
-
 
 
     //根据id获取project信息。
     public static ProjectModel getProjectByID(int project_id) throws SQLException {
         return db().table("water_ops_project")
                 .where("project_id = ?", project_id)
-                .select("*")
-                .getItem(new ProjectModel());
+                .selectItem("*", ProjectModel.class);
     }
 
     public static boolean addProject(String tag, String name, String git_url, String git_user, String git_password, String git_ssh,
@@ -80,5 +76,4 @@ public class DbWaterProjectApi {
                 .set("is_enabled", is_enabled)
                 .update() > 0;
     }
-
 }

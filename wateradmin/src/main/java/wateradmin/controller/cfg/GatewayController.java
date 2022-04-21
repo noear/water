@@ -11,7 +11,7 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.TagChecker;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagUtil;
-import wateradmin.dso.db.DbWaterCfgGatewayApi;
+import wateradmin.dso.db.DbWaterCfgUpstreamApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
 import wateradmin.viewModels.ViewModel;
@@ -25,7 +25,7 @@ public class GatewayController extends BaseController {
 
     @Mapping("")
     public ModelAndView gateway(String tag_name) throws SQLException {
-        List<TagCountsModel> tags = DbWaterCfgGatewayApi.getGatewayTagList();
+        List<TagCountsModel> tags = DbWaterCfgUpstreamApi.getGatewayTagList();
 
         //权限过滤
         TagChecker.filter(tags, m -> m.tag);
@@ -54,7 +54,7 @@ public class GatewayController extends BaseController {
             _state = 1;
         }
 
-        List<GatewayModel> list = DbWaterCfgGatewayApi.getGatewayList(tag_name, _state);
+        List<GatewayModel> list = DbWaterCfgUpstreamApi.getGatewayList(tag_name, _state);
 
         viewModel.put("list", list);
 
@@ -63,7 +63,7 @@ public class GatewayController extends BaseController {
 
     @Mapping("edit")
     public ModelAndView edit(int gateway_id) throws SQLException {
-        GatewayModel cfg = DbWaterCfgGatewayApi.getGateway(gateway_id);
+        GatewayModel cfg = DbWaterCfgUpstreamApi.getGateway(gateway_id);
         if (cfg.gateway_id == 0) {
             cfg.is_enabled = 1;
         }
@@ -80,7 +80,7 @@ public class GatewayController extends BaseController {
     public ViewModel save(int gateway_id, String tag, String name, String agent, String policy, int is_enabled) {
 
         try {
-            gateway_id = DbWaterCfgGatewayApi.saveGateway(gateway_id, tag, name, agent, policy, is_enabled);
+            gateway_id = DbWaterCfgUpstreamApi.saveGateway(gateway_id, tag, name, agent, policy, is_enabled);
 
             viewModel.put("gateway_id", gateway_id);
             viewModel.code(1, "成功");
@@ -97,7 +97,7 @@ public class GatewayController extends BaseController {
     @NotZero("gateway_id")
     @Mapping("ajax/enabled")
     public ViewModel enable(int gateway_id, int is_enabled) throws SQLException {
-        DbWaterCfgGatewayApi.setGatewayEnabled(gateway_id, is_enabled);
+        DbWaterCfgUpstreamApi.setGatewayEnabled(gateway_id, is_enabled);
 
         return viewModel.code(1, "");
     }
@@ -106,7 +106,7 @@ public class GatewayController extends BaseController {
     @NotZero("gateway_id")
     @Mapping("ajax/del")
     public ViewModel del(int gateway_id) throws SQLException {
-        DbWaterCfgGatewayApi.delGateway(gateway_id);
+        DbWaterCfgUpstreamApi.delGateway(gateway_id);
 
         return viewModel.code(1, "");
     }

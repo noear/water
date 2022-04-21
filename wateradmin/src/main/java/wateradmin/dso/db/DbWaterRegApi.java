@@ -275,6 +275,7 @@ public class DbWaterRegApi {
         resp.put("thread_count", thread_count);
         resp.put("thread_daemon_count", thread_daemon_count);
         resp.put("dates", dates);
+
         return resp;
     }
 }

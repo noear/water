@@ -1,7 +1,5 @@
 package wateradmin.dso.db;
 
-import javafx.scene.chart.StackedBarChart;
-import org.noear.solon.Utils;
 import org.noear.water.utils.Datetime;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
@@ -35,28 +33,26 @@ public class DbWaterOpsApi {
     //根据标签名称和状态获取服务列表。
     public static List<ServerModel> getServerByTagNameAndState(String tag, int is_enabled) throws SQLException {
         return db().table("water_ops_server")
-                   .where("tag = ?", tag)
-                   .and("is_enabled = ?", is_enabled)
-                   .select("*")
-                   .getList(new ServerModel());
+                .where("tag = ?", tag)
+                .and("is_enabled = ?", is_enabled)
+                .selectList("*", ServerModel.class);
     }
 
 
     //获取服务标签
     public static List<ServerModel> getServerTags() throws SQLException {
         return db().table("water_ops_server")
-                   .groupBy("tag")
-                   .orderByAsc("tag")
-                   .select("tag,count(*) counts")
-                   .getList(new ServerModel());
+                .groupBy("tag")
+                .orderByAsc("tag")
+                .selectList("tag,count(*) counts", ServerModel.class);
     }
 
     //禁用/启用 服务
     public static boolean disableServer(int server_id, int is_enabled) throws SQLException {
         return db().table("water_ops_server")
-                   .where("server_id = ?", server_id)
-                   .set("is_enabled", is_enabled)
-                   .update() > 0;
+                .where("server_id = ?", server_id)
+                .set("is_enabled", is_enabled)
+                .update() > 0;
     }
 
     public static boolean deleteServer(int server_id) throws SQLException {
@@ -67,13 +63,13 @@ public class DbWaterOpsApi {
 
     public static boolean addServer(String tag, String name, String ip, String hosts, String note, int is_enabled, int env_type) throws SQLException {
         return db().table("water_ops_server")
-                   .set("tag", tag)
-                   .set("name", name)
-                   .set("ip", ip)
-                   .set("hosts", hosts)
-                   .set("is_enabled", is_enabled)
-                   .set("env_type", env_type)
-                   .insert() > 0;
+                .set("tag", tag)
+                .set("name", name)
+                .set("ip", ip)
+                .set("hosts", hosts)
+                .set("is_enabled", is_enabled)
+                .set("env_type", env_type)
+                .insert() > 0;
     }
 
     public static List<ConfigModel> getIAASAccionts() throws SQLException {
@@ -96,9 +92,8 @@ public class DbWaterOpsApi {
         List<TagCountsModel> list = db().table("water_ops_server")
                 .where(where).and("is_enabled=1").andNeq("iaas_account", "")
                 .groupBy("iaas_account")
-                .select("iaas_account tag, COUNT(iaas_account) counts")
                 .caching(CacheUtil.data)
-                .getList(TagCountsModel.class);
+                .selectList("iaas_account tag, COUNT(iaas_account) counts", TagCountsModel.class);
 
         for (TagCountsModel m : list) {
 
@@ -115,18 +110,16 @@ public class DbWaterOpsApi {
 
     public static ServerModel getServerByID(int server_id) throws SQLException {
         return db().table("water_ops_server")
-                   .where("server_id = ?", server_id)
-                   .limit(1)
-                   .select("*")
-                   .getItem(new ServerModel());
+                .where("server_id = ?", server_id)
+                .limit(1)
+                .selectItem("*", ServerModel.class);
     }
 
     public static ServerModel getServerByIAAS(String iaas_key) throws SQLException {
         return db().table("water_ops_server")
-                   .where("iaas_key = ?", iaas_key)
-                   .limit(1)
-                   .select("*")
-                   .getItem(new ServerModel());
+                .where("iaas_key = ?", iaas_key)
+                .limit(1)
+                .selectItem("*", ServerModel.class);
     }
 
     public static ConfigModel getServerIaasAccount(String iaas_key) throws SQLException {
@@ -144,14 +137,14 @@ public class DbWaterOpsApi {
         }
     }
 
-    public static void setServerAttr(String iaas_key, String iaas_attrs) throws SQLException{
-        if(TextUtils.isEmpty(iaas_attrs)  || TextUtils.isEmpty(iaas_key)){
+    public static void setServerAttr(String iaas_key, String iaas_attrs) throws SQLException {
+        if (TextUtils.isEmpty(iaas_attrs) || TextUtils.isEmpty(iaas_key)) {
             return;
         }
 
         db().table("water_ops_server")
-                .set("iaas_attrs",iaas_attrs)
-                .whereEq("iaas_key",iaas_key)
+                .set("iaas_attrs", iaas_attrs)
+                .whereEq("iaas_key", iaas_key)
                 .update();
     }
 
@@ -162,17 +155,17 @@ public class DbWaterOpsApi {
         }
 
         DbTableQuery db = db().table("water_ops_server")
-                              .set("tag", tag)
-                              .set("name", name)
-                              .set("address", address)
-                              .set("iaas_type", iaas_type)
-                              .set("iaas_key", iaas_key)
-                              .set("iaas_account", iaas_account)
-                              .set("address_local", address_local)
-                              .set("hosts_local", hosts_local)
-                              .set("note", note)
-                              .set("is_enabled", is_enabled)
-                              .set("env_type", env_type);
+                .set("tag", tag)
+                .set("name", name)
+                .set("address", address)
+                .set("iaas_type", iaas_type)
+                .set("iaas_key", iaas_key)
+                .set("iaas_account", iaas_account)
+                .set("address_local", address_local)
+                .set("hosts_local", hosts_local)
+                .set("note", note)
+                .set("is_enabled", is_enabled)
+                .set("env_type", env_type);
 
         if (server_id > 0) {
             return db.where("server_id = ?", server_id).update() > 0;
@@ -182,117 +175,107 @@ public class DbWaterOpsApi {
 
     }
 
-//    public static List<ServerModel> getServerByType(List<Integer> types) throws SQLException {
-//        return db().table("water_ops_server")
-//                .where("iaas_type in (?...)", types).and("is_enabled = ?", 1)
-//                .select("*")
-//                .getList(new ServerModel());
-//    }
-
     public static List<ServerTrackEcsModel> getServerEcsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
-                   .leftJoin("water_ops_server_track_ecs t").on("s.iaas_type=0 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
-                   .where("s.iaas_type=0 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?", tagAndName)
-                   .build((tb) -> {
-                       if (TextUtils.isEmpty(name) == false) {
-                           tb.and("s.name like ?", "%" + name + "%");
-                       }
+                .leftJoin("water_ops_server_track_ecs t").on("s.iaas_type=0 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
+                .where("s.iaas_type=0 AND s.is_enabled=1")
+                .and("s.iaas_account = ?", tagAndName)
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(name) == false) {
+                        tb.and("s.name like ?", "%" + name + "%");
+                    }
 
-                       if (TextUtils.isEmpty(sort) == false) {
-                           if ("sev_num".equals(sort)) {
-                               tb.orderBy("s." + sort + " DESC");
-                           } else {
-                               tb.orderBy("t." + sort + " DESC");
-                           }
-                       } else {
-                           tb.orderBy("s.tag ASC,s.name ASC");
-                       }
-                   })
-                   .select("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,s.sev_num,s.address_local,t.*,s.iaas_key")
-                   .getList(new ServerTrackEcsModel());
+                    if (TextUtils.isEmpty(sort) == false) {
+                        if ("sev_num".equals(sort)) {
+                            tb.orderBy("s." + sort + " DESC");
+                        } else {
+                            tb.orderBy("t." + sort + " DESC");
+                        }
+                    } else {
+                        tb.orderBy("s.tag ASC,s.name ASC");
+                    }
+                })
+                .selectList("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,s.sev_num,s.address_local,t.*,s.iaas_key", ServerTrackEcsModel.class);
     }
 
 
     public static void setServerEcsTracks(List<EcsTrackModel> list) throws Exception {
         for (EcsTrackModel m : list) {
             db().table("water_ops_server_track_ecs").usingExpr(true).log(false)
-                .set("iaas_key", m.instanceId)
-                .set("cpu_usage", m.cpu)
-                .set("memory_usage", m.memory)
-                .set("disk_usage", m.disk)
-                .set("broadband_usage", m.broadband)
-                .set("tcp_num", m.tcp)
-                .set("gmt_modified", System.currentTimeMillis())
-                .upsertBy("iaas_key");
+                    .set("iaas_key", m.instanceId)
+                    .set("cpu_usage", m.cpu)
+                    .set("memory_usage", m.memory)
+                    .set("disk_usage", m.disk)
+                    .set("broadband_usage", m.broadband)
+                    .set("tcp_num", m.tcp)
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .upsertBy("iaas_key");
         }
     }
 
     public static void setServerBlsTracks(List<BlsTrackModel> list) throws Exception {
         for (BlsTrackModel m : list) {
             db().table("water_ops_server_track_bls").usingExpr(true).log(false)
-                .set("iaas_key", m.instanceId)
-                .set("co_conect_num", m.co_conect_num)
-                .set("new_conect_num", m.new_conect_num)
-                .set("qps", m.qps)
-                .set("traffic_tx", m.traffic_tx)
-                .set("gmt_modified", System.currentTimeMillis())
-                .upsertBy("iaas_key");
+                    .set("iaas_key", m.instanceId)
+                    .set("co_conect_num", m.co_conect_num)
+                    .set("new_conect_num", m.new_conect_num)
+                    .set("qps", m.qps)
+                    .set("traffic_tx", m.traffic_tx)
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .upsertBy("iaas_key");
         }
     }
 
     public static void setServerDbsTracks(List<DbsTrackModel> list) throws Exception {
         for (DbsTrackModel m : list) {
             db().table("water_ops_server_track_dbs").usingExpr(true).log(false)
-                .set("iaas_key", m.instanceId)
-                .set("connect_usage", m.connect_usage)
-                .set("cpu_usage", m.cpu_usage)
-                .set("memory_usage", m.memory_usage)
-                .set("disk_usage", m.disk_usage)
-                .set("gmt_modified", System.currentTimeMillis())
-                .upsertBy("iaas_key");
+                    .set("iaas_key", m.instanceId)
+                    .set("connect_usage", m.connect_usage)
+                    .set("cpu_usage", m.cpu_usage)
+                    .set("memory_usage", m.memory_usage)
+                    .set("disk_usage", m.disk_usage)
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .upsertBy("iaas_key");
         }
     }
 
     public static List<ServerTrackBlsModel> getServerBlsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
-                   .leftJoin("water_ops_server_track_bls t").on("s.iaas_type=1 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
-                   .where("s.iaas_type=1 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?", tagAndName)
-                   .build((tb) -> {
+                .leftJoin("water_ops_server_track_bls t").on("s.iaas_type=1 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
+                .where("s.iaas_type=1 AND s.is_enabled=1")
+                .and("s.iaas_account = ?", tagAndName)
+                .build((tb) -> {
 
-                       if (TextUtils.isEmpty(name) == false) {
-                           tb.and("s.name like ?", "%" + name + "%");
-                       }
+                    if (TextUtils.isEmpty(name) == false) {
+                        tb.and("s.name like ?", "%" + name + "%");
+                    }
 
-                       if (TextUtils.isEmpty(sort) == false) {
-                           tb.orderBy("t." + sort + " DESC");
-                       } else {
-                           tb.orderBy("s.tag ASC,s.name ASC");
-                       }
-                   })
-                   .select("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,t.*,s.iaas_key")
-                   .getList(new ServerTrackBlsModel());
+                    if (TextUtils.isEmpty(sort) == false) {
+                        tb.orderBy("t." + sort + " DESC");
+                    } else {
+                        tb.orderBy("s.tag ASC,s.name ASC");
+                    }
+                })
+                .selectList("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,t.*,s.iaas_key", ServerTrackBlsModel.class);
     }
 
     public static List<ServerTrackDbsModel> getServerDbsTracks(String tagAndName, String name, String sort) throws Exception {
         return db().table("water_ops_server s")
-                   .leftJoin("water_ops_server_track_dbs t").on("s.iaas_type>=2 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
-                   .where("s.iaas_type>=2 AND s.is_enabled=1")
-                   .and("s.iaas_account = ?",  tagAndName)
-                   .build((tb) -> {
-                       if (TextUtils.isEmpty(name) == false) {
-                           tb.and("s.name like ?", "%" + name + "%");
-                       }
+                .leftJoin("water_ops_server_track_dbs t").on("s.iaas_type>=2 AND s.is_enabled=1 AND s.iaas_key = t.iaas_key")
+                .where("s.iaas_type>=2 AND s.is_enabled=1")
+                .and("s.iaas_account = ?", tagAndName)
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(name) == false) {
+                        tb.and("s.name like ?", "%" + name + "%");
+                    }
 
-                       if (TextUtils.isEmpty(sort) == false) {
-                           tb.orderBy("t." + sort + " DESC");
-                       } else {
-                           tb.orderBy("s.tag ASC,s.name ASC");
-                       }
-                   })
-                   .select("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,t.*,s.iaas_key")
-                   .getList(new ServerTrackDbsModel());
+                    if (TextUtils.isEmpty(sort) == false) {
+                        tb.orderBy("t." + sort + " DESC");
+                    } else {
+                        tb.orderBy("s.tag ASC,s.name ASC");
+                    }
+                })
+                .selectList("s.server_id,s.name,s.tag,s.iaas_type,s.iaas_attrs,t.*,s.iaas_key", ServerTrackDbsModel.class);
     }
 
     ////////////////////////////////////////////////////
@@ -328,7 +311,7 @@ public class DbWaterOpsApi {
 
     public static List<ServiceSpeedModel> getServiceSpeedByService(String service, String tag) throws SQLException {
         return db().table("water_reg_service_speed")
-                .where("service = ? AND tag=?", service,tag)
+                .where("service = ? AND tag=?", service, tag)
                 .caching(CacheUtil.data)
                 .usingCache(3)
                 .selectList("*", ServiceSpeedModel.class);
@@ -434,7 +417,7 @@ public class DbWaterOpsApi {
     }
 
     //接口的三天的请求频率
-    public static Map<String,List> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
+    public static Map<String, List> getSpeedForDate(String tag, String name_md5, String service, String field) throws SQLException {
         Datetime now = Datetime.Now();
         int date0 = now.getDate();
         int date1 = now.addDay(-1).getDate();
@@ -490,7 +473,7 @@ public class DbWaterOpsApi {
 
 
     //获取接口三十天响应速度情况
-    public static Map<String,List> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
+    public static Map<String, List> getSpeedForMonth(String tag, String name_md5, String service) throws SQLException {
         Map<String, List> resp = new LinkedHashMap<>();
 
         List<ServiceSpeedDateModel> list = db().table("water_reg_service_speed_date")
@@ -535,15 +518,9 @@ public class DbWaterOpsApi {
         return resp;
     }
 
-
-
-    public static List<ServerModel> getServers(int is_enabled) throws SQLException{
+    public static List<ServerModel> getServers(int is_enabled) throws SQLException {
         return db().table("water_ops_server")
-                .where("is_enabled = ?",is_enabled)
-                .select("*")
-                .getList(new ServerModel());
+                .where("is_enabled = ?", is_enabled)
+                .selectList("*", ServerModel.class);
     }
-
-
-
 }
