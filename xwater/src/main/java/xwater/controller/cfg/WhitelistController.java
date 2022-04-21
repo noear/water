@@ -39,14 +39,12 @@ public class WhitelistController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
-        int state = ctx.paramAsInt("state", 1);
 
-        List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByTag(tag_name, key, state);
+        List<WhitelistModel> list = DbWaterCfgApi.getWhitelistByTag(tag_name, key);
 
 
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
         viewModel.put("key", key);
 
         return view("cfg/whitelist_inner");

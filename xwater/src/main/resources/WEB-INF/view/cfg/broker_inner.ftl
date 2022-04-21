@@ -16,87 +16,58 @@
         location.href="/cfg/broker/edit?tag_name=${tag_name!}&broker_id="+broker_id;
     }
 
-    function del(broker_id,is_enabled) {
-        var text = '禁用';
-        if (is_enabled == 0) {
-            text = '启用';
-            is_enabled = 1;
-        } else {
-            is_enabled = 0;
-        }
-        top.layer.confirm('确定'+text, {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            $.ajax({
-                type:"POST",
-                url:"/cfg/broker/isEnable",
-                data:{"broker_id":broker_id,"is_enabled":is_enabled},
-                success:function(data){
-                    if (data.code == 1) {
-                        top.layer.msg("操作成功");
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    } else {
-                        top.layer.msg("操作失败");
-                    }
-
-                }
-            });
-            top.layer.close(top.layer.index);
-        });
-    }
 </script>
 <body>
-        <toolbar>
-            <left>
-                <#if is_admin == 1>
-                    <button class="edit" onclick="edit(0);" type="button">新增</button>
-                </#if>
-            </left>
-            <right><@stateselector items="启用,未启用"/></right>
-        </toolbar>
-        <datagrid class="list">
-            <table>
-                <thead>
-                <tr>
-                    <td width="220px" class="left">broker</td>
-                    <td width="60px">保留<br/>天数</td>
-                    <td width="120px" class="right">今日<br/>记录数</td>
-                    <td width="120px" class="right">今日<br/>错误数</td>
-                    <td>数据源</td>
-                    <td width="60">启用<br/>报警</td>
-                    <#if is_admin == 1>
-                        <td width="50px" rowspan="2">操作</td>
+<toolbar>
+    <left>
+        <#if is_admin == 1>
+            <button class="edit" onclick="edit(0);" type="button">新增</button>
+        </#if>
+    </left>
+    <right>
+    </right>
+</toolbar>
+<datagrid class="list">
+    <table>
+        <thead>
+        <tr>
+            <td width="220px" class="left">broker</td>
+            <td width="60px">保留<br/>天数</td>
+            <td width="120px" class="right">今日<br/>记录数</td>
+            <td width="120px" class="right">今日<br/>错误数</td>
+            <td>数据源</td>
+            <td width="60">启用<br/>报警</td>
+            <#if is_admin == 1>
+                <td width="50px" rowspan="2">操作</td>
+            </#if>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        <#list brokers as broker>
+            <tr ${broker.isHighlight()?string("class='t4'","")}>
+                <td class="left"><a href="/log/query/inner?broker=${broker.broker}&tag_name=${broker.tag}" target="_parent">${broker.broker}</a></td>
+                <td class="center">${broker.keep_days}</td>
+                <td class="right">${broker.row_num_today}</td>
+                <td class="right">${broker.row_num_today_error}</td>
+
+                <td class="left break">${broker.source}</td>
+
+                <td>
+                    <#if broker.is_alarm?default(0) gt 0>
+                        是
                     </#if>
-                </tr>
-                </thead>
-                <tbody id="tbody">
-                <#list brokers as broker>
-                    <tr ${broker.isHighlight()?string("class='t4'","")}>
-                        <td class="left"><a href="/log/query/inner?broker=${broker.broker}&tag_name=${broker.tag}" target="_parent">${broker.broker}</a></td>
-                        <td class="center">${broker.keep_days}</td>
-                        <td class="right">${broker.row_num_today}</td>
-                        <td class="right">${broker.row_num_today_error}</td>
+                </td>
 
-                        <td class="left break">${broker.source}</td>
-
-                        <td>
-                            <#if broker.is_alarm?default(0) gt 0>
-                                是
-                            </#if>
-                        </td>
-
-                        <#if is_admin == 1>
-                            <td class="op">
-                                <a  onclick="edit('${broker.broker_id}')" style="color: blue;cursor: pointer">编辑</a>
-                            </td>
-                        </#if>
-                    </tr>
-                </#list>
-                </tbody>
-            </table>
-        </datagrid>
+                <#if is_admin == 1>
+                    <td class="op">
+                        <a  onclick="edit('${broker.broker_id}')" style="color: blue;cursor: pointer">编辑</a>
+                    </td>
+                </#if>
+            </tr>
+        </#list>
+        </tbody>
+    </table>
+</datagrid>
 
 </body>
 </html>

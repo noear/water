@@ -60,26 +60,11 @@ public class LoggerController extends BaseController {
     }
 
     @Mapping("logger/inner")
-    public ModelAndView loggerInner(String tag_name, Integer _state) throws Exception {
+    public ModelAndView loggerInner(String tag_name) throws Exception {
         tryInit();
 
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
-
-        if (_state == null) {
-            _state = 1;
-        }
-
-        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name, _state, null);
+        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name,null);
         viewModel.put("loggers", list);
-        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         return view("cfg/logger_inner");
     }

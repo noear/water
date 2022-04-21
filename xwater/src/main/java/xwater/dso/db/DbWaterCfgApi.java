@@ -90,9 +90,8 @@ public class DbWaterCfgApi {
     }
 
     //获取ip白名单列表
-    public static List<WhitelistModel> getWhitelistByTag(String tag_name, String key, int state) throws SQLException {
+    public static List<WhitelistModel> getWhitelistByTag(String tag_name, String key) throws SQLException {
         return db().table("water_cfg_whitelist")
-                .whereEq("is_enabled", state == 1)
                 .build(tb -> {
                     if (tag_name != null) {
                         tb.andEq("tag", tag_name);
@@ -418,10 +417,9 @@ public class DbWaterCfgApi {
     }
 
     //根据tag获取列表。
-    public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+    public static List<LoggerModel> getLoggersByTag(String tag_name, String sort) throws Exception {
         return db().table("water_cfg_logger")
                 .where("tag = ?", tag_name)
-                .and("is_enabled = ?", is_enabled)
                 .build((tb) -> {
                     if (TextUtils.isEmpty(sort) == false) {
                         tb.orderBy(sort + " DESC");
@@ -495,10 +493,9 @@ public class DbWaterCfgApi {
     }
 
     //根据tag获取列表。
-    public static List<BrokerModel> getBrokersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+    public static List<BrokerModel> getBrokersByTag(String tag_name, String sort) throws Exception {
         return db().table("water_cfg_broker")
                 .where("tag = ?", tag_name)
-                .and("is_enabled = ?", is_enabled)
                 .build((tb) -> {
                     if (TextUtils.isEmpty(sort) == false) {
                         tb.orderBy(sort + " DESC");

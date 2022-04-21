@@ -60,26 +60,11 @@ public class BrokerController extends BaseController {
     }
 
     @Mapping("broker/inner")
-    public ModelAndView brokerInner(String tag_name, Integer _state) throws Exception {
+    public ModelAndView brokerInner(String tag_name) throws Exception {
         tryInit();
 
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
-
-        if (_state == null) {
-            _state = 1;
-        }
-
-        List<BrokerModel> list = DbWaterCfgApi.getBrokersByTag(tag_name, _state, null);
+        List<BrokerModel> list = DbWaterCfgApi.getBrokersByTag(tag_name, null);
         viewModel.put("brokers", list);
-        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         return view("cfg/broker_inner");
     }

@@ -8,83 +8,6 @@
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script>
-        function imp(file) {
-            if(confirm("确定要导入吗？") == false){
-                return;
-            }
-
-            var fromData = new FormData();
-            fromData.append("file", file);
-            fromData.append("tag","${tag_name!}");
-
-            $.ajax({
-                type:"POST",
-                url:"ajax/import",
-                data:fromData,
-                processData: false,
-                contentType: false,
-                success:function (data) {
-                    if(data.code==1) {
-                        top.layer.msg('操作成功');
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    }else{
-                        top.layer.msg(data.msg);
-                    }
-                }
-            });
-        }
-
-        function exp() {
-            var vm = formToMap(".sel_from");
-            if(!vm.sel_id){
-                alert("请选择..");
-                return;
-            }
-
-            window.open("ajax/export?tag=${tag_name!}&ids=" + vm.sel_id, "_blank");
-        }
-
-        function del(act,hint){
-            var vm = formToMap(".sel_from");
-
-            if(!vm.sel_id){
-                alert("请选择..");
-                return;
-            }
-
-            if(confirm("确定要"+hint+"吗？") == false) {
-                return;
-            }
-
-            $.ajax({
-                type:"POST",
-                url:"ajax/batch",
-                data:{act: act, ids: vm.sel_id},
-                success:function (data) {
-                    if(data.code==1) {
-                        top.layer.msg('操作成功');
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    }else{
-                        top.layer.msg(data.msg);
-                    }
-                }
-            });
-        }
-
-        $(function(){
-            $('#sel_all').change(function(){
-                var ckd= $(this).prop('checked');
-                $('[name=sel_id]').prop('checked',ckd);
-            });
-
-            $("#imp_file").change(function () {
-                imp(this.files[0]);
-            })
-        });
     </script>
 </head>
 <body>
@@ -92,10 +15,6 @@
     <toolbar>
         <left>
             <form>
-                <input type="hidden" name="tag_name" value="${tag_name!}">
-                <input type="hidden" name="state" value="${state!}">
-                <input type="text"  name="key" placeholder="value"  value="${key!}"class="w250"/>
-                <button type="submit">查询</button>
                 <#if is_admin == 1>
                     <a class="btn edit mar10-l" href="/cfg/whitelist/edit?tag_name=${tag_name!}">新增</a>
                 </#if>
@@ -118,17 +37,12 @@
             </#if>
         </left>
         <right>
-            <selector>
-                <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
-                <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
-            </selector>
         </right>
     </toolbar>
     <datagrid class="list">
         <table>
             <thead>
             <tr>
-                <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="50px">ID</td>
                 <td width="100px">type</td>
                 <td>value</td>
@@ -140,7 +54,6 @@
 
             <#list list as m>
                 <tr>
-                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.row_id}" /><a></a></label></checkbox></td>
                     <td>${m.row_id}</td>
                     <td class="left">${m.type!}</td>
                     <td class="left">${m.value!}</td>
