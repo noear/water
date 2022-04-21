@@ -33,7 +33,7 @@ public class LoggerController extends BaseController {
 
     @Mapping("logger")
     public ModelAndView logger(String tag_name) throws Exception {
-        List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags();
+        List<TagCountsModel> tags = DbWaterCfgApi.getLoggerTags(true);
 
         TagChecker.filter(tags, m -> m.tag);
 

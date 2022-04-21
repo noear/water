@@ -54,13 +54,17 @@ public class DbWaterCfgApi {
     }
 
     //获取logger表tag
-    public static List<TagCountsModel> getLoggerTags() throws Exception {
-        return db().table("water_cfg_logger")
+    public static List<TagCountsModel> getLoggerTags(boolean all) throws Exception {
+        return db().table("water_cfg_logger").build(tb -> {
+                    if (all == false) {
+                        tb.whereEq("is_enabled", 1);
+                    }
+                })
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
+
 
     //根据tag获取列表。
     public static List<LoggerModel> getLoggersByTag(String tag_name, int is_enabled, String sort) throws Exception {
