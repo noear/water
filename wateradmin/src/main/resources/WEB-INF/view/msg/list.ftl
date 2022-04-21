@@ -159,7 +159,7 @@
                     </#list>
                 </select>
                 <script>$('#broker').val('${broker!}')</script>
-                <input type="text" id="key" value="${key!}" placeholder="*TraceId or ID or Topic or @Tags" class="w250"/>&nbsp;&nbsp;
+                <input type="text" id="key" value="${key!}" placeholder="*TraceId or ID or Topic or @Tags" class="w250"/>
                 <button type='button' onclick="search()">查询</button>
                 <button type='button' class="mar10-l" onclick="fresh()">刷新</button>
             </middle>

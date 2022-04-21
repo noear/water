@@ -91,8 +91,8 @@
             </#list>
         </tabbar>
         <#if is_admin==1>
-            <button id="add" onclick="editSQL(0)" type="button"  class="edit">新增</button>&nbsp;
-            <button id="edit" onclick="editSQL(1)" type="button"  class="minor">编辑</button>
+            <button id="add" onclick="editSQL(0)" type="button"  class="edit">新增</button>
+            <button id="edit" onclick="editSQL(1)" type="button"  class="minor mar10-l">编辑</button>
         </#if>
     </block>
 

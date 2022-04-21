@@ -32,8 +32,8 @@
 
     <toolbar>
         <form>
-            <input type="text"  name="name" placeholder="服务" id="name"/>&nbsp;&nbsp;
-            <button type="submit">查询</button>&nbsp;&nbsp;
+            <input type="text"  name="name" placeholder="服务" id="name"/>
+            <button type="submit">查询</button>
         </form>
     </toolbar>
     <datagrid class="list">

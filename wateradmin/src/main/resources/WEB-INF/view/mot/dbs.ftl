@@ -12,9 +12,9 @@
 <main>
     <toolbar>
         <left>
-            <input type="text" class="w250" name="name" placeholder="实例名" id="name"/>&nbsp;&nbsp;
-            <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="location.reload();">刷新</button>&nbsp;&nbsp;
+            <input type="text" class="w250" name="name" placeholder="实例名" id="name"/>
+            <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>
+            <button type="button" class="mar10-l" onclick="location.reload();">刷新</button>
         </left>
         <right>
             <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">

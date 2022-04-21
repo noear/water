@@ -16,7 +16,7 @@
 <toolbar>
     <left>
         <form>
-            <input type="text"  class="w300" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
+            <input type="text"  class="w250" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
             <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
             <button type="submit">查询</button>
             <#if is_admin = 1>

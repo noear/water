@@ -18,11 +18,11 @@
 <main>
     <toolbar>
         <form>
-            <input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>&nbsp;&nbsp;
-            <input type="hidden"  name="tag_name" value="${tag_name!}" />&nbsp;&nbsp;
-            <button type="submit">查询</button>&nbsp;&nbsp;
+            <input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>
+            <input type="hidden"  name="tag_name" value="${tag_name!}" />
+            <button type="submit">查询</button>
             <#if is_admin == 1>
-                <button type="button"  onclick="add();" class="edit mar20-l">新增</button>
+                <button type="button"  onclick="add();" class="edit mar10-l">新增</button>
             </#if>
         </form>
     </toolbar>

@@ -89,8 +89,8 @@
                         </td>
 
                         <#if is_admin == 1>
-                            <td>
-                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a>&nbsp;&nbsp;
+                            <td class="op">
+                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a> |
                                 <a  onclick="del('${logger.logger_id}','${logger.is_enabled}')" style="color: blue;cursor: pointer">
                                     <#if logger.is_enabled == 0>启用</#if>
                                     <#if logger.is_enabled == 1>禁用</#if>
