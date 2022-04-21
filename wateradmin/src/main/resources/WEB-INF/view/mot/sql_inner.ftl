@@ -54,7 +54,7 @@
     <toolbar>
         <left>
             秒数：<input type="text"  id="tagx" placeholder="num" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
-            log_date：<input type="text"  id="log_date" placeholder="yyyyMMdd.HH" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
+            时间：<input type="text"  id="log_date" placeholder="yyyyMMdd.HH" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
 
             <button type="button" onclick="queryDo()">查询</button>
         </left>
