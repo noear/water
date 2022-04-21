@@ -44,7 +44,7 @@
             <#if is_operator = 1>
             <a href="${faas_uri}${m1.path!}?_debug=1" class="btn minor mar10-l" onclick="return confirm('确定要调试吗？')" target="_blank">调试</a>
             </#if>
-            <n class="sml"> 编辑器的脚本库首次加载会比较慢...</n>
+            <n class="sml mar10-l"> 编辑器的脚本库首次加载会比较慢...</n>
         </left>
         <right class="col-6">
             <@versions table="luffy_file" keyName="file_id" keyValue="${m1.file_id}">
