@@ -158,7 +158,7 @@
                     <button type='button' class="minor mar10-l" onclick="exp()" >导出</button>
 
                     <#if state!=1>
-                        <button type='button' class="edit w80 mar10-l" onclick="reset()" >立即执行</button>
+                        <button type='button' class="edit mar10-l" onclick="reset()" >立即执行</button>
                         <button type='button' class="minor mar10-l" onclick="del(1,'禁用')" >禁用</button>
                     <#else>
                         <button type='button' class="minor mar10-l" onclick="del(0,'启用')" >启用</button>
