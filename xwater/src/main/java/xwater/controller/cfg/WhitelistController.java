@@ -59,6 +59,7 @@ public class WhitelistController extends BaseController {
             viewModel.put("m", model);
         } else {
             model = new WhitelistModel();
+            model.is_enabled = 1;
             viewModel.put("m", model);
         }
 
@@ -72,10 +73,10 @@ public class WhitelistController extends BaseController {
 
     //保存ip白名单新增
     @Mapping("edit/ajax/save")
-    public ViewModel saveWhitelistAdd(Integer row_id, String tag, String type, String value, String note) throws Exception {
+    public ViewModel saveWhitelistAdd(Integer row_id, String tag, String type, String value, String note, int is_enabled) throws Exception {
 
 
-        boolean result = DbWaterCfgApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note);
+        boolean result = DbWaterCfgApi.setWhitelist(row_id, tag.trim(), type.trim(), value.trim(), note, is_enabled);
         if (result) {
             viewModel.code(1, "操作成功");
         } else {

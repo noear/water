@@ -106,7 +106,7 @@ public class DbWaterCfgApi {
     }
 
     //新增ip白名单
-    public static boolean setWhitelist(Integer row_id, String tag, String type, String value, String note) throws SQLException {
+    public static boolean setWhitelist(Integer row_id, String tag, String type, String value, String note, int is_enabled) throws SQLException {
         if (row_id == null) {
             row_id = 0;
         }
@@ -119,7 +119,9 @@ public class DbWaterCfgApi {
                 .set("tag", tag.trim())
                 .set("type", type.trim())
                 .set("value", value.trim())
-                .set("note", note);
+                .set("note", note)
+                .set("is_enabled", is_enabled)
+                .set("gmt_modified", System.currentTimeMillis());
 
         if (row_id > 0) {
             return qr.whereEq("row_id", row_id).update() > 0;
