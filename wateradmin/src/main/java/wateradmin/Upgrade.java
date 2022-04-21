@@ -99,6 +99,7 @@ public class Upgrade {
             dataItem.set("plan_state", 1);
             dataItem.set("plan_max", 0);
             dataItem.set("plan_count", 0);
+            dataItem.set("note", "框架升级");
             dataItem.set("content", waterUpgradeNew);
 
             DbLuffyApi.setFile(0, dataItem, LuffyFileType.pln);

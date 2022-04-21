@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html class="frm10">
 <head>
-    <title>${app} - 网关配置</title>
+    <title>${app} - 上游配置</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
@@ -54,7 +54,7 @@
 <body>
 <toolbar class="blockquote">
     <left>
-        <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">网关配置</a></h2> / 编辑
+        <h2 class="ln30"><a href="#" onclick="javascript:history.back();" class="noline">上游配置</a></h2> / 编辑
     </left>
     <right class="form">
         <n>ctrl + s 可快捷保存</n>
