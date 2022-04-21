@@ -134,7 +134,7 @@
     <form>
         <toolbar>
             <left>
-                服务：<input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>&nbsp;&nbsp;
+                <input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>&nbsp;&nbsp;
                 <button type="submit">查询</button>&nbsp;&nbsp;
                 <button onclick="autofresh();"  type="button" style="width: 100px;" id="fresh">开启自动刷新</button>
                 <#if is_operator == 1>

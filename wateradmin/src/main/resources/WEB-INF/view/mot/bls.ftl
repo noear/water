@@ -12,7 +12,7 @@
 <main>
     <toolbar>
         <left>
-            实例：<input type="text" class="w250"  name="name" placeholder="实例名" id="name"/>&nbsp;&nbsp;
+            <input type="text" class="w250"  name="name" placeholder="实例名" id="name"/>&nbsp;&nbsp;
             <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" onclick="location.reload();">刷新</button>&nbsp;&nbsp;
         </left>
