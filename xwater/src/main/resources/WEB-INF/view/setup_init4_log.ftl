@@ -84,7 +84,7 @@
 </head>
 <body>
 <header>
-    <label title="${_version!}">WATER</label>
+    <label title="${_version!}">XWATER</label>
 </header>
 <main>
     <section>
