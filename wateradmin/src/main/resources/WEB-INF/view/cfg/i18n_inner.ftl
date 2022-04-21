@@ -125,11 +125,11 @@
         <left>
             <#if is_admin == 1>
                 <file>
-                    <label><input id="imp_file" type="file" accept=".yml,.json,.properties,.jsond"/><a class="btn minor w80">导入</a></label>
+                    <label><input id="imp_file" type="file" accept=".yml,.json,.properties,.jsond"/><a class="btn minor">导入</a></label>
                 </file>
 
                 <div class="btn-group">
-                    <a class="btn minor w80 mar10-l" >导出</a>
+                    <a class="btn minor mar10-l" >导出</a>
                     <div class="btn-dropdown mar10-l w150">
                         <a class="btn-link mar10" onclick="exp('yml')">导出为 Yml</a>
                         <a class="btn-link mar10" onclick="exp('json')">导出为 Json</a>
