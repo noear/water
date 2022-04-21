@@ -81,7 +81,7 @@
                             </#list>
                         </select>
                         <script>$('#broker').val('${broker!}')</script>
-                        ，ID/key：<input type="text" name="key" value="${key!}" style="width: 287px;"/>&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="key" value="${key!}" placeholder="ID/key" style="width: 287px;"/>&nbsp;&nbsp;&nbsp;
                         <button type="submit">查询</button>
                     </form>
             </toolbar>
