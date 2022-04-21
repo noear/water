@@ -92,6 +92,7 @@ public class DbWaterCfgApi {
     //获取ip白名单列表
     public static List<WhitelistModel> getWhitelistByTag(String tag_name, String key) throws SQLException {
         return db().table("water_cfg_whitelist")
+                .whereTrue()
                 .build(tb -> {
                     if (tag_name != null) {
                         tb.andEq("tag", tag_name);
@@ -341,10 +342,9 @@ public class DbWaterCfgApi {
                 .selectItem("*", ConfigModel.class);
     }
 
-    public static List<ConfigModel> getConfigsByTag(String tag, String key, int state) throws SQLException {
+    public static List<ConfigModel> getConfigsByTag(String tag, String key) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
-                .andEq("is_enabled", state == 1)
                 .build(tb -> {
                     if (!TextUtils.isEmpty(key)) {
                         tb.and("`key` like ?", "%" + key + "%");

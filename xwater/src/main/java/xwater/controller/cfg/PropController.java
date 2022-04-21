@@ -36,15 +36,12 @@ public class PropController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView innerDo(Context ctx, String tag_name, String key) throws SQLException {
-        int state = ctx.paramAsInt("state", 1);
-
         TagUtil.cookieSet(tag_name);
 
-        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, state);
+        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key);
 
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
         viewModel.put("key", key);
 
         return view("cfg/prop_inner");

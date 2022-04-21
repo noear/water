@@ -17,13 +17,13 @@ import java.util.*;
 
 @Getter
 public class ConfigModel implements IBinder {
-    public transient int row_id;
+    public int row_id;
     public String tag;
     public String key;
     public int type;
     public String value;
     public String edit_mode;
-    public transient int is_enabled;
+    public int is_enabled;
 
 
     @Override
