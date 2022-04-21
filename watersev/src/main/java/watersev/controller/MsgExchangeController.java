@@ -140,12 +140,13 @@ public class MsgExchangeController implements IJob {
         }
 
         long dist_nexttime = System.currentTimeMillis();
+        long time_start = dist_nexttime;
         List<MessageModel> msgList = msgBroker.getSource()
                 .getMessageListOfPending(5000, dist_nexttime);
 
         //记录性能
-        long _times = System.currentTimeMillis() - dist_nexttime;
-        WaterClient.Track.track("watermsg", "exchange-q", msgBroker.getName(), _times);
+        long time_span = System.currentTimeMillis() - time_start;
+        WaterClient.Track.track("watermsg", "exch-q", msgBroker.getName(), time_span);
 
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
 
@@ -159,8 +160,9 @@ public class MsgExchangeController implements IJob {
         //等待执行完成，再到下一轮
         countDownLatch.await();
 
-
-        WaterClient.Track.track("watermsg", "exchange-c", msgBroker.getName(), _times);
+        //再记时
+        time_span = System.currentTimeMillis() - time_start;
+        WaterClient.Track.track("watermsg", "exch-c", msgBroker.getName(), time_span);
 
         if (msgList.size() > 0) {
             return true;
