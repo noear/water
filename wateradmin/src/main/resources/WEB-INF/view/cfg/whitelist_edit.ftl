@@ -114,7 +114,7 @@
                 </td>
             </tr>
             <tr>
-                <th>note</th>
+                <th>备注</th>
                 <td><input type="text" id="note" value="${m.note!}" /></td>
             </tr>
             <tr>

@@ -34,7 +34,7 @@
                 <td width="50px">ID</td>
                 <td width="100px">type</td>
                 <td>value</td>
-                <td width="200px">note</td>
+                <td width="200px">备注</td>
                 <td width="60px">操作</td>
             </tr>
             </thead>
