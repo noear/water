@@ -1,8 +1,6 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.esearchx.EsContext;
 import org.noear.water.model.ConfigM;
-import org.noear.water.model.PropertiesM;
 import org.noear.water.protocol.*;
 import org.noear.water.protocol.model.log.LoggerEntity;
 import org.noear.water.protocol.model.log.LoggerMeta;
@@ -12,7 +10,6 @@ import org.noear.water.utils.ext.Fun1;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 public class LogSourceFactoryImpl implements LogSourceFactory {
     private static String _lock = "";
