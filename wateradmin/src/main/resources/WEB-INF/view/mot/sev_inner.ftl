@@ -134,11 +134,11 @@
     <form>
         <toolbar>
             <left>
-                <input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>&nbsp;&nbsp;
-                <button type="submit">查询</button>&nbsp;&nbsp;
-                <button onclick="autofresh();"  type="button" style="width: 100px;" id="fresh">开启自动刷新</button>
+                <input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>
+                <button type="submit">查询</button>
+                <button onclick="autofresh();" class="w100 mar10-l"  type="button" id="fresh">开启自动刷新</button>
                 <#if is_operator == 1>
-                    <span class="w50"></span><a class="btn edit" href="/mot/service/edit">添加</a>
+                    <span class="w50 mar10-l"></span><a class="btn edit" href="/mot/service/edit">添加</a>
                 </#if>
             </left>
             <right>

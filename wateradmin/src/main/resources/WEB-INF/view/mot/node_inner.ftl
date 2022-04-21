@@ -32,7 +32,7 @@
 
     <toolbar>
         <form>
-            <input type="text"  name="name" placeholder="服务" id="name"/>
+            <input class="w250" type="text"  name="name" placeholder="服务" id="name"/>
             <button type="submit">查询</button>
         </form>
     </toolbar>

@@ -36,8 +36,8 @@
 <main>
     <toolbar>
         <left>
-            <a class="w60">关键字：</a><input id="key" class="w350" placeholder="code" type="text" value="${key}" />
-            <button class="mar10-l" type="button" onclick="search()">查询</button>
+            <input id="key" class="w300" placeholder="code" type="text" value="${key}" />
+            <button type="button" onclick="search()">查询</button>
         </left>
     </toolbar>
 
