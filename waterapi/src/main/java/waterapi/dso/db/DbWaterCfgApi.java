@@ -54,12 +54,10 @@ public class DbWaterCfgApi {
                             tb.usingCache(cachedSeconds);
                         }
                     })
-                    .select("*")
-                    .getItem(new ConfigModel());
+                    .selectItem("*", ConfigModel.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-
     }
 
     public static void setConfig(String tag, String key, String value) throws SQLException {
@@ -88,8 +86,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .where("tag=? AND `key`=?", tag, key)
                 .andEq("is_enabled", 1)
-                .select("*")
-                .getItem(new ConfigModel());
+                .selectItem("*", ConfigModel.class);
     }
 
 
@@ -100,9 +97,8 @@ public class DbWaterCfgApi {
                 .andEq("tag", "_alarm")
                 .andEq("is_enabled", 1)
                 .andNeq("value", "")
-                .select("value ")
                 .caching(CacheUtils.data)
-                .getArray(0);
+                .selectArray("value ");
     }
 
     public static List<String> getAlarmMobiles(String tag) throws SQLException {
@@ -111,18 +107,17 @@ public class DbWaterCfgApi {
                 .andEq("tag", tag)
                 .andEq("is_enabled", 1)
                 .andNeq("value", "")
-                .select("value ")
                 .caching(CacheUtils.data)
-                .getArray(0);
+                .selectArray("value ");
     }
 
 
     public static LoggerModel getLogger(String logger) {
         try {
-            return db().table("water_cfg_logger").where("logger=?", logger).limit(1)
-                    .select("*")
+            return db().table("water_cfg_logger")
+                    .where("logger=?", logger).limit(1)
                     .caching(CacheUtils.data).usingCache(60)
-                    .getItem(LoggerModel.class);
+                    .selectItem("*", LoggerModel.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -133,8 +128,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
-                    .select("*")
-                    .getItem(BrokerVo.class);
+                    .selectItem("*", BrokerVo.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
