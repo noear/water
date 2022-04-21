@@ -28,7 +28,7 @@
         <table>
             <thead>
             <tr>
-                <td sort="" class="left">实例名</td>
+                <td sort="" class="left">实例</td>
                 <td sort="sev_num" width="60px">服务数</td>
                 <td sort="cpu_usage" width="70px">CPU</td>
                 <td sort="memory_usage" width="70px">内存</td>
