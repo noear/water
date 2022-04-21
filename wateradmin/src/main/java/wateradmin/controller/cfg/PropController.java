@@ -66,6 +66,8 @@ public class PropController extends BaseController {
 
         if (cfg.row_id > 0) {
             tag_name = cfg.tag;
+        }else{
+            cfg.is_enabled=1;
         }
 
         if (TextUtils.isEmpty(tml.value)) {
@@ -82,8 +84,8 @@ public class PropController extends BaseController {
     //编辑、保存功能。
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode) throws SQLException {
-        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
+    public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode, int is_disabled) throws SQLException {
+        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode,is_disabled==0);
 
         return viewModel.code(1, "操作成功");
     }

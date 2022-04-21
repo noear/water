@@ -219,6 +219,14 @@
                 </td>
             </tr>
             <tr>
+                <td></td>
+                <td>
+                    <checkbox>
+                        <label class="mar10-r"><input type="checkbox" id="is_disabled" ${cfg.disabled()?string("checked","")} /><a>禁止使用</a></label>
+                    </checkbox>
+                </td>
+            </tr>
+            <tr>
                 <th>配置内容</th>
                 <td>
                     <div style="line-height: 1em;">

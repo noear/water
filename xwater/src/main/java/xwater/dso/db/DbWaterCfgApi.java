@@ -239,7 +239,7 @@ public class DbWaterCfgApi {
 
 
     //编辑更新config。
-    public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
+    public static boolean setConfig(Integer row_id, String tag, String key, Integer type, String value, String edit_mode, boolean enabled) throws SQLException {
         if (value == null) {
             value = "";
         }
@@ -252,6 +252,7 @@ public class DbWaterCfgApi {
                 .set("key", key.trim())
                 .set("type", type)
                 .set("edit_mode", edit_mode)
+                .set("is_enabled",(enabled?1:0))
                 .set("gmt_modified", System.currentTimeMillis())
                 .set("value", value);
 

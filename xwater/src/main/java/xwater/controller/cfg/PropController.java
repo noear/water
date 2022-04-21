@@ -75,8 +75,8 @@ public class PropController extends BaseController {
 
     //编辑、保存功能。
     @Mapping("edit/ajax/save")
-    public ViewModel save(Integer row_id, String tag, String key, Integer type, String value, String edit_mode) throws SQLException {
-        boolean result = DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode);
+    public ViewModel save(Integer row_id, String tag, String key, Integer type, String value, String edit_mode, int is_disabled) throws SQLException {
+        boolean result = DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode, is_disabled==0);
 
         if (result) {
             viewModel.code(1, "保存成功");

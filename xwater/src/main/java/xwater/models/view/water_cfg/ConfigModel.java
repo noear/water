@@ -66,6 +66,10 @@ public class ConfigModel  implements IBinder{
     }
 
 
+    public boolean disabled() {
+        return is_enabled==0;
+    }
+
     public String type_str() {
         return ConfigType.getTitle(type);
     }
