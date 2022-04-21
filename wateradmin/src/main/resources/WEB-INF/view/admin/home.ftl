@@ -31,6 +31,7 @@
                 <a class='sel' href='/admin/setting' target="inner">设置</a>
                 <br/>
                 <br/>
+                <a href='/grit/ui/resource/entity/s?spaceCode=wateradmin' target="inner">菜单</a>
                 <a href='/grit/ui/subject/entity/s' target="inner">账号</a>
                 <a href='/grit/ui/auth/s' target="inner">授权</a>
                 <br/>
