@@ -133,21 +133,29 @@
 <body>
 <main>
     <toolbar>
-        <left>
-            <div>
-                <a class="w60">关键字：</a><input id="key" class="w350" placeholder="code or @path" type="text" value="${key}" />
+        <flex>
+            <left class="col-3">
+            </left>
+            <middle class="col-6 center">
+                <input id="key" class="w250" placeholder="code or @path" type="text" value="${key}" />
                 <button type="button" onclick="search()">查询</button>
                 <#if is_admin == 1>
                     <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
                 </#if>
-            </div>
-            <#if is_admin == 1>
-                <div>
-                    <a class="w60"></a><file>
-                        <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor w80">导入</a></label>
+            </middle>
+            <right class="col-3">
+            </right>
+        </flex>
+
+
+        <flex>
+            <left class="col-6">
+                <#if is_admin == 1>
+                    <file>
+                        <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
                     </file>
 
-                    <button type='button' class="minor w80 mar10-l" onclick="exp()" >导出</button>
+                    <button type='button' class="minor mar10-l" onclick="exp()" >导出</button>
 
                     <#if state!=1>
                         <button type='button' class="edit w80 mar10-l" onclick="reset()" >立即执行</button>
@@ -156,15 +164,15 @@
                         <button type='button' class="minor mar10-l" onclick="del(0,'启用')" >启用</button>
                         <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
                     </#if>
-                </div>
-            </#if>
-        </left>
-        <right>
-            <selector>
-                <a class="${(state !=1)?string('sel','')}" href="./list?tag_name=${tag}&state=0">启用</a>
-                <a class="${(state =1)?string('sel','')}" href="./list?tag_name=${tag}&state=1">未启用</a>
-            </selector>
-        </right>
+                </#if>
+            </left>
+            <right class="col-6">
+                <selector>
+                    <a class="${(state !=1)?string('sel','')}" href="./list?tag_name=${tag}&state=0">启用</a>
+                    <a class="${(state =1)?string('sel','')}" href="./list?tag_name=${tag}&state=1">未启用</a>
+                </selector>
+            </right>
+        </flex>
     </toolbar>
 
     <datagrid class="list">
