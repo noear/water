@@ -22,8 +22,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_logger")
                     .where("logger = ?", logger)
                     .limit(1)
-                    .select("*")
-                    .getItem(LoggerModel.class);
+                    .selectItem("*", LoggerModel.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -34,8 +33,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
-                    .select("*")
-                    .getItem(BrokerModel.class);
+                    .selectItem("*", BrokerModel.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

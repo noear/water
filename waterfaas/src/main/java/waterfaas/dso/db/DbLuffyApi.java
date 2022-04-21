@@ -34,24 +34,21 @@ public class DbLuffyApi {
                 .where("1=1")
                 .andIf(TextUtils.isEmpty(tag) == false, "tag=?", tag)
                 .andIf(TextUtils.isEmpty(label) == false, "label=?", label)
-                .select("path, note")
                 .caching(Config.cache_file)
                 .usingCache(isCache)
-                .getList(AFileModel.class);
+                .selectList("path, note", AFileModel.class);
     }
 
     public static List<String> fileGetPathAll() throws Exception {
-        return db().table("luffy_file").select("path")
-                .getDataList().toArray(0);
+        return db().table("luffy_file")
+                .selectArray("path");
     }
-
 
 
     public static List<AFileModel> pathFilters() throws Exception {
         return db().table("luffy_file")
                 .where("`label` = ?", Config.faas_filter_path)
-                .select("path,note")
-                .getList(AFileModel.class);
+                .selectList("path,note", AFileModel.class);
 
     }
 }
