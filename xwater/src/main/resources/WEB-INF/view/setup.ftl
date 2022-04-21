@@ -25,7 +25,7 @@
 </head>
 <body>
 <header>
-    <label title="${_version!}">WATER</label>
+    <label title="${_version!}">XWATER</label>
     <nav>
         <a href="/cfg/prop" class="sel" target="dock">属性配置</a>
         <a href="/cfg/whitelist" target="dock">安全名单</a>
