@@ -11,32 +11,7 @@
     <script src="${js}/layer/layer.js"></script>
 </head>
 <script>
-    function disable(server_id,type) {
-        var text = "启用";
-        if (type == 0) {
-            text = "禁用";
-        }
-        top.layer.confirm('确定'+text, {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            $.ajax({
-                type:"POST",
-                url:"/cfg/server/disable",
-                data:{"server_id":server_id,"is_enabled":type},
-                success:function (data) {
-                    if(data.code==1) {
-                        top.layer.msg(data.msg)
-                        setTimeout(function(){
-                            location.reload();
-                        },1000);
-                    }else{
-                        top.layer.msg(data.msg);
-                    }
-                }
-            });
-            top.layer.close(top.layer.index);
-        });
-    };
+
 </script>
 <body>
 <toolbar>
@@ -58,7 +33,7 @@
             <td>资源地址</td>
             <td width="45px">环境<br/>类型</td>
             <#if is_admin == 1>
-                <td width="80px">操作</td>
+                <td width="50px">操作</td>
             </#if>
         </tr>
         </thead>
@@ -77,13 +52,7 @@
                 <td>${m.env_type_str()}</td>
                 <#if is_admin == 1>
                     <td class="op">
-                        <a href="/cfg/server/edit?server_id=${m.server_id}" class="t2">编辑</a> |
-                        <#if m.is_enabled == 0>
-                            <a onclick="disable('${m.server_id}',1)" class="t2">启用</a>
-                        </#if>
-                        <#if m.is_enabled == 1>
-                            <a onclick="disable('${m.server_id}',0)" class="t2">禁用</a>
-                        </#if>
+                        <a href="/cfg/server/edit?server_id=${m.server_id}" class="t2">编辑</a>
                     </td>
                 </#if>
             </tr>

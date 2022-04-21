@@ -17,37 +17,6 @@
     function edit(logger_id) {
         location.href="/cfg/logger/edit?tag_name=${tag_name!}&logger_id="+logger_id;
     }
-
-    function del(logger_id,is_enabled) {
-        var text = '禁用';
-        if (is_enabled == 0) {
-            text = '启用';
-            is_enabled = 1;
-        } else {
-            is_enabled = 0;
-        }
-        top.layer.confirm('确定'+text, {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            $.ajax({
-                type:"POST",
-                url:"/cfg/logger/isEnable",
-                data:{"logger_id":logger_id,"is_enabled":is_enabled},
-                success:function(data){
-                    if (data.code == 1) {
-                        top.layer.msg("操作成功");
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    } else {
-                        top.layer.msg("操作失败");
-                    }
-
-                }
-            });
-            top.layer.close(top.layer.index);
-        });
-    }
 </script>
 <body>
         <toolbar>

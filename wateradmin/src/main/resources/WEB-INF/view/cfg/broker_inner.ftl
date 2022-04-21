@@ -18,36 +18,7 @@
         location.href="/cfg/broker/edit?tag_name=${tag_name!}&broker_id="+broker_id;
     }
 
-    function del(broker_id,is_enabled) {
-        var text = '禁用';
-        if (is_enabled == 0) {
-            text = '启用';
-            is_enabled = 1;
-        } else {
-            is_enabled = 0;
-        }
-        top.layer.confirm('确定'+text, {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            $.ajax({
-                type:"POST",
-                url:"/cfg/broker/isEnable",
-                data:{"broker_id":broker_id,"is_enabled":is_enabled},
-                success:function(data){
-                    if (data.code == 1) {
-                        top.layer.msg("操作成功");
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    } else {
-                        top.layer.msg("操作失败");
-                    }
 
-                }
-            });
-            top.layer.close(top.layer.index);
-        });
-    }
 </script>
 <body>
 
