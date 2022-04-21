@@ -100,12 +100,13 @@ public class BrokerController extends BaseController {
 
         if (broker.broker_id == 0) {
             broker.keep_days = 15;
+            broker.is_enabled = 1;
         } else {
             tag_name = broker.tag;
         }
 
         viewModel.put("option_sources", option_sources);
-        viewModel.put("log", broker);
+        viewModel.put("model", broker);
         viewModel.put("tag_name", tag_name);
 
         return view("cfg/broker_edit");
@@ -113,8 +114,8 @@ public class BrokerController extends BaseController {
 
     //日志配置ajax 保存功能。
     @Mapping("broker/edit/ajax/save")
-    public ViewModel saveBroker(Integer broker_id, String tag, String broker, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws Exception {
-        boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm);
+    public ViewModel saveBroker(Integer broker_id, String tag, String broker, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm,int is_enabled) throws Exception {
+        boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm, is_enabled);
 
         if (result) {
             try {

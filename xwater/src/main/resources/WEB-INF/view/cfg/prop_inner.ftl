@@ -97,7 +97,7 @@
         <form>
             <input type="hidden"  name="tag_name" value="${tag_name!}"/>
             <input type="hidden"  name="state" value="${state!}"/>
-            <a class="w60">关键字：</a><input type="text"  name="key" placeholder="key" value="${key!}" class="w350"/>
+            <input type="text"  name="key" placeholder="key" value="${key!}" class="w250"/>
             <button type="submit">查询</button>
             <#if is_admin == 1>
                 <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>

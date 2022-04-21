@@ -58,7 +58,7 @@
                         <#list logs as m>
                             <option value="${m.logger}">${m.logger} (${m.row_num_today})</option>
                         </#list>
-                    </select>&nbsp;&nbsp;
+                    </select>
 
                     <script>
                         <#if log??>
@@ -75,7 +75,8 @@
                     <input type="text" name="tagx" id="tagx"
                            class="w350 sml"
                            placeholder="Tag@Tag1@Tag2@Tag3@Tag4 or *TraceId ${allowSearch?string('or $Key','')}" />
-                    <button class="mar10-l" type="submit">查询</button>
+
+                    <button type="submit">查询</button>
 
                 </left>
                 <right class="sml">

@@ -9,7 +9,6 @@
     <script src="${js}/layer/layer.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-
     </style>
 </head>
 <script>
@@ -68,7 +67,7 @@
                     <td>数据源</td>
                     <td width="60">启用<br/>报警</td>
                     <#if is_admin == 1>
-                        <td width="100px" rowspan="2">操作</td>
+                        <td width="50px" rowspan="2">操作</td>
                     </#if>
                 </tr>
                 </thead>
@@ -90,11 +89,7 @@
 
                         <#if is_admin == 1>
                             <td class="op">
-                                <a  onclick="edit('${broker.broker_id}')" style="color: blue;cursor: pointer">编辑</a> |
-                                <a  onclick="del('${broker.broker_id}','${broker.is_enabled}')" style="color: blue;cursor: pointer">
-                                    <#if broker.is_enabled == 0>启用</#if>
-                                    <#if broker.is_enabled == 1>禁用</#if>
-                                </a>
+                                <a  onclick="edit('${broker.broker_id}')" style="color: blue;cursor: pointer">编辑</a>
                             </td>
                         </#if>
                     </tr>

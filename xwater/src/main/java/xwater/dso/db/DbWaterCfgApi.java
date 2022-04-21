@@ -457,20 +457,21 @@ public class DbWaterCfgApi {
     }
 
     //设置logger。
-    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm) throws SQLException {
+    public static boolean setLogger(Integer logger_id, String tag, String logger, String source, String note, int keep_days, int is_alarm, int is_enabled) throws SQLException {
         DbTableQuery db = db().table("water_cfg_logger")
                 .set("tag", tag)
                 .set("logger", logger)
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("is_alarm", is_alarm)
+                .set("is_enabled", is_enabled)
                 .set("note", note);
         if (logger_id > 0) {
             boolean isOk = db.where("logger_id = ?", logger_id).update() > 0;
 
             return isOk;
         } else {
-            return db.set("is_enabled", 1).insert() > 0;
+            return db.insert() > 0;
         }
     }
 
@@ -535,13 +536,14 @@ public class DbWaterCfgApi {
     }
 
     //设置 broker。
-    public static boolean setBroker(Integer broker_id, String tag, String broker, String source, String note, int keep_days, int is_alarm) throws SQLException {
+    public static boolean setBroker(Integer broker_id, String tag, String broker, String source, String note, int keep_days, int is_alarm, int is_enabled) throws SQLException {
         DbTableQuery db = db().table("water_cfg_broker")
                 .set("tag", tag)
                 .set("broker", broker)
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("is_alarm", is_alarm)
+                .set("is_enabled", is_enabled)
                 .set("note", note);
         if (broker_id > 0) {
             boolean isOk = db.where("broker_id = ?", broker_id).update() > 0;
@@ -549,7 +551,7 @@ public class DbWaterCfgApi {
 
             return isOk;
         } else {
-            return db.set("is_enabled", 1).insert() > 0;
+            return db.insert() > 0;
         }
     }
 

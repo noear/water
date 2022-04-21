@@ -100,12 +100,13 @@ public class LoggerController extends BaseController {
 
         if (logger.logger_id == 0) {
             logger.keep_days = 15;
+            logger.is_enabled = 1;
         } else {
             tag_name = logger.tag;
         }
 
         viewModel.put("option_sources", option_sources);
-        viewModel.put("log", logger);
+        viewModel.put("model", logger);
         viewModel.put("tag_name", tag_name);
 
         return view("cfg/logger_edit");
@@ -113,10 +114,10 @@ public class LoggerController extends BaseController {
 
     //日志配置ajax 保存功能。
     @Mapping("logger/edit/ajax/save")
-    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws Exception {
+    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm, int is_enabled) throws Exception {
 
 
-        boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
+        boolean result = DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm, is_enabled);
 
         if (result) {
             try {

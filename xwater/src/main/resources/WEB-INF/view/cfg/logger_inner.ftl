@@ -16,37 +16,6 @@
     function edit(logger_id) {
         location.href="/cfg/logger/edit?tag_name=${tag_name!}&logger_id="+logger_id;
     }
-
-    function del(logger_id,is_enabled) {
-        var text = '禁用';
-        if (is_enabled == 0) {
-            text = '启用';
-            is_enabled = 1;
-        } else {
-            is_enabled = 0;
-        }
-        top.layer.confirm('确定'+text, {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            $.ajax({
-                type:"POST",
-                url:"/cfg/logger/isEnable",
-                data:{"logger_id":logger_id,"is_enabled":is_enabled},
-                success:function(data){
-                    if (data.code == 1) {
-                        top.layer.msg("操作成功");
-                        setTimeout(function(){
-                            location.reload();
-                        },800);
-                    } else {
-                        top.layer.msg("操作失败");
-                    }
-
-                }
-            });
-            top.layer.close(top.layer.index);
-        });
-    }
 </script>
 <body>
         <toolbar>
@@ -68,7 +37,7 @@
                     <td>数据源</td>
                     <td width="60">启用<br/>报警</td>
                     <#if is_admin == 1>
-                        <td width="100px" rowspan="2">操作</td>
+                        <td width="50px" rowspan="2">操作</td>
                     </#if>
                 </tr>
                 </thead>
@@ -90,11 +59,7 @@
 
                         <#if is_admin == 1>
                             <td class="op">
-                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a> |
-                                <a  onclick="del('${logger.logger_id}','${logger.is_enabled}')" style="color: blue;cursor: pointer">
-                                    <#if logger.is_enabled == 0>启用</#if>
-                                    <#if logger.is_enabled == 1>禁用</#if>
-                                </a>
+                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a>
                             </td>
                         </#if>
                     </tr>
