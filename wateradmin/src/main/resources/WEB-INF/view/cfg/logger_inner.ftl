@@ -69,7 +69,7 @@
                     <td>数据源</td>
                     <td width="60">启用<br/>报警</td>
                     <#if is_admin == 1>
-                        <td width="100px" rowspan="2">操作</td>
+                        <td width="50px" rowspan="2">操作</td>
                     </#if>
                 </tr>
                 </thead>
@@ -91,11 +91,7 @@
 
                         <#if is_admin == 1>
                             <td>
-                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a>&nbsp;&nbsp;
-                                <a  onclick="del('${logger.logger_id}','${logger.is_enabled}')" style="color: blue;cursor: pointer">
-                                    <#if logger.is_enabled == 0>启用</#if>
-                                    <#if logger.is_enabled == 1>禁用</#if>
-                                </a>
+                                <a  onclick="edit('${logger.logger_id}')" style="color: blue;cursor: pointer">编辑</a>
                             </td>
                         </#if>
                     </tr>

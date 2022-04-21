@@ -13,7 +13,7 @@
     </style>
 
     <script>
-        var broker_id = '${log.broker_id}';
+        var broker_id = '${model.broker_id}';
 
         function save() {
             var vm = formToMap("form");
@@ -73,7 +73,7 @@
                     if(data.code==1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
-                            parent.location.href="/cfg/broker?tag_name=${log.tag!}";
+                            parent.location.href="/cfg/broker?tag_name=${model.tag!}";
                         },800);
                     }else{
                         top.layer.msg(data.msg);
@@ -83,7 +83,7 @@
         }
 
         $(function () {
-            document.getElementById('source').value="${log.source!}";
+            document.getElementById('source').value="${model.source!}";
 
             ctl_s_save_bind(document,save);
         });
@@ -112,11 +112,11 @@
             </tr>
             <tr>
                 <th>broker*</th>
-                <td><input type="text" id="broker" value="${log.broker!}"/></td>
+                <td><input type="text" id="broker" value="${model.broker!}"/></td>
             </tr>
             <tr>
                 <th>保留天数</th>
-                <td><input type="text" id="keep_days" value="${log.keep_days!30}"/></td>
+                <td><input type="text" id="keep_days" value="${model.keep_days!30}"/></td>
             </tr>
             <tr>
                 <th>数据源</th>
@@ -131,13 +131,21 @@
             </tr>
             <tr>
                 <th>备注</th>
-                <td><input type="text" class="longtxt" id="note" value="${log.note!}"/></td>
+                <td><input type="text" class="longtxt" id="note" value="${model.note!}"/></td>
+            </tr>
+            <tr>
+                <th>是否启用</th>
+                <td>
+                    <switcher>
+                        <label><input id="is_enabled" value="1" type="checkbox" ${(model.is_enabled = 1)?string("checked","")}><a></a></label>
+                    </switcher>
+                </td>
             </tr>
             <tr>
                 <th></th>
                 <td>
                     <checkbox>
-                        <label class="mar10-r"><input type="checkbox" id="is_alarm" ${(log.is_alarm = 1)?string('checked','')}  /><a>启用报警</a></label>
+                        <label class="mar10-r"><input type="checkbox" id="is_alarm" ${(model.is_alarm = 1)?string('checked','')}  /><a>启用报警</a></label>
                     </checkbox>
                 </td>
             </tr>

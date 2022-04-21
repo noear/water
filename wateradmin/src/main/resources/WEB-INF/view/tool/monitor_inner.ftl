@@ -59,8 +59,7 @@
                 <td>${monitor.task_tag}</td>
                 <td style="word-wrap:break-word;word-break:break-all;">${monitor.alarm_mobile!}</td>
                 <td>${monitor.alarm_count}</td>
-
-                <td>
+                <td class="op">
                     <a href="/tool/monitor/edit?monitor_id=${monitor.monitor_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a> |
                     <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=@${monitor.monitor_id}" target="_parent" class="t2">日志</a>
                 </td>

@@ -88,7 +88,7 @@ public class LoggerController extends BaseController {
         }
 
         viewModel.put("option_sources", option_sources);
-        viewModel.put("log", logger);
+        viewModel.put("model", logger);
         viewModel.put("tag_name", tag_name);
 
         return view("cfg/logger_edit");

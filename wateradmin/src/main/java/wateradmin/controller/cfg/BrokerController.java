@@ -87,7 +87,7 @@ public class BrokerController extends BaseController {
         }
 
         viewModel.put("option_sources", option_sources);
-        viewModel.put("log", broker);
+        viewModel.put("model", broker);
         viewModel.put("tag_name", tag_name);
 
         return view("cfg/broker_edit");
