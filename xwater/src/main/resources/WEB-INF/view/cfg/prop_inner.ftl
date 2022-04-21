@@ -36,7 +36,7 @@
         <thead>
         <tr>
             <td width="220px" class="left">key</td>
-            <td class="left">value</td>
+            <td class="left">配置内容</td>
             <#if is_admin == 1>
                 <td width="50px">操作</td>
             </#if>

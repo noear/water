@@ -219,7 +219,7 @@
                 </td>
             </tr>
             <tr>
-                <th>value</th>
+                <th>配置内容</th>
                 <td>
                     <div style="line-height: 1em;">
                         <boxlist>
