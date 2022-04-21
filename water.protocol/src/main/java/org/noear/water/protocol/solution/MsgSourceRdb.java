@@ -487,14 +487,19 @@ public class MsgSourceRdb implements MsgSource {
         long timeOuts = 1000 * seconds; //30s
         long refTime = currTime - timeOuts;
 
-        if (_db.table("water_msg_message").whereEq("state", 1).andLt("dist_nexttime", refTime).selectExists()) {
+        if (_db.table("water_msg_message")
+                .whereEq("state", 1)
+                .andLt("dist_nexttime", refTime)
+                .andLt("last_fulltime", refTime).selectExists()) {
             Datetime datetime = Datetime.Now();
 
             return _db.table("water_msg_message")
                     .set("state", 0)
                     .set("last_date", datetime.getDate())
                     .set("last_fulltime", datetime.getTicks())
-                    .whereEq("state", 1).andLt("dist_nexttime", refTime)
+                    .whereEq("state", 1)
+                    .andLt("dist_nexttime", refTime)
+                    .andLt("last_fulltime", refTime)
                     .update();
         } else {
             return 0;
