@@ -20,9 +20,8 @@ public class DbWaterCfgApi {
                 .andEq("type", "mobile")
                 .andEq("is_enabled", 1)
                 .andNeq("value", "")
-                .select("value ")
                 .caching(Config.cache_data)
-                .getArray(0);
+                .selectArray("value ");
     }
 
     public static LoggerModel getLogger(String logger) {
@@ -30,8 +29,7 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_logger")
                     .where("logger = ?", logger)
                     .limit(1)
-                    .select("*")
-                    .getItem(LoggerModel.class);
+                    .selectItem("*", LoggerModel.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -42,12 +40,12 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
-                    .select("*")
-                    .getItem(BrokerVo.class);
+                    .selectItem("*", BrokerVo.class);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
+
     public static List<BrokerVo> getBrokerList() throws Exception {
         return db().table("water_cfg_broker").whereEq("is_enabled", 1)
                 .caching(Config.cache_data)

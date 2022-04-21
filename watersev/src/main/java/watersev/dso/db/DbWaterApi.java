@@ -1,6 +1,7 @@
 package watersev.dso.db;
 
 import lombok.extern.slf4j.Slf4j;
+import org.noear.weed.DbContext;
 import watersev.Config;
 import watersev.models.water.MonitorModel;
 import watersev.models.water.SynchronousModel;
@@ -15,14 +16,16 @@ import java.util.List;
  */
 @Slf4j
 public class DbWaterApi {
+    public static DbContext db() {
+        return Config.water;
+    }
 
     //获取同步任务列表
     public static List<SynchronousModel> getSyncList() {
         try {
-            return Config.water.table("water_tool_synchronous")
+            return db().table("water_tool_synchronous")
                     .where("is_enabled = 1")
-                    .select("*")
-                    .getList(new SynchronousModel());
+                    .selectList("*", SynchronousModel.class);
         } catch (Exception ex) {
             log.error("{}", ex);
 
@@ -31,21 +34,23 @@ public class DbWaterApi {
     }
 
     public static void setSyncTaskTag(int sync_id, long task_tag) throws SQLException {
-        Config.water.table("water_tool_synchronous")
+        db().table("water_tool_synchronous")
                 .set("task_tag", task_tag)
-                .where("sync_id=?", sync_id).update();
+                .where("sync_id=?", sync_id)
+                .update();
     }
 
     public static void setSyncLastTime(int sync_id) throws SQLException {
-        Config.water.table("water_tool_synchronous")
+        db().table("water_tool_synchronous")
                 .set("last_fulltime", new Date())
-                .where("sync_id=?", sync_id).update();
+                .where("sync_id=?", sync_id)
+                .update();
     }
 
 
     public static List<MonitorModel> getMonitorList() {
         try {
-            return Config.water.table("water_tool_monitor")
+            return db().table("water_tool_monitor")
                     .where("is_enabled=1")
                     .selectList("*", MonitorModel.class);
         } catch (Exception ex) {
@@ -56,11 +61,10 @@ public class DbWaterApi {
     }
 
     public static void setMonitorState(int monitor_id, int alarm_count, String task_tag) throws SQLException {
-        Config.water.table("water_tool_monitor")
+        db().table("water_tool_monitor")
                 .set("alarm_count", alarm_count)
                 .set("task_tag", task_tag)
-                .where("monitor_id=?", monitor_id).update();
+                .where("monitor_id=?", monitor_id)
+                .update();
     }
-
-
 }
