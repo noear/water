@@ -83,6 +83,7 @@ public class LoggerController extends BaseController {
 
         if (logger.logger_id == 0) {
             logger.keep_days = 15;
+            logger.is_enabled = 1;
         } else {
             tag_name = logger.tag;
         }
@@ -98,12 +99,12 @@ public class LoggerController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @NotEmpty({"tag", "logger"})
     @Mapping("logger/edit/ajax/save")
-    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws Exception {
+    public ViewModel saveLogger(Integer logger_id, String tag, String logger, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm, int is_enabled) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm);
+        DbWaterCfgApi.setLogger(logger_id, tag.trim(), logger.trim(), source.trim(), note, keep_days, is_alarm, is_enabled);
 
         try {
             //尝试建记录器

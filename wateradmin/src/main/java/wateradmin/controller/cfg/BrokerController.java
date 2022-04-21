@@ -82,6 +82,7 @@ public class BrokerController extends BaseController {
 
         if (broker.broker_id == 0) {
             broker.keep_days = 15;
+            broker.is_enabled = 1;
         } else {
             tag_name = broker.tag;
         }
@@ -97,12 +98,12 @@ public class BrokerController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @NotEmpty({"tag", "broker"})
     @Mapping("broker/edit/ajax/save")
-    public ViewModel saveBroker(Integer broker_id, String tag, String broker, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm) throws Exception {
+    public ViewModel saveBroker(Integer broker_id, String tag, String broker, @Param(defaultValue = "") String source, String note, int keep_days, int is_alarm, int is_enabled) throws Exception {
         if (Session.current().isAdmin() == false) {
             return viewModel.code(0, "没有权限");
         }
 
-        boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm);
+        boolean result = DbWaterCfgApi.setBroker(broker_id, tag.trim(), broker.trim(), source.trim(), note, keep_days, is_alarm, is_enabled);
 
         if (result) {
             try {
