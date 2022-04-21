@@ -9,7 +9,7 @@
     <script src="${js}/layer/layer.js"></script>
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
-        .des{text-decoration:line-through; color:#888;}
+        .des td{text-decoration:line-through; color:#888;}
     </style>
 </head>
 <script>
