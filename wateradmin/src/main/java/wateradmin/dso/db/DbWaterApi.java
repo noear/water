@@ -12,12 +12,10 @@ import wateradmin.models.water.SynchronousModel;
 import java.sql.SQLException;
 import java.util.*;
 
-
 public class DbWaterApi {
     private static DbContext db() {
         return Config.water;
     }
-
 
 
     //获取monitor表中的数据。
@@ -30,21 +28,19 @@ public class DbWaterApi {
                     if (!TextUtils.isEmpty(monitor_name))
                         tb.and("name like ?", monitor_name + "%");
                 })
-                .select("*")
-                .getList(new MonitorModel());
+                .selectList("*", MonitorModel.class);
     }
 
     //根据id查找对应monitor，用于编辑功能。
     public static MonitorModel monitorGet(int monitor_id) throws SQLException {
-        if(monitor_id == 0){
+        if (monitor_id == 0) {
             return new MonitorModel();
         }
 
         return db()
                 .table("water_tool_monitor")
                 .where("monitor_id = ?", monitor_id)
-                .select("*")
-                .getItem(new MonitorModel());
+                .selectItem("*", MonitorModel.class);
     }
 
 
@@ -61,7 +57,7 @@ public class DbWaterApi {
                 .set("rule", rule)
                 .set("task_tag_exp", task_tag_exp)
                 .set("alarm_mobile", alarm_mobile)
-                .set("alarm_sign",alarm_sign)
+                .set("alarm_sign", alarm_sign)
                 .set("alarm_exp", alarm_exp)
                 .set("is_enabled", is_enabled);
 
@@ -84,13 +80,8 @@ public class DbWaterApi {
         return db().table("water_tool_monitor")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
-
-
-
-
 
 
     //根据名称和状态列出同步列表。
@@ -103,8 +94,7 @@ public class DbWaterApi {
                     if (!TextUtils.isEmpty(name))
                         tb.and("name like ?", name + "%");
                 })
-                .select("*")
-                .getList(new SynchronousModel());
+                .selectList("*", SynchronousModel.class);
     }
 
     public static boolean syncAdd(Integer type, String name, Integer interval, String target, String target_pk, String source,
@@ -124,21 +114,16 @@ public class DbWaterApi {
     }
 
 
-
-
-
-
     //数据同步  根据id获得对象
     public static SynchronousModel syncGet(int sync_id) throws SQLException {
-        if(sync_id == 0){
+        if (sync_id == 0) {
             return new SynchronousModel();
         }
 
         return db().table("water_tool_synchronous")
                 .where("sync_id = ?", sync_id)
                 .limit(1)
-                .select("*")
-                .getItem(new SynchronousModel());
+                .selectItem("*", SynchronousModel.class);
     }
 
     public static boolean syncSave(Integer sync_id, Integer type, String name, String tag, Integer interval, String target, String target_pk,
@@ -153,6 +138,7 @@ public class DbWaterApi {
                 .set("source_model", source_model)
                 .set("alarm_mobile", alarm_mobile)
                 .set("is_enabled", is_enabled);
+
         if (sync_id > 0) {
             return db.where("sync_id = ?", sync_id).update() > 0;
         } else {
@@ -171,49 +157,45 @@ public class DbWaterApi {
         return db().table("water_tool_synchronous")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
 
-
-    public static List<TagCountsModel> reportGetTags() throws SQLException{
+    public static List<TagCountsModel> reportGetTags() throws SQLException {
         return db().table("water_tool_report")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
-    public static List<ReportModel> reportGetListByTag(String tag) throws SQLException{
+    public static List<ReportModel> reportGetListByTag(String tag) throws SQLException {
         return db().table("water_tool_report")
-                .where("tag = ?",tag)
-                .select("*")
-                .getList(new ReportModel());
+                .where("tag = ?", tag)
+                .selectList("*", ReportModel.class);
     }
 
-    public static ReportModel reportGet(int row_id) throws SQLException{
+    public static ReportModel reportGet(int row_id) throws SQLException {
         return db().table("water_tool_report")
-                .where("row_id = ?",row_id)
-                .select("*")
-                .getItem(new ReportModel());
+                .where("row_id = ?", row_id)
+                .selectItem("*", ReportModel.class);
     }
 
-    public static boolean reportSave(int row_id, String tag, String name, String code, String note, String args) throws SQLException{
+    public static boolean reportSave(int row_id, String tag, String name, String code, String note, String args) throws SQLException {
         DbTableQuery dq = db().table("water_tool_report")
                 .set("tag", tag)
                 .set("name", name)
                 .set("note", note)
                 .set("args", args)
                 .set("code", code);
-        if (row_id>0){
+
+        if (row_id > 0) {
             //update
-            return dq.where("row_id = ?",row_id)
-                    .update()>0;
+            return dq.where("row_id = ?", row_id)
+                    .update() > 0;
         } else {
             //add
-            return dq.set("create_fulltime",new Date())
-                    .insert()>0;
+            return dq.set("create_fulltime", new Date())
+                    .insert() > 0;
         }
     }
 

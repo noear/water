@@ -26,8 +26,7 @@ public class DbLuffyApi {
         return db().table("luffy_file").where("file_type=?", type.code)
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
     private static String list_sels = "file_id,tag,label,path,`rank`,note,is_staticize,is_editable,is_disabled,is_exclude,link_to,edit_mode,content_type,update_fulltime,plan_state,plan_begin_time,plan_last_time,plan_last_timespan,plan_interval,plan_max,plan_count,use_whitelist";
@@ -75,15 +74,13 @@ public class DbLuffyApi {
         }
 
         return qr.orderByAsc("path")
-                .select(list_sels)
-                .getList(LuffyFileModel.class);
+                .selectList(list_sels, LuffyFileModel.class);
     }
 
     public static LuffyFileModel getFile(int file_id) throws SQLException {
         return db().table("luffy_file")
                 .where("file_id=?", file_id)
-                .select("*")
-                .getItem(LuffyFileModel.class);
+                .selectItem("*", LuffyFileModel.class);
     }
 
     public static LuffyFileModel getFileByPath(String path) throws SQLException {
@@ -111,9 +108,9 @@ public class DbLuffyApi {
                 .collect(Collectors.toList());
 
         return db().table("luffy_file").usingExpr(true)
-                .set("plan_last_time","$NULL")
-                .set("plan_last_timespan",0)
-                .set("plan_state",1)
+                .set("plan_last_time", "$NULL")
+                .set("plan_last_timespan", 0)
+                .set("plan_state", 1)
                 .whereIn("file_id", list)
                 .update();
     }
@@ -144,7 +141,7 @@ public class DbLuffyApi {
             NoticeUtils.updateCache("paas:" + file_id);
 
             /** 记录历史版本 */
-            DbWaterVerApi.logVersion(db(),"luffy_file", "file_id", file_id);
+            DbWaterVerApi.logVersion(db(), "luffy_file", "file_id", file_id);
         }
     }
 
@@ -157,8 +154,7 @@ public class DbLuffyApi {
         return db().table("luffy_file")
                 .whereIn("file_id", list)
                 .andEq("file_type", type.code)
-                .select("*")
-                .getList(LuffyFileModel.class);
+                .selectList("*", LuffyFileModel.class);
     }
 
     //批量导入
@@ -175,7 +171,7 @@ public class DbLuffyApi {
             return;
         }
 
-        if(wm.create_fulltime == null){
+        if (wm.create_fulltime == null) {
             wm.create_fulltime = new Date();
         }
 

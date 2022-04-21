@@ -3,7 +3,6 @@ package wateradmin.dso.db;
 import org.noear.solon.Utils;
 import org.noear.water.WW;
 import org.noear.water.dso.NoticeUtils;
-import org.noear.water.dso.WhitelistApi;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -32,12 +31,11 @@ public class DbWaterCfgApi {
                 .where("is_enabled=1")
                 .build(tb -> {
                     if (!TextUtils.isEmpty(tag)) {
-                        tb.and("tag = ?",tag);
+                        tb.and("tag = ?", tag);
                     }
                 })
                 .orderBy("logger asc")
-                .select("*")
-                .getList(LoggerModel.class);
+                .selectList("*", LoggerModel.class);
     }
 
     //
@@ -85,8 +83,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_logger")
                 .where("logger_id=?", logger_id)
                 .limit(1)
-                .select("*")
-                .getItem(LoggerModel.class);
+                .selectItem("*", LoggerModel.class);
     }
 
     //设置logger。
@@ -118,7 +115,7 @@ public class DbWaterCfgApi {
     }
 
     public static void delLogger(Integer logger_id) throws SQLException {
-        if(logger_id == null){
+        if (logger_id == null) {
             return;
         }
 
@@ -135,12 +132,11 @@ public class DbWaterCfgApi {
                 .where("is_enabled=1")
                 .build(tb -> {
                     if (!TextUtils.isEmpty(tag)) {
-                        tb.and("tag = ?",tag);
+                        tb.and("tag = ?", tag);
                     }
                 })
                 .orderBy("broker asc")
-                .select("*")
-                .getList(BrokerModel.class);
+                .selectList("*", BrokerModel.class);
     }
 
     //
@@ -149,9 +145,8 @@ public class DbWaterCfgApi {
             return db().table("water_cfg_broker")
                     .where("broker = ?", broker)
                     .limit(1)
-                    .select("*")
-                    .getItem(BrokerModel.class);
-        }catch (Exception ex){
+                    .selectItem("*", BrokerModel.class);
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -177,16 +172,15 @@ public class DbWaterCfgApi {
     public static List<BrokerModel> getBrokersByTag(String tag_name, int is_enabled, String sort) throws Exception {
         return db().table("water_cfg_broker")
                 .where("tag = ?", tag_name)
-                .and("is_enabled = ?",is_enabled)
-                .build((tb)->{
-                    if(TextUtils.isEmpty(sort) == false){
-                        tb.orderBy(sort+" DESC");
-                    }else{
+                .and("is_enabled = ?", is_enabled)
+                .build((tb) -> {
+                    if (TextUtils.isEmpty(sort) == false) {
+                        tb.orderBy(sort + " DESC");
+                    } else {
                         tb.orderBy("broker ASC");
                     }
                 })
-                .select("*")
-                .getList(BrokerModel.class);
+                .selectList("*", BrokerModel.class);
 
     }
 
@@ -195,8 +189,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_broker")
                 .where("broker_id=?", broker_id)
                 .limit(1)
-                .select("*")
-                .getItem(BrokerModel.class);
+                .selectItem("*", BrokerModel.class);
     }
 
     //设置 broker。
@@ -233,7 +226,7 @@ public class DbWaterCfgApi {
     }
 
     public static void delBroker(Integer broker_id) throws SQLException {
-        if(broker_id == null){
+        if (broker_id == null) {
             return;
         }
 
@@ -241,8 +234,6 @@ public class DbWaterCfgApi {
                 .where("broker_id = ?", broker_id)
                 .delete();
     }
-
-
 
 
     public static void delConfigByIds(int act, String ids) throws SQLException {
@@ -268,11 +259,11 @@ public class DbWaterCfgApi {
 
     //导入
     public static void impConfig(String tag, ConfigModel wm) throws SQLException {
-        if(TextUtils.isEmpty(tag) == false){
+        if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
 
-        if(TextUtils.isEmpty(wm.tag) || TextUtils.isEmpty(wm.key) || TextUtils.isEmpty(wm.value)){
+        if (TextUtils.isEmpty(wm.tag) || TextUtils.isEmpty(wm.key) || TextUtils.isEmpty(wm.value)) {
             return;
         }
 
@@ -288,13 +279,12 @@ public class DbWaterCfgApi {
     public static List<ConfigModel> getConfigByIds(String ids) throws SQLException {
         List<Object> list = Arrays.asList(ids.split(","))
                 .stream()
-                .map(s->Integer.parseInt(s))
+                .map(s -> Integer.parseInt(s))
                 .collect(Collectors.toList());
 
         return db().table("water_cfg_properties")
                 .whereIn("row_id", list)
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 
 
@@ -368,8 +358,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag,count(*) counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag,count(*) counts", TagCountsModel.class);
     }
 
     // 获取有特定类型配置的TAG
@@ -378,26 +367,24 @@ public class DbWaterCfgApi {
                 .where("type = ?", type)
                 .groupBy("tag")
                 .orderByAsc("tag")
-                .select("tag, COUNT(*) AS counts")
-                .getList(TagCountsModel.class);
+                .selectList("tag, COUNT(*) AS counts", TagCountsModel.class);
     }
 
     //编辑功能，根据row_id获取config信息。
     public static ConfigModel getConfig(Integer row_id) throws SQLException {
-        if(row_id == null || row_id == 0){
+        if (row_id == null || row_id == 0) {
             return new ConfigModel();
         }
 
         return db().table("water_cfg_properties")
                 .where("row_id = ?", row_id)
-                .select("*")
-                .getItem(ConfigModel.class);
+                .selectItem("*", ConfigModel.class);
     }
 
 
     //根据tag列出config。
     public static ConfigModel getConfigByTagName(String tagName) throws SQLException {
-        if(TextUtils.isEmpty(tagName)){
+        if (TextUtils.isEmpty(tagName)) {
             return new ConfigModel();
         }
 
@@ -408,7 +395,7 @@ public class DbWaterCfgApi {
 
 
     public static ConfigModel getConfigByTagName(String tag, String name) throws SQLException {
-        return getConfigByTagName(tag,name,false);
+        return getConfigByTagName(tag, name, false);
     }
 
     public static ConfigModel getConfigByTagName(String tag, String name, boolean cache) throws SQLException {
@@ -416,9 +403,8 @@ public class DbWaterCfgApi {
                 .whereEq("tag", tag)
                 .andEq("key", name)
                 .limit(1)
-                .select("*")
                 .caching(CacheUtil.data).usingCache(cache)
-                .getItem(ConfigModel.class);
+                .selectItem("*", ConfigModel.class);
     }
 
     public static List<ConfigModel> getConfigsByTag(String tag, String key, int state) throws SQLException {
@@ -463,8 +449,7 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.db)
                 .orderBy("`tag`,`key`")
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 
     //获取type=10的配置（结构化数据库）
@@ -472,23 +457,20 @@ public class DbWaterCfgApi {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.water_logger)
                 .orderBy("`tag`,`key`")
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 
     public static List<ConfigModel> getMsgStoreConfigs() throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("type", ConfigType.water_broker)
                 .orderBy("`tag`,`key`")
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 
     //获取type=10,11,12的配置（结构化数据库 + 非结构化数据库）
     public static List<ConfigModel> getDbConfigsEx() throws SQLException {
         return db().table("water_cfg_properties")
                 .where("type >=10 AND type<20")
-                .select("*")
-                .getList(ConfigModel.class);
+                .selectList("*", ConfigModel.class);
     }
 }
