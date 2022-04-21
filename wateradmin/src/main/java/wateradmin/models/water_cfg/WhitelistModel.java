@@ -9,5 +9,5 @@ public class WhitelistModel {
     public String type;
     public String value;
     public String note;
-    public transient int is_enabled;
+    public int is_enabled;
 }

@@ -15,7 +15,6 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.BrokerModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.LoggerModel;
-import wateradmin.models.water_cfg.WhitelistModel;
 
 import java.sql.SQLException;
 import java.util.Arrays;
