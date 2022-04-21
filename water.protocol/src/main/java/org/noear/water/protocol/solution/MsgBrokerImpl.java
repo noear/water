@@ -21,16 +21,21 @@ import java.util.Properties;
  * @author noear 2021/11/1 created
  */
 public class MsgBrokerImpl implements MsgBroker {
-    MsgSource source;
-    MsgQueue queue;
-    String name;
-    Logger log = LoggerFactory.getLogger(WW.logger_water_log_msg);
+    private final String name;
+
+    private MsgSource source;
+    private MsgQueue queue;
+    private Logger log = LoggerFactory.getLogger(WW.logger_water_log_msg);
 
     /**
      * 新的配置
      */
     public MsgBrokerImpl(String name, ConfigM cfg, ICacheServiceEx cache) {
-        this.name = name;
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
 
         PropertiesM prop = cfg.getProp();
         PropertiesM storeProp = prop.getProp("store");
@@ -56,13 +61,13 @@ public class MsgBrokerImpl implements MsgBroker {
         }
 
         if (cfg.value.contains("=redis") && queueProp != null) {
-            String name = queueProp.getProperty("name");
+            String queueName = queueProp.getProperty("name");
 
-            if (TextUtils.isEmpty(name)) {
+            if (TextUtils.isEmpty(queueName)) {
                 throw new RuntimeException("MsgBroker::Missing name configuration");
             }
 
-            queue = new MsgQueueRedis(name, new RedisClient(queueProp));
+            queue = new MsgQueueRedis(queueName, new RedisClient(queueProp));
         } else {
             queue = MsgQueueLocal.getInstance();
         }

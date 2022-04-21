@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
+import org.noear.water.WaterClient;
 import org.noear.water.protocol.MsgBroker;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -142,6 +143,10 @@ public class MsgExchangeController implements IJob {
         List<MessageModel> msgList = msgBroker.getSource()
                 .getMessageListOfPending(5000, dist_nexttime);
 
+        //记录性能
+        long _times = System.currentTimeMillis() - dist_nexttime;
+        WaterClient.Track.track("watermsg", "exchange-q", msgBroker.getName(), _times);
+
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
 
         for (MessageModel msg : msgList) {
@@ -153,6 +158,9 @@ public class MsgExchangeController implements IJob {
 
         //等待执行完成，再到下一轮
         countDownLatch.await();
+
+
+        WaterClient.Track.track("watermsg", "exchange-c", msgBroker.getName(), _times);
 
         if (msgList.size() > 0) {
             return true;
