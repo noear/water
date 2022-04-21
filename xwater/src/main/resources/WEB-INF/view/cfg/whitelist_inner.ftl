@@ -57,7 +57,7 @@
             <tbody id="tbody" class="sel_from" >
 
             <#list list as m>
-                <tr class="${broker.isEnabled()?string("", "dis")}">
+                <tr class="${m.isEnabled()?string("", "dis")}">
                     <td>${m.row_id}</td>
                     <td class="left">${m.type!}</td>
                     <td class="left">${m.value!}</td>

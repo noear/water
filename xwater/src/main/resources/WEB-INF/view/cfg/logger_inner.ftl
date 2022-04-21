@@ -44,7 +44,7 @@
         </thead>
         <tbody id="tbody">
         <#list loggers as logger>
-            <tr class="${logger.isHighlight()?string("t4","")} ${broker.isEnabled()?string("", "dis")}" >
+            <tr class="${logger.isHighlight()?string("t4","")} ${logger.isEnabled()?string("", "dis")}" >
                 <td class="left"><a href="/log/query/inner?logger=${logger.logger}&tag_name=${logger.tag}" target="_parent">${logger.logger}</a></td>
                 <td class="center">${logger.keep_days}</td>
                 <td class="right">${logger.row_num_today}</td>

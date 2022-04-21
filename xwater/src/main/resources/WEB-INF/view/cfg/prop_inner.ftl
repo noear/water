@@ -64,7 +64,7 @@
         </thead>
         <tbody id="tbody" class="sel_from">
         <#list list as cfg>
-            <tr class="${broker.isEnabled()?string("", "dis")}">
+            <tr class="${cfg.isEnabled()?string("", "dis")}">
                 <td class="left">${cfg.key!}
                     <#if cfg.type != 0>
                         <n-l>::${cfg.type_str()}</n-l>
