@@ -143,8 +143,8 @@ public class PlnController implements IJob {
         long _times = runTaskDo(task, timecount);
 
         //2.3.记录性能
-        WaterClient.Track.track("waterplan", task.tag, task.path, _times);
-        WaterClient.Track.trackNode("waterplan", WaterClient.localHost(), _times);
+        WaterClient.Track.track("watersev-pln", task.tag, task.path, _times);
+        WaterClient.Track.trackNode("watersev-pln", WaterClient.localHost(), _times);
     }
 
 

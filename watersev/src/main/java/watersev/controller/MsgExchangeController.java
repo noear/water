@@ -146,7 +146,7 @@ public class MsgExchangeController implements IJob {
 
         //记录性能
         long time_span = System.currentTimeMillis() - time_start;
-        WaterClient.Track.track("watermsg", "exch-q", msgBroker.getName(), time_span);
+        WaterClient.Track.track("watersev-msgexg", "query", msgBroker.getName(), time_span);
 
         CountDownLatch countDownLatch = new CountDownLatch(msgList.size());
 
@@ -162,7 +162,7 @@ public class MsgExchangeController implements IJob {
 
         //再记时
         time_span = System.currentTimeMillis() - time_start;
-        WaterClient.Track.track("watermsg", "exch-c", msgBroker.getName(), time_span);
+        WaterClient.Track.track("watersev-msgexg", "completed", msgBroker.getName(), time_span);
 
         if (msgList.size() > 0) {
             return true;
