@@ -174,7 +174,7 @@
                 </td>
             </tr>
             <tr>
-                <th>重复标识</th>
+                <th>去重标识</th>
                 <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /><n>（重复的标识不告警）</n></td>
             </tr>
 
