@@ -191,7 +191,7 @@
                 <td><textarea class="h50" id="alarm_exp">${monitor.alarm_exp!}</textarea></td>
             </tr>
             <tr>
-                <th>是否启用</th>
+                <th>启用</th>
                 <td>
                     <switcher>
                         <label><input id="is_enabled" type="checkbox" ${(monitor.is_enabled=1)?string("checked","")}><a></a></label>

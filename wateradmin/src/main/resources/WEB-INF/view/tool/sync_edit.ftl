@@ -158,7 +158,7 @@
                 <td><input type="text" id="alarm_mobile" value="${syn.alarm_mobile!}" class="longtxt" /></td>
             </tr>
             <tr>
-                <th>是否启用</th>
+                <th>启用</th>
                 <td>
                     <switcher>
                         <label><input id="is_enabled" type="checkbox" ${(syn.is_enabled = 1)?string("checked","")}><a></a></label>

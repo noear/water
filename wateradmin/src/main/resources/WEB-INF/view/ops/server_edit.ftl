@@ -170,7 +170,7 @@
             </td>
         </tr>
         <tr>
-            <th>是否启用</th>
+            <th>启用</th>
             <td>
                 <switcher>
                     <label><input id="is_enabled" value="1" type="checkbox" ${(server.is_enabled = 1)?string("checked","")}><a></a></label>
