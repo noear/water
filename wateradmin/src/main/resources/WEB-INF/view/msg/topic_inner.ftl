@@ -18,7 +18,7 @@
 <main>
     <toolbar>
         <form>
-            主题：<input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>&nbsp;&nbsp;
+            <input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>&nbsp;&nbsp;
             <input type="hidden"  name="tag_name" value="${tag_name!}" />&nbsp;&nbsp;
             <button type="submit">查询</button>&nbsp;&nbsp;
             <#if is_admin == 1>
