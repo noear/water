@@ -94,7 +94,7 @@ public class DbWaterCfgApi {
                 .set("keep_days", keep_days)
                 .set("source", source)
                 .set("is_alarm", is_alarm)
-                .set("is_enabled", 1)
+                .set("is_enabled", is_enabled)
                 .set("note", note)
                 .set("gmt_modified", System.currentTimeMillis());
 
