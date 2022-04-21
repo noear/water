@@ -74,14 +74,14 @@
     <main>
             <toolbar>
                     <form>
-                        <select id="broker" class="w100" title="broker">
+                        <select id="broker" style="width: 110px;" title="broker">
                             <option value=""></option>
                             <#list brokerList as broker>
                                 <option value="${broker.tag!}">${broker.tag!}</option>
                             </#list>
                         </select>
                         <script>$('#broker').val('${broker!}')</script>
-                        <input type="text" name="key" value="${key!}" placeholder="ID or key" style="width: 287px;"/>&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="key" value="${key!}" placeholder="ID or key" style="width: 300px;"/>
                         <button type="submit">查询</button>
                     </form>
             </toolbar>
@@ -89,7 +89,7 @@
                 <form>
                 <table>
                     <tr>
-                        <th>消息ID</th>
+                        <th style="width: 106px;">消息ID</th>
                         <td><input type="text" id="msg_id" value="${msg.msg_id!}"/></td>
                     </tr>
                     <tr>
@@ -101,7 +101,7 @@
                         <td><input type="text" id="topic_name" value="${msg.topic_name!}"/></td>
                     </tr>
                     <tr>
-                        <th>已派次数</th>
+                        <th>已派发次数</th>
                         <td><input type="text" id="dist_count" value="${msg.dist_count!}"/></td>
                     </tr>
                     <tr>
