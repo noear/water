@@ -423,7 +423,7 @@ public class DbWaterCfgApi {
 
     //获取logger表tag
     public static List<TagCountsModel> getLoggerTags() throws Exception {
-        return db().table("water_cfg_logger").whereEq("is_enabled",1)
+        return db().table("water_cfg_logger")
                 .groupBy("tag")
                 .orderByAsc("tag")
                 .select("tag,count(*) counts")
@@ -496,7 +496,7 @@ public class DbWaterCfgApi {
 
     //获取 broker 表tag
     public static List<TagCountsModel> getBrokerTags() throws Exception {
-        return db().table("water_cfg_broker").whereEq("is_enabled", 1)
+        return db().table("water_cfg_broker")
                 .groupBy("tag")
                 .orderByAsc("tag")
                 .selectList("tag,count(*) counts", TagCountsModel.class);
