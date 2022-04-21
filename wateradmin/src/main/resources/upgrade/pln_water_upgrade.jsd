@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 2;
+let ver_new = 3;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -15,9 +15,13 @@ if(ver_old >= ver_new){
 
 //2.开始更新
 
+let db2;
+
 //for 2.5.8
 if(ver_old < 1){
-    let db2 = water.db('water/water');
+    if(!db2){
+        db2 = water.db('water/water');
+    }
 
     //::规则计算
     let tmpRes = db2.table('grit_resource').whereEq('display_name','规则计算').limit(1).selectMap('*');
@@ -61,7 +65,10 @@ if(ver_old < 1){
 }
 
 if(ver_old < 2){
-    let db2 = water.db('water/water');
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
     //::安全名单
     let tmlRes = db2.table('grit_resource').whereEq('display_name','安全名单').limit(1).selectMap('*');
     tmlRes.remove("resource_id");
@@ -84,6 +91,14 @@ if(ver_old < 2){
             .insert();
     }
 
+}
+
+if(ver_old < 3){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
+    db2.table('grit_resource').set('is_disabled','1').whereEq('display_name','数据同步').andEq('link_uri','/tool/sync').update();
 }
 
 //3.设定版本
