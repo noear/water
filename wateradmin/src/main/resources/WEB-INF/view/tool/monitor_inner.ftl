@@ -14,19 +14,23 @@
 <body>
 
 <toolbar>
-    <left>
-        <form>
-            <input type="text"  class="w250" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
-            <button type="submit">查询</button>
+    <flex>
+        <left class="col-4">
             <#if is_admin = 1>
-                <a href="/tool/monitor/edit?monitor_id=0" class="btn edit mar10-l" >新增</a>
+                <a href="/tool/monitor/edit?monitor_id=0" class="btn edit" >新增</a>
             </#if>
-        </form>
-    </left>
-    <right>
-        <@stateselector items="启用,未启用"/>
-    </right>
+        </left>
+        <middle class="col-4 center">
+            <form>
+                <input type="text"  class="w200" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
+                <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
+                <button type="submit">查询</button>
+            </form>
+        </middle>
+        <right class="col-4">
+            <@stateselector items="启用,未启用"/>
+        </right>
+    </flex>
 </toolbar>
 <datagrid class="list">
     <table>

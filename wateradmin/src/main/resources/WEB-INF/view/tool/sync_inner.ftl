@@ -11,19 +11,23 @@
 <body>
 
 <toolbar>
-    <left>
-        <form>
-            名称：<input type="text" class="w300" name="sync_name" placeholder="名称" id="sync_name"/>
-            <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
-            <button type="submit">查询</button>
+    <flex>
+        <left class="col-4">
             <#if is_admin = 1>
-                <a href="/tool/sync/edit" class="btn edit mar10-l">新增</a>
+                <a href="/tool/sync/edit" class="btn edit">新增</a>
             </#if>
-        </form>
-    </left>
-    <right>
-        <@stateselector items="启用,未启用"/>
-    </right>
+        </left>
+        <middle class="col-4 center">
+            <form>
+                名称：<input type="text" class="w200" name="sync_name" placeholder="名称" id="sync_name"/>
+                <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name!}"/>
+                <button type="submit">查询</button>
+            </form>
+        </middle>
+        <right class="col-4">
+            <@stateselector items="启用,未启用"/>
+        </right>
+    </flex>
 </toolbar>
 <datagrid class="list">
     <table>
