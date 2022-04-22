@@ -22,7 +22,7 @@
         </left>
         <middle class="col-4 center">
             <form>
-                <input type="text"  class="w200" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
+                <input type="text"  class="w250" name="monitor_name" placeholder="项目名称" id="monitor_name"/>
                 <input type="hidden"  name="tag_name" id="tag_name" value="${tag_name}"/>
                 <button type="submit">查询</button>
             </form>
