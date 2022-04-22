@@ -126,8 +126,8 @@
                 </file>
 
                 <div class="btn-group">
-                    <a class="btn minor mar10-l" >导出</a>
-                    <div class="btn-dropdown mar10-l w150">
+                    <a class="btn minor" >导出</a>
+                    <div class="btn-dropdown w150">
                         <a class="btn-link mar10" onclick="exp('yml')">导出为 Yml</a>
                         <a class="btn-link mar10" onclick="exp('json')">导出为 Json</a>
                         <a class="btn-link mar10" onclick="exp('properties')">导出为 Properties</a>
@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-                <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
+                <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
 
                 <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
             </#if>
