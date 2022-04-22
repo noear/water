@@ -141,7 +141,7 @@
                     </#if>
                 </left>
                 <middle class="col-4 center">
-                    <input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>
+                    <input type="text" class="w200" name="name" placeholder="名称" id="name" value="${name!}"/>
                     <button type="submit">查询</button>
                 </middle>
                 <right class="col-4">

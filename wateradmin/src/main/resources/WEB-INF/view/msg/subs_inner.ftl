@@ -127,7 +127,7 @@
             </left>
             <middle  class="col-6 center">
                 <form>
-                    <input type="text" class="w250"  name="topic_name" placeholder="主题名称 或 接收地址" id="topic_name"/>
+                    <input type="text" class="w200"  name="topic_name" placeholder="主题名称 或 接收地址" id="topic_name"/>
                     <input type="hidden"  name="tag_name" value="${tag_name!}" />
                     <input type="hidden"  name="name" value="${name!}" />
                     <button type="submit">查询</button>

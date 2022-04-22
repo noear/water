@@ -114,7 +114,7 @@
         <form>
             <input type="hidden" name="tag_name" value="${tag_name!}">
             <input type="hidden" name="bundle" value="${bundle!}">
-            <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w250"/>
+            <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w200"/>
             <button type="submit">查询</button>
         </form>
 

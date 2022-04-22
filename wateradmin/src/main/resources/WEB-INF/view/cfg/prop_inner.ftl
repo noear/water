@@ -101,7 +101,7 @@
             <form>
                 <input type="hidden"  name="tag_name" value="${tag_name!}"/>
                 <input type="hidden"  name="state" value="${state!}"/>
-                <input type="text"  name="key" placeholder="key" value="${key!}" class="w250"/>
+                <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
                 <button type="submit">查询</button>
             </form>
             <#if is_admin == 1 >
