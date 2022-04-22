@@ -135,14 +135,14 @@
         <toolbar>
             <flex>
                 <left class="col-4">
+                    <button onclick="autofresh();" class="w100"  type="button" id="fresh">开启自动刷新</button>
                     <#if is_operator == 1>
-                        <span class="w50 mar10-l"></span><a class="btn edit" href="/mot/service/edit">添加</a>
+                        <a class="btn edit mar10-r" href="/mot/service/edit">添加</a>
                     </#if>
                 </left>
                 <middle class="col-4 center">
                     <input type="text" class="w250" name="name" placeholder="名称" id="name" value="${name!}"/>
                     <button type="submit">查询</button>
-                    <button onclick="autofresh();" class="w100 mar10-l"  type="button" id="fresh">开启自动刷新</button>
                 </middle>
                 <right class="col-4">
                     <@stateselector items="启用,未启用"/>

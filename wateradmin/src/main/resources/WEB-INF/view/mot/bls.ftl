@@ -13,11 +13,11 @@
     <toolbar>
         <flex>
             <left class="col-4">
+                <button type="button" onclick="location.reload();">刷新</button>
             </left>
             <middle class="col-4 center">
                 <input type="text" class="w250"  name="name" placeholder="实例" id="name"/>
                 <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>
-                <button type="button" class="mar10-l" onclick="location.reload();">刷新</button>
             </middle>
             <right class="col-4">
                 <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">
