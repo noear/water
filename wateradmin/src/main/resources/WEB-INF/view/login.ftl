@@ -17,8 +17,8 @@
     section table input{height: 30px!important; width: 100%;}
     section table button{color: #000; height: 30px; width: 120px;}
 
-    body > header p{margin: 10px;line-height: 30px;}
-    body > header sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
+    header p{margin: 10px;line-height: 30px;}
+    header sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
   </style>
   <script type="text/javascript">
     function checkClick(){
@@ -59,20 +59,21 @@
   </script>
 </head>
 <body onkeydown="checkKey()">
-<header>
-  <flex>
-    <left class="col-6">
-      <p>${title}<sup>${_version!}</sup></p>
-    </left>
-    <right class="col-6">
-      <p>
-        <a href="https://gitee.com/noear/water" target="_blank">gitee</a> | <a href="https://github.com/noear/water">github</a>
-      </p>
-    </right>
-  </flex>
-</header>
 
 <main>
+  <header>
+    <flex>
+      <left class="col-6">
+        <p>${title}<sup>${_version!}</sup></p>
+      </left>
+      <right class="col-6">
+        <p>
+          <a href="https://gitee.com/noear/water" target="_blank">gitee</a> | <a href="https://github.com/noear/water">github</a>
+        </p>
+      </right>
+    </flex>
+  </header>
+
   <section>
     <form method="post">
       <table>
