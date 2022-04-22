@@ -31,7 +31,6 @@ public class BaseController {
         viewModel.put("img", "/img");
         viewModel.put("title", Solon.cfg().appTitle());
 
-
         //支持设置模式
         viewModel.put("is_admin", 1);
         viewModel.put("is_operator", 1);

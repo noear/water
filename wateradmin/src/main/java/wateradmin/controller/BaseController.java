@@ -37,7 +37,6 @@ public class BaseController {
         //当前用户信息, new
         viewModel.put("user_id", Session.current().getSubjectId());
         viewModel.put("user_display_name", Session.current().getDisplayName());
-        viewModel.put("_version",WW.water_version);
 
         //操作权限
         int is_admin = Session.current().getIsAdmin();
