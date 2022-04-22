@@ -34,8 +34,8 @@ public class BaseController {
         viewModel.put("title", Solon.cfg().appTitle());
 
         //当前用户信息, old //将弃用
-        viewModel.put("puid", Session.current().getSubjectId());
-        viewModel.put("cn_name", Session.current().getDisplayName());
+//        viewModel.put("puid", Session.current().getSubjectId());
+//        viewModel.put("cn_name", Session.current().getDisplayName());
 
         //当前用户信息, new
         viewModel.put("user_id", Session.current().getSubjectId());

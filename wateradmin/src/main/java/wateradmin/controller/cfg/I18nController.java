@@ -64,7 +64,7 @@ public class I18nController extends BaseController {
             }
         }
 
-        if (Utils.isEmpty(lang) || "default".equals(lang)) {
+        if (Utils.isEmpty(lang)) {
             lang = ctx.cookie("lang");
         }
 
@@ -76,7 +76,7 @@ public class I18nController extends BaseController {
             }
         }
 
-        if (Utils.isEmpty(lang) || "default".equals(lang)) {
+        if (Utils.isEmpty(lang)) {
             if (langs.size() > 0) {
                 lang = langs.get(0).tag;
             }
