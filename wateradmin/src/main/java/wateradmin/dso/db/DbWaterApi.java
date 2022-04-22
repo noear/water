@@ -62,7 +62,7 @@ public class DbWaterApi {
                 .set("is_enabled", is_enabled);
 
         if (monitor_id > 0) {
-            return db.where("monitor_id = ?", monitor_id).update() > 0;
+            return db.whereEq("monitor_id", monitor_id).update() > 0;
         } else {
             return db.insert() > 0;
         }
