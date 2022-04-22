@@ -17,19 +17,23 @@
 </script>
 <body>
 <toolbar>
-    <left>
-        <form>
-            <input type="hidden"  name="tag_name" value="${tag_name!}"/>
-            <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
-            <button type="submit">查询</button>
+    <flex>
+        <left class="col-4">
             <#if is_admin == 1>
-                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
+                <a class="btn edit" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
             </#if>
-        </form>
-    </left>
-    <right>
+        </left>
+        <middle class="col-4 center">
+            <form>
+                <input type="hidden"  name="tag_name" value="${tag_name!}"/>
+                <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
+                <button type="submit">查询</button>
+            </form>
+        </middle>
+        <right class="col-4">
 
-    </right>
+        </right>
+    </flex>
 </toolbar>
 <datagrid class="list">
     <table>
