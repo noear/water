@@ -35,7 +35,6 @@ public class BaseController {
         //支持设置模式
         viewModel.put("is_admin", 1);
         viewModel.put("is_operator", 1);
-        viewModel.put("is_setup", 1);
 
 
         viewModel.put("timenow", Datetime.Now().toString("(yyyy-MM-dd HH:mm Z)") + " - " + WW.water_version);

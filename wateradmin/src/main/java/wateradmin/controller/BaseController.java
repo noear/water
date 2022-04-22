@@ -41,9 +41,6 @@ public class BaseController {
         viewModel.put("user_id", Session.current().getSubjectId());
         viewModel.put("user_display_name", Session.current().getDisplayName());
 
-        viewModel.put("is_setup", 0);
-
-
         //操作权限
         int is_admin = Session.current().getIsAdmin();
         int is_operator = Session.current().getIsOperator();

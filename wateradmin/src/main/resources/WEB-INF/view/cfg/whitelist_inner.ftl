@@ -93,7 +93,7 @@
     <toolbar>
         <flex>
             <left class="col-6">
-                <#if is_admin == 1 && is_setup !=1 >
+                <#if is_admin == 1>
                     <file>
                         <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
                     </file>
