@@ -30,27 +30,22 @@
     </div>
 
     <toolbar>
-        <div class="center">
+        <left>
             <form>
                 <input type="text" class="w250" name="name" placeholder="接口" id="name"/>
                 <input type="hidden" name="serviceName" id="serviceName" value="${serviceName}" />
                 <input type="hidden" name="tag" value="${tag!}">
                 <button type="submit">查询</button>
             </form>
-        </div>
-        <div>
-            <left>
-
-            </left>
-            <right>
-                <selector>
-                    <a class="${(''=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=">all</a>
-                    <#list tags as t>
-                        <a class="${(t.tag=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=${t.tag}">${t.tag}(${t.counts})</a>
-                    </#list>
-                </selector>
-            </right>
-        </div>
+        </left>
+        <right>
+            <selector>
+                <a class="${(''=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=">all</a>
+                <#list tags as t>
+                    <a class="${(t.tag=tag)?string('sel','')}" href="?tag_name=${tag_name!}&serviceName=${serviceName}&tag=${t.tag}">${t.tag}(${t.counts})</a>
+                </#list>
+            </selector>
+        </right>
     </toolbar>
     <datagrid class="list">
         <table>

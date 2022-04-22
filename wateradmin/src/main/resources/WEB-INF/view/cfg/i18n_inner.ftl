@@ -116,9 +116,6 @@
             <input type="hidden" name="bundle" value="${bundle!}">
             <input type="text"  name="name" placeholder="键值"  value="${name!}"class="w250"/>
             <button type="submit">查询</button>
-            <#if is_admin == 1>
-                <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
-            </#if>
         </form>
     </div>
     <div>
@@ -140,6 +137,8 @@
                 </div>
 
                 <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
+
+                <a class="btn edit mar10-l" href="/cfg/i18n/edit?tag_name=${tag_name!}&bundle=${bundle!}">新增</a>
             </#if>
         </left>
         <right>
