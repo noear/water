@@ -155,14 +155,14 @@
                         <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
                     </file>
 
-                    <button type='button' class="minor mar10-l" onclick="exp()" >导出</button>
+                    <button type='button' class="minor" onclick="exp()" >导出</button>
 
                     <#if state!=1>
+                        <button type='button' class="minor" onclick="del(1,'禁用')" >禁用</button>
                         <button type='button' class="edit mar10-l" onclick="reset()" >立即执行</button>
-                        <button type='button' class="minor mar10-l" onclick="del(1,'禁用')" >禁用</button>
                     <#else>
-                        <button type='button' class="minor mar10-l" onclick="del(0,'启用')" >启用</button>
-                        <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
+                        <button type='button' class="minor" onclick="del(0,'启用')" >启用</button>
+                        <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
                     </#if>
                 </#if>
             </left>

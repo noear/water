@@ -35,10 +35,10 @@
 <body>
 <main>
     <toolbar>
-        <left>
-            <input id="key" class="w300" placeholder="code" type="text" value="${key}" />
+        <div class="center">
+            <input id="key" class="w250" placeholder="code" type="text" value="${key}" />
             <button type="button" onclick="search()">查询</button>
-        </left>
+        </div>
     </toolbar>
 
     <datagrid class="list">

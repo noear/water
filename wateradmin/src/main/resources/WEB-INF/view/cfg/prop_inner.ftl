@@ -104,6 +104,9 @@
                 <input type="text"  name="key" placeholder="key" value="${key!}" class="w250"/>
                 <button type="submit">查询</button>
             </form>
+            <#if is_admin == 1 >
+                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
+            </#if>
         </middle>
         <right class="col-3">
         </right>
@@ -123,8 +126,6 @@
                     <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
                     <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
                 </#if>
-
-                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
             </#if>
         </left>
         <right class="col-6">
