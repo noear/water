@@ -138,6 +138,8 @@
                         <a class="btn-link mar10" onclick="exp('jsond')">导出为 JsonD</a>
                     </div>
                 </div>
+
+                <button type='button' class="minor mar10-l" onclick="del(9,'删除')" >删除</button>
             </#if>
         </left>
         <right>
