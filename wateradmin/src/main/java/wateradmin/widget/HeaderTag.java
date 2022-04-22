@@ -56,9 +56,8 @@ public class HeaderTag implements TemplateDirectiveModel {
         StringBuilder buf = new StringBuilder();
         buf.append("<header>");
 
-        buf.append("<label>"); //new
+        buf.append("<label title='").append(WW.water_version).append("'>"); //new
         buf.append(Solon.cfg().appTitle());
-        buf.append("<sup>").append(WW.water_version).append("<sup>"); //new
         buf.append("</label>\n");//new
 
 
