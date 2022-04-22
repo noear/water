@@ -33,13 +33,11 @@ public class BaseController {
         viewModel.put("img", "/_static/img");
         viewModel.put("title", Solon.cfg().appTitle());
 
-        //当前用户信息, old //将弃用
-//        viewModel.put("puid", Session.current().getSubjectId());
-//        viewModel.put("cn_name", Session.current().getDisplayName());
 
         //当前用户信息, new
         viewModel.put("user_id", Session.current().getSubjectId());
         viewModel.put("user_display_name", Session.current().getDisplayName());
+        viewModel.put("_version",WW.water_version);
 
         //操作权限
         int is_admin = Session.current().getIsAdmin();

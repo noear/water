@@ -61,7 +61,7 @@
 <main>
   <flex>
     <left class="col-6">
-      <p>${title}</p>
+      <p>${title}<sup>${_version!}</sup></p>
     </left>
     <right class="col-6">
       <p>
