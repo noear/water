@@ -81,6 +81,10 @@ public class DbWaterCfgI18nApi {
         value = value.replace("\\\\", "\\");
         value = value.replace("\\n", "\n");
 
+        if(lang == null){
+            lang = "";
+        }
+
         DbTableQuery tb = db().table("water_cfg_i18n")
                 .set("tag", tag)
                 .set("bundle", bundle)
