@@ -1,6 +1,6 @@
 ﻿/*
 durian ui
-ver:1.0.67
+ver:1.0.68
 author:noear
 */
 *,*::before, *::after { box-sizing: border-box; }
@@ -438,7 +438,7 @@ tile >*{display: block; margin: 10px;}
 
 /* form ext */
 file, radio,checkbox,switcher{display: inline-flex; line-height: 0px; vertical-align: middle;}
-file input:not([type='text']), radio input:not([type='text']), boxlist input:not([type='text']), checkbox input:not([type='text']),switcher input:not([type='text']){position: absolute; clip: rect(0, 0, 0, 0);}
+file input:not([type='text']), radio input:not([type='text']), boxlist input:not([type='text']), checkbox input:not([type='text']),switcher input:not([type='text']){position: absolute; clip: rect(0, 0, 0, 0); display: none;}
 file label, radio label,checkbox label,switcher label,boxlist label{display: inline-flex;margin: 0px;}
 
 file a { background:#fff;  border: 2px dotted #444; cursor: pointer; user-select: none; display: inline-block;  text-align: center; font-size: 40%; overflow: hidden; position: relative; height:26px; line-height:22px; padding: 0 15px;}
