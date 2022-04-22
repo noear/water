@@ -15,6 +15,8 @@
         pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
         n-l{display: block;line-height: 24px!important;}
+
+        header label sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
     </style>
     <script>
 
@@ -84,7 +86,7 @@
 </head>
 <body>
 <header>
-    <label title="${_version!}">XWATER</label>
+    <label>XWATER<sup>${_version!}</sup></label>
 </header>
 <main>
     <section>

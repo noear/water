@@ -14,6 +14,8 @@
         body > header label{background-color: #222;}
         pre{border:1px solid #C9C9C9;}
         section{margin: 10px;}
+
+        header label sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
     </style>
     <script>
 
@@ -83,7 +85,7 @@
 </head>
 <body>
 <header>
-    <label title="${_version!}">XWATER</label>
+    <label>XWATER<sup>${_version!}</sup></label>
 </header>
 <main>
     <section>
