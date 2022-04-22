@@ -9,7 +9,7 @@
   <script type="text/javascript" src="${js}/jtadmin.js" ></script>
   <style type="text/css">
 
-    section{width: 400px; padding: 50px 60px 50px 50px; left: calc(50vw - 200px); top: calc(50vh - 5vh - 150px); position: absolute; background: #ddd;}
+    section{width: 400px; padding: 50px 60px 50px 50px; left: calc(50vw - 200px); top: calc(50vh - 5vh - 130px); position: absolute; background: #ddd;}
     section table {width: 100%; }
     section table th{text-align: right;}
     section table td{padding-top: 5px; padding-bottom: 5px;}
@@ -17,7 +17,8 @@
     section table input{height: 30px!important; width: 100%;}
     section table button{color: #000; height: 30px; width: 120px;}
 
-    flex p{margin: 10px;line-height: 30px;}
+    body > header p{margin: 10px;line-height: 30px;}
+    body > header sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
   </style>
   <script type="text/javascript">
     function checkClick(){
@@ -58,7 +59,7 @@
   </script>
 </head>
 <body onkeydown="checkKey()">
-<main>
+<header>
   <flex>
     <left class="col-6">
       <p>${title}<sup>${_version!}</sup></p>
@@ -69,7 +70,9 @@
       </p>
     </right>
   </flex>
-  <br />
+</header>
+
+<main>
   <section>
     <form method="post">
       <table>

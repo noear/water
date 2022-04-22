@@ -12,6 +12,7 @@
     <style>
         body > header aside a{display:inline-block; height:100%; padding:0 15px; }
         body > header aside .split{border-left:1px solid #444;}
+        body > header sup{color: #00c1de; border-radius: 10px;margin-left: 5px;}
     </style>
 </head>
 <body>
