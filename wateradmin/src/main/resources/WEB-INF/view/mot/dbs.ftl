@@ -11,18 +11,22 @@
 <body>
 <main>
     <toolbar>
-        <left>
-            <input type="text" class="w250" name="name" placeholder="实例" id="name"/>
-            <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>
-            <button type="button" class="mar10-l" onclick="location.reload();">刷新</button>
-        </left>
-        <right>
-            <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">
-                <#list tags as m>
-                    <option value="${m.tag}">${m.note} (${m.counts})</option>
-                </#list>
-            </select>
-        </right>
+        <flex>
+            <left class="col-4">
+            </left>
+            <middle class="col-4 center">
+                <input type="text" class="w250" name="name" placeholder="实例" id="name"/>
+                <button type="button" onclick="UrlQueryBy('name',$('#name').val())">查询</button>
+                <button type="button" class="mar10-l" onclick="location.reload();">刷新</button>
+            </middle>
+            <right class="col-4">
+                <select name="tag_name" id="tag_name" onchange="UrlQueryBy('tag_name',$(this).val())">
+                    <#list tags as m>
+                        <option value="${m.tag}">${m.note} (${m.counts})</option>
+                    </#list>
+                </select>
+            </right>
+        </flex>
     </toolbar>
     <datagrid class="list">
         <table>

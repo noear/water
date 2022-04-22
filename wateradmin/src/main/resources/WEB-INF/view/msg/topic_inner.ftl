@@ -17,14 +17,23 @@
 <body>
 <main>
     <toolbar>
-        <form>
-            <input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>
-            <input type="hidden"  name="tag_name" value="${tag_name!}" />
-            <button type="submit">查询</button>
-            <#if is_admin == 1>
-                <button type="button"  onclick="add();" class="edit mar10-l">新增</button>
-            </#if>
-        </form>
+        <flex>
+            <left class="col-4">
+                <#if is_admin == 1>
+                    <button type="button"  onclick="add();" class="edit">新增</button>
+                </#if>
+            </left>
+            <middle class="col-4 center">
+                <form>
+                    <input type="text" class="w250" name="topic_name" placeholder="主题名称" id="topic_name"/>
+                    <input type="hidden"  name="tag_name" value="${tag_name!}" />
+                    <button type="submit">查询</button>
+                </form>
+            </middle>
+            <right class="col-4">
+
+            </right>
+        </flex>
     </toolbar>
     <datagrid class="list">
         <table>
