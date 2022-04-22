@@ -68,7 +68,7 @@ public class I18nController extends BaseController {
             lang = ctx.cookie("lang");
         }
 
-        if (Utils.isNotEmpty(lang) && "default".equals(lang) == false) {
+        if (Utils.isNotEmpty(lang)) {
             String lang1 = lang;
             long langCount = langs.stream().filter(m -> m.tag.equals(lang1)).count();
             if (langCount == 0L) {
@@ -84,7 +84,7 @@ public class I18nController extends BaseController {
 
         List<I18nModel> list = DbWaterCfgI18nApi.getI18nListByTag(tag_name, bundle, name, lang);
 
-        if (TextUtils.isEmpty(lang)) {
+        if (Utils.isEmpty(lang)) {
             lang = "default";
         }
 
