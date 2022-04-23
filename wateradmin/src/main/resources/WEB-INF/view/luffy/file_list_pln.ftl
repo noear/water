@@ -134,18 +134,17 @@
 <main>
     <toolbar>
         <flex>
-            <left class="col-4">
+            <left class="col-3">
 
             </left>
-            <middle class="col-4 center">
+            <middle class="col-6 center">
                 <input id="key" class="w200" placeholder="code or @path" type="text" value="${key}" />
                 <button type="button" onclick="search()">查询</button>
-
                 <#if is_admin == 1>
-                <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
+                    <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
                 </#if>
             </middle>
-            <right class="col-4">
+            <right class="col-3">
 
             </right>
         </flex>
