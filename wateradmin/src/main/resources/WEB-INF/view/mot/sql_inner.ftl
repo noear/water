@@ -44,6 +44,8 @@
                     return;
                 }
             });
+
+            bindQueryStringAndSort();
         });
     </script>
 </head>
@@ -72,7 +74,7 @@
 
     <toolbar>
         <left>
-            <input type="text"  id="tagx" placeholder="秒数" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
+            <input type="text"  id="tagx" placeholder="秒数" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>
 
             <input type="text"  name="time"  id="time"
                    jt-laydate="datetime"

@@ -45,6 +45,8 @@
                     return;
                 }
             });
+
+            bindQueryStringAndSort();
         });
     </script>
 </head>

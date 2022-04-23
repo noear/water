@@ -39,6 +39,8 @@
                     return;
                 }
             });
+
+            bindQueryStringAndSort();
         });
     </script>
     <style>
