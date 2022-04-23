@@ -20,7 +20,7 @@ import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterLogApi;
 import wateradmin.models.ScaleType;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -75,6 +75,7 @@ public class SqlController extends BaseController {
 
         List<TagCountsM> secondList = DbWaterLogApi.getSqlSecondsTags(logger, tag_name, serviceName);
 
+        secondList.sort(Comparator.comparingLong(t->Long.parseLong(t.tag)));
 
         String method = getSqlMethod(_state);
 

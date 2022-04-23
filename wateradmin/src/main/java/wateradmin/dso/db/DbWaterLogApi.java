@@ -26,9 +26,6 @@ public class DbWaterLogApi {
 
         StringBuilder tagx = new StringBuilder();
         tagx.append(""); //tag0
-        if (seconds > 0) {
-            tagx.append(seconds);
-        }
         tagx.append("@"); //tag1
         if (TextUtils.isNotEmpty(path)) {
             tagx.append(path);
@@ -43,6 +40,9 @@ public class DbWaterLogApi {
         }
         tagx.append("@"); //tag4
         tagx.append("@"); //tag5
+        if (seconds > 0) {
+            tagx.append(seconds * 1000);
+        }
         tagx.append("@"); //tag6
         if (TextUtils.isNotEmpty(group)) {
             tagx.append(group);

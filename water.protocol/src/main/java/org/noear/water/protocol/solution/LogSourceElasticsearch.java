@@ -69,6 +69,10 @@ public class LogSourceElasticsearch implements LogSource {
                         c.term("tag4", tags[4]);
                     }
 
+                    if (tags.length > 5 && tags[5].length() > 0) {
+                        c.range("weight", r->r.gte(Long.parseLong(tags[5])));
+                    }
+
                     if (tags.length > 6 && tags[6].length() > 0) {
                         c.term("group", tags[6]);
                     }

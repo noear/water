@@ -67,6 +67,10 @@ public class LogSourceRdb implements LogSource {
                     tb.andEq("tag4", tags[4]);
                 }
 
+                if (tags.length > 5 && tags[5].length() > 0) {
+                    tb.andGte("weight", Long.parseLong(tags[5]));
+                }
+
                 if (tags.length > 6 && tags[6].length() > 0) {
                     tb.andEq("group", tags[6]);
                 }
