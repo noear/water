@@ -522,27 +522,21 @@ public class MsgSourceMongo implements MsgSource {
 
     @Override
     public void persistence(int hotDate, int coldDate) throws Exception {
-        //转移数据（长久保存） // 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+        //转移数据（长久保存） //根据创建时间转移
         //
-        if (_db.table("water_msg_message_all").whereEq("last_date", hotDate).selectExists() == false) {
+        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
 
 
             FindIterable<Document> cursor = _db.table("water_msg_message")
-                    .whereEq("last_date", hotDate)
-                    .andGt("state", 1).selectCursor();
+                    .whereEq("log_date", hotDate)
+                    .selectCursor();
 
             persistenceDo(cursor, 5000); //>1
-
-            cursor = _db.table("water_msg_message")
-                    .whereEq("last_date", hotDate)
-                    .andLt("state", 0).selectCursor();
-
-            persistenceDo(cursor, 5000); //<0
         }
 
 
         //清理持久化
-        _db.table("water_msg_message_all").whereLte("last_date", coldDate);
+        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
     }
 
     private void persistenceDo(FindIterable<Document> cursor, int batchSize) {

@@ -510,17 +510,15 @@ public class MsgSourceRdb implements MsgSource {
 
     @Override
     public void persistence(int hotDate, int coldDate) throws Exception {
-        //转移数据（长久保存）// 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+        //转移数据（长久保存） //根据创建时间转移
         //
-        if (_db.table("water_msg_message_all").whereEq("last_date", hotDate).selectExists() == false) {
+        if (_db.table("water_msg_message_all").whereEq("log_date", hotDate).selectExists() == false) {
             _db.exe("INSERT INTO water_msg_message_all " +
-                    "SELECT * FROM water_msg_message WHERE last_date = ? AND state>1", hotDate);
-            _db.exe("INSERT INTO water_msg_message_all " +
-                    "SELECT * FROM water_msg_message WHERE last_date = ? AND state<0", hotDate);
+                    "SELECT * FROM water_msg_message WHERE log_date = ?", hotDate);
         }
 
         //清理持久化
-        _db.table("water_msg_message_all").whereLte("last_date", coldDate);
+        _db.table("water_msg_message_all").whereLte("log_date", coldDate);
     }
 
     @Override
