@@ -2,6 +2,7 @@ package wateradmin.controller.mot;
 
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.DateAnalyzer;
 import org.noear.water.WW;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.model.log.LogModel;
@@ -54,7 +55,7 @@ public class SqlController extends BaseController {
      * state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER
      */
     @Mapping("sql/inner")
-    public ModelAndView sql_inner(String tag_name, String serviceName, String tagx, String log_date, Integer _state, long startId) throws Exception {
+    public ModelAndView sql_inner(String tag_name, String serviceName, String tagx, String time, Integer _state, long startId) throws Exception {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
@@ -89,12 +90,8 @@ public class SqlController extends BaseController {
 
 
         long timestamp = 0;
-        if (TextUtils.isNotEmpty(log_date)) {
-            if (log_date.contains(".")) {
-                timestamp = Datetime.parse(log_date, "yyyyMMdd.HH").getTicks();
-            } else {
-                timestamp = Datetime.parse(log_date, "yyyyMMdd").getTicks();
-            }
+        if (TextUtils.isNotEmpty(time)) {
+            timestamp = DateAnalyzer.getGlobal().parse(time.replace("+", " ")).getTime();
         }
 
 

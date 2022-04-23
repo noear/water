@@ -8,6 +8,7 @@
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script src="${js}/laydate/laydate.js"></script>
+
     <script>
         function queryForm() {
             location.href = "/log/query/inner?logger="+$('#logger').val()+"&tag_name=${tag_name}";

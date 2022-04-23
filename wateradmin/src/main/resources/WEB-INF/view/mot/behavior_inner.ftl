@@ -8,6 +8,8 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer/layer.js"></script>
+    <script src="${js}/laydate/laydate.js"></script>
+
     <style>
         .tabs{padding-bottom: 10px;}
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
@@ -21,7 +23,7 @@
             UrlQueryByDic({
                 serviceName:'${serviceName!}',
                 tagx:$('#tagx').val(),
-                log_date:$('#log_date').val(),
+                time:$('#time').val(),
                 path:$('#path').val(),
                 startId:startId
             });
@@ -51,9 +53,15 @@
 
     <toolbar>
         <left>
-            账号：<input type="text"  id="tagx" placeholder="id.name" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
-            时间：<input type="text"  id="log_date" placeholder="yyyyMMdd.HH" id="log_date" class="w100"/>&nbsp;&nbsp;
-            路径：<input type="text"  id="path" placeholder="/"  id="path" class="w150"/>&nbsp;&nbsp;
+            <input type="text"  id="tagx" placeholder="账号" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
+
+            <input type="text"  name="time"  id="time"
+                   jt-laydate="datetime"
+                   placeholder="yyyy-MM-dd HH:mm:ss"
+                   autocomplete="off"
+                   class="w150 sml"/>
+
+            <input type="text"  id="path" placeholder="路径"  id="path" class="w150"/>&nbsp;&nbsp;
             <button type="button" onclick="queryDo()">查询</button>
         </left>
         <right>

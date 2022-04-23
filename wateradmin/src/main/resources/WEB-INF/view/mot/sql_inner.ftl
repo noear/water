@@ -8,6 +8,7 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/lib.js"></script>
     <script src="${js}/layer/layer.js"></script>
+    <script src="${js}/laydate/laydate.js"></script>
 
     <style>
         .tabs{padding-bottom: 10px;}
@@ -22,7 +23,7 @@
             UrlQueryByDic({
                 serviceName:'${serviceName!}',
                 tagx:$('#tagx').val(),
-                log_date:$('#log_date').val(),
+                time:$('#time').val(),
                 startId:startId
             });
         }
@@ -53,8 +54,13 @@
 
     <toolbar>
         <left>
-            秒数：<input type="text"  id="tagx" placeholder="num" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
-            时间：<input type="text"  id="log_date" placeholder="yyyyMMdd.HH" id="log_date" style="width: 100px;"/>&nbsp;&nbsp;
+            <input type="text"  id="tagx" placeholder="秒数" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>&nbsp;&nbsp;
+
+            <input type="text"  name="time"  id="time"
+                   jt-laydate="datetime"
+                   placeholder="yyyy-MM-dd HH:mm:ss"
+                   autocomplete="off"
+                   class="w150 sml"/>
 
             <button type="button" onclick="queryDo()">查询</button>
         </left>
