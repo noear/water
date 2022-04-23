@@ -55,7 +55,7 @@ public class SqlController extends BaseController {
      * state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER
      */
     @Mapping("sql/inner")
-    public ModelAndView sql_inner(String tag_name, String serviceName, String tagx, String time, Integer _state, long startId) throws Exception {
+    public ModelAndView sql_inner(String tag_name, String serviceName, int seconds, String time, Integer _state, long startId) throws Exception {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
@@ -68,22 +68,12 @@ public class SqlController extends BaseController {
             }
         }
 
-//        if (Utils.isEmpty(serviceName)) {
-//            return null;
-//        }
-
-
         viewModel.put("tabs", services);
         viewModel.put("tag_name", tag_name);
 
         //////
 
         List<TagCountsM> secondList = DbWaterLogApi.getSqlSecondsTags(logger, tag_name, serviceName);
-
-        int seconds = 0;
-        if (TextUtils.isEmpty(tagx) == false) {
-            seconds = Integer.parseInt(tagx);
-        }
 
 
         String method = getSqlMethod(_state);

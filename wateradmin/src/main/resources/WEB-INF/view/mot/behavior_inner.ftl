@@ -24,7 +24,7 @@
 
             urlQueryByDic({
                 serviceName:'${serviceName!}',
-                tagx:$('#tagx').val(),
+                operator:$('#operator').val(),
                 time:$('#time').val(),
                 path:$('#path').val(),
                 startId:startId
@@ -73,7 +73,7 @@
 
     <toolbar>
         <left>
-            <input type="text"  id="tagx" placeholder="操作人" autocomplete="off" list="datalist" class="w100"/>
+            <input type="text"  id="operator" placeholder="操作人" autocomplete="off" list="datalist" class="w100"/>
             <input type="text"  name="time"  id="time"
                    jt-laydate="datetime"
                    placeholder="yyyy-MM-dd HH:mm:ss"

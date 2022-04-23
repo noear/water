@@ -52,7 +52,7 @@ public class BehaviorController extends BaseController {
      * state: ALL,SELECT,UPDATE,INSERT,DELETE,OTHER
      */
     @Mapping("behavior/inner")
-    public ModelAndView behavior_inner(String tag_name, String serviceName, String tagx, String time, String path, Integer _state, long startId) throws Exception {
+    public ModelAndView behavior_inner(String tag_name, String serviceName, String operator, String time, String path, Integer _state, long startId) throws Exception {
         if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
@@ -86,7 +86,7 @@ public class BehaviorController extends BaseController {
         }
 
         int pageSize = 50;
-        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, serviceName, method, 0, tagx, path, startId, timestamp);
+        List<LogModel> list = DbWaterLogApi.getSqlLogsByPage(logger, tag_name, serviceName, method, 0, operator, path, startId, timestamp);
 
         viewModel.put("pageSize", pageSize);
         viewModel.put("listSize", list.size());

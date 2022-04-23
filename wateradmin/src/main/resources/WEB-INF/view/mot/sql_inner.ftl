@@ -24,7 +24,7 @@
 
             urlQueryByDic({
                 serviceName:'${serviceName!}',
-                tagx:$('#tagx').val(),
+                seconds:$('#seconds').val(),
                 time:$('#time').val(),
                 startId:startId
             });
@@ -32,12 +32,6 @@
 
         $(function (){
             $(".log a").click(function (){
-                let tagx = $(this).attr('tagx');
-                if(tagx){
-                    urlQueryBy("tagx",tagx,'page');
-                    return
-                }
-
                 let time = $(this).attr('time');
                 if(time){
                     urlQueryBy("time",time,'page');
@@ -74,7 +68,7 @@
 
     <toolbar>
         <left>
-            <input type="text"  id="tagx" placeholder="秒数" id="tagx" autocomplete="off" list="datalist" style="width: 100px;"/>
+            <input type="text"  id="seconds" placeholder="秒数" id="seconds" autocomplete="off" list="datalist" class="w100"/>
 
             <input type="text"  name="time"  id="time"
                    jt-laydate="datetime"
