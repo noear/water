@@ -95,24 +95,7 @@
 <body>
 <toolbar>
     <flex>
-        <left class="col-3">
-        </left>
-        <middle class="col-6 center">
-            <form>
-                <input type="hidden"  name="tag_name" value="${tag_name!}"/>
-                <input type="hidden"  name="state" value="${state!}"/>
-                <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
-                <button type="submit">查询</button>
-            </form>
-            <#if is_admin == 1 >
-                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
-            </#if>
-        </middle>
-        <right class="col-3">
-        </right>
-    </flex>
-    <flex>
-        <left class="col-6">
+        <left class="col-4">
             <#if is_admin == 1 >
                 <file>
                     <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
@@ -128,7 +111,18 @@
                 </#if>
             </#if>
         </left>
-        <right class="col-6">
+        <middle class="col-6 center">
+            <form>
+                <input type="hidden"  name="tag_name" value="${tag_name!}"/>
+                <input type="hidden"  name="state" value="${state!}"/>
+                <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
+                <button type="submit">查询</button>
+            </form>
+            <#if is_admin == 1 >
+                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
+            </#if>
+        </middle>
+        <right class="col-4">
             <selector>
                 <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
                 <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
