@@ -73,12 +73,12 @@
 
     <toolbar>
         <left>
-            <input type="text"  id="operator" placeholder="操作人" autocomplete="off" list="datalist" class="w100"/>
             <input type="text"  name="time"  id="time"
                    jt-laydate="datetime"
                    placeholder="yyyy-MM-dd HH:mm:ss"
                    autocomplete="off"
                    class="w150 sml"/>
+            <input type="text"  id="operator" placeholder="操作人" autocomplete="off" list="datalist" class="w100"/>
             <input type="text"  id="path" placeholder="路径"  class="w200"/>
             <button type="button" onclick="queryDo()">查询</button>
         </left>
