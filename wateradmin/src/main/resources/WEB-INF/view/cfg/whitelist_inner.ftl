@@ -104,7 +104,6 @@
                         <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
                     <#else>
                         <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
-                        <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
                     </#if>
                     <a class="btn edit mar10-l" href="/cfg/whitelist/edit?tag_name=${tag_name!}">新增</a>
                 </#if>
