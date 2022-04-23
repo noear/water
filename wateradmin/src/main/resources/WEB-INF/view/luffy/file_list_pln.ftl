@@ -135,6 +135,18 @@
     <toolbar>
         <flex>
             <left class="col-4">
+
+            </left>
+            <middle class="col-4 center">
+                <input id="key" class="w200" placeholder="code or @path" type="text" value="${key}" />
+                <button type="button" onclick="search()">查询</button>
+            </middle>
+            <right class="col-4">
+
+            </right>
+        </flex>
+        <flex>
+            <left class="col-6">
                 <#if is_admin == 1>
                     <file>
                         <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
@@ -147,16 +159,11 @@
                         <button type='button' class="edit mar10-l" onclick="reset()" >立即执行</button>
                     <#else>
                         <button type='button' class="minor" onclick="del(0,'启用')" >启用</button>
-                        <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
                     </#if>
                     <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
                 </#if>
             </left>
-            <middle class="col-4 center">
-                <input id="key" class="w200" placeholder="code or @path" type="text" value="${key}" />
-                <button type="button" onclick="search()">查询</button>
-            </middle>
-            <right class="col-4">
+            <right class="col-6">
                 <selector>
                     <a class="${(state !=1)?string('sel','')}" href="./list?tag_name=${tag}&state=0">启用</a>
                     <a class="${(state =1)?string('sel','')}" href="./list?tag_name=${tag}&state=1">未启用</a>
