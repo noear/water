@@ -33,9 +33,9 @@
 
         $(function (){
             $(".log a").click(function (){
-                let tagx = $(this).attr('tagx');
-                if(tagx){
-                    urlQueryBy("tagx",tagx,'page');
+                let path = $(this).attr('path');
+                if(path){
+                    urlQueryBy("path",path,'page');
                     return
                 }
 
@@ -103,7 +103,7 @@
                     </td>
                     <td>${log.tag2!}</td>
                     <td class="left break">
-                        <div>*${log.trace_id!} ${log.tag1!} (${log.from!})</div>
+                        <div>*${log.trace_id!} <a path="${log.tag1!}">${log.tag1!}</a> (${log.from!})</div>
                         <div style="font-size: small">${log.content!}</div>
                     </td>
                 </tr>
