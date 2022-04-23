@@ -23,6 +23,8 @@ import java.util.*;
 
 /**
  * @author noear 2021/2/5 created
+ *
+ * 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
  */
 public class MsgSourceMongo implements MsgSource {
     MgContext _db;
@@ -91,7 +93,7 @@ public class MsgSourceMongo implements MsgSource {
     }
 
     public long addMessage(String topic_name, String content) throws Exception {
-        return addMessage(null, null, null,  topic_name, content, null, false);
+        return addMessage(null, null, null, topic_name, content, null, false);
     }
 
     //添加消息
@@ -116,7 +118,7 @@ public class MsgSourceMongo implements MsgSource {
         long dist_nexttime = 0;
         if (plan_time != null) {
             dist_nexttime = DisttimeUtils.distTime(plan_time);
-        }else if(autoDelay){
+        } else if (autoDelay) {
             dist_nexttime = DisttimeUtils.nextTime(0);
         }
 
@@ -133,7 +135,7 @@ public class MsgSourceMongo implements MsgSource {
                 .set("dist_routed", false)
                 .set("dist_count", 0)
                 .set("plan_time", plan_time)
-                .set("state",0)
+                .set("state", 0)
                 .set("log_date", date)
                 .set("log_fulltime", datetime.getFulltime())
                 .set("last_date", date)
@@ -204,7 +206,7 @@ public class MsgSourceMongo implements MsgSource {
                             tb.set("dist_nexttime", dist_nexttime);
                         }
                     })
-                    .whereEq("_id",msg.msg_id).andGte("state", 0).andLte("state",1)
+                    .whereEq("_id", msg.msg_id).andGte("state", 0).andLte("state", 1)
                     .update();
 
             _db.table("water_msg_distribution")
@@ -240,7 +242,7 @@ public class MsgSourceMongo implements MsgSource {
                     .set("last_fulltime", datetime.getFulltime())
                     .set("dist_nexttime", ntime)
                     .set("dist_count", msg.dist_count)
-                    .whereEq("_id", msg.msg_id).andIn("state", Arrays.asList(0,1))
+                    .whereEq("_id", msg.msg_id).andIn("state", Arrays.asList(0, 1))
                     .update();
 
             return true;
@@ -268,7 +270,7 @@ public class MsgSourceMongo implements MsgSource {
 
         if (isExists == false) {
             Datetime datetime = new Datetime();
-            long dist_id =  SnowflakeUtils.genId();
+            long dist_id = SnowflakeUtils.genId();
 
             _db.table("water_msg_distribution")
                     .set("dist_id", dist_id)
@@ -324,7 +326,7 @@ public class MsgSourceMongo implements MsgSource {
     /////////
     // for admin
 
-    public  MessageModel getMessageByKey(String msg_key) throws Exception {
+    public MessageModel getMessageByKey(String msg_key) throws Exception {
         if (TextUtils.isEmpty(msg_key)) {
             return new MessageModel();
         }
@@ -349,7 +351,7 @@ public class MsgSourceMongo implements MsgSource {
     }
 
 
-    public  List<MessageModel> getMessageList(int _m, String key) throws Exception {
+    public List<MessageModel> getMessageList(int _m, String key) throws Exception {
         MgTableQuery qr = _db.table("water_msg_message");
 
         if (_m == 0) {
@@ -386,7 +388,7 @@ public class MsgSourceMongo implements MsgSource {
 
 
     //派发功能
-    public  boolean setMessageAsPending(List<Object> ids) throws Exception {
+    public boolean setMessageAsPending(List<Object> ids) throws Exception {
         Datetime datetime = Datetime.Now();
         return _db.table("water_msg_message")
                 .whereIn("_id", ids).andNeq("state", 2)
@@ -399,15 +401,15 @@ public class MsgSourceMongo implements MsgSource {
     }
 
     //获得异常消息的dist_id和subscriber_id。
-    public  List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws Exception {
+    public List<DistributionModel> getDistributionListByMsgIds(List<Object> ids) throws Exception {
         return _db.table("water_msg_distribution")
                 .whereIn("msg_id", ids)
-                .selectList( DistributionModel.class);
+                .selectList(DistributionModel.class);
     }
 
 
     //更新distribution中url
-    public  boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws Exception {
+    public boolean setDistributionReceiveUrl(long dist_id, String receive_url) throws Exception {
         return _db.table("water_msg_distribution")
                 .whereEq("dist_id", dist_id)
                 .set("receive_url", receive_url)
@@ -415,7 +417,7 @@ public class MsgSourceMongo implements MsgSource {
     }
 
     //取消派发
-    public  boolean setMessageAsCancel(List<Object> ids) throws Exception {
+    public boolean setMessageAsCancel(List<Object> ids) throws Exception {
         Datetime datetime = Datetime.Now();
 
         return _db.table("water_msg_message")
@@ -445,7 +447,7 @@ public class MsgSourceMongo implements MsgSource {
 
     }
 
-    private void initIndex(){
+    private void initIndex() {
         IndexOptions indexOptions = new IndexOptions();
         indexOptions.background(true);
         indexOptions.unique(true);
@@ -476,15 +478,15 @@ public class MsgSourceMongo implements MsgSource {
 
     @Override
     public void clear(int lteDate) throws Exception {
-        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",2).delete();
-        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",3).delete();
-        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",-1).delete();
-        _db.table("water_msg_message").whereLte("last_date",lteDate).andEq("state",-2).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", 2).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", 3).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", -1).delete();
+        _db.table("water_msg_message").whereLte("last_date", lteDate).andEq("state", -2).delete();
 
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",2).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",3).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",-1).delete();
-        _db.table("water_msg_distribution").whereLte("log_date",lteDate).andEq("msg_state",-2).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 2).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", 3).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", -1).delete();
+        _db.table("water_msg_distribution").whereLte("log_date", lteDate).andEq("msg_state", -2).delete();
     }
 
     @Override
@@ -520,34 +522,49 @@ public class MsgSourceMongo implements MsgSource {
 
     @Override
     public void persistence(int hotDate, int coldDate) throws Exception {
-        //转移数据（长久保存）
+        //转移数据（长久保存） // 消息状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
         //
         if (_db.table("water_msg_message_all").whereEq("last_date", hotDate).selectExists() == false) {
-            Map<String, Object> filter = new LinkedHashMap<>();
-            filter.put("last_date", hotDate);
 
-            FindIterable<Document> cursor = _db.mongo().find("water_msg_message", filter);
 
-            List<Map<String, Object>> dataPage = new ArrayList<>(2000);
-            for (Document item : cursor) {
-                dataPage.add(item);
+            FindIterable<Document> cursor = _db.table("water_msg_message")
+                    .whereEq("last_date", hotDate)
+                    .andGt("state", 1).selectCursor();
 
-                if (dataPage.size() == 2000) {
-                    //满2000就插一次
-                    _db.mongo().insertMany("water_msg_message_all", dataPage);
-                    dataPage.clear();
-                }
-            }
-            //处理没满2000的
-            if (dataPage.size() > 0) {
-                _db.mongo().insertMany("water_msg_message_all", dataPage);
-                dataPage.clear();
-            }
+            persistenceDo(cursor, 5000); //>1
+
+            cursor = _db.table("water_msg_message")
+                    .whereEq("last_date", hotDate)
+                    .andLt("state", 0).selectCursor();
+
+            persistenceDo(cursor, 5000); //<0
         }
 
 
         //清理持久化
         _db.table("water_msg_message_all").whereLte("last_date", coldDate);
+    }
+
+    private void persistenceDo(FindIterable<Document> cursor, int batchSize) {
+        if(batchSize < 1000){
+            batchSize = 1000;
+        }
+
+        List<Map<String, Object>> dataPage = new ArrayList<>(batchSize);
+        for (Document item : cursor) {
+            dataPage.add(item);
+
+            if (dataPage.size() == batchSize) {
+                //满5000就插一次
+                _db.mongo().insertMany("water_msg_message_all", dataPage);
+                dataPage.clear();
+            }
+        }
+        //处理没满页的
+        if (dataPage.size() > 0) {
+            _db.mongo().insertMany("water_msg_message_all", dataPage);
+            dataPage.clear();
+        }
     }
 
     @Override
