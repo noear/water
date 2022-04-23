@@ -6,13 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8 "/>
     <link rel="stylesheet" href="${css}/main.css"/>
     <script src="/_session/domain.js"></script>
-    <script src="${js}/lib.js"></script>
+    <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script src="${js}/laydate/laydate.js"></script>
 
     <style>
         .tabs{padding-bottom: 10px;}
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
+
+        .log a{text-decoration:underline; cursor: default;}
     </style>
     <script>
         function queryDo(startId) {
@@ -20,7 +22,7 @@
                 startId=0;
             }
 
-            UrlQueryByDic({
+            urlQueryByDic({
                 serviceName:'${serviceName!}',
                 tagx:$('#tagx').val(),
                 time:$('#time').val(),
@@ -28,6 +30,22 @@
                 startId:startId
             });
         }
+
+        $(function (){
+            $(".log a").click(function (){
+                let tagx = $(this).attr('tagx');
+                if(tagx){
+                    urlQueryBy("tagx",tagx,'page');
+                    return
+                }
+
+                let time = $(this).attr('time');
+                if(time){
+                    urlQueryBy("time",time,'page');
+                    return;
+                }
+            });
+        });
     </script>
 </head>
 <body>
@@ -53,15 +71,13 @@
 
     <toolbar>
         <left>
-            <input type="text"  id="tagx" placeholder="账号" id="tagx" autocomplete="off" list="datalist" class="w100"/>&nbsp;&nbsp;
-
+            <input type="text"  id="tagx" placeholder="操作人" autocomplete="off" list="datalist" class="w100"/>
             <input type="text"  name="time"  id="time"
                    jt-laydate="datetime"
                    placeholder="yyyy-MM-dd HH:mm:ss"
                    autocomplete="off"
                    class="w150 sml"/>
-
-            <input type="text"  id="path" placeholder="路径"  id="path" class="w150"/>&nbsp;&nbsp;
+            <input type="text"  id="path" placeholder="路径"  class="w200"/>
             <button type="button" onclick="queryDo()">查询</button>
         </left>
         <right>
@@ -79,9 +95,9 @@
             </thead>
             <tbody>
             <#list list as log>
-                <tr>
+                <tr class="log">
                     <td>
-                        ${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}
+                        <a time="${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}">${(log.log_fulltime?string('yyyy-MM-dd HH:mm:ss'))!}</a>
                     </td>
                     <td>${log.tag2!}</td>
                     <td class="left break">
