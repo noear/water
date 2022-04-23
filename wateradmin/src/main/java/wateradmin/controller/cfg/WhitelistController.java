@@ -138,6 +138,7 @@ public class WhitelistController extends BaseController {
 
 
     //批量导入
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
         if (Session.current().isAdmin() == false) {
@@ -161,6 +162,7 @@ public class WhitelistController extends BaseController {
     }
 
     //批量删除
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
