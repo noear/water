@@ -165,7 +165,7 @@ public class I18nController extends BaseController {
         }
     }
 
-
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {

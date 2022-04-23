@@ -149,6 +149,8 @@ public class KeyController extends BaseController {
         }
     }
 
+
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
