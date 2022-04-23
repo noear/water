@@ -13,7 +13,6 @@
     <toolbar>
         <flex>
             <left class="col-4">
-                <button type="button" onclick="location.reload();">刷新</button>
             </left>
             <middle class="col-4 center">
                 <input type="text" class="w200" name="name" placeholder="实例" id="name"/>
