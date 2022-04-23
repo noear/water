@@ -147,7 +147,8 @@ public class DbWaterCfgApi {
         }
 
         return db().table("water_cfg_key")
-                .where("access_key = ?", access_key)
+                .whereEq("access_key", access_key)
+                .andEq("is_enabled",1)
                 .caching(CacheUtils.data)
                 .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
                 .selectItem("*", KeyM.class);
@@ -159,7 +160,8 @@ public class DbWaterCfgApi {
         }
 
         return db().table("water_cfg_key")
-                .where("key_id = ?", key_id)
+                .whereEq("key_id", key_id)
+                .andEq("is_enabled",1)
                 .caching(CacheUtils.data)
                 .usingCache(2) //变更通知会延时3秒发,多并发时稍当一下
                 .selectItem("*", KeyM.class);
