@@ -146,9 +146,9 @@
         <flex>
             <left class="col-3">
                 <#if _m!=3 && is_admin == 1>
-                    <button type='button' class="edit" onclick="distribute()" >立即派发</button>
-                    <button type="button" class="minor  mar10-l" onclick="cancelSend()">取消</button>
-                    <button type="button" class="minor  mar10-l" onclick="repairSubs()">修复</button>
+                    <button type="button" class="minor" onclick="cancelSend()">取消</button>
+                    <button type="button" class="minor" onclick="repairSubs()">修复</button>
+                    <button type='button' class="edit mar10-l" onclick="distribute()" >立即派发</button>
                 </#if>
             </left>
             <middle class="col-6 center">
