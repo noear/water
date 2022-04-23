@@ -47,7 +47,7 @@
 
 <datalist id="datalist">
     <#list secondList as m>
-        <option value="${m.tag}">${m.tag}</option>
+        <option value="${m.tag}"> >=${m.tag}s</option>
     </#list>
 </datalist>
 

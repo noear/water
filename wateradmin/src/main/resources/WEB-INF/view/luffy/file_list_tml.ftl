@@ -132,16 +132,13 @@
                         <button type='button' class="minor" onclick="del(1,'禁用')" >禁用</button>
                     <#else>
                         <button type='button' class="minor" onclick="del(0,'启用')" >启用</button>
-                        <button type='button' class="minor" onclick="del(9,'删除')" >删除</button>
                     </#if>
+                    <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
                 </#if>
             </left>
             <middle class="col-4 center">
                 <input id="key" class="w200" placeholder="code or @path" type="text" value="${key}" />
                 <button type="button" onclick="search()">查询</button>
-                <#if is_admin == 1>
-                    <a class="btn edit mar10-l" href="edit?tag=${tag}">新增</a>
-                </#if>
             </middle>
             <right class="col-4">
                 <selector>
