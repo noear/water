@@ -533,12 +533,12 @@ public class MsgSourceMongo implements MsgSource {
                 dataPage.add(item);
 
                 if (dataPage.size() == 2000) {
-                    //满1000就插一次
+                    //满2000就插一次
                     _db.mongo().insertMany("water_msg_message_all", dataPage);
                     dataPage.clear();
                 }
             }
-            //处理没满1000的
+            //处理没满2000的
             if (dataPage.size() > 0) {
                 _db.mongo().insertMany("water_msg_message_all", dataPage);
                 dataPage.clear();
