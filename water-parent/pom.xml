@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>water-parent</artifactId>
-    <version>2.6.2-R</version>
+    <version>2.6.2</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
