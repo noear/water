@@ -44,9 +44,6 @@ public class ConfigModel implements IBinder {
         return new ConfigModel();
     }
 
-    public ConfigM toConfigM() {
-        return new ConfigM(key, value, 0);
-    }
 
     public String getString() {
         return value;
@@ -106,30 +103,12 @@ public class ConfigModel implements IBinder {
     }
 
 
-    /**
-     * 获取 db:DbContext
-     */
-    public DbContext getDb() {
-        return getDb(false);
-    }
-
-    public DbContext getDb(boolean pool) {
-        Properties prop = getProp();
-
-        if (pool) {
-            HikariDataSource source = new HikariDataSource();
-            String schema = prop.getProperty("schema");
-            String url = prop.getProperty("url");
-
-            Utils.injectProperties(source, prop);
-
-            if (TextUtils.isNotEmpty(url)) {
-                source.setJdbcUrl(url);
-            }
-
-            return new DbContext(source, schema);
-        } else {
-            return new DbContext(prop);
+    private ConfigM configM;
+    public ConfigM toConfigM() {
+        if (configM == null) {
+            configM = new ConfigM(key, value, gmt_modified);
         }
+
+        return configM;
     }
 }
