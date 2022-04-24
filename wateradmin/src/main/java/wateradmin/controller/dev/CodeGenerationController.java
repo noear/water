@@ -64,7 +64,7 @@ public class CodeGenerationController extends BaseController {
                         String key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tag , key);
-        DbContext db = cfg.getDb();
+        DbContext db = cfg.toConfigM().getDb();
 
         List<String> tbs = new ArrayList<>();
         db.getMetaData().getTableAll().forEach((tw)->{
@@ -83,7 +83,7 @@ public class CodeGenerationController extends BaseController {
                          String tb,
                          int tml_id) throws Exception {
 
-        DbContext db = DbWaterCfgApi.getConfigByTagName(tag , key).getDb();
+        DbContext db = DbWaterCfgApi.getConfigByTagName(tag , key).toConfigM().getDb();
 
         Map<String, Object> model = new HashMap<>();
 

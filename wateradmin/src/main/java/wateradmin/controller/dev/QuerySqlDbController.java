@@ -119,7 +119,7 @@ public class QuerySqlDbController extends BaseController {
            return "只支持业务库查询";
        }
 
-       DbContext dbContext = DbWaterCfgApi.getConfigByTagName(db).getDb();
+       DbContext dbContext = DbWaterCfgApi.getConfigByTagName(db).toConfigM().getDb();
 
        DataList list = dbContext.sql(sql).log(true).getDataList();
        String html = "";

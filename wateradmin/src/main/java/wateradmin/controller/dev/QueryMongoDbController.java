@@ -123,7 +123,7 @@ public class QueryMongoDbController extends BaseController {
 
             ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tagAndKey);
 
-            try (MgContext mg = cfg.getMg(db)) {
+            try (MgContext mg = cfg.toConfigM().getMg(db)) {
 
                 MgTableQuery qr = mg.table(coll).whereMap(whereMap);
                 String rstJson;

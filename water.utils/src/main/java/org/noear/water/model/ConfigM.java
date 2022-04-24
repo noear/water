@@ -12,11 +12,8 @@ import org.noear.weed.cache.SecondCache;
 import org.noear.weed.mongo.MgContext;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 
-public final class ConfigM{
+public final class ConfigM {
     public final String key;
     public final long lastModified;
     public final String value;
@@ -75,7 +72,6 @@ public final class ConfigM{
      * 转为Properties
      */
     private PropertiesM _prop;
-
     public PropertiesM getProp() {
         if (_prop == null) {
             _prop = ConfigUtils.global.getProp(value);
@@ -88,7 +84,6 @@ public final class ConfigM{
      * 转为ONode
      */
     private ONode _node;
-
     public ONode getNode() {
         if (_node == null) {
             _node = ConfigUtils.global.getNode(value);
@@ -123,28 +118,20 @@ public final class ConfigM{
     /**
      * 获取 rd:RedisX
      */
-    public RedisClient getRd() {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
 
-        return new RedisClient(getProp());
+
+    public RedisClient getRd() {
+        return ConfigResolver.toRedis(this, 0);
     }
+
 
     public RedisClient getRd(int db) {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
-
-        return new RedisClient(getProp(), db);
+        return ConfigResolver.toRedis(this, db);
     }
 
+    @Deprecated
     public RedisClient getRd(int db, int maxTotaol) {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
-
-        return new RedisClient(getProp(), db, maxTotaol);
+        return getRd(db);
     }
 
     public MgContext getMg() {
@@ -159,7 +146,7 @@ public final class ConfigM{
             throw new IllegalArgumentException("Missing db configuration");
         }
 
-        return getMgDo(prop, db);
+        return ConfigResolver.toMongo(this, db);
     }
 
     public MgContext getMg(String db) {
@@ -167,27 +154,9 @@ public final class ConfigM{
             return null;
         }
 
-        return getMgDo(getProp(), db);
+        return ConfigResolver.toMongo(this, db);
     }
 
-    private static Map<String, MgContext> _mgMap = new HashMap<>();
-
-    private MgContext getMgDo(Properties prop, String db) {
-        MgContext mg = _mgMap.get(value);
-
-        if (mg == null) {
-            synchronized (value.intern()) {
-                mg = _mgMap.get(value);
-
-                if (mg == null) {
-                    mg = new MgContext(prop, db);
-                    _mgMap.put(value, mg);
-                }
-            }
-        }
-
-        return mg;
-    }
 
     /**
      * 获取 cache:ICacheServiceEx
@@ -233,44 +202,12 @@ public final class ConfigM{
     /**
      * 获取 db:DbContext
      */
-    private static Map<String, DbContext> _dbMap = new HashMap<>();
-
     public DbContext getDb() {
         return getDb(false);
     }
 
     public DbContext getDb(boolean pool) {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
-
-        DbContext db = _dbMap.get(value);
-
-        if (db == null) {
-            synchronized (value.intern()) {
-                db = _dbMap.get(value);
-
-                if (db == null) {
-                    db = getDbDo(pool);
-                    _dbMap.put(value, db);
-                }
-            }
-
-        }
-        return db;
-    }
-
-    private DbContext getDbDo(boolean pool) {
-        Properties prop = getProp();
-        String url = prop.getProperty("url");
-
-        if (TextUtils.isEmpty(url)) {
-            return null;
-        }
-
-        String schema = prop.getProperty("schema");
-
-        return new DbContext(getDs(pool), schema);
+        return ConfigResolver.toDb(this, pool);
     }
 
     public DataSource getDs(boolean pool) {

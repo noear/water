@@ -65,7 +65,7 @@ public class DDLController extends BaseController {
     public ViewModel tb(String tag, String key) throws SQLException {
 
         ConfigModel cfg = DbWaterCfgApi.getConfigByTagName(tag, key);
-        DbContext db = cfg.getDb();
+        DbContext db = cfg.toConfigM().getDb();
 
         List<String> tbs = new ArrayList<>();
         db.getMetaData().getTableAll().forEach((tw)->{
@@ -82,7 +82,7 @@ public class DDLController extends BaseController {
                          String key,
                          String tb) throws SQLException {
 
-        DbContext db = DbWaterCfgApi.getConfigByTagName(tag, key).getDb();
+        DbContext db = DbWaterCfgApi.getConfigByTagName(tag, key).toConfigM().getDb();
 
         String ddl = db.sql(buildSqlGetDDL(tb)).getDataItem().getString(DDL_COLUMN_NAME);
 

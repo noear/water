@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WW;
+import org.noear.water.model.ConfigM;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.TextUtils;
@@ -48,7 +49,7 @@ public class ConfigModel implements IBinder {
 
 
     public boolean disabled() {
-        return is_enabled==0;
+        return is_enabled == 0;
     }
 
     public String type_str() {
@@ -124,73 +125,14 @@ public class ConfigModel implements IBinder {
     /**
      * 获取 db:DbContext
      */
-    public DbContext getDb() {
-        return getDb(false);
-    }
 
-    public DbContext getDb(boolean pool) {
-        Properties prop = getProp();
-        String url = prop.getProperty("url");
+    private ConfigM configM;
 
-        if (TextUtils.isEmpty(url)) {
-            return null;
+    public ConfigM toConfigM() {
+        if (configM == null) {
+            configM = new ConfigM(key, value, 0);
         }
 
-        String schema = prop.getProperty("schema");
-
-        return new DbContext(getDs(pool), schema);
-    }
-
-    public DataSource getDs(boolean pool) {
-        Properties prop = getProp();
-        String url = prop.getProperty("url");
-
-        if (TextUtils.isEmpty(url)) {
-            return null;
-        }
-
-        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
-        String driverClassName = prop.getProperty("driverClassName");
-
-        if (pool) {
-            HikariDataSource source = new HikariDataSource();
-
-            Utils.injectProperties(source, prop);
-            if (TextUtils.isNotEmpty(url)) {
-                source.setJdbcUrl(url);
-            }
-
-            return source;
-        } else {
-            if (TextUtils.isNotEmpty(driverClassName)) {
-                Utils.loadClass(driverClassName);
-            }
-
-            return new DbDataSource(url, username, password);
-        }
-    }
-
-    public MgContext getMg() {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
-
-        Properties prop = getProp();
-        String db = prop.getProperty("db");
-
-        if (TextUtils.isEmpty(db)) {
-            throw new IllegalArgumentException("Missing db configuration");
-        }
-
-        return new MgContext(prop, db);
-    }
-
-    public MgContext getMg(String db) {
-        if (TextUtils.isEmpty(value)) {
-            return null;
-        }
-
-        return new MgContext(getProp(), db);
+        return configM;
     }
 }
