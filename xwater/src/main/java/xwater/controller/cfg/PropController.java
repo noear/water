@@ -24,7 +24,7 @@ public class PropController extends BaseController {
     public ModelAndView index(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
-        TagChecker.filterWaterTag(tags, m -> m.tag);
+        //TagChecker.filterWaterTag(tags, m -> m.tag);
 
 
         tag_name = TagUtil.build(tag_name, tags);
