@@ -157,8 +157,8 @@ public class DbLuffyApi {
                 .selectList("*", LuffyFileModel.class);
     }
 
-    //批量导入
-    public static void impFile(LuffyFileType type, String tag, LuffyFileModel wm) throws SQLException {
+    //批量导入或替换
+    public static void impFileOrRep(LuffyFileType type, String tag, LuffyFileModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }

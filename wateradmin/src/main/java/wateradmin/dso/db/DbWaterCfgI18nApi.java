@@ -111,7 +111,7 @@ public class DbWaterCfgI18nApi {
     }
 
     //批量导入
-    public static void impI18n(String tag, String bundle, String name, String lang, String value) throws SQLException {
+    public static void impI18nOrRep(String tag, String bundle, String name, String lang, String value) throws SQLException {
         if (TextUtils.isEmpty(tag) || TextUtils.isEmpty(bundle) || TextUtils.isEmpty(name)) {
             return;
         }

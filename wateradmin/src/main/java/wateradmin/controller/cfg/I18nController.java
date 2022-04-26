@@ -311,7 +311,7 @@ public class I18nController extends BaseController {
         }
 
         for (I18nModel m : list) {
-            DbWaterCfgI18nApi.impI18n(tag, bundle, m.name, m.lang, m.value);
+            DbWaterCfgI18nApi.impI18nOrRep(tag, bundle, m.name, m.lang, m.value);
         }
 
         //通知更新
@@ -347,7 +347,7 @@ public class I18nController extends BaseController {
         for (Object k : i18n.keySet()) {
             if (k instanceof String) {
                 String name = (String) k;
-                DbWaterCfgI18nApi.impI18n(tag, bundle, name, lang, i18n.getProperty(name));
+                DbWaterCfgI18nApi.impI18nOrRep(tag, bundle, name, lang, i18n.getProperty(name));
             }
         }
 

@@ -3,6 +3,7 @@ package wateradmin.controller.paas;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
@@ -12,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.TagChecker;
-import wateradmin.dso.FaasUtils;
-import wateradmin.dso.Session;
-import wateradmin.dso.TagUtil;
+import wateradmin.dso.*;
 import wateradmin.dso.db.DbLuffyApi;
 import wateradmin.dso.db.DbWaterCfgSafeApi;
 import wateradmin.models.TagCountsModel;
@@ -356,12 +354,9 @@ public class LuffyFileController extends BaseController {
 
 
     //批量导入
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("{type}/ajax/import")
     public ViewModel importDo(String type, String tag, UploadedFile file) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
@@ -386,7 +381,7 @@ public class LuffyFileController extends BaseController {
             }
 
             //存入在后
-            DbLuffyApi.impFile(fileType, tag, m);
+            DbLuffyApi.impFileOrRep(fileType, tag, m);
         }
 
         return viewModel.code(1, "ok");
