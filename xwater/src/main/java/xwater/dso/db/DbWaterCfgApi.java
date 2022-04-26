@@ -131,7 +131,7 @@ public class DbWaterCfgApi {
     }
 
     //批量导入
-    public static void impWhitelist(String tag, WhitelistModel wm) throws SQLException {
+    public static void impWhitelistOrRep(String tag, WhitelistModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
@@ -140,12 +140,13 @@ public class DbWaterCfgApi {
             return;
         }
 
+        //不存在替换的概念
         db().table("water_cfg_whitelist")
                 .set("tag", wm.tag)
                 .set("type", wm.type)
                 .set("value", wm.value)
                 .set("note", wm.note)
-                .insertBy("tag,type,value");
+                .upsertBy("tag,type,value");
     }
 
     //删除
@@ -210,7 +211,7 @@ public class DbWaterCfgApi {
 
 
     //导入
-    public static void impConfig(String tag, ConfigModel wm) throws SQLException {
+    public static void impConfigOrRep(String tag, ConfigModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
@@ -225,7 +226,7 @@ public class DbWaterCfgApi {
                 .set("key", wm.key)
                 .set("value", wm.value)
                 .set("edit_mode", wm.edit_mode)
-                .insertBy("tag,key");
+                .upsertBy("tag,key");
     }
 
     public static List<ConfigModel> getConfigByIds(String ids) throws SQLException {

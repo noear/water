@@ -123,7 +123,7 @@ public class PropController extends BaseController {
         List<ConfigModel> list = entity.data.toObjectList(ConfigModel.class);
 
         for (ConfigModel m : list) {
-            DbWaterCfgApi.impConfig(tag, m);
+            DbWaterCfgApi.impConfigOrRep(tag, m);
         }
 
         return viewModel.code(1, "ok");

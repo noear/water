@@ -155,7 +155,7 @@ public class WhitelistController extends BaseController {
         List<WhitelistModel> list = entity.data.toObjectList(WhitelistModel.class);
 
         for (WhitelistModel m : list) {
-            DbWaterCfgSafeApi.impWhitelist(tag, m);
+            DbWaterCfgSafeApi.impWhitelistOrRep(tag, m);
         }
 
         return viewModel.code(1, "ok");

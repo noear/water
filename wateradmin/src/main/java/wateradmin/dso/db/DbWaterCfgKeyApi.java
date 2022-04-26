@@ -73,7 +73,7 @@ public class DbWaterCfgKeyApi {
     }
 
     //批量导入
-    public static void impKey(String tag, KeyModel wm) throws SQLException {
+    public static void impKeyOrRep(String tag, KeyModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
@@ -90,7 +90,7 @@ public class DbWaterCfgKeyApi {
                 .set("label", wm.label)
                 .set("description", wm.description)
                 .set("gmt_modified", System.currentTimeMillis())
-                .insertBy("access_key");
+                .upsertBy("access_key");
     }
 
     //删除

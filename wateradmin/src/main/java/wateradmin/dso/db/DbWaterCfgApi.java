@@ -258,7 +258,7 @@ public class DbWaterCfgApi {
 
 
     //导入
-    public static void impConfig(String tag, ConfigModel wm) throws SQLException {
+    public static void impConfigOrRep(String tag, ConfigModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
@@ -273,7 +273,7 @@ public class DbWaterCfgApi {
                 .set("key", wm.key)
                 .set("value", wm.value)
                 .set("edit_mode", wm.edit_mode)
-                .insertBy("tag,key");
+                .upsertBy("tag,key");
     }
 
     public static List<ConfigModel> getConfigByIds(String ids) throws SQLException {

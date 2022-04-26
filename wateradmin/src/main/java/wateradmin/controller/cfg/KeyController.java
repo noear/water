@@ -140,7 +140,7 @@ public class KeyController extends BaseController {
             List<KeyModel> list = entity.data.toObjectList(KeyModel.class);
 
             for (KeyModel m : list) {
-                DbWaterCfgKeyApi.impKey(tag, m);
+                DbWaterCfgKeyApi.impKeyOrRep(tag, m);
             }
 
             return viewModel.code(1, "ok");

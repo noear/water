@@ -80,7 +80,7 @@ public class DbWaterCfgSafeApi {
     }
 
     //批量导入
-    public static void impWhitelist(String tag, WhitelistModel wm) throws SQLException {
+    public static void impWhitelistOrRep(String tag, WhitelistModel wm) throws SQLException {
         if (TextUtils.isEmpty(tag) == false) {
             wm.tag = tag;
         }
@@ -89,13 +89,14 @@ public class DbWaterCfgSafeApi {
             return;
         }
 
+        //不存在替换的概念
         db().table("water_cfg_whitelist")
                 .set("tag", wm.tag)
                 .set("type", wm.type)
                 .set("value", wm.value)
                 .set("note", wm.note)
                 .set("gmt_modified", System.currentTimeMillis())
-                .insertBy("tag,type,value");
+                .upsertBy("tag,type,value");
     }
 
     //删除
