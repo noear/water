@@ -18,45 +18,38 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 public class HttpUtils {
-    private final static Supplier<Dispatcher> okhttp_dispatcher = () -> {
+    private final static Supplier<Dispatcher> httpClientDispatcher = () -> {
         Dispatcher temp = new Dispatcher();
         temp.setMaxRequests(20000);
         temp.setMaxRequestsPerHost(10000);
         return temp;
     };
 
-    private final static OkHttpClient httpShortClient = new OkHttpClient.Builder()
-            .connectTimeout(10 , TimeUnit.SECONDS)
+    private final static OkHttpClient httpClient = new OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
-            .dispatcher(okhttp_dispatcher.get())
-            .build();
-
-    //用于跑定时任务调度
-    private final static OkHttpClient httpLongClient = new OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(60 * 5, TimeUnit.SECONDS)
-            .readTimeout(60 * 5, TimeUnit.SECONDS)
-            .dispatcher(okhttp_dispatcher.get())
+            .dispatcher(httpClientDispatcher.get())
+            .addInterceptor(HttpInterceptor.instance)
             .build();
 
     public static HttpUtils http(String url) {
         //默认为长时间
-        return new HttpUtils(url, httpLongClient);
+        return new HttpUtils(url, httpClient);
     }
 
     /**
      * 短时间处理
      * */
     public static HttpUtils shortHttp(String url) {
-        return new HttpUtils(url, httpShortClient);
+        return new HttpUtils(url, httpClient).asShortHttp();
     }
 
     /**
      * 长时间处理
      * */
     public static HttpUtils longHttp(String url) {
-        return new HttpUtils(url, httpLongClient);
+        return new HttpUtils(url, httpClient).asLongHttp();
     }
 
 
@@ -74,23 +67,42 @@ public class HttpUtils {
     private boolean _callAsync;
 
     public HttpUtils(String url, OkHttpClient client) {
-        _client = client;
+        if (client == null) {
+            _client = httpClient;
+        } else {
+            _client = client;
+        }
+
         _builder = new Request.Builder().url(url);
     }
 
     /**
      * 短时间处理
-     * */
-    public HttpUtils asShortHttp(){
-        _client = httpShortClient;
-        return this;
+     */
+    public HttpUtils asShortHttp() {
+        return timeout(10, 10, 60);
     }
 
     /**
      * 长时间处理
-     * */
-    public HttpUtils asLongHttp(){
-        _client = httpLongClient;
+     */
+    public HttpUtils asLongHttp() {
+        return timeout(30, 60*5, 60*5);
+    }
+
+    public HttpUtils timeout(int timeoutSeconds) {
+        if (timeoutSeconds > 0) {
+            _builder.tag(HttpTimeout.class, new HttpTimeout(timeoutSeconds));
+        }
+
+        return this;
+    }
+
+    public HttpUtils timeout(int connectTimeoutSeconds, int writeTimeoutSeconds, int readTimeoutSeconds) {
+        if (connectTimeoutSeconds > 0) {
+            _builder.tag(HttpTimeout.class, new HttpTimeout(connectTimeoutSeconds, writeTimeoutSeconds, readTimeoutSeconds));
+        }
+
         return this;
     }
 
