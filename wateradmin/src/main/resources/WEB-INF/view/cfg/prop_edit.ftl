@@ -41,6 +41,10 @@
 
             vm.row_id= row_id;
 
+
+            let state = $('#is_disabled').prop('checked') ? 1 : 0;
+
+
             $.ajax({
                 type:"POST",
                 url:"/cfg/prop/edit/ajax/save",
@@ -49,7 +53,7 @@
                     if(data.code==1) {
                         top.layer.msg('操作成功')
                         setTimeout(function(){
-                            parent.location.href="/cfg/prop?tag_name="+vm.tag;
+                            parent.location.href="/cfg/prop?tag_name="+vm.tag+"&state="+state;
                         },800);
                     }else{
                         top.layer.msg(data.msg);
@@ -59,25 +63,28 @@
         }
 
         function del() {
-            if(!row_id){
+            if (!row_id) {
                 return;
             }
 
-            if(!confirm("确定要删除吗？")){
+            if (!confirm("确定要删除吗？")) {
                 return;
             }
+
+
+            let state = $('#is_disabled').prop('checked') ? 1 : 0;
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/prop/edit/ajax/del",
-                data:{"row_id":row_id},
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/cfg/prop/edit/ajax/del",
+                data: {"row_id": row_id},
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/prop?tag_name=${cfg.tag!}";
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/prop?tag_name=${cfg.tag!}" + "&state=" + state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
