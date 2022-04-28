@@ -64,9 +64,11 @@
     </left>
     <right class="form">
         <n>ctrl + s 可快捷保存</n>
-        <button type="button" jt-post="./ajax/save" jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-ctls>保存</button>
+        <button type="button" jt-post="./ajax/save"
+                jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-ctls>保存</button>
         <#if ((m1.path!'')?length > 1)>
-            <button type="button" class="minor" jt-post="./ajax/del?id=${id}" jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-confirm="del">删除</button>
+            <button type="button" class="minor" jt-post="./ajax/del?id=${id}"
+                    jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-confirm="del">删除</button>
         </#if>
     </right>
 </toolbar>
