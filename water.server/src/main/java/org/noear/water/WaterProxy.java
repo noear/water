@@ -96,6 +96,7 @@ public class WaterProxy {
 
     public static String runJob(String service, String name, Map<String, Object> args) throws Exception {
         return HttpUtils.http(service, WW.path_run_job)
+                .timeout(10, 10, 60 * 5)
                 .data(args)
                 .data("name", name)//兼容旧写法
                 .header(WW.http_header_job, name)
@@ -106,6 +107,7 @@ public class WaterProxy {
     public static String runStatus(String addrees) throws Exception {
         String url = "http://" + addrees + WW.path_run_status;
         return HttpUtils.http(url)
+                .timeout(10)
                 .header(WW.http_header_token, ServerConfig.taskToken)
                 .get();
     }
