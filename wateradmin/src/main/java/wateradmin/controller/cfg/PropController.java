@@ -1,5 +1,6 @@
 package wateradmin.controller.cfg;
 
+import org.noear.solon.annotation.Param;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
@@ -24,7 +25,7 @@ import java.util.List;
 @Mapping("/cfg/prop")
 public class PropController extends BaseController {
     @Mapping("")
-    public ModelAndView home(String tag_name, int state) throws SQLException {
+    public ModelAndView home(String tag_name, @Param(defaultValue = "1") int state) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
         TagChecker.filter(tags, m -> m.tag);
@@ -40,16 +41,16 @@ public class PropController extends BaseController {
 
     @Mapping("inner")
     public ModelAndView innerDo(Context ctx, String tag_name, String key) throws SQLException {
-        int state = ctx.paramAsInt("state",1);
+        int state = ctx.paramAsInt("state", 1);
 
         TagUtil.cookieSet(tag_name);
 
-        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name,key, state);
+        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, state);
 
-        viewModel.put("list",list);
-        viewModel.put("tag_name",tag_name);
-        viewModel.put("state",state);
-        viewModel.put("key",key);
+        viewModel.put("list", list);
+        viewModel.put("tag_name", tag_name);
+        viewModel.put("state", state);
+        viewModel.put("key", key);
 
         return view("cfg/prop_inner");
     }
@@ -67,8 +68,8 @@ public class PropController extends BaseController {
 
         if (cfg.row_id > 0) {
             tag_name = cfg.tag;
-        }else{
-            cfg.is_enabled=1;
+        } else {
+            cfg.is_enabled = 1;
         }
 
         if (TextUtils.isEmpty(tml.value)) {
@@ -85,8 +86,8 @@ public class PropController extends BaseController {
     //编辑、保存功能。
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel save(Integer row_id,String tag,String key,Integer type,String value, String edit_mode, int is_disabled) throws SQLException {
-        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode,is_disabled==0);
+    public ViewModel save(Integer row_id, String tag, String key, Integer type, String value, String edit_mode, int is_disabled) throws SQLException {
+        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode, is_disabled == 0);
 
         return viewModel.code(1, "操作成功");
     }
@@ -126,7 +127,7 @@ public class PropController extends BaseController {
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
-        if(entity == null || "water_cfg_properties".equals(entity.table) == false){
+        if (entity == null || "water_cfg_properties".equals(entity.table) == false) {
             return viewModel.code(0, "数据不对！");
         }
 
@@ -136,7 +137,7 @@ public class PropController extends BaseController {
             DbWaterCfgApi.impConfigOrRep(tag, m);
         }
 
-        return viewModel.code(1,"ok");
+        return viewModel.code(1, "ok");
     }
 
     //批量处理
@@ -147,7 +148,7 @@ public class PropController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        if(act == null){
+        if (act == null) {
             act = 0;
         }
 

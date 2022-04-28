@@ -3,6 +3,7 @@ package wateradmin.controller.paas;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.annotation.Param;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
@@ -30,23 +31,23 @@ public class LuffyFileController extends BaseController {
     static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
     @Mapping("api/home")
-    public ModelAndView api_home(String tag_name, String key, int state) throws SQLException {
-        return home(tag_name, LuffyFileType.api, key,state);
+    public ModelAndView api_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+        return home(tag_name, LuffyFileType.api, key, state);
     }
 
     @Mapping("tml/home")
-    public ModelAndView tml_home(String tag_name, String key, int state) throws SQLException {
-        return home(tag_name, LuffyFileType.tml, key,state);
+    public ModelAndView tml_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+        return home(tag_name, LuffyFileType.tml, key, state);
     }
 
     @Mapping("msg/home")
-    public ModelAndView msg_home(String tag_name, String key, int state) throws SQLException {
-        return home(tag_name, LuffyFileType.msg, key,state);
+    public ModelAndView msg_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+        return home(tag_name, LuffyFileType.msg, key, state);
     }
 
     @Mapping("pln/home")
-    public ModelAndView pln_home(String tag_name, String key, int state) throws SQLException {
-        return home(tag_name, LuffyFileType.pln, key,state);
+    public ModelAndView pln_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+        return home(tag_name, LuffyFileType.pln, key, state);
     }
 
     private ModelAndView home(String tag_name, LuffyFileType type, String key, int state) throws SQLException {
@@ -58,7 +59,7 @@ public class LuffyFileController extends BaseController {
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("key", key);
-        viewModel.put("state",state);
+        viewModel.put("state", state);
         viewModel.put("tags", tags);
         return view("luffy/file");
     }
@@ -86,8 +87,8 @@ public class LuffyFileController extends BaseController {
     private ModelAndView list(Context ctx, LuffyFileType type) throws SQLException {
         String tag_name = ctx.param("tag_name", "");
         String key = ctx.param("key", "");
-        int act = ctx.paramAsInt("act",11);
-        int state = ctx.paramAsInt("state",0);
+        int act = ctx.paramAsInt("act", 11);
+        int state = ctx.paramAsInt("state", 0);
 
 
         TagUtil.cookieSet(tag_name);
@@ -107,10 +108,10 @@ public class LuffyFileController extends BaseController {
         }
 
 
-        viewModel.put("state",state);
+        viewModel.put("state", state);
         viewModel.put("mlist", list);
 
-        return view("luffy/file_list_"+type.name());
+        return view("luffy/file_list_" + type.name());
     }
 
     @Mapping("api/edit")
@@ -223,7 +224,7 @@ public class LuffyFileController extends BaseController {
         MDC.put("tag1", tag1);
         MDC.put("tag2", tag2);
 
-        paasLog.warn("New setting: {}",ONode.stringify(ctx.paramMap()));
+        paasLog.warn("New setting: {}", ONode.stringify(ctx.paramMap()));
 
         return ajax_save(ctx, data, LuffyFileType.pln);
     }
@@ -239,18 +240,18 @@ public class LuffyFileController extends BaseController {
     }
 
     public Object ajax_save(Context ctx, DataItem data, LuffyFileType type) throws SQLException {
-        data.set("label", ctx.param("label",""));
-        data.set("tag", ctx.param("tag",""));
-        data.set("path", ctx.param("path",""));
+        data.set("label", ctx.param("label", ""));
+        data.set("tag", ctx.param("tag", ""));
+        data.set("path", ctx.param("path", ""));
         data.set("edit_mode", ctx.param("edit_mode"));
-        data.set("note", ctx.param("note",""));
+        data.set("note", ctx.param("note", ""));
         data.set("is_disabled", ctx.paramAsInt("is_disabled"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 
         int file_id = ctx.paramAsInt("id", 0);
         DbLuffyApi.setFile(file_id, data, type);
 
-        return viewModel.code(1,"ok");
+        return viewModel.code(1, "ok");
     }
 
     @Mapping("{type}/ajax/del")
@@ -259,12 +260,12 @@ public class LuffyFileController extends BaseController {
             DbLuffyApi.delFile(id);
         }
 
-        return viewModel.code(1,"ok");
+        return viewModel.code(1, "ok");
     }
 
     /**
      * 立即执行
-     * */
+     */
     @Mapping("pln/ajax/reset")
     public Object reset(Context ctx, String ids) throws Exception {
         if (Session.current().isAdmin() == false) {
@@ -315,12 +316,12 @@ public class LuffyFileController extends BaseController {
         viewModel.put("edit_mode", edit_mode);
         viewModel.put("code64", Base64Utils.encode(file.content));
 
-        if(readonly != null){
+        if (readonly != null) {
             return view("luffy/file_code_readonly");
-        }else{
-            if("ftl".equals(edit_mode) || "velocity".equals(edit_mode)) {
+        } else {
+            if ("ftl".equals(edit_mode) || "velocity".equals(edit_mode)) {
                 return view("luffy/file_code");
-            }else{
+            } else {
                 return view("luffy/file_code2");
             }
         }
@@ -328,15 +329,15 @@ public class LuffyFileController extends BaseController {
 
     @Mapping("{type}/code/ajax/save")
     public Object code_save(Context ctx, Integer id, String fc64, String path) throws SQLException {
-        if(id == null || id == 0){
-            return viewModel.code(0,"");
+        if (id == null || id == 0) {
+            return viewModel.code(0, "");
         }
 
         String fc = Base64Utils.decode(fc64);
 
         DbLuffyApi.setFileContent(id, fc);
 
-        return viewModel.code(1,"ok");
+        return viewModel.code(1, "ok");
     }
 
 
@@ -347,7 +348,7 @@ public class LuffyFileController extends BaseController {
 
         String jsonD = JsondUtils.encode("luffy_file", list);
 
-        String filename2 = "water_paasfile_" + type +"_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
+        String filename2 = "water_paasfile_" + type + "_" + tag + "_" + Datetime.Now().getDate() + ".jsond";
 
         ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
 
@@ -396,11 +397,11 @@ public class LuffyFileController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        if(act == null){
+        if (act == null) {
             act = 0;
         }
 
-        DbLuffyApi.delFileByIds(LuffyFileType.valueOf(type),act, ids);
+        DbLuffyApi.delFileByIds(LuffyFileType.valueOf(type), act, ids);
 
         return viewModel.code(1, "ok");
     }
