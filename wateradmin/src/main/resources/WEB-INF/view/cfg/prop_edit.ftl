@@ -42,7 +42,7 @@
             vm.row_id= row_id;
 
 
-            let state = $('#is_disabled').prop('checked') ? 1 : 0;
+            let state = $('#is_disabled').prop('checked') ? 0:1;
 
 
             $.ajax({
@@ -72,7 +72,7 @@
             }
 
 
-            let state = $('#is_disabled').prop('checked') ? 1 : 0;
+            let state = $('#is_disabled').prop('checked') ? 0:1;
 
             $.ajax({
                 type: "POST",
