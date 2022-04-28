@@ -31,22 +31,22 @@ public class LuffyFileController extends BaseController {
     static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
     @Mapping("api/home")
-    public ModelAndView api_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+    public ModelAndView api_home(String tag_name, String key, int state) throws SQLException {
         return home(tag_name, LuffyFileType.api, key, state);
     }
 
     @Mapping("tml/home")
-    public ModelAndView tml_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+    public ModelAndView tml_home(String tag_name, String key, int state) throws SQLException {
         return home(tag_name, LuffyFileType.tml, key, state);
     }
 
     @Mapping("msg/home")
-    public ModelAndView msg_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+    public ModelAndView msg_home(String tag_name, String key, int state) throws SQLException {
         return home(tag_name, LuffyFileType.msg, key, state);
     }
 
     @Mapping("pln/home")
-    public ModelAndView pln_home(String tag_name, String key, @Param(defaultValue = "1") int state) throws SQLException {
+    public ModelAndView pln_home(String tag_name, String key, int state) throws SQLException {
         return home(tag_name, LuffyFileType.pln, key, state);
     }
 
