@@ -15,6 +15,13 @@
             }
             return true;
         }
+
+        function jt_goback() {
+            let tag = $('#tag').val().trim();
+            let state = $('#is_disabled').prop('checked') ? 1 : 0;
+
+            parent.location = './home?tag_name=' + tag + '&state=' + state;
+        }
     </script>
 </head>
 <body>
@@ -65,10 +72,10 @@
     <right class="form">
         <n>ctrl + s 可快捷保存</n>
         <button type="button" jt-post="./ajax/save"
-                jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-ctls>保存</button>
+                jt-goback="jt_goback()" jt-ctls>保存</button>
         <#if ((m1.path!'')?length > 1)>
             <button type="button" class="minor" jt-post="./ajax/del?id=${id}"
-                    jt-goback="parent.location='./home?tag_name='+$('#tag').val().trim()" jt-confirm="del">删除</button>
+                    jt-goback="jt_goback()" jt-confirm="del">删除</button>
         </#if>
     </right>
 </toolbar>

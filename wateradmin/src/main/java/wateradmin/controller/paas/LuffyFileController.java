@@ -30,26 +30,26 @@ public class LuffyFileController extends BaseController {
     static Logger paasLog = LoggerFactory.getLogger("water_log_faas");
 
     @Mapping("api/home")
-    public ModelAndView api_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, LuffyFileType.api, key);
+    public ModelAndView api_home(String tag_name, String key, int state) throws SQLException {
+        return home(tag_name, LuffyFileType.api, key,state);
     }
 
     @Mapping("tml/home")
-    public ModelAndView tml_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, LuffyFileType.tml, key);
+    public ModelAndView tml_home(String tag_name, String key, int state) throws SQLException {
+        return home(tag_name, LuffyFileType.tml, key,state);
     }
 
     @Mapping("msg/home")
-    public ModelAndView msg_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, LuffyFileType.msg, key);
+    public ModelAndView msg_home(String tag_name, String key, int state) throws SQLException {
+        return home(tag_name, LuffyFileType.msg, key,state);
     }
 
     @Mapping("pln/home")
-    public ModelAndView pln_home(String tag_name, String key) throws SQLException {
-        return home(tag_name, LuffyFileType.pln, key);
+    public ModelAndView pln_home(String tag_name, String key, int state) throws SQLException {
+        return home(tag_name, LuffyFileType.pln, key,state);
     }
 
-    private ModelAndView home(String tag_name, LuffyFileType type, String key) throws SQLException {
+    private ModelAndView home(String tag_name, LuffyFileType type, String key, int state) throws SQLException {
         List<TagCountsModel> tags = DbLuffyApi.getFileTags(type);
 
         TagChecker.filter(tags, m -> m.tag);
@@ -57,6 +57,8 @@ public class LuffyFileController extends BaseController {
         tag_name = TagUtil.build(tag_name, tags);
 
         viewModel.put("tag_name", tag_name);
+        viewModel.put("key", key);
+        viewModel.put("state",state);
         viewModel.put("tags", tags);
         return view("luffy/file");
     }
