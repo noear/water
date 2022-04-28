@@ -113,6 +113,7 @@ interface PagingModel{
 }
 
 interface HttpUtils{
+    timeout(timeoutSeconds:number):HttpUtils;
     multipart(multipart:boolean):HttpUtils;
     userAgent(ua:string):HttpUtils;
     charset(charset:string):HttpUtils;
@@ -726,106 +727,9 @@ declare var XLock: JtLock;
 declare function requireX(path:string): void;
 declare function modelAndView(path:string, model:Map<string,object>): string;
 
-/////////////// RockClient
 
-interface AppModel{
-    app_id:number;
-    app_key:string;
-    akey:string;
+//////////////
 
-    agroup_id:number;
-    ugroup_id:number;
-
-    name:string;
-    note:string;
-}
-
-interface RockClient{
-    getApp(appID:number):AppModel;
-    getApp(akey:string):AppModel;
-    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
-}
-
-interface RockUtil{
-
-}
-
-interface rock{
-    client:RockClient;
-    util:RockUtil;
-
-    app(appID:number):AppModel;
-
-    cmd(service:string, cmd:string, args:Map<string,object>):string;
-    api(service:string, fun:string, args:Map<string,object>):string;
-
-    newID(group:string, key:string, times:number):number;
-}
-
-declare var RockClient: RockClient;
-declare var RockUtil: RockUtil;
-
-declare var rock: rock;
-
-
-/////////////// WaterClient
-
-interface ConfigApi{
-
-}
-
-interface MessageApi{
-
-}
-
-interface LogApi{
-
-}
-
-interface RegistryApi{
-
-}
-
-interface TrackApi{
-
-}
-
-interface NoticeApi{
-
-}
-
-interface WhitelistApi{
-
-}
-
-interface WaterClient{
-    Config:ConfigApi;
-    Message:MessageApi;
-    Log:LogApi;
-    Registry:RegistryApi;
-    Track:TrackApi;
-    Notice:NoticeApi;
-    Whitelist:WhitelistApi;
-}
-
-interface WaterProxy{
-    job(service:string, name:string):string;
-
-    call(service:string, path:string):string;
-    call(service:string, path:string, args:Map<string,object>):string;
-
-    faas(path:string):string;
-    faas(path:string, args:Map<string,object>):string;
-
-    raas(path:string, args:Map<string,object>):string;
-    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
-
-    logTrace(logger:string, data:Map<string,object>);
-    logDebug(logger:string, data:Map<string,object>);
-    logInfo(logger:string, data:Map<string,object>);
-    logWarn(logger:string, data:Map<string,object>);
-    logError(logger:string, data:Map<string,object>);
-}
 
 interface RedisSession{
     key(key:string):RedisSession;
@@ -1014,6 +918,109 @@ interface MgContext{
     table(table:string):MgTableQuery;
     mongo():MongoX;
 }
+
+
+/////////////// RockClient
+
+interface AppModel{
+    app_id:number;
+    app_key:string;
+    akey:string;
+
+    agroup_id:number;
+    ugroup_id:number;
+
+    name:string;
+    note:string;
+}
+
+interface RockClient{
+    getApp(appID:number):AppModel;
+    getApp(akey:string):AppModel;
+    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
+}
+
+interface RockUtil{
+
+}
+
+interface rock{
+    client:RockClient;
+    util:RockUtil;
+
+    app(appID:number):AppModel;
+
+    cmd(service:string, cmd:string, args:Map<string,object>):string;
+    api(service:string, fun:string, args:Map<string,object>):string;
+
+    newID(group:string, key:string, times:number):number;
+}
+
+declare var RockClient: RockClient;
+declare var RockUtil: RockUtil;
+
+declare var rock: rock;
+
+
+/////////////// WaterClient
+
+interface ConfigApi{
+
+}
+
+interface MessageApi{
+
+}
+
+interface LogApi{
+
+}
+
+interface RegistryApi{
+
+}
+
+interface TrackApi{
+
+}
+
+interface NoticeApi{
+
+}
+
+interface WhitelistApi{
+
+}
+
+interface WaterClient{
+    Config:ConfigApi;
+    Message:MessageApi;
+    Log:LogApi;
+    Registry:RegistryApi;
+    Track:TrackApi;
+    Notice:NoticeApi;
+    Whitelist:WhitelistApi;
+}
+
+interface WaterProxy{
+    job(service:string, name:string):string;
+
+    call(service:string, path:string):string;
+    call(service:string, path:string, args:Map<string,object>):string;
+
+    faas(path:string):string;
+    faas(path:string, args:Map<string,object>):string;
+
+    raas(path:string, args:Map<string,object>):string;
+    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
+}
+
 
 interface water{
     client:WaterClient;
