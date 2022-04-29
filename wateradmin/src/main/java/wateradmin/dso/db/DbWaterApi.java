@@ -46,7 +46,7 @@ public class DbWaterApi {
 
 
     //编辑更新监视任务。
-    public static boolean monitorSave(Integer monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign, String alarm_exp, Integer is_enabled) throws SQLException {
+    public static boolean monitorSave(int monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
         String guid = UUID.randomUUID().toString().replaceAll("-", "");
 
         DbTableQuery db = db().table("water_tool_monitor")

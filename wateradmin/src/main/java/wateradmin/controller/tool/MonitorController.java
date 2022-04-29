@@ -62,11 +62,7 @@ public class MonitorController extends BaseController {
     }
 
     @Mapping("monitor/edit")
-    public ModelAndView editMonitor(String tag,Integer monitor_id) throws SQLException {
-        if (monitor_id == null) {
-            monitor_id = 0;
-        }
-
+    public ModelAndView editMonitor(String tag, int monitor_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
         MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);
@@ -82,8 +78,8 @@ public class MonitorController extends BaseController {
 
         viewModel.put("cfgs", cfgs);
         viewModel.put("option_sources", option_sources);
-
         viewModel.put("monitor", monitor);
+
         if (Session.current().isAdmin()) {
             return view("tool/monitor_edit");
         } else {
@@ -94,8 +90,8 @@ public class MonitorController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("monitor/edit/ajax/save")
-    public ViewModel save(Integer monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
-                              String alarm_mobile, String alarm_sign, String alarm_exp, Integer is_enabled) throws SQLException {
+    public ViewModel save(int monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
+                              String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
         }
@@ -110,12 +106,9 @@ public class MonitorController extends BaseController {
         return viewModel;
     }
 
+    @AuthPermissions(SessionPerms.admin)
     @Mapping("monitor/edit/ajax/del")
-    public ViewModel del(Integer monitor_id) throws SQLException {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
-
+    public ViewModel del(int monitor_id) throws SQLException {
         boolean result = DbWaterApi.monitorDel(monitor_id);
 
         if (result) {
