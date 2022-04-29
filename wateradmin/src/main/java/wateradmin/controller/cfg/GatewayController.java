@@ -39,23 +39,10 @@ public class GatewayController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView inner(String tag_name, Integer _state) throws SQLException {
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
+    public ModelAndView inner(String tag_name, int _state) throws SQLException {
+        List<GatewayModel> list = DbWaterCfgUpstreamApi.getGatewayList(tag_name, _state == 0);
 
-        if (_state == null) {
-            _state = 1;
-        }
-
-        List<GatewayModel> list = DbWaterCfgUpstreamApi.getGatewayList(tag_name, _state);
-
+        viewModel.put("_state", _state);
         viewModel.put("list", list);
 
         return view("cfg/gateway_inner");

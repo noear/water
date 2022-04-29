@@ -47,8 +47,8 @@ public class BrokerController extends BaseController {
     public ModelAndView brokerInner(String tag_name, int _state) throws Exception {
         List<BrokerModel> list = DbWaterCfgApi.getBrokersByTag(tag_name, _state == 0, null);
 
-        viewModel.put("brokers", list);
         viewModel.put("_state", _state);
+        viewModel.put("brokers", list);
         viewModel.put("tag_name", tag_name);
 
         return view("cfg/broker_inner");

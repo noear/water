@@ -54,9 +54,9 @@ public class DbWaterCfgUpstreamApi {
     }
 
 
-    public static List<GatewayModel> getGatewayList(String tag_name, int is_enabled) throws SQLException {
+    public static List<GatewayModel> getGatewayList(String tag_name, boolean is_enabled) throws SQLException {
         DbTableQuery qr = db().table("water_cfg_gateway")
-                .whereEq("is_enabled", is_enabled);
+                .whereEq("is_enabled", is_enabled ? 1 : 0);
 
         if ("_".equals(tag_name)) {
             qr.andEq("tag", "");
