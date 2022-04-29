@@ -30,6 +30,8 @@
                 return;
             }
 
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
+
             $.ajax({
                 type: "POST",
                 url: "/cfg/gateway/ajax/save",
@@ -46,7 +48,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            location.href = "/cfg/gateway/inner?tag_name=" + tag;
+                            location.href = "/cfg/gateway/inner?tag_name=" + tag  + "&_state=" + _state;
                         }, 800);
                     }else{
                         top.layer.msg(data.msg);
@@ -59,6 +61,8 @@
             if(gateway_id < 1){
                 return;
             }
+
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             let tag = $("#tag").val();
 
@@ -76,7 +80,7 @@
                             top.layer.msg('操作成功');
 
                             setTimeout(function () {
-                                location.href = "/cfg/gateway/inner?tag_name=" + tag;
+                                location.href = "/cfg/gateway/inner?tag_name=" + tag + "&_state=" + _state;
                             }, 800);
                         }else{
                             top.layer.msg(data.msg);
