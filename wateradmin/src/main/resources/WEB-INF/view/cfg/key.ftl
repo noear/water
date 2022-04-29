@@ -15,6 +15,7 @@
                 $('tree li:first').addClass('sel');
             }
         });
+
         var tagName = '${tag_name!}';
         function node_onclick(tag_name,obj) {
             tagName = tag_name
