@@ -53,9 +53,9 @@ public class MonitorController extends BaseController {
     public ModelAndView monitorInner(String tag_name,String monitor_name, int _state) throws SQLException {
         viewModel.put("_state", _state);
 
-        int is_enabled = (_state == 0 ? 1 : 0);
+        boolean is_enabled = (_state == 0);
 
-        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name, monitor_name, _state);
+        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name, monitor_name, is_enabled);
         viewModel.put("monitors", list);
         viewModel.put("tag_name", tag_name);
         return view("tool/monitor_inner");

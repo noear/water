@@ -19,10 +19,10 @@ public class DbWaterApi {
 
 
     //获取monitor表中的数据。
-    public static List<MonitorModel> monitorGetList(String tag_name, String monitor_name, int is_enabled) throws SQLException {
+    public static List<MonitorModel> monitorGetList(String tag_name, String monitor_name, boolean is_enabled) throws SQLException {
         return db()
                 .table("water_tool_monitor")
-                .whereEq("is_enabled", is_enabled)
+                .whereEq("is_enabled", is_enabled ? 1 : 0)
                 .andEq("tag", tag_name)
                 .build(tb -> {
                     if (!TextUtils.isEmpty(monitor_name)) {
