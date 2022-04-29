@@ -71,7 +71,7 @@ public class GwController extends BaseController {
             tag_name = null;
         }
 
-        List<GatewayModel> gats = DbWaterCfgUpstreamApi.getGatewayList(tag_name, 1);
+        List<GatewayModel> gats = DbWaterCfgUpstreamApi.getGatewayList(tag_name, true);
 
         if (gateway_id == 0) {
             if (gats.size() > 0) {
