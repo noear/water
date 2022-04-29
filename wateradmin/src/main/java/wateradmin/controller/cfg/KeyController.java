@@ -72,10 +72,10 @@ public class KeyController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws Exception {
+    public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description, int is_enabled) throws Exception {
 
         try {
-            boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key, access_secret_salt, label, description);
+            boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key, access_secret_salt, label, description, is_enabled);
             if (result) {
                 viewModel.code(1, "操作成功");
             } else {

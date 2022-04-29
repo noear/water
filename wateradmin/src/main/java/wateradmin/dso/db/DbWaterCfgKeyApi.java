@@ -45,7 +45,7 @@ public class DbWaterCfgKeyApi {
     }
 
     //新增ip白名单
-    public static boolean setKey(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt, String label, String description) throws SQLException {
+    public static boolean setKey(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt, String label, String description, int is_enabled) throws SQLException {
         if (key_id == null) {
             key_id = 0;
         }
@@ -61,6 +61,7 @@ public class DbWaterCfgKeyApi {
                 .set("access_secret_salt", access_secret_salt)
                 .set("label", label)
                 .set("description", description)
+                .set("is_enabled", is_enabled)
                 .set("gmt_modified", System.currentTimeMillis());
 
         if (key_id > 0) {

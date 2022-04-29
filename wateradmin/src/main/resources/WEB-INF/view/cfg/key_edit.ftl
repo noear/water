@@ -116,7 +116,14 @@
                 <th>access_secret_salt</th>
                 <td><input disabled="disabled" type="text" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
             </tr>
-
+            <tr>
+                <th>启用</th>
+                <td>
+                    <switcher>
+                        <label><input id="is_enabled" value="1" type="checkbox" ${(m.is_enabled = 1)?string("checked","")}><a></a></label>
+                    </switcher>
+                </td>
+            </tr>
         </table>
         </form>
     </detail>
