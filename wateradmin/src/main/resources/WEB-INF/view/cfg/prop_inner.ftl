@@ -103,7 +103,7 @@
 
                 <button type='button' class="minor" onclick="exp('${tag_name!}')" >导出</button>
 
-                <#if state==1>
+                <#if _state == 0>
                     <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
                 <#else>
                     <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
@@ -114,16 +114,13 @@
         <middle class="col-6 center">
             <form>
                 <input type="hidden"  name="tag_name" value="${tag_name!}"/>
-                <input type="hidden"  name="state" value="${state!}"/>
+                <input type="hidden"  name="_state" value="${_state!}"/>
                 <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
                 <button type="submit">查询</button>
             </form>
         </middle>
         <right class="col-4">
-            <selector>
-                <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
-                <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
-            </selector>
+            <@stateselector items="启用,未启用"/>
         </right>
     </flex>
 </toolbar>

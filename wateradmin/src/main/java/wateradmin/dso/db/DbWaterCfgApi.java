@@ -408,13 +408,13 @@ public class DbWaterCfgApi {
                 .selectItem("*", ConfigModel.class);
     }
 
-    public static List<ConfigModel> getConfigsByTag(String tag, String key, int state) throws SQLException {
+    public static List<ConfigModel> getConfigsByTag(String tag, String key, boolean is_enabled) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
-                .andEq("is_enabled", state == 1)
+                .andEq("is_enabled", is_enabled ? 1 : 0)
                 .build(tb -> {
                     if (!TextUtils.isEmpty(key)) {
-                        tb.and("`key` like ?", "%" + key + "%");
+                        tb.andLk("key", "%" + key + "%");
                     }
                 })
                 .selectList("*", ConfigModel.class);

@@ -39,23 +39,21 @@
                 return;
             }
 
-            vm.row_id= row_id;
+            vm.row_id = row_id;
 
-
-            let state = $('#is_disabled').prop('checked') ? 0:1;
-
+            let _state = $('#is_disabled').prop('checked') ? 1 : 0;
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/prop/edit/ajax/save",
-                data:vm,
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/cfg/prop/edit/ajax/save",
+                data: vm,
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/prop?tag_name="+vm.tag+"&state="+state;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/prop?tag_name=" + vm.tag + "&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
@@ -72,7 +70,7 @@
             }
 
 
-            let state = $('#is_disabled').prop('checked') ? 0:1;
+            let _state = $('#is_disabled').prop('checked') ? 1 : 0;
 
             $.ajax({
                 type: "POST",
@@ -82,7 +80,7 @@
                     if (data.code == 1) {
                         top.layer.msg('操作成功')
                         setTimeout(function () {
-                            parent.location.href = "/cfg/prop?tag_name=${cfg.tag!}" + "&state=" + state;
+                            parent.location.href = "/cfg/prop?tag_name=${cfg.tag!}" + "&_state=" + _state;
                         }, 800);
                     } else {
                         top.layer.msg(data.msg);
@@ -90,7 +88,6 @@
                 }
             });
         }
-
 
 
         function loadTypeTml(){

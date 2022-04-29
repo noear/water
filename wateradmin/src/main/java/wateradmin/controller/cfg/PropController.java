@@ -25,7 +25,7 @@ import java.util.List;
 @Mapping("/cfg/prop")
 public class PropController extends BaseController {
     @Mapping("")
-    public ModelAndView home(String tag_name, @Param(defaultValue = "1") int state) throws SQLException {
+    public ModelAndView home(String tag_name,  int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
         TagChecker.filter(tags, m -> m.tag);
@@ -35,22 +35,20 @@ public class PropController extends BaseController {
 
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
-        viewModel.put("state", state);
+        viewModel.put("_state", _state);
         return view("cfg/prop");
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws SQLException {
-        int state = ctx.paramAsInt("state", 1);
-
+    public ModelAndView innerDo(Context ctx, String tag_name, String key, int _state) throws SQLException {
         TagUtil.cookieSet(tag_name);
 
-        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, state);
+        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, _state == 0);
 
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
         viewModel.put("key", key);
+        viewModel.put("_state", _state);
 
         return view("cfg/prop_inner");
     }
