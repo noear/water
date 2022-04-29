@@ -32,6 +32,7 @@ public class KeyController extends BaseController {
 
         tag_name = TagUtil.build(tag_name, tags);
 
+        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
         return view("cfg/key");
