@@ -20,9 +20,10 @@ import java.util.List;
 public class ServerController extends BaseController {
 
     @Mapping("server")
-    public ModelAndView project(String tag_name) throws SQLException {
+    public ModelAndView home(String tag_name, int _state) throws SQLException {
         List<ServerModel> tags = DbWaterOpsApi.getServerTags();
 
+        viewModel.put("_state", _state);
         viewModel.put("tags", tags);
 
         if (TextUtils.isEmpty(tag_name) == false) {
@@ -39,22 +40,10 @@ public class ServerController extends BaseController {
     }
 
     @Mapping("server/inner")
-    public ModelAndView projectInner(String tag_name, int _state) throws SQLException {
-        if (_state > 0) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
+    public ModelAndView inner(String tag_name, int _state) throws SQLException {
+        List<ServerModel> list = DbWaterOpsApi.getServerByTagNameAndState(tag_name, _state == 0);
 
-        if (_state == 0) {
-            _state = 1;
-        }
-
-        List<ServerModel> list = DbWaterOpsApi.getServerByTagNameAndState(tag_name, _state);
+        viewModel.put("_state", _state);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
 
@@ -94,7 +83,7 @@ public class ServerController extends BaseController {
 
     //跳转服务编辑页面
     @Mapping("server/edit")
-    public ModelAndView serverEdit(String tag_name, int server_id) throws SQLException {
+    public ModelAndView edit(String tag_name, int server_id) throws SQLException {
         ServerModel server = DbWaterOpsApi.getServerByID(server_id);
 
         if (server.server_id == 0) {
@@ -117,8 +106,8 @@ public class ServerController extends BaseController {
     //保存编辑
     @AuthPermissions(SessionPerms.admin)
     @Mapping("server/edit/ajax/save")
-    public ViewModel serverEditSave(int server_id, String tag, String name, String address, String address_local, int iaas_type, String iaas_key,  String iaas_account, String hosts_local, String note, int is_enabled, int env_type) throws SQLException {
-        boolean result = DbWaterOpsApi.updateServer(server_id, tag, name, address, address_local, iaas_type, iaas_key,  iaas_account, hosts_local, note, is_enabled, env_type);
+    public ViewModel saveDo(int server_id, String tag, String name, String address, String address_local, int iaas_type, String iaas_key, String iaas_account, String hosts_local, String note, int is_enabled, int env_type) throws SQLException {
+        boolean result = DbWaterOpsApi.updateServer(server_id, tag, name, address, address_local, iaas_type, iaas_key, iaas_account, hosts_local, note, is_enabled, env_type);
 
         if (result) {
             viewModel.code(1, "保存成功！");

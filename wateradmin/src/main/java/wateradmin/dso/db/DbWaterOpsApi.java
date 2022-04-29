@@ -31,10 +31,10 @@ public class DbWaterOpsApi {
     ////////////////////////////////////////////////////
 
     //根据标签名称和状态获取服务列表。
-    public static List<ServerModel> getServerByTagNameAndState(String tag, int is_enabled) throws SQLException {
+    public static List<ServerModel> getServerByTagNameAndState(String tag, boolean is_enabled) throws SQLException {
         return db().table("water_ops_server")
-                .where("tag = ?", tag)
-                .and("is_enabled = ?", is_enabled)
+                .whereEq("tag", tag)
+                .andEq("is_enabled", is_enabled ? 1 : 0)
                 .selectList("*", ServerModel.class);
     }
 
@@ -50,14 +50,14 @@ public class DbWaterOpsApi {
     //禁用/启用 服务
     public static boolean disableServer(int server_id, int is_enabled) throws SQLException {
         return db().table("water_ops_server")
-                .where("server_id = ?", server_id)
                 .set("is_enabled", is_enabled)
+                .whereEq("server_id", server_id)
                 .update() > 0;
     }
 
     public static boolean deleteServer(int server_id) throws SQLException {
         return db().table("water_ops_server")
-                .where("server_id = ?", server_id)
+                .whereEq("server_id", server_id)
                 .delete() > 0;
     }
 
