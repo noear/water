@@ -3,7 +3,6 @@ package wateradmin.controller.mot;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.utils.TextUtils;
 
-
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
@@ -25,7 +24,7 @@ public class LogController extends BaseController {
     //日志统计
     @Mapping("log")
     public ModelAndView logger(Context ctx, String tag_name) throws Exception {
-        if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+        if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             ctx.forward("/mot/log/inner");
             return null;
         }
@@ -35,39 +34,29 @@ public class LogController extends BaseController {
         TagChecker.filter(tags, m -> m.tag);
 
         if (TextUtils.isEmpty(tag_name) == false) {
-            viewModel.put("tag_name",tag_name);
+            viewModel.put("tag_name", tag_name);
         } else {
-            if (tags.isEmpty() == false && tags.size()>0) {
-                viewModel.put("tag_name",tags.get(0).tag);
+            if (tags.isEmpty() == false && tags.size() > 0) {
+                viewModel.put("tag_name", tags.get(0).tag);
             } else {
-                viewModel.put("tag_name",null);
+                viewModel.put("tag_name", null);
             }
         }
-        viewModel.put("tags",tags);
+        viewModel.put("tags", tags);
         return view("mot/log");
     }
 
     //日志统计列表
     @Mapping("log/inner")
-    public ModelAndView loggerInner(String tag_name,Integer _state, String sort) throws Exception {
-        if(SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
+    public ModelAndView loggerInner(String tag_name, int _state, String sort) throws Exception {
+        if (SettingUtils.serviceScale().ordinal() < ScaleType.medium.ordinal()) {
             tag_name = null;
         }
 
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
-        if (_state == null)
-            _state = 1;
-        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name,_state, sort);
-        viewModel.put("loggers",list);
-        viewModel.put("_state",_state);
+        List<LoggerModel> list = DbWaterCfgApi.getLoggersByTag(tag_name, _state == 0, sort);
+
+        viewModel.put("loggers", list);
+        viewModel.put("_state", _state);
         return view("mot/log_inner");
     }
 }
