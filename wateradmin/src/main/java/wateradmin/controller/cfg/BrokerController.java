@@ -44,38 +44,24 @@ public class BrokerController extends BaseController {
     }
 
     @Mapping("broker/inner")
-    public ModelAndView brokerInner(String tag_name, Integer _state) throws Exception {
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
+    public ModelAndView brokerInner(String tag_name, int _state) throws Exception {
+        List<BrokerModel> list = DbWaterCfgApi.getBrokersByTag(tag_name, _state == 0, null);
 
-        if (_state == null) {
-            _state = 1;
-        }
-
-        List<BrokerModel> list = DbWaterCfgApi.getBrokersByTag(tag_name, _state, null);
         viewModel.put("brokers", list);
         viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
+
         return view("cfg/broker_inner");
     }
 
     //日志配置编辑页面跳转。
     @Mapping("broker/edit")
-    public ModelAndView brokerEdit(String tag_name, Integer broker_id) throws Exception {
-        if (broker_id == null) {
-            broker_id = 0;
-        }
-
+    public ModelAndView brokerEdit(String tag_name, int broker_id) throws Exception {
         BrokerModel broker = DbWaterCfgApi.getBroker(broker_id);
+
         List<ConfigModel> configs = DbWaterCfgApi.getMsgStoreConfigs();
         List<String> option_sources = new ArrayList<>();
+
         for (ConfigModel config : configs) {
             option_sources.add(config.tag + "/" + config.key);
         }
@@ -123,12 +109,9 @@ public class BrokerController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @NotZero("broker_id")
     @Mapping("broker/edit/ajax/del")
-    public ViewModel delBroker(Integer broker_id) throws SQLException {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
-
+    public ViewModel delBroker(int broker_id) throws SQLException {
         DbWaterCfgApi.delBroker(broker_id);
+
         return viewModel.code(1, "操作成功！");
     }
 
@@ -136,7 +119,7 @@ public class BrokerController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @NotZero("broker_id")
     @Mapping("broker/isEnable")
-    public ViewModel brokerEnable(Integer broker_id, int is_enabled) throws SQLException {
+    public ViewModel brokerEnable(int broker_id, int is_enabled) throws SQLException {
         DbWaterCfgApi.setBrokerEnabled(broker_id, is_enabled);
 
         return viewModel.code(1, "保存成功！");

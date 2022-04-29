@@ -169,10 +169,10 @@ public class DbWaterCfgApi {
     }
 
     //根据tag获取列表。
-    public static List<BrokerModel> getBrokersByTag(String tag_name, int is_enabled, String sort) throws Exception {
+    public static List<BrokerModel> getBrokersByTag(String tag_name, boolean is_enabled, String sort) throws Exception {
         return db().table("water_cfg_broker")
-                .where("tag = ?", tag_name)
-                .and("is_enabled = ?", is_enabled)
+                .whereEq("tag", tag_name)
+                .andEq("is_enabled", is_enabled ? 1 : 0)
                 .build((tb) -> {
                     if (TextUtils.isEmpty(sort) == false) {
                         tb.orderBy(sort + " DESC");
