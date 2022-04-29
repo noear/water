@@ -28,12 +28,14 @@ public class MonitorController extends BaseController {
 
     //monitor视图跳转。
     @Mapping("monitor")
-    public ModelAndView MonitorIndex(String tag_name) throws SQLException {
+    public ModelAndView MonitorIndex(String tag_name, int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
 
         TagChecker.filter(tags, m -> m.tag);
 
         viewModel.put("tags",tags);
+        viewModel.put("_state", _state);
+
         if (TextUtils.isEmpty(tag_name) == false) {
             viewModel.put("tag_name",tag_name);
         } else {
@@ -48,21 +50,14 @@ public class MonitorController extends BaseController {
 
     //Monitor的 iframe inner视图。
     @Mapping("monitor/inner")
-    public ModelAndView monitorInner(String tag_name,String monitor_name,Integer _state) throws SQLException {
-        if (_state!=null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
-        if(_state==null)
-            _state = 1;
-        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name,monitor_name, _state);
-        viewModel.put("monitors",list);
-        viewModel.put("tag_name",tag_name);
+    public ModelAndView monitorInner(String tag_name,String monitor_name, int _state) throws SQLException {
+        viewModel.put("_state", _state);
+
+        int is_enabled = (_state == 0 ? 1 : 0);
+
+        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name, monitor_name, _state);
+        viewModel.put("monitors", list);
+        viewModel.put("tag_name", tag_name);
         return view("tool/monitor_inner");
     }
 

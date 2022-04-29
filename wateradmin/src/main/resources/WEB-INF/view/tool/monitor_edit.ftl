@@ -19,17 +19,17 @@
         window.vm = {};
 
         function saveEdit() {
-            var monitor_id = ${monitor.monitor_id}
-            var name = $('#name').val();
-            var tag = $('#tag').val();
-            var type = $('#type').val();
-            var source_query = window.vm.source_query;
-            var rule = window.vm.rule;
-            var task_tag_exp = $('#task_tag_exp').val();
-            var alarm_mobile = $('#alarm_mobile').val();
-            var alarm_exp = $('#alarm_exp').val();
-            var alarm_sign = $('#alarm_sign').val();
-            var is_enabled =  $('#is_enabled').prop('checked')?1:0;
+            let monitor_id = ${monitor.monitor_id}
+            let name = $('#name').val();
+            let tag = $('#tag').val();
+            let type = $('#type').val();
+            let source_query = window.vm.source_query;
+            let rule = window.vm.rule;
+            let task_tag_exp = $('#task_tag_exp').val();
+            let alarm_mobile = $('#alarm_mobile').val();
+            let alarm_exp = $('#alarm_exp').val();
+            let alarm_sign = $('#alarm_sign').val();
+            let is_enabled = $('#is_enabled').prop('checked') ? 1 : 0;
 
             if (name == null || name == "" || name == undefined) {
                 top.layer.msg("名称不能为空");
@@ -42,65 +42,58 @@
             }
 
             //验证手机
-            if(alarm_mobile == null || alarm_mobile == "" || alarm_mobile == undefined) {
-               //允许为空
-            }else{
-                //非空时判断格式
-                var reg = "1[345780]\\d{9}(?=,|$)";
-                var re = new RegExp(reg);
-                if (re.test(alarm_mobile)) {
-                }
-                else {
-                    top.layer.msg('请输入正确的手机号！');
-                    return;
-                }
+            if (alarm_mobile == null || alarm_mobile == "" || alarm_mobile == undefined) {
+                //允许为空
             }
 
             $.ajax({
-                type:"POST",
-                url:"/tool/monitor/edit/ajax/save",
-                data:{"monitor_id":monitor_id,
-                    "name":name,
-                    "tag":tag,
-                    "type":type,
-                    "source_query":source_query,
-                    "rule":rule,
-                    "task_tag_exp":task_tag_exp,
-                    "alarm_mobile":alarm_mobile,
-                    "alarm_exp":alarm_exp,
-                    "is_enabled":is_enabled,
-                    "alarm_sign":alarm_sign},
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/tool/monitor/edit/ajax/save",
+                data: {
+                    "monitor_id": monitor_id,
+                    "name": name,
+                    "tag": tag,
+                    "type": type,
+                    "source_query": source_query,
+                    "rule": rule,
+                    "task_tag_exp": task_tag_exp,
+                    "alarm_mobile": alarm_mobile,
+                    "alarm_exp": alarm_exp,
+                    "is_enabled": is_enabled,
+                    "alarm_sign": alarm_sign
+                },
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/tool/monitor?tag_name="+tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/tool/monitor?tag_name=" + tag + "&_state=" + (is_enabled == 1 ? 0 : 1);
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
             });
         }
 
-        function del(monitor_id){
-            if(confirm('确定删除吗？') == false){
+        function del(monitor_id) {
+            if (confirm('确定删除吗？') == false) {
                 return;
             }
 
-            var tag = $('#tag').val();
+            let tag = $('#tag').val();
+            let is_enabled = $('#is_enabled').prop('checked') ? 1 : 0;
 
             $.ajax({
-                type:"POST",
-                url:"/tool/monitor/edit/ajax/del",
-                data:{"monitor_id":monitor_id,},
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/tool/monitor/edit/ajax/del",
+                data: {"monitor_id": monitor_id,},
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/tool/monitor?tag_name="+tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/tool/monitor?tag_name=" + tag + "&_state=" + (is_enabled == 1 ? 0 : 1);
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }

@@ -19,14 +19,15 @@ public class DbWaterApi {
 
 
     //获取monitor表中的数据。
-    public static List<MonitorModel> monitorGetList(String tag_name, String monitor_name, Integer _state) throws SQLException {
+    public static List<MonitorModel> monitorGetList(String tag_name, String monitor_name, int is_enabled) throws SQLException {
         return db()
                 .table("water_tool_monitor")
-                .where("is_enabled = ?", _state)
-                .and("tag = ?", tag_name)
+                .whereEq("is_enabled", is_enabled)
+                .andEq("tag", tag_name)
                 .build(tb -> {
-                    if (!TextUtils.isEmpty(monitor_name))
-                        tb.and("name like ?", monitor_name + "%");
+                    if (!TextUtils.isEmpty(monitor_name)) {
+                        tb.andLk("name", monitor_name + "%");
+                    }
                 })
                 .selectList("*", MonitorModel.class);
     }
