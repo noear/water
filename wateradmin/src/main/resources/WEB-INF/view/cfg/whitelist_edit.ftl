@@ -9,35 +9,37 @@
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script>
-        function del(){
+        function del() {
             var row_id = ${m.row_id!0};
-            if(row_id < 1){
+            if (row_id < 1) {
                 return;
             }
 
             var vm = formToMap("#form");
 
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
+
             top.layer.confirm('确定删除', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 $.ajax({
-                    type:"POST",
-                    url:"/cfg/whitelist/ajax/del",
-                    data:{"row_id":row_id},
-                    success:function(data){
-                        if(1==data.code) {
+                    type: "POST",
+                    url: "/cfg/whitelist/ajax/del",
+                    data: {"row_id": row_id},
+                    success: function (data) {
+                        if (1 == data.code) {
                             top.layer.msg('操作成功');
                             setTimeout(function () {
-                                parent.location.href = "/cfg/whitelist?tag_name=" + vm.tag;
+                                parent.location.href = "/cfg/whitelist?tag_name=" + vm.tag + "&_state=" + _state;
                             }, 800);
-                        }else{
+                        } else {
                             top.layer.msg(data.msg);
                         }
                     }
                 });
                 top.layer.close(top.layer.index);
             });
-        };
+        }
 
         function save() {
             var vm = formToMap("#form");
@@ -47,22 +49,24 @@
                 return;
             }
 
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
+
             $.ajax({
-                type:"POST",
-                url:"/cfg/whitelist/edit/ajax/save",
-                data:vm,
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/cfg/whitelist/edit/ajax/save",
+                data: vm,
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/whitelist?tag_name="+vm.tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/whitelist?tag_name=" + vm.tag + "&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
             });
-        };
+        }
 
         $(function () {
             ctl_s_save_bind(document,save);

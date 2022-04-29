@@ -27,33 +27,28 @@ public class WhitelistController extends BaseController {
 
     //IP白名单列表
     @Mapping("")
-    public ModelAndView home(String tag_name) throws Exception {
+    public ModelAndView home(String tag_name, int _state) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgSafeApi.getWhitelistTags();
-
 
         TagChecker.filter(tags, m -> m.tag);
 
-
         tag_name = TagUtil.build(tag_name, tags);
 
+        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
         return view("cfg/whitelist");
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
-        int state = ctx.paramAsInt("state", 1);
-
-        List<WhitelistModel> list = DbWaterCfgSafeApi.getWhitelistByTag(tag_name, key, state);
-
+    public ModelAndView innerDo(Context ctx, String tag_name, String key, int _state) throws Exception {
+        List<WhitelistModel> list = DbWaterCfgSafeApi.getWhitelistByTag(tag_name, key, _state == 0);
 
         TagChecker.filter(list, m -> m.tag);
 
-
+        viewModel.put("_state", _state);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
         viewModel.put("key", key);
 
         return view("cfg/whitelist_inner");

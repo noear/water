@@ -100,7 +100,7 @@
 
                     <button type='button' class="minor" onclick="exp()" >导出</button>
 
-                    <#if state==1>
+                    <#if _state == 0>
                         <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
                     <#else>
                         <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
@@ -109,10 +109,7 @@
                 </#if>
             </left>
             <right class="col-6">
-                <selector>
-                    <a class="${(state =1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=1">启用</a>
-                    <a class="${(state !=1)?string('sel','')}" href="inner?tag_name=${tag_name}&state=0">未启用</a>
-                </selector>
+                <@stateselector items="启用,未启用"/>
             </right>
         </flex>
     </toolbar>

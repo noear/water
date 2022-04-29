@@ -9,60 +9,63 @@
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
     <script>
-        function del(){
-            var key_id = ${m.key_id!0};
-            if(key_id < 1){
+        function del() {
+            let key_id = ${m.key_id!0};
+            if (key_id < 1) {
                 return;
             }
 
-            var vm = formToMap("#form");
+            let vm = formToMap("#form");
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             top.layer.confirm('确定删除', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
+                btn: ['确定', '取消'] //按钮
+            }, function () {
                 $.ajax({
-                    type:"POST",
-                    url:"/cfg/key/ajax/del",
-                    data:{"key_id":key_id},
-                    success:function(data){
-                        if(1==data.code) {
+                    type: "POST",
+                    url: "/cfg/key/ajax/del",
+                    data: {"key_id": key_id},
+                    success: function (data) {
+                        if (1 == data.code) {
                             top.layer.msg('操作成功');
                             setTimeout(function () {
-                                parent.location.href = "/cfg/key?tag_name=" + vm.tag;
+                                parent.location.href = "/cfg/key?tag_name=" + vm.tag + "&_state=" + _state;
                             }, 800);
-                        }else{
+                        } else {
                             top.layer.msg(data.msg);
                         }
                     }
                 });
                 top.layer.close(top.layer.index);
             });
-        };
+        }
 
         function save() {
-            var vm = formToMap("#form");
+            let vm = formToMap("#form");
 
             if (!vm.tag || !vm.access_key || !vm.access_secret_key) {
                 top.layer.msg("tag 或 access_key 或 access_secret_key 不能为空！");
                 return;
             }
 
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
+
             $.ajax({
-                type:"POST",
-                url:"/cfg/key/edit/ajax/save",
-                data:vm,
-                success:function (data) {
-                    if(data.code==1) {
+                type: "POST",
+                url: "/cfg/key/edit/ajax/save",
+                data: vm,
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/key?tag_name="+vm.tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/key?tag_name=" + vm.tag + "&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
             });
-        };
+        }
 
         $(function () {
             ctl_s_save_bind(document,save);

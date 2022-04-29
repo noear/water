@@ -36,7 +36,7 @@
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/cfg/key/inner?tag_name=${tag_name!}" frameborder="0" id="table"></iframe>
+        <iframe src="/cfg/key/inner?tag_name=${tag_name!}&_state=${_state!}" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>

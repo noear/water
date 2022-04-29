@@ -33,9 +33,9 @@ public class DbWaterCfgSafeApi {
     }
 
     //获取ip白名单列表
-    public static List<WhitelistModel> getWhitelistByTag(String tag_name, String key, int state) throws SQLException {
+    public static List<WhitelistModel> getWhitelistByTag(String tag_name, String key, boolean is_enabled) throws SQLException {
         return db().table("water_cfg_whitelist")
-                .whereEq("is_enabled", state == 1)
+                .whereEq("is_enabled", is_enabled ? 1 : 0)
                 .build(tb -> {
                     if (tag_name != null) {
                         tb.andEq("tag", tag_name);

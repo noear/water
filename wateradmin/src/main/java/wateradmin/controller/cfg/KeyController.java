@@ -9,7 +9,6 @@ import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
@@ -21,18 +20,15 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
-
 @Controller
 @Mapping("/cfg/key")
 public class KeyController extends BaseController {
 
     @Mapping("")
-    public ModelAndView home(String tag_name) throws Exception {
+    public ModelAndView home(String tag_name, int _state) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgKeyApi.getKeyTags();
 
-
         TagChecker.filter(tags, m -> m.tag);
-
 
         tag_name = TagUtil.build(tag_name, tags);
 
@@ -42,18 +38,14 @@ public class KeyController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key) throws Exception {
-        int state = ctx.paramAsInt("state", 1);
-
-        List<KeyModel> list = DbWaterCfgKeyApi.getKeyListByTag(tag_name, key, state);
-
+    public ModelAndView innerDo(Context ctx, String tag_name, String key, int _state) throws Exception {
+        List<KeyModel> list = DbWaterCfgKeyApi.getKeyListByTag(tag_name, key, _state == 0);
 
         TagChecker.filter(list, m -> m.tag);
 
-
+        viewModel.put("_state", _state);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        viewModel.put("state", state);
         viewModel.put("key", key);
 
         return view("cfg/key_inner");
@@ -81,9 +73,6 @@ public class KeyController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
     public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限");
-        }
 
         try {
             boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key, access_secret_salt, label, description);
@@ -153,10 +142,6 @@ public class KeyController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         if (act == null) {
             act = 0;
         }
