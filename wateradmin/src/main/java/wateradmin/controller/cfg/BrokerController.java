@@ -31,13 +31,14 @@ import java.util.List;
 public class BrokerController extends BaseController {
 
     @Mapping("broker")
-    public ModelAndView broker(String tag_name) throws Exception {
+    public ModelAndView broker(String tag_name, int _state) throws Exception {
         List<TagCountsModel> tags = DbWaterCfgApi.getBrokerTags();
 
         TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 
+        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
         return view("cfg/broker");

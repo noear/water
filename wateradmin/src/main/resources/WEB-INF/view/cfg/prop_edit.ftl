@@ -28,6 +28,7 @@
 
         function save() {
             var vm = formToMap('form');
+            vm.row_id = row_id;
 
             if (!vm.tag) {
                 top.layer.msg("tag不能为空！");
@@ -38,8 +39,6 @@
                 top.layer.msg("key不能为空！");
                 return;
             }
-
-            vm.row_id = row_id;
 
             let _state = $('#is_disabled').prop('checked') ? 1 : 0;
 
@@ -68,7 +67,6 @@
             if (!confirm("确定要删除吗？")) {
                 return;
             }
-
 
             let _state = $('#is_disabled').prop('checked') ? 1 : 0;
 

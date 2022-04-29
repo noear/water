@@ -17,37 +17,38 @@
 
         function save() {
             var vm = formToMap("form");
+            vm.broker_id = broker_id;
 
             if (!vm.tag) {
                 top.layer.msg("标签名称不能为空！");
                 return;
             }
 
-            if(broker_id==null){
-                broker_id=0;
+            if (broker_id == null) {
+                broker_id = 0;
             }
 
-            vm.broker_id = broker_id;
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             top.layer.load(2);
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/broker/edit/ajax/save",
-                data:vm,
-                success:function (data) {
+                type: "POST",
+                url: "/cfg/broker/edit/ajax/save",
+                data: vm,
+                success: function (data) {
                     top.layer.closeAll();
 
-                    if(data.code == 1) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/broker?tag_name="+vm.tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/broker?tag_name=" + vm.tag + "&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 },
-                error:function(data){
+                error: function (data) {
                     top.layer.closeAll();
                     top.layer.msg('网络请求出错...');
                 }
@@ -55,27 +56,29 @@
         }
 
         function del() {
-            if(!broker_id){
+            if (!broker_id) {
                 return;
             }
 
-            if(!confirm("确定要删除吗？")){
+            if (!confirm("确定要删除吗？")) {
                 return;
             }
+
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/broker/edit/ajax/del",
-                data:{
-                    "broker_id":broker_id
+                type: "POST",
+                url: "/cfg/broker/edit/ajax/del",
+                data: {
+                    "broker_id": broker_id
                 },
-                success:function (data) {
-                    if(data.code==1) {
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/broker?tag_name=${model.tag!}";
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/broker?tag_name=${model.tag!}&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
