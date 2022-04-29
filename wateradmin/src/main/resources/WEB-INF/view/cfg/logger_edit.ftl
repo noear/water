@@ -17,37 +17,38 @@
 
         function save() {
             var vm = formToMap("form");
+            vm.logger_id = logger_id;
 
             if (!vm.tag) {
                 top.layer.msg("tag不能为空！");
                 return;
             }
 
-            if(logger_id==null){
-                logger_id=0;
+            if (logger_id == null) {
+                logger_id = 0;
             }
 
-            vm.logger_id = logger_id;
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             top.layer.load(2);
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/logger/edit/ajax/save",
-                data:vm,
-                success:function (data) {
+                type: "POST",
+                url: "/cfg/logger/edit/ajax/save",
+                data: vm,
+                success: function (data) {
                     top.layer.closeAll();
 
-                    if(data.code == 1) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/logger?tag_name="+vm.tag;
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/logger?tag_name=" + vm.tag + "&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 },
-                error:function(data){
+                error: function (data) {
                     top.layer.closeAll();
                     top.layer.msg('网络请求出错...');
                 }
@@ -55,27 +56,29 @@
         }
 
         function del() {
-            if(!logger_id){
+            if (!logger_id) {
                 return;
             }
 
-            if(!confirm("确定要删除吗？")){
+            if (!confirm("确定要删除吗？")) {
                 return;
             }
+
+            let _state = $('#is_enabled').prop('checked') ? 0 : 1;
 
             $.ajax({
-                type:"POST",
-                url:"/cfg/logger/edit/ajax/del",
-                data:{
-                    "logger_id":logger_id
+                type: "POST",
+                url: "/cfg/logger/edit/ajax/del",
+                data: {
+                    "logger_id": logger_id
                 },
-                success:function (data) {
-                    if(data.code==1) {
+                success: function (data) {
+                    if (data.code == 1) {
                         top.layer.msg('操作成功')
-                        setTimeout(function(){
-                            parent.location.href="/cfg/logger?tag_name=${model.tag!}";
-                        },800);
-                    }else{
+                        setTimeout(function () {
+                            parent.location.href = "/cfg/logger?tag_name=${model.tag!}&_state=" + _state;
+                        }, 800);
+                    } else {
                         top.layer.msg(data.msg);
                     }
                 }
