@@ -85,8 +85,7 @@ public class WaterProxy {
         return call(SERVICE_WATER_FAAS, path, args);
     }
 
-
-    private static HttpUtils http(String url) {
+    public static HttpUtils http(String url) {
         return HttpUtils.http(url);
     }
 
@@ -95,13 +94,17 @@ public class WaterProxy {
     }
 
     public static String runJob(String service, String name, Map<String, Object> args) throws Exception {
+        return getJob(service, name, args)
+                .post();
+    }
+
+    public static HttpUtils getJob(String service, String name, Map<String, Object> args) throws Exception {
         return HttpUtils.http(service, WW.path_run_job)
                 .timeout(10, 10, 60 * 5)
                 .data(args)
                 .data("name", name)//兼容旧写法
                 .header(WW.http_header_job, name)
-                .header(WW.http_header_token, ServerConfig.taskToken)
-                .post();
+                .header(WW.http_header_token, ServerConfig.taskToken);
     }
 
     public static String runStatus(String addrees) throws Exception {
