@@ -89,15 +89,24 @@ public class WaterProxy {
         return HttpUtils.http(url);
     }
 
+    /**
+     * 运行任务指令
+     * */
     public static String runJob(String service, String name) throws Exception {
         return runJob(service, name, null);
     }
 
+    /**
+     * 运行任务指令
+     * */
     public static String runJob(String service, String name, Map<String, Object> args) throws Exception {
         return getJob(service, name, args)
                 .post();
     }
 
+    /**
+     * 获取任务（提供修改超时的可能）
+     * */
     public static HttpUtils getJob(String service, String name, Map<String, Object> args) throws Exception {
         return HttpUtils.http(service, WW.path_run_job)
                 .timeout(10, 10, 60 * 5)
@@ -107,6 +116,9 @@ public class WaterProxy {
                 .header(WW.http_header_token, ServerConfig.taskToken);
     }
 
+    /**
+     * 运行状态指令
+     * */
     public static String runStatus(String addrees) throws Exception {
         String url = "http://" + addrees + WW.path_run_status;
         return HttpUtils.http(url)
