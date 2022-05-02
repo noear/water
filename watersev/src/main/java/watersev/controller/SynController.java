@@ -194,7 +194,7 @@ public final class SynController implements IJob {
                     max_id = key;
                 }
 
-                tdb.table(tsTable).where(task.target_pk + "=?", key).update(item);
+                tdb.table(tsTable).whereEq(task.target_pk , key).update(item);
             }
 
             LogUtil.info(this.getName(), task.sync_id+"", task.getTitle()+", 1::maxid=" + max_id);
