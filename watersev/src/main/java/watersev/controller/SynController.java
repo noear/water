@@ -134,7 +134,7 @@ public final class SynController implements IJob {
         DataList list = null;
 
         while (true) {
-            max_id = tdb.table(tsTable).select("MAX(" + task.target_pk + ")").getVariate().longValue(0l);
+            max_id = tdb.table(tsTable).selectValue("MAX(" + task.target_pk + ")",0l);
 
             list = getSourceData(task, sdb, sModelCode, max_id, block_size);
 
