@@ -46,6 +46,11 @@ grit.ldap:
 * iOS：https://testflight.apple.com/join/ZUhQctwS
 * Android：https://www.noear.org/app/heihei.apk
 
+### 助理工具：xwater（用完就停掉）
+
+* 进行 water  环境安装与初始化
+* 当 water 无法启动时，可用它修改配置或查看日志
+
 
 
 
