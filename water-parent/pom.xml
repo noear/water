@@ -40,14 +40,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.7.5</solon.ver>
+        <solon.ver>1.7.6</solon.ver>
 
         <snack3.ver>3.2.22</snack3.ver>
         <weed3.ver>3.4.25</weed3.ver>
         <grit.ver>1.1.4</grit.ver>
         <rock.ver>2.1.4</rock.ver>
         <redisx.ver>1.4.3</redisx.ver>
-        <esearchx.ver>1.0.14</esearchx.ver>
+        <esearchx.ver>1.0.15</esearchx.ver>
 
         <water.ver>2.6.3</water.ver>
 
