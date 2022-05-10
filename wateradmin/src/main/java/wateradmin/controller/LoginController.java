@@ -6,6 +6,8 @@ import org.noear.grit.client.GritUtil;
 import org.noear.grit.model.domain.Resource;
 import org.noear.grit.model.domain.Subject;
 import org.noear.solon.Utils;
+import org.noear.solon.annotation.Get;
+import org.noear.solon.annotation.Produces;
 import org.noear.solon.core.handle.Result;
 import org.noear.water.utils.ImageUtils;
 import org.noear.water.utils.RandomUtils;
@@ -109,7 +111,9 @@ public class LoginController extends BaseController {
     /*
      * 获取验证码图片
      */
-    @Mapping(value = "/login/validation/img", method = MethodType.GET, produces = "image/jpeg")
+    @Get
+    @Produces("image/jpeg")
+    @Mapping("/login/validation/img")
     public void getValidationImg(Context ctx) throws IOException {
         // 生成验证码存入session
         String validation = RandomUtils.code(4);
