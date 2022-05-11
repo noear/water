@@ -10,6 +10,7 @@ import org.noear.solon.i18n.I18nBundleFactory;
  */
 @Configuration
 public class Config {
+    //将国际化配置切换到 water 管理
     @Bean
     public I18nBundleFactory i18nBundleFactory(){
         return new CloudI18nBundleFactory();
