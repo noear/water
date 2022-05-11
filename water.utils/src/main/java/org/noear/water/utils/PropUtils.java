@@ -16,6 +16,10 @@ public class PropUtils {
     }
 
     private static Properties build0(String text) throws IOException {
+        if(TextUtils.isEmpty(text)){
+            return new Properties();
+        }
+
         text = text.trim();
 
         int idx1 = text.indexOf("=");
