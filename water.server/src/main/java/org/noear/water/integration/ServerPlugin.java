@@ -2,8 +2,8 @@ package org.noear.water.integration;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
+import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
@@ -17,7 +17,7 @@ public class ServerPlugin implements Plugin {
      static final String clz_BcfClient = "org.noear.bcf.BcfClient";
 
     @Override
-    public void start(SolonApp app) {
+    public void start(AopContext context) {
         initWeed();
     }
 

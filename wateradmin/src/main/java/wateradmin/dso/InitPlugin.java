@@ -3,9 +3,9 @@ package wateradmin.dso;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.cloud.CloudClient;
+import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.logging.utils.TagsMDC;
@@ -28,7 +28,7 @@ public class InitPlugin implements Plugin {
     boolean isErrorLogEnable;
 
     @Override
-    public void start(SolonApp app) {
+    public void start(AopContext context) {
         Utils.loadClass("com.mysql.jdbc.Driver");
         Utils.loadClass("com.mysql.cj.jdbc.Driver");
 
