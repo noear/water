@@ -1,6 +1,6 @@
 package waterfaas.dso;
 
-import org.noear.solon.SolonApp;
+import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.water.config.ServerConfig;
 import org.noear.water.protocol.ProtocolHub;
@@ -19,7 +19,7 @@ public class AppInitPlugin implements Plugin {
     static Logger log = LoggerFactory.getLogger(AppInitPlugin.class);
 
     @Override
-    public void start(SolonApp app) {
+    public void start(AopContext context) {
         try {
             List<BrokerVo> list = DbWaterCfgApi.getBrokerList();
             for (BrokerVo brokerVo : list) {
