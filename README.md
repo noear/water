@@ -13,7 +13,7 @@
 功能相当于：consul + rabbitmq + elk + prometheus + openFaas + quartz + 等等，并有机结合在一起。 或者约等于：nacos + rocketmq + PlumeLog + prometheus + magic-api + xxl-job + 等。
 
 
-对 k8s 友好，支持 ip 漂移、支持 k8s service 映射。
+对 k8s 友好，支持 ip 漂移、支持 k8s svc 映射。
 
 ## 开始
 
