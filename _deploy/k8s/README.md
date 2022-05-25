@@ -56,7 +56,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.7.0
 * 添加 water/watersev-tol 服务（镜像：noearorg/watersev:2.7.0）。工具服务，包含： (msgchk,sevchk,syn,mot)
   * 镜像端口：9372
   * 对外端口：9372 或其它
-  * 建议1个副本即可
+  * 建议1个副本起步
 
 
   ```properties
