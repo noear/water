@@ -32,7 +32,7 @@ One-stop service governance platform, work easy and leave early
 
 
 
-# Water（水孕育万物...）
+# 介绍（水孕育万物...）
 
 为Java服务开发和治理，提供一站式解决方案（可以理解为微服务架构支持套件）。基于 Solon 框架开发，并支持完整的 Solon Cloud 规范；已在生产环境跑了4年。
 
