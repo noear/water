@@ -1,7 +1,34 @@
-[![Maven Central](https://img.shields.io/maven-central/v/org.noear/water.client.svg)](https://search.maven.org/search?q=g:org.noear%20AND%20water)
-[![Apache 2.0](https://img.shields.io/:license-Apache2-blue.svg)](https://license.coscl.org.cn/Apache2/)
-[![JDK-8+](https://img.shields.io/badge/JDK-8+-green.svg)](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
-[![QQ交流群](https://img.shields.io/badge/QQ交流群-22200020-orange)](https://jq.qq.com/?_wv=1027&k=kjB5JNiC)
+<h1 align="center" style="text-align:center;">
+  Water
+</h1>
+<p align="center">
+One-stop service governance platform, work easy and leave early
+</p>
+<p align="center">
+    <a target="_blank" href="https://search.maven.org/search?q=org.noear%20water">
+        <img src="https://img.shields.io/maven-central/v/org.noear/water.client.svg?label=Maven%20Central" alt="Maven" />
+    </a>
+    <a target="_blank" href="https://license.coscl.org.cn/Apache2/">
+		<img src="https://img.shields.io/:license-Apache2-blue.svg" alt="Apache 2" />
+	</a>
+    <a target="_blank" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">
+		<img src="https://img.shields.io/badge/JDK-8+-green.svg" alt="jdk-8+" />
+	</a>
+    <br />
+    <a target="_blank" href='https://gitee.com/noear/water/stargazers'>
+		<img src='https://gitee.com/noear/water/badge/star.svg' alt='gitee star'/>
+	</a>
+    <a target="_blank" href='https://github.com/noear/water/stargazers'>
+		<img src="https://img.shields.io/github/stars/noear/water.svg?logo=github" alt="github star"/>
+	</a>
+</p>
+<br/>
+<p align="center">
+	<a href="https://jq.qq.com/?_wv=1027&k=kjB5JNiC">
+	<img src="https://img.shields.io/badge/QQ交流群-22200020-orange"/></a>
+</p>
+
+
 
 
 
