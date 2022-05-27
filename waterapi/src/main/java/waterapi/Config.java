@@ -37,6 +37,7 @@ public class Config {
     public static RedisClient rd_track; //db:5
 
     public static ConfigM water_redis;
+    public static ConfigM water_heihei;
 
     public static String localHost;
 
@@ -107,6 +108,8 @@ public class Config {
             water_log_store = cfg(WW.water_log_store);
             water_msg_store = cfg(WW.water_msg_store);
 
+            water_heihei = cfg(WW.water_heihei);
+
             initWeedOnException();
 
             System.out.println("[Water] config completed.");
@@ -115,7 +118,7 @@ public class Config {
 
     public static void tryRegService() {
         try {
-            localHost = LocalUtils.getLocalAddr(Solon.global().port());
+            localHost = LocalUtils.getLocalAddr(Solon.cfg().serverPort());
             String code_location = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
             //本地IP订阅

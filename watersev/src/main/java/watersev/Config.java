@@ -21,6 +21,8 @@ public class Config {
     public static final DbContext water;
     public static final DbContext water_paas;
 
+    public static ConfigM water_heihei;
+
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
 
@@ -35,6 +37,8 @@ public class Config {
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
+
+        water_heihei = cfg(WW.water_heihei);
 
         cache_file = new LocalCache();
         cache_data = cfg("water_cache").getCh().nameSet("cache_data");

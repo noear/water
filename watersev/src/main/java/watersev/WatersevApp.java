@@ -72,7 +72,7 @@ public class WatersevApp {
             //用于清除控制
             ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, Config.cache_data, DbWaterCfgApi::getBroker);
 
-            ProtocolHub.heihei = new HeiheiImp();
+            ProtocolHub.heihei = new HeiheiImp(Config.water_heihei);
 
             x.sharedAdd("cache", Config.cache_data);
             x.sharedAdd("XFun", JtFun.g);
