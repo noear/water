@@ -134,16 +134,21 @@ public final class MotController implements IJob {
         }
 
         if (isMatch) {
-            LogUtil.warn(this.getName(), task.monitor_id + "", task.name+", match[error]==" + task.alarm_exp + "#" + task_tag + "(alarm)\n" + model_json);
+            LogUtil.warn(this.getName(), task.monitor_id + "", task.name + ", match[error]==" + task.alarm_exp + "#" + task_tag + "(alarm)\n" + model_json);
         } else {
-            LogUtil.info(this.getName(), task.monitor_id + "", task.name+ ", no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
+            LogUtil.info(this.getName(), task.monitor_id + "", task.name + ", no match[ok]==" + task.alarm_exp + "#" + task_tag + "\n" + model_json);
         }
 
         if (isMatch) {
             DbWaterApi.setMonitorState(task.monitor_id, task.alarm_count + 1, task_tag);//记录次数
 
-            if (task.rule.indexOf("m.tag") >= 0 || task_tag.equals(task.task_tag) == false) {
+            if (task_tag.startsWith("!")) {
+                //!xxx 表示，一直报警
                 AlarmUtil.tryAlarm(task, false);//报警
+            } else {
+                if (task_tag.equals(task.task_tag) == false) {
+                    AlarmUtil.tryAlarm(task, false);//报警
+                }
             }
         } else {
             if (task.alarm_count > 0) {
