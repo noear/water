@@ -2,7 +2,9 @@ package watersev.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WaterClient;
@@ -49,6 +51,9 @@ public class RegController implements IJob {
                 sevList.addAll(subServiceSet);
             }
         }
+
+        //设置跟踪
+        CloudClient.trace().setLocalTraceId(Utils.guid());
 
         for (String sev : sevList) {
             checkinOne(sev);
