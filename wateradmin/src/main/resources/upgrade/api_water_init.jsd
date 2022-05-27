@@ -24,8 +24,10 @@ water.getStatus = function(addrees){return WaterProxy.runStatus(addrees);}
 
 
 water.call = function(service,fun,args){if(!args){args={}} return WaterProxy.call(service,fun,args);};
+water.callFile = function(path,attrs){if(!attrs){attrs={}} return XFun.callFile(path, attrs);}
 
-water.faas = function(path,args){if(!args){args={}} return WaterProxy.paas(path,args)};
+water.faas = function(path,args){if(!args){args={}} return WaterProxy.faas(path,args)};
+water.faasAsJson = function(path,args){ return JSON.parse(water.faas(path, args));};
 water.raas = function(path,args){var args2={};if(args){for(var k in args){var v=args[k];if(v){if(v instanceof Object){args2[k]=JSON.stringify(v)}else{args2[k]=v}}}}return WaterProxy.raas(path,args2)};
 water.paas = function(path,args){ return water.faas(path, args);};
 
@@ -43,6 +45,5 @@ water.sendMessage = function(topic,message){ return WaterClient.Message.sendMess
 LocalDate = Java.type('java.time.LocalDate');
 LocalTime = Java.type('java.time.LocalTime');
 LocalDateTime = Java.type('java.time.LocalDateTime');
-
 
 return 'OK';

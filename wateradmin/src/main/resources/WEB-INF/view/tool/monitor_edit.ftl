@@ -203,8 +203,8 @@
                 [
                     {name: "--faas()",value: "--faas()::", meta: "faas",type: "local",score: 1000},
                     {name: "return",value: "return ", meta: "faas",type: "local",score: 1000},
-                    {name: "water.faas",value: "water.faas('path');", meta: "faas",type: "local",score: 1000},
-                    {name: "XFun.callFile",value: "XFun.callFile('path');", meta: "faas",type: "local",score: 1000}
+                    {name: "water.faasAsJson",value: "water.faasAsJson('path');", meta: "faas",type: "local",score: 1000},
+                    {name: "water.callFile",value: "water.callFile('path');", meta: "faas",type: "local",score: 1000}
                     <#list cfgs as cfg>
                     ,{name: "--${cfg.tag}/${cfg.key}",value: "--${cfg.tag}/${cfg.key}::", meta: "db",type: "local",score: 1000}
                     </#list>
