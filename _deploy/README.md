@@ -40,10 +40,6 @@ grit.ldap:
   groupFilter: "cn=%s"
 ```
 
-### 告警接收客户端：（嘿嘿）
-
-* iOS：https://testflight.apple.com/join/ZUhQctwS
-* Android：https://www.noear.org/app/heihei.apk
 
 ### 助理工具：xwater（用完就停掉）
 
@@ -51,5 +47,23 @@ grit.ldap:
 * 当 water 无法启动时，可用它修改配置或查看日志
 
 
+### 告警接收客户端：（嘿嘿）
+
+* iOS：https://testflight.apple.com/join/ZUhQctwS
+* Android：https://www.noear.org/app/heihei.apk
+
+
+### 告警的三种接收方式：
+
+* 默认嘿嘿专属客户端
+* 钉钉群的 webhook
+* 企业群信群的 webhook
+
+water/water_heihei
+```properties
+type=webhook
+url=...
+accessSecret=.. #如果没有，不要加
+```
 
 
