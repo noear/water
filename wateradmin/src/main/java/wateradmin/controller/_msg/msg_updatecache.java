@@ -65,7 +65,7 @@ public class msg_updatecache implements CloudEventHandler {
 
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
             try {
-                HttpUtils.http("http://" + instance.address() + "/run/cache/update/")
+                HttpUtils.http("http://" + instance.address() + "/_run/update/cache")
                         .data("tags", tags)
                         .post();
 
