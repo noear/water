@@ -16,9 +16,6 @@ import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
 import watersev.utils.HttpUtilEx;
 
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
