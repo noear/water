@@ -7,6 +7,7 @@ import org.noear.water.WW;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
+import org.noear.water.utils.PingUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.Timespan;
 import watersev.dso.AlarmUtil;
@@ -155,11 +156,8 @@ public final class SevCheckController implements IJob {
 
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
-            //连上马上关闭，2秒超时
-            SocketAddress socketAddress = new InetSocketAddress(uri.getHost(), uri.getPort());
-            Socket socket = new Socket();
-            socket.connect(socketAddress, 2000);
-            socket.close();
+            //ping 检测
+            PingUtils.ping(uri.getAuthority(), 2000);
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
 
