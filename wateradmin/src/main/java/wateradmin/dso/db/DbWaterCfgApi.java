@@ -207,9 +207,6 @@ public class DbWaterCfgApi {
         if (broker_id > 0) {
             boolean isOk = db.where("broker_id = ?", broker_id).update() > 0;
 
-            //发送通知消息
-            NoticeUtils.updateCache("broker:" + broker);
-
             return isOk;
         } else {
             return db.insert() > 0;

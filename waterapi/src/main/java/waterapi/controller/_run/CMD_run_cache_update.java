@@ -50,5 +50,13 @@ public class CMD_run_cache_update extends UapiBase {
             }
             return;
         }
+
+        //todo: 要不要加？
+        if ("broker".equals(ss[0])) {
+            if (ProtocolHub.msgBrokerFactory != null) {
+                ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
+            }
+            return;
+        }
     }
 }
