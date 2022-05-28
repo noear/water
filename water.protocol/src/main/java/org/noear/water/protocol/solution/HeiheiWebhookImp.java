@@ -13,20 +13,18 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * 嘿嘿的叮叮实现
+ * 嘿嘿的 Webhook 实现
  *
  * @author noear
  * @since 2.7
  */
-public class HeiheiDingdingImp implements Heihei {
+public class HeiheiWebhookImp implements Heihei {
     private String apiUrl;
     private String accessSecret;
 
-    public HeiheiDingdingImp(String apiUrl, String accessSecret) {
+    public HeiheiWebhookImp(String apiUrl, String accessSecret) {
         this.apiUrl = apiUrl;
         this.accessSecret = accessSecret;
     }
@@ -39,19 +37,23 @@ public class HeiheiDingdingImp implements Heihei {
             return null;
         }
 
-        long timeStamp = System.currentTimeMillis();
+        ONode oNode = new ONode();
 
-        Map<String, Object> json = new HashMap(3);
-        Map<String, Object> text = new HashMap(3);
-        json.put("msgtype", "text");
-        text.put("content", content);
-        json.put("text", text);
+        oNode.set("msgtype", "text");
+        oNode.getOrNew("text").set("content", content);
 
         try {
-            String url = apiUrl + "&timestamp=" + timeStamp + "&sign=" + sign(timeStamp);
+            String url;
+            if(TextUtils.isEmpty(accessSecret)){
+                //如果没有密钥
+                url = apiUrl;
+            }else{
+                long timeStamp = System.currentTimeMillis();
+                url = apiUrl + "&timestamp=" + timeStamp + "&sign=" + sign(timeStamp);
+            }
 
             String rst = HttpUtils.shortHttp(url)
-                    .bodyJson(ONode.stringify(json))
+                    .bodyJson(oNode.toJson())
                     .post();
 
             log_heihei.info(content);
@@ -66,9 +68,6 @@ public class HeiheiDingdingImp implements Heihei {
         return null;
     }
 
-    /**
-     * 钉钉签名
-     */
     private String sign(Long timeStamp) throws Exception {
         String stringToSign = timeStamp + "\n" + accessSecret;
 

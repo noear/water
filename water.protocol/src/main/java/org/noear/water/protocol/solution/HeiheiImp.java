@@ -17,12 +17,11 @@ public class HeiheiImp implements Heihei {
         }
 
         PropertiesM props = cfg.getProp();
-        String type = props.getProperty("type");
         String url = props.getProperty("url");
         String accessSecret = props.getProperty("accessSecret");
 
-        if ("dingding".equals(type)) {
-            real = new HeiheiDingdingImp(url, accessSecret);
+        if (TextUtils.isNotEmpty(url)) {
+            real = new HeiheiWebhookImp(url, accessSecret);
         } else {
             real = new HeiheiDefaultImp();
         }
