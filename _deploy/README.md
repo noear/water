@@ -55,15 +55,15 @@ grit.ldap:
 
 ### 告警的三种接收方式：
 
-* 默认嘿嘿专属客户端
+* 默认嘿嘿客户端
 * 钉钉群的 webhook
 * 企业群信群的 webhook
 
-water/water_heihei
-```properties
-type=webhook
-url=...
-accessSecret=.. #如果没有，不要加
-```
+    使用 webhook，需添加配置： water/water_heihei
+    ```properties
+    type=webhook
+    url=...
+    accessSecret=.. #如果没有，不要加
+    ```
 
 
