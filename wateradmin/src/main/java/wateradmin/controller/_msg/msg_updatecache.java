@@ -31,22 +31,24 @@ public class msg_updatecache implements CloudEventHandler {
     }
 
     private void handlerDo(String tag) throws Exception {
-        if (tag.indexOf(":") > 0) {
-            String[] ss = tag.split(":");
+        if (tag.indexOf(":") < 0) {
+            return;
+        }
 
-            if ("logger".equals(ss[0])) {
-                if (ProtocolHub.logSourceFactory != null) {
-                    ProtocolHub.logSourceFactory.updateSource(ss[1]); //尝试更新源
-                }
-                return;
-            }
+        String[] ss = tag.split(":");
 
-            if ("broker".equals(ss[0])) {
-                if (ProtocolHub.msgBrokerFactory != null) {
-                    ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
-                }
-                return;
+        if ("logger".equals(ss[0])) {
+            if (ProtocolHub.logSourceFactory != null) {
+                ProtocolHub.logSourceFactory.updateSource(ss[1]); //尝试更新源
             }
+            return;
+        }
+
+        if ("broker".equals(ss[0])) {
+            if (ProtocolHub.msgBrokerFactory != null) {
+                ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
+            }
+            return;
         }
     }
 
@@ -65,7 +67,7 @@ public class msg_updatecache implements CloudEventHandler {
 
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
             try {
-                HttpUtils.http("http://" + instance.address() + "/_run/update/cache")
+                HttpUtils.http("http://" + instance.address() + "/_run/update/cache/")
                         .data("tags", tags)
                         .post();
 
