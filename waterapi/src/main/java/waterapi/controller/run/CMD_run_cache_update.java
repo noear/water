@@ -17,6 +17,7 @@ import waterapi.dso.interceptor.Logging;
  * @author noear
  * @since 2021.10
  */
+@Deprecated
 @Logging
 @Whitelist
 @Controller
