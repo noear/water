@@ -24,8 +24,8 @@ One-stop service governance platform, work easy and leave early
 </p>
 <br/>
 <p align="center">
-	<a href="https://jq.qq.com/?_wv=1027&k=kjB5JNiC">
-	<img src="https://img.shields.io/badge/QQ交流群-22200020-orange"/></a>
+	<a href="https://jq.qq.com/?_wv=1027&k=6hGHvT1l">
+	<img src="https://img.shields.io/badge/QQ交流群-1410383-orange"/></a>
 </p>
 
 
