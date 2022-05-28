@@ -39,7 +39,7 @@ public final class ProtocolHub {
 
     public static Monitoring monitoring;
 
-    public static Heihei heihei;
+    public static HeiheiAgent heihei;
 
     public static ConfigM cfg(String key) {
         return config.get(WW.water, key);

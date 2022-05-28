@@ -78,6 +78,7 @@ public class ConfigApi {
     /**
      * 获取系统配置
      */
+    @Deprecated
     public Properties getProperties(String tag) {
         load(tag);
         return _cfgMap.get(tag).getPropSet();

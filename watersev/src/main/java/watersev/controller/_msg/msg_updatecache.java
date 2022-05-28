@@ -31,47 +31,50 @@ public class msg_updatecache implements CloudEventHandler {
     }
 
     private void handlerDo(String tag) throws Exception {
-        if (tag.indexOf(":") > 0) {
-            String[] ss = tag.split(":");
-            if ("paas".equals(ss[0])) {
-                String file_id = ss[1];
+        if (tag.indexOf(":") < 0) {
+            return;
+        }
 
-                if (TextUtils.isNumeric(file_id)) {
-                    AFileModel file = DbLuffyApi.fileGet(Integer.parseInt(file_id));
 
-                    if (Utils.isNotEmpty(file.path)) {
-                        //更新代码缓存
-                        String name = file.path.replace("/", "__");
-                        AFileUtil.remove(file.path);
-                        ExecutorFactory.del(name);
+        String[] ss = tag.split(":");
+        if ("paas".equals(ss[0])) {
+            String file_id = ss[1];
 
-                        //处理hook.start
-                        if (label_hook_start.equals(file.label)) {
-                            ExecutorFactory.execOnly(file, Context.current());
-                        }
+            if (TextUtils.isNumeric(file_id)) {
+                AFileModel file = DbLuffyApi.fileGet(Integer.parseInt(file_id));
+
+                if (Utils.isNotEmpty(file.path)) {
+                    //更新代码缓存
+                    String name = file.path.replace("/", "__");
+                    AFileUtil.remove(file.path);
+                    ExecutorFactory.del(name);
+
+                    //处理hook.start
+                    if (label_hook_start.equals(file.label)) {
+                        ExecutorFactory.execOnly(file, Context.current());
                     }
                 }
-                return;
             }
+            return;
+        }
 
-            if ("logger".equals(ss[0])) {
-                if (ProtocolHub.logSourceFactory != null) {
-                    ProtocolHub.logSourceFactory.updateSource(ss[1]);
-                }
-                return;
+        if ("logger".equals(ss[0])) {
+            if (ProtocolHub.logSourceFactory != null) {
+                ProtocolHub.logSourceFactory.updateSource(ss[1]);
             }
+            return;
+        }
 
-            if ("broker".equals(ss[0])) {
-                if (ProtocolHub.msgBrokerFactory != null) {
-                    ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
-                }
-                return;
+        if ("broker".equals(ss[0])) {
+            if (ProtocolHub.msgBrokerFactory != null) {
+                ProtocolHub.msgBrokerFactory.updateBroker(ss[1]); //尝试更新源
             }
+            return;
+        }
 
-            if ("whitelist".equals(ss[0])) {
-                ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
-                return;
-            }
+        if ("whitelist".equals(ss[0])) {
+            ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
+            return;
         }
     }
 }

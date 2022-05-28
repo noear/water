@@ -37,7 +37,7 @@ public class WaterapiApp {
 
 			ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, CacheUtils.data, DbWaterCfgApi::getBroker);
 
-			ProtocolHub.heihei = new HeiheiImp(Config.water_heihei); //new WaterLoggerLocal()
+			ProtocolHub.heihei = new HeiheiAgentImp(Config.water_heihei); //new WaterLoggerLocal()
 
 			//尝试注册服务
 			Config.tryRegService();

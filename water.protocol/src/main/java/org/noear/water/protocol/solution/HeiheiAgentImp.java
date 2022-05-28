@@ -3,14 +3,21 @@ package org.noear.water.protocol.solution;
 import org.noear.water.model.ConfigM;
 import org.noear.water.model.PropertiesM;
 import org.noear.water.protocol.Heihei;
+import org.noear.water.protocol.HeiheiAgent;
 import org.noear.water.utils.TextUtils;
 
 import java.util.*;
 
-public class HeiheiImp implements Heihei {
-    private final Heihei real;
+public class HeiheiAgentImp implements HeiheiAgent {
+    private Heihei real;
 
-    public HeiheiImp(ConfigM cfg) {
+    public HeiheiAgentImp(ConfigM cfg) {
+        updateConfig(cfg);
+    }
+
+
+    @Override
+    public void updateConfig(ConfigM cfg) {
         if (cfg == null || TextUtils.isEmpty(cfg.value)) {
             real = new HeiheiDefaultImp();
             return;

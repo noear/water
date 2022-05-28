@@ -12,10 +12,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Config {
-    public static final String water_service_name = "watersev";
+    //public static final String water_service_name = "watersev";
 
     public static final ICacheServiceEx cache_file;
-//    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
+    //    public static final ICacheServiceEx cache_data = new LocalCache().nameSet("cache_data");
     public static final ICacheServiceEx cache_data;
 
     public static final DbContext water;
@@ -47,7 +47,6 @@ public class Config {
     public static void tryInit() {
 
     }
-
 
     public static ConfigM cfg(String key) {
         return WaterClient.Config.get(WW.water, key);
