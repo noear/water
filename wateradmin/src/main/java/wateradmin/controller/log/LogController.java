@@ -18,6 +18,7 @@ import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.LoggerModel;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class LogController extends BaseController {
 
     @Mapping("query/inner")
     public ModelAndView index_inner(String tag_name, String logger, String tagx, String time, long startId, Integer level, Context ctx) throws Exception {
+        tagx = URLDecoder.decode(tagx,"UTF-8");
 
         List<LoggerModel> loggers = DbWaterCfgApi.getLoggerByTag(tag_name);
 
