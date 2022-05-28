@@ -70,6 +70,10 @@ One-stop service governance platform, work easy and leave early
 * 消息持久化，支持：MySql、PostgreSQL、MongoDb
 
 
+### 应用参考
+
+地址：[https://gitee.com/noear/marsh](https://gitee.com/noear/marsh)
+
 ### 视频教程
 
 [[Water 教程一] 用 docker-compose 快速部署。轻松工作，早点下班哦：）](https://www.bilibili.com/video/BV1T44y1e7AS/)
