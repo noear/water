@@ -128,7 +128,7 @@ public class AlarmUtil {
                     sb.append("恢复正常：").append(task.name);
                 }
             } else {
-                String label = (task.type == 1 ? "简报" : "预警");
+                String label = "监视";
 
                 sb.append(label);
 

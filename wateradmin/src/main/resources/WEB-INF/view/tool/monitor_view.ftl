@@ -50,21 +50,6 @@
                 <td><input type="text" id="name" value = "${monitor.name!}"/></td>
             </tr>
             <tr>
-                <th>监视类型</th>
-                <td>
-                    <select id="type" >
-                        <#if monitor.type=0>
-                            <option value="0" selected="selected">数据预警</option>
-                            <option value="1">数据简报</option>
-                        </#if>
-                        <#if monitor.type=1>
-                            <option value="0">数据预警</option>
-                            <option value="1" selected="selected">数据简报</option>
-                        </#if>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <th>数据采集</th>
                 <td>
                     <pre style="height:100px;width:600px;" jt-sql id="source_query">${monitor.source_query!}</pre>
@@ -73,17 +58,19 @@
             <tr>
                 <th>触发规则</th>
                 <td>
-                    <pre style="height:50px;width:600px;" jt-js id="rule">${monitor.rule!}</pre>
+                    <pre style="height:40px;width:600px;" jt-js id="rule">${monitor.rule!}</pre>
                 </td>
             </tr>
             <tr>
-                <th>重复标识</th>
-                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" /><n>（重复的标识不报警）</n></td>
+                <th>告警标识</th>
+                <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" />
+                    <n-l>重复的标识不告警；!开头的标识不限制</n-l>
+                </td>
             </tr>
 
             <tr>
-                <th>报警手机</th>
-                <td><input type="text" id="alarm_mobile" class="longtxt" value = "${monitor.alarm_mobile!}"/><n>（多个手机号用逗号分隔）</n></td>
+                <th>告警手机</th>
+                <td><input type="text" id="alarm_mobile" class="longtxt" placeholder="多个手机号用','分隔" value="${monitor.alarm_mobile!}"/></td>
             </tr>
             <tr>
                 <th>报警签名</th>
