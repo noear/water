@@ -71,9 +71,9 @@ public class DataSynController extends BaseController {
 //                              String source_model, String alarm_mobile, Integer is_enabled) throws SQLException{
 //        boolean result = DbWaterApi.syncSave(syn_id,type, name, tag, interval, target, target_pk, source_model, alarm_mobile, is_enabled);
 //        if (result){
-//            viewModel.code(1,"保存成功!");
+//            viewModel.code(1,"保存成功");
 //        } else {
-//            viewModel.code(0,"保存失败!");
+//            viewModel.code(0,"保存失败");
 //        }
 //
 //        return viewModel;
@@ -87,7 +87,7 @@ public class DataSynController extends BaseController {
 //
 //        boolean result = DbWaterApi.syncDel(syn_id);
 //        if (result) {
-//            viewModel.code(1, "删除成功!");
+//            viewModel.code(1, "删除成功");
 //        } else {
 //            viewModel.code(0, "删除失败!");
 //        }
