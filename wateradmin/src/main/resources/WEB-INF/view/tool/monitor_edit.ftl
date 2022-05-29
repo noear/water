@@ -153,7 +153,8 @@
 
             <tr>
                 <th>告警签名</th>
-                <td><input type="text" id="alarm_sign"  value = "${monitor.alarm_sign!}"/></td>
+                <td><input type="text" id="alarm_sign" maxlength="4" value="${monitor.alarm_sign!}"/>
+                </td>
             </tr>
             <tr>
                 <th>告警描述</th>
