@@ -30,6 +30,7 @@ public class MonitorModel implements IBinder
 	{
 		//1.source:数据源
         monitor_id = s.get("monitor_id").value(0);
+        tag = s.get("tag").value(null);
         key = s.get("key").value(null);
         name = s.get("name").value(null);
         type = s.get("type").value(0);
@@ -42,8 +43,6 @@ public class MonitorModel implements IBinder
         alarm_count = s.get("alarm_count").value(0);
         alarm_sign = s.get("alarm_sign").value(null);
         is_enabled = s.get("is_enabled").value(0);
-        tag = s.get("tag").value(null);
-        counts = s.get("counts").value(0L);
 	}
 	
 	public IBinder clone()

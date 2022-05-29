@@ -38,9 +38,9 @@
         <tr>
             <td width="40">ID</td>
             <td class="left">监视项目</td>
-            <td width="70px" nowrap>监视标签</td>
-            <td width="110px">报警手机</td>
-            <td width="80px">报警次数</td>
+            <td width="70px" nowrap>告警标识</td>
+            <td width="110px">告警手机</td>
+            <td width="80px">告警次数</td>
             <#if is_admin == 1>
                 <td width="80"></td>
             <#else>
