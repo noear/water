@@ -22,7 +22,6 @@
             let monitor_id = ${monitor.monitor_id}
             let name = $('#name').val();
             let tag = $('#tag').val();
-            let type = $('#type').val();
             let source_query = window.vm.source_query;
             let rule = window.vm.rule;
             let task_tag_exp = $('#task_tag_exp').val();
@@ -53,7 +52,6 @@
                     "monitor_id": monitor_id,
                     "name": name,
                     "tag": tag,
-                    "type": type,
                     "source_query": source_query,
                     "rule": rule,
                     "task_tag_exp": task_tag_exp,

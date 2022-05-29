@@ -90,7 +90,7 @@ public class MonitorController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("monitor/edit/ajax/save")
-    public ViewModel save(int monitor_id, String tag, String name, Integer type, String source_query, String rule, String task_tag_exp,
+    public ViewModel save(int monitor_id, String tag, String name, int type, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
