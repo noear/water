@@ -39,7 +39,6 @@
             <td width="40">ID</td>
             <td class="left">监视项目</td>
             <td width="70px" nowrap>告警标识</td>
-            <td width="110px">告警手机</td>
             <td width="80px">告警次数</td>
             <#if is_admin == 1>
                 <td width="80"></td>
@@ -61,7 +60,6 @@
                     </div>
                 </td>
                 <td>${monitor.task_tag}</td>
-                <td style="word-wrap:break-word;word-break:break-all;">${monitor.alarm_mobile!}</td>
                 <td>${monitor.alarm_count}</td>
                 <td class="op">
                     <a href="/tool/monitor/edit?monitor_id=${monitor.monitor_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a> |
