@@ -124,18 +124,14 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                if (task.type != 1) { //1=报喜, 不需要恢复
+                //if (task.type != 1) { //1=报喜, 不需要恢复
                     sb.append("恢复正常：").append(task.name);
-                }
+                //}
             } else {
-                String label = "监视";
-
-                sb.append(label);
-
                 if (TextUtils.isEmpty(task.alarm_exp)) {
-                    sb.append("：").append(task.name);
+                    sb.append(task.name);
                 } else {
-                    sb.append("：").append(task.alarm_exp);
+                    sb.append(task.alarm_exp);
                 }
             }
 
