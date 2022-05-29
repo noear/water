@@ -3,7 +3,6 @@ package wateradmin.controller.tool;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.water.utils.TextUtils;
 
-
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;

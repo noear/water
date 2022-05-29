@@ -39,7 +39,7 @@
             <td width="40">ID</td>
             <td class="left">监视项目</td>
             <td width="70px" nowrap>告警标识</td>
-            <td width="80px">告警次数</td>
+            <td width="100px">告警次数</td>
             <#if is_admin == 1>
                 <td width="80"></td>
             <#else>
