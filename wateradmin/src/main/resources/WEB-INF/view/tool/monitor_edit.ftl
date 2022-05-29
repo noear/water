@@ -25,7 +25,6 @@
             let source_query = window.vm.source_query;
             let rule = window.vm.rule;
             let task_tag_exp = $('#task_tag_exp').val();
-            let alarm_mobile = $('#alarm_mobile').val();
             let alarm_exp = $('#alarm_exp').val();
             let alarm_sign = $('#alarm_sign').val();
             let is_enabled = $('#is_enabled').prop('checked') ? 1 : 0;
@@ -40,11 +39,6 @@
                 return;
             }
 
-            //验证手机
-            if (alarm_mobile == null || alarm_mobile == "" || alarm_mobile == undefined) {
-                //允许为空
-            }
-
             $.ajax({
                 type: "POST",
                 url: "/tool/monitor/edit/ajax/save",
@@ -55,7 +49,7 @@
                     "source_query": source_query,
                     "rule": rule,
                     "task_tag_exp": task_tag_exp,
-                    "alarm_mobile": alarm_mobile,
+                    "alarm_mobile": '',
                     "alarm_exp": alarm_exp,
                     "is_enabled": is_enabled,
                     "alarm_sign": alarm_sign
@@ -155,11 +149,6 @@
                 <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" />
                     <n-l>重复的标识不告警；!开头的标识不限制。{{x}}表示嵌入变量</n-l>
                 </td>
-            </tr>
-
-            <tr>
-                <th>告警手机</th>
-                <td><input type="text" id="alarm_mobile" class="longtxt" placeholder="多个手机号用','分隔" value="${monitor.alarm_mobile!}"/></td>
             </tr>
 
             <tr>

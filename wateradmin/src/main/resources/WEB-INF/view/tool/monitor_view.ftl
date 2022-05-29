@@ -67,11 +67,6 @@
                     <n-l>重复的标识不告警；!开头的标识不限制</n-l>
                 </td>
             </tr>
-
-            <tr>
-                <th>告警手机</th>
-                <td><input type="text" id="alarm_mobile" class="longtxt" placeholder="多个手机号用','分隔" value="${monitor.alarm_mobile!}"/></td>
-            </tr>
             <tr>
                 <th>告警签名</th>
                 <td><input type="text" id="alarm_sign"  value = "${monitor.alarm_sign!}"/></td>
