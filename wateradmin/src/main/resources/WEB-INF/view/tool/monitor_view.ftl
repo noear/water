@@ -61,20 +61,26 @@
                     <pre style="height:40px;width:600px;" jt-js id="rule">${monitor.rule!}</pre>
                 </td>
             </tr>
+
             <tr>
                 <th>告警标识</th>
                 <td><input type="text" id="task_tag_exp" class="longtxt" value="${monitor.task_tag_exp!}" />
-                    <n-l>重复的标识不告警；!开头的标识不限制</n-l>
+                    <n-l>重复的标识不重复告警（!开头的除外）。{{x}}表示嵌入变量</n-l>
                 </td>
             </tr>
             <tr>
                 <th>告警签名</th>
-                <td><input type="text" id="alarm_sign"  value = "${monitor.alarm_sign!}"/></td>
+                <td><input type="text" id="alarm_sign" maxlength="4" value="${monitor.alarm_sign!}"/>
+                </td>
             </tr>
             <tr>
                 <th>告警描述</th>
-                <td><textarea class="h50" id="alarm_exp">${monitor.alarm_exp!}</textarea></td>
+                <td>
+                    <textarea class="h40" id="alarm_exp">${monitor.alarm_exp!}</textarea>
+                    <n-l>{{x}}表示嵌入变量</n-l>
+                </td>
             </tr>
+
             <tr>
                 <th>启用</th>
                 <td>
