@@ -919,6 +919,14 @@ interface MgContext{
     mongo():MongoX;
 }
 
+interface EsQuery{
+
+}
+
+interface EsContext{
+    stream(streamName:string):EsQuery
+    indice(indiceName:string):EsQuery
+}
 
 /////////////// RockClient
 
@@ -1030,6 +1038,7 @@ interface water{
     db(tagKey:string):DbContext;
     rd(tagKey:string, db:number):RedisClient;
     mg(tagKey:string, db:string):MgContext;
+    es(tagKey:string):EsContext;
 
     job(service:string, name:string):string;
 

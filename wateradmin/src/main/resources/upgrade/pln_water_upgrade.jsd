@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 3;
+let ver_new = 4;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -105,6 +105,17 @@ if(ver_old < 3){
     //改名
     db2.table('grit_resource').set('order_index',5).set('display_name','上游配置').whereEq('display_name','网关配置').andEq('link_uri','/cfg/gateway').update();
     db2.table('grit_resource').set('display_name','上游监控').whereEq('display_name','网关监控').andEq('link_uri','/mot/gw').update();
+}
+
+
+//for 2.7.0
+if(ver_old < 4){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
+    //禁用
+    db2.table('grit_resource').whereEq('display_name','数据同步').andEq('link_uri','/tool/sync').delete();
 }
 
 //3.设定版本

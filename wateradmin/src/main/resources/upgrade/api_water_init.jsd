@@ -17,6 +17,7 @@ water.cfg = function(tagKey){return WaterClient.Config.getByTagKey(tagKey)};
 water.db  = function(tagKey){return water.cfg(tagKey).getDb()};
 water.rd  = function(tagKey,i){return water.cfg(tagKey).getRd(i)};
 water.mg  = function(tagKey,c){return water.cfg(tagKey).getMg(c)};
+water.es  = function(tagKey){return water.cfg(tagKey).getEs()};
 water.updateCache = function(tags){WaterClient.Notice.updateCache(tags)};
 
 water.job = function(service,job,args){if(!args){args={}} var rst = WaterProxy.runJob(service,job,args); XUtil.log("Job return: "+rst); if('OK' != rst){throw "Job return: "+rst;}else{return rst;}}
