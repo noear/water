@@ -46,7 +46,7 @@
                 <td><input type="text" id="tag" value = "${monitor.tag!}"/></td>
             </tr>
             <tr>
-                <th>项目名称*</th>
+                <th>显示名称*</th>
                 <td><input type="text" id="name" value = "${monitor.name!}"/></td>
             </tr>
             <tr>
