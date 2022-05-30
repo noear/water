@@ -380,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `water_tool_monitor`  (
     PRIMARY KEY (`monitor_id`) USING BTREE,
     KEY `IX_key` (`key`) USING BTREE,
     KEY `IX_tag` (`tag`) USING BTREE
-) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-工具-监视登记表（监视数据）' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB  CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'WATER-工具-数据监视' ROW_FORMAT = DYNAMIC;
 
 CREATE TABLE IF NOT EXISTS `water_tool_report`  (
     `row_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '简报ID',
