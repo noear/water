@@ -136,13 +136,15 @@ interface HttpUtils{
     cache(seconds:number):HttpUtils;
 
     exec(mothod:String):Response;
-    exec2(mothod:String):string;
+    execAsBody(mothod:String):string;
+    execAsCode(mothod:String):number;
 
     get():string;
     post():string;
     put():string;
     patch():string;
     delete():string;
+    head():number;
 }
 
 
@@ -488,6 +490,8 @@ interface JtUtil {
     newOutputStream():OutputStream;
     newXfile():UploadedFile;
     newUri(url:string):URI;
+
+    ping(addrs:string):void;
 
     http(url:string):HttpUtils;
     htmlEncode(str:string):string;
