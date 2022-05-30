@@ -87,7 +87,7 @@
                             <option value="http" ${(model.protocol == 'http')?string('selected','')}>http://</option>
                             <option value="tcp" ${(model.protocol == 'tcp')?string('selected','')}>tcp://</option>
                         </select>
-                        <input type="text" id="address" value="${model.address!}" />
+                        <input style="width: 510px" type="text" id="address" value="${model.address!}" />
                     </td>
                 </tr>
                 <tr>
