@@ -53,7 +53,7 @@
                 <td>${monitor.monitor_id}</td>
                 <td class="left break">
                     <div>
-                        显示名称：${monitor.name} （${monitor.type_str()}）</note>
+                        显示名称：${monitor.name}</note>
                     </div>
                     <div>
                         <note>数据采集：${monitor.source_query}</note>
