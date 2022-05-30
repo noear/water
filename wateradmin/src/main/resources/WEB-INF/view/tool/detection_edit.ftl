@@ -81,11 +81,11 @@
                     <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
                 </tr>
                 <tr>
-                    <th>地址</th>
+                    <th>检测地址</th>
                     <td>
                         <select id="protocol" class="w80">
-                            <option value="http" selected>http://</option>
-                            <option value="tcp">tcp://</option>
+                            <option value="http" ${(model.protocol == 'http')?string('selected','')}>http://</option>
+                            <option value="tcp" ${(model.protocol == 'tcp')?string('selected','')}>tcp://</option>
                         </select>
                         <input type="text" id="address" value="${model.address!}" />
                     </td>
