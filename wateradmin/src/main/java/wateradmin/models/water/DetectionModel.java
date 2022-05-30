@@ -1,8 +1,15 @@
 package wateradmin.models.water;
 
+import lombok.Getter;
+import org.noear.water.utils.EncryptUtils;
+import org.noear.water.utils.Timespan;
+
+import java.util.Date;
+
 /**
  * @author noear
  */
+@Getter
 public class DetectionModel {
 
     /**  */
@@ -26,7 +33,7 @@ public class DetectionModel {
     /** 检查方式（0被检查；1自己签到） */
     public int check_type;
     /** 最后检查时间 */
-    public long check_last_time;
+    public Date check_last_time;
     /** 最后检查状态（0：OK；1：error） */
     public int check_last_state;
     /** 最后检查描述 */
@@ -40,4 +47,18 @@ public class DetectionModel {
     /** 最后修改时间 */
     public long gmt_modified;
 
+    public boolean isAlarm() {
+        if (check_last_state == 1)
+            return true;
+
+        if (new Timespan(check_last_time).seconds() >= 8) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public String service_md5() {
+        return "%7Bmd5%7D" + EncryptUtils.md5(name + "@" + address);
+    }
 }

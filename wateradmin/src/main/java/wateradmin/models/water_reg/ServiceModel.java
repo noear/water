@@ -35,17 +35,6 @@ public class ServiceModel implements IBinder {
     public String check_last_note;
     public int is_enabled;
 
-    public boolean isAlarm() {
-        if (check_last_state == 1)
-            return true;
-
-        if (new Timespan(check_last_time).seconds() >= 8) {
-            return true;
-        }
-
-        return false;
-    }
-
     public void bind(GetHandlerEx s) {
         //1.source:数据源
         //
@@ -80,6 +69,17 @@ public class ServiceModel implements IBinder {
 
     public IBinder clone() {
         return new ServiceModel();
+    }
+
+    public boolean isAlarm() {
+        if (check_last_state == 1)
+            return true;
+
+        if (new Timespan(check_last_time).seconds() >= 8) {
+            return true;
+        }
+
+        return false;
     }
 
     public String service_md5() {

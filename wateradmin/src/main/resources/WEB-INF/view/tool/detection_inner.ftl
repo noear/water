@@ -36,35 +36,35 @@
     <table>
         <thead>
         <tr>
-            <td width="40">ID</td>
-            <td class="left">监视项目</td>
-            <td width="70px" nowrap>告警标识</td>
-            <td width="100px">告警次数</td>
-            <#if is_admin == 1>
-                <td width="80"></td>
-            <#else>
-                <td width="80"></td>
-            </#if>
+            <td width="140px" class="left">名称</td>
+            <td class="left">地址</td>
+            <td width="120px">检测情况</td>
+            <td width="130px">操作</td>
         </tr>
         </thead>
-        <tbody id="tbody">
-        <#list list as detection>
+        <tbody id="tbody" >
+        <#list list as m>
             <tr>
-                <td>${detection.detection_id}</td>
-                <td class="left break">
-                    <div>
-                        显示名称：${detection.name}</note>
-                    </div>
-                    <div>
-                        <note>数据采集：${detection.source_query}</note>
-                    </div>
-                </td>
-                <td>${detection.task_tag}</td>
-                <td>${detection.alarm_count}</td>
-                <td class="op">
-                    <a href="/tool/detection/edit?detection_id=${detection.detection_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a> |
-                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=@${detection.detection_id}" target="_parent" class="t2">日志</a>
-                </td>
+            <td class="left">${m.name!}</td>
+            <td class="left break">
+                ${m.protocol!}://${m.address!}
+            </td>
+            <td style='${m.isAlarm()?string("color:red","")}'>
+                ${(m.check_last_time?string('HH:mm:ss'))!}
+                <#if m.check_last_state == 0>
+                    - ok
+                <#else>
+                    - no
+                </#if>
+            </td>
+
+            <td class="op">
+                <a href="/tool/detection/edit?detection_id=${m.detection_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a>
+                |
+                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=det_${m.detection_id}" target="_parent" class="t2">日志</a>
+                |
+                <a href="/mot/service/charts?key=${m.key}" class="t2">监控</a>
+            </td>
             </tr>
         </#list>
         </tbody>
