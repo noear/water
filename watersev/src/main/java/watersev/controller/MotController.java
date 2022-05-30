@@ -54,14 +54,10 @@ public final class MotController implements IJob {
                 continue;
             }
 
-            exec0(task);
+            CallUtil.asynCall(() -> {
+                execDo(task);
+            });
         }
-    }
-
-    private void exec0(MonitorModel task) {
-        CallUtil.asynCall(() -> {
-            execDo(task);
-        });
     }
 
     /**
@@ -71,12 +67,14 @@ public final class MotController implements IJob {
      */
     private void execDo(MonitorModel task) {
         String threadName = "mot-" + task.monitor_id;
-        Thread.currentThread().setName(threadName);
 
         if (LockUtils.tryLock(WW.watersev_mot, threadName, 59) == false) {
             //尝试获取锁（59秒内只能调度一次），避免集群，多次运行
             return;
         }
+
+
+        Thread.currentThread().setName(threadName);
 
         try {
             ContextUtil.currentSet(new ContextEmpty());

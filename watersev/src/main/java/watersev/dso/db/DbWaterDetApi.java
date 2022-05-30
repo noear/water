@@ -24,17 +24,6 @@ public final class DbWaterDetApi {
                 .selectList("*", DetectionModel.class);
     }
 
-    public static void setServiceState(long detection_id, int state) {
-        try {
-            db().table("water_tool_detection")
-                    .set("state", state)
-                    .whereEq("detection_id", detection_id)
-                    .update();
-        } catch (Exception ex) {
-            log.error("{}", ex);
-        }
-    }
-
     /**
      * 更新服务，同时修改检测时间和备注（服务是被动检测的）
      */
@@ -45,28 +34,6 @@ public final class DbWaterDetApi {
                     .set("check_last_state", check_state)
                     .set("check_last_time", System.currentTimeMillis())
                     .set("check_last_note", check_note)
-                    .build((tb) -> {
-                        if (check_state == 0)
-                            tb.set("check_error_num", 0);
-                        else
-                            tb.set("check_error_num", "$check_error_num+1");
-                    })
-                    .whereEq("detection_id", detection_id)
-                    .update();
-        } catch (Exception ex) {
-            log.error("{}", ex);
-        }
-    }
-
-
-    /**
-     * 更新服务，但不改检测时间和备注（服务是主要签到的）
-     */
-    public static void udpService1(long detection_id, int check_state) {
-        try {
-            db().table("water_tool_detection").usingExpr(true)
-                    .set("state", 0)
-                    .set("check_last_state", check_state)
                     .build((tb) -> {
                         if (check_state == 0)
                             tb.set("check_error_num", 0);

@@ -12,6 +12,7 @@ import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterDetApi;
 import watersev.models.water.DetectionModel;
+import watersev.utils.CallUtil;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
@@ -40,28 +41,33 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
-        //
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 59)) {
-            exec0();
-        }
+        exec0();
     }
 
     private void exec0() throws SQLException {
         //取出待处理的服务（已启用的服务）
         List<DetectionModel> list = DbWaterDetApi.getServiceList();
 
-        for (DetectionModel sev : list) {
-            check(sev);
+        for (DetectionModel task : list) {
+            CallUtil.asynCall(()->{
+                check(task);
+            });
         }
     }
 
     //检测服务，并尝试报警
-    private void check(DetectionModel sev) {
-        Thread.currentThread().setName("det-" + sev.detection_id);
+    private void check(DetectionModel task) {
+        String threadName = "det-" + task.detection_id;
+
+        if (LockUtils.tryLock(WW.watersev_det, threadName, 59)) {
+            //尝试获取锁（59秒内只能调度一次），避免集群，多次运行
+            return;
+        }
+
+        Thread.currentThread().setName(threadName);
 
         //被动检测模式
-        check_type0(sev);
+        check_type0(task);
     }
 
 
@@ -70,7 +76,6 @@ public final class DetController implements IJob {
      */
     private void check_type0(DetectionModel sev) {
         String url = sev.protocol + "://" + sev.address;
-
 
         if (url.startsWith("http://") || url.startsWith("https://")) {
             check_type0_http(sev, url);
@@ -86,8 +91,6 @@ public final class DetController implements IJob {
 
         try {
             URI uri = URI.create(url);
-
-            DbWaterDetApi.setServiceState(sev.detection_id, 1);//设为;正在处理中
 
             //ping 检测
             PingUtils.ping(uri.getAuthority(), 2000);
@@ -109,8 +112,6 @@ public final class DetController implements IJob {
         String nameAndIp = sev.name + "@" + sev.address;
 
         try {
-            DbWaterDetApi.setServiceState(sev.detection_id, 1);//设为;正在处理中
-
             /**
              * callback:
              * isOk:请求是否成功
