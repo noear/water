@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import org.noear.water.utils.IDUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
@@ -47,7 +48,7 @@ public class DbWaterApi {
 
     //编辑更新监视任务。
     public static boolean monitorSave(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
-        String guid = UUID.randomUUID().toString().replaceAll("-", "");
+        String guid = IDUtils.guid();
 
         DbTableQuery db = db().table("water_tool_monitor")
                 .set("key", guid)
