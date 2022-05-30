@@ -64,17 +64,11 @@ public class DetectionController extends BaseController {
 
         DetectionModel detection = DbWaterToolApi.detectionGet(detection_id);
 
-        List<String> option_sources = new ArrayList<>();
-        for (ConfigModel config : cfgs) {
-            option_sources.add(config.tag + "/" + config.key);
+        if(detection.detection_id == 0){
+            detection.tag = tag;
+            detection.protocol = "http";
         }
 
-        if (cfgs == null) {
-            cfgs = new ArrayList<>();
-        }
-
-        viewModel.put("cfgs", cfgs);
-        viewModel.put("option_sources", option_sources);
         viewModel.put("model", detection);
 
         return view("tool/detection_edit");
