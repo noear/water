@@ -17,7 +17,7 @@
     <flex>
         <left class="col-4">
             <#if is_admin = 1>
-                <a href="/tool/detection/edit?detection_id=0" class="btn edit" >新增</a>
+                <a href="/tool/detection/edit?tag=${tag_name!}&detection_id=0" class="btn edit" >新增</a>
             </#if>
         </left>
         <middle class="col-4 center">
