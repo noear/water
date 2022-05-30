@@ -66,6 +66,11 @@ public class MonitorController extends BaseController {
 
         MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);
 
+        if(monitor.monitor_id == 0){
+            monitor.tag = tag;
+        }
+
+
         List<String> option_sources = new ArrayList<>();
         for (ConfigModel config : cfgs) {
             option_sources.add(config.tag + "/" + config.key);
