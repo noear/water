@@ -49,7 +49,7 @@ public final class DetController implements IJob {
         List<DetectionModel> list = DbWaterDetApi.getServiceList();
 
         for (DetectionModel task : list) {
-            CallUtil.asynCall(()->{
+            CallUtil.asynCall(() -> {
                 check(task);
             });
         }
@@ -104,7 +104,7 @@ public final class DetController implements IJob {
 
 
             DbWaterDetApi.udpService0(sev.detection_id, 1, "0");
-            LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+            LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
         }
     }
 
@@ -141,7 +141,7 @@ public final class DetController implements IJob {
 
 
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
-                    LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
+                    LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
                     if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                         //报警，30秒一次
@@ -160,7 +160,7 @@ public final class DetController implements IJob {
             TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 1);
 
             DbWaterDetApi.udpService0(sev.detection_id, 1, ex.getMessage());
-            LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
+            LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
         }
     }
 }

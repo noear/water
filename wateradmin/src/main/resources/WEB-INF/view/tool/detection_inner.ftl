@@ -61,7 +61,7 @@
             <td class="op">
                 <a href="/tool/detection/edit?detection_id=${m.detection_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a>
                 |
-                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=det@${m.address}" target="_parent" class="t2">日志</a>
+                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=det@${m.detection_id}" target="_parent" class="t2">日志</a>
                 |
                 <a href="/mot/service/charts?key=${m.key}" class="t2">监控</a>
             </td>
