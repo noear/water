@@ -68,6 +68,7 @@ public class MonitorController extends BaseController {
 
         if(monitor.monitor_id == 0){
             monitor.tag = tag;
+            monitor.is_enabled = 1;
         }
 
 

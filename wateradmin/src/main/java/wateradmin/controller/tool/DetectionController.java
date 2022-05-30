@@ -67,6 +67,7 @@ public class DetectionController extends BaseController {
         if(detection.detection_id == 0){
             detection.tag = tag;
             detection.protocol = "http";
+            detection.is_enabled = 1;
         }
 
         viewModel.put("model", detection);
