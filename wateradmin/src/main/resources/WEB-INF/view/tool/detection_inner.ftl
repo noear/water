@@ -17,12 +17,12 @@
     <flex>
         <left class="col-4">
             <#if is_admin = 1>
-                <a href="/tool/monitor/edit?monitor_id=0" class="btn edit" >新增</a>
+                <a href="/tool/detection/edit?detection_id=0" class="btn edit" >新增</a>
             </#if>
         </left>
         <middle class="col-4 center">
             <form>
-                <input type="text"  class="w200" name="monitor_name" placeholder="项目名称" />
+                <input type="text"  class="w200" name="detection_name" placeholder="项目名称" />
                 <input type="hidden"  name="tag_name" value="${tag_name}"/>
                 <button type="submit">查询</button>
             </form>
@@ -48,22 +48,22 @@
         </tr>
         </thead>
         <tbody id="tbody">
-        <#list list as monitor>
+        <#list list as detection>
             <tr>
-                <td>${monitor.monitor_id}</td>
+                <td>${detection.detection_id}</td>
                 <td class="left break">
                     <div>
-                        显示名称：${monitor.name}</note>
+                        显示名称：${detection.name}</note>
                     </div>
                     <div>
-                        <note>数据采集：${monitor.source_query}</note>
+                        <note>数据采集：${detection.source_query}</note>
                     </div>
                 </td>
-                <td>${monitor.task_tag}</td>
-                <td>${monitor.alarm_count}</td>
+                <td>${detection.task_tag}</td>
+                <td>${detection.alarm_count}</td>
                 <td class="op">
-                    <a href="/tool/monitor/edit?monitor_id=${monitor.monitor_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a> |
-                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=@${monitor.monitor_id}" target="_parent" class="t2">日志</a>
+                    <a href="/tool/detection/edit?detection_id=${detection.detection_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a> |
+                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=@${detection.detection_id}" target="_parent" class="t2">日志</a>
                 </td>
             </tr>
         </#list>

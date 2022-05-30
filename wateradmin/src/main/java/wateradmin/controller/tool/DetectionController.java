@@ -1,19 +1,17 @@
 package wateradmin.controller.tool;
 
-import org.noear.solon.auth.annotation.AuthPermissions;
-import org.noear.water.utils.TextUtils;
-
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
+import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
-import wateradmin.dso.TagChecker;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
-import wateradmin.dso.db.DbWaterApi;
+import wateradmin.dso.TagChecker;
+import wateradmin.dso.db.DbWaterToolApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water.MonitorModel;
+import wateradmin.models.water.DetectionModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -23,12 +21,12 @@ import java.util.List;
 
 @Controller
 @Mapping("/tool/")
-public class MonitorController extends BaseController {
+public class DetectionController extends BaseController {
 
-    //monitor视图跳转。
-    @Mapping("monitor")
+    //detection视图跳转。
+    @Mapping("detection")
     public ModelAndView MonitorIndex(String tag_name, int _state) throws SQLException {
-        List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
+        List<TagCountsModel> tags = DbWaterToolApi.detectionGetTags();
 
         TagChecker.filter(tags, m -> m.tag);
 
@@ -44,27 +42,27 @@ public class MonitorController extends BaseController {
                 viewModel.put("tag_name",null);
             }
         }
-        return view("tool/monitor");
+        return view("tool/detection");
     }
 
     //Monitor的 iframe inner视图。
-    @Mapping("monitor/inner")
-    public ModelAndView monitorInner(String tag_name,String monitor_name, int _state) throws SQLException {
+    @Mapping("detection/inner")
+    public ModelAndView detectionInner(String tag_name,String detection_name, int _state) throws SQLException {
         viewModel.put("_state", _state);
 
         boolean is_enabled = (_state == 0);
 
-        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name, monitor_name, is_enabled);
+        List<DetectionModel> list = DbWaterToolApi.detectionGetList(tag_name, detection_name, is_enabled);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
-        return view("tool/monitor_inner");
+        return view("tool/detection_inner");
     }
 
-    @Mapping("monitor/edit")
-    public ModelAndView editMonitor(String tag, int monitor_id) throws SQLException {
+    @Mapping("detection/edit")
+    public ModelAndView editMonitor(String tag, int detection_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
-        MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);
+        DetectionModel detection = DbWaterToolApi.detectionGet(detection_id);
 
         List<String> option_sources = new ArrayList<>();
         for (ConfigModel config : cfgs) {
@@ -77,25 +75,21 @@ public class MonitorController extends BaseController {
 
         viewModel.put("cfgs", cfgs);
         viewModel.put("option_sources", option_sources);
-        viewModel.put("model", monitor);
+        viewModel.put("model", detection);
 
-        if (Session.current().isAdmin()) {
-            return view("tool/monitor_edit");
-        } else {
-            return view("tool/monitor_view");
-        }
+        return view("tool/detection_edit");
     }
 
 
     @AuthPermissions(SessionPerms.admin)
-    @Mapping("monitor/edit/ajax/save")
-    public ViewModel save(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp,
+    @Mapping("detection/edit/ajax/save")
+    public ViewModel save(int detection_id, String tag, String name, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
         }
 
-        boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
+        boolean result = DbWaterToolApi.detectionSave(detection_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
         if (result) {
             viewModel.code(1, "保存成功");
         } else {
@@ -106,9 +100,9 @@ public class MonitorController extends BaseController {
     }
 
     @AuthPermissions(SessionPerms.admin)
-    @Mapping("monitor/edit/ajax/del")
-    public ViewModel del(int monitor_id) throws SQLException {
-        boolean result = DbWaterApi.monitorDel(monitor_id);
+    @Mapping("detection/edit/ajax/del")
+    public ViewModel del(int detection_id) throws SQLException {
+        boolean result = DbWaterToolApi.detectionDel(detection_id);
 
         if (result) {
             viewModel.code(1, "删除成功");
