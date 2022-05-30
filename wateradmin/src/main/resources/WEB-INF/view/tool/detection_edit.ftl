@@ -33,13 +33,13 @@
             }, function(){
                 $.ajax({
                     type:"POST",
-                    url:"/mot/service/edit/ajax/save",
+                    url:"/tool/detection/edit/ajax/save",
                     data:vm,
                     success:function (data) {
                         if(data.code==1) {
                             top.layer.msg('操作成功');
                             setTimeout(function(){
-                                location.href="/mot/service/inner?tag_name="+vm.tag;
+                                location.href="/tool/detection/inner?tag_name="+vm.tag;
                             },800);
                         }else{
                             top.layer.msg(data.msg);
@@ -83,11 +83,20 @@
                 <tr>
                     <th>地址</th>
                     <td>
-                        <select class="w80">
-                            <option value="http">http://</option>
+                        <select id="protocol" class="w80">
+                            <option value="http" selected>http://</option>
                             <option value="tcp">tcp://</option>
                         </select>
-                        <input type="text" id="address" value="${model.address!}" /></td>
+                        <input type="text" id="address" value="${model.address!}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>启用</th>
+                    <td>
+                        <switcher>
+                            <label><input id="is_enabled" type="checkbox" ${(model.is_enabled=1)?string("checked","")}><a></a></label>
+                        </switcher>
+                    </td>
                 </tr>
             </table>
         </form>

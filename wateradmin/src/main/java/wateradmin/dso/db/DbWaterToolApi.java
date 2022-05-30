@@ -47,27 +47,35 @@ public class DbWaterToolApi {
 
 
     //编辑更新监视任务。
-    public static boolean detectionSave(int detection_id, String tag, String name, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
-        String guid = IDUtils.guid();
+    public static boolean detectionSave(int detection_id, String tag, String name, String protocol, String address, int is_enabled) throws SQLException {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
+            return false;
+        }
 
-        DbTableQuery db = db().table("water_tool_detection")
-                .set("key", guid)
+        if (tag == null) {
+            tag = "";
+        }
+
+        DbTableQuery query = db()
+                .table("water_tool_detection")
                 .set("name", name)
                 .set("tag", tag)
-                .set("type", 0)
-                .set("source_query", source_query)
-                .set("rule", rule)
-                .set("task_tag_exp", task_tag_exp)
-                .set("alarm_mobile", alarm_mobile)
-                .set("alarm_sign", alarm_sign)
-                .set("alarm_exp", alarm_exp)
+                .set("protocol", protocol)
+                .set("address", address)
                 .set("is_enabled", is_enabled);
 
-        if (detection_id > 0) {
-            return db.whereEq("detection_id", detection_id).update() > 0;
+
+        if (detection_id == 0) {
+            String key = IDUtils.guid();
+            query.set("check_last_time", System.currentTimeMillis())
+                    .set("key", key)
+                    .insert();
         } else {
-            return db.insert() > 0;
+            query.whereEq("detection_id", detection_id)
+                    .update();
         }
+
+        return true;
     }
 
     public static boolean detectionDel(Integer detection_id) throws SQLException {
