@@ -87,29 +87,27 @@ public final class DetController implements IJob {
     }
 
     private void check_type0_tcp(DetectionModel sev, String url) {
-        String nameAndIp = sev.name + "@" + sev.address;
+        String detName = "det_" + sev.detection_id;
 
         try {
             URI uri = URI.create(url);
 
             //ping 检测
+            long time_start = System.currentTimeMillis();
             PingUtils.ping(uri.getAuthority(), 2000);
+            long time_span = System.currentTimeMillis() - time_start;
 
             DbWaterDetApi.udpService0(sev.detection_id, 0, "");
 
-            TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 0);
-
+            TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
         } catch (Throwable ex) {
-            TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 1);
-
-
             DbWaterDetApi.udpService0(sev.detection_id, 1, "0");
             LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
         }
     }
 
     private void check_type0_http(DetectionModel sev, String url) {
-        String nameAndIp = sev.name + "@" + sev.address;
+        String detName = "det_" + sev.detection_id;
 
         try {
             /**
@@ -120,16 +118,18 @@ public final class DetController implements IJob {
              */
 
             String url2 = url;
+            long time_start = System.currentTimeMillis();
 
             //最长5秒会回调
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
+                long time_span = System.currentTimeMillis() - time_start;
                 Thread.currentThread().setName("sev-c-" + sev.detection_id);
 
                 if (code >= 200 && code < 400) { //正常
                     DbWaterDetApi.udpService0(sev.detection_id, 0, code + "");
 
 
-                    TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 0);
+                    TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
 
                     if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                         AlarmUtil.tryAlarm(sev, true, code);
@@ -137,7 +137,7 @@ public final class DetController implements IJob {
                         GatewayUtils.notice(sev.tag, sev.name);
                     }
                 } else {
-                    TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 1);
+                    TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
 
 
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
@@ -157,8 +157,6 @@ public final class DetController implements IJob {
                 }
             });
         } catch (Throwable ex) { //出错
-            TrackBuffer.singleton().appendCount("_waterdet", "app", nameAndIp, 1, 1);
-
             DbWaterDetApi.udpService0(sev.detection_id, 1, ex.getMessage());
             LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
         }
