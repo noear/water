@@ -63,7 +63,7 @@
                 data: {"detection_id": detection_id,},
                 success: function (data) {
                     if (data.code == 1) {
-                        top.layer.msg('操作成功')
+                        top.layer.msg('操作成功');
                         setTimeout(function () {
                             parent.location.href = "/tool/detection?tag_name=" + tag + "&_state=" + (is_enabled == 1 ? 0 : 1);
                         }, 800);
