@@ -19,7 +19,7 @@
         window.vm = {};
 
         function saveEdit() {
-            let monitor_id = ${monitor.monitor_id}
+            let monitor_id = ${model.monitor_id}
             let name = $('#name').val();
             let tag = $('#tag').val();
             let source_query = window.vm.source_query;
@@ -113,8 +113,8 @@
         <right class="form">
             <#if is_admin = 1>
                 <button type="button" onclick="saveEdit()"><u>S</u> 保存</button>
-                <#if monitor.monitor_id gt 0>
-                    <button type="button" onclick="del(${monitor.monitor_id})" class="minor">删除</button>
+                <#if model.monitor_id gt 0>
+                    <button type="button" onclick="del(${model.monitor_id})" class="minor">删除</button>
                 </#if>
             </#if>
         </right>
@@ -125,22 +125,22 @@
         <table>
             <tr>
                 <th>tag*</th>
-                <td><input type="text" id="tag" value = "${monitor.tag!}"/></td>
+                <td><input type="text" id="tag" value = "${model.tag!}"/></td>
             </tr>
             <tr>
                 <th>显示名称*</th>
-                <td><input type="text" id="name" value = "${monitor.name!}"/></td>
+                <td><input type="text" id="name" value = "${model.name!}"/></td>
             </tr>
             <tr>
                 <th>数据采集</th>
                 <td>
-                    <pre style="height:100px;width:600px;" jt-sql id="source_query">${monitor.source_query!}</pre>
+                    <pre style="height:100px;width:600px;" jt-sql id="source_query">${model.source_query!}</pre>
                 </td>
             </tr>
             <tr>
                 <th>触发规则</th>
                 <td>
-                    <pre style="height:40px;width:600px;" jt-js id="rule">${monitor.rule!}</pre>
+                    <pre style="height:40px;width:600px;" jt-js id="rule">${model.rule!}</pre>
                 </td>
             </tr>
 
