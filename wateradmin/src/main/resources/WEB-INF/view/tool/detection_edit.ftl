@@ -111,6 +111,7 @@
                     <td>
                         <select id="protocol" class="w80">
                             <option value="http" ${(model.protocol == 'http')?string('selected','')}>http://</option>
+                            <option value="https" ${(model.protocol == 'https')?string('selected','')}>https://</option>
                             <option value="tcp" ${(model.protocol == 'tcp')?string('selected','')}>tcp://</option>
                         </select>
                         <input style="width: 510px" type="text" id="address" value="${model.address!}" />
