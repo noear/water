@@ -36,7 +36,7 @@
     <table>
         <thead>
         <tr>
-            <td width="140px" class="left">名称</td>
+            <td width="180px" class="left">应用名称</td>
             <td class="left">地址</td>
             <td width="120px">检测情况</td>
             <td width="130px">操作</td>

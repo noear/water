@@ -103,7 +103,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>名称*</th>
+                    <th>应用名称*</th>
                     <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
                 </tr>
                 <tr>
