@@ -28,24 +28,20 @@
                 return;
             }
 
-            top.layer.confirm('确定保存操作', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                $.ajax({
-                    type:"POST",
-                    url:"/tool/detection/edit/ajax/save",
-                    data:vm,
-                    success:function (data) {
-                        if(data.code==1) {
-                            top.layer.msg('操作成功');
-                            setTimeout(function(){
-                                location.href="/tool/detection/inner?tag_name="+vm.tag;
-                            },800);
-                        }else{
-                            top.layer.msg(data.msg);
-                        }
+            $.ajax({
+                type:"POST",
+                url:"/tool/detection/edit/ajax/save",
+                data:vm,
+                success:function (data) {
+                    if(data.code==1) {
+                        top.layer.msg('操作成功');
+                        setTimeout(function(){
+                            location.href="/tool/detection/inner?tag_name="+vm.tag;
+                        },800);
+                    }else{
+                        top.layer.msg(data.msg);
                     }
-                });
+                }
             });
         }
 

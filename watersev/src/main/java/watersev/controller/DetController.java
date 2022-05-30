@@ -32,7 +32,7 @@ public final class DetController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 10; //实际是：60s 跑一次
+        return 1000 * 60; //实际是：60s 跑一次
     }
 
 
@@ -42,7 +42,7 @@ public final class DetController implements IJob {
 
         //尝试获取锁（1秒内只能调度一次），避免集群切换时，多次运行
         //
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 9)) {
+        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 59)) {
             exec0();
         }
     }
