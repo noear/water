@@ -16,7 +16,6 @@ import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
