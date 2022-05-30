@@ -74,7 +74,9 @@
             <table>
                 <tr>
                     <th>tag*</th>
-                    <td><input type="text" autofocus id="tag" value="${model.tag!}"/></td>
+                    <td><input type="text" autofocus id="tag" value="${model.tag!}"/>
+                        <input type="hidden" value="${model.detection_id!0}">
+                    </td>
                 </tr>
                 <tr>
                     <th>名称*</th>
