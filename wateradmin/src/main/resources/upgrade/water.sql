@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS  `water_cfg_key` (
 
 CREATE TABLE IF NOT EXISTS  `water_tool_detection` (
     `detection_id` bigint(20) NOT NULL AUTO_INCREMENT,
-    `tag` varchar(40) NOT NULL DEFAULT '',
-    `key` varchar(40) NOT NULL COMMENT '检测key',
-    `name` varchar(255) NOT NULL,
-    `protocol` varchar(100) DEFAULT NULL,
-    `address` varchar(500) NOT NULL,
+    `tag` varchar(40) NOT NULL DEFAULT '' COMMENT '分类标签',
+    `key` varchar(40) NOT NULL COMMENT '唯一key',
+    `name` varchar(255) NOT NULL COMMENT '名称',
+    `protocol` varchar(100) DEFAULT NULL COMMENT '协议',
+    `address` varchar(500) NOT NULL COMMENT '地址',
     `state` int(11) NOT NULL DEFAULT '0' COMMENT '0:待检查；1检查中',
     `check_error_num` int(11) NOT NULL DEFAULT '0' COMMENT '检测异常数量',
     `check_interval` int(11) NOT NULL DEFAULT '0' COMMENT '检测间隔时间(s)',
@@ -53,9 +53,7 @@ CREATE TABLE IF NOT EXISTS  `water_tool_detection` (
     PRIMARY KEY (`detection_id`) USING BTREE,
     UNIQUE KEY `IX_key` (`key`) USING BTREE,
     KEY `IX_tag` (`tag`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-工具-应用监视';
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=1286 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='WATER-工具-应用监视';
 
 
 
