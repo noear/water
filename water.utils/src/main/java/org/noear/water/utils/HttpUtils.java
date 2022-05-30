@@ -366,33 +366,54 @@ public class HttpUtils {
         }
     }
 
-    //@XNote("执行请求，返回字符串")
-    public String exec2(String mothod) throws IOException {
+    /**
+     * 执行请求，返回Body字符串
+     * */
+    public String execAsBody(String mothod) throws IOException {
         Response tmp = exec(mothod);
 
         int code = tmp.code();
         String text = tmp.body().string();
-        if (code >= 200 && code <= 300) {
+
+        if (code >= 200 && code < 400) {
             return text;
         } else {
-            throw new HttpResultException(code + " 错误：" + text);
+            throw new HttpResultException("HTTP Error " + code + ": " + text);
         }
     }
 
-    //@XNote("执行请求，返回状态码")
-    public int exec3(String mothod) throws IOException {
+    /**
+     * 执行请求，返回状态码
+     * */
+    public int execAsCode(String mothod) throws IOException {
         return exec(mothod).code();
+    }
+
+    /**
+     * @deprecated 1.7
+     * */
+    @Deprecated
+    public String exec2(String mothod) throws IOException {
+        return execAsBody(mothod);
+    }
+
+    /**
+     * @deprecated 1.7
+     * */
+    @Deprecated
+    public int exec3(String mothod) throws IOException {
+        return execAsCode(mothod);
     }
 
 
     //@XNote("发起GET请求，返回字符串（RESTAPI.select 从服务端获取一或多项资源）")
     public String get() throws IOException {
-        return exec2("GET");
+        return execAsBody("GET");
     }
 
     //@XNote("发起POST请求，返回字符串（RESTAPI.create 在服务端新建一项资源）")
     public String post() throws IOException {
-        return exec2("POST");
+        return execAsBody("POST");
     }
 
     public void postAsync() throws IOException {
@@ -413,21 +434,21 @@ public class HttpUtils {
 
     //@XNote("发起PUT请求，返回字符串（RESTAPI.update 客户端提供改变后的完整资源）")
     public String put() throws IOException {
-        return exec2("PUT");
+        return execAsBody("PUT");
     }
 
     //@XNote("发起PATCH请求，返回字符串（RESTAPI.update 客户端提供改变的属性）")
     public String patch() throws IOException {
-        return exec2("PATCH");
+        return execAsBody("PATCH");
     }
 
     //@XNote("发起DELETE请求，返回字符串（RESTAPI.delete 从服务端删除资源）")
     public String delete() throws IOException {
-        return exec2("DELETE");
+        return execAsBody("DELETE");
     }
 
     public int head() throws IOException{
-        return exec3("HEAD");
+        return execAsCode("HEAD");
     }
 
     private static String getRequestCookieString(Map<String, String> cookies) {
