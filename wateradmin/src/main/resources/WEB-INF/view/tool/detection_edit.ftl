@@ -49,6 +49,31 @@
             });
         }
 
+        function del(detection_id) {
+            if (confirm('确定删除吗？') == false) {
+                return;
+            }
+
+            let tag = $('#tag').val();
+            let is_enabled = $('#is_enabled').prop('checked') ? 1 : 0;
+
+            $.ajax({
+                type: "POST",
+                url: "/tool/detection/edit/ajax/del",
+                data: {"detection_id": detection_id,},
+                success: function (data) {
+                    if (data.code == 1) {
+                        top.layer.msg('操作成功')
+                        setTimeout(function () {
+                            parent.location.href = "/tool/detection?tag_name=" + tag + "&_state=" + (is_enabled == 1 ? 0 : 1);
+                        }, 800);
+                    } else {
+                        top.layer.msg(data.msg);
+                    }
+                }
+            });
+        }
+
         $(function () {
             ctl_s_save_bind(document,saveEdit);
         })
@@ -65,6 +90,9 @@
             <#if is_admin == 1>
                 <n>ctrl + s 可快捷保存</n>
                 <button type="button" class="w80" onclick="saveEdit()">保存</button>
+                <#if model.detection_id gt 0>
+                    <button type="button" onclick="del(${model.detection_id})" class="minor">删除</button>
+                </#if>
             </#if>
         </right>
     </toolbar>
@@ -75,7 +103,7 @@
                 <tr>
                     <th>tag*</th>
                     <td><input type="text" autofocus id="tag" value="${model.tag!}"/>
-                        <input type="hidden" value="${model.detection_id!0}">
+                        <input type="hidden" id="detection_id" value="${model.detection_id!0}">
                     </td>
                 </tr>
                 <tr>
