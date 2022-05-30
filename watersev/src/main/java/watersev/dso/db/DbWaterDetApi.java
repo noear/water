@@ -3,8 +3,7 @@ package watersev.dso.db;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.weed.DbContext;
 import watersev.Config;
-import watersev.models.water_reg.ServiceModel;
-import watersev.models.water_reg.ServiceSmpModel;
+import watersev.models.water.DetectionModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,11 +17,11 @@ public final class DbWaterDetApi {
         return Config.water;
     }
 
-    public static List<ServiceModel> getServiceList() throws SQLException {
+    public static List<DetectionModel> getServiceList() throws SQLException {
         //不能缓存（以便随时获取状态）
         return db().table("water_tool_detection")
                 .where("is_enabled=1")
-                .selectList("*", ServiceModel.class);
+                .selectList("*", DetectionModel.class);
     }
 
     public static void setServiceState(long detection_id, int state) {

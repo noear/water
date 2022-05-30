@@ -30,8 +30,6 @@ public class DetectionModel {
     public String alarm_sign;
     /** 0:待检查；1检查中 */
     public int state;
-    /** 检查方式（0被检查；1自己签到） */
-    public int check_type;
     /** 最后检查时间 */
     public Date check_last_time;
     /** 最后检查状态（0：OK；1：error） */

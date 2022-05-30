@@ -149,6 +149,33 @@ public class AlarmUtil {
         }
     }
 
+
+    public static void tryAlarm(DetectionModel task, boolean isOk, int code) {
+        if (task.is_enabled == 0) {
+            return;
+        }
+
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            if (isOk) {
+                sb.append("恢复：应用=").append(task.name).append("@")
+                        .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
+            } else {
+                sb.append("报警：应用=").append(task.name).append("@")
+                        .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
+            }
+
+            buildSign(sb, task.alarm_sign);
+
+            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
+            ProtocolHub.heihei.push("sev", alias, sb.toString());
+
+        } catch (Exception ex) {
+            LogUtil.error("AlarmUtil", "", ex);
+        }
+    }
+
     private static void buildSign(StringBuilder sb, String alarm_sign) {
         if (TextUtils.isEmpty(alarm_sign) && TextUtils.isEmpty(Config.alarm_sign())) {
             return;
