@@ -27,7 +27,7 @@ public class MonitorController extends BaseController {
 
     //monitor视图跳转。
     @Mapping("monitor")
-    public ModelAndView MonitorIndex(String tag_name, int _state) throws SQLException {
+    public ModelAndView home(String tag_name, int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
 
         TagChecker.filter(tags, m -> m.tag);
@@ -49,7 +49,7 @@ public class MonitorController extends BaseController {
 
     //Monitor的 iframe inner视图。
     @Mapping("monitor/inner")
-    public ModelAndView monitorInner(String tag_name,String monitor_name, int _state) throws SQLException {
+    public ModelAndView inner(String tag_name,String monitor_name, int _state) throws SQLException {
         viewModel.put("_state", _state);
 
         boolean is_enabled = (_state == 0);
@@ -61,7 +61,7 @@ public class MonitorController extends BaseController {
     }
 
     @Mapping("monitor/edit")
-    public ModelAndView editMonitor(String tag, int monitor_id) throws SQLException {
+    public ModelAndView edit(String tag, int monitor_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
         MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);

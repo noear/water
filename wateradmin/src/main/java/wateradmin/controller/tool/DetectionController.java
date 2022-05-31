@@ -24,7 +24,7 @@ public class DetectionController extends BaseController {
 
     //detection视图跳转。
     @Mapping("detection")
-    public ModelAndView MonitorIndex(String tag_name, int _state) throws SQLException {
+    public ModelAndView home(String tag_name, int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterToolApi.detectionGetTags();
 
         TagChecker.filter(tags, m -> m.tag);
@@ -46,7 +46,7 @@ public class DetectionController extends BaseController {
 
     //Monitor的 iframe inner视图。
     @Mapping("detection/inner")
-    public ModelAndView detectionInner(String tag_name,String detection_name, int _state) throws SQLException {
+    public ModelAndView inner(String tag_name,String detection_name, int _state) throws SQLException {
         viewModel.put("_state", _state);
 
         boolean is_enabled = (_state == 0);
@@ -58,7 +58,7 @@ public class DetectionController extends BaseController {
     }
 
     @Mapping("detection/edit")
-    public ModelAndView editMonitor(String tag, int detection_id) throws SQLException {
+    public ModelAndView edit(String tag, int detection_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
         DetectionModel detection = DbWaterToolApi.detectionGet(detection_id);
