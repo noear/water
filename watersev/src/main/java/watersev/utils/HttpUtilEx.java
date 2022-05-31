@@ -35,7 +35,7 @@ public class HttpUtilEx {
                 try {
                     uConnection.setRequestMethod("HEAD"); //HEAD
                     uConnection.setConnectTimeout(1000 * 3);
-                    uConnection.setReadTimeout(1000 * 2);
+                    uConnection.setReadTimeout(1000 * 3);
                     uConnection.connect();
                     int code = uConnection.getResponseCode();
 
