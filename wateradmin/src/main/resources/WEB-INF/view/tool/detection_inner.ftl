@@ -44,7 +44,11 @@
         </thead>
         <tbody id="tbody" >
         <#list list as m>
-            <tr>
+            <#if m.check_last_state == 1>
+            <tr style="color: red">
+            <#else>
+                <tr>
+            </#if>
             <td class="left">${m.name!}</td>
             <td class="left break">
                 ${m.protocol!}://${m.address!}
