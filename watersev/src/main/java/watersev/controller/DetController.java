@@ -40,7 +40,7 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_sevchk, WW.watersev_sevchk, 59)) {
+        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 59)) {
             exec0();
         }
     }
@@ -132,7 +132,9 @@ public final class DetController implements IJob {
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
-                    AlarmUtil.tryAlarm(sev, false, code);
+                    if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
+                        AlarmUtil.tryAlarm(sev, false, code);
+                    }
                 }
             });
         } catch (Throwable ex) { //出错
