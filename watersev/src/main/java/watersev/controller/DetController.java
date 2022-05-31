@@ -32,7 +32,7 @@ public final class DetController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 60; //实际是：60s 跑一次
+        return 1000 * 10; //实际是：60s 跑一次
     }
 
 
@@ -40,7 +40,7 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 59)) {
+        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 9)) {
             exec0();
         }
     }
@@ -61,23 +61,15 @@ public final class DetController implements IJob {
         String threadName = "det-" + task.detection_id;
         Thread.currentThread().setName(threadName);
 
-        //被动检测模式
-        check_type0(task);
-    }
-
-
-    /**
-     * 被动检测模式
-     */
-    private void check_type0(DetectionModel sev) {
-        String url = sev.protocol + "://" + sev.address;
+        //检测开始
+        String url = task.protocol + "://" + task.address;
 
         if (url.startsWith("http://") || url.startsWith("https://")) {
-            check_type0_http(sev, url);
+            check_type0_http(task, url);
         }
 
         if (url.startsWith("tcp://")) {
-            check_type0_tcp(sev, url);
+            check_type0_tcp(task, url);
         }
     }
 
