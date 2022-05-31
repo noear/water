@@ -36,8 +36,8 @@
     <table>
         <thead>
         <tr>
-            <td width="180px" class="left">应用名称</td>
-            <td class="left">地址</td>
+            <td class="left">应用名称</td>
+            <td width="80px">检测间隔</td>
             <td width="120px">检测情况</td>
             <td width="130px">操作</td>
         </tr>
@@ -49,9 +49,12 @@
             <#else>
                 <tr>
             </#if>
-            <td class="left">${m.name!}</td>
-            <td class="left break">
-                ${m.protocol!}://${m.address!}
+            <td class="left">
+                <div>${m.name!}</div>
+                <n-l>${m.protocol!}://${m.address!}</n-l>
+            </td>
+            <td>
+                ${m.check_interval}s
             </td>
             <td style='${m.isAlarm()?string("color:red","")}'>
                 ${(m.check_last_time?string('HH:mm:ss'))!}

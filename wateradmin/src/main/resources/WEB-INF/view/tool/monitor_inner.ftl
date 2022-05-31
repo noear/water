@@ -49,9 +49,7 @@
                     <div>
                         ${monitor.name}
                     </div>
-                    <div>
-                        <note>${monitor.source_query}</note>
-                    </div>
+                    <n-l>${monitor.source_query}</n-l>
                 </td>
                 <td>${monitor.task_tag}</td>
                 <td>${monitor.alarm_count}</td>
