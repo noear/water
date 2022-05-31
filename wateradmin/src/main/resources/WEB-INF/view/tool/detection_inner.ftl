@@ -70,7 +70,7 @@
                 |
                 <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=det@${m.detection_id}" target="_parent" class="t2">日志</a>
                 |
-                <a href="/mot/speed/charts?tag=${m.tag}&name_md5=det_${m.detection_id}&service=_waterdet" class="t2">监控</a>
+                <a href="/mot/speed/charts?tag=${m.tag}&name_md5=${m.track_md5()}&service=_waterdet" class="t2">监控</a>
             </td>
             </tr>
         </#list>
