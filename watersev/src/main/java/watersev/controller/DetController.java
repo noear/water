@@ -12,6 +12,7 @@ import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterDetApi;
 import watersev.models.water.DetectionModel;
+import watersev.utils.CallUtil;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
@@ -82,7 +83,7 @@ public final class DetController implements IJob {
         }
 
         if (url.startsWith("tcp://")) {
-            CompletableFuture.runAsync(() -> {
+            CallUtil.asynCall(()->{
                 check_type0_tcp(task, url);
             });
         }

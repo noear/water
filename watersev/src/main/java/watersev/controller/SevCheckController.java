@@ -14,6 +14,7 @@ import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
+import watersev.utils.CallUtil;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
@@ -144,7 +145,7 @@ public final class SevCheckController implements IJob {
         }
 
         if (url.startsWith("tcp://")) {
-            CompletableFuture.runAsync(() -> {
+            CallUtil.asynCall(()->{
                 check_type0_tcp(sev, url);
             });
         }
