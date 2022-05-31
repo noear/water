@@ -47,7 +47,7 @@ public class DbWaterApi {
 
 
     //编辑更新监视任务。
-    public static boolean monitorSave(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
+    public static boolean monitorSave(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_exp, int is_enabled) throws SQLException {
         String guid = IDUtils.guid();
 
         DbTableQuery db = db().table("water_tool_monitor")
@@ -59,7 +59,7 @@ public class DbWaterApi {
                 .set("rule", rule)
                 .set("task_tag_exp", task_tag_exp)
                 .set("alarm_mobile", alarm_mobile)
-                .set("alarm_sign", alarm_sign)
+                .set("alarm_sign", "")
                 .set("alarm_exp", alarm_exp)
                 .set("is_enabled", is_enabled);
 

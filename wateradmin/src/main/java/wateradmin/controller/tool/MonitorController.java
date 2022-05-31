@@ -96,12 +96,12 @@ public class MonitorController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("monitor/edit/ajax/save")
     public ViewModel save(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp,
-                              String alarm_mobile, String alarm_sign, String alarm_exp, int is_enabled) throws SQLException {
+                              String alarm_mobile, String alarm_exp, int is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
         }
 
-        boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_sign, alarm_exp, is_enabled);
+        boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_exp, is_enabled);
         if (result) {
             viewModel.code(1, "保存成功");
         } else {

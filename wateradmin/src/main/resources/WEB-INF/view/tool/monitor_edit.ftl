@@ -26,15 +26,14 @@
             let rule = window.vm.rule;
             let task_tag_exp = $('#task_tag_exp').val();
             let alarm_exp = $('#alarm_exp').val();
-            let alarm_sign = $('#alarm_sign').val();
             let is_enabled = $('#is_enabled').prop('checked') ? 1 : 0;
 
-            if (name == null || name == "" || name == undefined) {
+            if (!name) {
                 top.layer.msg("名称不能为空");
                 return;
             }
 
-            if (tag == null || tag == "" || tag == undefined) {
+            if (!tag) {
                 top.layer.msg("tag不能为空");
                 return;
             }
@@ -51,8 +50,7 @@
                     "task_tag_exp": task_tag_exp,
                     "alarm_mobile": '',
                     "alarm_exp": alarm_exp,
-                    "is_enabled": is_enabled,
-                    "alarm_sign": alarm_sign
+                    "is_enabled": is_enabled
                 },
                 success: function (data) {
                     if (data.code == 1) {
@@ -148,11 +146,6 @@
                 <th>告警标识</th>
                 <td><input type="text" id="task_tag_exp" class="longtxt" value="${model.task_tag_exp!}" />
                     <n-l>重复的标识不重复告警（!开头的除外）。{{x}}表示嵌入变量</n-l>
-                </td>
-            </tr>
-            <tr>
-                <th>告警签名</th>
-                <td><input type="text" id="alarm_sign" maxlength="4" value="${model.alarm_sign!}"/>
                 </td>
             </tr>
             <tr>
