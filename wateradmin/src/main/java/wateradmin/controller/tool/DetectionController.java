@@ -67,11 +67,11 @@ public class DetectionController extends BaseController {
             detection.tag = tag;
             detection.protocol = "http";
             detection.is_enabled = 1;
-            detection.check_interval = 300;
+            detection.check_interval = 10;
         }
 
         if(detection.check_interval == 0){
-            detection.check_interval = 60;
+            detection.check_interval = 10;
         }
 
         viewModel.put("model", detection);
