@@ -31,6 +31,10 @@ public class ServerPlugin implements Plugin {
         if (bcfClz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
+                if(cmd.isLog < 0){
+                    return;
+                }
+
                 if (isDebugMode) {
                     if (isWeedStyle2) {
                         System.out.println(cmd.toSqlString());
@@ -53,16 +57,16 @@ public class ServerPlugin implements Plugin {
         } else {
             //admin 项目
             WeedConfig.onExecuteAft((cmd) -> {
+                if(cmd.isLog < 0){
+                    return;
+                }
+
                 if (isDebugMode) {
                     if (isWeedStyle2) {
                         System.out.println(cmd.text2());
                     } else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                     }
-                }
-
-                if (cmd.isLog < 0) {
-                    return;
                 }
 
                 Context context = Context.current();
