@@ -1,5 +1,6 @@
 package watersev.dso;
 
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.utils.TextUtils;
@@ -155,14 +156,18 @@ public class AlarmUtil {
             return;
         }
 
+        if (TextUtils.isEmpty(task.alarm_sign)) {
+            task.alarm_sign = "应用监视";
+        }
+
         try {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                sb.append("恢复：应用=").append(task.name).append("@")
+                sb.append("恢复：").append(task.tag).append("/").append(task.name).append("@")
                         .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
             } else {
-                sb.append("报警：应用=").append(task.name).append("@")
+                sb.append("报警：").append(task.tag).append("/").append(task.name).append("@")
                         .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
             }
 
