@@ -22,7 +22,6 @@ public final class DbWaterDetApi {
         return db().table("water_tool_detection")
                 .where("is_enabled=1")
                 .caching(Config.cache_data)
-                .usingCache(60)
                 .selectList("*", DetectionModel.class);
     }
 

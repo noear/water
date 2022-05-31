@@ -7,6 +7,7 @@ import org.noear.water.WW;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.PingUtils;
+import org.noear.water.utils.Timespan;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterDetApi;
@@ -16,6 +17,7 @@ import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public final class DetController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 10; //实际是：60s 跑一次
+        return 1000 * 5; //实际是：60s 跑一次
     }
 
 
@@ -40,7 +42,7 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 9)) {
+        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 4)) {
             exec0();
         }
     }
@@ -50,6 +52,12 @@ public final class DetController implements IJob {
         List<DetectionModel> list = DbWaterDetApi.getServiceList();
 
         for (DetectionModel task : list) {
+            if (task.check_last_time != null) {
+                if (new Timespan(new Date(), task.check_last_time).seconds() < task.check_interval) {
+                    continue;
+                }
+            }
+
             CallUtil.asynCall(() -> {
                 check(task);
             });
