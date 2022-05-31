@@ -19,6 +19,7 @@ import watersev.utils.HttpUtilEx;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 服务检测（已支持 is_unstable）（可集群，可多实例运行。同时间，只会有一个节点有效）
@@ -127,21 +128,25 @@ public final class SevCheckController implements IJob {
             return;
         }
 
-        String url = sev.check_url;
-        if (url.indexOf("://") < 0) {
+        String urlTmp = sev.check_url;
+        if (urlTmp.indexOf("://") < 0) {
             if (sev.address.indexOf("://") > 0) {
-                url = sev.address + sev.check_url;
+                urlTmp = sev.address + sev.check_url;
             } else {
-                url = "http://" + sev.address + sev.check_url;
+                urlTmp = "http://" + sev.address + sev.check_url;
             }
         }
+
+        String url = urlTmp;
 
         if (url.startsWith("http://") || url.startsWith("https://")) {
             check_type0_http(sev, url);
         }
 
         if (url.startsWith("tcp://")) {
-            check_type0_tcp(sev, url);
+            CompletableFuture.runAsync(() -> {
+                check_type0_tcp(sev, url);
+            });
         }
     }
 
