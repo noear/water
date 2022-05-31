@@ -52,7 +52,7 @@ public final class DetController implements IJob {
         List<DetectionModel> list = DbWaterDetApi.getServiceList();
 
         for (DetectionModel task : list) {
-            if (task.check_interval == 0) {
+            if (task.check_interval < 10) {
                 task.check_interval = 10;
             }
 
