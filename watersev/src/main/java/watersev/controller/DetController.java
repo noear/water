@@ -4,7 +4,6 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.PingUtils;
@@ -41,7 +40,9 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        exec0();
+        if (LockUtils.tryLock(WW.watersev_sevchk, WW.watersev_sevchk, 59)) {
+            exec0();
+        }
     }
 
     private void exec0() throws SQLException {
@@ -58,12 +59,6 @@ public final class DetController implements IJob {
     //检测服务，并尝试报警
     private void check(DetectionModel task) {
         String threadName = "det-" + task.detection_id;
-
-        if (LockUtils.tryLock(WW.watersev_det, threadName, 59) == false) {
-            //尝试获取锁（59秒内只能调度一次），避免集群，多次运行
-            return;
-        }
-
         Thread.currentThread().setName(threadName);
 
         //被动检测模式
@@ -128,32 +123,16 @@ public final class DetController implements IJob {
                 if (code >= 200 && code < 400) { //正常
                     DbWaterDetApi.udpService0(sev.detection_id, 0, code + "");
 
-
                     TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
 
-                    if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
-                        AlarmUtil.tryAlarm(sev, true, code);
-                        //通知给网关
-                        GatewayUtils.notice(sev.tag, sev.name);
-                    }
+                    AlarmUtil.tryAlarm(sev, true, code);
                 } else {
                     TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
-
 
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
-                    if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
-                        //报警，30秒一次
-                        //
-                        if (LockUtils.tryLock(WW.watersev_sevchk, "sev-a-" + sev.detection_id, 30)) {
-                            AlarmUtil.tryAlarm(sev, false, code);
-                        }
-
-                        if (sev.check_error_num == 2) {
-                            GatewayUtils.notice(sev.tag, sev.name);
-                        }
-                    }
+                    AlarmUtil.tryAlarm(sev, false, code);
                 }
             });
         } catch (Throwable ex) { //出错
