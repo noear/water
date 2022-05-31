@@ -1,19 +1,15 @@
 package wateradmin.models.water_cfg;
 
-import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import org.noear.snack.ONode;
-import org.noear.solon.Utils;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.*;
-import org.noear.weed.mongo.MgContext;
 import wateradmin.dso.ConfigType;
 
-import javax.sql.DataSource;
 import java.util.*;
 
 @Getter
