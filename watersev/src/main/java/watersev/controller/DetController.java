@@ -107,7 +107,7 @@ public final class DetController implements IJob {
             }
         } catch (Throwable ex) {
             DbWaterDetApi.udpService0(sev.detection_id, 1, "0");
-            LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+            LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
 
             if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
                 AlarmUtil.tryAlarm(sev, false, 0);
@@ -125,8 +125,6 @@ public final class DetController implements IJob {
              * code:如果成功，状态码为何?
              * hint:如果出错，提示信息?
              */
-
-            String url2 = url;
             long time_start = System.currentTimeMillis();
 
             //最长5秒会回调
@@ -146,7 +144,7 @@ public final class DetController implements IJob {
                     WaterClient.Track.track("_waterdet", sev.tag, trackName, time_span);
 
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
-                    LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
+                    LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
 
                     if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
                         AlarmUtil.tryAlarm(sev, false, code);
@@ -155,7 +153,7 @@ public final class DetController implements IJob {
             });
         } catch (Throwable ex) { //出错
             DbWaterDetApi.udpService0(sev.detection_id, 1, ex.getMessage());
-            LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
+            LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\n" + Utils.throwableToString(ex));
         }
     }
 }
