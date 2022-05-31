@@ -126,7 +126,7 @@
                 <td><input type="text" id="tag" value = "${model.tag!}"/></td>
             </tr>
             <tr>
-                <th>显示名称*</th>
+                <th>数据名称*</th>
                 <td><input type="text" id="name" value = "${model.name!}"/></td>
             </tr>
             <tr>

@@ -36,7 +36,7 @@
     <table>
         <thead>
         <tr>
-            <td class="left">监视项目</td>
+            <td class="left">数据名称</td>
             <td width="70px" nowrap>告警标识</td>
             <td width="100px">告警次数</td>
             <td width="90"></td>
@@ -47,10 +47,10 @@
             <tr>
                 <td class="left break">
                     <div>
-                        显示名称：${monitor.name}</note>
+                        ${monitor.name}
                     </div>
                     <div>
-                        <note>数据采集：${monitor.source_query}</note>
+                        <note>${monitor.source_query}</note>
                     </div>
                 </td>
                 <td>${monitor.task_tag}</td>
