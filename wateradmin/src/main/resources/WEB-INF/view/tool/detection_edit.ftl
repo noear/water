@@ -118,6 +118,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>检测间隔</th>
+                    <td><input type="text" autofocus id="check_interval" value="${model.check_interval!300}"/>s/次</td>
+                </tr>
+                <tr>
                     <th>启用</th>
                     <td>
                         <switcher>
