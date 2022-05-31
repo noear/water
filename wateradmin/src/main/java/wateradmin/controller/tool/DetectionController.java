@@ -70,6 +70,10 @@ public class DetectionController extends BaseController {
             detection.check_interval = 300;
         }
 
+        if(detection.check_interval == 0){
+            detection.check_interval = 60;
+        }
+
         viewModel.put("model", detection);
 
         return view("tool/detection_edit");
