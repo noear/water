@@ -34,7 +34,7 @@ public final class DetController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 5; //实际是：60s 跑一次
+        return 1000 * 5; //实际是：5s 跑一次
     }
 
 
