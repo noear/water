@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.function.BiConsumer;
 
 /**
  * @author noear
@@ -30,5 +31,16 @@ public class PingUtils {
         } else {
             InetAddress.getByName(address).isReachable(millis);
         }
+    }
+
+    public static void pingAsyn(String address, int millis, BiConsumer<Boolean, Throwable> callback) {
+        RunUtils.runAsyn(() -> {
+            try {
+                ping(address, millis);
+                callback.accept(true, null);
+            } catch (Throwable e) {
+                callback.accept(false, e);
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package watersev.utils;
 
+import org.noear.water.utils.RunUtils;
 import watersev.utils.ext.Act3;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class HttpUtilEx {
      * hint:如果出错，提示信息?
      */
     public static void getStatusByAsync(String url, Act3<Boolean, Integer, String> callback)  {
-        CallUtil.asynCall(()->{
+        RunUtils.runAsyn(()->{
             getHttpStatusDo(url, (isOk, code, hint) -> {
                 callback.run(isOk, code, hint);
             });

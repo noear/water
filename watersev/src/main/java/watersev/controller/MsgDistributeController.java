@@ -22,7 +22,6 @@ import watersev.dso.db.DbWaterMsgApi;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.StateTag;
 import watersev.models.water_cfg.BrokerHolder;
-import watersev.utils.CallUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -121,7 +120,7 @@ public final class MsgDistributeController implements IJob {
         //
         //引处，不需要再做索
         //
-        CallUtil.asynCall(() -> {
+        RunUtils.runAsyn(() -> {
             exec1(brokerHolder);
         });
     }

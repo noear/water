@@ -6,21 +6,16 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
-import org.noear.water.utils.LockUtils;
-import org.noear.water.utils.PingUtils;
-import org.noear.water.utils.TextUtils;
-import org.noear.water.utils.Timespan;
+import org.noear.water.utils.*;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_reg.ServiceModel;
-import watersev.utils.CallUtil;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 服务检测（已支持 is_unstable）（可集群，可多实例运行。同时间，只会有一个节点有效）
@@ -145,7 +140,7 @@ public final class SevCheckController implements IJob {
         }
 
         if (url.startsWith("tcp://")) {
-            CallUtil.asynCall(()->{
+            RunUtils.runAsyn(()->{
                 check_type0_tcp(sev, url);
             });
         }

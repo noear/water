@@ -5,6 +5,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.PingUtils;
 import org.noear.water.utils.Timespan;
@@ -12,13 +13,11 @@ import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterDetApi;
 import watersev.models.water.DetectionModel;
-import watersev.utils.CallUtil;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 应用监视（可集群，可多实例运行。同时间，只会有一个节点有效）
@@ -83,7 +82,7 @@ public final class DetController implements IJob {
         }
 
         if (url.startsWith("tcp://")) {
-            CallUtil.asynCall(()->{
+            RunUtils.runAsyn(()->{
                 check_type0_tcp(task, url);
             });
         }

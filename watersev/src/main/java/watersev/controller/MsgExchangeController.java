@@ -14,7 +14,6 @@ import org.noear.water.utils.*;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterRegApi;
 import watersev.models.water_cfg.BrokerHolder;
-import watersev.utils.CallUtil;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -109,7 +108,7 @@ public class MsgExchangeController implements IJob {
 
         //todo:比任务轮询时间还长，可能不合适？
         if (LockUtils.tryLock(WW.watersev_msgexg, lockName, 1)) {
-            CallUtil.asynCall(() -> {
+            RunUtils.runAsyn(() -> {
                 exec1(brokerHolder);
             });
         }

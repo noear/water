@@ -11,13 +11,13 @@ import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
+import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import watersev.dso.*;
 import watersev.dso.db.DbWaterApi;
 import watersev.models.water.MonitorModel;
-import watersev.utils.CallUtil;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public final class MotController implements IJob {
                 continue;
             }
 
-            CallUtil.asynCall(() -> {
+            RunUtils.runAsyn(() -> {
                 execDo(task);
             });
         }

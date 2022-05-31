@@ -6,13 +6,13 @@ import org.noear.solon.core.handle.ContextUtil;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timecount;
 import luffy.JtRun;
 import watersev.dso.*;
 import watersev.dso.db.DbWaterFaasApi;
 import watersev.models.water_paas.LuffyFileModel;
-import watersev.utils.CallUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -53,7 +53,7 @@ public class PlnController implements IJob {
         System.out.println("查到任务数：" + list.size());
 
         for (LuffyFileModel task : list) {
-            CallUtil.asynCall(() -> {
+            RunUtils.runAsyn(() -> {
                 doExec(task);
             });
         }
