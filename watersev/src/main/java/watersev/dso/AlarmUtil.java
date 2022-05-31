@@ -139,6 +139,10 @@ public class AlarmUtil {
                 return;
             }
 
+            if (TextUtils.isEmpty(task.alarm_sign)) {
+                task.alarm_sign = "数据监视";
+            }
+
             buildSign(sb, task.alarm_sign);
 
             List<String> alias = buildAlias(task.task_tag, task.alarm_mobile);
