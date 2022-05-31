@@ -52,6 +52,10 @@ public final class DetController implements IJob {
         List<DetectionModel> list = DbWaterDetApi.getServiceList();
 
         for (DetectionModel task : list) {
+            if (task.check_interval == 0) {
+                task.check_interval = 10;
+            }
+
             if (task.check_last_time != null) {
                 if (new Timespan(new Date(), task.check_last_time).seconds() < task.check_interval) {
                     continue;
@@ -89,7 +93,7 @@ public final class DetController implements IJob {
 
             //ping 检测
             long time_start = System.currentTimeMillis();
-            PingUtils.ping(uri.getAuthority(), 2000);
+            PingUtils.ping(uri.getAuthority(), 3000);
             long time_span = System.currentTimeMillis() - time_start;
 
             DbWaterDetApi.udpService0(sev.detection_id, 0, "");
