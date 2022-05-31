@@ -1,6 +1,7 @@
 package wateradmin.models.water;
 
 import lombok.Getter;
+import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.Timespan;
 
 import java.util.Date;
@@ -90,5 +91,10 @@ public class DetectionModel {
         }
 
         return false;
+    }
+
+
+    public String track_md5() {
+        return "%7Bmd5%7D" + EncryptUtils.md5(name + "@" + protocol + "://" + address);
     }
 }

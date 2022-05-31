@@ -82,7 +82,7 @@ public class ServiceModel implements IBinder {
         return false;
     }
 
-    public String service_md5() {
+    public String track_md5() {
         return "%7Bmd5%7D" + EncryptUtils.md5(name + "@" + address);
     }
 }
