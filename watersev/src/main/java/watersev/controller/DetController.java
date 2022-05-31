@@ -59,7 +59,7 @@ public final class DetController implements IJob {
     private void check(DetectionModel task) {
         String threadName = "det-" + task.detection_id;
 
-        if (LockUtils.tryLock(WW.watersev_det, threadName, 59)) {
+        if (LockUtils.tryLock(WW.watersev_det, threadName, 59) == false) {
             //尝试获取锁（59秒内只能调度一次），避免集群，多次运行
             return;
         }
