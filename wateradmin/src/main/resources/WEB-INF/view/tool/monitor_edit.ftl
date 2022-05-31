@@ -132,13 +132,13 @@
             <tr>
                 <th>数据采集</th>
                 <td>
-                    <pre style="height:100px;width:600px;" jt-sql id="source_query">${model.source_query!}</pre>
+                    <pre style="height:150px;width:600px;" jt-sql id="source_query">${model.source_query!}</pre>
                 </td>
             </tr>
             <tr>
                 <th>触发规则</th>
                 <td>
-                    <pre style="height:40px;width:600px;" jt-js id="rule">${model.rule!}</pre>
+                    <pre style="height:50px;width:600px;" jt-js id="rule">${model.rule!}</pre>
                 </td>
             </tr>
 
@@ -151,7 +151,7 @@
             <tr>
                 <th>告警描述</th>
                 <td>
-                    <textarea class="h40" id="alarm_exp">${model.alarm_exp!}</textarea>
+                    <textarea class="h50" id="alarm_exp">${model.alarm_exp!}</textarea>
                     <n-l>{{x}}表示嵌入变量</n-l>
                 </td>
             </tr>
