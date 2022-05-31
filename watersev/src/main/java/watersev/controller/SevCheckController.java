@@ -157,9 +157,14 @@ public final class SevCheckController implements IJob {
             PingUtils.ping(uri.getAuthority(), 2000);
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
-
             TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 0);
 
+
+            if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
+                AlarmUtil.tryAlarm(sev, true, 200);
+                //通知给网关
+                GatewayUtils.notice(sev.tag, sev.name);
+            }
         } catch (Throwable ex) {
             TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
 
@@ -172,6 +177,19 @@ public final class SevCheckController implements IJob {
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
                 LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+
+                //开始告警
+                if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
+                    //报警，30秒一次
+                    //
+                    if (LockUtils.tryLock(WW.watersev_sevchk, "sev-a-" + sev.service_id, 30)) {
+                        AlarmUtil.tryAlarm(sev, false, 0);
+                    }
+
+                    if (sev.check_error_num == 2) {
+                        GatewayUtils.notice(sev.tag, sev.name);
+                    }
+                }
             }
         }
     }

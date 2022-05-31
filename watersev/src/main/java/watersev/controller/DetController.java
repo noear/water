@@ -93,11 +93,18 @@ public final class DetController implements IJob {
             long time_span = System.currentTimeMillis() - time_start;
 
             DbWaterDetApi.udpService0(sev.detection_id, 0, "");
-
             TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
+
+            if (sev.check_error_num > 0) {
+                AlarmUtil.tryAlarm(sev, true, 200);
+            }
         } catch (Throwable ex) {
             DbWaterDetApi.udpService0(sev.detection_id, 1, "0");
             LogUtil.sevWarn(getName(), sev.detection_id + "", sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+
+            if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
+                AlarmUtil.tryAlarm(sev, false, 0);
+            }
         }
     }
 
