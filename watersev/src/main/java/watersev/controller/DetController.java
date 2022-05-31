@@ -125,7 +125,9 @@ public final class DetController implements IJob {
 
                     TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
 
-                    AlarmUtil.tryAlarm(sev, true, code);
+                    if (sev.check_error_num > 0) {
+                        AlarmUtil.tryAlarm(sev, true, code);
+                    }
                 } else {
                     TrackBuffer.singleton().append("_waterdet", "app", detName, time_span);
 
