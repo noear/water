@@ -67,6 +67,7 @@ public class DetectionController extends BaseController {
             detection.tag = tag;
             detection.protocol = "http";
             detection.is_enabled = 1;
+            detection.check_interval = 300;
         }
 
         viewModel.put("model", detection);
@@ -77,8 +78,8 @@ public class DetectionController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("detection/edit/ajax/save")
-    public ViewModel save(int detection_id, String tag, String name, String protocol, String address, int is_enabled) throws SQLException {
-        boolean result = DbWaterToolApi.detectionSave(detection_id, tag, name, protocol, address, is_enabled);
+    public ViewModel save(int detection_id, String tag, String name, String protocol, String address, int check_interval, int is_enabled) throws SQLException {
+        boolean result = DbWaterToolApi.detectionSave(detection_id, tag, name, protocol, address, check_interval, is_enabled);
 
         if (result) {
             viewModel.code(1, "保存成功");

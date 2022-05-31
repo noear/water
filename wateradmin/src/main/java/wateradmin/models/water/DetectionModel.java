@@ -59,6 +59,10 @@ public class DetectionModel {
      */
     public String check_last_note;
     /**
+     * 检测间隔时间（s）
+     * */
+    public int check_interval;
+    /**
      * 检测异常数量
      */
     public int check_error_num;

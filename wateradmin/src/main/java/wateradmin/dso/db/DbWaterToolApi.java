@@ -47,7 +47,7 @@ public class DbWaterToolApi {
 
 
     //编辑更新监视任务。
-    public static boolean detectionSave(int detection_id, String tag, String name, String protocol, String address, int is_enabled) throws SQLException {
+    public static boolean detectionSave(int detection_id, String tag, String name, String protocol, String address, int check_interval, int is_enabled) throws SQLException {
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
             return false;
         }
@@ -62,6 +62,7 @@ public class DbWaterToolApi {
                 .set("tag", tag)
                 .set("protocol", protocol)
                 .set("address", address)
+                .set("check_interval", check_interval)
                 .set("is_enabled", is_enabled);
 
 
