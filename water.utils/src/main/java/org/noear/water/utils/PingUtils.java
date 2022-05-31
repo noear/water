@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
  */
 public class PingUtils {
     public static void ping(String address) throws Exception {
-        ping(address, 2000);
+        ping(address, 3000);
     }
 
     /**

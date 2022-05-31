@@ -155,7 +155,7 @@ public final class SevCheckController implements IJob {
             DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
 
             //ping 检测
-            PingUtils.ping(uri.getAuthority(), 2000);
+            PingUtils.ping(uri.getAuthority(), 3000);
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
             TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 0);
