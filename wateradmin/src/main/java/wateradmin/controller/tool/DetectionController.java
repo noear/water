@@ -83,6 +83,14 @@ public class DetectionController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("detection/edit/ajax/save")
     public ViewModel save(int detection_id, String tag, String name, String protocol, String address, int check_interval, int is_enabled) throws SQLException {
+        if (check_interval == 0) {
+            check_interval = 10;
+        }
+
+        if (check_interval < 5) {
+            check_interval = 5;
+        }
+
         boolean result = DbWaterToolApi.detectionSave(detection_id, tag, name, protocol, address, check_interval, is_enabled);
 
         if (result) {

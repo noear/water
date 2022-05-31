@@ -61,7 +61,7 @@ public final class DetController implements IJob {
             }
 
             if (task.check_last_time != null) {
-                if (new Timespan(new Date(), task.check_last_time).seconds() < task.check_interval) {
+                if (new Timespan(task.check_last_time).seconds() < task.check_interval) {
                     continue;
                 }
             }

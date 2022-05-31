@@ -1,6 +1,7 @@
 package wateradmin.models.water;
 
 import lombok.Getter;
+import org.noear.water.utils.Timespan;
 
 import java.util.Date;
 
@@ -60,7 +61,7 @@ public class DetectionModel {
     public String check_last_note;
     /**
      * 检测间隔时间（s）
-     * */
+     */
     public int check_interval;
     /**
      * 检测异常数量
@@ -81,6 +82,10 @@ public class DetectionModel {
 
     public boolean isAlarm() {
         if (check_last_state == 1) {
+            return true;
+        }
+
+        if (new Timespan(check_last_time).seconds() > (check_interval + 10)) {
             return true;
         }
 
