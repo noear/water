@@ -49,7 +49,7 @@ grit.ldap:
 ### 告警接收客户端：（嘿嘿）
 
 * iOS：https://testflight.apple.com/join/ZUhQctwS
-* Android：https://www.noear.org/app/heihei.apk
+* Android：http://www.noear.org/app/heihei.apk
 
 
 ### 告警的三种接收方式：
