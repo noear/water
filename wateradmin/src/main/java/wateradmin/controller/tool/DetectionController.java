@@ -8,6 +8,7 @@ import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagChecker;
+import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterToolApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
@@ -29,6 +30,8 @@ public class DetectionController extends BaseController {
 
         TagChecker.filter(tags, m -> m.tag);
 
+        tag_name = TagUtil.build(tag_name, tags);
+
         viewModel.put("tags",tags);
         viewModel.put("_state", _state);
 
@@ -47,6 +50,8 @@ public class DetectionController extends BaseController {
     //Monitor的 iframe inner视图。
     @Mapping("detection/inner")
     public ModelAndView inner(String tag_name,String detection_name, int _state) throws SQLException {
+        TagUtil.cookieSet(tag_name);
+
         viewModel.put("_state", _state);
 
         boolean is_enabled = (_state == 0);

@@ -30,7 +30,6 @@ public class PropController extends BaseController {
 
         TagChecker.filter(tags, m -> m.tag);
 
-
         tag_name = TagUtil.build(tag_name, tags);
 
         viewModel.put("tag_name", tag_name);
@@ -40,7 +39,7 @@ public class PropController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key, int _state) throws SQLException {
+    public ModelAndView inner(String tag_name, String key, int _state) throws SQLException {
         TagUtil.cookieSet(tag_name);
 
         List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, _state == 0);
@@ -56,7 +55,7 @@ public class PropController extends BaseController {
 
     //跳转编辑页面。
     @Mapping("edit")
-    public ModelAndView editConfig(String tag_name, Integer row_id) throws SQLException {
+    public ModelAndView edit(String tag_name, Integer row_id) throws SQLException {
         if (row_id == null) {
             row_id = 0;
         }
