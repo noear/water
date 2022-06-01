@@ -21,7 +21,6 @@ public final class DbWaterDetApi {
         //不能缓存（以便随时获取状态）
         return db().table("water_tool_detection")
                 .where("is_enabled=1")
-                .caching(Config.cache_data)
                 .selectList("*", DetectionModel.class);
     }
 
