@@ -82,6 +82,7 @@ public final class MotController implements IJob {
             runTask(task);
         } catch (Throwable ex) {
             LogUtil.error(this.getName(), task.monitor_id + "", task.name + "::\n\n" + Utils.throwableToString(ex));
+            AlarmUtil.tryAlarmOnError(task);
         } finally {
             ContextUtil.currentRemove();
         }

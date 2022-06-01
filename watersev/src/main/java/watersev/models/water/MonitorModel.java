@@ -6,6 +6,7 @@ import org.noear.weed.IBinder;
 public class MonitorModel implements IBinder {
     public int monitor_id;
     public int type; //监视类型（0:数据表预警；1:数据表报喜）
+    public String tag;
     public String name;
     public String source_query;
     public String task_tag;
@@ -20,6 +21,7 @@ public class MonitorModel implements IBinder {
     public void bind(GetHandlerEx s) {
         monitor_id = s.get("monitor_id").value(0);
         type = s.get("type").value(0);
+        tag = s.get("tag").value("");
         name = s.get("name").value("");
         source_query = s.get("source_query").value("");
         rule = s.get("rule").value("");

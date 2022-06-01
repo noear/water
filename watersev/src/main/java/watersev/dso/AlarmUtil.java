@@ -105,7 +105,7 @@ public class AlarmUtil {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("报警：定时任务出错=").append(task.tag).append("::").append(task.path)
+            sb.append("报警：定时任务异常=").append(task.tag).append("::").append(task.path)
                     .append("@").append("pln").append("@").append(task.file_id);
 
             buildSign(sb, task.alarm_sign);
@@ -153,6 +153,23 @@ public class AlarmUtil {
         }
     }
 
+    public static void tryAlarmOnError(MonitorModel task) {
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("报警：数据监视异常=").append(task.tag).append("::").append(task.name)
+                    .append("@").append("mot").append("@").append(task.monitor_id);
+
+            buildSign(sb, "");
+
+            List<String> alias = buildAlias(task.tag, "");
+            ProtocolHub.heihei.push("mot", alias, sb.toString());
+
+        } catch (Exception ex) {
+            LogUtil.error("AlarmUtil", "", ex);
+        }
+    }
+
 
     public static void tryAlarm(DetectionModel task, boolean isOk, int code) {
         if (task.is_enabled == 0) {
@@ -167,10 +184,10 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                sb.append("恢复：").append(task.tag).append("/").append(task.name).append("@")
+                sb.append("恢复：").append(task.tag).append("::").append(task.name).append("@")
                         .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
             } else {
-                sb.append("报警：").append(task.tag).append("/").append(task.name).append("@")
+                sb.append("报警：").append(task.tag).append("::").append(task.name).append("@")
                         .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
             }
 
