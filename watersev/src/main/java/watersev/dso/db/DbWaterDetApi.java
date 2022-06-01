@@ -42,7 +42,6 @@ public final class DbWaterDetApi {
                             tb.set("check_error_num", "$check_error_num+1");
                     })
                     .whereEq("detection_id", detection_id)
-                    .usingExpr(true)
                     .update();
         } catch (Exception ex) {
             log.error("{}", ex);

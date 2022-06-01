@@ -130,7 +130,7 @@ public final class DetController implements IJob {
             //最长5秒会回调
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
                 long time_span = System.currentTimeMillis() - time_start;
-                Thread.currentThread().setName("sev-c-" + sev.detection_id);
+                Thread.currentThread().setName("det-c-" + sev.detection_id);
 
                 if (code >= 200 && code < 400) { //正常
                     DbWaterDetApi.udpService0(sev.detection_id, 0, code + "");
