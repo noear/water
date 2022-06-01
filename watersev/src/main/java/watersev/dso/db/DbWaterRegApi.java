@@ -86,6 +86,8 @@ public final class DbWaterRegApi {
             db().table("water_reg_service")
                     .where("service_id=? AND is_unstable=1", service_id)
                     .delete();
+
+            log.warn("water_reg_service deleted: " +service_id);
         } catch (Exception ex) {
             log.error("{}", ex);
         }
@@ -93,7 +95,7 @@ public final class DbWaterRegApi {
 
     public static void delConsumer(String consumer_address) {
         try {
-            db().table("water_reg_consumer")
+            db().table("water_reg_consumer").log(true)
                     .whereEq("consumer_address", consumer_address)
                     .delete();
         } catch (Exception ex) {

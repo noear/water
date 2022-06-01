@@ -14,7 +14,7 @@ import org.noear.weed.WeedConfig;
  * @author noear 2021/10/28 created
  */
 public class ServerPlugin implements Plugin {
-     static final String clz_BcfClient = "org.noear.bcf.BcfClient";
+     static final String clz_GritUtil = "org.noear.grit.client.GritUtil";
 
     @Override
     public void start(AopContext context) {
@@ -22,13 +22,13 @@ public class ServerPlugin implements Plugin {
     }
 
     private void initWeed() {
-        Class<?> bcfClz = Utils.loadClass(clz_BcfClient);
+        Class<?> gritClz = Utils.loadClass(clz_GritUtil);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
         final boolean isTrackEnable = Solon.cfg().getBool("water.weed.track.enable", false);
         //final boolean isErrorLogEnable = Solon.cfg().getBool("water.weed.error.log.enable", true);
 
-        if (bcfClz == null) {
+        if (gritClz == null) {
             //api项目
             WeedConfig.onExecuteAft(cmd -> {
                 if(cmd.isLog < 0){
@@ -45,7 +45,7 @@ public class ServerPlugin implements Plugin {
 
                 WaterClient.Track.trackOfPerformance(service_name(), cmd, 1000);
 
-                if (isTrackEnable) {
+                if (isTrackEnable || cmd.isLog > 0) {
                     String tag = cmd.context.schema();
                     if (TextUtils.isEmpty(tag)) {
                         tag = "sql";
@@ -78,7 +78,7 @@ public class ServerPlugin implements Plugin {
                     WaterClient.Track.trackOfBehavior(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), context.realIp());
                 }
 
-                if (isTrackEnable) {
+                if (isTrackEnable || cmd.isLog > 0) {
                     String tag = cmd.context.schema();
                     if (TextUtils.isEmpty(tag)) {
                         tag = "sql";

@@ -15,7 +15,6 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.core.handle.MethodType;
 import org.slf4j.MDC;
 import wateradmin.dso.Session;
 
