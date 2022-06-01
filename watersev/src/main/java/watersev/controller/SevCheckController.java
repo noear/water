@@ -152,8 +152,6 @@ public final class SevCheckController implements IJob {
         try {
             URI uri = URI.create(url);
 
-            DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
-
             //ping 检测
             PingUtils.ping(uri.getAuthority(), 3000);
 
@@ -199,8 +197,6 @@ public final class SevCheckController implements IJob {
         String nameAndIp = sev.name + "@" + sev.address;
 
         try {
-            DbWaterRegApi.setServiceState(sev.service_id, 1);//设为;正在处理中
-
             /**
              * callback:
              * isOk:请求是否成功

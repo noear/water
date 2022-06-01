@@ -36,17 +36,6 @@ public final class DbWaterRegApi {
                 .selectList("name,address,meta,check_last_state", ServiceSmpModel.class);
     }
 
-    public static void setServiceState(long service_id, int state) {
-        try {
-            db().table("water_reg_service")
-                    .set("state", state)
-                    .where("service_id=?", service_id)
-                    .update();
-        } catch (Exception ex) {
-            log.error("{}", ex);
-        }
-    }
-
     /**
      * 更新服务，同时修改检测时间和备注（服务是被动检测的）
      * */
