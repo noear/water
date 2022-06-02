@@ -119,17 +119,17 @@ public class AlarmUtil {
     }
 
 
-    public static void tryAlarm(MonitorModel task, boolean isOk) {
+    public static void tryAlarm(MonitorModel task, boolean isOk) { //不要加tag（全自定义）
         try {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
                 //if (task.type != 1) { //1=报喜, 不需要恢复
-                    sb.append("恢复正常：").append(task.tag).append("::").append(task.name);
+                    sb.append("恢复正常：").append(task.name);
                 //}
             } else {
                 if (TextUtils.isEmpty(task.alarm_exp)) {
-                    sb.append(task.tag).append("::").append(task.name);
+                    sb.append(task.name);
                 } else {
                     sb.append(task.alarm_exp);
                 }
@@ -153,11 +153,11 @@ public class AlarmUtil {
         }
     }
 
-    public static void tryAlarmOnError(MonitorModel task) {
+    public static void tryAlarmOnError(MonitorModel task) { //不要加tag（全自定义）
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("报警：数据监视异常=").append(task.tag).append("::").append(task.name)
+            sb.append("报警：数据监视异常=").append(task.name)
                     .append("@").append("mot").append("@").append(task.monitor_id);
 
             buildSign(sb, "");
