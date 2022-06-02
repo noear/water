@@ -63,10 +63,10 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                sb.append("恢复：服务=").append(task.name).append("@")
+                sb.append("恢复：服务=").append(task.tag).append("::").append(task.name).append("@")
                         .append(task.address).append(task.meta).append("，状态:").append(code);
             } else {
-                sb.append("报警：服务=").append(task.name).append("@")
+                sb.append("报警：服务=").append(task.tag).append("::").append(task.name).append("@")
                         .append(task.address).append(task.meta).append("，状态:").append(code);
             }
 
@@ -85,9 +85,9 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
             if (isOk) {
-                sb.append("提醒：同步成功=").append(task.name).append("@").append(max_id + "");
+                sb.append("提醒：同步成功=").append(task.tag).append("::").append(task.name).append("@").append(max_id + "");
             } else {
-                sb.append("提醒：同步失败=").append(task.name).append("@").append(max_id + "");
+                sb.append("提醒：同步失败=").append(task.tag).append("::").append(task.name).append("@").append(max_id + "");
             }
 
             buildSign(sb, task.alarm_sign);
@@ -129,7 +129,7 @@ public class AlarmUtil {
                 //}
             } else {
                 if (TextUtils.isEmpty(task.alarm_exp)) {
-                    sb.append(task.name);
+                    sb.append(task.tag).append("::").append(task.name);
                 } else {
                     sb.append(task.alarm_exp);
                 }
