@@ -114,6 +114,7 @@ public final class MotController implements IJob {
         ONode model = new ONode().asObject();
         model.set("d", motResult.data);
         model.set("tag", task.task_tag);
+        model.getOrNew("meta").set("tag", task.tag).set("name", task.name);
 
 
         String model_json = model.options(json_cfg).toJson();//date -> "new Date('" + new Datetime(date).toString("yyyy-MM-dd HH:mm:ss") + "')");
