@@ -125,7 +125,7 @@ public class AlarmUtil {
 
             if (isOk) {
                 //if (task.type != 1) { //1=报喜, 不需要恢复
-                    sb.append("恢复正常：").append(task.name);
+                    sb.append("恢复正常：").append(task.tag).append("::").append(task.name);
                 //}
             } else {
                 if (TextUtils.isEmpty(task.alarm_exp)) {
