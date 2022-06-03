@@ -91,7 +91,7 @@
 <main>
     <section>
         <blockquote>
-            <h2 class="ln30">配置 Water PaaS DB (3/5)</h2>
+            <h2 class="ln30">配置 Water FaaS DB (3/5)</h2>
         </blockquote>
         <detail>
             <form>
@@ -119,9 +119,9 @@
                         <td>
                             <hr />
                             <n-l>
-                                Water PaaS：
+                                Water FaaS：
                                 <br/>
-                                提供了 FaaS（即时接口、定时任务、动态事件）和 RaaS（规则计算）两种动态计算服务
+                                提供了 即时接口、定时任务、动态事 三种动态计算服务
                                 <br/>
                                 为开发和运维提供了友好的动态计算能力和应急处理能力
                             </n-l>
