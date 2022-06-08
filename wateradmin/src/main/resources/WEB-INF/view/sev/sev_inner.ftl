@@ -103,9 +103,9 @@
                 <left class="col-4">
                     <#if is_admin == 1>
                         <#if _state == 0>
-                            <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>
+                            <button type='button' class="minor mar10-r" onclick="del(0,'禁用')" >禁用</button>
                         <#else>
-                            <button type='button' class="minor mar10-l" onclick="del(1,'启用')" >启用</button>
+                            <button type='button' class="minor mar10-r" onclick="del(1,'启用')" >启用</button>
                         </#if>
 
                         <a class="btn edit" href="/sev/service/edit">手动添加</a>
