@@ -85,6 +85,10 @@
                     <td><input type="text" id="address" value="${model.address!}" /><n>（ip | ip:port | x://host）</n></td>
                 </tr>
                 <tr>
+                    <th>元信息</th>
+                    <td><input type="text" id="meta" value="${model.meta!}" class="longtxt"/></td>
+                </tr>
+                <tr>
                     <th>检查类型</th>
                     <td><select id="check_type">
                             <option value="0" selected="selected">被动检查</option>
@@ -98,10 +102,6 @@
                 <tr>
                     <th>检查路径</th>
                     <td><input  type="text" id="check_url" value="${model.check_url!'/'}" /><n>（/x）</n></td>
-                </tr>
-                <tr>
-                    <th>启动备注</th>
-                    <td><input type="text" id="meta" value="${model.meta!}" class="longtxt"/></td>
                 </tr>
             </table>
         </form>

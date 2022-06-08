@@ -152,8 +152,8 @@ public class SevController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel service_edit_ajax_save(Integer service_id, String tag, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
-        boolean result = DbWaterRegApi.udpService(service_id, tag, name, address, note, check_type, check_url);
+    public ViewModel service_edit_ajax_save(Integer service_id, String tag, String name, String address, String meta, Integer check_type, String check_url) throws SQLException {
+        boolean result = DbWaterRegApi.udpService(service_id, tag, name, address, meta, check_type, check_url);
 
         if (result) {
             viewModel.code(1, "保存成功！");

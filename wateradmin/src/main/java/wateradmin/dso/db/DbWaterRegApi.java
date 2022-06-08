@@ -142,7 +142,7 @@ public class DbWaterRegApi {
                 .selectList("*", ServiceModel.class);
     }
 
-    public static boolean udpService(Integer service_id, String tag,String name, String address, String note, Integer check_type, String check_url) throws SQLException {
+    public static boolean udpService(Integer service_id, String tag,String name, String address, String meta, Integer check_type, String check_url) throws SQLException {
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
             return false;
         }
@@ -160,7 +160,8 @@ public class DbWaterRegApi {
                 .set("name", name)
                 .set("tag", tag)
                 .set("address", address)
-                .set("note", note)
+                .set("meta", meta)
+                .set("note", meta)
                 .set("check_type", check_type)
                 .set("check_url", check_url);
 
