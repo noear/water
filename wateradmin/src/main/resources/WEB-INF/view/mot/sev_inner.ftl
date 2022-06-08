@@ -139,6 +139,7 @@
                 </left>
                 <middle class="col-4 center">
                     <input type="text" class="w200" name="name" placeholder="名称" id="name" value="${name!}"/>
+                    <input type="hidden" name="tag_name" value="${tag_name!}"/>
                     <button type="submit">查询</button>
                 </middle>
                 <right class="col-4">
