@@ -1,4 +1,4 @@
-package wateradmin.controller.cfg;
+package wateradmin.controller.sev;
 
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Controller
-@Mapping("/cfg/gateway")
+@Mapping("/sev/gateway")
 public class GatewayController extends BaseController {
 
     @Mapping("")
@@ -35,7 +35,7 @@ public class GatewayController extends BaseController {
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
 
-        return view("cfg/gateway");
+        return view("sev/gateway");
     }
 
     @Mapping("inner")
@@ -45,7 +45,7 @@ public class GatewayController extends BaseController {
         viewModel.put("_state", _state);
         viewModel.put("list", list);
 
-        return view("cfg/gateway_inner");
+        return view("sev/gateway_inner");
     }
 
     @Mapping("edit")
@@ -57,7 +57,7 @@ public class GatewayController extends BaseController {
 
         viewModel.set("cfg", cfg);
 
-        return view("cfg/gateway_edit");
+        return view("sev/gateway_edit");
 
     }
 

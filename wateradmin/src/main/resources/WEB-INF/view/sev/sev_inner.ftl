@@ -160,8 +160,6 @@
                 <td>检测路径</td>
                 <td width="120px">检测情况</td>
                 <#if is_admin == 1>
-                    <td width="170px">操作</td>
-                <#else>
                     <td width="80px">操作</td>
                 </#if>
             </tr>
@@ -209,8 +207,8 @@
                     </#if>
                 </td>
 
-                <td class="op">
-                    <#if is_admin == 1>
+                <#if is_admin == 1>
+                    <td class="op">
                         <a class="t2" onclick="deleteService('${m.service_id}')">删除</a> |
                         <#if m.is_enabled == 1>
                             <a class="t2" onclick="disableService('${m.service_id}',0)">禁用</a>
@@ -218,12 +216,9 @@
                         <#if m.is_enabled == 0>
                             <a class="t2" onclick="disableService('${m.service_id}',1)">启用</a>
                         </#if>
-                    </#if>
-                    |
-                    <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=sevchk@${m.address}" class="t2">日志</a>
-                    |
-                    <a href="/sev/service/charts?key=${m.key}" class="t2">监控</a>
-                </td>
+                    </td>
+                </#if>
+
                 </tr>
             </#list>
             </tbody>

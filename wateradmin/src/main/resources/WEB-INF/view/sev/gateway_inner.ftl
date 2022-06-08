@@ -15,7 +15,7 @@
 <script>
 
     function edit(gateway_id) {
-        location.href="/cfg/gateway/edit?gateway_id="+gateway_id;
+        location.href="/sev/gateway/edit?gateway_id="+gateway_id;
     }
 
 </script>

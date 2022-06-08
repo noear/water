@@ -34,7 +34,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/cfg/gateway/ajax/save",
+                url: "/sev/gateway/ajax/save",
                 data: {
                     gateway_id: gateway_id,
                     tag: tag,
@@ -48,7 +48,7 @@
                         top.layer.msg('操作成功');
 
                         setTimeout(function () {
-                            location.href = "/cfg/gateway/inner?tag_name=" + tag  + "&_state=" + _state;
+                            location.href = "/sev/gateway/inner?tag_name=" + tag  + "&_state=" + _state;
                         }, 800);
                     }else{
                         top.layer.msg(data.msg);
@@ -71,7 +71,7 @@
             }, function(){
                 $.ajax({
                     type:"POST",
-                    url:"/cfg/gateway/ajax/del",
+                    url:"/sev/gateway/ajax/del",
                     data:{
                         "gateway_id":gateway_id
                     },
@@ -80,7 +80,7 @@
                             top.layer.msg('操作成功');
 
                             setTimeout(function () {
-                                location.href = "/cfg/gateway/inner?tag_name=" + tag + "&_state=" + _state;
+                                location.href = "/sev/gateway/inner?tag_name=" + tag + "&_state=" + _state;
                             }, 800);
                         }else{
                             top.layer.msg(data.msg);

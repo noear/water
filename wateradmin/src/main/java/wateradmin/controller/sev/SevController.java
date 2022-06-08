@@ -49,7 +49,7 @@ public class SevController extends BaseController {
         viewModel.put("tag_name", tag_name);
         viewModel.put("tags", tags);
 
-        return view("mot/sev");
+        return view("sev/sev");
     }
 
     //服务状态
@@ -64,7 +64,6 @@ public class SevController extends BaseController {
                 }
             }
 
-            viewModel.put("tag_name",tag_name);
             viewModel.set("tabs", nameList);
             viewModel.put("tabs_visible",true);
             viewModel.set("name", name);
@@ -94,7 +93,7 @@ public class SevController extends BaseController {
         viewModel.put("services", services);
         viewModel.put("name", name);
 
-        return view("mot/sev_inner");
+        return view("sev/sev_inner");
     }
 
     @Mapping("/service/status")
@@ -167,7 +166,7 @@ public class SevController extends BaseController {
             _state = 1;
         List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state);
         viewModel.put("services", services);
-        return view("mot/sev_inner_table");
+        return view("sev/sev_inner_table");
     }
 
     //删除服务
@@ -215,7 +214,7 @@ public class SevController extends BaseController {
         viewModel.put("model", model);
         viewModel.put("service_id", service_id);
 
-        return view("mot/sev_edit");
+        return view("sev/sev_edit");
     }
 
     @AuthPermissions(SessionPerms.admin)
@@ -251,7 +250,7 @@ public class SevController extends BaseController {
         viewModel.put("service", sev.name);
         viewModel.put("address", sev.getAddress());
 
-        return view("mot/sev_charts");
+        return view("sev/sev_charts");
     }
 
     // todo: 未完成
