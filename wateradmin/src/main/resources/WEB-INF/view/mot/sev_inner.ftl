@@ -23,6 +23,18 @@
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
     <script>
+        function autofresh() {
+            if ( $('#fresh').text() == '关闭自动刷新') {
+                $('#fresh').text('开启自动刷新');
+                location.reload();
+            } else {
+                $('#fresh').text('关闭自动刷新');
+                setInterval(function(){
+                    freshData();
+                }, 3000);
+            }
+        }
+
         function freshData() {
             var name = $('#name').val();
             var _state = 0;
@@ -34,7 +46,7 @@
                 $('datagrid').empty();
                 $('datagrid').html(rst);
             })
-        };
+        }
 
         $(function(){
             var x = 10;
@@ -57,11 +69,6 @@
                     "left": (e.pageX+x)  + "px"
                 });
             });
-
-            //自动刷新
-            setInterval(function(){
-                freshData();
-            }, 3000);
         });
     </script>
 </head>
@@ -85,7 +92,7 @@
         <toolbar>
             <flex>
                 <left class="col-4">
-
+                    <button onclick="autofresh();" class="w100"  type="button" id="fresh">开启自动刷新</button>
                 </left>
                 <middle class="col-4 center">
                     <input type="text" class="w200" name="name" placeholder="名称" id="name" value="${name!}"/>
