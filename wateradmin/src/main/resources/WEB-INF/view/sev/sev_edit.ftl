@@ -59,7 +59,7 @@
 
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="history.back(-1)" class="noline">服务状态</a></h2> / 添加
+            <h2 class="ln30"><a href="#" onclick="history.back(-1)" class="noline">服务列表</a></h2> / 添加
         </left>
         <right class="form">
             <#if is_admin == 1>
