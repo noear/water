@@ -30,7 +30,7 @@ public class SevController extends BaseController {
 
     //服务状态
     @Mapping("")
-    public ModelAndView sev(Context ctx, String tag_name) throws SQLException {
+    public ModelAndView sev(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
 
         //权限过滤
@@ -53,7 +53,7 @@ public class SevController extends BaseController {
 
     //服务状态
     @Mapping("inner")
-    public ModelAndView inner(String tag_name, String name, Integer _state) throws SQLException {
+    public ModelAndView inner(String tag_name, String name, int _state) throws SQLException {
         if (SettingUtils.serviceScale() == ScaleType.large) {
             List<TagCountsModel> nameList = DbWaterRegApi.getServiceNameList(tag_name);
 
@@ -71,22 +71,10 @@ public class SevController extends BaseController {
         }
 
 
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
+        List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state == 0);
 
-        if (_state == null) {
-            _state = 1;
-        }
 
-        List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state);
-
+        viewModel.put("_state", _state);
         viewModel.put("tag_name", tag_name);
         viewModel.put("services", services);
         viewModel.put("name", name);
@@ -147,26 +135,6 @@ public class SevController extends BaseController {
             return "The service unsupported";
         }
     }
-
-    //页面自动刷新获取表单数据
-    @Mapping("ajax/service_table")
-    public ModelAndView manageS_table(String tag_name, String name, Integer _state, String _type) throws SQLException {
-        if (_state != null) {
-            viewModel.put("_state", _state);
-            int state = _state;
-            if (state == 0) {
-                _state = 1;
-            } else if (state == 1) {
-                _state = 0;
-            }
-        }
-        if (_state == null)
-            _state = 1;
-        List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state);
-        viewModel.put("services", services);
-        return view("sev/sev_inner_table");
-    }
-
 
     //服务状态
     @Mapping("edit")
