@@ -69,13 +69,17 @@ public class ServerPlugin implements Plugin {
                     }
                 }
 
-                Context context = Context.current();
+
 
                 String sqlUp = cmd.text.toUpperCase();
                 String chkUp = "User_Id=? AND Pass_Wd=? AND Is_Disabled=0".toUpperCase();
 
                 if (cmd.timespan() > 2000 || cmd.isLog > 0 || sqlUp.indexOf("INSERT INTO ") >= 0 || sqlUp.indexOf("UPDATE ") >= 0 || sqlUp.indexOf("DELETE ") >= 0 || sqlUp.indexOf(chkUp) >= 0) {
-                    WaterClient.Track.trackOfBehavior(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), context.realIp());
+                    Context context = Context.current();
+
+                    if (context != null) {
+                        WaterClient.Track.trackOfBehavior(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), context.realIp());
+                    }
                 }
 
                 if (isTrackEnable || cmd.isLog > 0) {
