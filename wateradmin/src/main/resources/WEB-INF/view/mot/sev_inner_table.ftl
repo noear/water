@@ -21,14 +21,14 @@
             <#if m.check_type == 0>
                 <a href="/mot/service/status?s=${m.name}@${m.address}" target="_blank">
                     ${m.address}
-                    <#if m.note?default("")?length gt 0>
-                        - ${m.note}
+                    <#if m.meta?default("")?length gt 0>
+                        - ${m.meta}
                     </#if>
                 </a>
             <#else>
                 ${m.address}
-                <#if m.note?default("")?length gt 0>
-                    - ${m.note}
+                <#if m.meta?default("")?length gt 0>
+                    - ${m.meta}
                 </#if>
             </#if>
         </td>

@@ -101,7 +101,7 @@
                 </tr>
                 <tr>
                     <th>启动备注</th>
-                    <td><input type="text" id="note" value="${model.note!}" class="longtxt"/></td>
+                    <td><input type="text" id="meta" value="${model.meta!}" class="longtxt"/></td>
                 </tr>
             </table>
         </form>

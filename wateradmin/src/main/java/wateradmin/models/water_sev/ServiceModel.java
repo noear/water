@@ -23,7 +23,7 @@ public class ServiceModel implements IBinder {
     public String ver;
     public String address;
     public String port;
-    public String note;
+    public String meta;
     public String alarm_mobile;
     public String alarm_sign;
     public int state;
@@ -44,7 +44,7 @@ public class ServiceModel implements IBinder {
         name = s.get("name").value(null);
         ver = s.get("ver").value(null);
         address = s.get("address").value(null);
-        note = s.get("note").value(null);
+        meta = s.get("meta").value(null);
         alarm_mobile = s.get("alarm_mobile").value(null);
         alarm_sign = s.get("alarm_sign").value(null);
         state = s.get("state").intValue(0);
