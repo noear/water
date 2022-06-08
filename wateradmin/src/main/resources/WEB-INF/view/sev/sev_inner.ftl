@@ -110,7 +110,7 @@
             <flex>
                 <left class="col-4">
                     <#if is_operator == 1>
-                        <a class="btn edit mar10-l" href="/sev/service/edit">手动添加</a>
+                        <a class="btn edit" href="/sev/service/edit">手动添加</a>
                     </#if>
                 </left>
                 <middle class="col-4 center">
