@@ -23,48 +23,6 @@
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
     <script>
-        function deleteService(service_id) {
-            top.layer.confirm('确定删除', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                $.ajax({
-                    type:"POST",
-                    url:"/mot/service/ajax/deleteService",
-                    data:{"service_id":service_id},
-                    success:function(data){
-                        top.layer.msg('操作成功');
-                        if ( $('#fresh').text() == '开启自动刷新') {
-                            location.reload();
-                        }
-                    }
-                });
-                top.layer.close(top.layer.index);
-            });
-        };
-
-        function disableService(service_id,type) {
-            var text = "启用";
-            if (type == 0) {
-                text = "禁用";
-            }
-            top.layer.confirm('确定'+text, {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                $.ajax({
-                    type:"POST",
-                    url:"/mot/service/ajax/disable",
-                    data:{"service_id":service_id,"is_enabled":type},
-                    success:function(data){
-                        top.layer.msg(data.msg);
-                        if ( $('#fresh').text() == '开启自动刷新') {
-                            location.reload();
-                        }
-                    }
-                });
-                top.layer.close(top.layer.index);
-            });
-        };
-
         function autofresh() {
             if ( $('#fresh').text() == '关闭自动刷新') {
                 $('#fresh').text('开启自动刷新');
