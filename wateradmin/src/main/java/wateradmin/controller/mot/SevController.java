@@ -4,7 +4,6 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
-import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.water.WaterProxy;
@@ -12,7 +11,6 @@ import org.noear.water.utils.HttpUtils;
 import org.noear.water.utils.TextUtils;
 import wateradmin.controller.BaseController;
 import wateradmin.dso.TagChecker;
-import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterRegApi;
@@ -157,69 +155,6 @@ public class SevController extends BaseController {
         viewModel.put("services", services);
         return view("mot/sev_inner_table");
     }
-
-    //删除服务
-    @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/ajax/deleteService")
-    public ViewModel deleteServiceById(Integer service_id) throws SQLException {
-        ServiceModel sev = DbWaterRegApi.getServiceById(service_id);
-        boolean result = DbWaterRegApi.deleteServiceById(service_id);
-
-        //删除消费者记录
-        DbWaterRegApi.delConsumer(sev.address);
-
-        if (result) {
-            viewModel.code(1, "删除成功！");
-        } else {
-            viewModel.code(0, "删除失败！");
-        }
-
-        return viewModel;
-    }
-
-    //启用 | 禁用 服务
-    @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/ajax/disable")
-    public ViewModel disable(Integer service_id, Integer is_enabled) throws SQLException {
-
-        boolean result = DbWaterRegApi.disableService(service_id, is_enabled);
-        if (result) {
-            viewModel.code(1, "操作成功！");
-        } else {
-            viewModel.code(0, "操作失败！");
-        }
-
-        return viewModel;
-    }
-
-    //服务状态
-    @Mapping("/service/edit")
-    public ModelAndView service_edit(Integer service_id) throws SQLException {
-        ServiceModel model = new ServiceModel();
-        if (service_id != null) {
-            model = DbWaterRegApi.getServiceById(service_id);
-        }
-
-        viewModel.put("model", model);
-        viewModel.put("service_id", service_id);
-
-        return view("mot/sev_edit");
-    }
-
-    @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/edit/ajax/save")
-    public ViewModel service_edit_ajax_save(Integer service_id, String tag, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
-        boolean result = DbWaterRegApi.udpService(service_id, tag, name, address, note, check_type, check_url);
-
-        if (result) {
-            viewModel.code(1, "保存成功！");
-        } else {
-            viewModel.code(0, "保存失败！");
-        }
-
-        return viewModel;
-    }
-
 
     //性能监控图标统计
     // todo: 未完成
