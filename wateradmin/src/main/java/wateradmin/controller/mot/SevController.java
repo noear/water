@@ -18,7 +18,7 @@ import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_reg.ServiceModel;
+import wateradmin.models.water_sev.ServiceModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;

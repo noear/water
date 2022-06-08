@@ -12,11 +12,12 @@ import wateradmin.Config;
 import wateradmin.dso.CacheUtil;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_mot.ServiceRuntimeModel;
-import wateradmin.models.water_reg.ServiceConsumerModel;
-import wateradmin.models.water_reg.ServiceModel;
+import wateradmin.models.water_sev.ServiceConsumerModel;
+import wateradmin.models.water_sev.ServiceModel;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class DbWaterRegApi {
@@ -37,6 +38,26 @@ public class DbWaterRegApi {
         GatewayUtils.notice(m.tag, m.name);
 
         return isOk;
+    }
+
+    public static void deleteServiceByIds(int act, String ids) throws SQLException {
+        List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+
+        if (list.size() == 0) {
+            return;
+        }
+
+        if (act == 9) {
+            db().table("water_reg_service")
+                    .whereIn("service_id", list)
+                    .delete();
+        } else {
+            db().table("water_reg_service")
+                    .set("is_enabled", (act == 1 ? 1 : 0))
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .whereIn("service_id", list)
+                    .update();
+        }
     }
 
     //修改服务启用禁用状态

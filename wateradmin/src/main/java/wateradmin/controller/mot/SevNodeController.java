@@ -13,7 +13,7 @@ import wateradmin.dso.db.DbWaterOpsApi;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_reg.ServiceSpeedModel;
+import wateradmin.models.water_sev.ServiceSpeedModel;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -1,6 +1,5 @@
 package wateradmin.controller.sev;
 
-import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -15,22 +14,22 @@ import wateradmin.dso.SessionPerms;
 import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
+import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water_reg.ServiceModel;
+import wateradmin.models.water_sev.ServiceModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 @Controller
-@Mapping("/sev/")
+@Mapping("/sev/service")
 public class SevController extends BaseController {
 
     //服务状态
-    @Mapping("/service")
+    @Mapping("")
     public ModelAndView sev(Context ctx, String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterRegApi.getServiceTagList();
 
@@ -53,24 +52,23 @@ public class SevController extends BaseController {
     }
 
     //服务状态
-    @Mapping("/service/inner")
+    @Mapping("inner")
     public ModelAndView inner(String tag_name, String name, Integer _state) throws SQLException {
-        if(SettingUtils.serviceScale() == ScaleType.large){
+        if (SettingUtils.serviceScale() == ScaleType.large) {
             List<TagCountsModel> nameList = DbWaterRegApi.getServiceNameList(tag_name);
 
-            if(Utils.isEmpty(name)){
-                if(nameList.size() > 0){
+            if (Utils.isEmpty(name)) {
+                if (nameList.size() > 0) {
                     name = nameList.get(0).tag;
                 }
             }
 
             viewModel.set("tabs", nameList);
-            viewModel.put("tabs_visible",true);
+            viewModel.put("tabs_visible", true);
             viewModel.set("name", name);
-        }else{
-            viewModel.put("tabs_visible",false);
+        } else {
+            viewModel.put("tabs_visible", false);
         }
-
 
 
         if (_state != null) {
@@ -96,7 +94,7 @@ public class SevController extends BaseController {
         return view("sev/sev_inner");
     }
 
-    @Mapping("/service/status")
+    @Mapping("status")
     public String service_status(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
@@ -115,7 +113,7 @@ public class SevController extends BaseController {
         }
     }
 
-    @Mapping("/service/check")
+    @Mapping("check")
     public String service_check(String s) throws Exception {
         if (TextUtils.isEmpty(s)) {
             return "Not supported";
@@ -151,7 +149,7 @@ public class SevController extends BaseController {
     }
 
     //页面自动刷新获取表单数据
-    @Mapping("/service/ajax/service_table")
+    @Mapping("ajax/service_table")
     public ModelAndView manageS_table(String tag_name, String name, Integer _state, String _type) throws SQLException {
         if (_state != null) {
             viewModel.put("_state", _state);
@@ -169,42 +167,9 @@ public class SevController extends BaseController {
         return view("sev/sev_inner_table");
     }
 
-    //删除服务
-    @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/ajax/deleteService")
-    public ViewModel deleteServiceById(Integer service_id) throws SQLException {
-        ServiceModel sev = DbWaterRegApi.getServiceById(service_id);
-        boolean result = DbWaterRegApi.deleteServiceById(service_id);
-
-        //删除消费者记录
-        DbWaterRegApi.delConsumer(sev.address);
-
-        if (result) {
-            viewModel.code(1, "删除成功！");
-        } else {
-            viewModel.code(0, "删除失败！");
-        }
-
-        return viewModel;
-    }
-
-    //启用 | 禁用 服务
-    @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/ajax/disable")
-    public ViewModel disable(Integer service_id, Integer is_enabled) throws SQLException {
-
-        boolean result = DbWaterRegApi.disableService(service_id, is_enabled);
-        if (result) {
-            viewModel.code(1, "操作成功！");
-        } else {
-            viewModel.code(0, "操作失败！");
-        }
-
-        return viewModel;
-    }
 
     //服务状态
-    @Mapping("/service/edit")
+    @Mapping("edit")
     public ModelAndView service_edit(Integer service_id) throws SQLException {
         ServiceModel model = new ServiceModel();
         if (service_id != null) {
@@ -218,7 +183,7 @@ public class SevController extends BaseController {
     }
 
     @AuthPermissions(SessionPerms.admin)
-    @Mapping("/service/edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel service_edit_ajax_save(Integer service_id, String tag, String name, String address, String note, Integer check_type, String check_url) throws SQLException {
         boolean result = DbWaterRegApi.udpService(service_id, tag, name, address, note, check_type, check_url);
 
@@ -231,60 +196,12 @@ public class SevController extends BaseController {
         return viewModel;
     }
 
+    @AuthPermissions(SessionPerms.admin)
+    @Mapping("ajax/batch")
+    public ViewModel service_ajax_batch(int act, String ids) throws SQLException {
 
-    //性能监控图标统计
-    // todo: 未完成
-    @Mapping("/service/charts")
-    public ModelAndView speedCharts(String key) throws SQLException {
-        if (key == null) {
-            key = "";
-        }
+        DbWaterRegApi.deleteServiceByIds(act, ids);
 
-        ServiceModel sev = DbWaterRegApi.getServiceByKey(key);
-
-        Map<String, List> speedReqTate = DbWaterRegApi.getChartsForDate(key, "memory_used"); //total_num
-        Map<String, List> speeds = DbWaterRegApi.getChartsForMonth(key);
-        viewModel.put("speedReqTate", ONode.stringify(speedReqTate));
-        viewModel.put("speeds", ONode.stringify(speeds));
-        viewModel.put("key", key);
-        viewModel.put("service", sev.name);
-        viewModel.put("address", sev.getAddress());
-
-        return view("sev/sev_charts");
-    }
-
-    // todo: 未完成
-    @Mapping("/service/charts/ajax/reqtate")
-    public ViewModel speedCharts_reqtate(String key, Integer type) throws SQLException {
-        String valField = "memory_used";
-        if (type == null) {
-            type = 0;
-        }
-        switch (type) {
-            case 0:
-                valField = "memory_used";
-                break;
-            case 1:
-                valField = "memory_total";
-                break;
-            case 2:
-                valField = "memory_max";
-                break;
-            case 3:
-                valField = "thread_peak_count";
-                break;
-            case 4:
-                valField = "thread_count";
-                break;
-            case 5:
-                valField = "thread_daemon_count";
-                break;
-        }
-
-        Map<String, List> speedReqTate = DbWaterRegApi.getChartsForDate(key, valField);
-        viewModel.put("speedReqTate", speedReqTate);
-        viewModel.put("key", key);
-        viewModel.put("typeName", valField);
-        return viewModel;
+        return viewModel.code(1, "ok");
     }
 }

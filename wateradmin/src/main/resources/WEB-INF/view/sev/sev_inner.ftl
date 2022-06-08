@@ -23,47 +23,34 @@
         .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
     <script>
-        function deleteService(service_id) {
-            top.layer.confirm('确定删除', {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                $.ajax({
-                    type:"POST",
-                    url:"/sev/service/ajax/deleteService",
-                    data:{"service_id":service_id},
-                    success:function(data){
-                        top.layer.msg('操作成功');
-                        if ( $('#fresh').text() == '开启自动刷新') {
-                            location.reload();
-                        }
-                    }
-                });
-                top.layer.close(top.layer.index);
-            });
-        };
+        function del(act,hint){
+            var vm = formToMap(".sel_from");
 
-        function disableService(service_id,type) {
-            var text = "启用";
-            if (type == 0) {
-                text = "禁用";
+            if(!vm.sel_id){
+                alert("请选择..");
+                return;
             }
-            top.layer.confirm('确定'+text, {
-                btn: ['确定','取消'] //按钮
-            }, function(){
-                $.ajax({
-                    type:"POST",
-                    url:"/sev/service/ajax/disable",
-                    data:{"service_id":service_id,"is_enabled":type},
-                    success:function(data){
-                        top.layer.msg(data.msg);
-                        if ( $('#fresh').text() == '开启自动刷新') {
+
+            if(confirm("确定要"+hint+"吗？") == false) {
+                return;
+            }
+
+            $.ajax({
+                type:"POST",
+                url:"ajax/batch",
+                data:{act: act, ids: vm.sel_id},
+                success:function (data) {
+                    if(data.code==1) {
+                        top.layer.msg('操作成功');
+                        setTimeout(function(){
                             location.reload();
-                        }
+                        },800);
+                    }else{
+                        top.layer.msg(data.msg);
                     }
-                });
-                top.layer.close(top.layer.index);
+                }
             });
-        };
+        }
 
         $(function(){
             var x = 10;
@@ -85,6 +72,11 @@
                     "top": (e.pageY+y) + "px",
                     "left": (e.pageX+x)  + "px"
                 });
+            });
+
+            $('#sel_all').change(function(){
+                var ckd= $(this).prop('checked');
+                $('[name=sel_id]').prop('checked',ckd);
             });
         });
     </script>
@@ -109,7 +101,13 @@
         <toolbar>
             <flex>
                 <left class="col-4">
-                    <#if is_operator == 1>
+                    <#if is_admin == 1>
+                        <#if _state == 0>
+                            <button type='button' class="minor mar10-l" onclick="del(0,'禁用')" >禁用</button>
+                        <#else>
+                            <button type='button' class="minor mar10-l" onclick="del(1,'启用')" >启用</button>
+                        </#if>
+
                         <a class="btn edit" href="/sev/service/edit">手动添加</a>
                     </#if>
                 </left>
@@ -128,6 +126,7 @@
         <table>
             <thead>
             <tr>
+                <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="140px" class="left">名称</td>
                 <td class="left">地址</td>
                 <td width="50px">检测<br/>类型</td>
@@ -138,13 +137,14 @@
                 </#if>
             </tr>
             </thead>
-            <tbody id="tbody" >
+            <tbody id="tbody" class="sel_from">
             <#list services as m>
                 <#if m.check_last_state == 1>
                 <tr style="color: red" title="${m.code_location!}">
                 <#else>
                     <tr title="${m.code_location!}">
                 </#if>
+                <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.service_id}" /><a></a></label></checkbox></td>
                 <td class="left">${m.name}</td>
                 <td class="left break">
                     <#if m.check_type == 0>
@@ -180,19 +180,6 @@
                         - no
                     </#if>
                 </td>
-
-                <#if is_admin == 1>
-                    <td class="op">
-                        <a class="t2" onclick="deleteService('${m.service_id}')">删除</a> |
-                        <#if m.is_enabled == 1>
-                            <a class="t2" onclick="disableService('${m.service_id}',0)">禁用</a>
-                        </#if>
-                        <#if m.is_enabled == 0>
-                            <a class="t2" onclick="disableService('${m.service_id}',1)">启用</a>
-                        </#if>
-                    </td>
-                </#if>
-
                 </tr>
             </#list>
             </tbody>

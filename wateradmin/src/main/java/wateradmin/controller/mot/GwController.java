@@ -21,10 +21,10 @@ import wateradmin.dso.db.DbWaterRegApi;
 import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.GatewayModel;
-import wateradmin.models.water_reg.GatewayVoModel;
-import wateradmin.models.water_reg.ServiceConsumerModel;
-import wateradmin.models.water_reg.ServiceModel;
-import wateradmin.models.water_reg.ServiceSpeedModel;
+import wateradmin.models.water_sev.GatewayVoModel;
+import wateradmin.models.water_sev.ServiceConsumerModel;
+import wateradmin.models.water_sev.ServiceModel;
+import wateradmin.models.water_sev.ServiceSpeedModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.io.IOException;

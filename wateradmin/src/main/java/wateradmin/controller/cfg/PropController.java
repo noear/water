@@ -25,7 +25,7 @@ import java.util.List;
 @Mapping("/cfg/prop")
 public class PropController extends BaseController {
     @Mapping("")
-    public ModelAndView home(String tag_name,  int _state) throws SQLException {
+    public ModelAndView home(String tag_name, int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
         TagChecker.filter(tags, m -> m.tag);
@@ -117,10 +117,6 @@ public class PropController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
         String jsonD = IOUtils.toString(file.content);
         JsondEntity entity = JsondUtils.decode(jsonD);
 
@@ -140,15 +136,7 @@ public class PropController extends BaseController {
     //批量处理
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
-    public ViewModel batchDo(Context ctx, String tag, Integer act, String ids) throws Exception {
-        if (Session.current().isAdmin() == false) {
-            return viewModel.code(0, "没有权限！");
-        }
-
-        if (act == null) {
-            act = 0;
-        }
-
+    public ViewModel batchDo(int act, String ids) throws Exception {
         DbWaterCfgApi.delConfigByIds(act, ids);
 
         return viewModel.code(1, "ok");

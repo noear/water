@@ -1,4 +1,4 @@
-package wateradmin.models.water_reg;
+package wateradmin.models.water_sev;
 
 import lombok.Getter;
 import org.noear.weed.*;

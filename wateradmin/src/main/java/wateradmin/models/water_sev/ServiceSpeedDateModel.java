@@ -1,4 +1,4 @@
-package wateradmin.models.water_reg;
+package wateradmin.models.water_sev;
 
 import lombok.Getter;
 import org.noear.weed.*;
@@ -8,7 +8,7 @@ import org.noear.weed.*;
 /// 
 /// </summary>
 @Getter
-public class ServiceSpeedHourModel implements IBinder {
+public class ServiceSpeedDateModel implements IBinder {
     public String service;
     public String tag;
     public String name;
@@ -21,9 +21,6 @@ public class ServiceSpeedHourModel implements IBinder {
     public long total_num_slow2;
     public long total_num_slow5;
     public int log_date;
-    public int log_hour;
-
-    public long val;
 
     public void bind(GetHandlerEx s) {
         //1.source:数据源
@@ -40,12 +37,9 @@ public class ServiceSpeedHourModel implements IBinder {
         total_num_slow2 = s.get("total_num_slow2").value(0L);
         total_num_slow5 = s.get("total_num_slow5").value(0L);
         log_date = s.get("log_date").value(0);
-        log_hour = s.get("log_hour").value(0);
-
-        val = s.get("val").value(0L);
     }
 
     public IBinder clone() {
-        return new ServiceSpeedHourModel();
+        return new ServiceSpeedDateModel();
     }
 }
