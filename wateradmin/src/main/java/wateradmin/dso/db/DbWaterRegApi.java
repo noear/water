@@ -97,7 +97,7 @@ public class DbWaterRegApi {
     public static List<ServiceModel> getServices(String tag_name, String name,boolean is_enabled) throws SQLException {
         DbTableQuery qr = db()
                 .table("water_reg_service")
-                .where("is_enabled = ?", is_enabled ? 1 : 0);
+                .whereEq("is_enabled", is_enabled ? 1 : 0);
 
         if ("_".equals(tag_name)) {
             qr.andEq("tag", "");
