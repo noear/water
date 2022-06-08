@@ -136,9 +136,6 @@
             <flex>
                 <left class="col-4">
                     <button onclick="autofresh();" class="w100"  type="button" id="fresh">开启自动刷新</button>
-                    <#if is_operator == 1>
-                        <a class="btn edit mar10-l" href="/mot/service/edit">添加</a>
-                    </#if>
                 </left>
                 <middle class="col-4 center">
                     <input type="text" class="w200" name="name" placeholder="名称" id="name" value="${name!}"/>

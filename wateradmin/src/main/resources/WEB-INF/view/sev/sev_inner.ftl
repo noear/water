@@ -65,32 +65,6 @@
             });
         };
 
-        function autofresh() {
-            if ( $('#fresh').text() == '关闭自动刷新') {
-                $('#fresh').text('开启自动刷新');
-                location.reload();
-            } else {
-                $('#fresh').text('关闭自动刷新');
-                setInterval(function(){
-                    freshData();
-                }, 3000);
-            }
-
-        };
-
-        function freshData() {
-            var name = $('#name').val();
-            var _state = 0;
-            <#if _state??>
-            var _state = ${_state};
-            </#if>
-
-            $.get('/sev/service/ajax/service_table?tag_name=${tag_name!}&name='+name+'&_state='+_state,function (rst) {
-                $('datagrid').empty();
-                $('datagrid').html(rst);
-            })
-        };
-
         $(function(){
             var x = 10;
             var y = 20;
@@ -135,9 +109,8 @@
         <toolbar>
             <flex>
                 <left class="col-4">
-                    <button onclick="autofresh();" class="w100"  type="button" id="fresh">开启自动刷新</button>
                     <#if is_operator == 1>
-                        <a class="btn edit mar10-l" href="/sev/service/edit">添加</a>
+                        <a class="btn edit mar10-l" href="/sev/service/edit">手动添加</a>
                     </#if>
                 </left>
                 <middle class="col-4 center">
