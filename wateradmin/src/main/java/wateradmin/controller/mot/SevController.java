@@ -147,7 +147,7 @@ public class SevController extends BaseController {
 
     //页面自动刷新获取表单数据
     @Mapping("/service/ajax/service_table")
-    public ModelAndView manageS_table(String tag_name, String name, int _state, String _type) throws SQLException {
+    public ModelAndView service_table(String tag_name, String name, int _state, String _type) throws SQLException {
 
         List<ServiceModel> services = DbWaterRegApi.getServices(tag_name, name, _state == 0);
 
