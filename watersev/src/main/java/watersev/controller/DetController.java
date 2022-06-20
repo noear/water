@@ -79,12 +79,14 @@ public final class DetController implements IJob {
 
         if (url.startsWith("http://") || url.startsWith("https://")) {
             check_type0_http(task, url);
+            return;
         }
 
-        if (url.startsWith("tcp://")) {
+        if (url.startsWith("://")) {
             RunUtils.runAsyn(()->{
                 check_type0_tcp(task, url);
             });
+            return;
         }
     }
 

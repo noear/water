@@ -137,12 +137,14 @@ public final class SevCheckController implements IJob {
 
         if (url.startsWith("http://") || url.startsWith("https://")) {
             check_type0_http(sev, url);
+            return;
         }
 
-        if (url.startsWith("tcp://")) {
+        if (url.startsWith("://")) {
             RunUtils.runAsyn(()->{
                 check_type0_tcp(sev, url);
             });
+            return;
         }
     }
 
