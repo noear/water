@@ -3,7 +3,7 @@ package wateradmin;
 import org.noear.snack.ONode;
 import org.noear.solon.SolonApp;
 import org.noear.solon.auth.AuthUtil;
-import org.noear.solon.extend.health.HealthHandler;
+import org.noear.solon.health.HealthHandler;
 import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
