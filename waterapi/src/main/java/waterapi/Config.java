@@ -6,7 +6,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
-import org.noear.solon.extend.health.HealthHandler;
+import org.noear.solon.health.HealthHandler;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
@@ -17,8 +17,6 @@ import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
-
-import java.util.Properties;
 
 public class Config {
     static final String TML_MARK_SERVER = "${server}";

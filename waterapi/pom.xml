@@ -45,12 +45,12 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.health</artifactId>
+            <artifactId>solon.health</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.properties.yaml</artifactId>
+            <artifactId>solon.config.yaml</artifactId>
         </dependency>
 
         <dependency>

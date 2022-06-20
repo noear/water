@@ -117,25 +117,19 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solon.extend.properties.yaml</artifactId>
+                <artifactId>solon.config.yaml</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solon.extend.staticfiles</artifactId>
+                <artifactId>solon.web.staticfiles</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solon.extend.health</artifactId>
-                <version>${solon.ver}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.noear</groupId>
-                <artifactId>solon.extend.servlet</artifactId>
+                <artifactId>solon.health</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 

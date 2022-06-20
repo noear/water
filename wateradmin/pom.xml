@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.extend.cors</artifactId>
+            <artifactId>solon.web.cors</artifactId>
             <version>${solon.ver}</version>
         </dependency>
 
