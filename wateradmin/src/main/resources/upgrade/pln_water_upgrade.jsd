@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 5;
+let ver_new = 6;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -127,7 +127,7 @@ if(ver_old < 5){
     //资源改名
     db2.table('grit_resource').set('display_name','告警工具').whereEq('display_name','日常工具').andEq('link_uri','/tool/').update();
     //添加资源
-     let tmlRes = db2.table('grit_resource').whereEq('display_name','数据监视').andEq('link_uri','/tool/monitor').limit(1).selectMap('*');
+    let tmlRes = db2.table('grit_resource').whereEq('display_name','数据监视').andEq('link_uri','/tool/monitor').limit(1).selectMap('*');
     if(tmlRes.size() > 0){
         tmlRes.remove("resource_id");
 
@@ -140,6 +140,45 @@ if(ver_old < 5){
         }
     }
 
+}
+
+//for 2.7.2
+if(ver_old < 6){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
+    //添加资源(服务发现)
+    let tmlRes = db2.table('grit_resource').whereEq('display_name','配置管理').andEq('link_uri','/cfg/').limit(1).selectMap('*');
+    if(tmlRes.size() > 0){
+        tmlRes.remove("resource_id");
+
+        if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/sev/').selectExists() == false){
+            let resId1 = db2.table('grit_resource')
+                .setMap(tmlRes).set('display_name','服务发现').set('order_index',4).set('link_uri','/sev/').set("guid", XUtil.guid())
+                .usingNull(false)
+                .usingExpr(false)
+                .insert();
+
+            //资源改名(上游配置)
+            db2.table('grit_resource').set('resource_pid',resId1).set('link_uri','/sev/gateway')
+               .whereEq('display_name','上游配置').andEq('link_uri','/cfg/gateway')
+               .update();
+
+            //添加资源（服务列表）
+            tmlRes = db2.table('grit_resource').whereEq('display_name','上游配置').andEq('link_uri','/cfg/gateway').limit(1).selectMap('*');
+            if(tmlRes.size() > 0){
+                tmlRes.remove("resource_id");
+
+                let resId2 = db2.table('grit_resource')
+                .setMap(tmlRes).set('display_name','服务列表').set('order_index',0).set('link_uri','/sev/service').set("guid", XUtil.guid())
+                .usingNull(false)
+                .usingExpr(false)
+                .insert();
+            }
+
+        }
+    }
 }
 
 //3.设定版本
