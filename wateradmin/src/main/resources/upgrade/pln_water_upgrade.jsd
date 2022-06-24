@@ -177,6 +177,19 @@ if(ver_old < 6){
                 .usingNull(false)
                 .usingExpr(false)
                 .insert();
+
+                //为'服务状态'的用户，添加'服务列表'
+                tmlRes = db2.table('grit_resource').whereEq('display_name','服务状态').andEq('link_uri','/mot/service').limit(1).selectMap('*');
+                if(tmlRes.resource_id){
+                    let resList = db2.table('grit_resource_linked').whereEq('resource_id',tmlRes.resource_id)
+                                     .selectDataList('resource_id,subject_id,subject_type');
+
+                    resList.forEach(r1 => {
+                        r1.set('resource_id',resId2);
+                    });
+
+                    db2.table('grit_resource_linked').insertList(resList);
+                }
             }
         }
     }
