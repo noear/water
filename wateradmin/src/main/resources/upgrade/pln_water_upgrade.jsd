@@ -188,7 +188,7 @@ if(ver_old < 6){
                         r1.set('resource_id',resId2);
                     });
 
-                    db2.table('grit_resource_linked').insertList(resList);
+                    db2.table('grit_resource_linked').insertList(resList.getRows());
                 }
             }
         }
