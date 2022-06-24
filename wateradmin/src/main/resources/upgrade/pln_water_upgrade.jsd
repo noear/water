@@ -164,19 +164,20 @@ if(ver_old < 6){
             db2.table('grit_resource').set('resource_pid',resId1).set('link_uri','/sev/gateway')
                .whereEq('display_name','上游配置').andEq('link_uri','/cfg/gateway')
                .update();
+        }
 
-            //添加资源（服务列表）
-            tmlRes = db2.table('grit_resource').whereEq('display_name','上游配置').andEq('link_uri','/cfg/gateway').limit(1).selectMap('*');
-            if(tmlRes.size() > 0){
-                tmlRes.remove("resource_id");
+        //添加资源（服务列表）
+        tmlRes = db2.table('grit_resource').whereEq('display_name','上游配置').andEq('link_uri','/sev/gateway').limit(1).selectMap('*');
+        if(tmlRes.size() > 0){
+            tmlRes.remove("resource_id");
 
+            if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/sev/service').selectExists() == false){
                 let resId2 = db2.table('grit_resource')
                 .setMap(tmlRes).set('display_name','服务列表').set('order_index',0).set('link_uri','/sev/service').set("guid", XUtil.guid())
                 .usingNull(false)
                 .usingExpr(false)
                 .insert();
             }
-
         }
     }
 }
