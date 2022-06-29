@@ -35,10 +35,10 @@
                 <#if subjectScale gt 0>
                     <a href='/grit/ui/subject/group' target="inner">账号组</a>
                     <a href='/grit/ui/subject/entity' target="inner">账号</a>
-                    <a href='/grit/ui/auth' target="inner">授权</a>
+                    <a href='/grit/ui/auth?spaceCode=wateradmin' target="inner">授权</a>
                 <#else>
                     <a href='/grit/ui/subject/entity/s' target="inner">账号</a>
-                    <a href='/grit/ui/auth/s' target="inner">授权</a>
+                    <a href='/grit/ui/auth/s?spaceCode=wateradmin' target="inner">授权</a>
                 </#if>
 
                 <br/>
