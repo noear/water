@@ -54,9 +54,9 @@ public class AdminController extends BaseController {
         });
 
 
-        viewModel.put("name_topic","water.setting.scale.topic");
-        viewModel.put("name_service","water.setting.scale.service");
-        viewModel.put("name_subject","water.setting.scale.subject");
+        viewModel.put("name_topic", SettingUtils.name_topic);
+        viewModel.put("name_service", SettingUtils.name_service);
+        viewModel.put("name_subject", SettingUtils.name_subject);
 
         viewModel.put("sets", sets);
 
