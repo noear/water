@@ -1,7 +1,7 @@
 package demoapi;
 
 import org.noear.solon.Solon;
-import org.noear.solon.extend.cors.CrossHandler;
+import org.noear.solon.web.cors.CrossHandler;
 
 /**
  * @author noear 2021/11/7 created

@@ -22,7 +22,7 @@
         <!-- Http 启动器 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.boot.jdkhttp</artifactId>
+            <artifactId>solon.boot.jlhttp</artifactId>
             <version>${solon.ver}</version>
         </dependency>
 
