@@ -56,6 +56,7 @@ public class CMD_track_add2 extends UapiBase {
         }
 
         TrackEventGather gather = ONode.deserialize(data_json, TrackEventGather.class);
+
         if (gather != null) {
             Config.rd_track.open(ru -> {
                 for (Map.Entry<String, TrackEvent> kv : gather.mainSet.entrySet()) {
