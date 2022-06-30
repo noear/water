@@ -7,6 +7,7 @@ import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
+import org.noear.water.utils.BehaviorUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
@@ -43,7 +44,7 @@ public class ServerPlugin implements Plugin {
                     }
                 }
 
-                WaterClient.Track.trackOfPerformance(service_name(), cmd, 1000);
+                BehaviorUtils.trackOfPerformance(service_name(), cmd, 1000);
 
                 if (isTrackEnable || cmd.isLog > 0) {
                     String tag = cmd.context.schema();
@@ -78,7 +79,7 @@ public class ServerPlugin implements Plugin {
                     Context context = Context.current();
 
                     if (context != null) {
-                        WaterClient.Track.trackOfBehavior(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), context.realIp());
+                        BehaviorUtils.trackOfBehavior(service_name(), cmd, context.userAgent(), context.path(), user_puid() + "." + user_name(), context.realIp());
                     }
                 }
 
