@@ -9,8 +9,8 @@ import org.noear.solon.core.AopContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.logging.utils.TagsMDC;
-import org.noear.water.WaterClient;
 import org.noear.water.config.ServerConfig;
+import org.noear.water.utils.BehaviorUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 import wateradmin.dso.db.DbWaterCfgSafeApi;
@@ -99,7 +99,7 @@ public class InitPlugin implements Plugin {
                 String userDisplayName = getUserDisplayName(ctx);
                 String userId = getUserId(ctx);
 
-                WaterClient.Track.trackOfBehavior(Solon.cfg().appName(), cmd, ctx.userAgent(), ctx.pathNew(), userId + "." + userDisplayName, ctx.realIp());
+                BehaviorUtils.trackOfBehavior(Solon.cfg().appName(), cmd, ctx.userAgent(), ctx.pathNew(), userId + "." + userDisplayName, ctx.realIp());
             }
 
             if (isTrackEnable) {
