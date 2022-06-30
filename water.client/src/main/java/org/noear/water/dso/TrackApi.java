@@ -7,10 +7,14 @@ import org.noear.water.WaterAddress;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.model.LogM;
-import org.noear.water.track.TrackBuffer;
+import org.noear.water.track.TrackEventGather;
 import org.noear.water.track.TrackNames;
+import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.Command;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 跟踪服务接口
@@ -32,7 +36,7 @@ public class TrackApi {
     static {
         rd_track = WaterSetting.redis_track_cfg().getRd(5);
         rd_track_md5 = WaterSetting.redis_track_cfg().getRd(6);
-        TrackBuffer.singleton().bind(rd_track);
+        //TrackPipeline.singleton().bind(rd_track);
         TrackNames.singleton().bind(rd_track_md5);
     }
 
@@ -50,18 +54,18 @@ public class TrackApi {
      */
     public void track(String service, String tag, String name, long timespan) {
         String nameMd5 = getNameMd5(name);
-        TrackBuffer.singleton().append(service, tag, nameMd5, timespan);
+        TrackPipeline.singleton().append(service, tag, nameMd5, timespan);
     }
 
     public void trackNode(String service, String _node, long timespan) {
         if (TextUtils.isNotEmpty(_node)) {
-            TrackBuffer.singleton().appendNode(service, _node, timespan);
+            TrackPipeline.singleton().appendNode(service, _node, timespan);
         }
     }
 
     public void trackFrom(String service, String _from, long timespan) {
         if (TextUtils.isNotEmpty(_from)) {
-            TrackBuffer.singleton().appendFrom(service, _from, timespan);
+            TrackPipeline.singleton().appendFrom(service, _from, timespan);
         }
     }
 
@@ -167,5 +171,36 @@ public class TrackApi {
         logM.from = operator_ip;
 
         WaterClient.Log.append(logM);
+    }
+
+    public void appendAll(TrackEventGather gather, boolean async) {
+        if (async) {
+            WaterSetting.pools.submit(() -> {
+                appendAllDo(gather);
+            });
+        } else {
+            appendAllDo(gather);
+        }
+    }
+
+    private void appendAllDo(TrackEventGather gather) {
+        if (gather == null) {
+            return;
+        }
+
+        String json = ONode.stringify(gather);
+
+        try {
+            if (WaterSetting.water_logger_gzip()) {
+                apiCaller.postBody("/track/add2/", GzipUtils.gZip(json), WW.mime_glog);
+            } else {
+                Map<String, String> map = new HashMap<>();
+                map.put("data", json);
+
+                apiCaller.post("/track/add2/", map);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

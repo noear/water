@@ -1,21 +1,27 @@
 package org.noear.water.track;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.LongAdder;
 
-public class TrackEvent {
+public class TrackEvent implements Serializable {
     public static final String type_date = "date";
     public static final String type_hour = "hour";
 
-    private Map<String,LongAdder> _hash = new HashMap<>();
+    private Map<String,LongAdder> _hash;
 
     public String type = type_date;
     public String group;
     public String key_minute;
     public String key_minute_bef;
 
+    public TrackEvent(){
+        _hash = new HashMap<>();
+    }
+
     public TrackEvent(String group){
+        this();
         this.group = group;
     }
 
