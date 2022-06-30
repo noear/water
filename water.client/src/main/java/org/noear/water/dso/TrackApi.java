@@ -26,7 +26,6 @@ public class TrackApi {
     }
 
 
-
     public String getNameMd5(String name) {
         return TrackNames.singleton().getNameMd5(name);
     }
@@ -67,6 +66,7 @@ public class TrackApi {
             TrackPipeline.singleton().appendFrom(service, _from, timespan);
         }
     }
+
     public void appendAll(TrackEventGather gather, boolean async) {
         if (async) {
             WaterSetting.pools.submit(() -> {
@@ -85,14 +85,10 @@ public class TrackApi {
         String json = ONode.stringify(gather);
 
         try {
-            if (WaterSetting.water_logger_gzip()) {
-                apiCaller.postBody("/track/add2/", GzipUtils.gZip(json), WW.mime_glog);
-            } else {
-                Map<String, String> map = new HashMap<>();
-                map.put("data", json);
+            Map<String, String> map = new HashMap<>();
+            map.put("data", json);
 
-                apiCaller.post("/track/add2/", map);
-            }
+            apiCaller.post("/track/add2/", map);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

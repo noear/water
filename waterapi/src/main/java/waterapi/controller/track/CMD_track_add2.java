@@ -7,11 +7,9 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
-import org.noear.water.WW;
 import org.noear.water.track.TrackEvent;
 import org.noear.water.track.TrackEventGather;
 import org.noear.water.track.TrackUtils;
-import org.noear.water.utils.GzipUtils;
 import waterapi.Config;
 import waterapi.controller.UapiBase;
 import waterapi.controller.UapiCodes;
@@ -32,26 +30,10 @@ public class CMD_track_add2 extends UapiBase {
 
     @Mapping("/track/add2/")
     public Result cmd_exec(Context ctx) throws Exception {
-        String contentType = ctx.contentType();
-        String data_json = null;
-
-        if (contentType != null) {
-            if (contentType.startsWith(WW.mime_glog)) {
-                data_json = GzipUtils.unGZip(ctx.body());
-            }
-
-            if (contentType.startsWith(WW.mime_json)) {
-                data_json = ctx.body();
-            }
-        }
-
-
-        if (data_json == null) {
-            data_json = ctx.param("data");
-        }
+        String data_json = ctx.param("data");
 
         if (Utils.isEmpty(data_json)) {
-            LogUtils.warn(ctx, contentType, "Context body or @data is null");
+            LogUtils.warn(ctx, ctx.path(), "Context param @data is null");
             throw UapiCodes.CODE_13("data");
         }
 
