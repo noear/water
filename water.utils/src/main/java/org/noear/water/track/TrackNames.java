@@ -68,7 +68,7 @@ public class TrackNames {
     }
 
     public String getDo(String nameMd5) {
-        return _redisX.open1(ru -> ru.key(nameMd5).get());
+        return _redisX.openAndGet(ru -> ru.key(nameMd5).get());
     }
 
     private void setDo(String nameMd5, String name) {

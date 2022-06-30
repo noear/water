@@ -1,25 +1,15 @@
 package org.noear.water.utils;
 
-import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.WaterSetting;
 import org.noear.water.model.LogM;
-import org.noear.water.track.TrackNames;
 import org.noear.weed.Command;
 
 /**
  * @author noear 2022/6/30 created
  */
 public class BehaviorUtils {
-    public static RedisClient rd_track_md5;
-
-    static {
-        rd_track_md5 = WaterSetting.redis_track_cfg().getRd(6);
-        TrackNames.singleton().bind(rd_track_md5);
-    }
-
 
     /**
      * 跟踪SQL性能

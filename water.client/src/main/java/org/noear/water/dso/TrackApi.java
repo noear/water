@@ -1,12 +1,11 @@
 package org.noear.water.dso;
 
+import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
-import org.noear.water.WW;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterSetting;
 import org.noear.water.track.TrackEventGather;
 import org.noear.water.track.TrackNames;
-import org.noear.water.utils.GzipUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
@@ -19,6 +18,15 @@ import java.util.Map;
  * @since 2.0
  * */
 public class TrackApi {
+
+    public static RedisClient rd_track_md5;
+
+    static {
+        rd_track_md5 = WaterSetting.redis_track_cfg().getRd(6);
+        TrackNames.singleton().bind(rd_track_md5);
+    }
+
+
     protected final ApiCaller apiCaller;
 
     public TrackApi() {
