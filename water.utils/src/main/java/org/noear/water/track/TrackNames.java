@@ -13,9 +13,9 @@ import java.util.concurrent.Executors;
  * @author noear 2021/3/26 created
  */
 public class TrackNames {
-    static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
+    private static final ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    private static TrackNames singleton = new TrackNames();
+    private static final TrackNames singleton = new TrackNames();
 
     public static TrackNames singleton() {
         return singleton;

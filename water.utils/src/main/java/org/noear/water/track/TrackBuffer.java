@@ -5,7 +5,7 @@ import org.noear.redisx.RedisClient;
 import java.util.Map;
 
 public class TrackBuffer extends TrackEventBuffer {
-    private static TrackBuffer singleton = new TrackBuffer();
+    private static final TrackBuffer singleton = new TrackBuffer();
 
     public static TrackBuffer singleton() {
         return singleton;

@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2.0
  * */
 public class LogPipeline extends EventPipeline<LogM> {
-    private static LogPipeline singleton = new LogPipeline();
+    private static final LogPipeline singleton = new LogPipeline();
 
     public static LogPipeline singleton() {
         return singleton;

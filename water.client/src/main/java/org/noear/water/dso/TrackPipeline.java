@@ -11,7 +11,7 @@ import java.util.Map;
  * @author noear 2022/6/30 created
  */
 public class TrackPipeline extends TrackEventBuffer {
-    private static TrackPipeline singleton = new TrackPipeline();
+    private static final TrackPipeline singleton = new TrackPipeline();
 
     public static TrackPipeline singleton() {
         return singleton;
