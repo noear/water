@@ -4,6 +4,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
+import org.noear.water.WaterClient;
 import org.noear.water.dso.GatewayUtils;
 import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.*;
@@ -158,7 +159,7 @@ public final class SevCheckController implements IJob {
             PingUtils.ping(uri.getAuthority(), 3000);
 
             DbWaterRegApi.udpService0(sev.service_id, 0, "");
-            TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 0);
+            WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 0);
 
 
             if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
@@ -167,7 +168,7 @@ public final class SevCheckController implements IJob {
                 GatewayUtils.notice(sev.tag, sev.name);
             }
         } catch (Throwable ex) {
-            TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
+            WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 1);
 
             if (sev.is_unstable && sev.check_error_num >= 2) {
                 //
@@ -216,7 +217,7 @@ public final class SevCheckController implements IJob {
                     DbWaterRegApi.udpService0(sev.service_id, 0, code + "");
 
 
-                    TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 0);
+                    WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 0);
 
                     if (sev.check_error_num >= 2) { //之前2次坏的，现在好了提示一下
                         AlarmUtil.tryAlarm(sev, true, code);
@@ -224,7 +225,7 @@ public final class SevCheckController implements IJob {
                         GatewayUtils.notice(sev.tag, sev.name);
                     }
                 } else {
-                    TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
+                    WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 1);
 
                     //出错
                     if (sev.is_unstable && sev.check_error_num >= 2 && !isOk) {
@@ -252,7 +253,7 @@ public final class SevCheckController implements IJob {
                 }
             });
         } catch (Throwable ex) { //出错
-            TrackBuffer.singleton().appendCount("_waterchk", "service", nameAndIp, 1, 1);
+            WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
             LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
