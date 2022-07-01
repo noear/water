@@ -92,11 +92,11 @@ public class Config {
             System.out.println("[Water] start config water redis...");
             water_redis = cfg(WW.water_redis);
 
-            ConfigM cm2 = cfg(WW.water_redis_track);
-
             rd_ids = water_redis.getRd(1);
             rd_lock = water_redis.getRd(2);
             rd_msg = water_redis.getRd(3);
+
+            ConfigM cm2 = cfg(WW.water_redis_track);
             if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
                 rd_track = water_redis.getRd(5);
             } else {

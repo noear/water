@@ -3,9 +3,9 @@ package watersev;
 import org.noear.redisx.RedisClient;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterSetting;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
-import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -25,7 +25,6 @@ public class Config {
 
     public static RedisClient rd_track; //db:5
 
-    public static ConfigM water_redis = cfg(WW.water_redis);
     public static ConfigM water_heihei = cfg(WW.water_heihei);
 
     public static ConfigM water_log_store = cfg(WW.water_log_store);
@@ -48,12 +47,7 @@ public class Config {
     }
 
     public static void tryInit() {
-        ConfigM cm2 = cfg(WW.water_redis_track);
-        if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
-            rd_track = water_redis.getRd(5);
-        } else {
-            rd_track = cm2.getRd(5);
-        }
+        rd_track = WaterSetting.redis_track_cfg().getRd(5);
     }
 
     public static ConfigM cfg(String key) {
