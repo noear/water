@@ -4,7 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.water.WaterAddress;
 import org.noear.water.WaterSetting;
 import org.noear.water.track.TrackEventGather;
-import org.noear.water.utils.NameUtils;
+import org.noear.water.utils.NameMd5Utils;
 import org.noear.water.utils.TextUtils;
 
 import java.util.HashMap;
@@ -29,11 +29,11 @@ public class TrackApi {
 
 
     public String getNameMd5(String name) {
-        return NameUtils.getNameMd5(name);
+        return NameMd5Utils.getNameMd5(name);
     }
 
     public String getName(String nameMd5) {
-        return NameUtils.getName(nameMd5);
+        return NameMd5Utils.getName(nameMd5);
     }
 
 
@@ -52,9 +52,13 @@ public class TrackApi {
     /**
      * 跟踪请求性能
      */
-    public void track(String service, String tag, String name, long timespan) {
+    public void trackAndMd5(String service, String tag, String name, long timespan) {
         String nameMd5 = getNameMd5(name);
         TrackPipeline.singleton().append(service, tag, nameMd5, timespan);
+    }
+
+    public void track(String service, String tag, String name, long timespan) {
+        TrackPipeline.singleton().append(service, tag, name, timespan);
     }
 
     public void trackNode(String service, String _node, long timespan) {

@@ -102,7 +102,7 @@ public final class DetController implements IJob {
             long time_span = System.currentTimeMillis() - time_start;
 
             DbWaterDetApi.udpService0(sev.detection_id, 0, "");
-            WaterClient.Track.track("_waterdet", sev.tag, trackName, time_span);
+            WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
             if (sev.check_error_num > 0) {
                 AlarmUtil.tryAlarm(sev, true, 200);
@@ -137,13 +137,13 @@ public final class DetController implements IJob {
                 if (code >= 200 && code < 400) { //正常
                     DbWaterDetApi.udpService0(sev.detection_id, 0, code + "");
 
-                    WaterClient.Track.track("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
                     if (sev.check_error_num > 0) {
                         AlarmUtil.tryAlarm(sev, true, code);
                     }
                 } else {
-                    WaterClient.Track.track("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
                     DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);

@@ -7,7 +7,7 @@ import org.noear.water.track.TrackNames;
 /**
  * @author noear 2022/7/1 created
  */
-public class NameUtils {
+public class NameMd5Utils {
     public static RedisClient rd_track_md5;
 
     static {
