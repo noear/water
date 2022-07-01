@@ -15,20 +15,18 @@ import waterapi.utils.PreheatUtils;
 public class WaterapiApp {
 	public static void main(String[] args) {
 		Solon.start(WaterapiApp.class, args, x -> {
+			x.enableStaticfiles(false);
+			x.enableErrorAutoprint(false);
+
 			//注册本地日志服务
 			CloudManager.register(new CloudLogServiceLocalImp());
 
 			//加载环境变量(支持弹性容器设置的环境)
 			x.cfg().loadEnv("water.");
 
-			x.enableStaticfiles(false);
-			x.enableErrorAutoprint(false);
-
-
-			//尝试初始化
+			//设置接口
+			//
 			Config.tryInit();
-
-
 			TrackBuffer.singleton().bind(Config.rd_track);
 
 			ProtocolHub.config = DbWaterCfgApi::getConfigM;

@@ -11,6 +11,7 @@ import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
+import org.noear.water.track.TrackBuffer;
 import waterfaas.controller.AppHandler;
 import waterfaas.controller.FrmInterceptor;
 import waterfaas.dso.db.DbWaterCfgApi;
@@ -24,12 +25,13 @@ public class WaterfaasApp {
         JtRun.init();
 
         SolonApp app = Solon.start(WaterfaasApp.class, args, (x) -> {
-            Config.tryInit(x);
-
             x.enableErrorAutoprint(false);
 
             //设置接口
             //
+            Config.tryInit(x);
+            TrackBuffer.singleton().bind(Config.rd_track);
+
             ProtocolHub.config = WaterClient.Config::get;
 
             //用于清除控制

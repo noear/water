@@ -8,6 +8,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
+import org.noear.water.track.TrackBuffer;
 import org.noear.water.utils.TextUtils;
 import watersev.dso.JobRunnerEx;
 import watersev.dso.InitPlugin;
@@ -62,7 +63,10 @@ public class WatersevApp {
             //加载环境变量(支持弹性容器设置的环境)
             x.cfg().loadEnv("water.");
 
+            //设置接口
+            //
             Config.tryInit();
+            TrackBuffer.singleton().bind(Config.rd_track);
 
             ProtocolHub.config = WaterClient.Config::get;
 

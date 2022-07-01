@@ -1,9 +1,11 @@
 package watersev;
 
+import org.noear.redisx.RedisClient;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.cache.LocalCache;
@@ -21,7 +23,10 @@ public class Config {
     public static final DbContext water;
     public static final DbContext water_paas;
 
-    public static ConfigM water_heihei;
+    public static RedisClient rd_track; //db:5
+
+    public static ConfigM water_redis = cfg(WW.water_redis);
+    public static ConfigM water_heihei = cfg(WW.water_heihei);
 
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
@@ -38,14 +43,17 @@ public class Config {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 
-        water_heihei = cfg(WW.water_heihei);
-
         cache_file = new LocalCache();
         cache_data = cfg("water_cache").getCh().nameSet("cache_data");
     }
 
     public static void tryInit() {
-
+        ConfigM cm2 = cfg(WW.water_redis_track);
+        if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
+            rd_track = water_redis.getRd(5);
+        } else {
+            rd_track = cm2.getRd(5);
+        }
     }
 
     public static ConfigM cfg(String key) {

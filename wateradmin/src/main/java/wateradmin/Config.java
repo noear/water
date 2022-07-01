@@ -1,5 +1,6 @@
 package wateradmin;
 
+import org.noear.redisx.RedisClient;
 import org.noear.snack.ONode;
 import org.noear.solon.SolonApp;
 import org.noear.solon.auth.AuthUtil;
@@ -8,6 +9,7 @@ import org.noear.water.WaterClient;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
+import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.WeedConfig;
 import wateradmin.dso.SessionPerms;
@@ -18,8 +20,12 @@ public class Config {
     public static final DbContext water_paas;
     public static final DbContext water_paas_request;
 
+    public static RedisClient rd_track; //db:5
+
+    public static ConfigM water_redis = cfg(WW.water_redis);
     public static ConfigM water_log_store = cfg(WW.water_log_store);
     public static ConfigM water_msg_store = cfg(WW.water_msg_store);
+
 
     //paas 根地址
     public static String faas_uri() {
@@ -53,6 +59,13 @@ public class Config {
 
     public static void tryInit(SolonApp app) {
         waterfaas_secretKey = app.cfg().get("waterfaas.secretKey");
+
+        ConfigM cm2 = cfg(WW.water_redis_track);
+        if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
+            rd_track = water_redis.getRd(5);
+        } else {
+            rd_track = cm2.getRd(5);
+        }
 
         //适配认证框架
         AuthUtil.adapter()
