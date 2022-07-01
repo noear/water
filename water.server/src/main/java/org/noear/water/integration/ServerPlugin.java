@@ -8,7 +8,6 @@ import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.BehaviorUtils;
-import org.noear.water.utils.NameMd5Utils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
