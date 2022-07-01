@@ -78,11 +78,11 @@
                 </tr>
                 <tr>
                     <th>name*</th>
-                    <td><input type="text" autofocus id="name" value="${model.name!}"/><n>（name | web:name）</n></td>
+                    <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
                 </tr>
                 <tr>
                     <th>地址</th>
-                    <td><input type="text" id="address" value="${model.address!}" /><n>（ip | ip:port | x://host）</n></td>
+                    <td><input type="text" id="address" value="${model.address!}" /><n>（ip:port | host:port）</n></td>
                 </tr>
                 <tr>
                     <th>元信息</th>
