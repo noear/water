@@ -9,7 +9,7 @@ import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.Datetime;
-import org.noear.water.utils.NameUtils;
+import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.TextUtils;
 
 import java.io.IOException;
@@ -155,7 +155,7 @@ public class LogSourceElasticsearch implements LogSource {
                 event.log_date = new Datetime(event.log_fulltime).getDate();
             }
 
-            event.class_name = NameUtils.formatClassName(event.class_name);
+            event.class_name = ClassUtils.formatClassName(event.class_name);
 
             ONode doc = ONode.loadObj(event).build(n -> {
                 n.set("@timestamp", event.log_fulltime);

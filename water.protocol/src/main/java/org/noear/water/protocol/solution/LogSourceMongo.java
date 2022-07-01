@@ -1,22 +1,18 @@
 package org.noear.water.protocol.solution;
 
 import com.mongodb.client.AggregateIterable;
-import org.bson.BsonArray;
-import org.bson.BsonDocument;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.noear.snack.ONode;
 import org.noear.water.model.LogM;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
-import org.noear.water.utils.NameUtils;
+import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.mongo.MgContext;
 import org.noear.weed.mongo.MgTableQuery;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.*;
 
@@ -165,7 +161,7 @@ public class LogSourceMongo implements LogSource {
 
             data.put("group", event.group);
             data.put("service", event.service);
-            data.put("class_name", NameUtils.formatClassName(event.class_name));
+            data.put("class_name", ClassUtils.formatClassName(event.class_name));
             data.put("thread_name", event.thread_name);
 
             data.put("content", event.content);

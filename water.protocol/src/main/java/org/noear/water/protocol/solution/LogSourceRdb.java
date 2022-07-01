@@ -5,7 +5,7 @@ import org.noear.water.model.LogM;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
 import org.noear.water.protocol.model.log.LogModel;
-import org.noear.water.utils.NameUtils;
+import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -145,7 +145,7 @@ public class LogSourceRdb implements LogSource {
                             .set("weight", event.weight)
                             .setDf("group", event.group, "")
                             .setDf("service", event.service, "")
-                            .set("class_name", NameUtils.formatClassName(event.class_name))
+                            .set("class_name", ClassUtils.formatClassName(event.class_name))
                             .set("thread_name", event.thread_name)
                             .setDf("content", event.content, "")
                             .setDf("metainfo", event.metainfo, "")
