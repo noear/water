@@ -12,7 +12,7 @@ public class NameMd5Utils {
 
     static {
         rd_track_md5 = WaterSetting.redis_track_cfg().getRd(6);
-        org.noear.water.track.TrackNames.singleton().bind(rd_track_md5);
+        TrackNames.singleton().bind(rd_track_md5);
     }
 
     public static String getNameMd5(String name) {
