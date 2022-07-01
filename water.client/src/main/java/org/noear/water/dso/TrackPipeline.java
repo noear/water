@@ -19,15 +19,17 @@ public class TrackPipeline extends TrackEventBuffer {
 
     @Override
     protected void flush(Map<String, TrackEvent> mainSet, Map<String, TrackEvent> serviceSet, Map<String, TrackEvent> fromSet) throws Throwable {
-        TrackEventGather gather = new TrackEventGather();
-        gather.mainSet = mainSet;
-        gather.serviceSet = serviceSet;
-        gather.fromSet = fromSet;
+        synchronized (this) {
+            TrackEventGather gather = new TrackEventGather();
+            gather.mainSet = mainSet;
+            gather.serviceSet = serviceSet;
+            gather.fromSet = fromSet;
 
-        WaterClient.Track.appendAll(gather, false);
+            WaterClient.Track.appendAll(gather, false);
 
-        mainSet.clear();
-        serviceSet.clear();
-        fromSet.clear();
+            mainSet.clear();
+            serviceSet.clear();
+            fromSet.clear();
+        }
     }
 }
