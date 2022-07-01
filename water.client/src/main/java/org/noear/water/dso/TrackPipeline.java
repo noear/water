@@ -25,5 +25,9 @@ public class TrackPipeline extends TrackEventBuffer {
         gather.fromSet = fromSet;
 
         WaterClient.Track.appendAll(gather, false);
+
+        mainSet.clear();
+        serviceSet.clear();
+        fromSet.clear();
     }
 }
