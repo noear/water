@@ -185,8 +185,8 @@ public abstract class TrackEventBuffer implements TaskUtils.ITask {
         }
     }
 
-    private long interval = 2000;
-    private long interval_min = 1000;
+    private long interval = 1000;
+    private long interval_min = 100;
 
     /**
      * 获取任务间隔时间
