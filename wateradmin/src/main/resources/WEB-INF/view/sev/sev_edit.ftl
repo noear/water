@@ -77,7 +77,7 @@
                     <td><input type="text" autofocus id="tag" value="${model.tag!}"/></td>
                 </tr>
                 <tr>
-                    <th>name*</th>
+                    <th>service*</th>
                     <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
                 </tr>
                 <tr>

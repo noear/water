@@ -109,7 +109,7 @@
         <table>
             <thead>
             <tr>
-                <td width="140px" class="left">名称</td>
+                <td width="140px" class="left">service</td>
                 <td class="left">地址</td>
                 <td width="50px">检测<br/>类型</td>
                 <td>检测路径</td>

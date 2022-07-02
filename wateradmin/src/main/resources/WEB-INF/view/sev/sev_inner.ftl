@@ -113,7 +113,7 @@
                     </#if>
                 </left>
                 <middle class="col-4 center">
-                    <input type="text" class="w200" name="name" placeholder="名称" id="name" value="${name!}"/>
+                    <input type="text" class="w200" name="name" placeholder="service" id="name" value="${name!}"/>
                     <input type="hidden" name="tag_name" value="${tag_name!}"/>
                     <button type="submit">查询</button>
                 </middle>
@@ -128,7 +128,7 @@
             <thead>
             <tr>
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-                <td width="140px" class="left">名称</td>
+                <td width="140px" class="left">service</td>
                 <td class="left">地址</td>
                 <td width="50px">检测<br/>类型</td>
                 <td>检测路径</td>
