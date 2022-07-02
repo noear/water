@@ -1,3 +1,7 @@
+#### 2.8.0
+* wateradmin 增加 gritapi 服务注册
+* TrackApi 改用 http 代理提交数据（不再直连redis）
+
 #### 2.7.3
 * 权限管理增加分组授权支持
 
