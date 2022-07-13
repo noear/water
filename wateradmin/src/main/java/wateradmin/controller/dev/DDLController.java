@@ -30,7 +30,7 @@ public class DDLController extends BaseController {
     }
 
     @Mapping("")
-    public ModelAndView ddl(String tag_name) throws SQLException {
+    public ModelAndView home(String tag_name) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTagsByType(CFG_TYPE_DB);
 
         TagChecker.filter(tags, m -> m.tag);

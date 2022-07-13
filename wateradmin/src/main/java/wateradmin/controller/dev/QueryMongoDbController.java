@@ -31,7 +31,7 @@ import java.util.Map;
 @Mapping("/dev/query_mongo")
 public class QueryMongoDbController extends BaseController {
     @Mapping("")
-    public ModelAndView query() throws SQLException {
+    public ModelAndView home() throws SQLException {
         List<ConfigModel> list = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.mangodb);
 
         viewModel.put("cfgs", list);

@@ -362,7 +362,8 @@ public class DbWaterCfgApi {
     // 获取有特定类型配置的TAG
     public static List<TagCountsModel> getConfigTagsByType(int type) throws SQLException {
         return db().table("water_cfg_properties")
-                .where("type = ?", type)
+                .whereEq("type", type)
+                .andEq("is_enabled", 1)
                 .groupBy("tag")
                 .orderByAsc("tag")
                 .selectList("tag, COUNT(*) AS counts", TagCountsModel.class);
@@ -419,7 +420,8 @@ public class DbWaterCfgApi {
 
     public static List<ConfigModel> getConfigsByType(String tag, int type) throws SQLException {
         return db().table("water_cfg_properties")
-                .where("type = ?", type)
+                .whereEq("type", type)
+                .andEq("is_enabled", 1)
                 .build((tb) -> {
                     if (TextUtils.isEmpty(tag) == false) {
                         tb.and("tag = ?", tag);
@@ -431,7 +433,8 @@ public class DbWaterCfgApi {
 
     public static List<ConfigModel> getConfigTagKeyByType(String tag, int type) throws SQLException {
         return db().table("water_cfg_properties")
-                .where("type = ?", type)
+                .whereEq("type", type)
+                .andEq("is_enabled", 1)
                 .build((tb) -> {
                     if (TextUtils.isEmpty(tag) == false) {
                         tb.and("tag = ?", tag);

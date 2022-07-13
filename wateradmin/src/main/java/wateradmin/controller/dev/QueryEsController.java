@@ -30,7 +30,7 @@ import java.util.List;
 @Mapping("/dev/query_es")
 public class QueryEsController extends BaseController {
     @Mapping("")
-    public ModelAndView query() throws SQLException {
+    public ModelAndView home() throws SQLException {
         List<ConfigModel> list = DbWaterCfgApi.getConfigTagKeyByType(null, ConfigType.elasticsearch);
 
         viewModel.put("cfgs", list);
