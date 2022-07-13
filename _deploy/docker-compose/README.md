@@ -33,7 +33,7 @@ docker-compose up
 
 **注意：**
 
-* 如何修改了 docker-compose.yml 配置，引入 networks，要把每个服务的ip固定下来
+* 如果修改了 docker-compose.yml 配置，引入 networks，要把每个服务的ip固定下来
 
 ## 四、后续配置修改
 
