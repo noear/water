@@ -40,7 +40,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.9.1</solon.ver>
+        <solon.ver>1.9.2</solon.ver>
 
         <water.ver>2.8.0</water.ver>
         <grit.ver>1.3.0</grit.ver>
