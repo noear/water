@@ -244,10 +244,10 @@ public class Job_test implements CloudJobHandler {
 
 # 管理界面预览
 
-* 报警专用客户端
+* 告警专用客户端
 <img src="https://gitee.com/noear/water/raw/master/preview/a0.jpg" height="300"/>
 
-* 管理小工具
+* 告警工具
 <img src="https://gitee.com/noear/water/raw/master/preview/a1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/a2.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/a3.png" height="300"/>
@@ -255,7 +255,7 @@ public class Job_test implements CloudJobHandler {
 * 日志查询
 <img src="https://gitee.com/noear/water/raw/master/preview/b1.png" height="300"/>
 
-* 消息中心管理
+* 消息总线
 <img src="https://gitee.com/noear/water/raw/master/preview/c1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/c2.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/c3.png" height="300"/>
@@ -275,13 +275,13 @@ public class Job_test implements CloudJobHandler {
 <img src="https://gitee.com/noear/water/raw/master/preview/e1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/e3.png" height="300"/>
 
-* FaaS管理后台
+* 函数计算
 <img src="https://gitee.com/noear/water/raw/master/preview/f1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f2.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f5.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/fx.png" height="300"/>
 
-* 开发者小工具
+* 开发助手
 <img src="https://gitee.com/noear/water/raw/master/preview/h1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/h2.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/h3.png" height="300"/>
