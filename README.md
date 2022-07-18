@@ -275,7 +275,7 @@ public class Job_test implements CloudJobHandler {
 <img src="https://gitee.com/noear/water/raw/master/preview/e1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/e3.png" height="300"/>
 
-* PaaS管理后台
+* FaaS管理后台
 <img src="https://gitee.com/noear/water/raw/master/preview/f1.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f2.png" height="300"/>
 <img src="https://gitee.com/noear/water/raw/master/preview/f5.png" height="300"/>
