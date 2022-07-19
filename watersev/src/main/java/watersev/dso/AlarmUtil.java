@@ -145,7 +145,7 @@ public class AlarmUtil {
 
             buildSign(sb, task.alarm_sign);
 
-            List<String> alias = buildAlias(task.task_tag, task.alarm_mobile);
+            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
             ProtocolHub.heihei.push("mot", alias, sb.toString());
 
         } catch (Exception ex) {
