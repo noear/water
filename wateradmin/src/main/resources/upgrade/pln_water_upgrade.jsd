@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 6;
+let ver_new = 7;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -193,6 +193,16 @@ if(ver_old < 6){
             }
         }
     }
+}
+
+//for 2.7.2
+if(ver_old < 7){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
+    //资源改名
+    db2.table('grit_resource').set('display_name','系统监控').whereEq('display_name','服务监控').andEq('link_uri','/mot/').update();
 }
 
 //3.设定版本
