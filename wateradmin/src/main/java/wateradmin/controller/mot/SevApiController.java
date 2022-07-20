@@ -110,7 +110,7 @@ public class SevApiController extends BaseController {
 
         if (otherList.contains(serviceName) == false) {
             if (serviceName.endsWith("_")) {
-                return view("mot/speed_inner4");
+                return view("mot/speed_inner_gauge");
             } else {
                 return view("mot/speed_inner");
             }
@@ -120,7 +120,7 @@ public class SevApiController extends BaseController {
             } else if ("_waterlog".equals(serviceName)) {
                 return view("mot/speed_inner_log");
             } else {
-                return view("mot/speed_inner2");
+                return view("mot/speed_inner_count");
             }
         }
     }
@@ -146,7 +146,7 @@ public class SevApiController extends BaseController {
 
         if (otherList.contains(service) == false) {
             if (service.endsWith("_")) {
-                return view("mot/speed_charts4");
+                return view("mot/speed_charts_gauge");
             } else {
                 return view("mot/speed_charts");
             }
@@ -156,7 +156,7 @@ public class SevApiController extends BaseController {
             } else if ("_waterlog".equals(service)) {
                 return view("mot/speed_charts_log");
             } else {
-                return view("mot/speed_charts2");
+                return view("mot/speed_charts_count");
             }
         }
     }

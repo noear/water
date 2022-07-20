@@ -49,6 +49,18 @@ public class TrackApi {
         TrackPipeline.singleton().appendCount(service, tag, name, count, count1, count2, count5);
     }
 
+//    public void addCount(String group, String category, String item, long val){
+//        trackCount(group, category, item, val);
+//    }
+
+//    public  void addMeter(String group, String category, String item, long val){
+//        track(group, category, item, val);
+//    }
+
+//    public void addGauge(String group, String category, String item, long val){
+//        track(group + "_", category, item, val);
+//    }
+
     /**
      * 跟踪请求性能
      */
