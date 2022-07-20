@@ -37,53 +37,92 @@ public class TrackApi {
     }
 
 
+
+
+
+    public void addCount(String group, String category, String item, long count) {
+        TrackPipeline.singleton().appendCount(group, category, item, count);
+    }
+
+    public void addCount(String group, String category, String item, long count, long count5) {
+        TrackPipeline.singleton().appendCount(group, category, item, count, count5);
+    }
+
+    public void addCount(String group, String category, String item, long count, long count1, long count2, long count5) {
+        TrackPipeline.singleton().appendCount(group, category, item, count, count1, count2, count5);
+    }
+
+
+    public void addGauge(String group, String category, String item, long val) {
+        if (group.endsWith("_")) {
+            TrackPipeline.singleton().append(group, category, item, val);
+        } else {
+            TrackPipeline.singleton().append(group + "_", category, item, val);
+        }
+    }
+
+    public void addMeter(String group, String category, String item, long val) {
+        TrackPipeline.singleton().append(group, category, item, val);
+    }
+
+    public void addMeterAndMd5(String group, String tag, String name, long val) {
+        String nameMd5 = getNameMd5(name);
+        TrackPipeline.singleton().append(group, tag, nameMd5, val);
+    }
+
+    public void addMeterByNode(String group, String _node, long val) {
+        if (TextUtils.isNotEmpty(_node)) {
+            TrackPipeline.singleton().appendNode(group, _node, val);
+        }
+    }
+
+    public void addMeterByFrom(String group, String _from, long val) {
+        if (TextUtils.isNotEmpty(_from)) {
+            TrackPipeline.singleton().appendFrom(group, _from, val);
+        }
+    }
+
+
+    @Deprecated
     public void trackCount(String service, String tag, String name, long count) {
-        TrackPipeline.singleton().appendCount(service, tag, name, count);
+        addCount(service, tag, name, count);
     }
 
+    @Deprecated
     public void trackCount(String service, String tag, String name, long count, long count5) {
-        TrackPipeline.singleton().appendCount(service, tag, name, count, count5);
+        addCount(service, tag, name, count, count5);
     }
 
+    @Deprecated
     public void trackCount(String service, String tag, String name, long count, long count1, long count2, long count5) {
-        TrackPipeline.singleton().appendCount(service, tag, name, count, count1, count2, count5);
+        addCount(service, tag, name, count, count1, count2, count5);
     }
 
-//    public void addCount(String group, String category, String item, long val){
-//        trackCount(group, category, item, val);
-//    }
-
-//    public  void addMeter(String group, String category, String item, long val){
-//        track(group, category, item, val);
-//    }
-
-//    public void addGauge(String group, String category, String item, long val){
-//        track(group + "_", category, item, val);
-//    }
 
     /**
      * 跟踪请求性能
      */
-    public void trackAndMd5(String service, String tag, String name, long timespan) {
-        String nameMd5 = getNameMd5(name);
-        TrackPipeline.singleton().append(service, tag, nameMd5, timespan);
-    }
-
+    @Deprecated
     public void track(String service, String tag, String name, long timespan) {
-        TrackPipeline.singleton().append(service, tag, name, timespan);
+        addMeter(service, tag, name, timespan);
     }
 
+    @Deprecated
+    public void trackAndMd5(String service, String tag, String name, long timespan) {
+        addMeterAndMd5(service, tag, name, timespan);
+    }
+
+    @Deprecated
     public void trackNode(String service, String _node, long timespan) {
-        if (TextUtils.isNotEmpty(_node)) {
-            TrackPipeline.singleton().appendNode(service, _node, timespan);
-        }
+        addMeterByNode(service, _node, timespan);
     }
 
+    @Deprecated
     public void trackFrom(String service, String _from, long timespan) {
-        if (TextUtils.isNotEmpty(_from)) {
-            TrackPipeline.singleton().appendFrom(service, _from, timespan);
-        }
+        addMeterByFrom(service, _from, timespan);
     }
+
+    /////////////////////////////////////////
 
     public void appendAll(TrackEventGather gather, boolean async) {
         if (async) {
