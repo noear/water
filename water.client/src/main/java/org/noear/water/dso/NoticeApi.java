@@ -48,7 +48,7 @@ public class NoticeApi {
         params.put("msg", msg);
 
         try {
-            return apiCaller.post("/run/push/", params);
+            return apiCaller.post("/alarm/push/", params);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
