@@ -52,9 +52,9 @@
             <thead>
             <tr>
                 <td sort="" class="left">分组::指标</td>
-                <td width="60px" sort="average">平均<br/>值</td>
-                <td width="60px" sort="fastest">最小<br/>值</td>
-                <td width="60px" sort="slowest">最大<br/>值</td>
+                <td width="80px" sort="average">平均值</td>
+                <td width="80px" sort="fastest">最小值</td>
+                <td width="80px" sort="slowest">最大值</td>
                 <td width="70px" sort="total_num">记录<br/>次数</td>
                 <td width="70px" sort="gmt_modified">更新时间</td>
                 <td width="50px"></td>
