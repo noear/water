@@ -5,7 +5,6 @@ import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiBase;
-import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterCfgSafeApi;
 import waterapi.dso.interceptor.Logging;
 
