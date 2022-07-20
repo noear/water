@@ -993,7 +993,9 @@ interface RegistryApi{
 }
 
 interface TrackApi{
-
+    addCount(group:string, category:string, item:string, val:number);
+    addGauge(group:string, category:string, item:string, val:number);
+    addMeter(group:string, category:string, item:string, val:number);
 }
 
 interface NoticeApi{
