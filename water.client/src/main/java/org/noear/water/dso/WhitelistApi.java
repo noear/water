@@ -52,7 +52,7 @@ public class WhitelistApi {
         params.put("type", type);
         params.put("value", value);
 
-        return apiCaller.post("/run/whitelist/check/", params);
+        return apiCaller.post("/list/check/", params);
     }
 
     private boolean checkDo(String tags, String type, String value) {
