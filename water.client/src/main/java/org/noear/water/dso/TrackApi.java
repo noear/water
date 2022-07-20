@@ -67,15 +67,15 @@ public class TrackApi {
         TrackPipeline.singleton().append(group, tag, nameMd5, val);
     }
 
-    public void addMeterByNode(String group, String _node, long val) {
+    public void addMeterByNode(String category, String _node, long val) {
         if (TextUtils.isNotEmpty(_node)) {
-            TrackPipeline.singleton().appendNode(group, _node, val);
+            TrackPipeline.singleton().appendNode(category, _node, val);
         }
     }
 
-    public void addMeterByFrom(String group, String _from, long val) {
+    public void addMeterByFrom(String category, String _from, long val) {
         if (TextUtils.isNotEmpty(_from)) {
-            TrackPipeline.singleton().appendFrom(group, _from, val);
+            TrackPipeline.singleton().appendFrom(category, _from, val);
         }
     }
 
