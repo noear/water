@@ -109,7 +109,11 @@ public class SevApiController extends BaseController {
         List<String> otherList = Arrays.asList("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".split(","));
 
         if (otherList.contains(serviceName) == false) {
-            return view("mot/speed_inner");
+            if (serviceName.endsWith("_")) {
+                return view("mot/speed_inner4");
+            } else {
+                return view("mot/speed_inner");
+            }
         } else {
             if ("_watersrt".equals(serviceName)) {
                 return view("mot/speed_inner3");
@@ -138,10 +142,14 @@ public class SevApiController extends BaseController {
         viewModel.put("name_md5", name_md5);
         viewModel.put("service", service);
 
-       List<String> otherList = Arrays.asList("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".split(","));
+        List<String> otherList = Arrays.asList("_waterlog,_waterchk,_watersrt,_watermsg,watercfg".split(","));
 
         if (otherList.contains(service) == false) {
-            return view("mot/speed_charts");
+            if (service.endsWith("_")) {
+                return view("mot/speed_charts4");
+            } else {
+                return view("mot/speed_charts");
+            }
         } else {
             if ("_watersrt".equals(service)) {
                 return view("mot/speed_charts3");
