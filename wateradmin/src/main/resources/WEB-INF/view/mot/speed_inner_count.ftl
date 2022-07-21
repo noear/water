@@ -62,7 +62,7 @@
             </thead>
             <tbody id="tbody">
             <#list speeds as m>
-                <tr ${m.isHighlight()?string("class='t4'","")}>
+                <tr>
                     <td class="left break">${m.tag}::${m.name}</td>
                     <td class="right">${m.total_num}</td>
                     <td class="right">${m.total_num_slow1}</td>

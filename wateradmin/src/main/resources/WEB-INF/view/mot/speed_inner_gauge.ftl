@@ -62,7 +62,7 @@
             </thead>
             <tbody id="tbody">
             <#list speeds as m>
-                <tr ${m.isHighlight()?string("class='t4'","")}>
+                <tr>
                     <td class="left break">${m.tag}::${m.name}</td>
                     <td class="right">${m.average}</td>
                     <td class="right ${(m.fastest>1000)?string("t4","")}" >${m.fastest}</td>
