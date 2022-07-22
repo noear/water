@@ -87,7 +87,7 @@
             <td width="130px">操作</td>
         </tr>
         </thead>
-        <tbody id="tbody" >
+        <tbody id="tbody" class="sel_from">
         <#list list as m>
             <#if m.check_last_state == 1>
             <tr style="color: red">

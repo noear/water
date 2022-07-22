@@ -87,7 +87,7 @@
             <td width="90"></td>
         </tr>
         </thead>
-        <tbody id="tbody">
+        <tbody id="tbody" class="sel_from">
         <#list list as monitor>
             <tr>
                 <td><checkbox><label><input type="checkbox" name="sel_id" value="${monitor.monitor_id}" /><a></a></label></checkbox></td>
