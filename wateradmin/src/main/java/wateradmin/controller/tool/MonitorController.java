@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@Mapping("/tool/")
+@Mapping("/tool/monitor")
 public class MonitorController extends BaseController {
 
     //monitor视图跳转。
-    @Mapping("monitor")
+    @Mapping("")
     public ModelAndView home(String tag_name, int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
 
@@ -51,7 +51,7 @@ public class MonitorController extends BaseController {
     }
 
     //Monitor的 iframe inner视图。
-    @Mapping("monitor/inner")
+    @Mapping("inner")
     public ModelAndView inner(String tag_name,String monitor_name, int _state) throws SQLException {
         TagUtil.cookieSet(tag_name);
 
@@ -65,7 +65,7 @@ public class MonitorController extends BaseController {
         return view("tool/monitor_inner");
     }
 
-    @Mapping("monitor/edit")
+    @Mapping("edit")
     public ModelAndView edit(String tag, int monitor_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
@@ -99,7 +99,7 @@ public class MonitorController extends BaseController {
 
 
     @AuthPermissions(SessionPerms.admin)
-    @Mapping("monitor/edit/ajax/save")
+    @Mapping("edit/ajax/save")
     public ViewModel save(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp,
                               String alarm_mobile, String alarm_exp, int is_enabled) throws SQLException {
         if (alarm_mobile.endsWith(",")) {
@@ -117,7 +117,7 @@ public class MonitorController extends BaseController {
     }
 
     @AuthPermissions(SessionPerms.admin)
-    @Mapping("monitor/edit/ajax/del")
+    @Mapping("edit/ajax/del")
     public ViewModel del(int monitor_id) throws SQLException {
         boolean result = DbWaterApi.monitorDel(monitor_id);
 
@@ -128,5 +128,14 @@ public class MonitorController extends BaseController {
         }
 
         return viewModel;
+    }
+
+    //批量处理
+    @AuthPermissions(SessionPerms.admin)
+    @Mapping("ajax/batch")
+    public ViewModel batchDo(int act, String ids) throws Exception {
+        DbWaterCfgApi.delConfigByIds(act, ids);
+
+        return viewModel.code(1, "ok");
     }
 }

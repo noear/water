@@ -12,6 +12,7 @@ import wateradmin.models.water.SynchronousModel;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DbWaterApi {
     private static DbContext db() {
@@ -75,6 +76,27 @@ public class DbWaterApi {
                 .whereEq("monitor_id", monitor_id)
                 .delete() > 0;
     }
+
+    public static void monitorDelByIds(int act, String ids) throws SQLException {
+        List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+
+        if (list.size() == 0) {
+            return;
+        }
+
+        if (act == 9) {
+            db().table("water_tool_monitor")
+                    .whereIn("monitor_id", list)
+                    .delete();
+        } else {
+            db().table("water_tool_monitor")
+                    .set("is_enabled", (act == 1 ? 1 : 0))
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .whereIn("monitor_id", list)
+                    .update();
+        }
+    }
+
 
 
     //获取monitor表的tag分组信息。

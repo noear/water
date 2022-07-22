@@ -10,6 +10,43 @@
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
     </style>
+    <script>
+        function del(act,hint){
+            var vm = formToMap(".sel_from");
+
+            if(!vm.sel_id){
+                alert("请选择..");
+                return;
+            }
+
+            if(confirm("确定要"+hint+"吗？") == false) {
+                return;
+            }
+
+            $.ajax({
+                type:"POST",
+                url:"ajax/batch",
+                data:{act: act, ids: vm.sel_id},
+                success:function (data) {
+                    if(data.code==1) {
+                        top.layer.msg('操作成功');
+                        setTimeout(function(){
+                            location.reload();
+                        },800);
+                    }else{
+                        top.layer.msg(data.msg);
+                    }
+                }
+            });
+        }
+
+        $(function(){
+            $('#sel_all').change(function(){
+                var ckd= $(this).prop('checked');
+                $('[name=sel_id]').prop('checked',ckd);
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -17,7 +54,13 @@
     <flex>
         <left class="col-4">
             <#if is_admin = 1>
-                <a href="/tool/monitor/edit?tag=${tag_name!}&monitor_id=0" class="btn edit" >新增</a>
+                <#if _state == 0>
+                    <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
+                <#else>
+                    <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
+                </#if>
+
+                <a class="btn edit mar10-l" href="/tool/monitor/edit?tag=${tag_name!}&monitor_id=0" >新增</a>
             </#if>
         </left>
         <middle class="col-4 center">
@@ -36,6 +79,7 @@
     <table>
         <thead>
         <tr>
+            <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
             <td class="left">数据名称</td>
             <td width="70px" nowrap>告警标识</td>
             <td width="100px">告警次数</td>
@@ -45,6 +89,7 @@
         <tbody id="tbody">
         <#list list as monitor>
             <tr>
+                <td><checkbox><label><input type="checkbox" name="sel_id" value="${monitor.monitor_id}" /><a></a></label></checkbox></td>
                 <td class="left break">
                     <div>
                         ${monitor.name}
