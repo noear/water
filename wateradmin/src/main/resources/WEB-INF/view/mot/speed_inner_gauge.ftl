@@ -65,8 +65,8 @@
                 <tr>
                     <td class="left break">${m.tag}::${m.name}</td>
                     <td class="right">${m.average}</td>
-                    <td class="right ${(m.fastest>1000)?string("t4","")}" >${m.fastest}</td>
-                    <td class="right ${(m.slowest>1000)?string("t4","")}">${m.slowest}</td>
+                    <td class="right">${m.fastest}</td>
+                    <td class="right">${m.slowest}</td>
                     <td class="right">${m.total_num}</td>
                     <td>${m.gmt_modified?string('dd HH:mm')}</td>
                     <td><a href="/mot/speed/charts?tag=${m.tag}&name_md5=${m.name_md5?url}&service=${m.service}" style="color:blue;cursor:pointer;">详情</a></td>
