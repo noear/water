@@ -18,13 +18,8 @@
                 return;
             }
 
-            if(!vm.name){
-                top.layer.msg("name不能为空！");
-                return;
-            }
-
-            if(!vm.address){
-                top.layer.msg("地址不能为空！");
+            if(!vm.url){
+                top.layer.msg("域名不能为空！");
                 return;
             }
 
@@ -103,24 +98,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>应用名称*</th>
-                    <td><input type="text" autofocus id="name" value="${model.name!}"/></td>
+                    <th>域名*</th>
+                    <td><input class="longtxt" type="text" autofocus id="url" value="${model.url!}"/></td>
                 </tr>
                 <tr>
-                    <th>检测地址</th>
-                    <td>
-                        <select id="protocol" class="w80">
-                            <option value="http" ${(model.protocol == 'http')?string('selected','')}>http://</option>
-                            <option value="https" ${(model.protocol == 'https')?string('selected','')}>https://</option>
-                            <option value="tcp" ${(model.protocol == 'tcp')?string('selected','')}>tcp://</option>
-                            <option value="grpc" ${(model.protocol == 'grpc')?string('selected','')}>grpc://</option>
-                        </select>
-                        <input style="width: 510px" type="text" id="address" value="${model.address!}" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>检测间隔</th>
-                    <td><input type="text" class="w150" id="check_interval" value="${model.check_interval!300}"/> 秒/次</td>
+                    <th>备注</th>
+                    <td><input type="text"  id="note" value="${model.note!}"/></td>
                 </tr>
                 <tr>
                     <th>启用</th>

@@ -81,8 +81,9 @@
         <thead>
         <tr>
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-            <td class="left">应用名称</td>
-            <td width="80px">检测间隔</td>
+            <td class="left">域名</td>
+            <td width="80px">剩余时间</td>
+            <td width="80px">过期时间</td>
             <td width="120px">检测情况</td>
             <td width="130px">操作</td>
         </tr>
@@ -97,12 +98,15 @@
             <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.certification_id}" /><a></a></label></checkbox></td>
             <td class="left">
                 <div>${m.name!}</div>
-                <n-l>${m.protocol!}://${m.address!}</n-l>
+                <n-l>${m.url!}</n-l>
             </td>
             <td>
-                ${m.check_interval}s
+
             </td>
-            <td style='${m.isAlarm()?string("color:red","")}'>
+            <td>
+                ${m.time_of_end}
+            </td>
+            <td>
                 ${(m.check_last_time?string('HH:mm:ss'))!}
                 <#if m.check_last_state == 0>
                     - ok
