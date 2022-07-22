@@ -99,7 +99,7 @@
                 </tr>
                 <tr>
                     <th>域名*</th>
-                    <td><input class="longtxt" type="text" autofocus id="url" value="${model.url!}"/></td>
+                    <td><input class="longtxt" type="text" autofocus id="url" placeholder="https://..." value="${model.url!}"/></td>
                 </tr>
                 <tr>
                     <th>备注</th>
