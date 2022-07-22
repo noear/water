@@ -25,10 +25,10 @@ import java.util.List;
  * @author noear
  * */
 @Component
-public final class DetController implements IJob {
+public final class DetAppController implements IJob {
     @Override
     public String getName() {
-        return "det";
+        return "detapp";
     }
 
     @Override

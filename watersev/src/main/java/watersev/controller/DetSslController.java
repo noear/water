@@ -23,10 +23,10 @@ import java.util.List;
  * @author noear
  * */
 @Component
-public final class SslController implements IJob {
+public final class DetSslController implements IJob {
     @Override
     public String getName() {
-        return "ssl";
+        return "detssl";
     }
 
     @Override
