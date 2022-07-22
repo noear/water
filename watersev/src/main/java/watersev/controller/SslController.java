@@ -31,7 +31,7 @@ public final class SslController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 60 * 30; //实际是：30m 跑一次
+        return 1000 * 60 * 5; //实际是：5m 跑一次
     }
 
 
