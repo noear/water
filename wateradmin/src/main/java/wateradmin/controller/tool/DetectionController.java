@@ -125,7 +125,7 @@ public class DetectionController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(int act, String ids) throws Exception {
-        DbWaterCfgApi.delConfigByIds(act, ids);
+        DbWaterToolApi.detectionDelByIds(act, ids);
 
         return viewModel.code(1, "ok");
     }

@@ -134,7 +134,7 @@ public class MonitorController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(int act, String ids) throws Exception {
-        DbWaterCfgApi.delConfigByIds(act, ids);
+        DbWaterApi.monitorDelByIds(act, ids);
 
         return viewModel.code(1, "ok");
     }
