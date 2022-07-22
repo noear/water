@@ -80,7 +80,7 @@ public class CertificationModel {
         if (time_of_end == null) {
             return "";
         } else {
-            return new Timespan(time_of_end).days() + "天";
+            return new Timespan(time_of_end, new Date()).days() + "天";
         }
     }
 }
