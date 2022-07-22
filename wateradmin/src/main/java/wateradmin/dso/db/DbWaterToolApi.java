@@ -9,7 +9,9 @@ import wateradmin.models.TagCountsModel;
 import wateradmin.models.water.DetectionModel;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author noear 2022/5/30 created
@@ -83,6 +85,26 @@ public class DbWaterToolApi {
         return db().table("water_tool_detection")
                 .whereEq("detection_id", detection_id)
                 .delete() > 0;
+    }
+
+    public static void detectionDelByIds(int act, String ids) throws SQLException {
+        List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
+
+        if (list.size() == 0) {
+            return;
+        }
+
+        if (act == 9) {
+            db().table("water_tool_detection")
+                    .whereIn("detection_id", list)
+                    .delete();
+        } else {
+            db().table("water_tool_detection")
+                    .set("is_enabled", (act == 1 ? 1 : 0))
+                    .set("gmt_modified", System.currentTimeMillis())
+                    .whereIn("detection_id", list)
+                    .update();
+        }
     }
 
 
