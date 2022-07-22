@@ -38,6 +38,7 @@ public class HttpUtilEx {
                     uConnection.setReadTimeout(1000 * 3);
                     uConnection.connect();
                     int code = uConnection.getResponseCode();
+                    uConnection.disconnect();
 
                     callback.run(true, code, "");
                 } catch (Throwable e) {

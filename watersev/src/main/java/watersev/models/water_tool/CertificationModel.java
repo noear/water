@@ -1,56 +1,60 @@
-package watersev.models.water;
+package watersev.models.water_tool;
 
 import lombok.Getter;
-import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.Timespan;
 
 import java.util.Date;
 
 /**
- * @author noear
+ * @author noear 2022/7/22 created
  */
-public class DetectionModel {
+@Getter
+public class CertificationModel {
 
     /**
      *
      */
-    public long detection_id;
+    public long certification_id;
     /**
-     *
+     * 分类标签
      */
     public String tag;
     /**
-     * 检测key
+     * 唯一key
      */
     public String key;
     /**
-     *
+     * 地址
      */
-    public String name;
+    public String url;
     /**
-     *
+     * 备注
      */
-    public String protocol;
+    public String note;
     /**
-     *
+     * 生效时间
      */
-    public String address;
+    public Date time_of_start;
     /**
-     *
+     * 失效时间
      */
-    public String alarm_mobile;
-    /**
-     *
-     */
-    public String alarm_sign;
+    public Date time_of_end;
     /**
      * 0:待检查；1检查中
      */
     public int state;
     /**
+     * 检测异常数量
+     */
+    public int check_error_num;
+    /**
+     * 检测间隔时间(s)
+     */
+    public int check_interval;
+    /**
      * 最后检查时间
      */
-    public Date check_last_time;
+    public long check_last_time;
     /**
      * 最后检查状态（0：OK；1：error）
      */
@@ -59,14 +63,6 @@ public class DetectionModel {
      * 最后检查描述
      */
     public String check_last_note;
-    /**
-     * 检测间隔时间（s）
-     * */
-    public int check_interval;
-    /**
-     * 检测异常数量
-     */
-    public int check_error_num;
     /**
      * 是否为已启用
      */
@@ -80,4 +76,11 @@ public class DetectionModel {
      */
     public long gmt_modified;
 
+    public String remaining() {
+        if (time_of_end == null) {
+            return "";
+        } else {
+            return new Timespan(time_of_end, new Date()).days() + "天";
+        }
+    }
 }

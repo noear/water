@@ -3,7 +3,7 @@ package watersev.dso.db;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.weed.DbContext;
 import watersev.Config;
-import watersev.models.water.MonitorModel;
+import watersev.models.water_tool.MonitorModel;
 import watersev.models.water.SynchronousModel;
 
 import java.sql.SQLException;
@@ -47,24 +47,4 @@ public class DbWaterApi {
                 .update();
     }
 
-
-    public static List<MonitorModel> getMonitorList() {
-        try {
-            return db().table("water_tool_monitor")
-                    .where("is_enabled=1")
-                    .selectList("*", MonitorModel.class);
-        } catch (Exception ex) {
-            log.error("{}", ex);
-
-            return new ArrayList<>();
-        }
-    }
-
-    public static void setMonitorState(int monitor_id, int alarm_count, String task_tag) throws SQLException {
-        db().table("water_tool_monitor")
-                .set("alarm_count", alarm_count)
-                .set("task_tag", task_tag)
-                .where("monitor_id=?", monitor_id)
-                .update();
-    }
 }

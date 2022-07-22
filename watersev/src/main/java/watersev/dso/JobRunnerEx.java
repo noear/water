@@ -22,7 +22,7 @@ public class JobRunnerEx extends JobRunner {
         if (is_ok == false) {
             switch (sss) {
                 case "tool":
-                    is_ok = ("msgexg,msgchk,sevchk,syn,mot,det".indexOf(task.getName()) >= 0);
+                    is_ok = ("msgexg,msgchk,sevchk,syn,mot,det,ssl".indexOf(task.getName()) >= 0);
                     break;
                 case "tol":
                     is_ok = ("msgchk,sevchk,syn,mot,det".indexOf(task.getName()) >= 0);

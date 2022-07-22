@@ -11,8 +11,8 @@ import org.noear.water.utils.PingUtils;
 import org.noear.water.utils.Timespan;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
-import watersev.dso.db.DbWaterDetApi;
-import watersev.models.water.DetectionModel;
+import watersev.dso.db.DbWaterToolApi;
+import watersev.models.water_tool.DetectionModel;
 import watersev.utils.HttpUtilEx;
 
 import java.net.URI;
@@ -48,7 +48,7 @@ public final class DetController implements IJob {
 
     private void exec0() throws SQLException {
         //取出待处理的服务（已启用的服务）
-        List<DetectionModel> list = DbWaterDetApi.getServiceList();
+        List<DetectionModel> list = DbWaterToolApi.detectionGetList();
 
         for (DetectionModel task : list) {
             if (task.check_interval == 0) {
@@ -101,14 +101,14 @@ public final class DetController implements IJob {
             PingUtils.ping(uri.getAuthority(), 3000);
             long time_span = System.currentTimeMillis() - time_start;
 
-            DbWaterDetApi.udpService0(sev.detection_id, 0, "");
+            DbWaterToolApi.detectionSetState(sev.detection_id, 0, "");
             WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
             if (sev.check_error_num > 0) {
                 AlarmUtil.tryAlarm(sev, true, 200);
             }
         } catch (Throwable ex) {
-            DbWaterDetApi.udpService0(sev.detection_id, 1, "0");
+            DbWaterToolApi.detectionSetState(sev.detection_id, 1, "0");
             LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
 
             if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
@@ -135,7 +135,7 @@ public final class DetController implements IJob {
                 Thread.currentThread().setName("det-c-" + sev.detection_id);
 
                 if (code >= 200 && code < 400) { //正常
-                    DbWaterDetApi.udpService0(sev.detection_id, 0, code + "");
+                    DbWaterToolApi.detectionSetState(sev.detection_id, 0, code + "");
 
                     WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
@@ -145,7 +145,7 @@ public final class DetController implements IJob {
                 } else {
                     WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
 
-                    DbWaterDetApi.udpService0(sev.detection_id, 1, code + "");
+                    DbWaterToolApi.detectionSetState(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
 
                     if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
@@ -154,7 +154,7 @@ public final class DetController implements IJob {
                 }
             });
         } catch (Throwable ex) { //出错
-            DbWaterDetApi.udpService0(sev.detection_id, 1, ex.getMessage());
+            DbWaterToolApi.detectionSetState(sev.detection_id, 1, ex.getMessage());
             LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\n" + Utils.throwableToString(ex));
         }
     }

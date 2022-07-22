@@ -16,8 +16,8 @@ import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
 import watersev.dso.*;
-import watersev.dso.db.DbWaterApi;
-import watersev.models.water.MonitorModel;
+import watersev.dso.db.DbWaterToolApi;
+import watersev.models.water_tool.MonitorModel;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public final class MotController implements IJob {
 
         //尝试获取锁（60秒内只能调度一次）；避免集群切换时，多次运行
         //
-        List<MonitorModel> list = DbWaterApi.getMonitorList();
+        List<MonitorModel> list = DbWaterToolApi.getMonitorList();
 
         for (MonitorModel task : list) {
             if (TextUtils.isEmpty(task.source_query)) {
@@ -140,7 +140,7 @@ public final class MotController implements IJob {
         }
 
         if (isMatch) {
-            DbWaterApi.setMonitorState(task.monitor_id, task.alarm_count + 1, task_tag);//记录次数
+            DbWaterToolApi.setMonitorState(task.monitor_id, task.alarm_count + 1, task_tag);//记录次数
 
             if (task_tag.startsWith("!")) {
                 //!xxx 表示，一直报警
@@ -152,7 +152,7 @@ public final class MotController implements IJob {
             }
         } else {
             if (task.alarm_count > 0) {
-                DbWaterApi.setMonitorState(task.monitor_id, 0, task_tag);//记录次数
+                DbWaterToolApi.setMonitorState(task.monitor_id, 0, task_tag);//记录次数
                 AlarmUtil.tryAlarm(task, true);//通知恢复
             }
         }

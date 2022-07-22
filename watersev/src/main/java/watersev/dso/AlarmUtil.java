@@ -9,6 +9,8 @@ import watersev.models.StateTag;
 import watersev.models.water.*;
 import watersev.models.water_paas.LuffyFileModel;
 import watersev.models.water_reg.ServiceModel;
+import watersev.models.water_tool.DetectionModel;
+import watersev.models.water_tool.MonitorModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

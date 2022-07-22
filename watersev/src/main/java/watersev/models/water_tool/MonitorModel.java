@@ -1,4 +1,4 @@
-package watersev.models.water;
+package watersev.models.water_tool;
 
 import org.noear.weed.GetHandlerEx;
 import org.noear.weed.IBinder;
