@@ -84,8 +84,7 @@
             <td class="left">域名</td>
             <td width="80px">剩余时间</td>
             <td width="80px">过期时间</td>
-            <td width="120px">检测情况</td>
-            <td width="130px">操作</td>
+            <td width="90px">操作</td>
         </tr>
         </thead>
         <tbody id="tbody" class="sel_from">
@@ -97,30 +96,20 @@
             </#if>
             <td><checkbox><label><input type="checkbox" name="sel_id" value="${m.certification_id}" /><a></a></label></checkbox></td>
             <td class="left">
-                <div>${m.name!}</div>
-                <n-l>${m.url!}</n-l>
+                <div>${m.url!}</div>
+                <n-l>${m.note!}</n-l>
             </td>
             <td>
 
             </td>
             <td>
-                ${m.time_of_end}
-            </td>
-            <td>
-                ${(m.check_last_time?string('HH:mm:ss'))!}
-                <#if m.check_last_state == 0>
-                    - ok
-                <#else>
-                    - no
-                </#if>
+                ${(m.time_of_end?string("yyyy-MM-dd"))!}
             </td>
 
             <td class="op">
                 <a href="/tool/certification/edit?certification_id=${m.certification_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a>
                 |
                 <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=ssl@${m.certification_id}" target="_parent" class="t2">日志</a>
-                |
-                <a href="/mot/speed/charts?tag=${m.tag}&name_md5=${m.track_md5()}&service=_waterdet" class="t2">监控</a>
             </td>
             </tr>
         </#list>
