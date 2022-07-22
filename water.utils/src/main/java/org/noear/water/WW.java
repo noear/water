@@ -38,7 +38,8 @@ public class WW {
     public static final String waterfaas = "waterfaas";
 
 
-    public static final String watersev_det = "watersev-det";
+    public static final String watersev_detapp = "watersev-detapp";
+    public static final String watersev_detssl = "watersev-detssl";
     public static final String watersev_mot = "watersev-mot";
     public static final String watersev_msgchk = "watersev-msgchk";
     public static final String watersev_msgdis = "watersev-msgdis";

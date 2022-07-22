@@ -41,7 +41,7 @@ public final class DetAppController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 4)) {
+        if (LockUtils.tryLock(WW.watersev_detapp, WW.watersev_detapp, 4)) {
             exec0();
         }
     }
@@ -111,7 +111,7 @@ public final class DetAppController implements IJob {
             DbWaterToolApi.detectionSetState(sev.detection_id, 1, "0");
             LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
 
-            if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
+            if (LockUtils.tryLock(WW.watersev_detapp, "det-a-" + sev.detection_id, 30)) {
                 AlarmUtil.tryAlarm(sev, false, 0);
             }
         }
@@ -148,7 +148,7 @@ public final class DetAppController implements IJob {
                     DbWaterToolApi.detectionSetState(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
 
-                    if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
+                    if (LockUtils.tryLock(WW.watersev_detapp, "det-a-" + sev.detection_id, 30)) {
                         AlarmUtil.tryAlarm(sev, false, code);
                     }
                 }

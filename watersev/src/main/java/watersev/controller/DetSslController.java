@@ -39,7 +39,7 @@ public final class DetSslController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_det, WW.watersev_det, 10)) {
+        if (LockUtils.tryLock(WW.watersev_detssl, WW.watersev_detssl, 10)) {
             exec0();
         }
     }
