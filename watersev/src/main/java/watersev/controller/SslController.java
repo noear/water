@@ -4,17 +4,13 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.WaterClient;
 import org.noear.water.utils.*;
-import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterToolApi;
 import watersev.models.water_tool.CertificationModel;
-import watersev.utils.HttpUtilEx;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
