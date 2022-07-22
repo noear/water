@@ -11,10 +11,11 @@ import wateradmin.dso.TagChecker;
 import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagUtil;
-import wateradmin.dso.db.DbWaterApi;
+import wateradmin.dso.db.DbWaterToolApi;
 import wateradmin.dso.db.DbWaterCfgApi;
+import wateradmin.dso.db.DbWaterToolApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water.MonitorModel;
+import wateradmin.models.water_tool.MonitorModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
@@ -29,7 +30,7 @@ public class MonitorController extends BaseController {
     //monitor视图跳转。
     @Mapping("")
     public ModelAndView home(String tag_name, int _state) throws SQLException {
-        List<TagCountsModel> tags = DbWaterApi.monitorGetTags();
+        List<TagCountsModel> tags = DbWaterToolApi.monitorGetTags();
 
         TagChecker.filter(tags, m -> m.tag);
 
@@ -59,7 +60,7 @@ public class MonitorController extends BaseController {
 
         boolean is_enabled = (_state == 0);
 
-        List<MonitorModel> list = DbWaterApi.monitorGetList(tag_name, monitor_name, is_enabled);
+        List<MonitorModel> list = DbWaterToolApi.monitorGetList(tag_name, monitor_name, is_enabled);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
         return view("tool/monitor_inner");
@@ -69,7 +70,7 @@ public class MonitorController extends BaseController {
     public ModelAndView edit(String tag, int monitor_id) throws SQLException {
         List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
 
-        MonitorModel monitor = DbWaterApi.monitorGet(monitor_id);
+        MonitorModel monitor = DbWaterToolApi.monitorGet(monitor_id);
 
         if(monitor.monitor_id == 0){
             monitor.tag = tag;
@@ -106,7 +107,7 @@ public class MonitorController extends BaseController {
             alarm_mobile = alarm_mobile.substring(0, alarm_mobile.length() - 1);
         }
 
-        boolean result = DbWaterApi.monitorSave(monitor_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_exp, is_enabled);
+        boolean result = DbWaterToolApi.monitorSave(monitor_id, tag, name, source_query, rule, task_tag_exp, alarm_mobile, alarm_exp, is_enabled);
         if (result) {
             viewModel.code(1, "保存成功");
         } else {
@@ -119,7 +120,7 @@ public class MonitorController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/del")
     public ViewModel del(int monitor_id) throws SQLException {
-        boolean result = DbWaterApi.monitorDel(monitor_id);
+        boolean result = DbWaterToolApi.monitorDel(monitor_id);
 
         if (result) {
             viewModel.code(1, "删除成功");
@@ -134,7 +135,7 @@ public class MonitorController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("ajax/batch")
     public ViewModel batchDo(int act, String ids) throws Exception {
-        DbWaterApi.monitorDelByIds(act, ids);
+        DbWaterToolApi.monitorDelByIds(act, ids);
 
         return viewModel.code(1, "ok");
     }

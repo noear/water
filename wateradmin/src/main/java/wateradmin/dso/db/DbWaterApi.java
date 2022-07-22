@@ -6,9 +6,9 @@ import org.noear.weed.DbTableQuery;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water.ReportModel;
-import wateradmin.models.water.MonitorModel;
-import wateradmin.models.water.SynchronousModel;
+import wateradmin.models.water_tool.ReportModel;
+import wateradmin.models.water_tool.MonitorModel;
+import wateradmin.models.water_tool.SynchronousModel;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -19,93 +19,6 @@ public class DbWaterApi {
         return Config.water;
     }
 
-
-    //获取monitor表中的数据。
-    public static List<MonitorModel> monitorGetList(String tag_name, String monitor_name, boolean is_enabled) throws SQLException {
-        return db()
-                .table("water_tool_monitor")
-                .whereEq("is_enabled", is_enabled ? 1 : 0)
-                .andEq("tag", tag_name)
-                .build(tb -> {
-                    if (!TextUtils.isEmpty(monitor_name)) {
-                        tb.andLk("name", monitor_name + "%");
-                    }
-                })
-                .selectList("*", MonitorModel.class);
-    }
-
-    //根据id查找对应monitor，用于编辑功能。
-    public static MonitorModel monitorGet(int monitor_id) throws SQLException {
-        if (monitor_id == 0) {
-            return new MonitorModel();
-        }
-
-        return db()
-                .table("water_tool_monitor")
-                .where("monitor_id = ?", monitor_id)
-                .selectItem("*", MonitorModel.class);
-    }
-
-
-    //编辑更新监视任务。
-    public static boolean monitorSave(int monitor_id, String tag, String name, String source_query, String rule, String task_tag_exp, String alarm_mobile, String alarm_exp, int is_enabled) throws SQLException {
-        String guid = IDUtils.guid();
-
-        DbTableQuery db = db().table("water_tool_monitor")
-                .set("key", guid)
-                .set("name", name)
-                .set("tag", tag)
-                .set("type", 0)
-                .set("source_query", source_query)
-                .set("rule", rule)
-                .set("task_tag_exp", task_tag_exp)
-                .set("alarm_mobile", alarm_mobile)
-                .set("alarm_sign", "")
-                .set("alarm_exp", alarm_exp)
-                .set("is_enabled", is_enabled);
-
-        if (monitor_id > 0) {
-            return db.whereEq("monitor_id", monitor_id).update() > 0;
-        } else {
-            return db.insert() > 0;
-        }
-    }
-
-    public static boolean monitorDel(Integer monitor_id) throws SQLException {
-        return db().table("water_tool_monitor")
-                .whereEq("monitor_id", monitor_id)
-                .delete() > 0;
-    }
-
-    public static void monitorDelByIds(int act, String ids) throws SQLException {
-        List<Object> list = Arrays.asList(ids.split(",")).stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
-
-        if (list.size() == 0) {
-            return;
-        }
-
-        if (act == 9) {
-            db().table("water_tool_monitor")
-                    .whereIn("monitor_id", list)
-                    .delete();
-        } else {
-            db().table("water_tool_monitor")
-                    .set("is_enabled", (act == 1 ? 1 : 0))
-                    .set("gmt_modified", System.currentTimeMillis())
-                    .whereIn("monitor_id", list)
-                    .update();
-        }
-    }
-
-
-
-    //获取monitor表的tag分组信息。
-    public static List<TagCountsModel> monitorGetTags() throws SQLException {
-        return db().table("water_tool_monitor")
-                .groupBy("tag")
-                .orderByAsc("tag")
-                .selectList("tag,count(*) counts", TagCountsModel.class);
-    }
 
 
     //根据名称和状态列出同步列表。

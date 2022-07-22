@@ -18,7 +18,7 @@ import wateradmin.dso.Session;
 import wateradmin.dso.db.DbWaterApi;
 import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.models.TagCountsModel;
-import wateradmin.models.water.ReportModel;
+import wateradmin.models.water_tool.ReportModel;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
