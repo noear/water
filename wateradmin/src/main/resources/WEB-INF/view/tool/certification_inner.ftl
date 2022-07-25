@@ -50,7 +50,7 @@
             //增加sort[排序]支持
             $('td[sort]').bind('click',function () {
                 var v = $(this).attr('sort');
-                UrlQueryBy('sort',v);
+                urlQueryBy('sort',v);
             });
 
             var s = getQueryString('sort');
