@@ -72,9 +72,10 @@ public class BaseController implements Render {
         if (data instanceof Throwable) {
             if (ctx.path().contains("/ajax/")) {
                 Throwable ex = (Throwable) data;
+
                 ViewModel vm = new ViewModel();
-                vm.code(0, "操作失败");
-                vm.put("_error", ex.getLocalizedMessage());
+                vm.code(0, "操作失败：" + ex.getLocalizedMessage());
+
                 ctx.status(200);
                 ctx.render(viewModel);
                 return;
