@@ -4,6 +4,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Singleton;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
+import org.noear.solon.core.handle.Render;
 import org.noear.solon.validation.annotation.Valid;
 import org.noear.water.WW;
 import org.noear.water.utils.Datetime;
@@ -16,7 +17,7 @@ import wateradmin.viewModels.ViewModel;
  */
 @Valid
 @Singleton(false)
-public class BaseController {
+public class BaseController implements Render {
     /*视图数据模型*/
     protected ViewModel viewModel = new ViewModel();
 
@@ -64,5 +65,22 @@ public class BaseController {
      * */
     public void redirect(String url) {
         Context.current().redirect(url);
+    }
+
+    @Override
+    public void render(Object data, Context ctx) throws Throwable {
+        if (data instanceof Throwable) {
+            if (ctx.path().contains("/ajax/")) {
+                Throwable ex = (Throwable) data;
+                ViewModel vm = new ViewModel();
+                vm.code(0, "操作失败");
+                vm.put("_error", ex.getLocalizedMessage());
+                ctx.status(200);
+                ctx.render(viewModel);
+                return;
+            }
+        }
+
+        ctx.render(data);
     }
 }
