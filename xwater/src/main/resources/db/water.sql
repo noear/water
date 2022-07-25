@@ -380,7 +380,8 @@ CREATE TABLE IF NOT EXISTS  `water_tool_certification` (
     `gmt_modified` bigint(20) DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (`certification_id`) USING BTREE,
     UNIQUE KEY `IX_key` (`key`) USING BTREE,
-    KEY `IX_tag` (`tag`) USING BTREE
+    KEY `IX_tag` (`tag`) USING BTREE,
+    KEY `IX_time_of_end` (`time_of_end`)
 ) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-工具-证书监视';
 
 
@@ -403,9 +404,8 @@ CREATE TABLE IF NOT EXISTS  `water_tool_detection` (
     `gmt_modified` bigint(20) DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (`detection_id`) USING BTREE,
     UNIQUE KEY `IX_key` (`key`) USING BTREE,
-    KEY `IX_tag` (`tag`) USING BTREE,
-    KEY `IX_time_of_end` (`time_of_end`)
-) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT='WATER-工具-应用监视' ROW_FORMAT = DYNAMIC;
+    KEY `IX_tag` (`tag`) USING BTREE
+) ENGINE=InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=DYNAMIC COMMENT='WATER-工具-应用监视';
 
 
 CREATE TABLE IF NOT EXISTS `water_tool_monitor`  (
