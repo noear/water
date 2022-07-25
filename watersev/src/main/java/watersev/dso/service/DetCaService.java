@@ -39,7 +39,7 @@ public class DetCaService {
             try {
                 check(task);
             } catch (Throwable e) {
-                LogUtil.sevError(getName(), task.certification_id + "", task.url + "::\n" + Utils.throwableToString(e));
+                LogUtil.error(getName(), task.certification_id + "", task.url + "::\n" + Utils.throwableToString(e));
             }
         }
     }
@@ -59,7 +59,9 @@ public class DetCaService {
                 long days = new Timespan(time_of_end, new Date()).days();
                 if (days <= 100) {
                     AlarmUtil.tryAlarm(task, time_of_end, days);
-                    LogUtil.sevWarn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
+                    LogUtil.warn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
+                }else{
+                    LogUtil.info(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
                 }
             }
             return;
@@ -75,7 +77,7 @@ public class DetCaService {
             return time_of_end;
         } catch (Throwable ex) {
             DbWaterToolApi.certificationSetState(task.certification_id, 1, "0", null);
-            LogUtil.sevWarn(getName(), task.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
+            LogUtil.warn(getName(), task.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
 
             return null;
         }

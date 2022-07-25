@@ -117,19 +117,6 @@ public class LogUtil {
         }
     }
 
-    public static void sevWarn(String tag, String tag1, String content) {
-        MDC.put("tag0", tag);
-        MDC.put("tag1", tag1);
-
-        log_sev.warn(content);
-    }
-
-    public static void sevError(String tag, String tag1, String content) {
-        MDC.put("tag0", tag);
-        MDC.put("tag1", tag1);
-
-        log_sev.error(content);
-    }
 
     //==========================================================
     //

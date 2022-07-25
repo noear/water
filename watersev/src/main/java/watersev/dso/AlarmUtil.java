@@ -49,7 +49,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("msg", alias, sb.toString());
 
         } catch (Exception ex) {
-            LogUtil.error("AlarmUtil",  "", ex);
+            LogUtil.error("AlarmUtil", "", ex);
         }
     }
 
@@ -81,7 +81,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("sev", alias, sb.toString());
 
         } catch (Exception ex) {
-            LogUtil.error("AlarmUtil",  "", ex);
+            LogUtil.error("AlarmUtil", "", ex);
         }
     }
 
@@ -101,7 +101,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("syn", alias, sb.toString());
 
         } catch (Exception ex) {
-            LogUtil.error("AlarmUtil",  "", ex);
+            LogUtil.error("AlarmUtil", "", ex);
         }
     }
 
@@ -119,7 +119,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("pln", alias, sb.toString());
 
         } catch (Exception ex) {
-            LogUtil.error("AlarmUtil",  "", ex);
+            LogUtil.error("AlarmUtil", "", ex);
         }
     }
 
@@ -130,7 +130,7 @@ public class AlarmUtil {
 
             if (isOk) {
                 //if (task.type != 1) { //1=报喜, 不需要恢复
-                    sb.append("恢复正常：").append(task.name);
+                sb.append("恢复正常：").append(task.name);
                 //}
             } else {
                 if (TextUtils.isEmpty(task.alarm_exp)) {
@@ -154,7 +154,7 @@ public class AlarmUtil {
             ProtocolHub.heihei.push("mot", alias, sb.toString());
 
         } catch (Exception ex) {
-            LogUtil.error("AlarmUtil",  "", ex);
+            LogUtil.error("AlarmUtil", "", ex);
         }
     }
 
@@ -181,7 +181,7 @@ public class AlarmUtil {
             return;
         }
 
-        String alarm_sign =  "应用监视";
+        String alarm_sign = "应用监视";
 
         try {
             StringBuilder sb = new StringBuilder();
@@ -215,12 +215,14 @@ public class AlarmUtil {
             StringBuilder sb = new StringBuilder();
 
 
-            sb.append("报警：").append(task.tag).append("::").append(task.url).append("，证书状态:");
+            sb.append("报警：").append(task.tag).append("::").append(task.url).append("，证书");
             if (days > 0) {
-                sb.append(days).append("天后过期，过期时间：").append(new Datetime(timeOfEnd).toString("yyyy-MM-dd"));
+                sb.append(days).append("天后过期");
             } else {
-                sb.append("已过期").append(Math.abs(days)).append("天，过期时间：").append(new Datetime(timeOfEnd).toString("yyyy-MM-dd"));
+                sb.append("已过期").append(Math.abs(days)).append("天");
             }
+            sb.append("（过期时间：").append(new Datetime(timeOfEnd).toString("yyyy-MM-dd"))
+                    .append("）");
 
             buildSign(sb, alarm_sign);
 

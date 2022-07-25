@@ -89,7 +89,7 @@ public final class SevCheckController implements IJob {
             }
         } else {
             //日志
-            LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
+            LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": did not checkin time: " + seconds + "s");
 
             //超过8秒的，说明有问题了 //默认5秒会签到
             if (sev.is_unstable && sev.check_error_num >= 2) {
@@ -98,7 +98,7 @@ public final class SevCheckController implements IJob {
                 //
                 DbWaterRegApi.delService(sev.service_id);
                 DbWaterRegApi.delConsumer(sev.address);
-                LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + ": had delete");
+                LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + ": had delete");
             } else {
                 //
                 // 如果稳定服务，则提示出错
@@ -177,7 +177,7 @@ public final class SevCheckController implements IJob {
                 DbWaterRegApi.delConsumer(sev.address);
             } else {
                 DbWaterRegApi.udpService0(sev.service_id, 1, "0");
-                LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
+                LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + "::\n" + Utils.throwableToString(ex));
 
                 //开始告警
                 if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
@@ -235,7 +235,7 @@ public final class SevCheckController implements IJob {
                         DbWaterRegApi.delConsumer(sev.address);
                     } else {
                         DbWaterRegApi.udpService0(sev.service_id, 1, code + "");
-                        LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
+                        LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + url2 + ", " + hint);
 
                         if (sev.check_error_num >= 2) {//之前好的，现在坏了提示一下
                             //报警，30秒一次
@@ -255,7 +255,7 @@ public final class SevCheckController implements IJob {
             WaterClient.Track.trackCount("_waterchk", "service", nameAndIp, 1, 1);
 
             DbWaterRegApi.udpService0(sev.service_id, 1, ex.getMessage());
-            LogUtil.sevWarn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
+            LogUtil.warn(getName(), sev.address, sev.name + "@" + sev.address + "\n" + Utils.throwableToString(ex));
         }
     }
 }
