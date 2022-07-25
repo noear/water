@@ -83,7 +83,8 @@ public class CertificationController extends BaseController {
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel save(int certification_id, String tag, String url, String note, int is_enabled) throws SQLException {
+    public ViewModel save(int certification_id, String tag, String url, String note, int is_enabled) throws Exception {
+
         boolean result = DbWaterToolApi.certificationSave(certification_id, tag, url, note, is_enabled);
 
         if (result) {

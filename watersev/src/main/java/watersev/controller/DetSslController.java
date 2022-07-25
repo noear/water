@@ -9,10 +9,6 @@ import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterToolApi;
 import watersev.models.water_tool.CertificationModel;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
-import java.net.URL;
-import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.sql.SQLException;
 import java.util.List;
@@ -71,36 +67,12 @@ public final class DetSslController implements IJob {
         //String trackName = sev.name + "@" + sev.protocol + "://" + sev.address;
 
         try {
-            X509Certificate certificate = getCa(url);
+            X509Certificate certificate = CaUtils.getCa(url);
             DbWaterToolApi.certificationSetState(sev.certification_id, 0, "", certificate.getNotAfter());
 
         } catch (Throwable ex) {
             DbWaterToolApi.certificationSetState(sev.certification_id, 1, "0", null);
             LogUtil.sevWarn(getName(), sev.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
         }
-    }
-
-
-    private X509Certificate getCa(String urlStr) throws IOException {
-        URL url = new URL(urlStr);
-        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-
-        connection.connect();
-        Certificate certificate = null;
-        if(connection.getServerCertificates().length > 0) {
-            certificate = connection.getServerCertificates()[0];
-        }
-        connection.disconnect();
-
-        return (X509Certificate)certificate;
-
-//        for (Certificate certificate : connection.getServerCertificates()) {
-//            //第一个就是服务器本身证书，后续的是证书链上的其他证书
-//            X509Certificate x509Certificate = (X509Certificate) certificate;
-//            System.out.println(x509Certificate.getSubjectDN().getName());
-//            System.out.println(new Datetime(x509Certificate.getNotBefore()).toString("yyyy-MM-dd HH:mm:ss"));//有效期开始时间
-//            System.out.println(new Datetime(x509Certificate.getNotAfter()).toString("yyyy-MM-dd HH:mm:ss"));//有效期结束时间
-//            break;
-//        }
     }
 }

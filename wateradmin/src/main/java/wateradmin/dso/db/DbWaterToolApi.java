@@ -1,5 +1,6 @@
 package wateradmin.dso.db;
 
+import org.noear.water.utils.CaUtils;
 import org.noear.water.utils.IDUtils;
 import org.noear.water.utils.TextUtils;
 import org.noear.weed.DbContext;
@@ -12,6 +13,7 @@ import wateradmin.models.water_tool.MonitorModel;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -238,7 +240,7 @@ public class DbWaterToolApi {
 
 
     //编辑更新监视任务。
-    public static boolean certificationSave(int certification_id, String tag, String url, String note, int is_enabled) throws SQLException {
+    public static boolean certificationSave(int certification_id, String tag, String url, String note, int is_enabled) throws Exception {
         if (TextUtils.isEmpty(tag) || TextUtils.isEmpty(url)) {
             return false;
         }
@@ -247,12 +249,19 @@ public class DbWaterToolApi {
             tag = "";
         }
 
+        if (url.contains("://") == false) {
+            url = "https://" + url;
+        }
+
+        Date time_of_end = CaUtils.getCaEndTime(url);
+
         DbTableQuery query = db()
                 .table("water_tool_certification")
                 .set("note", note)
                 .set("tag", tag)
                 .set("url", url)
                 .set("check_interval", 0)
+                .set("time_of_end", time_of_end)
                 .set("is_enabled", is_enabled);
 
 
