@@ -49,7 +49,7 @@ public class CertificationController extends BaseController {
 
     //Monitor的 iframe inner视图。
     @Mapping("inner")
-    public ModelAndView inner(String tag_name,String url, int _state) throws SQLException {
+    public ModelAndView inner(String tag_name,String url, int _state, String sort) throws SQLException {
         TagUtil.cookieSet(tag_name);
 
         viewModel.put("_state", _state);
@@ -64,8 +64,6 @@ public class CertificationController extends BaseController {
 
     @Mapping("edit")
     public ModelAndView edit(String tag, int certification_id) throws SQLException {
-        List<ConfigModel> cfgs = DbWaterCfgApi.getDbConfigs();
-
         CertificationModel certification = DbWaterToolApi.certificationGet(certification_id);
 
         if(certification.certification_id == 0){

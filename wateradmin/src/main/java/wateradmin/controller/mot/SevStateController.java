@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Controller
 @Mapping("/mot/")
-public class SevController extends BaseController {
+public class SevStateController extends BaseController {
 
     //服务状态
     @Mapping("/service")

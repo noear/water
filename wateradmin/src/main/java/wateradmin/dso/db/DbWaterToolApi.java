@@ -213,14 +213,18 @@ public class DbWaterToolApi {
 
 
     //获取certification表中的数据。
-    public static List<CertificationModel> certificationGetList(String tag_name, String url, boolean is_enabled) throws SQLException {
+    public static List<CertificationModel> certificationGetList(String tag_name, String url, boolean is_enabled, String sort) throws SQLException {
         return db()
                 .table("water_tool_certification")
                 .whereEq("is_enabled", is_enabled ? 1 : 0)
                 .andEq("tag", tag_name)
                 .build(tb -> {
-                    if (!TextUtils.isEmpty(url)) {
+                    if (TextUtils.isNotEmpty(url)) {
                         tb.andLk("url", "%" + url + "%");
+                    }
+
+                    if (TextUtils.isNotEmpty(sort)) {
+                        tb.orderBy(sort);
                     }
                 })
                 .selectList("*", CertificationModel.class);
