@@ -253,6 +253,10 @@ public class DbWaterToolApi {
             tag = "";
         }
 
+        if(note == null){
+            note = "";
+        }
+
         if (url.contains("://") == false) {
             url = "https://" + url;
         }
