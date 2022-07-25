@@ -57,7 +57,9 @@ public class DetCaService {
 
             if (time_of_end != null) {
                 long days = new Timespan(time_of_end, new Date()).days();
-                if (days <= 100) {
+
+                //todo: 15 天开始告警
+                if (days <= 15) {
                     AlarmUtil.tryAlarm(task, time_of_end, days);
                     LogUtil.warn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
                 }else{
