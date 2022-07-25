@@ -4,6 +4,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.water.WW;
 import org.noear.water.utils.CaUtils;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.Timespan;
 import watersev.dso.AlarmUtil;
@@ -54,6 +55,7 @@ public class DetCaService {
                 long days = new Timespan(time_of_end, new Date()).days();
                 if (days <= 100) {
                     AlarmUtil.tryAlarm(task, time_of_end, days);
+                    LogUtil.sevWarn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
                 }
             }
             return;
