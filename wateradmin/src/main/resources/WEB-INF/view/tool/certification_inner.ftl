@@ -82,8 +82,8 @@
         <tr>
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
             <td class="left">域名</td>
-            <td width="80px">剩余时间</td>
-            <td width="120px">过期时间</td>
+            <td width="80px" class="right">剩余时间</td>
+            <td width="120px" class="right">过期时间</td>
             <td width="90px">操作</td>
         </tr>
         </thead>
@@ -99,10 +99,10 @@
                 <div>${m.url!}</div>
                 <n-l>${m.note!}</n-l>
             </td>
-            <td>
+            <td class="right">
                 ${m.remaining()!}
             </td>
-            <td>
+            <td class="right">
                 ${(m.time_of_end?string("yyyy-MM-dd"))!}
             </td>
 
