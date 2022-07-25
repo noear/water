@@ -109,7 +109,7 @@
             <td class="op">
                 <a href="/tool/certification/edit?certification_id=${m.certification_id}" class="t2" ><#if is_admin = 1>编辑<#else>查看</#if></a>
                 |
-                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=ssl@${m.certification_id}" target="_parent" class="t2">日志</a>
+                <a href="/log/query/inner?tag_name=water&logger=water_log_sev&level=0&tagx=detca@${m.certification_id}" target="_parent" class="t2">日志</a>
             </td>
             </tr>
         </#list>
