@@ -75,7 +75,7 @@
 
     <toolbar class="blockquote">
         <left>
-            <h2 class="ln30"><a href="#" onclick="history.back(-1)" class="noline">应用监视</a></h2> / 编辑
+            <h2 class="ln30"><a href="#" onclick="history.back(-1)" class="noline">证书监视</a></h2> / 编辑
         </left>
         <right class="form">
             <#if is_admin == 1>
