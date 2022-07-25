@@ -46,7 +46,13 @@ public class DetAppService {
                 }
             }
 
-            check(task);
+            try {
+                check(task);
+            }catch (Throwable e){
+                String trackName = task.name + "@" + task.protocol + "://" + task.address;
+
+                LogUtil.sevWarn(getName(), task.detection_id + "", trackName + "\n" + Utils.throwableToString(e));
+            }
         }
     }
 
@@ -71,8 +77,8 @@ public class DetAppService {
         }
     }
 
-    private void check_type0_tcp(DetectionModel sev, String url) {
-        String trackName = sev.name + "@" + sev.protocol + "://" + sev.address;
+    private void check_type0_tcp(DetectionModel task, String url) {
+        String trackName = task.name + "@" + task.protocol + "://" + task.address;
 
         try {
             URI uri = URI.create(url);
@@ -82,24 +88,24 @@ public class DetAppService {
             PingUtils.ping(uri.getAuthority(), 3000);
             long time_span = System.currentTimeMillis() - time_start;
 
-            DbWaterToolApi.detectionSetState(sev.detection_id, 0, "");
-            WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
+            DbWaterToolApi.detectionSetState(task.detection_id, 0, "");
+            WaterClient.Track.addMeterAndMd5("_waterdet", task.tag, trackName, time_span);
 
-            if (sev.check_error_num > 0) {
-                AlarmUtil.tryAlarm(sev, true, 200);
+            if (task.check_error_num > 0) {
+                AlarmUtil.tryAlarm(task, true, 200);
             }
         } catch (Throwable ex) {
-            DbWaterToolApi.detectionSetState(sev.detection_id, 1, "0");
-            LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
+            DbWaterToolApi.detectionSetState(task.detection_id, 1, "0");
+            LogUtil.sevWarn(getName(), task.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
 
-            if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
-                AlarmUtil.tryAlarm(sev, false, 0);
+            if (LockUtils.tryLock(WW.watersev_det, "det-a-" + task.detection_id, 30)) {
+                AlarmUtil.tryAlarm(task, false, 0);
             }
         }
     }
 
-    private void check_type0_http(DetectionModel sev, String url) {
-        String trackName = sev.name + "@" + sev.protocol + "://" + sev.address;
+    private void check_type0_http(DetectionModel task, String url) {
+        String trackName = task.name + "@" + task.protocol + "://" + task.address;
 
         try {
             /**
@@ -113,30 +119,30 @@ public class DetAppService {
             //最长5秒会回调
             HttpUtilEx.getStatusByAsync(url, (isOk, code, hint) -> {
                 long time_span = System.currentTimeMillis() - time_start;
-                Thread.currentThread().setName("det-c-" + sev.detection_id);
+                Thread.currentThread().setName("det-c-" + task.detection_id);
 
                 if (code >= 200 && code < 400) { //正常
-                    DbWaterToolApi.detectionSetState(sev.detection_id, 0, code + "");
+                    DbWaterToolApi.detectionSetState(task.detection_id, 0, code + "");
 
-                    WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.addMeterAndMd5("_waterdet", task.tag, trackName, time_span);
 
-                    if (sev.check_error_num > 0) {
-                        AlarmUtil.tryAlarm(sev, true, code);
+                    if (task.check_error_num > 0) {
+                        AlarmUtil.tryAlarm(task, true, code);
                     }
                 } else {
-                    WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.addMeterAndMd5("_waterdet", task.tag, trackName, time_span);
 
-                    DbWaterToolApi.detectionSetState(sev.detection_id, 1, code + "");
-                    LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
+                    DbWaterToolApi.detectionSetState(task.detection_id, 1, code + "");
+                    LogUtil.sevWarn(getName(), task.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
 
-                    if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
-                        AlarmUtil.tryAlarm(sev, false, code);
+                    if (LockUtils.tryLock(WW.watersev_det, "det-a-" + task.detection_id, 30)) {
+                        AlarmUtil.tryAlarm(task, false, code);
                     }
                 }
             });
         } catch (Throwable ex) { //出错
-            DbWaterToolApi.detectionSetState(sev.detection_id, 1, ex.getMessage());
-            LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\n" + Utils.throwableToString(ex));
+            DbWaterToolApi.detectionSetState(task.detection_id, 1, ex.getMessage());
+            LogUtil.sevWarn(getName(), task.detection_id + "", trackName + "\n" + Utils.throwableToString(ex));
         }
     }
 }

@@ -122,12 +122,13 @@ public class LogUtil {
         MDC.put("tag1", tag1);
 
         log_sev.warn(content);
+    }
 
-
-        MDC.put("tag0", "sev");//兼容旧的
+    public static void sevError(String tag, String tag1, String content) {
+        MDC.put("tag0", tag);
         MDC.put("tag1", tag1);
 
-        log_sev.warn(content);
+        log_sev.error(content);
     }
 
     //==========================================================

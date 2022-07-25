@@ -36,7 +36,11 @@ public class DetCaService {
         List<CertificationModel> list = DbWaterToolApi.certificationGetList();
 
         for (CertificationModel task : list) {
-            check(task);
+            try {
+                check(task);
+            } catch (Throwable e) {
+                LogUtil.sevError(getName(), task.certification_id + "", task.url + "::\n" + Utils.throwableToString(e));
+            }
         }
     }
 
@@ -62,16 +66,16 @@ public class DetCaService {
         }
     }
 
-    private Date check_type(CertificationModel sev, String url) {
+    private Date check_type(CertificationModel task, String url) {
         try {
             X509Certificate certificate = CaUtils.getCa(url);
             Date time_of_end = certificate.getNotAfter();
-            DbWaterToolApi.certificationSetState(sev.certification_id, 0, "", time_of_end);
+            DbWaterToolApi.certificationSetState(task.certification_id, 0, "", time_of_end);
 
             return time_of_end;
         } catch (Throwable ex) {
-            DbWaterToolApi.certificationSetState(sev.certification_id, 1, "0", null);
-            LogUtil.sevWarn(getName(), sev.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
+            DbWaterToolApi.certificationSetState(task.certification_id, 1, "0", null);
+            LogUtil.sevWarn(getName(), task.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
 
             return null;
         }
