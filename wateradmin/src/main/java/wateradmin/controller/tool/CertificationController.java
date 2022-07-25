@@ -56,7 +56,7 @@ public class CertificationController extends BaseController {
 
         boolean is_enabled = (_state == 0);
 
-        List<CertificationModel> list = DbWaterToolApi.certificationGetList(tag_name, url, is_enabled);
+        List<CertificationModel> list = DbWaterToolApi.certificationGetList(tag_name, url, is_enabled, sort);
         viewModel.put("list", list);
         viewModel.put("tag_name", tag_name);
         return view("tool/certification_inner");
