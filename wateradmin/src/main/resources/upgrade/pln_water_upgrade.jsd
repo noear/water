@@ -205,7 +205,7 @@ if(ver_old < 7){
     db2.table('grit_resource').set('display_name','系统监控').whereEq('display_name','服务监控').andEq('link_uri','/mot/').update();
 }
 
-//for 2.8.2
+//for 2.8.1
 if(ver_old < 8){
     if(!db2){
         db2 = water.db('water/water');
