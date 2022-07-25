@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 7;
+let ver_new = 8;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -203,6 +203,40 @@ if(ver_old < 7){
 
     //资源改名
     db2.table('grit_resource').set('display_name','系统监控').whereEq('display_name','服务监控').andEq('link_uri','/mot/').update();
+}
+
+//for 2.8.2
+if(ver_old < 8){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
+    //添加资源（服务列表）
+    tmlRes = db2.table('grit_resource').whereEq('display_name','应用监视').andEq('link_uri','/tool/detection').limit(1).selectMap('*');
+    if(tmlRes.size() > 0){
+        let tmlResId = tmlRes.resource_id;
+        tmlRes.remove("resource_id");
+
+        if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/tool/certification').selectExists() == false){
+            let resId2 = db2.table('grit_resource')
+            .setMap(tmlRes).set('display_name','证书监视').set('order_index',10).set('link_uri','/tool/certification').set("guid", XUtil.guid())
+            .usingNull(false)
+            .usingExpr(false)
+            .insert();
+
+            //为'应用监视'的用户，添加'证书监视'
+            if(tmlResId){
+                let resList = db2.table('grit_resource_linked').whereEq('resource_id',tmlResId)
+                                    .selectDataList('resource_id,subject_id,subject_type');
+
+                resList.forEach(r1 => {
+                    r1.set('resource_id',resId2);
+                });
+
+                db2.table('grit_resource_linked').insertList(resList.getRows());
+            }
+        }
+    }
 }
 
 //3.设定版本
