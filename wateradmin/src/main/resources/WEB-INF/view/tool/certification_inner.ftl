@@ -92,8 +92,8 @@
         <thead>
         <tr>
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-            <td class="left" sort="url">域名</td>
-            <td width="80px" >剩余时间</td>
+            <td class="left" sort="">域名</td>
+            <td width="90px" sort="time_of_end">剩余时间</td>
             <td width="120px" sort="time_of_end">过期时间</td>
             <td width="90px">操作</td>
         </tr>
