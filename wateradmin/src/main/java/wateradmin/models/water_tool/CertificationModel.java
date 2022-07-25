@@ -76,11 +76,28 @@ public class CertificationModel {
      */
     public long gmt_modified;
 
+    private Long _days;
+    public Long days(){
+        if(_days == null){
+            _days = new Timespan(time_of_end, new Date()).days();
+        }
+
+        return _days;
+    }
+
     public String remaining() {
         if (time_of_end == null) {
             return "";
         } else {
-            return new Timespan(time_of_end, new Date()).days() + "天";
+            return days() + "天";
         }
+    }
+
+    public boolean isAlarm() {
+        if (days() >= 15) {
+            return true;
+        }
+
+        return false;
     }
 }

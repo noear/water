@@ -77,7 +77,7 @@ public class BaseController implements Render {
                 vm.code(0, "操作失败：" + ex.getLocalizedMessage());
 
                 ctx.status(200);
-                ctx.render(viewModel.model());
+                ctx.render(vm.model());
                 return;
             }
         }

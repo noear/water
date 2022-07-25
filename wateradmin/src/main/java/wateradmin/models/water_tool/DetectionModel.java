@@ -37,14 +37,6 @@ public class DetectionModel {
      */
     public String address;
     /**
-     *
-     */
-    public String alarm_mobile;
-    /**
-     *
-     */
-    public String alarm_sign;
-    /**
      * 0:待检查；1检查中
      */
     public int state;

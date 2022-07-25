@@ -110,10 +110,10 @@
                 <div>${m.url!}</div>
                 <n-l>${m.note!}</n-l>
             </td>
-            <td class="right">
+            <td class="right" style='${m.isAlarm()?string("color:red","")}'>
                 ${m.remaining()!}
             </td>
-            <td class="right">
+            <td class="right" style='${m.isAlarm()?string("color:red","")}'>
                 ${(m.time_of_end?string("yyyy-MM-dd HH:mm:ss"))!}
             </td>
 
