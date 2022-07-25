@@ -1,46 +1,36 @@
-package watersev.controller;
+package watersev.dso.service;
 
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
-import org.noear.water.utils.*;
+import org.noear.water.utils.CaUtils;
+import org.noear.water.utils.LockUtils;
+import org.noear.water.utils.Timespan;
+import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
 import watersev.dso.db.DbWaterToolApi;
 import watersev.models.water_tool.CertificationModel;
 
 import java.security.cert.X509Certificate;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
- * 应用监视（可集群，可多实例运行。同时间，只会有一个节点有效）
- *
- * @author noear
- * */
+ * @author noear 2022/7/25 created
+ */
 @Component
-public final class DetSslController implements IJob {
-    @Override
+public class DetCaService {
     public String getName() {
-        return "detssl";
+        return "detca";
     }
 
-    @Override
-    public int getInterval() {
-        return 1000 * 60 * 5; //实际是：5m 跑一次
-    }
-
-
-    @Override
-    public void exec() throws Throwable {
-        RegController.addService("watersev-" + getName());
-
-        if (LockUtils.tryLock(WW.watersev_detssl, WW.watersev_detssl, 10)) {
-            exec0();
+    public void execDo() throws SQLException {
+        //5分钟一次
+        if (LockUtils.tryLock(WW.watersev_det, getName(), 60 * 5) == false) {
+            return;
         }
-    }
 
-    private void exec0() throws SQLException {
         //取出待处理的服务（已启用的服务）
         List<CertificationModel> list = DbWaterToolApi.certificationGetList();
 
@@ -51,28 +41,37 @@ public final class DetSslController implements IJob {
 
     //检测服务，并尝试报警
     private void check(CertificationModel task) {
-        String threadName = "ssl-" + task.certification_id;
+        String threadName = getName() + "-" + task.certification_id;
         Thread.currentThread().setName(threadName);
 
         //检测开始
         String url = task.url;
 
         if (url.startsWith("https://")) {
-            check_type(task, url);
+            Date time_of_end = check_type(task, url);
+
+            if (time_of_end != null) {
+                long days = new Timespan(time_of_end, new Date()).days();
+                if (days <= 100) {
+                    AlarmUtil.tryAlarm(task, time_of_end, days);
+                }
+            }
             return;
         }
     }
 
-    private void check_type(CertificationModel sev, String url) {
-        //String trackName = sev.name + "@" + sev.protocol + "://" + sev.address;
-
+    private Date check_type(CertificationModel sev, String url) {
         try {
             X509Certificate certificate = CaUtils.getCa(url);
-            DbWaterToolApi.certificationSetState(sev.certification_id, 0, "", certificate.getNotAfter());
+            Date time_of_end = certificate.getNotAfter();
+            DbWaterToolApi.certificationSetState(sev.certification_id, 0, "", time_of_end);
 
+            return time_of_end;
         } catch (Throwable ex) {
             DbWaterToolApi.certificationSetState(sev.certification_id, 1, "0", null);
             LogUtil.sevWarn(getName(), sev.certification_id + "", url + "::\n" + Utils.throwableToString(ex));
+
+            return null;
         }
     }
 }

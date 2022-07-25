@@ -2,6 +2,7 @@ package watersev.dso;
 
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.DistributionModel;
+import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
 import watersev.Config;
 import watersev.dso.db.DbWaterCfgApi;
@@ -9,11 +10,13 @@ import watersev.models.StateTag;
 import watersev.models.water.*;
 import watersev.models.water_paas.LuffyFileModel;
 import watersev.models.water_reg.ServiceModel;
+import watersev.models.water_tool.CertificationModel;
 import watersev.models.water_tool.DetectionModel;
 import watersev.models.water_tool.MonitorModel;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AlarmUtil {
@@ -178,9 +181,7 @@ public class AlarmUtil {
             return;
         }
 
-        if (TextUtils.isEmpty(task.alarm_sign)) {
-            task.alarm_sign = "应用监视";
-        }
+        String alarm_sign =  "应用监视";
 
         try {
             StringBuilder sb = new StringBuilder();
@@ -193,10 +194,38 @@ public class AlarmUtil {
                         .append(task.protocol).append("://").append(task.address).append("，状态:").append(code);
             }
 
-            buildSign(sb, task.alarm_sign);
+            buildSign(sb, alarm_sign);
 
-            List<String> alias = buildAlias(task.tag, task.alarm_mobile);
-            ProtocolHub.heihei.push("sev", alias, sb.toString());
+            List<String> alias = buildAlias(task.tag, "");
+            ProtocolHub.heihei.push("det", alias, sb.toString());
+
+        } catch (Exception ex) {
+            LogUtil.error("AlarmUtil", "", ex);
+        }
+    }
+
+    public static void tryAlarm(CertificationModel task, Date timeOfEnd, long days) {
+        if (task.is_enabled == 0) {
+            return;
+        }
+
+        String alarm_sign = "证书监视";
+
+        try {
+            StringBuilder sb = new StringBuilder();
+
+
+            sb.append("报警：").append(task.tag).append("::").append(task.url).append("，证书状态:");
+            if (days > 0) {
+                sb.append(days).append("天后过期，过期时间：").append(new Datetime(timeOfEnd).toString("yyyy-MM-dd"));
+            } else {
+                sb.append("已过期").append(Math.abs(days)).append("天，过期时间：").append(new Datetime(timeOfEnd).toString("yyyy-MM-dd"));
+            }
+
+            buildSign(sb, alarm_sign);
+
+            List<String> alias = buildAlias(task.tag, "");
+            ProtocolHub.heihei.push("det", alias, sb.toString());
 
         } catch (Exception ex) {
             LogUtil.error("AlarmUtil", "", ex);

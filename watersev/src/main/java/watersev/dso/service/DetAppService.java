@@ -1,13 +1,12 @@
-package watersev.controller;
+package watersev.dso.service;
 
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
-import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.LockUtils;
 import org.noear.water.utils.PingUtils;
+import org.noear.water.utils.RunUtils;
 import org.noear.water.utils.Timespan;
 import watersev.dso.AlarmUtil;
 import watersev.dso.LogUtil;
@@ -20,33 +19,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * 应用监视（可集群，可多实例运行。同时间，只会有一个节点有效）
- *
- * @author noear
- * */
+ * @author noear 2022/7/25 created
+ */
 @Component
-public final class DetAppController implements IJob {
-    @Override
+public class DetAppService {
     public String getName() {
         return "detapp";
     }
 
-    @Override
-    public int getInterval() {
-        return 1000 * 5; //实际是：5s 跑一次
-    }
-
-
-    @Override
-    public void exec() throws Throwable {
-        RegController.addService("watersev-" + getName());
-
-        if (LockUtils.tryLock(WW.watersev_detapp, WW.watersev_detapp, 4)) {
-            exec0();
-        }
-    }
-
-    private void exec0() throws SQLException {
+    public void execDo() throws SQLException {
         //取出待处理的服务（已启用的服务）
         List<DetectionModel> list = DbWaterToolApi.detectionGetList();
 
@@ -71,7 +52,7 @@ public final class DetAppController implements IJob {
 
     //检测服务，并尝试报警
     private void check(DetectionModel task) {
-        String threadName = "det-" + task.detection_id;
+        String threadName = getName() + "-" + task.detection_id;
         Thread.currentThread().setName(threadName);
 
         //检测开始
@@ -83,7 +64,7 @@ public final class DetAppController implements IJob {
         }
 
         if (url.startsWith("://")) {
-            RunUtils.runAsyn(()->{
+            RunUtils.runAsyn(() -> {
                 check_type0_tcp(task, url);
             });
             return;
@@ -102,7 +83,7 @@ public final class DetAppController implements IJob {
             long time_span = System.currentTimeMillis() - time_start;
 
             DbWaterToolApi.detectionSetState(sev.detection_id, 0, "");
-            WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
+            WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
 
             if (sev.check_error_num > 0) {
                 AlarmUtil.tryAlarm(sev, true, 200);
@@ -111,7 +92,7 @@ public final class DetAppController implements IJob {
             DbWaterToolApi.detectionSetState(sev.detection_id, 1, "0");
             LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "::\n" + Utils.throwableToString(ex));
 
-            if (LockUtils.tryLock(WW.watersev_detapp, "det-a-" + sev.detection_id, 30)) {
+            if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
                 AlarmUtil.tryAlarm(sev, false, 0);
             }
         }
@@ -137,18 +118,18 @@ public final class DetAppController implements IJob {
                 if (code >= 200 && code < 400) { //正常
                     DbWaterToolApi.detectionSetState(sev.detection_id, 0, code + "");
 
-                    WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
 
                     if (sev.check_error_num > 0) {
                         AlarmUtil.tryAlarm(sev, true, code);
                     }
                 } else {
-                    WaterClient.Track.trackAndMd5("_waterdet", sev.tag, trackName, time_span);
+                    WaterClient.Track.addMeterAndMd5("_waterdet", sev.tag, trackName, time_span);
 
                     DbWaterToolApi.detectionSetState(sev.detection_id, 1, code + "");
                     LogUtil.sevWarn(getName(), sev.detection_id + "", trackName + "\ncode=" + code + ", " + hint);
 
-                    if (LockUtils.tryLock(WW.watersev_detapp, "det-a-" + sev.detection_id, 30)) {
+                    if (LockUtils.tryLock(WW.watersev_det, "det-a-" + sev.detection_id, 30)) {
                         AlarmUtil.tryAlarm(sev, false, code);
                     }
                 }

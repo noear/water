@@ -1,8 +1,5 @@
 package watersev.models.water_tool;
 
-import lombok.Getter;
-import org.noear.water.utils.EncryptUtils;
-import org.noear.water.utils.Timespan;
 
 import java.util.Date;
 
@@ -35,14 +32,6 @@ public class DetectionModel {
      *
      */
     public String address;
-    /**
-     *
-     */
-    public String alarm_mobile;
-    /**
-     *
-     */
-    public String alarm_sign;
     /**
      * 0:待检查；1检查中
      */
