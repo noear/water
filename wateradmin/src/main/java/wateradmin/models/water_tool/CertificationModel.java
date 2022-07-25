@@ -94,7 +94,7 @@ public class CertificationModel {
     }
 
     public boolean isAlarm() {
-        if (days() >= 15) {
+        if (days() <= 15) {
             return true;
         }
 
