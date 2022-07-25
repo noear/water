@@ -46,6 +46,17 @@
                 var ckd= $(this).prop('checked');
                 $('[name=sel_id]').prop('checked',ckd);
             });
+
+            //增加sort[排序]支持
+            $('td[sort]').bind('click',function () {
+                var v = $(this).attr('sort');
+                UrlQueryBy('sort',v);
+            });
+
+            var s = getQueryString('sort');
+            if(s) {
+                $("td[sort='" + s + "']").addClass('sel');
+            }
         });
     </script>
 </head>
@@ -82,8 +93,8 @@
         <tr>
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
             <td class="left" sort="url">域名</td>
-            <td width="80px" class="right">剩余时间</td>
-            <td width="120px" class="right" sort="time_of_end">过期时间</td>
+            <td width="80px" >剩余时间</td>
+            <td width="120px" sort="time_of_end">过期时间</td>
             <td width="90px">操作</td>
         </tr>
         </thead>
