@@ -1,7 +1,7 @@
 package waterapi.utils;
 
 import org.noear.solon.Solon;
-import org.noear.solon.ext.ConsumerEx;
+import org.noear.solon.core.util.ConsumerEx;
 import org.noear.water.utils.HttpUtils;
 
 /**
