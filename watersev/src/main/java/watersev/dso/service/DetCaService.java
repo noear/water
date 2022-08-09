@@ -53,7 +53,7 @@ public class DetCaService {
         String url = task.url;
 
         if (url.startsWith("https://")) {
-            Date time_of_end = check_type(task, url);
+            Date time_of_end = getCaEndTime(task, url);
 
             if (time_of_end != null) {
                 long days = new Timespan(time_of_end, new Date()).days();
@@ -66,11 +66,10 @@ public class DetCaService {
                     LogUtil.info(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
                 }
             }
-            return;
         }
     }
 
-    private Date check_type(CertificationModel task, String url) {
+    private Date getCaEndTime(CertificationModel task, String url) {
         try {
             X509Certificate certificate = CaUtils.getCa(url);
             Date time_of_end = certificate.getNotAfter();

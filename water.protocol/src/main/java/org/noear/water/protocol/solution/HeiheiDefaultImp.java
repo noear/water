@@ -79,9 +79,9 @@ public class HeiheiDefaultImp implements Heihei {
 
             return rst;
         } catch (HttpResultException ex) {
-            log_heihei.warn("{}", ex.getLocalizedMessage());
+            log_heihei.warn("{}\n\n{}", message, ex.getLocalizedMessage());
         } catch (Exception ex) {
-            log_heihei.error("{}", ex);
+            log_heihei.error("{}\n\n{}", message, ex);
         }
 
         return null;

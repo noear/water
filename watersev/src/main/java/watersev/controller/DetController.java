@@ -1,10 +1,12 @@
 package watersev.controller;
 
+import org.noear.solon.Utils;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.extend.schedule.IJob;
 import org.noear.water.WW;
 import org.noear.water.utils.LockUtils;
+import watersev.dso.LogUtil;
 import watersev.dso.service.DetAppService;
 import watersev.dso.service.DetCaService;
 
@@ -37,8 +39,18 @@ public final class DetController implements IJob {
         RegController.addService("watersev-" + getName());
 
         if (LockUtils.tryLock(WW.watersev_det, getName(), 4)) {
-            detAppService.execDo();
-            detCaService.execDo();
+            try {
+                detAppService.execDo();
+            }catch (Throwable e){
+                LogUtil.error(getName(),  "", Utils.throwableToString(e));
+            }
+
+
+            try {
+                detCaService.execDo();
+            }catch (Throwable e){
+                LogUtil.error(getName(),  "", Utils.throwableToString(e));
+            }
         }
     }
 }
