@@ -103,7 +103,7 @@
                 ${m.check_interval}s
             </td>
             <td style='${m.isAlarm()?string("color:red","")}'>
-                ${(m.check_last_time?string('HH:mm:ss'))!}
+                ${(m.check_last_time?string('dd HH:mm'))!}
                 <#if m.check_last_state == 0>
                     - ok
                 <#else>
