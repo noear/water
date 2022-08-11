@@ -54,7 +54,7 @@ public class CertificationModel {
     /**
      * 最后检查时间
      */
-    public long check_last_time;
+    public Date check_last_time;
     /**
      * 最后检查状态（0：OK；1：error）
      */
@@ -95,6 +95,18 @@ public class CertificationModel {
 
     public boolean isAlarm() {
         if (days() <= 15) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isAlarm2() {
+        if (check_last_state == 1) {
+            return true;
+        }
+
+        if (new Timespan(check_last_time).seconds() > 60*60) {
             return true;
         }
 

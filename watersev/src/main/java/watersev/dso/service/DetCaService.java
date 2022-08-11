@@ -61,9 +61,9 @@ public class DetCaService {
                 //todo: 15 天开始告警
                 if (days <= 15) {
                     AlarmUtil.tryAlarm(task, time_of_end, days);
-                    LogUtil.warn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
+                    LogUtil.warn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd HH:mm:ss"));
                 }else{
-                    LogUtil.info(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd"));
+                    LogUtil.info(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd HH:mm:ss"));
                 }
             }
         }

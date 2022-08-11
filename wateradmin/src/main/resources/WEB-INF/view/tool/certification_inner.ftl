@@ -94,7 +94,8 @@
             <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
             <td class="left" sort="">域名</td>
             <td width="90px" sort="time_of_end">剩余时间</td>
-            <td width="170px" sort="time_of_end">过期时间</td>
+            <td width="100px" sort="time_of_end">过期时间</td>
+            <td width="120px">检测情况</td>
             <td width="90px">操作</td>
         </tr>
         </thead>
@@ -114,7 +115,16 @@
                 ${m.remaining()!}
             </td>
             <td class="right" style='${m.isAlarm()?string("color:red","")}'>
-                ${(m.time_of_end?string("yyyy-MM-dd HH:mm:ss"))!}
+                ${(m.time_of_end?string("yyyy-MM-dd"))!}
+            </td>
+
+            <td style='${m.isAlarm2()?string("color:red","")}'>
+                ${(m.check_last_time?string('HH:mm:ss'))!}
+                <#if m.check_last_state == 0>
+                    - ok
+                <#else>
+                    - no
+                </#if>
             </td>
 
             <td class="op">
