@@ -1,20 +1,22 @@
 package features;
 
 import org.junit.Test;
+import org.noear.water.utils.CaUtils;
 import org.noear.water.utils.Datetime;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
+import java.util.Date;
 
 /**
  * @author noear 2022/7/22 created
  */
 public class CaTest {
     @Test
-    public void test() throws Exception{
-        URL url = new URL("https://api.timichat.com");
+    public void test() throws Exception {
+        URL url = new URL("https://www.oschina.net");
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.connect();
         for (Certificate certificate : connection.getServerCertificates()) {
@@ -26,5 +28,11 @@ public class CaTest {
             break;
         }
         connection.disconnect();
+    }
+
+    @Test
+    public void test2() throws Exception {
+        Date time_of_end = CaUtils.getCaEndTime("https://www.oschina.net");
+        System.out.println(new Datetime(time_of_end).toString("yyyy-MM-dd HH:mm:ss"));//有效期结束时间
     }
 }

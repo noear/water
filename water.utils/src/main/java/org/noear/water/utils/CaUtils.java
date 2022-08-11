@@ -28,14 +28,5 @@ public class CaUtils {
         connection.disconnect();
 
         return (X509Certificate) certificate;
-
-//        for (Certificate certificate : connection.getServerCertificates()) {
-//            //第一个就是服务器本身证书，后续的是证书链上的其他证书
-//            X509Certificate x509Certificate = (X509Certificate) certificate;
-//            System.out.println(x509Certificate.getSubjectDN().getName());
-//            System.out.println(new Datetime(x509Certificate.getNotBefore()).toString("yyyy-MM-dd HH:mm:ss"));//有效期开始时间
-//            System.out.println(new Datetime(x509Certificate.getNotAfter()).toString("yyyy-MM-dd HH:mm:ss"));//有效期结束时间
-//            break;
-//        }
     }
 }
