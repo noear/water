@@ -54,7 +54,10 @@
         <luffy.ver>1.3.2</luffy.ver>
 
         <snakeyaml.ver>1.29</snakeyaml.ver>
-        <HikariCP.ver>4.0.3</HikariCP.ver>
+        <hikaricp.ver>4.0.3</hikaricp.ver>
+
+        <springboot.ver>2.0.4.RELEASE</springboot.ver>
+        <spring.ver>5.0.8.RELEASE</spring.ver>
     </properties>
 
 
@@ -286,7 +289,7 @@
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
-                <version>${HikariCP.ver}</version>
+                <version>${hikaricp.ver}</version>
             </dependency>
 
             <dependency>
