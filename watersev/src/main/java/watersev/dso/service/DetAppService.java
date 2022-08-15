@@ -69,7 +69,7 @@ public class DetAppService {
             return;
         }
 
-        if (url.startsWith("://")) {
+        if (url.contains("://")) {
             RunUtils.runAsyn(() -> {
                 check_type0_tcp(task, url);
             });
