@@ -1,5 +1,4 @@
 target/
-bin/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -15,6 +14,8 @@ bin/
 *.iws
 *.iml
 *.ipr
+*.log
+*.flattened-pom.xml
 
 ### NetBeans ###
 nbproject/private/
@@ -25,4 +26,4 @@ nbdist/
 .nb-gradle/
 
 ### Mac files ###
-.DS_Store
+*.DS_Store
