@@ -32,7 +32,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.8.2
   
 
   ```properties
-  #添加环境变量（替换为初始化好的 Water DB 配置；可以 server 换成 url 属性，配置完整的 jdbcUrl）： 
+  #添加环境变量（替换为初始化好的 Water DB 配置；可以把 server 换成 url 属性，配置完整的 jdbcUrl）： 
   water.ds.schema=water
   water.ds.server=mysql.water.io:3306 
   water.ds.username=demo
