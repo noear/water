@@ -16,7 +16,7 @@ services:
     container_name: waterapi
     environment:
       - water.ds.schema={water}
-      - water.ds.server={water.mysql.io:3306}
+      - water.ds.server={water.mysql.io:3306} #提示：可以 server 换成 url 属性，配置完整的 jdbcUrl
       - water.ds.username={demo}
       - water.ds.password={1234}
       - TZ=Asia/Shanghai
