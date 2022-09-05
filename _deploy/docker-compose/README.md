@@ -47,6 +47,11 @@ docker-compose up
 
 > 其它一些配置，视情况进行调整。
 
+## 五、客户端使用
+
+* 使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:9371
+* 运行机器添加 waterapi 的 host 配置
+* 代码演示，参考 demo/demoapi 项目
 
 
 ## 附：补充说明
