@@ -49,9 +49,9 @@ docker-compose up
 
 ## 五、客户端使用
 
-* 使用 water-solon-plugin 时，配置为：solon.cloud.water.server=waterapi:9371
-* 运行机器添加 waterapi 的 host 配置
-* 代码演示，参考 demo/demoapi 项目
+* 使用 water-solon-plugin 组件，并配置为：solon.cloud.water.server=waterapi:9371
+* 服务所在机器，需添加 waterapi 的 host 配置
+* 具体代码演示，可参考 demo/demoapi 项目
 
 > 基本套路是：让 waterapi 运行正常，所有其它服务都连接它
 
