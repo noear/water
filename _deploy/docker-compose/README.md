@@ -53,6 +53,8 @@ docker-compose up
 * 运行机器添加 waterapi 的 host 配置
 * 代码演示，参考 demo/demoapi 项目
 
+> 基本套路是：让 waterapi 运行正常，所有其它服务都连接它
+
 
 ## 附：补充说明
 
