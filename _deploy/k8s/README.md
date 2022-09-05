@@ -116,6 +116,17 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.8.2
 
 > 其它一些配置，视情况进行调整。
 
+
+## 五、客户端使用
+
+* 使用 water-solon-plugin 组件，并配置为：solon.cloud.water.server=waterapi:9371
+* 部署 pod 时，增加环境变量：solon.cloud.water.server=waterapi.water:9371 （即上面的配置换掉，带上 k8s 域）
+* 具体代码演示，可参考 demo/demoapi 项目
+
+> 基本套路是：让 waterapi 运行正常，然后让其它服务都连接它
+
+
+
 ## 附：补充说明
 
 * water 管理控制台初始账号与密码
