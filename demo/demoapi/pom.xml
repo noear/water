@@ -8,7 +8,6 @@
     <artifactId>demoapi</artifactId>
     <version>dev</version>
 
-
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
