@@ -214,7 +214,7 @@
 * 实现 Logger source 即时同步热切换!!!
 
 #### 2.2.16
-* 整个项目基于solon cloud接口进行开发（即基于 water-solon-plugin ）
+* 整个项目基于solon cloud接口进行开发（即基于 water-solon-cloud-plugin ）
 
 #### 2.2.15
 * 基于 weed3 3.4.0 进行改造
@@ -274,7 +274,7 @@
 
 #### 2.0.14 规划::
 * 调整 water.client 及 water.client-solon-plugin
-* 尝试构建基于 solon.cloud 标准的接口：water-solon-plugin
+* 尝试构建基于 solon.cloud 标准的接口：water-solon-cloud-plugin
 
 #### 2.0.9 规划::
 * 调整xcall,xclient为：http, client

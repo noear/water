@@ -49,7 +49,7 @@ One-stop service governance platform, work easy and leave early
 | 组件                          | 说明                                          |
 |-----------------------------|---------------------------------------------|
 | org.noear:water.client      | 框架：Water 客户端                                |
-| org.noear:water-solon-plugin | 框架：Water 客户端 for solon（也可用于 Spring Boot 项目） |
+| org.noear:water-solon-cloud-plugin | 框架：Water 客户端 for solon（也可用于 Spring Boot 项目） |
 |                             |                                             |
 | org.noear:waterapi          | 构建：Water 服务端                                |
 | org.noear:watersev          | 构建：Water 后台服务（健康检测；数据监视；消息派发；定时任务等...）      |
@@ -109,8 +109,8 @@ One-stop service governance platform, work easy and leave early
 <!-- solon cloud 集成版本 （也可用于 Spring Boot 项目） -->
 <dependency>
     <groupId>org.noear</groupId>
-    <artifactId>water-solon-plugin</artifactId>
-    <version>1.10.1</version>
+    <artifactId>water-solon-cloud-plugin</artifactId>
+    <version>1.10.5</version>
 </dependency>
 ```
 

@@ -119,7 +119,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.8.2
 
 ## 五、客户端使用
 
-* 使用 water-solon-plugin 组件，并配置为：solon.cloud.water.server=waterapi:9371
+* 使用 water-solon-cloud-plugin 组件，并配置为：solon.cloud.water.server=waterapi:9371
 * 部署 pod 时，增加环境变量：solon.cloud.water.server=waterapi.water:9371 （即上面的配置换掉，带上 k8s 域）
 * 具体代码演示，可参考 demo/demoapi 项目
 
@@ -137,6 +137,6 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.8.2
 
 
   ```properties
-  #使用 water-solon-plugin 时，配置为：
+  #使用 water-solon-cloud-plugin 时，配置为：
   solon.cloud.water.server=watreapi.water:9371
   ```

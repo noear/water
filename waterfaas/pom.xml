@@ -71,13 +71,13 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>water-solon-plugin</artifactId>
+            <artifactId>water-solon-cloud-plugin</artifactId>
             <version>${solon.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>httputils-solon-plugin</artifactId>
+            <artifactId>httputils-solon-cloud-plugin</artifactId>
             <version>${solon.ver}</version>
         </dependency>
 

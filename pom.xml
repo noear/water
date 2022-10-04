@@ -28,8 +28,6 @@
 
         <module>xwater</module>
 
-<!--        <module>water-solon-plugin</module>-->
-<!--        <module>water-springboot-starter</module>-->
 
         <module>demo/demoapi</module>
     </modules>
