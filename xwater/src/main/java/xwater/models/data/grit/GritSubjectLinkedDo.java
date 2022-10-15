@@ -1,8 +1,8 @@
 package xwater.models.data.grit;
 
 import lombok.Getter;
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
+import org.noear.wood.annotation.PrimaryKey;
+import org.noear.wood.annotation.Table;
 
 import java.io.Serializable;
 

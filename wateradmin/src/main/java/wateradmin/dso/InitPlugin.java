@@ -12,7 +12,7 @@ import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.config.ServerConfig;
 import org.noear.water.utils.BehaviorUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.WeedConfig;
+import org.noear.wood.WoodConfig;
 import wateradmin.dso.db.DbWaterCfgSafeApi;
 
 /**
@@ -23,7 +23,7 @@ import wateradmin.dso.db.DbWaterCfgSafeApi;
 @Slf4j
 public class InitPlugin implements Plugin {
     boolean isDebugMode;
-    boolean isWeedStyle2;
+    boolean isWoodStyle2;
     boolean isTrackEnable;
     boolean isErrorLogEnable;
 
@@ -35,13 +35,13 @@ public class InitPlugin implements Plugin {
 
         isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
 
-        String style = Solon.cfg().get("srww.weed.print.style");
-        isWeedStyle2 = "sql".equals(style);
-        isTrackEnable = Solon.cfg().getBool("srww.weed.track.enable", isDebugMode);
-        isErrorLogEnable = Solon.cfg().getBool("srww.weed.error.log.enable", true);
+        String style = Solon.cfg().get("srww.wood.print.style");
+        isWoodStyle2 = "sql".equals(style);
+        isTrackEnable = Solon.cfg().getBool("srww.wood.track.enable", isDebugMode);
+        isErrorLogEnable = Solon.cfg().getBool("srww.wood.error.log.enable", true);
 
 
-        initWeed();
+        initWood();
 
         try {
             ServerConfig.taskToken = DbWaterCfgSafeApi.getServerTokenOne();
@@ -50,11 +50,11 @@ public class InitPlugin implements Plugin {
         }
     }
 
-    private void initWeed() {
-        initWeedForAdmin();
+    private void initWood() {
+        initWoodForAdmin();
 
-        WeedConfig.onException((cmd, err) -> {
-            TagsMDC.tag0("weed");
+        WoodConfig.onException((cmd, err) -> {
+            TagsMDC.tag0("wood");
 
             if (isErrorLogEnable) {
                 if (cmd == null) {
@@ -72,15 +72,15 @@ public class InitPlugin implements Plugin {
         });
     }
 
-    private void initWeedForAdmin() {
+    private void initWoodForAdmin() {
         //admin 项目
-        WeedConfig.onExecuteAft((cmd) -> {
+        WoodConfig.onExecuteAft((cmd) -> {
             if (cmd.isLog < 0) {
                 return;
             }
 
             if (isDebugMode) {
-                if (isWeedStyle2) {
+                if (isWoodStyle2) {
                     log.debug(cmd.toSqlString());
                 } else {
                     log.debug(cmd.text + "\r\n" + ONode.stringify(cmd.paramMap()));

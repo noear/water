@@ -3,7 +3,7 @@ package org.noear.water;
 import org.noear.solon.cloud.utils.http.HttpUtils;
 import org.noear.water.config.ServerConfig;
 import org.noear.water.model.LogLevel;
-import org.noear.weed.cache.CacheUsing;
+import org.noear.wood.cache.CacheUsing;
 
 import java.util.Map;
 

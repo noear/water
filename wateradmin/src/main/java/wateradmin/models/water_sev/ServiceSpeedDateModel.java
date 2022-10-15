@@ -1,7 +1,7 @@
 package wateradmin.models.water_sev;
 
 import lombok.Getter;
-import org.noear.weed.*;
+import org.noear.wood.*;
 
 /// <summary>
 /// 生成:2018/04/26 09:46:37

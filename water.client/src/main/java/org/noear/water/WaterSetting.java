@@ -4,9 +4,9 @@ import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.HostUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
+import org.noear.wood.DbContext;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

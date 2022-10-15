@@ -1,8 +1,8 @@
 package xwater.models.data.water;
 
 import lombok.Getter;
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
+import org.noear.wood.annotation.PrimaryKey;
+import org.noear.wood.annotation.Table;
 
 @Table("water_cfg_whitelist")
 @Getter

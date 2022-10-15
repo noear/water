@@ -2,8 +2,8 @@ package org.noear.water.utils;
 
 import org.noear.redisx.RedisClient;
 import org.noear.water.model.ConfigM;
-import org.noear.weed.DbContext;
-import org.noear.weed.mongo.MgContext;
+import org.noear.wood.DbContext;
+import org.noear.mongox.MgContext;
 
 import java.util.HashMap;
 import java.util.Map;

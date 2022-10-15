@@ -3,8 +3,8 @@ package org.noear.water.utils;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.core.exts.ClassWrap;
 import org.noear.snack.core.exts.FieldWrap;
-import org.noear.weed.DbContext;
-import org.noear.weed.DbDataSource;
+import org.noear.wood.DbContext;
+import org.noear.wood.DbDataSource;
 
 import javax.sql.DataSource;
 import java.util.Properties;

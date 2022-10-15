@@ -23,7 +23,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
+            <artifactId>wood</artifactId>
         </dependency>
 
         <dependency>

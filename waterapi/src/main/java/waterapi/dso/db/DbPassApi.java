@@ -1,8 +1,8 @@
 package waterapi.dso.db;
 
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQuery;
+import org.noear.wood.DbContext;
+import org.noear.wood.DbTableQuery;
 import waterapi.Config;
 
 import java.sql.SQLException;

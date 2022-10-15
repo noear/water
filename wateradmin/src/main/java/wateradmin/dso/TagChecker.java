@@ -2,7 +2,7 @@ package wateradmin.dso;
 
 import org.noear.grit.client.GritClient;
 import org.noear.grit.model.domain.ResourceEntity;
-import org.noear.weed.ext.Fun1;
+import org.noear.wood.ext.Fun1;
 import org.noear.water.utils.TextUtils;
 import wateradmin.Config;
 

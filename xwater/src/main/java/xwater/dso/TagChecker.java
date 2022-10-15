@@ -1,7 +1,7 @@
 package xwater.dso;
 
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.ext.Fun1;
+import org.noear.wood.ext.Fun1;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -13,8 +13,8 @@ import org.noear.water.utils.DsCacheUtils;
 import org.noear.water.utils.DsUtils;
 import org.noear.water.utils.LocalUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.WeedConfig;
+import org.noear.wood.DbContext;
+import org.noear.wood.WoodConfig;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.db.DbWaterRegApi;
 
@@ -48,8 +48,8 @@ public class Config {
     //获取一个数据库配置
 
     static {
-        WeedConfig.isDebug = false;
-        WeedConfig.isUsingValueExpression = false;
+        WoodConfig.isDebug = false;
+        WoodConfig.isUsingValueExpression = false;
 
         Utils.loadClass("com.mysql.jdbc.Driver");
         Utils.loadClass("com.mysql.cj.jdbc.Driver");
@@ -108,7 +108,7 @@ public class Config {
 
             water_heihei = cfg(WW.water_heihei);
 
-            initWeedOnException();
+            initWoodOnException();
 
             System.out.println("[Water] config completed.");
         }
@@ -136,11 +136,11 @@ public class Config {
         }
     }
 
-    private static void initWeedOnException() {
+    private static void initWoodOnException() {
         //
         // 有可能会造成列循环
         //
-        WeedConfig.onException((cmd, err) -> {
+        WoodConfig.onException((cmd, err) -> {
             if (cmd != null) {
                 Context ctx = Context.current();
 
@@ -148,7 +148,7 @@ public class Config {
                     //
                     //有可能会造成列循环；所以转给上下文特性
                     //
-                    ctx.attrSet("weed_cmd", cmd);
+                    ctx.attrSet("wood_cmd", cmd);
                 }
             }
         });

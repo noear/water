@@ -1,7 +1,7 @@
 package wateradmin.dso;
 
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
 
 public class CacheUtil {
 

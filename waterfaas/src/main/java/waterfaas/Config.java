@@ -7,9 +7,9 @@ import org.noear.water.WaterClient;
 import org.noear.water.WaterSetting;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsCacheUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
+import org.noear.wood.DbContext;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
 
 public class Config {
     public static final String faas_filter_file = "filter.file";
@@ -38,7 +38,7 @@ public class Config {
 
     public static void tryInit(SolonApp app) {
 
-        //WeedConfig.isUsingValueExpression = false;
+        //WoodConfig.isUsingValueExpression = false;
 
         waterfaas_secretKey = app.cfg().get("waterfaas.secretKey");
 

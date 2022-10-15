@@ -2,8 +2,8 @@ package wateradmin.dso.db;
 
 import org.noear.water.dso.NoticeUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQuery;
+import org.noear.wood.DbContext;
+import org.noear.wood.DbTableQuery;
 import wateradmin.Config;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.I18nModel;

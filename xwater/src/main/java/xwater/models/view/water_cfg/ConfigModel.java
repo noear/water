@@ -6,10 +6,10 @@ import org.noear.water.WW;
 import org.noear.water.utils.Base64Utils;
 import org.noear.water.utils.ConfigUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.GetHandlerEx;
-import org.noear.weed.IBinder;
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
+import org.noear.wood.GetHandlerEx;
+import org.noear.wood.IBinder;
+import org.noear.wood.annotation.PrimaryKey;
+import org.noear.wood.annotation.Table;
 import xwater.dso.ConfigType;
 
 import java.util.Date;

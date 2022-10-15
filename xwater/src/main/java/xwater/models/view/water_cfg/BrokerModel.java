@@ -3,8 +3,8 @@ package xwater.models.view.water_cfg;
 import lombok.Getter;
 import org.noear.water.protocol.model.message.BrokerMeta;
 import org.noear.water.utils.EncryptUtils;
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
+import org.noear.wood.annotation.PrimaryKey;
+import org.noear.wood.annotation.Table;
 
 import java.util.Date;
 

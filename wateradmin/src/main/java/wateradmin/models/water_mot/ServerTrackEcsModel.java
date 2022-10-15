@@ -1,8 +1,8 @@
 package wateradmin.models.water_mot;
 
 import lombok.Getter;
-import org.noear.weed.GetHandlerEx;
-import org.noear.weed.IBinder;
+import org.noear.wood.GetHandlerEx;
+import org.noear.wood.IBinder;
 import wateradmin.dso.IaasTypeUtils;
 
 import java.util.Date;

@@ -1,7 +1,7 @@
 package xwater.models.data.water_paas;
 
-import org.noear.weed.annotation.PrimaryKey;
-import org.noear.weed.annotation.Table;
+import org.noear.wood.annotation.PrimaryKey;
+import org.noear.wood.annotation.Table;
 
 /**
  * @author noear 2021/11/3 created

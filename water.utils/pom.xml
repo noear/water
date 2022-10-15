@@ -35,18 +35,23 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
+            <artifactId>wood</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.memcached</artifactId>
+            <artifactId>mongox</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>wood.cache.memcached</artifactId>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.redis</artifactId>
+            <artifactId>wood.cache.redis</artifactId>
             <scope>provided</scope>
         </dependency>
 

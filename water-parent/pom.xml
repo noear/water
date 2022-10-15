@@ -36,20 +36,21 @@
     </scm>
 
     <properties>
-        <revision>2.8.2</revision>
+        <revision>2.8.3</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.10.6</solon.ver>
+        <solon.ver>1.10.7</solon.ver>
 
-        <grit.ver>1.3.5</grit.ver>
+        <grit.ver>1.3.6</grit.ver>
         <rock.ver>2.4.1</rock.ver>
 
-        <snack3.ver>3.2.40</snack3.ver>
-        <weed3.ver>3.4.29</weed3.ver>
+        <snack3.ver>3.2.44</snack3.ver>
+        <wood.ver>1.0.0</wood.ver>
         <redisx.ver>1.4.4</redisx.ver>
+        <mongox.ver>1.0.0</mongox.ver>
         <esearchx.ver>1.0.15</esearchx.ver>
 
         <luffy.ver>1.3.4</luffy.ver>
@@ -217,31 +218,37 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>mongox</artifactId>
+                <version>${mongox.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>esearchx</artifactId>
                 <version>${esearchx.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3</artifactId>
-                <version>${weed3.ver}</version>
+                <artifactId>wood</artifactId>
+                <version>${wood.ver}</version>
             </dependency>
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3-solon-plugin</artifactId>
+                <artifactId>wood-solon-plugin</artifactId>
                 <version>${solon.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.cache.memcached</artifactId>
-                <version>${weed3.ver}</version>
+                <artifactId>wood.cache.memcached</artifactId>
+                <version>${wood.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>weed3.cache.redis</artifactId>
-                <version>${weed3.ver}</version>
+                <artifactId>wood.cache.redis</artifactId>
+                <version>${wood.ver}</version>
             </dependency>
 
             <dependency>

@@ -9,8 +9,8 @@ import org.noear.water.protocol.MsgQueue;
 import org.noear.water.protocol.MsgSource;
 import org.noear.water.utils.DsUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.mongo.MgContext;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.mongox.MgContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

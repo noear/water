@@ -10,8 +10,8 @@ import org.noear.water.protocol.model.log.LogModel;
 import org.noear.water.utils.ClassUtils;
 import org.noear.water.utils.Datetime;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.mongo.MgContext;
-import org.noear.weed.mongo.MgTableQuery;
+import org.noear.mongox.MgContext;
+import org.noear.mongox.MgTableQuery;
 
 import java.io.IOException;
 import java.util.*;

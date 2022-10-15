@@ -1,7 +1,7 @@
 package watersev.dso.db;
 
-import org.noear.weed.DbContext;
-import org.noear.weed.DbTableQuery;
+import org.noear.wood.DbContext;
+import org.noear.wood.DbTableQuery;
 import watersev.Config;
 import watersev.models.water_paas.LuffyFileModel;
 

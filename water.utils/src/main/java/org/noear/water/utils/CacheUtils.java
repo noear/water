@@ -1,11 +1,11 @@
 package org.noear.water.utils;
 
 import org.noear.water.WW;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
-import org.noear.weed.cache.SecondCache;
-import org.noear.weed.cache.memcached.MemCache;
-import org.noear.weed.cache.redis.RedisCache;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
+import org.noear.wood.cache.SecondCache;
+import org.noear.wood.cache.memcached.MemCache;
+import org.noear.wood.cache.redis.RedisCache;
 
 import java.util.Properties;
 

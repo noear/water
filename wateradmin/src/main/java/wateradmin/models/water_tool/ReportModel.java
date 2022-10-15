@@ -1,7 +1,7 @@
 package wateradmin.models.water_tool;
 
 import lombok.Data;
-import org.noear.weed.*;
+import org.noear.wood.*;
 import java.util.*;
 
 @Data

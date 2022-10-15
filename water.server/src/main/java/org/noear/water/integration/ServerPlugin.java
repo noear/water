@@ -9,7 +9,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.BehaviorUtils;
 import org.noear.water.utils.TextUtils;
-import org.noear.weed.WeedConfig;
+import org.noear.wood.WoodConfig;
 
 /**
  * @author noear 2021/10/28 created
@@ -19,25 +19,25 @@ public class ServerPlugin implements Plugin {
 
     @Override
     public void start(AopContext context) {
-        initWeed();
+        initWood();
     }
 
-    private void initWeed() {
+    private void initWood() {
         Class<?> gritClz = Utils.loadClass(clz_GritUtil);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
-        final boolean isWeedStyle2 = "text2".equals(Solon.cfg().get("water.weed.log.style"));
-        final boolean isTrackEnable = Solon.cfg().getBool("water.weed.track.enable", false);
-        //final boolean isErrorLogEnable = Solon.cfg().getBool("water.weed.error.log.enable", true);
+        final boolean isWoodStyle2 = "text2".equals(Solon.cfg().get("water.wood.log.style"));
+        final boolean isTrackEnable = Solon.cfg().getBool("water.wood.track.enable", false);
+        //final boolean isErrorLogEnable = Solon.cfg().getBool("water.wood.error.log.enable", true);
 
         if (gritClz == null) {
             //api项目
-            WeedConfig.onExecuteAft(cmd -> {
+            WoodConfig.onExecuteAft(cmd -> {
                 if(cmd.isLog < 0){
                     return;
                 }
 
                 if (isDebugMode) {
-                    if (isWeedStyle2) {
+                    if (isWoodStyle2) {
                         System.out.println(cmd.toSqlString());
                     } else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
@@ -52,19 +52,19 @@ public class ServerPlugin implements Plugin {
                         tag = "sql";
                     }
 
-                    WaterClient.Track.trackAndMd5(service_name() + "_sql", tag, cmd.text, cmd.timespan());
+                    WaterClient.Track.addMeterAndMd5(service_name() + "_sql", tag, cmd.text, cmd.timespan());
                 }
             });
         } else {
             //admin 项目
-            WeedConfig.onExecuteAft((cmd) -> {
+            WoodConfig.onExecuteAft((cmd) -> {
                 if(cmd.isLog < 0){
                     return;
                 }
 
                 if (isDebugMode) {
-                    if (isWeedStyle2) {
-                        System.out.println(cmd.text2());
+                    if (isWoodStyle2) {
+                        System.out.println(cmd.toSqlString());
                     } else {
                         System.out.println(cmd.text + "\n" + ONode.stringify(cmd.paramMap()));
                     }

@@ -1,8 +1,8 @@
 package wateradmin.models.water;
 
 import lombok.Getter;
-import org.noear.weed.GetHandlerEx;
-import org.noear.weed.IBinder;
+import org.noear.wood.GetHandlerEx;
+import org.noear.wood.IBinder;
 
 @Getter
 public class FieldVoModel implements IBinder {

@@ -1,6 +1,6 @@
 package waterapi.dso.db;
 
-import org.noear.weed.DbContext;
+import org.noear.wood.DbContext;
 import waterapi.Config;
 import waterapi.models.GatewayModel;
 

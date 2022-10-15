@@ -2,8 +2,8 @@ package org.noear.water.protocol.model.message;
 
 import lombok.Getter;
 import org.noear.water.utils.Timespan;
-import org.noear.weed.GetHandlerEx;
-import org.noear.weed.IBinder;
+import org.noear.wood.GetHandlerEx;
+import org.noear.wood.IBinder;
 
 import java.util.Date;
 

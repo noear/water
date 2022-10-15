@@ -4,7 +4,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.Context;
 import org.noear.water.WW;
-import org.noear.weed.Command;
+import org.noear.wood.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -82,7 +82,7 @@ public class LogUtils {
             }
 
             String _from = FromUtils.getFromName(ctx);
-            Command cmd = ctx.attr("weed_cmd");
+            Command cmd = ctx.attr("wood_cmd");
             String param = ONode.stringify(ctx.paramMap());
 
             String tag = ctx.path();

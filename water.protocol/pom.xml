@@ -22,17 +22,17 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
+            <artifactId>wood</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.memcached</artifactId>
+            <artifactId>wood.cache.memcached</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>weed3.cache.redis</artifactId>
+            <artifactId>wood.cache.redis</artifactId>
         </dependency>
 
         <dependency>

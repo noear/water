@@ -8,7 +8,7 @@ import org.noear.water.protocol.model.message.BrokerEntity;
 import org.noear.water.protocol.model.message.BrokerMeta;
 import org.noear.water.utils.TextUtils;
 import org.noear.water.utils.ext.Fun1;
-import org.noear.weed.cache.ICacheServiceEx;
+import org.noear.wood.cache.ICacheServiceEx;
 
 import java.io.IOException;
 import java.util.ArrayList;

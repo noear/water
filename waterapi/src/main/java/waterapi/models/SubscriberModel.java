@@ -1,7 +1,7 @@
 package waterapi.models;
 
-import org.noear.weed.GetHandlerEx;
-import org.noear.weed.IBinder;
+import org.noear.wood.GetHandlerEx;
+import org.noear.wood.IBinder;
 
 /**
  * Created by noear on 2017/7/18.

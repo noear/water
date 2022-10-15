@@ -1,8 +1,8 @@
 package waterapi.dso;
 
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
-import org.noear.weed.cache.SecondCache;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
+import org.noear.wood.cache.SecondCache;
 import waterapi.Config;
 
 public class CacheUtils {

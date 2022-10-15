@@ -7,7 +7,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
 import org.noear.solon.test.SolonJUnit4ClassRunner;
-import org.noear.weed.DbContext;
+import org.noear.wood.DbContext;
 import xwater.Config;
 
 import java.io.ByteArrayInputStream;

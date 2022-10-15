@@ -3,9 +3,9 @@ package xwater;
 import org.noear.solon.Utils;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsUtils;
-import org.noear.weed.DbContext;
-import org.noear.weed.cache.ICacheServiceEx;
-import org.noear.weed.cache.LocalCache;
+import org.noear.wood.DbContext;
+import org.noear.wood.cache.ICacheServiceEx;
+import org.noear.wood.cache.LocalCache;
 import xwater.dso.db.DbWaterCfgApi;
 import xwater.models.view.water_cfg.ConfigModel;
 
