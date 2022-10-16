@@ -36,14 +36,12 @@ public class Config {
     }
 
 
-    public static ExecutorService pools = Executors.newCachedThreadPool();
-
     static {
         water = DsCacheUtils.getDb(cfg(WW.water).value, true);
         water_paas = DsCacheUtils.getDb(cfg(WW.water_paas).value, true, water);
 
         cache_file = new LocalCache();
-        //cache_data = cfg("water_cache").getCh().nameSet("cache_data");
+        //cache_data = cfg("water_cache").getCh().nameSet("cache_data"); //2022-10
     }
 
     public static void tryInit() {
