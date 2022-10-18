@@ -3,7 +3,6 @@
 * docker-compose：基于 docker-compose 模式部署参考
 * k8s ：基于 k8s 模式部署参考
 
-
 ### 镜像列表（生产时，tag 须为具体的版本号，切不能用 latest）
 
 | 镜像                      | 镜像端口    | 说明                 |
