@@ -110,7 +110,7 @@ One-stop service governance platform, work easy and leave early
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-cloud-plugin</artifactId>
-    <version>1.10.5</version>
+    <version>1.10.7</version>
 </dependency>
 ```
 
