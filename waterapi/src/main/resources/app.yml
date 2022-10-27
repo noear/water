@@ -13,7 +13,7 @@ solon.logging.appender:
     level: "INFO"
 
 solon.logging.logger:
-  "org.eclipse.jetty.*":
+  "org.eclipse.jetty":
     level: "WARN"
-  "com.zaxxer.hikari.*":
+  "com.zaxxer.hikari":
     level: "WARN"

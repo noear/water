@@ -42,7 +42,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.10.7</solon.ver>
+        <solon.ver>1.10.9</solon.ver>
 
         <grit.ver>1.4.0</grit.ver>
         <rock.ver>2.5.0</rock.ver>
