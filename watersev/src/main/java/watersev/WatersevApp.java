@@ -2,8 +2,10 @@ package watersev;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.NvMap;
+import org.noear.solon.core.util.LogUtil;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
+import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
@@ -59,6 +61,10 @@ public class WatersevApp {
             //有端口才开启http能力
             x.enableHttp(has_server_port);
             x.enableErrorAutoprint(false);
+
+            //设置日志
+            //
+            LogUtil.globalSet(new LogUtilToSlf4j());
 
             //加载环境变量(支持弹性容器设置的环境)
             x.cfg().loadEnv("water.");

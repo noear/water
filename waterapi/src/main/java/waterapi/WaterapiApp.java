@@ -2,12 +2,14 @@ package waterapi;
 
 import org.noear.solon.Solon;
 import org.noear.solon.cloud.CloudManager;
+import org.noear.solon.core.util.LogUtil;
+import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.track.TrackBuffer;
 import waterapi.dso.CacheUtils;
-import waterapi.dso.MsgInitPlugin;
+import waterapi.dso.AppInitPlugin;
 import waterapi.dso.db.DbWaterCfgApi;
 import waterapi.dso.log.CloudLogServiceLocalImp;
 import waterapi.utils.PreheatUtils;
@@ -18,8 +20,9 @@ public class WaterapiApp {
 			x.enableStaticfiles(false);
 			x.enableErrorAutoprint(false);
 
-			//注册本地日志服务
-			CloudManager.register(new CloudLogServiceLocalImp());
+			//设置日志
+			//
+			LogUtil.globalSet(new LogUtilToSlf4j());
 
 			//加载环境变量(支持弹性容器设置的环境)
 			x.cfg().loadEnv("water.");
@@ -40,7 +43,7 @@ public class WaterapiApp {
 			//尝试注册服务
 			Config.tryRegService();
 
-			x.pluginAdd(-1, new MsgInitPlugin());
+			x.pluginAdd(-1, new AppInitPlugin());
 		});
 
 

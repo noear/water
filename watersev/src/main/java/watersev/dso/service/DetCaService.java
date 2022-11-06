@@ -27,8 +27,8 @@ public class DetCaService {
     }
 
     public void execDo() throws SQLException {
-        //5分钟一次
-        if (LockUtils.tryLock(WW.watersev_det, getName(), 60 * 5) == false) {
+        //60分钟一次
+        if (LockUtils.tryLock(WW.watersev_det, getName(), 60 * 60) == false) {
             return;
         }
 
@@ -61,6 +61,7 @@ public class DetCaService {
                 //todo: 15 天开始告警
                 if (days <= 15) {
                     AlarmUtil.tryAlarm(task, time_of_end, days);
+
                     LogUtil.warn(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd HH:mm:ss"));
                 }else{
                     LogUtil.info(getName(), task.certification_id + "", url + "::" + days + "d::" + new Datetime(time_of_end).toString("yyyy-MM-dd HH:mm:ss"));

@@ -5,6 +5,8 @@ import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.model.Instance;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.event.EventBus;
+import org.noear.solon.core.util.LogUtil;
+import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.protocol.ProtocolHub;
@@ -23,6 +25,10 @@ public class WateradminApp {
             x.enableErrorAutoprint(false);
             x.onError(new ErrorListener());
             x.pluginAdd(0, new InitPlugin());
+
+            //设置日志
+            //
+            LogUtil.globalSet(new LogUtilToSlf4j());
 
             //设置接口
             //
