@@ -15,7 +15,7 @@ solon.cloud.water:
     seal: "0zJt0J88TkIvqYgC"
 
 solon.logging.appender:
-  console:
+  cloud:
     level: "INFO"
 
 solon.logging.logger:
