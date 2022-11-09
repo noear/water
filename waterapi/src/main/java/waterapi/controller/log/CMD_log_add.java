@@ -44,6 +44,7 @@ public class CMD_log_add extends UapiBase {
 
         LogM log = new LogM();
 
+        log.log_id = SnowflakeUtils.genId(); //ProtocolHub.idBuilder.getLogId(log.logger);
         log.group = ctx.param("group", "");
         log.service = ctx.param("app_name", "");
 

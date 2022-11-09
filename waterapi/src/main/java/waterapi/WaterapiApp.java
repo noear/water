@@ -11,7 +11,6 @@ import org.noear.water.track.TrackBuffer;
 import waterapi.dso.CacheUtils;
 import waterapi.dso.AppInitPlugin;
 import waterapi.dso.db.DbWaterCfgApi;
-import waterapi.dso.log.CloudLogServiceLocalImp;
 import waterapi.utils.PreheatUtils;
 
 public class WaterapiApp {

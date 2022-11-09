@@ -63,7 +63,10 @@ public class CMD_log_add2 extends UapiBase {
             n1.remove(typePropertyName);
 
             LogM log = n1.toObject(LogM.class);
-            log.log_id = SnowflakeUtils.genId();
+            
+            if (log.log_id == 0) {
+                log.log_id = SnowflakeUtils.genId(); //ProtocolHub.idBuilder.getLogId(log.logger);
+            }
 
             list.add(log);
         }
