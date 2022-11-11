@@ -2,7 +2,7 @@
   Water
 </h1>
 <p align="center">
-One-stop service governance platform, work easy and leave early
+一站式服务治理平台。简单工作，早点下班
 </p>
 <p align="center">
     <a target="_blank" href="https://search.maven.org/search?q=org.noear%20water">
