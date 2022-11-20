@@ -1,8 +1,5 @@
 package wateradmin.controller.dev;
 
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.esearchx.EsCommand;
 import org.noear.esearchx.EsContext;
@@ -121,10 +118,7 @@ public class QueryEsController extends BaseController {
             //返回
             return rstJson;
         } catch (Exception ex) {
-            return JSON.toJSONString(ex,
-                    SerializerFeature.BrowserCompatible,
-                    SerializerFeature.WriteClassName,
-                    SerializerFeature.DisableCircularReferenceDetect);
+            return ONode.serialize(ex);
         }
     }
 }

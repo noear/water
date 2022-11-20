@@ -1,6 +1,6 @@
 package wateradmin.controller.tool;
 
-import com.alibaba.fastjson.JSONObject;
+import org.noear.snack.ONode;
 import org.noear.solon.Utils;
 import org.noear.water.WaterClient;
 import org.noear.wood.DataItem;
@@ -142,9 +142,10 @@ public class ReportController extends BaseController {
 
     @Mapping(value = "ajax/do")
     public String doQuery(Integer row_id,Boolean is_condition,String conditon_param) throws SQLException{
-        JSONObject params = new JSONObject();
-        if (!TextUtils.isEmpty(conditon_param))
-            params = JSONObject.parseObject(conditon_param);
+        ONode params = new ONode();
+        if (!TextUtils.isEmpty(conditon_param)) {
+            params = ONode.load(conditon_param);
+        }
 
         ReportModel report = DbWaterApi.reportGet(row_id);
 
@@ -207,7 +208,7 @@ public class ReportController extends BaseController {
         }
     }
 
-    private String exec_sql(String code, boolean is_ddl, boolean is_condition, JSONObject params,String args) throws SQLException{
+    private String exec_sql(String code, boolean is_ddl, boolean is_condition, ONode params,String args) throws SQLException{
         String db = code.split("::")[0].trim();
         String sql = code.split("::")[1].trim();
         if(db.startsWith("--")){
@@ -236,8 +237,8 @@ public class ReportController extends BaseController {
             }
 
 
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
-                String value = (String)entry.getValue();
+            for (Map.Entry<String, ONode> entry : params.obj().entrySet()) {
+                String value = entry.getValue().getString();
                 String key = entry.getKey().trim();
                 String mapKey = key.replaceAll("@", "");
                 if (TextUtils.isEmpty(value)){

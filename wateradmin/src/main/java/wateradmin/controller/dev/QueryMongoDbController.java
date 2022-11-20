@@ -1,8 +1,5 @@
 package wateradmin.controller.dev;
 
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.noear.snack.ONode;
@@ -160,10 +157,7 @@ public class QueryMongoDbController extends BaseController {
                 return rstJson;
             }
         } catch (Exception ex) {
-            return JSON.toJSONString(ex,
-                    SerializerFeature.BrowserCompatible,
-                    SerializerFeature.WriteClassName,
-                    SerializerFeature.DisableCircularReferenceDetect);
+            return ONode.serialize(ex);
         }
     }
 }

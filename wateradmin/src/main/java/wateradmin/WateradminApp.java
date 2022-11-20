@@ -17,7 +17,6 @@ import wateradmin.dso.CacheUtil;
 import wateradmin.dso.ErrorListener;
 import wateradmin.dso.InitPlugin;
 import wateradmin.dso.db.DbWaterCfgApi;
-import wateradmin.dso.wrap.MonitoringAliyun;
 
 public class WateradminApp {
     public static void main(String[] args) throws Exception {
@@ -39,8 +38,6 @@ public class WateradminApp {
 
             ProtocolHub.logSourceFactory = new LogSourceFactoryImpl(Config.water_log_store, DbWaterCfgApi::getLogger);
             ProtocolHub.msgBrokerFactory = new MsgBrokerFactoryImpl(Config.water_msg_store, CacheUtil.data, DbWaterCfgApi::getBroker);
-
-            ProtocolHub.monitoring = new MonitoringAliyun();
         });
 
         //尝试注册 gritapi 服务
