@@ -34,7 +34,7 @@ import java.util.List;
 
 @Controller
 @Mapping("/mot/gw")
-public class GwController extends BaseController {
+public class UpstreamController extends BaseController {
 
     private static final String SEV_SERVER_TAG = "_service";
 

@@ -2,7 +2,6 @@ package xwater;
 
 import org.noear.solon.Solon;
 import org.noear.solon.core.NvMap;
-import org.noear.solon.core.util.LogUtil;
 
 public class XwaterApp {
     public static void main(String[] args) {
