@@ -31,5 +31,6 @@ water.ds.password=demo
 * 先用 xwater.jar 安装 water；即完成各种配置及初始化
 * 启动 waterapi.jar；注意数据源配置
 * 等5秒
+* 相关服务器，添加 host 记录 (waterapi=x.x.x.x)
 * 启动 wateradmin.jar, watersev.jar, waterfaas.jar
 
