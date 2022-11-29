@@ -32,3 +32,4 @@ water.ds.password=demo
 * 启动 waterapi.jar；注意数据源配置
 * 等5秒
 * 启动 wateradmin.jar, watersev.jar, waterfaas.jar
+
