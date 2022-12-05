@@ -31,14 +31,15 @@ public class HttpUtilEx {
         try {
             URL u = new URL(url);
             try {
-                HttpURLConnection uConnection = (HttpURLConnection) u.openConnection();
+                HttpURLConnection connection = (HttpURLConnection) u.openConnection();
                 try {
-                    uConnection.setRequestMethod("HEAD"); //HEAD
-                    uConnection.setConnectTimeout(1000 * 3);
-                    uConnection.setReadTimeout(1000 * 3);
-                    uConnection.connect();
-                    int code = uConnection.getResponseCode();
-                    uConnection.disconnect();
+                    connection.setRequestMethod("HEAD"); //HEAD
+                    connection.setConnectTimeout(1000 * 3);
+                    connection.setReadTimeout(1000 * 3);
+                    connection.setUseCaches(false);
+                    connection.connect();
+                    int code = connection.getResponseCode();
+                    connection.disconnect();
 
                     callback.run(true, code, "");
                 } catch (Throwable e) {

@@ -18,6 +18,7 @@ public class CaTest {
     public void test() throws Exception {
         URL url = new URL("https://www.oschina.net");
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setUseCaches(false);
         connection.connect();
         for (Certificate certificate : connection.getServerCertificates()) {
             //第一个就是服务器本身证书，后续的是证书链上的其他证书

@@ -20,6 +20,7 @@ public class CaUtils {
         URL caUrl = new URL(url);
         HttpsURLConnection connection = (HttpsURLConnection) caUrl.openConnection();
 
+        connection.setUseCaches(false);
         connection.connect();
         Certificate certificate = null;
         if (connection.getServerCertificates().length > 0) {
