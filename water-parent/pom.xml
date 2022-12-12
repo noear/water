@@ -36,18 +36,18 @@
     </scm>
 
     <properties>
-        <revision>2.9.1</revision>
+        <revision>2.9.2</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.11.4</solon.ver>
+        <solon.ver>1.11.5</solon.ver>
 
-        <grit.ver>1.4.2</grit.ver>
-        <rock.ver>2.5.2</rock.ver>
+        <grit.ver>1.4.3</grit.ver>
+        <rock.ver>2.5.3</rock.ver>
 
-        <snack3.ver>3.2.48</snack3.ver>
+        <snack3.ver>3.2.50</snack3.ver>
         <wood.ver>1.0.7</wood.ver>
         <redisx.ver>1.4.4</redisx.ver>
         <mongox.ver>1.0.0</mongox.ver>
