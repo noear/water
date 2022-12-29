@@ -54,9 +54,10 @@ public class AdminController extends BaseController {
         });
 
 
-        viewModel.put("name_topic", SettingUtils.name_topic);
-        viewModel.put("name_service", SettingUtils.name_service);
-        viewModel.put("name_subject", SettingUtils.name_subject);
+        viewModel.put("name_topic", SettingUtils.name_scale_topic);
+        viewModel.put("name_service", SettingUtils.name_scale_service);
+        viewModel.put("name_subject", SettingUtils.name_scale_subject);
+        viewModel.put("name_logItemLimit", SettingUtils.name_size_logItemLimit);
 
         viewModel.put("sets", sets);
 

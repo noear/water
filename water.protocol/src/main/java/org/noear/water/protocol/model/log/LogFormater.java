@@ -12,6 +12,16 @@ import org.noear.water.utils.TextUtils;
 public class LogFormater {
     public static final LogFormater instance = new LogFormater();
 
+    private int itemLimitSize;
+
+    public int getItemLimitSize() {
+        return itemLimitSize;
+    }
+
+    public void setItemLimitSize(int itemLimitSize) {
+        this.itemLimitSize = itemLimitSize;
+    }
+
     public String html(LogModel log) {
         StringBuilder buf = new StringBuilder(500);
 
@@ -92,7 +102,12 @@ public class LogFormater {
         if (log.content == null) {
             return "";
         } else {
-            return HtmlEncode.encode(log.content).replaceAll("\n", "<br/>");
+            String content = log.content;
+            if (getItemLimitSize() > 10 && content.length() > getItemLimitSize()) {
+                content = content.substring(0, getItemLimitSize());
+            }
+
+            return HtmlEncode.encode(content).replaceAll("\n", "<br/>");
         }
     }
 }

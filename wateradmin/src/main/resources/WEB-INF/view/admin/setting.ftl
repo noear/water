@@ -93,6 +93,14 @@
                     </td>
                 </tr>
 
+                <tr><td colspan="2"> <h2>日志</h2> <hr/></td></tr>
+                <tr>
+                    <th>单条最大显示长度</th>
+                    <td>
+                        <input id="${name_logItemLimit}" type="text" value="${sets[name_logItemLimit]!}">
+                    </td>
+                </tr>
+
                 <tr><td colspan="2"> <h2>其它</h2> <hr/></td></tr>
                 <tr>
                     <th>告警签名</th>

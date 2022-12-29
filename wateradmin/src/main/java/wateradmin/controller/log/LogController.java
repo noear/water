@@ -12,6 +12,7 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.ModelAndView;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
 import wateradmin.dso.db.DbWaterCfgApi;
@@ -102,6 +103,8 @@ public class LogController extends BaseController {
         } else {
             viewModel.put("lastId", 0L);
         }
+
+        LogFormater.instance.setItemLimitSize(SettingUtils.logItemLimitSize());
 
         viewModel.put("formater", LogFormater.instance);
 

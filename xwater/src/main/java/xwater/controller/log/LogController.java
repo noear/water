@@ -113,6 +113,9 @@ public class LogController extends BaseController {
         viewModel.put("list", list);
         viewModel.put("logs", loggers);
 
+        //限2000长度
+        LogFormater.instance.setItemLimitSize(2000);
+
         viewModel.put("formater", LogFormater.instance);
 
         return view("log/query_inner");
