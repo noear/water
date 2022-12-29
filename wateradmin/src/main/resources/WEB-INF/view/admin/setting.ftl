@@ -97,7 +97,7 @@
                 <tr>
                     <th>单条最大显示长度</th>
                     <td>
-                        <input id="${name_logItemLimit}" type="text" value="${sets[name_logItemLimit]!}">
+                        <input id="${name_logItemLimit}" type="text" value="${sets[name_logItemLimit]!}" placeholder="0,表示默认">
                     </td>
                 </tr>
 
