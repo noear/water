@@ -86,7 +86,7 @@ public class AdminController extends BaseController {
             //for bcf ldap
         }
 
-        return new ViewModel().code(1);
+        return new ViewModel().code(1, "ok");
     }
 
 
