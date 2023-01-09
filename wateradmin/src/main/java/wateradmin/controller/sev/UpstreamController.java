@@ -19,9 +19,12 @@ import wateradmin.viewModels.ViewModel;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 上游配置（以前叫网关配置）
+ * */
 @Controller
 @Mapping("/sev/gateway")
-public class GatewayController extends BaseController {
+public class UpstreamController extends BaseController {
 
     @Mapping("")
     public ModelAndView gateway(String tag_name) throws SQLException {
