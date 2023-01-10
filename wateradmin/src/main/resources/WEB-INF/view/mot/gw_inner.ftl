@@ -132,7 +132,7 @@
                 <td>${(c.row_id)!}</td>
                 <td class="left">${(c.consumer)!}@${c.consumer_address!}
                     <#if c.consumer_address?contains(":")>
-                    - <a class="t2" href="./check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${cfg.name!}" target="_blank">检查</a>
+                    - <a class="t2" href="/mot/gw/check?s=${(c.consumer)!}@${c.consumer_address!}&upstream=${cfg.name!}" target="_blank">检查</a>
                     </#if>
                 </td>
                 <td class="left">${(c.consumer_ip)!}</td>
