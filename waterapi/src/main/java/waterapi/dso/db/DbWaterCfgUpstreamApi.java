@@ -17,6 +17,7 @@ public class DbWaterCfgUpstreamApi {
     public static GatewayModel getGatewayByName(String name) throws SQLException {
         return db().table("water_cfg_gateway")
                 .whereEq("name", name)
+                .andEq("is_enabled", 1)
                 .limit(1)
                 .selectItem("*", GatewayModel.class);
     }

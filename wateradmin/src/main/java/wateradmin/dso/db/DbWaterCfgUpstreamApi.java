@@ -78,16 +78,34 @@ public class DbWaterCfgUpstreamApi {
 
     //设置启用状态
     public static void setGatewayEnabled(int gatewayId, int is_enabled) throws SQLException {
+        GatewayModel model = db().table("water_cfg_gateway")
+                .whereEq("gateway_id", gatewayId)
+                .selectItem("*", GatewayModel.class);
+
         db().table("water_cfg_gateway")
                 .whereEq("gateway_id", gatewayId)
                 .set("is_enabled", is_enabled)
                 .set("gmt_modified", System.currentTimeMillis())
                 .update();
+
+        //增加通知
+        if (Utils.isNotEmpty(model.tag)) {
+            GatewayUtils.notice(model.tag, model.name);
+        }
     }
 
     public static void delGateway(int gatewayId) throws SQLException {
+        GatewayModel model = db().table("water_cfg_gateway")
+                .whereEq("gateway_id", gatewayId)
+                .selectItem("*", GatewayModel.class);
+
         db().table("water_cfg_gateway")
                 .whereEq("gateway_id", gatewayId)
                 .delete();
+
+        //增加通知
+        if (Utils.isNotEmpty(model.tag)) {
+            GatewayUtils.notice(model.tag, model.name);
+        }
     }
 }
