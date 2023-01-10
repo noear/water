@@ -18,9 +18,9 @@ public final class DbWaterFaasApi {
     //
     public static List<LuffyFileModel> getPlanList() throws SQLException {
         return db().table("luffy_file")
-                .whereEq("file_type", 1)
-                .andEq("is_disabled", 0)
-                .andLte("plan_last_timespan", System.currentTimeMillis())
+                .whereEq("file_type", 1) //定时任务
+                .andEq("is_disabled", 0) //未禁用的
+                .andLte("plan_last_timespan", System.currentTimeMillis()) //下个周期时间
                 .selectList("*", LuffyFileModel.class);
     }
 
