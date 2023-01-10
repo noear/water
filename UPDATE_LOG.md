@@ -1,7 +1,7 @@
 #### 2.9.3
-* wateradmin, "上游配置" 禁用、删除时增加状态同步（即发消息）
-  * 修复 上游监控/检测 404 的问题
-  * 修复 upstream 更新后，不能同步的问题
+* wateradmin, 增加 "上游配置" 禁用、删除时状态同步（即发消息）
+* wateradmin, 修复 "上游监控" /检测 404 的问题
+* wateradmin, 修复 upstream 更新后，不能同步的问题 //由 water-solon-cloud-plugin 1.11.5 引起
 * waterapi, 获取上游配置时增加是否启用过滤
 * 增加 日志查询单条最大显示长度设置
 * solon 升级为：1.12.2
