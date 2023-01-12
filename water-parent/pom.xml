@@ -44,8 +44,8 @@
 
         <solon.ver>1.12.2</solon.ver>
 
-        <grit.ver>1.4.3</grit.ver>
-        <rock.ver>2.5.3</rock.ver>
+        <grit.ver>1.4.4</grit.ver>
+        <rock.ver>2.5.4</rock.ver>
 
         <snack3.ver>3.2.50</snack3.ver>
         <wood.ver>1.0.7</wood.ver>
@@ -53,7 +53,7 @@
         <mongox.ver>1.0.1</mongox.ver>
         <esearchx.ver>1.0.17</esearchx.ver>
 
-        <luffy.ver>1.4.2</luffy.ver>
+        <luffy.ver>1.4.3</luffy.ver>
 
         <snakeyaml.ver>1.33</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
