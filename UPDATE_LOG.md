@@ -3,7 +3,7 @@
 * wateradmin, 修复 "上游监控" /检测 404 的问题
 * wateradmin, 修复 upstream 更新后，不能同步的问题 //由 water-solon-cloud-plugin 1.11.5 引起
 * waterapi, 获取上游配置时增加是否启用过滤
-* 增加 日志查询单条最大显示长度设置
+* 增加 日志查询单条最大显示长度设置（默认不限）
 * solon 升级为：1.12.2
 
 #### 2.9.2

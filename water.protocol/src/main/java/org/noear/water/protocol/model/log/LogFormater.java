@@ -103,7 +103,7 @@ public class LogFormater {
             return "";
         } else {
             String content = log.content;
-            if (getItemLimitSize() > 10 && content.length() > getItemLimitSize()) {
+            if (getItemLimitSize() > 0 && content.length() > getItemLimitSize()) {
                 content = content.substring(0, getItemLimitSize());
             }
 

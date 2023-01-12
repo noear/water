@@ -13,7 +13,7 @@ public class SettingUtils {
     public static final String name_size_logItemLimit = "water.setting.size.logItemLimit";
 
     public static int logItemLimitSize(){
-        return Solon.cfg().getInt(name_size_logItemLimit, 2000);
+        return Solon.cfg().getInt(name_size_logItemLimit, 0);
     }
 
     /**
