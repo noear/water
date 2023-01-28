@@ -120,7 +120,7 @@ public class WhitelistController extends BaseController {
     //批量导入
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
-        String jsonD = IOUtils.toString(file.content);
+        String jsonD = IOUtils.toString(file.getContent());
         JsondEntity entity = JsondUtils.decode(jsonD);
 
         if (entity == null || "water_cfg_whitelist".equals(entity.table) == false) {

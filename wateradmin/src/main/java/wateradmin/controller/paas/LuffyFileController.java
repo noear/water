@@ -360,7 +360,7 @@ public class LuffyFileController extends BaseController {
     @AuthPermissions(SessionPerms.admin)
     @Mapping("{type}/ajax/import")
     public ViewModel importDo(String type, String tag, UploadedFile file) throws Exception {
-        String jsonD = IOUtils.toString(file.content);
+        String jsonD = IOUtils.toString(file.getContent());
         JsondEntity entity = JsondUtils.decode(jsonD);
 
         if (entity == null || "luffy_file".equals(entity.table) == false) {

@@ -120,7 +120,7 @@ public class KeyController extends BaseController {
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, UploadedFile file) throws Exception {
         try {
-            String jsonD = IOUtils.toString(file.content);
+            String jsonD = IOUtils.toString(file.getContent());
             JsondEntity entity = JsondUtils.decode(jsonD);
 
             if (entity == null || "water_cfg_key".equals(entity.table) == false) {

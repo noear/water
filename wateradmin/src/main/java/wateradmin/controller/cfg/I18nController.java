@@ -272,7 +272,7 @@ public class I18nController extends BaseController {
     @Mapping("ajax/import")
     public ViewModel importDo(String tag, String bundle, UploadedFile file) throws Exception {
         try {
-            if ("jsond".equals(file.extension)) {
+            if ("jsond".equals(file.getExtension())) {
                 return importFileForJsond(tag, bundle, file);
             } else {
                 return importFileForProfile(tag, bundle, file);
@@ -288,7 +288,7 @@ public class I18nController extends BaseController {
             return viewModel.code(0, "没有权限！");
         }
 
-        String jsonD = IOUtils.toString(file.content);
+        String jsonD = IOUtils.toString(file.getContent());
         JsondEntity entity = JsondUtils.decode(jsonD);
 
         if (entity == null || "water_cfg_i18n".equals(entity.table) == false) {
@@ -321,7 +321,7 @@ public class I18nController extends BaseController {
     }
 
     private ViewModel importFileForProfile(String tag, String bundle, UploadedFile file) throws Exception {
-        String i18nStr = Utils.transferToString(file.content, "UTF-8");
+        String i18nStr = Utils.transferToString(file.getContent(), "UTF-8");
         Properties i18n = Utils.buildProperties(i18nStr);
 
         //初始化 _i18n.lang (_开头可以排序在前)
