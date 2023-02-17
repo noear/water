@@ -21,7 +21,7 @@ public class Upgrade {
     public static void tryUpdate() {
         //for v1:2.4.8
         try {
-            api_water_init();
+            luffy_file_update("/sdk_water/_init.jsx", "upgrade/api_water_init.jsd");
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
             log.error("Upgrade attempt failed: {}", e);
@@ -43,6 +43,18 @@ public class Upgrade {
             log.error("Upgrade water schema failed: {}", e);
         }
 
+        //for v2.10.0
+        try{
+            luffy_file_update("/water/speed_sync", "upgrade/pln_water_speed_sync.jsd");
+            luffy_file_update("/water/speed_sync_date", "upgrade/pln_water_speed_sync_date.jsd");
+            luffy_file_update("/water/speed_sync_hour", "upgrade/pln_water_speed_sync_hour.jsd");
+
+            luffy_file_update("/water/log_stat_sync", "upgrade/pln_water_log_stat_sync.jsd");
+        }catch (Throwable e){
+            TagsMDC.tag0("upgrade");
+            log.error("Upgrade water schema failed: {}", e);
+        }
+
         try {
             ConfigM lang_type = WaterClient.Config.get("_system", "lang_type");
             if (lang_type == null || Utils.isEmpty(lang_type.value)) {
@@ -56,12 +68,11 @@ public class Upgrade {
         }
     }
 
-    private static void api_water_init() throws Throwable {
-        //for "api::/sdk_water/_init.jsx"
-        String waterInitNew = Utils.getResourceAsString("upgrade/api_water_init.jsd");
+    private static void luffy_file_update(String oldFile, String newFile) throws Throwable {
+        String waterInitNew = Utils.getResourceAsString(newFile);
         String waterInitNewMd5 = Utils.md5(waterInitNew);
 
-        LuffyFileModel file = DbLuffyApi.getFileByPath("/sdk_water/_init.jsx");
+        LuffyFileModel file = DbLuffyApi.getFileByPath(oldFile);
         if (file.file_id > 0) {
             String fileContentMd5 = Utils.md5(file.content);
 

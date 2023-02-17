@@ -1,0 +1,59 @@
+let util = requireX('/water/speed_sync.fun');
+
+let rd = water.rd('water/water_redis',5);
+
+let rlist = rd.open1(function(ru){
+  return ru.key('monitor_keys').hashGetAll();
+});
+
+var jlist = [];
+rlist.forEach(function(k,v){
+  jlist.push(k);
+});
+
+XUtil.log('monitor_keys.size = ' + jlist.length);
+
+let now = new Datetime();
+
+let log_date = now.toString('yyyyMMdd');
+let log_hour = now.toString('HH');
+let list = XUtil.newList();
+
+
+for(let i in jlist){
+  let ikey = jlist[i];
+  let dkey = ikey +'$'+ log_date + log_hour;
+
+  let dd = rd.open1((ru)=>{
+  return ru.key(dkey).hashGetAll();
+  });
+
+  if(dd && dd.size()>0){
+    let ss = ikey.split('$');
+    let mm = util.map2json(dd);
+
+    mm.service = ss[0];
+    mm.tag = ss[1];
+    mm.name_md5 = ss[2];
+    mm.name = WaterClient.Track.getName(mm.name_md5);
+    mm.name_md5 = WaterClient.Track.getNameMd5(mm.name_md5);//兼容旧的数据
+    mm.log_date = log_date;
+    mm.log_hour = log_hour;
+
+    if(mm.name && mm.name.length > 900){
+      mm.name = mm.name.substr(0,900);
+    }
+
+    if(mm.service && mm.service != 'null'){
+        list.add(mm);
+    }
+  }
+}
+
+XUtil.tran(()=>{
+  for(let mm of list){
+    util.speed_log_hour(mm);
+  }
+});
+
+return 'OK';

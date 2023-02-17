@@ -1,0 +1,43 @@
+let db2= water.db('water/water');
+let date = Datetime.Now();
+
+let yesterday = date.addDay(-1).getDate();
+let beforeday = date.addDay(-1).getDate();
+
+let list1 = db2.exe("list::SELECT name, total_num, total_num_slow5 FROM water_reg_service_speed WHERE service=? AND TAG=?",'_waterlog','logger');
+let list2 = db2.exe("list::SELECT name, total_num, total_num_slow5 FROM water_reg_service_speed_date WHERE service=? AND TAG=? AND log_date=?",'_waterlog','logger',yesterday);
+let list3 = db2.exe("list::SELECT name, total_num, total_num_slow5 FROM water_reg_service_speed_date WHERE service=? AND TAG=? AND log_date=?",'_waterlog','logger',beforeday);
+
+
+XUtil.tran(()=>{
+    for(let m of list1){
+        db2.table('water_cfg_logger')
+        .set('row_num_today',m.total_num)
+        .set('row_num_today_error',m.total_num_slow5)
+        .whereEq('logger',m.name)
+        .update();
+    }
+});
+
+XUtil.tran(()=>{
+    for(let m of list2){
+        db2.table('water_cfg_logger')
+        .set('row_num_yesterday',m.total_num)
+        .set('row_num_yesterday_error',m.total_num_slow5)
+        .whereEq('logger',m.name)
+        .update();
+    }
+});
+
+XUtil.tran(()=>{
+    for(let m of list3){
+        db2.table('water_cfg_logger')
+        .set('row_num_beforeday',m.total_num)
+        .set('row_num_beforeday_error',m.total_num_slow5)
+        .whereEq('logger',m.name)
+        .update();
+    }
+});
+
+return 'OK';
+
