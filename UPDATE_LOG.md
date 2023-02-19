@@ -3,9 +3,10 @@
 * snack3 升级为：3.2.52
 * grit 升级为：1.5.0
 * rock 升级为：2.6.0
-* luffy 升级为：1.5.0
+* luffy 升级为：1.5.1
 * 优化框架任务 speed_sync_date，speed_sync_hour，speed_sync 执行性能（提高几倍）
 * 优化框架任务 log_stat_sync 执行性能（提高几倍）
+* 函数计算增加事务控制快捷接口, XUtil.tran(()=>{})
 
 #### 2.9.3
 * wateradmin, 增加 "上游配置" 禁用、删除时状态同步（即发消息）
