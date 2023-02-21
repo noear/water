@@ -1,7 +1,10 @@
 package watersev;
 
 import luffy.WaterImpl;
+import org.noear.rock.RockClient;
+import org.noear.rock.RockUtil;
 import org.noear.solon.Solon;
+import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.core.util.LogUtil;
 import org.noear.solon.extend.schedule.JobRunner;
@@ -104,6 +107,11 @@ public class WatersevApp {
             x.sharedAdd("LocalDate", LocalDate.class);
             x.sharedAdd("LocalTime", LocalTime.class);
             x.sharedAdd("LocalDateTime", LocalDateTime.class);
+
+            if(Utils.hasClass(()-> RockUtil.class)){
+                x.sharedAdd("RockClient", RockClient.class);
+                x.sharedAdd("RockUtil", RockUtil.class);
+            }
 
             x.pluginAdd(-1, new InitPlugin());
         });

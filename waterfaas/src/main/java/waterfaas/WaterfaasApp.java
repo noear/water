@@ -1,9 +1,12 @@
 package waterfaas;
 
 import luffy.WaterImpl;
+import org.noear.rock.RockClient;
+import org.noear.rock.RockUtil;
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
+import org.noear.solon.Utils;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
 import org.noear.solon.core.util.LogUtil;
@@ -65,6 +68,11 @@ public class WaterfaasApp {
             x.sharedAdd("LocalDate", LocalDate.class);
             x.sharedAdd("LocalTime", LocalTime.class);
             x.sharedAdd("LocalDateTime", LocalDateTime.class);
+
+            if(Utils.hasClass(()-> RockUtil.class)){
+                x.sharedAdd("RockClient", RockClient.class);
+                x.sharedAdd("RockUtil", RockUtil.class);
+            }
 
             x.pluginAdd(-1, new AppInitPlugin());
         });
