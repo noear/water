@@ -19,14 +19,6 @@ import wateradmin.models.water_paas.LuffyFileType;
 @Slf4j
 public class Upgrade {
     public static void tryUpdate() {
-        //for v1:2.4.8
-        try {
-            luffy_file_update("/sdk_water/_init.jsx", "upgrade/api_water_init.jsd");
-        } catch (Throwable e) {
-            TagsMDC.tag0("upgrade");
-            log.error("Upgrade attempt failed: {}", e);
-        }
-
         try {
             pln_water_upgrade();
         } catch (Throwable e) {
@@ -55,6 +47,14 @@ public class Upgrade {
             log.error("Upgrade water schema failed: {}", e);
         }
 
+        //for v2.10.1
+        try {
+            luffy_file_delete("/sdk_water/_init.jsx");
+        } catch (Throwable e) {
+            TagsMDC.tag0("upgrade");
+            log.error("Upgrade attempt failed: {}", e);
+        }
+
         try {
             ConfigM lang_type = WaterClient.Config.get("_system", "lang_type");
             if (lang_type == null || Utils.isEmpty(lang_type.value)) {
@@ -65,6 +65,13 @@ public class Upgrade {
             }
         } catch (Throwable e) {
 
+        }
+    }
+
+    private static void luffy_file_delete(String oldFile) throws Throwable {
+        LuffyFileModel file = DbLuffyApi.getFileByPath(oldFile);
+        if (file.file_id > 0) {
+            DbLuffyApi.delFile(file.file_id);
         }
     }
 

@@ -1,5 +1,6 @@
 package waterfaas;
 
+import luffy.WaterImpl;
 import org.noear.solon.Solon;
 import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;

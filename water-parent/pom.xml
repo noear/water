@@ -53,7 +53,7 @@
         <mongox.ver>1.0.1</mongox.ver>
         <esearchx.ver>1.0.17</esearchx.ver>
 
-        <luffy.ver>1.5.1</luffy.ver>
+        <luffy.ver>1.5.2</luffy.ver>
 
         <snakeyaml.ver>1.33</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>

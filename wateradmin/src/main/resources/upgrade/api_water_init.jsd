@@ -1,15 +1,3 @@
-if(__global.water && __global.water.ver==1){
-    return {msg:'old'};
-}
 
-__global.water = {ver:2};
-
-
-WaterClient = Java.type('org.noear.water.WaterClient');
-WaterProxy  = Java.type('org.noear.water.WaterProxy');
-
-LocalDate = Java.type('java.time.LocalDate');
-LocalTime = Java.type('java.time.LocalTime');
-LocalDateTime = Java.type('java.time.LocalDateTime');
 
 return 'OK';
