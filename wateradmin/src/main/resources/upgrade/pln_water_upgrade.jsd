@@ -24,9 +24,10 @@ if(ver_old < 1){
     }
 
     //::规则计算
+    let idList;
     let tmpRes = db2.table('grit_resource').whereEq('display_name','规则计算').limit(1).selectMap('*');
     if(tmpRes.resource_id){
-        let idList = db2.table('grit_resource').whereEq('resource_pid', tmpRes.resource_id).selectArray('resource_id');
+        idList = db2.table('grit_resource').whereEq('resource_pid', tmpRes.resource_id).selectArray('resource_id');
         if(idList.size() > 0){
             db2.table('grit_resource_linked').whereIn('resource_id',idList).delete();
             db2.table('grit_resource').whereEq('resource_pid',tmpRes.resource_id).delete();
@@ -36,18 +37,20 @@ if(ver_old < 1){
 
     //::Ops
     tmpRes = db2.table('grit_resource').whereEq('display_name','计算资源').limit(1).selectMap('*');
-    let rst = db2.table('grit_resource').set('link_uri','/cfg/server').set('resource_pid',9).set('order_index',21)
-                 .whereEq('resource_id',tmpRes.resource_id).andNeq('resource_pid',9)
-                 .update();
+    if(tmpRes.size() > 0){
+        let rst = db2.table('grit_resource').set('link_uri','/cfg/server').set('resource_pid',9).set('order_index',21)
+                    .whereEq('resource_id',tmpRes.resource_id).andNeq('resource_pid',9)
+                    .update();
 
-    if(rst){ //如果更新成功
-        tmpRes.remove("resource_id");
+        if(rst){ //如果更新成功
+            tmpRes.remove("resource_id");
 
-        db2.table('grit_resource')
-        .setMap(tmpRes).set('display_name','$').set('order_index',20).set('link_uri','').set('resource_pid',9).set("guid", XUtil.guid())
-        .usingNull(false)
-        .usingExpr(false)
-        .insert();
+            db2.table('grit_resource')
+            .setMap(tmpRes).set('display_name','$').set('order_index',20).set('link_uri','').set('resource_pid',9).set("guid", XUtil.guid())
+            .usingNull(false)
+            .usingExpr(false)
+            .insert();
+        }
     }
 
     idList = db2.table('grit_resource').whereEq('resource_pid',13).selectArray('resource_id');
@@ -72,26 +75,28 @@ if(ver_old < 2){
 
     //::安全名单
     let tmlRes = db2.table('grit_resource').whereEq('display_name','安全名单').limit(1).selectMap('*');
-    tmlRes.remove("resource_id");
 
-    //::访问密钥
-    if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/key').selectExists() == false){
-        db2.table('grit_resource')
-            .setMap(tmlRes).set('display_name','访问密钥').set('order_index',12).set('link_uri','/cfg/key').set("guid", XUtil.guid())
-            .usingNull(false)
-            .usingExpr(false)
-            .insert();
+    if(tmlRes.size() > 0){
+        tmlRes.remove("resource_id");
+
+        //::访问密钥
+        if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/key').selectExists() == false){
+            db2.table('grit_resource')
+                .setMap(tmlRes).set('display_name','访问密钥').set('order_index',12).set('link_uri','/cfg/key').set("guid", XUtil.guid())
+                .usingNull(false)
+                .usingExpr(false)
+                .insert();
+        }
+
+        //::多语言包
+        if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/i18n').selectExists() == false){
+            db2.table('grit_resource')
+                .setMap(tmlRes).set('display_name','多语言包').set('order_index',13).set('link_uri','/cfg/i18n').set("guid", XUtil.guid())
+                .usingNull(false)
+                .usingExpr(false)
+                .insert();
+        }
     }
-
-    //::多语言包
-    if(db2.table('grit_resource').whereEq('resource_pid',tmlRes.resource_pid).andEq('link_uri','/cfg/i18n').selectExists() == false){
-        db2.table('grit_resource')
-            .setMap(tmlRes).set('display_name','多语言包').set('order_index',13).set('link_uri','/cfg/i18n').set("guid", XUtil.guid())
-            .usingNull(false)
-            .usingExpr(false)
-            .insert();
-    }
-
 }
 
 //for 2.6.1
@@ -128,6 +133,7 @@ if(ver_old < 5){
     db2.table('grit_resource').set('display_name','告警工具').whereEq('display_name','日常工具').andEq('link_uri','/tool/').update();
     //添加资源
     let tmlRes = db2.table('grit_resource').whereEq('display_name','数据监视').andEq('link_uri','/tool/monitor').limit(1).selectMap('*');
+
     if(tmlRes.size() > 0){
         tmlRes.remove("resource_id");
 

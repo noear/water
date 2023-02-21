@@ -319,7 +319,7 @@ public class LuffyFileController extends BaseController {
         if (readonly != null) {
             return view("luffy/file_code_readonly");
         } else {
-            if ("ftl".equals(edit_mode) || "velocity".equals(edit_mode) || "groovy".equals(edit_mode)) {
+            if ("ftl".equals(edit_mode) || "velocity".equals(edit_mode)) {
                 return view("luffy/file_code");
             } else {
                 return view("luffy/file_code2");
