@@ -1,3 +1,8 @@
+#### 2.10.1
+* 原 faas / sdk_water 改由 java 封装（不再由 js 处理）
+* 原 faas / sdk_rock 改由 java 封装（不再由 js 处理）
+* 增加 groovy 脚本执行器
+
 #### 2.10.0
 * solon 升级为: 2.0.0
 * snack3 升级为：3.2.52
