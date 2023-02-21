@@ -7,6 +7,7 @@ import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
 import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterProxy;
 import org.noear.water.protocol.solution.*;
 import org.noear.water.protocol.ProtocolHub;
 import luffy.JtRun;
@@ -15,6 +16,10 @@ import org.noear.water.utils.TextUtils;
 import watersev.dso.JobRunnerEx;
 import watersev.dso.InitPlugin;
 import watersev.dso.db.DbWaterCfgApi;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Watersev 会包函多个子服务，每个子服务会各自签到，会形成各自的服务集群。
@@ -89,6 +94,15 @@ public class WatersevApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.sharedAdd("water", WaterImpl.g);
+
+            x.sharedAdd("WaterClient",WaterClient.class);
+            x.sharedAdd("WaterProxy", WaterProxy.class);
+
+            x.sharedAdd("LocalDate", LocalDate.class);
+            x.sharedAdd("LocalTime", LocalTime.class);
+            x.sharedAdd("LocalDateTime", LocalDateTime.class);
 
             x.pluginAdd(-1, new InitPlugin());
         });

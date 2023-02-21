@@ -9,6 +9,7 @@ import org.noear.solon.core.util.LogUtil;
 import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
+import org.noear.water.WaterProxy;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import luffy.JtRun;
@@ -18,6 +19,10 @@ import waterfaas.controller.AppHandler;
 import waterfaas.controller.FrmInterceptor;
 import waterfaas.dso.db.DbWaterCfgApi;
 import waterfaas.dso.AppInitPlugin;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class WaterfaasApp {
     public static void main(String[] args) throws Exception{
@@ -50,6 +55,15 @@ public class WaterfaasApp {
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtil.g);
             x.sharedAdd("XLock", JtLock.g);
+
+            x.sharedAdd("water", WaterImpl.g);
+
+            x.sharedAdd("WaterClient",WaterClient.class);
+            x.sharedAdd("WaterProxy", WaterProxy.class);
+
+            x.sharedAdd("LocalDate", LocalDate.class);
+            x.sharedAdd("LocalTime", LocalTime.class);
+            x.sharedAdd("LocalDateTime", LocalDateTime.class);
 
             x.pluginAdd(-1, new AppInitPlugin());
         });

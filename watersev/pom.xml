@@ -61,6 +61,12 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>luffy.executor.s.groovy</artifactId>
+            <version>${luffy.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>luffy.executor.m.freemarker</artifactId>
             <version>${luffy.ver}</version>
         </dependency>
