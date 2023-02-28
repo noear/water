@@ -1,7 +1,10 @@
 #### 2.10.1
-* 原 faas / sdk_water 改由 java 封装（不再由 js 处理）
-* 原 faas / sdk_rock 改由 java 封装（不再由 js 处理）
-* 增加 groovy 脚本执行器
+* solon 升级为: 2.1.4
+* snack3 升级为：3.2.54
+* luffy 升级为：1.6.0
+* 调整 faas / sdk_water 的实现，改由 java 封装（不再由 js 包装）
+* 调整 faas / sdk_rock  的实现，改由 java 封装（不再由 js 包装）
+* 增加 faas groovy 脚本执行器！！！
 
 #### 2.10.0
 * solon 升级为: 2.0.0
