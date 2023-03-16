@@ -110,7 +110,7 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-cloud-plugin</artifactId>
-    <version>2.1.4</version>
+    <version>2.2.4</version>
 </dependency>
 ```
 
