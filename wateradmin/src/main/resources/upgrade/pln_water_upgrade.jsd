@@ -246,6 +246,10 @@ if(ver_old < 8){
 }
 
 if(ver_old < 9){
+    if(!db2){
+        db2 = water.db('water/water');
+    }
+
     if(!hasCol('water_cfg_key','metainfo')){
         db2.exe( "ALTER TABLE `water_cfg_key` "+
                 " ADD COLUMN `metainfo` varchar(2000) NULL COMMENT '元信息' AFTER `description`;");
@@ -254,7 +258,7 @@ if(ver_old < 9){
 
 function hasCol(tb,col){
    return db2.table('information_schema.columns')
-            .where('TABLE_SCHEMA=?',db.schema())
+            .where('TABLE_SCHEMA=?',db2.schema())
             .and("table_name=?",tb)
             .and("column_name=?",col)
             .exists();
