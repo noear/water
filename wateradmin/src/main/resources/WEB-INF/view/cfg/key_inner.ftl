@@ -121,7 +121,7 @@
                 <td width="50px">ID</td>
                 <td width="300px" class="left">access_key</td>
                 <td width="100px" class="left">label</td>
-                <td class="left">description</td>
+                <td class="left">metainfo</td>
                 <td width="60px">操作</td>
             </tr>
             </thead>
@@ -133,7 +133,7 @@
                     <td>${m.key_id}</td>
                     <td class="left">${m.access_key!}</td>
                     <td class="left">${m.label!}</td>
-                    <td class="left">${m.description!}</td>
+                    <td class="left">${m.metainfo!}</td>
                     <#if is_admin == 1>
                         <td><a class="t2" href="/cfg/key/edit?id=${m.key_id}">编辑</a></td>
                     </#if>

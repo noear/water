@@ -8,6 +8,8 @@
     <script src="/_session/domain.js"></script>
     <script src="${js}/jtadmin.js"></script>
     <script src="${js}/layer/layer.js"></script>
+    <script src="${js}/ace/ace.js" ></script>
+    <script src="${js}/ace/ext-language_tools.js"></script>
     <script>
         function del() {
             let key_id = ${m.key_id!0};
@@ -67,11 +69,78 @@
             });
         }
 
+        var ext_tools = ace.require("ace/ext/language_tools");
+
+        ext_tools.addCompleter({
+            getCompletions: function(editor, session, pos, prefix, callback) {
+                callback(null,
+                    [
+                        {name: "schema",value: "schema", meta: "",type: "local",score: 1000},
+                        {name: "url",value: "url", meta: "",type: "local",score: 1000},
+                        {name: "username",value: "username", meta: "",type: "local",score: 1000},
+                        {name: "password",value: "password", meta: "",type: "local",score: 1000},
+                        {name: "server",value: "server", meta: "",type: "local",score: 1000},
+                        {name: "user",value: "user", meta: "",type: "local",score: 1000},
+                        {name: "name",value: "name", meta: "",type: "local",score: 1000},
+                        {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
+                        {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000},
+                        {name: "regionId",value: "regionId", meta: "",type: "local",score: 1000},
+                        {name: "endpoint",value: "endpoint", meta: "",type: "local",score: 1000},
+                        {name: "bucket",value: "bucket", meta: "",type: "local",score: 1000}
+                    ]);
+            }
+        });
+
+
+        function build_editor(mod){
+            if(window.editor){
+                window.editor.getSession().setMode("ace/mode/"+mod);
+                return
+            }
+
+            var editor = ace.edit(document.getElementById('metainfo_edit'));
+
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setMode("ace/mode/"+mod);
+            editor.setOptions({
+                showFoldWidgets:false,
+                showLineNumbers:false,
+                enableBasicAutocompletion: true,
+                enableSnippets: true,
+                enableLiveAutocompletion: true
+            });
+
+            editor.setShowPrintMargin(false);
+            editor.moveCursorTo(0, 0);
+
+            editor.getSession().on('change', function(e) {
+                var value = editor.getValue();
+                $('#metainfo').val(value);
+            });
+
+            window.editor = editor;
+        }
+
+        function editor_shift(mod){
+            localStorage.setItem("water_prop_edit_mode", mod);
+
+            build_editor(mod);
+        }
+
         $(function () {
             ctl_s_save_bind(document,save);
+
+            //编辑模式支持
+            build_editor("properties");
         })
     </script>
     <style>
+        pre{border:1px solid #C9C9C9;}
+
+        boxlist label a{ background:#fff; border-color:#f1f1f1 #f1f1f1 #fff #f1f1f1;}
+        boxlist label a:hover{ border-color:#C9C9C9 #C9C9C9 #fff #C9C9C9;}
+        boxlist input:checked + a{background:#C9C9C9; border-color:#C9C9C9}
+
         .disabled{background: #ddd;}
     </style>
 </head>
@@ -122,7 +191,15 @@
             <tr>
                 <th>metainfo</th>
                 <td>
-                <textarea id="metainfo">${m.metainfo!}</textarea>
+                    <div style="line-height: 1em;">
+                        <boxlist>
+                            <label><input type="radio" name="edit_mode" value="properties" checked/><a>properties</a></label>
+                        </boxlist>
+                    </div>
+                    <div>
+                        <textarea id="metainfo" class="hidden">${m.metainfo!}</textarea>
+                        <pre style="height:100px;width:600px;"  id="metainfo_edit">${m.metainfo!}</pre>
+                    </div>
                 </td>
             </tr>
             <tr>

@@ -247,13 +247,13 @@ if(ver_old < 8){
 
 if(ver_old < 9){
     if(!hasCol('water_cfg_key','metainfo')){
-        db.exe( "ALTER TABLE `water_cfg_key` "+
+        db2.exe( "ALTER TABLE `water_cfg_key` "+
                 " ADD COLUMN `metainfo` varchar(2000) NULL COMMENT '元信息' AFTER `description`;");
     }
 }
 
 function hasCol(tb,col){
-   return db.table('information_schema.columns')
+   return db2.table('information_schema.columns')
             .where('TABLE_SCHEMA=?',db.schema())
             .and("table_name=?",tb)
             .and("column_name=?",col)
