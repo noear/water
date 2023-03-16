@@ -6,7 +6,7 @@ if(!ver_old_str){
     ver_old_str = '0';
 }
 
-let ver_new = 8;
+let ver_new = 9;
 let ver_old = parseInt(ver_old_str);
 
 if(ver_old >= ver_new){
@@ -243,6 +243,21 @@ if(ver_old < 8){
             }
         }
     }
+}
+
+if(ver_old < 9){
+    if(!hasCol('water_cfg_key','metainfo')){
+        db.exe( "ALTER TABLE `water_cfg_key` "+
+                " ADD COLUMN `metainfo` varchar(2000) NULL COMMENT '元信息' AFTER `description`;");
+    }
+}
+
+function hasCol(tb,col){
+   return db.table('information_schema.columns')
+            .where('TABLE_SCHEMA=?',db.schema())
+            .and("table_name=?",tb)
+            .and("column_name=?",col)
+            .exists();
 }
 
 //3.设定版本

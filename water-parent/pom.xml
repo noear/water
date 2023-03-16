@@ -36,18 +36,18 @@
     </scm>
 
     <properties>
-        <revision>2.10.1</revision>
+        <revision>2.10.2</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>2.2.0</solon.ver>
+        <solon.ver>2.2.4</solon.ver>
 
         <grit.ver>1.5.0</grit.ver>
         <rock.ver>2.6.0</rock.ver>
 
-        <snack3.ver>3.2.56</snack3.ver>
+        <snack3.ver>3.2.60</snack3.ver>
         <wood.ver>1.0.7</wood.ver>
         <redisx.ver>1.4.5</redisx.ver>
         <mongox.ver>1.0.1</mongox.ver>
@@ -57,9 +57,6 @@
 
         <snakeyaml.ver>1.33</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
-
-        <springboot.ver>2.0.4.RELEASE</springboot.ver>
-        <spring.ver>5.0.8.RELEASE</spring.ver>
     </properties>
 
 

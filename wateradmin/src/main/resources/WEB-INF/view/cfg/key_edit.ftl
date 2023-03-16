@@ -71,6 +71,9 @@
             ctl_s_save_bind(document,save);
         })
     </script>
+    <style>
+        .disabled{background: #ddd;}
+    </style>
 </head>
 <body>
 
@@ -106,15 +109,21 @@
             </tr>
             <tr>
                 <th>access_key</th>
-                <td><input disabled="disabled" type="text" id="access_key" value="${m.access_key!}" /></td>
+                <td><input class="disabled" type="text" id="access_key" value="${m.access_key!}" /></td>
             </tr>
             <tr>
                 <th>access_secret_key</th>
-                <td><input disabled="disabled" type="text" id="access_secret_key" value="${m.access_secret_key!}" /></td>
+                <td><input class="disabled" type="text" id="access_secret_key" value="${m.access_secret_key!}" /></td>
             </tr>
             <tr>
                 <th>access_secret_salt</th>
-                <td><input disabled="disabled" type="text" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
+                <td><input class="disabled" type="text" id="access_secret_salt" value="${m.access_secret_salt!}" /></td>
+            </tr>
+            <tr>
+                <th>metainfo</th>
+                <td>
+                <textarea id="metainfo">${m.metainfo!}</textarea>
+                </td>
             </tr>
             <tr>
                 <th>启用</th>

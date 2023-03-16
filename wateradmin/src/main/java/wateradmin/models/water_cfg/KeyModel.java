@@ -18,6 +18,8 @@ public class KeyModel {
     public String label;
     /** 描述 */
     public String description;
+    /** 元信息 */
+    public String metainfo;
     /** 是否启用 */
     public int is_enabled;
     /** 创建时间 */
