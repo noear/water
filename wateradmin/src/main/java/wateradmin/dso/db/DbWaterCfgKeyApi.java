@@ -50,11 +50,12 @@ public class DbWaterCfgKeyApi {
             key_id = 0;
         }
 
-        if (access_key == null) {
+        if (access_key == null || access_secret_key == null) {
             return false;
         }
 
         DbTableQuery qr = db().table("water_cfg_key")
+                .usingNull(true)
                 .set("tag", tag.trim())
                 .set("access_key", access_key)
                 .set("access_secret_key", access_secret_key)

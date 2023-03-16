@@ -75,18 +75,8 @@
             getCompletions: function(editor, session, pos, prefix, callback) {
                 callback(null,
                     [
-                        {name: "schema",value: "schema", meta: "",type: "local",score: 1000},
-                        {name: "url",value: "url", meta: "",type: "local",score: 1000},
-                        {name: "username",value: "username", meta: "",type: "local",score: 1000},
-                        {name: "password",value: "password", meta: "",type: "local",score: 1000},
-                        {name: "server",value: "server", meta: "",type: "local",score: 1000},
-                        {name: "user",value: "user", meta: "",type: "local",score: 1000},
-                        {name: "name",value: "name", meta: "",type: "local",score: 1000},
-                        {name: "accessKeyId",value: "accessKeyId", meta: "",type: "local",score: 1000},
-                        {name: "accessSecret",value: "accessSecret", meta: "",type: "local",score: 1000},
-                        {name: "regionId",value: "regionId", meta: "",type: "local",score: 1000},
-                        {name: "endpoint",value: "endpoint", meta: "",type: "local",score: 1000},
-                        {name: "bucket",value: "bucket", meta: "",type: "local",score: 1000}
+                        {name: "app_group_id",value: "app_group_id", meta: "",type: "local",score: 1000},
+                        {name: "user_group_id",value: "user_group_id", meta: "",type: "local",score: 1000}
                     ]);
             }
         });
