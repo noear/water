@@ -119,7 +119,7 @@
             <tr>
                 <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
                 <td width="50px">ID</td>
-                <td width="300px" class="left">access_key</td>
+                <td width="280px" class="left">access_key</td>
                 <td width="100px" class="left">label</td>
                 <td class="left">metainfo</td>
                 <td width="60px">操作</td>
