@@ -1,6 +1,11 @@
 package org.noear.water.model;
 
+import org.noear.water.utils.TextUtils;
+
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
+import java.util.Properties;
 
 public class KeyM implements Serializable {
     /**
@@ -58,5 +63,39 @@ public class KeyM implements Serializable {
 
     public String metainfo() {
         return metainfo;
+    }
+
+    public boolean metainfoHas(String name){
+        return metainfoMap().containsKey(name);
+    }
+
+    public String metainfoGet(String name){
+        return metainfoMap().getProperty(name);
+    }
+
+    public String metainfoGet(String name, String def){
+        return metainfoMap().getProperty(name, def);
+    }
+
+    private transient Properties metainfoMap;
+
+    public Properties metainfoMap() {
+        if (metainfoMap == null) {
+            synchronized (this) {
+                if (metainfoMap == null) {
+                    metainfoMap = new Properties();
+
+                    if (TextUtils.isNotEmpty(metainfo)) {
+                        try {
+                            metainfoMap.load(new StringReader(metainfo));
+                        } catch (IOException e) {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return metainfoMap;
     }
 }
