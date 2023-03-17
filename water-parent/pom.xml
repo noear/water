@@ -55,7 +55,7 @@
 
         <luffy.ver>1.6.0</luffy.ver>
 
-        <snakeyaml.ver>1.33</snakeyaml.ver>
+        <snakeyaml.ver>2.0</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
     </properties>
 
