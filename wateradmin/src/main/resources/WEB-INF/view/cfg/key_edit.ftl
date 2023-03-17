@@ -131,7 +131,7 @@
         boxlist label a:hover{ border-color:#C9C9C9 #C9C9C9 #fff #C9C9C9;}
         boxlist input:checked + a{background:#C9C9C9; border-color:#C9C9C9}
 
-        .disabled{background: #ddd;}
+        .disabled{color:#888;background-color:#f9f9fa}
     </style>
 </head>
 <body>
@@ -161,10 +161,6 @@
             <tr>
                 <th>label</th>
                 <td><input type="text" id="label" value="${m.label!}" /></td>
-            </tr>
-            <tr>
-                <th>description</th>
-                <td><input type="text" class="longtxt" id="description" value="${m.description!}" /></td>
             </tr>
             <tr>
                 <th>access_key</th>
