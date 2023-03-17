@@ -12,12 +12,15 @@ import wateradmin.controller.BaseController;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.TagChecker;
 import wateradmin.dso.TagUtil;
+import wateradmin.dso.db.DbWaterCfgApi;
 import wateradmin.dso.db.DbWaterCfgKeyApi;
 import wateradmin.models.TagCountsModel;
+import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.models.water_cfg.KeyModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -54,27 +57,44 @@ public class KeyController extends BaseController {
 
     @Mapping("edit")
     public ModelAndView edit(int id, String tag_name) throws SQLException {
-        KeyModel model = DbWaterCfgKeyApi.getKey(id);
-        viewModel.put("m", model);
+        //tips
+        ConfigModel tips = DbWaterCfgApi.getConfigByTagName("_system", "key_tips");
+        List<String> tipsList = new ArrayList<>();
+        if (Utils.isNotEmpty(tips.value)) {
+            for (String item : tips.value.split(",")) {
+                tipsList.add(item.trim());
+            }
+        }
 
-        if(model.key_id == 0){
+        if (tipsList.size() == 0) {
+            tipsList.add("app_group_id");
+            tipsList.add("user_group_id");
+        }
+
+
+        //model
+        KeyModel model = DbWaterCfgKeyApi.getKey(id);
+
+        if (model.key_id == 0) {
             model.access_key = Utils.guid();
             model.access_secret_key = RandomUtils.code(24);
             model.access_secret_salt = RandomUtils.code(16);
-            model.is_enabled=1;
+            model.is_enabled = 1;
         }
 
         if (model.tag != null) {
             tag_name = model.tag;
         }
 
+        viewModel.put("tipsList", tipsList);
+        viewModel.put("m", model);
         viewModel.put("tag_name", tag_name);
         return view("cfg/key_edit");
     }
 
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt , String label, String description, String metainfo, int is_enabled) throws Exception {
+    public ViewModel saveDo(Integer key_id, String tag, String access_key, String access_secret_key, String access_secret_salt, String label, String description, String metainfo, int is_enabled) throws Exception {
 
         try {
             boolean result = DbWaterCfgKeyApi.setKey(key_id, tag, access_key, access_secret_key, access_secret_salt, label, description, metainfo, is_enabled);
