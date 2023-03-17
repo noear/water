@@ -70,14 +70,14 @@
         }
 
         var ext_tools = ace.require("ace/ext/language_tools");
+        var ext_lang_tips = [];
+        <#list tipsList as tip>
+        ext_lang_tips.push({name: "${tip}",value: "${tip}", meta: "",type: "local",score: 1000})
+        </#list>
 
         ext_tools.addCompleter({
             getCompletions: function(editor, session, pos, prefix, callback) {
-                callback(null,
-                    [
-                        {name: "app_group_id",value: "app_group_id", meta: "",type: "local",score: 1000},
-                        {name: "user_group_id",value: "user_group_id", meta: "",type: "local",score: 1000}
-                    ]);
+                callback(null,ext_lang_tips);
             }
         });
 
