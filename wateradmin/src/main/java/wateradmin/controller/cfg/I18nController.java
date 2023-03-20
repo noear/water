@@ -48,7 +48,9 @@ public class I18nController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String bundle, String name, String lang) throws Exception {
+    public ModelAndView inner(Context ctx, String tag_name, String bundle, String name, String lang) throws Exception {
+        TagUtil.cookieSet(tag_name);
+
         List<TagCountsModel> bundles = DbWaterCfgI18nApi.getI18nBundles(tag_name);
         if (TextUtils.isEmpty(bundle)) {
             if (bundles.size() > 0) {

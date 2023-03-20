@@ -42,7 +42,9 @@ public class KeyController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView innerDo(Context ctx, String tag_name, String key, int _state) throws Exception {
+    public ModelAndView inner(String tag_name, String key, int _state) throws Exception {
+        TagUtil.cookieSet(tag_name);
+
         List<KeyModel> list = DbWaterCfgKeyApi.getKeyListByTag(tag_name, key, _state == 0);
 
         TagChecker.filter(list, m -> m.tag);
