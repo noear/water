@@ -53,7 +53,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.10.2
   * 要配置外网访问地址，建议加域名
   
   
-* 添加 water/watersev-tol 服务（镜像：noearorg/watersev:2.10.2）。工具服务，包含： (msgchk,sevchk,syn,mot)
+* 添加 water/watersev-tol 服务（镜像：noearorg/watersev:2.10.2）。工具服务，包含： (msgchk,sevchk,mot,detapp,detssl)
   * 镜像端口：9372
   * 对外端口：9372 或其它
   * 建议1个副本起步
