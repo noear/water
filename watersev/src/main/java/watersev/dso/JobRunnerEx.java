@@ -25,7 +25,7 @@ public class JobRunnerEx extends JobRunner {
                     is_ok = ("msgexg,msgchk,sevchk,syn,mot,detapp,detssl".indexOf(task.getName()) >= 0);
                     break;
                 case "tol":
-                    is_ok = ("msgchk,sevchk,syn,mot,detapp,detssl".indexOf(task.getName()) >= 0);
+                    is_ok = ("msgchk,sevchk,mot,detapp,detssl".indexOf(task.getName()) >= 0);
                     break;
                 case "msg":
                     is_ok = ("msgdis".indexOf(task.getName()) >= 0);
