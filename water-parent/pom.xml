@@ -42,7 +42,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>2.2.5</solon.ver>
+        <solon.ver>2.2.6</solon.ver>
 
         <grit.ver>1.5.1</grit.ver>
         <rock.ver>2.6.1</rock.ver>
@@ -55,7 +55,7 @@
 
         <luffy.ver>1.6.0</luffy.ver>
 
-        <snakeyaml.ver>1.33</snakeyaml.ver>
+        <snakeyaml.ver>2.0</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
     </properties>
 

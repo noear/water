@@ -1,6 +1,7 @@
 package wateradmin.controller._msg;
 
 import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.cloud.CloudEventHandler;
 import org.noear.solon.cloud.annotation.CloudEvent;
 import org.noear.solon.cloud.annotation.EventLevel;
@@ -34,7 +35,7 @@ public class msg_updateconfig implements CloudEventHandler {
             return;
         }
 
-        CloudLoadBalance loadBalance = (CloudLoadBalance) CloudLoadBalanceFactory.instance.create("water", WW.waterapi);
+        CloudLoadBalance loadBalance = (CloudLoadBalance) CloudClient.loadBalance().create("water", WW.waterapi);
 
         for (Instance instance : loadBalance.getDiscovery().cluster()) {
             try {
