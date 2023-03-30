@@ -80,7 +80,6 @@ public class HttpUtils {
 
         if (url.contains("://") == false) {
             throw new IllegalArgumentException("No url scheme 'http' or 'https' found: " + url);
-
         }
 
         _url = url;
