@@ -38,6 +38,10 @@ public class HttpUtils {
         return new HttpUtils(url, httpClient);
     }
 
+    public static HttpUtils http(String url, OkHttpClient client) {
+        return new HttpUtils(url, client);
+    }
+
     /**
      * 短时间处理
      * */
@@ -54,6 +58,7 @@ public class HttpUtils {
 
 
     private OkHttpClient _client;
+    private String _url;
     private Charset _charset;
     private Map<String, String> _cookies;
     private RequestBody _body;
@@ -73,6 +78,12 @@ public class HttpUtils {
             _client = client;
         }
 
+        if (url.contains("://") == false) {
+            throw new IllegalArgumentException("No url scheme 'http' or 'https' found: " + url);
+
+        }
+
+        _url = url;
         _builder = new Request.Builder().url(url);
     }
 
@@ -284,7 +295,7 @@ public class HttpUtils {
     }
 
     //@XNote("执行请求，返回响应对象")
-    public Response exec(String mothod) throws IOException {
+    private Response execDo(String mothod) throws IOException {
         if (_multipart) {
             tryInitPartBuilder(MultipartBody.FORM);
 
@@ -363,6 +374,17 @@ public class HttpUtils {
         } else {
             Call call = _client.newCall(_builder.build());
             return call.execute();
+        }
+    }
+
+    /**
+     * 执行请求，返回响应对象
+     * */
+    public Response exec(String mothod) throws IOException {
+        try {
+            return execDo(mothod);
+        } catch (IOException e) {
+            throw new IOException(_url + ", request failed", e);
         }
     }
 

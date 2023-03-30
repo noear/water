@@ -68,6 +68,8 @@ public class DDLController extends BaseController {
         DbContext db = cfg.toConfigM().getDb();
 
         List<String> tbs = new ArrayList<>();
+
+        db.getMetaData().refresh();
         db.getMetaData().getTableAll().forEach((tw)->{
             tbs.add(tw.getName());
         });
