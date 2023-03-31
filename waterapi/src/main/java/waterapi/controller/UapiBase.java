@@ -5,6 +5,7 @@ import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.Render;
 import org.noear.solon.core.handle.Result;
 import org.noear.solon.validation.annotation.Valid;
+import org.noear.water.WW;
 
 @Valid
 public class UapiBase implements Render {
@@ -13,6 +14,9 @@ public class UapiBase implements Render {
         if (obj == null) {
             return;
         }
+
+        //统一添加版本号输出
+        ctx.headerSet(WW.http_header_version, WW.water_version);
 
         if (obj instanceof String) {
             ctx.outputAsJson((String) obj);
