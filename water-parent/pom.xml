@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <revision>2.10.2</revision>
+        <revision>2.10.3</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -48,7 +48,7 @@
         <rock.ver>2.6.1</rock.ver>
 
         <snack3.ver>3.2.62</snack3.ver>
-        <wood.ver>1.0.9</wood.ver>
+        <wood.ver>1.1.0</wood.ver>
         <redisx.ver>1.4.6</redisx.ver>
         <mongox.ver>1.0.1</mongox.ver>
         <esearchx.ver>1.0.17</esearchx.ver>

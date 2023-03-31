@@ -1,7 +1,7 @@
 package org.noear.water;
 
 public class WW {
-    public static final String water_version = "v2.10.2";
+    public static final String water_version = "v2.10.3";
 
     public static final String mime_glog = "water/glog";
     public static final String mime_gzip = "application/x-gzip";
@@ -13,6 +13,7 @@ public class WW {
     public static final String http_header_from = "Water-From";
     public static final String http_header_trace = "Water-Trace-Id";
     public static final String http_header_token = "Water-Access-Token";
+    public static final String http_header_version = "Water-Version";
 
     public static final String msg_ucache_topic = "water.cache.update";
     public static final String msg_uconfig_topic = "water.config.update";

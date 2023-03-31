@@ -60,9 +60,10 @@ class ApiCaller {
             httpUtils.asShortHttp();
         }
 
-        return httpUtils.headerAdd(WW.http_header_token, WaterClient.waterAclToken())
-                .headerAdd(WW.http_header_trace, WaterClient.waterTraceId())
-                .headerAdd(WW.http_header_from, WaterClient.localServiceHost());
+        return httpUtils.header(WW.http_header_token, WaterClient.waterAclToken())
+                .header(WW.http_header_version, WW.water_version)
+                .header(WW.http_header_trace, WaterClient.waterTraceId())
+                .header(WW.http_header_from, WaterClient.localServiceHost());
     }
 
     public String post(String path, Map<String, String> data, String trace_id) throws IOException {
