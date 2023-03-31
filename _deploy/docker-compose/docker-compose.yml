@@ -2,7 +2,7 @@ version: '3'
 
 # 部署指南：
 # 1.运行 Water 助理工具 完成初始化
-#   > docker run -it --rm -p 19371:19371 noearorg/xwater:2.10.2
+#   > docker run -it --rm -p 19371:19371 noearorg/xwater:2.10.3
 # 2.把配置里的 water.ds.* 换成真实的 WaterDb，并启动
 # 3.管理后台地址 http://localhost:9373 做日常管理
 # 4.使用 water-solon-cloud-plugin 时，配置为：solon.cloud.water.server=waterapi:9371
@@ -12,7 +12,7 @@ version: '3'
 
 services:
   waterapi:
-    image: noearorg/waterapi:2.10.2
+    image: noearorg/waterapi:2.10.3
     container_name: waterapi
     environment:
       - water.ds.schema={water}
@@ -23,7 +23,7 @@ services:
     ports:
       - 9371:9371
   watersev:
-    image: noearorg/watersev:2.10.2
+    image: noearorg/watersev:2.10.3
     container_name: watersev
     environment:
       - solon.start.ping=waterapi:9371
@@ -33,7 +33,7 @@ services:
     ports:
       - 9372:9372
   wateradmin:
-    image: noearorg/wateradmin:2.10.2
+    image: noearorg/wateradmin:2.10.3
     container_name: wateradmin
     environment:
       - solon.start.ping=waterapi:9371
@@ -43,7 +43,7 @@ services:
     ports:
       - 9373:9373
   waterfaas:
-    image: noearorg/waterfaas:2.10.2
+    image: noearorg/waterfaas:2.10.3
     container_name: waterfaas
     environment:
       - solon.start.ping=waterapi:9371
