@@ -126,6 +126,7 @@ interface HttpUtils{
     data(key:string, value:string):HttpUtils;
     data(key:string, filename:string, inputStream:InputStream, contentType:string):HttpUtils;
 
+    bodyJson(json:string):HttpUtils;
     bodyTxt(txt:string):HttpUtils;
     bodyTxt(txt:string, contentType:string):HttpUtils;
     bodyRaw(raw:InputStream):HttpUtils;
