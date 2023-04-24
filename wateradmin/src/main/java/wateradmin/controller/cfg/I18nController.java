@@ -1,6 +1,7 @@
 package wateradmin.controller.cfg;
 
 import org.noear.snack.ONode;
+import org.noear.snack.core.Feature;
 import org.noear.solon.Utils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
@@ -16,7 +17,6 @@ import wateradmin.dso.db.DbWaterCfgI18nApi;
 import wateradmin.models.TagCountsModel;
 import wateradmin.models.water_cfg.EnumModel;
 import wateradmin.models.water_cfg.I18nModel;
-import wateradmin.utils.JsonFormatTool;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
@@ -230,7 +230,7 @@ public class I18nController extends BaseController {
         }
 
         if ("json".equals(fmt)) {
-            String data = JsonFormatTool.formatJson(ONode.stringify(i18nMap));//格式化一下好看些
+            String data = ONode.load(i18nMap, Feature.PrettyFormat).toJson();//格式化一下好看些
             String filename2 = filename + ".json";
 
             ctx.headerSet("Content-Disposition", "attachment; filename=\"" + filename2 + "\"");
