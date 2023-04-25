@@ -26,14 +26,19 @@ import java.util.List;
 @Mapping("/cfg/prop")
 public class PropController extends BaseController {
     @Mapping("")
-    public ModelAndView home(String tag_name, int _state) throws SQLException {
+    public ModelAndView home(String tag_name, String label,  int _state) throws SQLException {
         List<TagCountsModel> tags = DbWaterCfgApi.getConfigTags();
 
         TagChecker.filter(tags, m -> m.tag);
 
         tag_name = TagUtil.build(tag_name, tags);
 
+        if(label == null){
+            label = "";
+        }
+
         viewModel.put("tag_name", tag_name);
+        viewModel.put("label", label);
         viewModel.put("tags", tags);
         viewModel.put("_state", _state);
         return view("cfg/prop");

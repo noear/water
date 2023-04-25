@@ -40,6 +40,10 @@
                 return;
             }
 
+            if(!vm.label){
+                vm.label='';
+            }
+
             let _state = $('#is_disabled').prop('checked') ? 1 : 0;
 
             $.ajax({
@@ -50,7 +54,7 @@
                     if (data.code == 1) {
                         top.layer.msg('操作成功')
                         setTimeout(function () {
-                            parent.location.href = "/cfg/prop?tag_name=" + vm.tag + "&_state=" + _state;
+                            parent.location.href = "/cfg/prop?tag_name=" + vm.tag + "&label=" + vm.label + "&_state=" + _state;
                         }, 800);
                     } else {
                         top.layer.msg(data.msg);

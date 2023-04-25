@@ -101,9 +101,9 @@
         <tabbar>
             <#list labelList as m>
                 <#if m.tag == label>
-                    <a id="e${m.tag}" class="btn sel">${m.tag}</a>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}(${m.counts})</a>
                 <#else>
-                    <a id="e${m.tag}" class="btn" href="/cfg/prop/inner?tag_name=${tag_name!}&label=${m.tag}">${m.tag}</a>
+                    <a id="e${m.tag}" class="btn" href="/cfg/prop/inner?tag_name=${tag_name!}&label=${m.tag}">${m.tag}(${m.counts})</a>
                 </#if>
             </#list>
         </tabbar>

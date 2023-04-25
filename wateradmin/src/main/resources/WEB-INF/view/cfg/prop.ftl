@@ -21,7 +21,7 @@
             tagName = tag_name
             $('li.sel').removeClass('sel');
             $(obj).addClass("sel");
-            $("#table").attr('src',"/cfg/prop/inner?tag_name="+tagName);
+            $("#table").attr('src',"/cfg/prop/inner?tag_name="+tagName + "&label=${label!}");
         };
     </script>
 </head>
@@ -37,7 +37,7 @@
         </tree>
     </middle>
     <right class="frm">
-        <iframe src="/cfg/prop/inner?tag_name=${tag_name!}&_state=${_state!}" frameborder="0" id="table"></iframe>
+        <iframe src="/cfg/prop/inner?tag_name=${tag_name!}&label=${label!}&_state=${_state!}" frameborder="0" id="table"></iframe>
     </right>
 </main>
 </body>
