@@ -215,15 +215,18 @@
                 <td><input type="text" id="key" value="${cfg.key!}"/></td>
             </tr>
             <tr>
-                <th>type</th>
+                <th>管理类型</th>
                 <td>
                     <@enum group="config_type" style="select" id="type" value="${cfg.type!}" ></@enum>
                     <a class="clone"><i class="fa fa-clone"></i></a>
+                    <n>（比如：选了 rdb 会在开发助手那儿显示）</n>
                 </td>
             </tr>
             <tr>
-                <th>label</th>
-                <td><input type="text" id="label" value="${cfg.label!}"/></td>
+                <th>管理标记</th>
+                <td><input type="text" id="label" value="${cfg.label!}"/>
+                    <n>（属性多时，用于归类显示）</n>
+                </td>
             </tr>
             <tr>
                 <td></td>
