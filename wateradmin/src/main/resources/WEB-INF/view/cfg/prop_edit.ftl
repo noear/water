@@ -222,6 +222,10 @@
                 </td>
             </tr>
             <tr>
+                <th>label</th>
+                <td><input type="text" id="label" value="${cfg.label!}"/></td>
+            </tr>
+            <tr>
                 <td></td>
                 <td>
                     <checkbox>

@@ -81,6 +81,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>应用属性数量</th>
+                    <td>
+                        <boxlist>
+                            <label><input type="radio" name="${name_props}" value="0" checked /><a>少</a></label>
+                            <label><input type="radio" name="${name_props}" value="1" /><a>多</a></label>
+                        </boxlist>
+                        <script>
+                            $("input[name='${name_props}'][value='${sets[name_props]!}']").attr("checked",true);
+                        </script>
+                    </td>
+                </tr>
+                <tr>
                     <th>系统账号数量</th>
                     <td>
                         <boxlist>

@@ -286,11 +286,17 @@ public class DbWaterCfgApi {
 
 
     //编辑更新config。
-    public static void setConfig(long row_id, String tag, String key, Integer type, String value0, String edit_mode, boolean enabled) throws SQLException {
+    public static void setConfig(long row_id, String tag, String key, Integer type,  String label,String value0, String edit_mode, boolean enabled) throws SQLException {
         if (value0 == null) {
             value0 = "";
         } else {
             value0 = value0.trim();
+        }
+
+        if(label == null){
+            label = "";
+        }else{
+            label = label.trim();
         }
 
         String value_org = value0;
@@ -301,6 +307,7 @@ public class DbWaterCfgApi {
                 .set("tag", tag.trim())
                 .set("key", key.trim())
                 .set("type", type)
+                .set("label", label)
                 .set("edit_mode", edit_mode)
                 .set("value", value)
                 .set("is_enabled",(enabled?1:0))
@@ -406,16 +413,27 @@ public class DbWaterCfgApi {
                 .selectItem("*", ConfigModel.class);
     }
 
-    public static List<ConfigModel> getConfigsByTag(String tag, String key, boolean is_enabled) throws SQLException {
+    public static List<ConfigModel> getConfigsByTag(String tag, String label,String key, boolean is_enabled) throws SQLException {
         return db().table("water_cfg_properties")
                 .whereEq("tag", tag)
                 .andEq("is_enabled", is_enabled ? 1 : 0)
                 .build(tb -> {
+                    if (label != null) {
+                        tb.andEq("label", label);
+                    }
+
                     if (!TextUtils.isEmpty(key)) {
                         tb.andLk("key", "%" + key + "%");
                     }
                 })
                 .selectList("*", ConfigModel.class);
+    }
+
+    public static List<TagCountsModel> getConfigLabelsByTag(String tag) throws SQLException {
+        return db().table("water_cfg_properties")
+                .whereEq("tag", tag)
+                .groupBy("label")
+                .selectList("label tag,count(*) counts", TagCountsModel.class);
     }
 
     public static List<ConfigModel> getConfigsByType(String tag, int type) throws SQLException {

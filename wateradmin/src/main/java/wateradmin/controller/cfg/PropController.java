@@ -1,6 +1,5 @@
 package wateradmin.controller.cfg;
 
-import org.noear.solon.annotation.Param;
 import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
@@ -9,16 +8,18 @@ import org.noear.water.utils.*;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import wateradmin.controller.BaseController;
+import wateradmin.dso.SettingUtils;
 import wateradmin.dso.TagChecker;
-import wateradmin.dso.Session;
 import wateradmin.dso.SessionPerms;
 import wateradmin.dso.db.DbWaterCfgApi;
+import wateradmin.models.ScaleType;
 import wateradmin.models.TagCountsModel;
 import wateradmin.dso.TagUtil;
 import wateradmin.models.water_cfg.ConfigModel;
 import wateradmin.viewModels.ViewModel;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -39,12 +40,25 @@ public class PropController extends BaseController {
     }
 
     @Mapping("inner")
-    public ModelAndView inner(String tag_name, String key, int _state) throws SQLException {
+    public ModelAndView inner(String tag_name, String label, String key, int _state) throws SQLException {
         TagUtil.cookieSet(tag_name);
 
-        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, key, _state == 0);
+        List<TagCountsModel> labelList;
+        if (SettingUtils.propsScale().ordinal() < ScaleType.medium.ordinal()) {
+            label = null;
+            labelList = new ArrayList<>();
+        } else {
+            if (label == null) {
+                label = "";
+            }
+            labelList = DbWaterCfgApi.getConfigLabelsByTag(tag_name);
+        }
+
+        List<ConfigModel> list = DbWaterCfgApi.getConfigsByTag(tag_name, label, key, _state == 0);
 
         viewModel.put("list", list);
+        viewModel.put("labelList", labelList);
+        viewModel.put("label", label);
         viewModel.put("tag_name", tag_name);
         viewModel.put("key", key);
         viewModel.put("_state", _state);
@@ -83,8 +97,8 @@ public class PropController extends BaseController {
     //编辑、保存功能。
     @AuthPermissions(SessionPerms.admin)
     @Mapping("edit/ajax/save")
-    public ViewModel save(Integer row_id, String tag, String key, Integer type, String value, String edit_mode, int is_disabled) throws SQLException {
-        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, value, edit_mode, is_disabled == 0);
+    public ViewModel save(Integer row_id, String tag, String key, Integer type, String label, String value, String edit_mode, int is_disabled) throws SQLException {
+        DbWaterCfgApi.setConfig(row_id, tag.trim(), key.trim(), type, label, value, edit_mode, is_disabled == 0);
 
         return viewModel.code(1, "操作成功");
     }

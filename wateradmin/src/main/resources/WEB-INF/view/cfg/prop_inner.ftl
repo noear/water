@@ -11,6 +11,8 @@
     <style>
         datagrid b{color: #8D8D8D;font-weight: normal}
 
+        .tabs{padding-bottom: 10px;}
+        .tabs a.btn{margin: 0 5px 5px 5px!important;}
     </style>
 </head>
 <script>
@@ -93,67 +95,80 @@
     });
 </script>
 <body>
-<toolbar>
-    <flex>
-        <left class="col-4">
-            <#if is_admin == 1 >
-                <file>
-                    <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
-                </file>
-
-                <button type='button' class="minor" onclick="exp('${tag_name!}')" >导出</button>
-
-                <#if _state == 0>
-                    <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
+<main>
+    <div class="tabs">
+        <tabbar>
+            <#list labelList as m>
+                <#if m.tag == label>
+                    <a id="e${m.tag}" class="btn sel">${m.tag}</a>
                 <#else>
-                    <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
+                    <a id="e${m.tag}" class="btn" href="/cfg/prop/inner?tag_name=${tag_name!}&label=${m.tag}">${m.tag}</a>
                 </#if>
-                <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
-            </#if>
-        </left>
-        <middle class="col-6 center">
-            <form>
-                <input type="hidden"  name="tag_name" value="${tag_name!}"/>
-                <input type="hidden"  name="_state" value="${_state!}"/>
-                <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
-                <button type="submit">查询</button>
-            </form>
-        </middle>
-        <right class="col-4">
-            <@stateselector items="启用,未启用"/>
-        </right>
-    </flex>
-</toolbar>
-<datagrid class="list">
-    <table>
-        <thead>
-        <tr>
-            <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
-            <td width="220px" class="left">key</td>
-            <td class="left">配置内容</td>
-            <#if is_admin == 1>
-                <td width="50px">操作</td>
-            </#if>
-        </tr>
-        </thead>
-        <tbody id="tbody" class="sel_from">
-        <#list list as cfg>
-            <tr>
-                <td><checkbox><label><input type="checkbox" name="sel_id" value="${cfg.row_id}" /><a></a></label></checkbox></td>
-                <td class="left">${cfg.key!}
-                    <#if cfg.type != 0>
-                        <n-l>::${cfg.type_str()}</n-l>
+            </#list>
+        </tabbar>
+    </div>
+
+    <toolbar>
+        <flex>
+            <left class="col-4">
+                <#if is_admin == 1 >
+                    <file>
+                        <label><input id="imp_file" type="file" accept=".jsond"/><a class="btn minor">导入</a></label>
+                    </file>
+
+                    <button type='button' class="minor" onclick="exp('${tag_name!}')" >导出</button>
+
+                    <#if _state == 0>
+                        <button type='button' class="minor" onclick="del(0,'禁用')" >禁用</button>
+                    <#else>
+                        <button type='button' class="minor" onclick="del(1,'启用')" >启用</button>
                     </#if>
-                </td>
-                <td class="left break">${cfg.value_html()!}</td>
+                    <a class="btn edit mar10-l" href="/cfg/prop/edit?tag_name=${tag_name!}">新增</a>
+                </#if>
+            </left>
+            <middle class="col-6 center">
+                <form>
+                    <input type="hidden"  name="tag_name" value="${tag_name!}"/>
+                    <input type="hidden"  name="_state" value="${_state!}"/>
+                    <input type="text"  name="key" placeholder="key" value="${key!}" class="w200"/>
+                    <button type="submit">查询</button>
+                </form>
+            </middle>
+            <right class="col-4">
+                <@stateselector items="启用,未启用"/>
+            </right>
+        </flex>
+    </toolbar>
+    <datagrid class="list">
+        <table>
+            <thead>
+            <tr>
+                <td width="20px"><checkbox><label><input type="checkbox" id="sel_all" /><a></a></label></checkbox></td>
+                <td width="220px" class="left">key</td>
+                <td class="left">配置内容</td>
                 <#if is_admin == 1>
-                    <td class="op"><a href="/cfg/prop/edit?row_id=${cfg.row_id}" class="t2">编辑</a></td>
+                    <td width="50px">操作</td>
                 </#if>
             </tr>
-        </#list>
-        </tbody>
-    </table>
-</datagrid>
-
+            </thead>
+            <tbody id="tbody" class="sel_from">
+            <#list list as cfg>
+                <tr>
+                    <td><checkbox><label><input type="checkbox" name="sel_id" value="${cfg.row_id}" /><a></a></label></checkbox></td>
+                    <td class="left">${cfg.key!}
+                        <#if cfg.type != 0>
+                            <n-l>::${cfg.type_str()}</n-l>
+                        </#if>
+                    </td>
+                    <td class="left break">${cfg.value_html()!}</td>
+                    <#if is_admin == 1>
+                        <td class="op"><a href="/cfg/prop/edit?row_id=${cfg.row_id}" class="t2">编辑</a></td>
+                    </#if>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
+    </datagrid>
+</main>
 </body>
 </html>

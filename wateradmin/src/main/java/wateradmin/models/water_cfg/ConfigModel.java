@@ -18,6 +18,7 @@ public class ConfigModel implements IBinder {
     public String tag;
     public String key;
     public int type;
+    public String label;
     public String value;
     public String edit_mode;
     public int is_enabled;
@@ -29,6 +30,7 @@ public class ConfigModel implements IBinder {
         tag = s.get("tag").value("");
         key = s.get("key").value("");
         type = s.get("type").value(0);
+        label = s.get("label").value("");
         value = s.get("value").value("");
         edit_mode = s.get("edit_mode").value("");
         is_enabled = s.get("is_enabled").value(0);
