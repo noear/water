@@ -96,6 +96,7 @@
 </script>
 <body>
 <main>
+    <#if labelList?size gt 0>
     <div class="tabs">
         <tabbar>
             <#list labelList as m>
@@ -107,6 +108,7 @@
             </#list>
         </tabbar>
     </div>
+    </#if>
 
     <toolbar>
         <flex>
