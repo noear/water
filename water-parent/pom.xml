@@ -57,7 +57,7 @@
 
         <snakeyaml.ver>2.0</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
-        <mysql.ver>5.1.49</mysql.ver>
+        <mysql.ver>8.0.32</mysql.ver>
     </properties>
 
 
