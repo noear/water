@@ -2,6 +2,7 @@ package wateradmin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
+import org.noear.solon.core.runtime.NativeDetector;
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -19,6 +20,10 @@ import wateradmin.models.water_paas.LuffyFileType;
 @Slf4j
 public class Upgrade {
     public static void tryUpdate() {
+        if(NativeDetector.isAotRuntime()){
+            return;
+        }
+
         try {
             pln_water_upgrade();
         } catch (Throwable e) {
