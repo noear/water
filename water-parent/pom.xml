@@ -57,6 +57,7 @@
 
         <snakeyaml.ver>2.0</snakeyaml.ver>
         <hikaricp.ver>4.0.3</hikaricp.ver>
+        <mysql.ver>5.1.49</mysql.ver>
     </properties>
 
 
@@ -288,7 +289,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.49</version>
+                <version>${mysql.ver}</version>
             </dependency>
 
             <dependency>
