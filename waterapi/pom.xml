@@ -101,6 +101,13 @@
 
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>solon.aot</artifactId>
+            <version>${solon.ver}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
             <version>${solon.ver}</version>
             <scope>test</scope>

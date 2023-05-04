@@ -1,4 +1,4 @@
-package wateradmin.aot;
+package wateradmin.dso.aot;
 
 import com.mysql.jdbc.*;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;

@@ -5,10 +5,11 @@ import org.noear.water.utils.Datetime;
 import org.noear.water.utils.EncryptUtils;
 import org.noear.water.utils.TextUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
-public class LuffyFileModel {
+public class LuffyFileModel implements Serializable {
     public transient int file_id;
     public int file_type;
     public String tag;
