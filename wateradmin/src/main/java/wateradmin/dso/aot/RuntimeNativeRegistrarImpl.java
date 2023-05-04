@@ -24,8 +24,6 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                 MemberCategory.INVOKE_DECLARED_METHODS);
 
 
-        metadata.registerReflection(DefaultJwtBuilder.class, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
-        metadata.registerReflection(DefaultJwtParserBuilder.class, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS);
 
 
         metadata.registerReflection(HikariConfig.class, MemberCategory.INVOKE_DECLARED_METHODS);
