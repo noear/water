@@ -30,7 +30,7 @@ public final class DetController implements IJob {
 
     @Override
     public int getInterval() {
-        return 1000 * 5; //实际是：5s 跑一次
+        return 1000 * 60; //实际是：60s 跑一次
     }
 
 
@@ -38,18 +38,19 @@ public final class DetController implements IJob {
     public void exec() throws Throwable {
         RegController.addService("watersev-" + getName());
 
-        if (LockUtils.tryLock(WW.watersev_det, getName(), 4)) {
+        if (LockUtils.tryLock(WW.watersev_det, getName(), 60)) {
             try {
                 detAppService.execDo();
-            }catch (Throwable e){
-                LogUtil.error(getName(),  "", Utils.throwableToString(e));
+            } catch (Throwable e) {
+                LogUtil.error(getName(), "", Utils.throwableToString(e));
             }
+        }
 
-
+        if (LockUtils.tryLock(WW.watersev_det, getName(), 60 * 60) == false) {
             try {
                 detCaService.execDo();
-            }catch (Throwable e){
-                LogUtil.error(getName(),  "", Utils.throwableToString(e));
+            } catch (Throwable e) {
+                LogUtil.error(getName(), "", Utils.throwableToString(e));
             }
         }
     }

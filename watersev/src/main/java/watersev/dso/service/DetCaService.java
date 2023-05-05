@@ -27,11 +27,6 @@ public class DetCaService {
     }
 
     public void execDo() throws SQLException {
-        //60分钟一次
-        if (LockUtils.tryLock(WW.watersev_det, getName(), 60 * 60) == false) {
-            return;
-        }
-
         //取出待处理的服务（已启用的服务）
         List<CertificationModel> list = DbWaterToolApi.certificationGetList();
 
