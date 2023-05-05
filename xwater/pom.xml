@@ -22,42 +22,42 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.boot.jlhttp</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <!-- 静态文件支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.web.staticfiles</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <!-- Yaml配置支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.config.yaml</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <!-- 本地SessionSate支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.sessionstate.local</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <!-- Json序列化支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.serialization.snack3</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <!-- freemarker模板支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.view.freemarker</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <dependency>
@@ -94,7 +94,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
             <scope>test</scope>
         </dependency>
 

@@ -44,31 +44,31 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>rock.client</artifactId>
-            <version>${rock.ver}</version>
+            <version>${rock.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>luffy.base</artifactId>
-            <version>${luffy.ver}</version>
+            <version>${luffy.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>luffy.executor.s.javascript</artifactId>
-            <version>${luffy.ver}</version>
+            <version>${luffy.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>luffy.executor.s.groovy</artifactId>
-            <version>${luffy.ver}</version>
+            <version>${luffy.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>luffy.executor.m.freemarker</artifactId>
-            <version>${luffy.ver}</version>
+            <version>${luffy.version}</version>
         </dependency>
 
         <dependency>
@@ -84,13 +84,13 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>water-solon-cloud-plugin</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.cloud.httputils</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <dependency>
@@ -139,7 +139,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-test</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
             <scope>test</scope>
         </dependency>
 

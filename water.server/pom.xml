@@ -34,13 +34,13 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>water-solon-cloud-plugin</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.cloud.httputils</artifactId>
-            <version>${solon.ver}</version>
+            <version>${solon.version}</version>
         </dependency>
     </dependencies>
 

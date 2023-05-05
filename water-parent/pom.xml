@@ -36,28 +36,28 @@
     </scm>
 
     <properties>
-        <revision>2.10.3</revision>
+        <revision>2.10.4</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>2.2.15</solon.ver>
+        <solon.version>2.2.16</solon.version>
 
-        <grit.ver>1.5.2</grit.ver>
-        <rock.ver>2.6.2</rock.ver>
+        <grit.version>1.5.4</grit.version>
+        <rock.version>2.6.3</rock.version>
 
-        <snack3.ver>3.2.66</snack3.ver>
-        <wood.ver>1.1.0</wood.ver>
-        <redisx.ver>1.4.7</redisx.ver>
-        <mongox.ver>1.0.1</mongox.ver>
-        <esearchx.ver>1.0.17</esearchx.ver>
+        <snack3.version>3.2.66</snack3.version>
+        <wood.version>1.1.1</wood.version>
+        <redisx.version>1.4.7</redisx.version>
+        <mongox.version>1.0.1</mongox.version>
+        <esearchx.version>1.0.17</esearchx.version>
 
-        <luffy.ver>1.6.2</luffy.ver>
+        <luffy.version>1.6.3</luffy.version>
 
-        <snakeyaml.ver>2.0</snakeyaml.ver>
-        <hikaricp.ver>4.0.3</hikaricp.ver>
-        <mysql.ver>8.0.32</mysql.ver>
+        <snakeyaml.version>2.0</snakeyaml.version>
+        <hikaricp.version>4.0.3</hikaricp.version>
+        <mysql.version>8.0.32</mysql.version>
     </properties>
 
 
@@ -91,186 +91,186 @@
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.cloud</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.boot.jlhttp</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.boot.undertow</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.boot.jetty</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.config.yaml</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.web.staticfiles</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.health</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>springboot-solon-plugin</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.extend.schedule</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.data</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.validation</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.serialization.snack3</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon.serialization.fastjson</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>nami.channel.http.okhttp</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>nami.coder.snack3</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>nami</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-web</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-api</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>snack3</artifactId>
-                <version>${snack3.ver}</version>
+                <version>${snack3.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>redisx</artifactId>
-                <version>${redisx.ver}</version>
+                <version>${redisx.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>mongox</artifactId>
-                <version>${mongox.ver}</version>
+                <version>${mongox.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>esearchx</artifactId>
-                <version>${esearchx.ver}</version>
+                <version>${esearchx.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>wood</artifactId>
-                <version>${wood.ver}</version>
+                <version>${wood.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>wood-solon-plugin</artifactId>
-                <version>${solon.ver}</version>
+                <version>${solon.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>wood.cache.memcached</artifactId>
-                <version>${wood.ver}</version>
+                <version>${wood.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>wood.cache.redis</artifactId>
-                <version>${wood.ver}</version>
+                <version>${wood.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>grit.server.ui-durian</artifactId>
-                <version>${grit.ver}</version>
+                <version>${grit.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>grit.server</artifactId>
-                <version>${grit.ver}</version>
+                <version>${grit.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>grit-solon-plugin</artifactId>
-                <version>${grit.ver}</version>
+                <version>${grit.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
-                <version>${snakeyaml.ver}</version>
+                <version>${snakeyaml.version}</version>
             </dependency>
 
             <dependency>
@@ -289,13 +289,13 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.ver}</version>
+                <version>${mysql.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
-                <version>${hikaricp.ver}</version>
+                <version>${hikaricp.version}</version>
             </dependency>
 
             <dependency>

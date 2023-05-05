@@ -1,8 +1,7 @@
 package wateradmin.dso.aot;
 
 import com.zaxxer.hikari.HikariConfig;
-import io.jsonwebtoken.impl.DefaultJwtBuilder;
-import io.jsonwebtoken.impl.DefaultJwtParserBuilder;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.aot.RuntimeNativeMetadata;
 import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.aot.hint.MemberCategory;
@@ -20,10 +19,6 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerResourceInclude("com.mysql.jdbc.LocalizedErrorMessages.properties");
 
         metadata.registerSerialization(LuffyFileModel.class);
-        metadata.registerReflection(LuffyFileModel.class, MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                MemberCategory.INVOKE_DECLARED_METHODS);
-
-
 
 
         metadata.registerReflection(HikariConfig.class, MemberCategory.INVOKE_DECLARED_METHODS);
