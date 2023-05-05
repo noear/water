@@ -92,8 +92,8 @@ public class DetectionController extends BaseController {
             check_interval = 300;
         }
 
-        if (check_interval < 5) {
-            check_interval = 5;
+        if (check_interval < 60) {
+            check_interval = 60;
         }
 
         boolean result = DbWaterToolApi.detectionSave(detection_id, tag, name, protocol, address, check_interval, is_enabled);
