@@ -226,7 +226,7 @@
                 </td>
             </tr>
             <tr>
-                <th>label</th>
+                <th>管理标记</th>
                 <td><input type="text" id="label" value="${cfg.label!}"/>
                     <n>（属性多时，用于归类显示）</n>
                 </td>
