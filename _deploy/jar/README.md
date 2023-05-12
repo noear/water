@@ -26,7 +26,7 @@ water.ds.username=demo
 water.ds.password=demo
 ```
 
-## 三、部署流程
+## 三、部署流程（要基于 jdk11 部署）
 
 * 先用 xwater.jar 安装 water；即完成各种配置及初始化
 * 启动 waterapi.jar；注意数据源配置
