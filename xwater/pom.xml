@@ -18,6 +18,11 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+
         <!-- Http 启动器 -->
         <dependency>
             <groupId>org.noear</groupId>

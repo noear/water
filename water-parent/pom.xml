@@ -36,26 +36,28 @@
     </scm>
 
     <properties>
-        <revision>2.10.4</revision>
+        <revision>2.11.0</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.version>2.2.17</solon.version>
+        <solon.version>2.3.1</solon.version>
 
-        <grit.version>1.5.5</grit.version>
-        <rock.version>2.6.3</rock.version>
+        <grit.version>1.6.0</grit.version>
+        <rock.version>2.7.0</rock.version>
 
-        <snack3.version>3.2.66</snack3.version>
-        <wood.version>1.1.1</wood.version>
-        <redisx.version>1.4.7</redisx.version>
-        <mongox.version>1.0.1</mongox.version>
+        <snack3.version>3.2.72</snack3.version>
+        <wood.version>1.1.2</wood.version>
+        <redisx.version>1.4.8</redisx.version>
+        <mongox.version>1.0.2</mongox.version>
         <esearchx.version>1.0.17</esearchx.version>
 
-        <luffy.version>1.6.3</luffy.version>
+        <luffy.version>1.6.4</luffy.version>
 
         <snakeyaml.version>2.0</snakeyaml.version>
+        <slf4j.version>2.0.7</slf4j.version>
+
         <hikaricp.version>4.0.3</hikaricp.version>
         <mysql.version>5.1.49</mysql.version>
     </properties>
@@ -64,6 +66,12 @@
     <!-- 以 1.8 build -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.noear</groupId>
                 <artifactId>water.utils</artifactId>
@@ -296,6 +304,12 @@
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
                 <version>${hikaricp.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -327,6 +341,12 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>1.10</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
