@@ -75,7 +75,7 @@ public class LogController extends BaseController {
             try {
                 long timestamp = 0;
                 if (TextUtils.isNotEmpty(time)) {
-                    timestamp = DateAnalyzer.getGlobal().parse(time.replace("+", " ")).getTime();
+                    timestamp = DateAnalyzer.global().parse(time.replace("+", " ")).getTime();
                 }
 
                 allowSearch = ProtocolHub.getLogSource(logger).allowSearch();

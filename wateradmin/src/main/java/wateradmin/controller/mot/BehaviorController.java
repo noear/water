@@ -82,7 +82,7 @@ public class BehaviorController extends BaseController {
 
         long timestamp = 0;
         if (TextUtils.isNotEmpty(time)) {
-            timestamp = DateAnalyzer.getGlobal().parse(time.replace("+", " ")).getTime();
+            timestamp = DateAnalyzer.global().parse(time.replace("+", " ")).getTime();
         }
 
         int pageSize = 50;
