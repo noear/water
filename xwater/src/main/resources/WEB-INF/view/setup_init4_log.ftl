@@ -143,6 +143,21 @@
                             </code>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water Log DB（for mysql），支持 MySql 8.0、5.7、5.6（建议用 8.0）。如果有需要，可以创建个空库：
+                                <br />
+                                <code lang="sql">
+                                    CREATE DATABASE water_log_store <br/>
+                                    DEFAULT CHARACTER SET utf8mb4 <br/>
+                                    DEFAULT COLLATE utf8mb4_general_ci;
+                                </code>
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>

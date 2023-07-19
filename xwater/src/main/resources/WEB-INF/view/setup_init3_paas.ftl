@@ -127,6 +127,21 @@
                             </n-l>
                         </td>
                     </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <hr />
+                            <n-l>
+                                Water FaaS DB，支持 MySql 8.0、5.7、5.6（建议用 8.0）。如果还没有，可以创建个空库：
+                                <br />
+                                <code lang="sql">
+                                    CREATE DATABASE water_paas <br/>
+                                    DEFAULT CHARACTER SET utf8mb4 <br/>
+                                    DEFAULT COLLATE utf8mb4_general_ci;
+                                </code>
+                            </n-l>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </detail>
