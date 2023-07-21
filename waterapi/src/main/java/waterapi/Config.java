@@ -31,7 +31,7 @@ public class Config {
 
     public static RedisClient rd_ids;   //db:1
     public static RedisClient rd_lock;  //db:2
-    public static RedisClient rd_msg;   //db:3
+    //public static RedisClient rd_msg;   //db:3 //已改由 water_msg_store 配置
     public static RedisClient rd_track; //db:5
 
     public static ConfigM water_redis;
@@ -94,7 +94,7 @@ public class Config {
 
             rd_ids = water_redis.getRd(1);
             rd_lock = water_redis.getRd(2);
-            rd_msg = water_redis.getRd(3);
+            //rd_msg = water_redis.getRd(3);
 
             ConfigM cm2 = cfg(WW.water_redis_track);
             if (cm2 == null || TextUtils.isEmpty(cm2.value)) {
