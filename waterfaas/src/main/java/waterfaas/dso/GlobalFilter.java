@@ -38,9 +38,9 @@ public class GlobalFilter implements Filter {
                 String _from = CloudClient.trace().getFromId(); //FromUtils.getFrom(c);
 
 
-                CloudClient.metric().addMeter(service, tag, ctx.path(), _times);
-                CloudClient.metric().addMeter(WW.track_service, service, _node, _times);
-                CloudClient.metric().addMeter(WW.track_from, service, _from, _times);
+                CloudClient.metric().addTimer(service, tag, ctx.path(), _times);
+                CloudClient.metric().addTimer(WW.track_service, service, _node, _times);
+                CloudClient.metric().addTimer(WW.track_from, service, _from, _times);
 
 //                WaterClient.Track.track(service, tag, ctx.path(), _times);
 //                WaterClient.Track.trackNode(service, _node, _times);

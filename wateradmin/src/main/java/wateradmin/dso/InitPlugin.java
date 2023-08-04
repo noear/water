@@ -108,7 +108,7 @@ public class InitPlugin implements Plugin {
                     tag = "sql";
                 }
 
-                CloudClient.metric().addMeter(Solon.cfg().appName() + "_sql", tag, cmd.text, cmd.timespan());
+                CloudClient.metric().addTimer(Solon.cfg().appName() + "_sql", tag, cmd.text, cmd.timespan());
                 //WaterClient.Track.track(service_name() + "_sql", tag, cmd.text, cmd.timespan());
             }
         });

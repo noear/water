@@ -18,9 +18,6 @@ import java.util.Map;
  * */
 public class TrackApi {
 
-
-
-
     protected final ApiCaller apiCaller;
 
     public TrackApi() {
@@ -58,25 +55,57 @@ public class TrackApi {
         }
     }
 
-    public void addMeter(String group, String category, String item, long val) {
+    public void addTimer(String group, String category, String item, long val) {
         TrackPipeline.singleton().append(group, category, item, val);
     }
 
-    public void addMeterAndMd5(String group, String tag, String name, long val) {
-        String nameMd5 = getNameMd5(name);
-        TrackPipeline.singleton().append(group, tag, nameMd5, val);
-    }
-
-    public void addMeterByNode(String category, String _node, long val) {
+    public void addTimerByNode(String category, String _node, long val) {
         if (TextUtils.isNotEmpty(_node)) {
             TrackPipeline.singleton().appendNode(category, _node, val);
         }
     }
 
-    public void addMeterByFrom(String category, String _from, long val) {
+    public void addTimerByFrom(String category, String _from, long val) {
         if (TextUtils.isNotEmpty(_from)) {
             TrackPipeline.singleton().appendFrom(category, _from, val);
         }
+    }
+
+    public void addTimerAndMd5(String group, String tag, String name, long val) {
+        String nameMd5 = getNameMd5(name);
+        TrackPipeline.singleton().append(group, tag, nameMd5, val);
+    }
+
+    /**
+     * @deprecated 2.11.1
+     * */
+    @Deprecated
+    public void addMeterAndMd5(String group, String tag, String name, long val) {
+        addTimerAndMd5(group, tag, name, val);
+    }
+
+    /**
+     * @deprecated 2.11.1
+     * */
+    @Deprecated
+    public void addMeter(String group, String category, String item, long val) {
+        addTimer(group, category, item, val);
+    }
+
+    /**
+     * @deprecated 2.11.1
+     * */
+    @Deprecated
+    public void addMeterByNode(String category, String _node, long val) {
+        addTimerByNode(category, _node, val);
+    }
+
+    /**
+     * @deprecated 2.11.1
+     * */
+    @Deprecated
+    public void addMeterByFrom(String category, String _from, long val) {
+        addTimerByFrom(category, _from, val);
     }
 
 
@@ -99,19 +128,21 @@ public class TrackApi {
     /**
      * 跟踪请求性能
      */
-    @Deprecated
-    public void track(String service, String tag, String name, long timespan) {
-        addMeter(service, tag, name, timespan);
-    }
+
 
     @Deprecated
     public void trackAndMd5(String service, String tag, String name, long timespan) {
-        addMeterAndMd5(service, tag, name, timespan);
+        addTimerAndMd5(service, tag, name, timespan);
+    }
+
+    @Deprecated
+    public void track(String service, String tag, String name, long timespan) {
+        addTimer(service, tag, name, timespan);
     }
 
     @Deprecated
     public void trackNode(String service, String _node, long timespan) {
-        addMeterByNode(service, _node, timespan);
+        addTimerByNode(service, _node, timespan);
     }
 
     @Deprecated
