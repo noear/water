@@ -47,7 +47,7 @@ public class AppFilterImpl implements Filter {
 
             //3.获得接口响应时长
             long milliseconds = System.currentTimeMillis() - start;
-            CloudClient.metric().addMeter(Solon.cfg().appName(), "path", ctx.pathNew(), milliseconds);
+            CloudClient.metric().addTimer(Solon.cfg().appName(), "path", ctx.pathNew(), milliseconds);
         }
     }
 }
