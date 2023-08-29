@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>2.4.2</version>
+        <version>2.4.6</version>
         <relativePath />
     </parent>
 
@@ -55,18 +55,6 @@
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <compilerArgument>-parameters</compilerArgument>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-maven-plugin</artifactId>

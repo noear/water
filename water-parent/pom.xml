@@ -42,14 +42,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.version>2.4.2</solon.version>
+        <solon.version>2.4.6</solon.version>
 
         <grit.version>1.6.3</grit.version>
         <rock.version>2.7.2</rock.version>
 
-        <snack3.version>3.2.75</snack3.version>
+        <snack3.version>3.2.79</snack3.version>
         <wood.version>1.1.8</wood.version>
-        <redisx.version>1.4.8</redisx.version>
+        <redisx.version>1.4.9</redisx.version>
         <mongox.version>1.0.2</mongox.version>
         <esearchx.version>1.0.25</esearchx.version>
 
@@ -60,6 +60,11 @@
 
         <hikaricp.version>4.0.3</hikaricp.version>
         <mysql.version>5.1.49</mysql.version>
+
+
+        <maven-compiler.version>3.11.0</maven-compiler.version>
+        <maven-assembly.version>3.6.0</maven-assembly.version>
+        <maven-resources.version>3.3.1</maven-resources.version>
     </properties>
 
 
@@ -442,7 +447,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler.version}</version>
                 <configuration>
                     <compilerArgument>-parameters</compilerArgument>
                     <source>1.8</source>
@@ -454,7 +459,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-assembly.version}</version>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
@@ -468,7 +473,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.2.7</version>
+                <version>1.5.0</version>
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
@@ -491,6 +496,15 @@
                 </executions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <modules>
