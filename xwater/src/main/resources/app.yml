@@ -1,6 +1,6 @@
 server.port: 19371
 
-file.encoding: "utf-8"
+server.http.gzip.enable: true
 
 solon.app:
   name: "watersetup"

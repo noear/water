@@ -2,6 +2,7 @@ solon.extend: wateradmin_ext
 
 server.port: 9373
 server.session.timeout: 360000 #10h
+server.http.gzip.enable: true
 
 solon.app:
   name: "wateradmin"
@@ -26,7 +27,6 @@ solon.logging.logger:
     level: "WARN"
   "com.zaxxer.hikari":
     level: "WARN"
-
 
 waterfaas.secretKey: "0zJt0J88TkIvqYgC"
 
