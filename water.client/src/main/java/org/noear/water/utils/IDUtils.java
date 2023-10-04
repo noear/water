@@ -20,7 +20,7 @@ public class IDUtils {
 
 
     public static long newID(String group, String key, int cacheTime) {
-        return _redis_idx.open1((ru) -> ru.key(group).expire(cacheTime).hashIncr(key, 1l));
+        return _redis_idx.openAndGet((ru) -> ru.key(group).expire(cacheTime).hashIncr(key, 1l));
     }
 
     public static long newID(String group, String key) {

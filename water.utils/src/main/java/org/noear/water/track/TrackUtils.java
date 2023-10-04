@@ -55,7 +55,7 @@ public class TrackUtils {
         String log_time = now.toString("yyyy-MM-dd HH:mm:ss");
 
         //2.记录性能值
-        redisX.open0((ru) -> {
+        redisX.open((ru) -> {
 
             long average = do_track_key_minute(ru, key_minute_bef, key_minute, timespan); //生成基于分的平均响应
 

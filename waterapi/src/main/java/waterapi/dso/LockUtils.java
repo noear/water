@@ -20,7 +20,7 @@ public class LockUtils {
     public static boolean tryLock(String group, String key, int inSeconds, String inMaster) {
         String key2 = group + ".lk." + key;
 
-        return _redis_uni.open1((ru) -> ru.key(key2).expire(inSeconds).lock(inMaster));
+        return _redis_uni.openAndGet((ru) -> ru.key(key2).expire(inSeconds).lock(inMaster));
     }
 
     /**
@@ -31,7 +31,7 @@ public class LockUtils {
     public static boolean tryLock(String group, String key, int inSeconds) {
         String key2 = group + ".lk." + key;
 
-        return _redis_uni.open1((ru) -> ru.key(key2).expire(inSeconds).lock("_"));
+        return _redis_uni.openAndGet((ru) -> ru.key(key2).expire(inSeconds).lock("_"));
     }
 
     /**
@@ -47,7 +47,7 @@ public class LockUtils {
     public static boolean isLocked(String group, String key) {
         String key2 = group + ".lk." + key;
 
-        return _redis_uni.open1((ru) -> ru.key(key2).exists());
+        return _redis_uni.openAndGet((ru) -> ru.key(key2).exists());
     }
 
 

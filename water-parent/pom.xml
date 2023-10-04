@@ -49,14 +49,14 @@
 
         <snack3.version>3.2.80</snack3.version>
         <wood.version>1.2.2</wood.version>
-        <redisx.version>1.5.0</redisx.version>
+        <redisx.version>1.6.0</redisx.version>
         <mongox.version>1.0.2</mongox.version>
         <esearchx.version>1.0.25</esearchx.version>
 
         <luffy.version>1.6.8</luffy.version>
 
         <snakeyaml.version>2.0</snakeyaml.version>
-        <slf4j.version>2.0.7</slf4j.version>
+        <slf4j.version>2.0.9</slf4j.version>
 
         <hikaricp.version>4.0.3</hikaricp.version>
         <mysql.version>5.1.49</mysql.version>
