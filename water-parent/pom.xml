@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <revision>2.11.3</revision>
+        <revision>2.11.4</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -44,18 +44,18 @@
 
         <solon.version>2.5.7</solon.version>
 
-        <grit.version>1.6.5</grit.version>
-        <rock.version>2.7.3</rock.version>
+        <grit.version>1.6.6</grit.version>
+        <rock.version>2.7.4</rock.version>
 
         <snack3.version>3.2.80</snack3.version>
         <wood.version>1.2.2</wood.version>
         <redisx.version>1.6.0</redisx.version>
-        <mongox.version>1.0.2</mongox.version>
+        <mongox.version>1.0.3</mongox.version>
         <esearchx.version>1.0.25</esearchx.version>
 
         <luffy.version>1.6.8</luffy.version>
 
-        <snakeyaml.version>2.0</snakeyaml.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
         <slf4j.version>2.0.9</slf4j.version>
 
         <hikaricp.version>4.0.3</hikaricp.version>
@@ -320,26 +320,13 @@
             <dependency>
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongo-java-driver</artifactId>
-                <version>3.12.6</version>
+                <version>3.12.14</version>
             </dependency>
-
-            <dependency>
-                <groupId>com.rabbitmq</groupId>
-                <artifactId>amqp-client</artifactId>
-                <version>5.9.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>4.7.0</version>
-            </dependency>
-
 
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.24</version>
+                <version>1.18.30</version>
             </dependency>
 
             <dependency>
