@@ -9,8 +9,6 @@ import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.cloud.utils.http.PreheatUtils;
 import org.noear.solon.core.handle.MethodType;
-import org.noear.solon.core.util.LogUtil;
-import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterProxy;
@@ -35,12 +33,6 @@ public class WaterfaasApp {
         JtRun.init();
 
         SolonApp app = Solon.start(WaterfaasApp.class, args, (x) -> {
-            x.enableErrorAutoprint(false);
-
-            //设置日志
-            //
-            LogUtil.globalSet(new LogUtilToSlf4j());
-
             //设置接口
             //
             Config.tryInit(x);

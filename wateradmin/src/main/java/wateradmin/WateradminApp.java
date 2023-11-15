@@ -14,20 +14,13 @@ import org.noear.water.protocol.solution.LogSourceFactoryImpl;
 import org.noear.water.protocol.solution.MsgBrokerFactoryImpl;
 import org.noear.water.track.TrackBuffer;
 import wateradmin.dso.CacheUtil;
-import wateradmin.dso.ErrorListener;
 import wateradmin.dso.InitPlugin;
 import wateradmin.dso.db.DbWaterCfgApi;
 
 public class WateradminApp {
     public static void main(String[] args) throws Exception {
         Solon.start(WateradminApp.class, args, x -> {
-            x.enableErrorAutoprint(false);
-            x.onError(new ErrorListener());
             x.pluginAdd(0, new InitPlugin());
-
-            //设置日志
-            //
-            LogUtil.globalSet(new LogUtilToSlf4j());
 
             //设置接口
             //

@@ -16,11 +16,6 @@ public class WaterapiApp {
 	public static void main(String[] args) {
 		Solon.start(WaterapiApp.class, args, x -> {
 			x.enableStaticfiles(false);
-			x.enableErrorAutoprint(false);
-
-			//设置日志
-			//
-			LogUtil.globalSet(new LogUtilToSlf4j());
 
 			//加载环境变量(支持弹性容器设置的环境)
 			x.cfg().loadEnv("water.");

@@ -1,7 +1,7 @@
 package waterapi.dso;
 
 import org.noear.solon.cloud.CloudManager;
-import org.noear.solon.core.AopContext;
+import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.model.message.BrokerVo;
@@ -19,7 +19,7 @@ public class AppInitPlugin implements Plugin {
     static Logger log = LoggerFactory.getLogger(AppInitPlugin.class);
 
     @Override
-    public void start(AopContext context) {
+    public void start(AppContext context) {
         //注册本地日志服务
         CloudManager.register(new CloudLogServiceLocalImp());
 

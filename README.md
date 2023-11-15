@@ -103,14 +103,14 @@
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water.client</artifactId>
-    <version>2.11.4</version>
+    <version>2.12.0</version>
 </dependency>
 
 <!-- solon cloud 集成版本 （也可用于 Spring Boot 项目） -->
 <dependency>
     <groupId>org.noear</groupId>
     <artifactId>water-solon-cloud-plugin</artifactId>
-    <version>2.5.4</version>
+    <version>2.6.0</version>
 </dependency>
 ```
 
