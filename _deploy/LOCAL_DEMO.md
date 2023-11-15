@@ -1,4 +1,4 @@
-本地部署时，使用 ip地址（避免 localhost 在 docker 里傻了）
+本地部署时，需要 java11 + 使用 ip地址（避免 localhost 在 docker 里傻了）
 
 schema=water_demo
 server=192.168.3.2:3306
