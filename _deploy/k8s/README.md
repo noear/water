@@ -14,7 +14,7 @@
 运行 Water 助理工具（在本地或服务器上运行都可）
 
 ```shell
-docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
+docker run -it --rm -p 19371:19371 noearorg/xwater:2.12.0
 ```
 
 * 用浏览器打开界面：`http://locahost:19371`，按提示操作
@@ -25,7 +25,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
 
 * 添加 water 域
 
-* 添加 water/waterapi 服务（镜像：noearorg/waterapi:2.11.4）。主接口
+* 添加 water/waterapi 服务（镜像：noearorg/waterapi:2.12.0）。主接口
   * 镜像端口：9371
   * 对外端口：9371
   * 建议2个副本起步
@@ -39,21 +39,21 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
   water.ds.password=123456
   ```
 
-* 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:2.11.4）。管理控制台
+* 添加 water/wateradmin 服务（镜像：noearorg/wateradmin:2.12.0）。管理控制台
   * 镜像端口：9373
   * 对外端口：9373 或其它
   * 建议1个副本即可
   * 要配置外网访问地址，建议加域名
 
   
-* 添加 water/waterfaas 服务 （镜像：noearorg/waterfaas:2.11.4）。即时接口服务
+* 添加 water/waterfaas 服务 （镜像：noearorg/waterfaas:2.12.0）。即时接口服务
   * 镜像端口：9374
   * 对外端口：9374 或其它
   * 建议1个副本起步
   * 要配置外网访问地址，建议加域名
   
   
-* 添加 water/watersev-tol 服务（镜像：noearorg/watersev:2.11.4）。工具服务，包含： (msgchk,sevchk,mot,detapp,detssl)
+* 添加 water/watersev-tol 服务（镜像：noearorg/watersev:2.12.0）。工具服务，包含： (msgchk,sevchk,mot,detapp,detssl)
   * 镜像端口：9372
   * 对外端口：9372 或其它
   * 建议1个副本起步
@@ -64,7 +64,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
   water.sss=tol
   ```
 
-* 添加 water/watersev-pln 服务（镜像：noearorg/watersev:2.11.4）。定时任务调度服务
+* 添加 water/watersev-pln 服务（镜像：noearorg/watersev:2.12.0）。定时任务调度服务
   * 镜像端口：9372
   * 对外端口：9372 或其它
   * 建议1个副本起步（如果定时任务多，2个起步）
@@ -76,7 +76,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
   ```
 
 
-* 添加 water/watersev-msgdis 服务（镜像：noearorg/watersev:2.11.4）。消息派发服务
+* 添加 water/watersev-msgdis 服务（镜像：noearorg/watersev:2.12.0）。消息派发服务
   * 镜像端口：9372
   * 对外端口：9372 或其它
   * 建议副本数为 Msg bus broker 的数量两倍或以上（刚开始可2个起步）
@@ -87,7 +87,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.11.4
   water.sss=msgdis
   ```
 
-* 添加 water/watersev-msgexg 服务（镜像：noearorg/watersev:2.11.4）。消息交换服务
+* 添加 water/watersev-msgexg 服务（镜像：noearorg/watersev:2.12.0）。消息交换服务
   * 镜像端口：9372
   * 对外端口：9372 或其它
   * 建议副本数与 Msg bus broker 的数量相等（刚开始可1个起步）
