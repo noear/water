@@ -28,6 +28,7 @@
 #配置变量（替换为初始化好的 Water DB 配置；可以把 server 换成 url 属性，配置完整的 jdbcUrl）： 
 water.ds.schema=water
 water.ds.server=mysql.water.io:3306
+#water.ds.url=jdbc:mysql://...
 water.ds.username=demo
 water.ds.password=demo
 ```
