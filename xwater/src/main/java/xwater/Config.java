@@ -57,9 +57,13 @@ public class Config {
 
         DbContext db = DsUtils.getDb(props, pool);
 
-        db.initMetaData();
 
-        return db;
+        if (db.initMetaData()) {
+            return db;
+        } else {
+            //说明初始化未成功
+            return null;
+        }
     }
 
     /**

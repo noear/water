@@ -26,16 +26,20 @@ public class ConnectController {
 
         Properties props = Config.getProp(config);
 
-        if (props.size() > 3) {
-            Config.water = Config.getDb(props, true);
+        try {
+            if (props.size() > 3) {
+                Config.water = Config.getDb(props, true);
 
-            if (Config.water != null) {
-                //连接成功
-                String token = Base64Utils.encode(config);
-                ctx.cookieSet("XWATER_TOKEN", token);
+                if (Config.water != null) {
+                    //连接成功
+                    String token = Base64Utils.encode(config);
+                    ctx.cookieSet("XWATER_TOKEN", token);
+                }
+            } else {
+                return Result.failure("配置有问题...");
             }
-        } else {
-            return Result.failure("配置有问题...");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
