@@ -48,13 +48,13 @@ grit.ldap:
 
 ### 5、告警接收客户端（这个很重要）
 
-1) 专属客户端，嘿嘿
+#### a) 专属客户端，嘿嘿
 
 * iOS：https://testflight.apple.com/join/ZUhQctwS
 * Android：http://www.noear.org/app/heihei.apk
 * git: https://gitee.com/noear/heihei
 
-2)  钉钉群 或 企业群信群的 webhook
+#### b)  钉钉群 或 企业群信群的 webhook
 
 ```properties
 # 使用 webhook，需添加配置： water/water_heihei (替代默认的嘿嘿)
