@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `water_cfg_properties`  (
     `key` varchar(99) DEFAULT NULL COMMENT '属性key',
     `type` int(11) NOT NULL DEFAULT '0' COMMENT '类型：0:未知，1:数据库；2:Redis；3:MangoDb；4:Memcached',
     `value` varchar(8000) DEFAULT NULL COMMENT '属性值',
+    `label` varchar(40) NOT NULL DEFAULT '' COMMENT '标记(用于虚拟分组)',
     `edit_mode` varchar(40) DEFAULT NULL,
     `is_editable` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否可编辑',
     `is_enabled` int(11) NOT NULL DEFAULT '1' COMMENT '是否启用',
