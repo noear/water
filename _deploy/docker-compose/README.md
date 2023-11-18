@@ -23,7 +23,17 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.12.0
 
 ## 三、开始部署服务
 
-新建个目录：water，把 docker-compose.yml 放进去。然后修改相关的 water.ds. 数据源配置
+新建个目录：water，把 docker-compose.yml 放进去
+
+**修改 docker-compose.yml 的数据源环境变量**
+
+```properties
+#修改环境变量（替换为初始化好的 Water DB 配置；可以把 server 换成 url 属性，配置完整的 jdbcUrl）： 
+water.ds.schema=water
+water.ds.server=mysql.water.io:3306 
+water.ds.username=demo
+water.ds.password=123456
+```
 
 **进入 water 目录后，开始运行**
 
