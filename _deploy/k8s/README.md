@@ -9,7 +9,22 @@
 * mongodb 4.x+：做为消息持久化用（也可以使用 mysql8）
 * elasticsearch 7.9+：做为日志持久化用（也可以使用 mysql8 或 mongodb）
 
-## 二、初始化环境
+
+
+## 二、镜像列表（生产时，tag 须为具体的版本号，切不能用 latest）
+
+| 镜像                      | 镜像端口    | 说明                 |
+|-------------------------|-------|--------------------|
+| noearorg/waterapi:2.12.0 | 9371  | 主接口服务              |
+| noearorg/watersev:2.12.0       | 9372  | 批处理服务              |
+| noearorg/wateradmin:2.12.0     | 9373  | 管理控制台              |
+| noearorg/waterfaas:2.12.0      | 9374  | FaaS 即时接口服务        |
+|                         |       |                    |
+| noearorg/xwater:2.12.0         | 19371 | Water助理工具（仅在需要时启用） |
+
+
+
+## 三、初始化环境
 
 运行 Water 助理工具（在本地或服务器上运行都可）
 
@@ -21,7 +36,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.12.0
 
 * 完成操作后，关掉服务(有需要再启动，每次用完都关掉)
 
-## 三、开始部署服务
+## 四、开始部署服务
 
 * 添加 water 域
 
@@ -104,7 +119,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.12.0
 * 把动态ip域设得广一些，不要短时间内出现重复ip的问题
 
 
-## 四、后续配置修改
+## 五、后续配置修改
 
 进入 wateradmin 管理控制台，打开 "配置管理 / 属性配置"。 进一步修改配置：
 
@@ -117,7 +132,7 @@ docker run -it --rm -p 19371:19371 noearorg/xwater:2.12.0
 > 其它一些配置，视情况进行调整。
 
 
-## 五、客户端使用
+## 六、客户端使用
 
 * 使用 water-solon-cloud-plugin 组件，并配置为：solon.cloud.water.server=waterapi:9371
 * 部署 pod 时，增加环境变量：solon.cloud.water.server=waterapi.water:9371 （即上面的配置换掉，带上 k8s 域）

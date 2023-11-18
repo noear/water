@@ -4,6 +4,8 @@
 
 ## 一、先玩通 docker-compose，对整体有所了解
 
+这个很重要，尤其是几个服务之间的关系可以从 docker-compose 感受到。
+
 ## 二、基于源码打包 jar
 
 ### 1、程序包说明
@@ -29,9 +31,9 @@ water.ds.password=demo
 
 ## 三、部署流程（要基于 jdk11 部署）
 
-* 先用 xwater.jar 安装 water；即完成各种配置及初始化
-* 启动 waterapi.jar；注意数据源配置
+* 使用 xwater.jar 安装 water；即完成各种配置及初始化
+* 启动 waterapi.jar；注意数据源配置（是其它服务的基础依赖）
 * 等5秒
 * 相关服务器，添加 host 记录 (waterapi=x.x.x.x)
-* 启动 wateradmin.jar, watersev.jar, waterfaas.jar
+* 再启动 wateradmin.jar, watersev.jar, waterfaas.jar
 
