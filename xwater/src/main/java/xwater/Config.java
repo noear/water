@@ -57,8 +57,7 @@ public class Config {
 
         DbContext db = DsUtils.getDb(props, pool);
 
-
-        if (db.initMetaData()) {
+        if (db.getDialect() != null) {
             return db;
         } else {
             //说明初始化未成功
