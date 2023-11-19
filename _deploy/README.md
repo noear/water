@@ -33,7 +33,7 @@ water.ds.username=demo
 water.ds.password=demo
 ```
 
-* xwater 连接界面的配置（两都是样，只是省了前缀）
+* xwater 连接界面的配置（其实一样，只是省了前缀）
 
 
 ```properties
