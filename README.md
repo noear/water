@@ -2,7 +2,7 @@
   Water
 </h1>
 <p align="center">
-一站式服务治理平台。简单工作，早点下班
+一站式分布式服务治理中台。简单工作，早点下班
 </p>
 <p align="center">
     <a target="_blank" href="https://search.maven.org/search?q=org.noear%20water">
