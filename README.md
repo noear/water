@@ -94,6 +94,8 @@
 
 [Water 教程九] 多账号管理及权限配置，还有LDAP登录配置
 
+[[Water 教程++] 基于源码的部署与运行](https://www.bilibili.com/video/BV1oz4y1F7Q4/)
+
 ### (一) 使用
 
 #### 配置
