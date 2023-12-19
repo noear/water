@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import waterfaas.dso.AFileUtil;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * 执行工厂适配器
@@ -74,6 +74,11 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
         return AFileUtil.get(path);
     }
 
+    @Override
+    public List<AFileModel> fileFind(String tag, String label, boolean isCache) throws Exception {
+        return Collections.emptyList();
+    }
+
     private String _nodeId;
     @Override
     public String nodeId() {
@@ -131,5 +136,20 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
             WaterClient.Config.set(ss[0], ss[1], value);
         }
         return true;
+    }
+
+    @Override
+    public Map cfgMap(String name) throws Exception {
+        ConfigM cfg = WaterClient.Config.get(water_paas, name);
+        Map<String, Object> tmp = new LinkedHashMap<>();
+
+        if (cfg != null) {
+            tmp.put("value", cfg.value);
+            tmp.put("name", name);
+            tmp.put("tag", water_paas);
+            tmp.put("update_fulltime", new Date(cfg.lastModified));
+        }
+
+        return tmp;
     }
 }

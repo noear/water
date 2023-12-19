@@ -5,12 +5,10 @@ import org.noear.solon.core.handle.ContextEmpty;
 import org.noear.solon.core.handle.ContextUtil;
 import org.noear.luffy.dso.CallUtil;
 import org.noear.luffy.dso.JtBridge;
-import org.noear.luffy.dso.JtFun;
 import org.noear.luffy.executor.ExecutorFactory;
 import org.noear.luffy.model.AFileModel;
 import org.noear.water.utils.EncryptUtils;
 import waterfaas.Config;
-import waterfaas.dso.db.DbLuffyApi;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -65,21 +63,9 @@ public class JtRun {
     }
 
     public static void xfunInit(){
-        JtFun.g.set("afile_get_paths", (map) -> {
-            String tag = (String) map.get("tag");
-            String label = (String) map.get("label");
-            Boolean useCache = (Boolean) map.get("useCache");
-            return DbLuffyApi.fileGetPaths(tag, label, useCache);
-        });
-
-        JtFun.g.set("afile_get", (map) -> {
-            String path = (String) map.get("path");
-            return DbLuffyApi.fileGet(path);
-        });
-
         CallUtil.callLabel(null, Config.faas_hook_start, false, Collections.EMPTY_MAP);
 
-        //再等0.5秒
+        //再等0.5秒 //执行引擎需要加载东西
         try {
             Thread.sleep(500);
         }catch (Exception ex){

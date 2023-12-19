@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import watersev.dso.AFileUtil;
 
-import java.util.Map;
+import java.util.*;
 
 /**
  * 执行工厂适配器
@@ -75,10 +75,16 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
         return AFileUtil.get(path);
     }
 
+    @Override
+    public List<AFileModel> fileFind(String tag, String label, boolean isCache) throws Exception {
+        return Collections.emptyList();
+    }
+
     private String _nodeId;
+
     @Override
     public String nodeId() {
-        if(_nodeId == null) {
+        if (_nodeId == null) {
             _nodeId = LocalUtils.getLocalIp();
         }
 
@@ -96,41 +102,56 @@ public class JtExecutorAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public String cfgGet(String name, String def) throws Exception {
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             return def;
         }
 
         ConfigM tmp = null;
-        if(name.indexOf("/") < 0){
-            tmp = WaterClient.Config.get(water_paas,name);
-        }else {
+        if (name.indexOf("/") < 0) {
+            tmp = WaterClient.Config.get(water_paas, name);
+        } else {
             tmp = WaterClient.Config.getByTagKey(name);
         }
 
 
-        if(tmp == null){
+        if (tmp == null) {
             return def;
         }
 
-        if(tmp.value == null){
+        if (tmp.value == null) {
             return def;
-        }else{
+        } else {
             return tmp.value;
         }
     }
 
     @Override
     public boolean cfgSet(String name, String value) throws Exception {
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             return false;
         }
-        if(name.indexOf("/") < 0){
+        if (name.indexOf("/") < 0) {
             WaterClient.Config.set(water_paas, name, value);
-        }else {
+        } else {
             String[] ss = name.split("/");
 
             WaterClient.Config.set(ss[0], ss[1], value);
         }
         return true;
+    }
+
+    @Override
+    public Map cfgMap(String name) throws Exception {
+        ConfigM cfg = WaterClient.Config.get(water_paas, name);
+        Map<String, Object> tmp = new LinkedHashMap<>();
+
+        if (cfg != null) {
+            tmp.put("value", cfg.value);
+            tmp.put("name", name);
+            tmp.put("tag", water_paas);
+            tmp.put("update_fulltime", new Date(cfg.lastModified));
+        }
+
+        return tmp;
     }
 }
