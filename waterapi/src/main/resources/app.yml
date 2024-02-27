@@ -17,8 +17,3 @@ solon.logging.logger:
     level: "WARN"
   "com.zaxxer.hikari":
     level: "WARN"
-
-water.ds.schema: water
-water.ds.server: 192.168.3.2:3307
-water.ds.username: demo
-water.ds.password: 123456
