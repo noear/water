@@ -14,7 +14,7 @@ password=123456
 ---
 
 
-water.ds.schema: water_demo
-water.ds.server: 192.168.3.2:3306
-water.ds.username: demo
-water.ds.password: 123456
+water.ds.schema: water
+water.ds.server: 192.168.3.2:3307
+water.ds.username: root
+water.ds.password: 1234
