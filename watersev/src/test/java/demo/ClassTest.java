@@ -1,6 +1,6 @@
 package demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author noear 2023/2/21 created

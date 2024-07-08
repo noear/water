@@ -1,6 +1,6 @@
 package demo;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.noear.luffy.task.cron.CronExpression;
 import org.noear.luffy.task.cron.CronExpressionPlus;
 import org.noear.luffy.task.cron.CronUtils;

@@ -1,8 +1,6 @@
 package demo;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.noear.solon.test.SolonJUnit4ClassRunner;
+import org.junit.jupiter.api.Test;
 import org.noear.solon.test.SolonTest;
 import watersev.WatersevApp;
 import watersev.dso.MsgUtils;
@@ -10,7 +8,6 @@ import watersev.dso.MsgUtils;
 /**
  * @author noear 2021/11/4 created
  */
-@RunWith(SolonJUnit4ClassRunner.class)
 @SolonTest(WatersevApp.class)
 public class ReceiveUrlTest {
 
