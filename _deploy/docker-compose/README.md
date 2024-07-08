@@ -14,12 +14,12 @@
 
 | 镜像                      | 镜像端口    | 说明                 |
 |-------------------------|-------|--------------------|
-| noearorg/waterapi:2.13.1 | 9371  | 主接口服务              |
-| noearorg/watersev:2.13.1       | 9372  | 批处理服务              |
-| noearorg/wateradmin:2.13.1     | 9373  | 管理控制台              |
-| noearorg/waterfaas:2.13.1      | 9374  | FaaS 即时接口服务        |
+| noearorg/waterapi:2.13.3 | 9371  | 主接口服务              |
+| noearorg/watersev:2.13.3       | 9372  | 批处理服务              |
+| noearorg/wateradmin:2.13.3     | 9373  | 管理控制台              |
+| noearorg/waterfaas:2.13.3      | 9374  | FaaS 即时接口服务        |
 |                         |       |                    |
-| noearorg/xwater:2.13.1         | 19371 | Water助理工具（仅在需要时启用） |
+| noearorg/xwater:2.13.3         | 19371 | Water助理工具（仅在需要时启用） |
 
 
 ## 三、初始化环境
@@ -27,7 +27,7 @@
 运行 Water 助理工具（在本地或服务器上运行都可）
 
 ```shell 
-docker run -it --rm -p 19371:19371 noearorg/xwater:2.13.1
+docker run -it --rm -p 19371:19371 noearorg/xwater:2.13.3
 ```
 
 * 用浏览器打开界面：`http://localhost:19371`，按提示操作
