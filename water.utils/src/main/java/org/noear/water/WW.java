@@ -1,7 +1,7 @@
 package org.noear.water;
 
 public class WW {
-    public static final String water_version = "v2.13.3";
+    public static final String water_version = "v2.14.0";
 
     public static final String mime_glog = "water/glog";
     public static final String mime_gzip = "application/x-gzip";

@@ -50,7 +50,9 @@ public class WateradminApp {
     private static void gritApiRegTry() {
         try {
             if (CloudClient.discovery() != null) {
-                Instance instance = new Instance("gritapi", Instance.local().address()).protocol("http")
+                Instance instance = new Instance("gritapi",
+                        Instance.local().host(),
+                        Instance.local().port()).protocol("http")
                         .metaPut("provider","wateradmin");
                 CloudClient.discovery().register("grit", instance);
             }
