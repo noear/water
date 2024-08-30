@@ -34,7 +34,7 @@ public class ToolmenuTag implements TemplateDirectiveModel {
     }
 
     private void build(Environment env, Map map) throws Exception {
-        NvMap mapExt = new NvMap(map);
+        NvMap mapExt = NvMap.from(map);
 
         String groupCode = mapExt.get("pack");
 

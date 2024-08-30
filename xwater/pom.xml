@@ -26,42 +26,42 @@
         <!-- Http 启动器 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.boot.smarthttp</artifactId>
+            <artifactId>solon-boot-smarthttp</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <!-- 静态文件支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.web.staticfiles</artifactId>
+            <artifactId>solon-web-staticfiles</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <!-- Yaml配置支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.config.yaml</artifactId>
+            <artifactId>solon-config-yaml</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <!-- 本地SessionSate支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.sessionstate.local</artifactId>
+            <artifactId>solon-sessionstate-local</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <!-- Json序列化支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.serialization.snack3</artifactId>
+            <artifactId>solon-serialization-snack3</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <!-- freemarker模板支持组件 -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.view.freemarker</artifactId>
+            <artifactId>solon-view-freemarker</artifactId>
             <version>${solon.version}</version>
         </dependency>
 

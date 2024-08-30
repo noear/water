@@ -44,7 +44,7 @@ public class VersionsTag implements TemplateDirectiveModel {
         body.render(sw);
         script = sw.toString();
 
-        NvMap mapExt = new NvMap(map);
+        NvMap mapExt = NvMap.from(map);
         table = mapExt.getOrDefault("table","");
         keyName = mapExt.getOrDefault("keyName","");
         keyValue = mapExt.getOrDefault("keyValue","");

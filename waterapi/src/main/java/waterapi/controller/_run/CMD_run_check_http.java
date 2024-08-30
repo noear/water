@@ -21,18 +21,15 @@ public class CMD_run_check_http extends UapiBase {
     public String run_check_http(Context ctx) {
         ONode data = new ONode();
 
-        Map<String, String> map = ctx.headerMap();
-        if (map != null) {
-            map.forEach((k, v) -> {
-                data.set(k, v);
-            });
-        }
+        ctx.headerMap().forEach(kv -> {
+            data.set(kv.getKey(), kv.getFirstValue());
+        });
 
         data.set("__RemoteIp", ctx.header("RemoteIp"));
         data.set("__X-Forwarded-For", ctx.header("X-Forwarded-For"));
         data.set("__Proxy-Client-IP", ctx.header("Proxy-Client-IP"));
         data.set("__WL-Proxy-Client-IP", ctx.header("WL-Proxy-Client-IP"));
-        data.set("__getRemoteAddr", ctx.ip());
+        data.set("__getRemoteAddr", ctx.remoteIp());
 
         return data.toJson();
     }

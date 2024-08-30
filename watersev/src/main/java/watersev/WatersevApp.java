@@ -8,6 +8,7 @@ import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
+import org.noear.solon.extend.schedule.XJobPluginImp;
 import org.noear.water.WaterClient;
 import org.noear.water.WaterProxy;
 import org.noear.water.protocol.solution.*;
@@ -107,6 +108,10 @@ public class WatersevApp {
             }
 
             x.pluginAdd(-1, new InitPlugin());
+
+            //添加定时任务插件
+            x.pluginAdd(0, new XJobPluginImp());
+
         });
 
         JtRun.xfunInit();

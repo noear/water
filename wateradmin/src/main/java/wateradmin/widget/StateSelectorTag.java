@@ -25,7 +25,7 @@ public class StateSelectorTag implements TemplateDirectiveModel {
     }
 
     public void build(Environment env, Map map) throws Exception {
-        NvMap mapExt = new NvMap(map);
+        NvMap mapExt = NvMap.from(map);
 
         clientID = mapExt.getOrDefault("clientID","");
         forPage = mapExt.getBool("forPage", true);

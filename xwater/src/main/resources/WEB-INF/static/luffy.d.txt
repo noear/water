@@ -409,20 +409,16 @@ interface Context{
     paramAsDecimal(key:string, def:number):number;
 
     paramMap():JMap<string,string>;
-    paramSet(key:string, val:string):void;
 
-    paramsMap():JMap<string,JList<string>>;
-    paramsAdd(key:string, val:string):void;
-
-    files(key:string):JList<UploadedFile>;
+    fileValues(key:string):JList<UploadedFile>;
     file(key:string):UploadedFile;
 
     cookie(key:string):string;
-    cookie(key:string, def:string):string;
+    cookieOrDefault(key:string, def:string):string;
     cookieMap():JMap<string,string>;
 
     header(key:string):string;
-    header(key:string, def:string):string;
+    headerOrDefault(key:string, def:string):string;
     headerMap():JMap<string,string>;
 
     sessionId():string;

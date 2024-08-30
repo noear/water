@@ -50,16 +50,15 @@ public class LogUtils {
         try {
             String _from = FromUtils.getFromName(ctx);
 
-            Map<String, String> pnames = ctx.paramMap();
             String tag = ctx.path();
 
             ONode label = new ONode();
 
-            if (pnames != null) {
-                pnames.forEach((k, v) -> {
-                    label.set(k, v);
-                });
-            }
+
+            ctx.paramMap().forEach(kv -> {
+                label.set(kv.getKey(), kv.getFirstValue());
+            });
+
 
             MDC.put("tag0", tag);
             MDC.put("tag2", tag2);

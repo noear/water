@@ -31,19 +31,25 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.web.cors</artifactId>
+            <artifactId>solon-web-cors</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.sessionstate.jwt</artifactId>
+            <artifactId>solon-view-freemarker</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.auth</artifactId>
+            <artifactId>solon-sessionstate-jwt</artifactId>
+            <version>${solon.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-security-auth</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
@@ -70,7 +76,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.cloud.httputils</artifactId>
+            <artifactId>solon-net-httputils</artifactId>
             <version>${solon.version}</version>
         </dependency>
 

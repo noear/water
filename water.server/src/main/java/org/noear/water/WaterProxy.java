@@ -1,6 +1,6 @@
 package org.noear.water;
 
-import org.noear.solon.cloud.utils.http.HttpUtils;
+import org.noear.solon.net.http.HttpUtils;
 import org.noear.water.config.ServerConfig;
 import org.noear.water.model.LogLevel;
 import org.noear.wood.cache.CacheUsing;

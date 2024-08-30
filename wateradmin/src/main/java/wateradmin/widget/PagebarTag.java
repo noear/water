@@ -32,7 +32,7 @@ public class PagebarTag implements TemplateDirectiveModel {
     }
 
     public void build(Environment env,Map map) throws Exception {
-        NvMap mapExt = new NvMap(map);
+        NvMap mapExt = NvMap.from(map);
         pageSize = mapExt.getInt("pageSize",1);
         rowCount = mapExt.getInt("rowCount",0);
 
