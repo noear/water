@@ -1,16 +1,15 @@
 package waterapi.dso.validation;
 
-import org.noear.solon.annotation.Component;
-import org.noear.solon.core.AppContext;
-import org.noear.solon.core.Plugin;
+import org.noear.solon.annotation.Bean;
+import org.noear.solon.annotation.Configuration;
 import org.noear.solon.validation.ValidatorManager;
 import org.noear.solon.validation.annotation.Whitelist;
 import waterapi.controller.UapiCodes;
 
-@Component
-public class ValidatorAdapter implements Plugin {
-    @Override
-    public void start(AppContext context) {
+@Configuration
+public class ValidatorAdapter {
+    @Bean
+    public void initWhitelist() {
         ValidatorManager.register(Whitelist.class, new WhitelistValidatorImp());
 
         ValidatorManager.setFailureHandler((ctx, ano, result, message) -> {
