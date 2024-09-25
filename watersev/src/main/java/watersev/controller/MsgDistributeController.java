@@ -180,7 +180,7 @@ public final class MsgDistributeController implements IJob {
             //派发
             distributeDo(msgBroker, msg);
         } catch (Throwable ex) {
-            EventBus.push(ex);
+            EventBus.publish(ex);
         }
     }
 

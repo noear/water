@@ -65,7 +65,7 @@ public class CMD_msg_subscribe extends UapiBase {
         }
 
 
-        String alarm_mobile = ctx.param("alarm_mobile", "");//订阅者的报敬接收手机号
+        String alarm_mobile = ctx.paramOrDefault("alarm_mobile", "");//订阅者的报敬接收手机号
 
         boolean isOk = true;
         for (String topic2 : topic.split(",")) {//多个主题以","隔开

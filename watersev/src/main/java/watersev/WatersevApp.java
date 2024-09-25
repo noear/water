@@ -6,6 +6,7 @@ import org.noear.rock.RockUtil;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.NvMap;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.extend.schedule.JobRunner;
 import org.noear.luffy.dso.*;
 import org.noear.solon.extend.schedule.XJobPluginImp;
@@ -102,7 +103,7 @@ public class WatersevApp {
             x.sharedAdd("LocalTime", LocalTime.class);
             x.sharedAdd("LocalDateTime", LocalDateTime.class);
 
-            if(Utils.hasClass(()-> RockUtil.class)){
+            if(ClassUtil.hasClass(()-> RockUtil.class)){
                 x.sharedAdd("RockClient", RockClient.class);
                 x.sharedAdd("RockUtil", RockUtil.class);
             }

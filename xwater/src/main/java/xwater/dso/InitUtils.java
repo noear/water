@@ -2,6 +2,7 @@ package xwater.dso;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Utils;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.wood.DbContext;
 import xwater.models.data.grit.GritResourceDo;
 import xwater.models.data.grit.GritResourceLinkedDo;
@@ -54,7 +55,7 @@ public class InitUtils {
     }
 
     public static void tryInitGrit(DbContext db) throws Exception {
-        String sql = Utils.getResourceAsString("db/grit.sql");
+        String sql = ResourceUtil.getResourceAsString("db/grit.sql");
         tryInitSchemaBySplitSql(db, sql);
 
         tryInitDataByTypeJsonSql(db, GritResourceDo.class,"grit_resource", "grit");
@@ -64,7 +65,7 @@ public class InitUtils {
     }
 
     public static void tryInitWater(DbContext db) throws Exception {
-        String sql = Utils.getResourceAsString("db/water.sql");
+        String sql = ResourceUtil.getResourceAsString("db/water.sql");
         tryInitSchemaBySplitSql(db, sql);
 
         tryInitDataByTypeJsonSql(db, WaterCfgBrokerDo.class, "water_cfg_broker", "water");
@@ -80,7 +81,7 @@ public class InitUtils {
 
 
     public static void tryInitWaterPaas(DbContext db) throws Exception {
-        String sql = Utils.getResourceAsString("db/water_paas.sql");
+        String sql = ResourceUtil.getResourceAsString("db/water_paas.sql");
         tryInitSchemaBySplitSql(db, sql);
 
         tryInitDataByTypeJsonSql(db, LuffyFileDo.class, "luffy_file", "water_paas");
@@ -113,7 +114,7 @@ public class InitUtils {
         String fileName = "db/init/" + schema + "_" + table + ".json";
         System.out.println(">>>>>>>>>>>>>>>>>>>>: " + fileName);
 
-        String json = Utils.getResourceAsString(fileName);
+        String json = ResourceUtil.getResourceAsString(fileName);
         if(Utils.isEmpty(json)){
             return;
         }

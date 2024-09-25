@@ -30,7 +30,7 @@ public class DockController extends BaseController {
                 viewModel.set("fun_type", 0);
             }
         } catch (Exception e) {
-            EventBus.push(e);
+            EventBus.publish(e);
         }
 
         return view("dock");
@@ -59,7 +59,7 @@ public class DockController extends BaseController {
                 viewModel.set("fun_type", 0);
             }
         } catch (Exception e) {
-            EventBus.push(e);
+            EventBus.publish(e);
         }
 
         return view("dock");

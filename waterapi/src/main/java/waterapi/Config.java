@@ -6,6 +6,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.health.HealthHandler;
 import org.noear.water.WW;
 import org.noear.water.model.ConfigM;
@@ -51,8 +52,8 @@ public class Config {
         WoodConfig.isDebug = false;
         WoodConfig.isUsingValueExpression = false;
 
-        Utils.loadClass("com.mysql.jdbc.Driver");
-        Utils.loadClass("com.mysql.cj.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     private static boolean _inited = false;

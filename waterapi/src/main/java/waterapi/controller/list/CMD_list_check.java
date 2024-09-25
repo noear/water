@@ -25,7 +25,7 @@ public class CMD_list_check extends UapiBase {
     @NotEmpty({"type", "value"})
     @Mapping("/list/check/")
     public String cmd_exec(Context ctx, String type, String value) throws Exception {
-        String tags = ctx.param("tags", "");
+        String tags = ctx.paramOrDefault("tags", "");
 
         if (tags.contains("client")) {
             if (DbWaterCfgSafeApi.whitelistIgnoreClient()) {

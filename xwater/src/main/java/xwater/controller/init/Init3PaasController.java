@@ -37,7 +37,7 @@ public class Init3PaasController {
             try (DbContext db = Config.getDb(props, true)) {
                 tryInitSchema(db, config);
             } catch (Exception e) {
-                EventBus.push(e);
+                EventBus.publish(e);
                 return Result.failure("出错，" + e.getLocalizedMessage());
             }
         } else {

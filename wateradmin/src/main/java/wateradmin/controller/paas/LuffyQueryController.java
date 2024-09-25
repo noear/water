@@ -20,7 +20,7 @@ import java.util.List;
 public class LuffyQueryController extends BaseController {
     @Mapping("")
     public ModelAndView list(Context ctx) throws SQLException {
-        String key = ctx.param("key", "");
+        String key = ctx.paramOrDefault("key", "");
         int act = ctx.paramAsInt("act",11);
 
         key = Base64Utils.decode(key);

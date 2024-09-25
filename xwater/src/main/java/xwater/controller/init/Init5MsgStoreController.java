@@ -53,7 +53,7 @@ public class Init5MsgStoreController {
             DbWaterCfgApi.updConfig(WW.water, WW.water_msg_store, config);
             DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "5");
         }catch (Exception e){
-            EventBus.push(e);
+            EventBus.publish(e);
             return Result.failure("出错，" + e.getLocalizedMessage());
         }
 

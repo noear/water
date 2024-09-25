@@ -55,7 +55,7 @@ public class WateradminApp {
                 CloudClient.discovery().register("grit", instance);
             }
         } catch (Exception e) {
-            EventBus.push(e);
+            EventBus.publish(e);
         }
     }
 }

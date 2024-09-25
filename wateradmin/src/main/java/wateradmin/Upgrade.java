@@ -3,6 +3,7 @@ package wateradmin;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
 import org.noear.solon.core.runtime.NativeDetector;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.WaterClient;
 import org.noear.water.model.ConfigM;
@@ -33,7 +34,7 @@ public class Upgrade {
 
         //for v2:2.5.0
         try {
-            String sql = Utils.getResourceAsString("upgrade/water.sql");
+            String sql = ResourceUtil.getResourceAsString("upgrade/water.sql");
             tryInitSchemaBySplitSql(Config.water, sql);
         } catch (Throwable e) {
             TagsMDC.tag0("upgrade");
@@ -63,7 +64,7 @@ public class Upgrade {
         try {
             ConfigM lang_type = WaterClient.Config.get("_system", "lang_type");
             if (lang_type == null || Utils.isEmpty(lang_type.value)) {
-                String txt = Utils.getResourceAsString("upgrade/lang_type.txt");
+                String txt = ResourceUtil.getResourceAsString("upgrade/lang_type.txt");
                 if (Utils.isNotEmpty(txt)) {
                     WaterClient.Config.set("_system", "lang_type", txt);
                 }
@@ -81,7 +82,7 @@ public class Upgrade {
     }
 
     private static void luffy_file_update(String oldFile, String newFile) throws Throwable {
-        String waterInitNew = Utils.getResourceAsString(newFile);
+        String waterInitNew = ResourceUtil.getResourceAsString(newFile);
         String waterInitNewMd5 = Utils.md5(waterInitNew);
 
         LuffyFileModel file = DbLuffyApi.getFileByPath(oldFile);
@@ -96,7 +97,7 @@ public class Upgrade {
 
     private static void pln_water_upgrade() throws Throwable {
         //for "pln::/water/_upgrade"
-        String waterUpgradeNew = Utils.getResourceAsString("upgrade/pln_water_upgrade.jsd");
+        String waterUpgradeNew = ResourceUtil.getResourceAsString("upgrade/pln_water_upgrade.jsd");
         String waterUpgradeNewMd5 = Utils.md5(waterUpgradeNew);
 
         LuffyFileModel file = DbLuffyApi.getFileByPath("/water/_upgrade");

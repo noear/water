@@ -5,6 +5,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.Utils;
 import org.noear.solon.core.Props;
+import org.noear.solon.core.util.IoUtil;
 import org.noear.solon.test.SolonTest;
 import org.noear.wood.DbContext;
 import xwater.Config;
@@ -83,6 +84,6 @@ public class GeneratorJson {
         }
         file.createNewFile();
 
-        Utils.transferTo(new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8)), new FileOutputStream(file));
+        IoUtil.transferTo(new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8)), new FileOutputStream(file));
     }
 }

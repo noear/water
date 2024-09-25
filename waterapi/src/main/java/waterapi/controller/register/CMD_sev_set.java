@@ -26,7 +26,7 @@ public class CMD_sev_set extends UapiBase {
     @Mapping("/sev/set/")
     public Result cmd_exec(Context ctx, String tag, String service, String address, String meta) throws Exception {
         if (meta == null) {
-            meta = ctx.param("note", "");
+            meta = ctx.paramOrDefault("note", "");
         }
 
         int enabled = ctx.paramAsInt("enabled", 9);

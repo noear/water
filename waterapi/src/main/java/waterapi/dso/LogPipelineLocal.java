@@ -29,7 +29,7 @@ public class LogPipelineLocal extends EventPipeline<LogM> {
         try {
             ProtocolHub.logStorer.writeAll(logEvents);
         } catch (Throwable ex) {
-            EventBus.push(ex); //todo: EventBus.pushAsyn(ex);
+            EventBus.publish(ex); //todo: EventBus.pushAsyn(ex);
         }
     }
 }

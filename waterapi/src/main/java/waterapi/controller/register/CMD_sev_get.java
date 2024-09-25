@@ -23,7 +23,7 @@ public class CMD_sev_get extends UapiBase {
     @Mapping("/sev/get/")
     public Result cmd_exec(Context ctx, String tag, String service, String address, String meta) throws Exception {
         if (meta == null) {
-            meta = ctx.param("note", "");
+            meta = ctx.paramOrDefault("note", "");
         }
 
         ServiceModel serviceModel = DbWaterRegApi.getService(service, address, meta);

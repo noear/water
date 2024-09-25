@@ -34,7 +34,7 @@ public class Init2WaterRedisController {
                 s.key("test").get();
             });
         } catch (Exception e) {
-            EventBus.push(e);
+            EventBus.publish(e);
             return Result.failure("出错，连接失败");
         }
 

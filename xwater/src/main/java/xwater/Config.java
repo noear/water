@@ -1,6 +1,7 @@
 package xwater;
 
 import org.noear.solon.Utils;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.water.model.ConfigM;
 import org.noear.water.utils.DsUtils;
 import org.noear.wood.DbContext;
@@ -17,8 +18,8 @@ import java.util.Properties;
  */
 public class Config {
     static {
-        Utils.loadClass("com.mysql.jdbc.Driver");
-        Utils.loadClass("com.mysql.cj.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.cj.jdbc.Driver");
     }
 
     public static final ICacheServiceEx cache = new LocalCache();

@@ -1,8 +1,6 @@
 package waterapi;
 
 import org.noear.solon.Solon;
-import org.noear.solon.core.util.LogUtil;
-import org.noear.solon.logging.utils.LogUtilToSlf4j;
 import org.noear.water.WW;
 import org.noear.water.protocol.ProtocolHub;
 import org.noear.water.protocol.solution.*;

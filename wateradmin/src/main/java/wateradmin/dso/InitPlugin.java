@@ -8,6 +8,7 @@ import org.noear.solon.cloud.CloudClient;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.logging.utils.TagsMDC;
 import org.noear.water.config.ServerConfig;
 import org.noear.water.utils.BehaviorUtils;
@@ -29,8 +30,8 @@ public class InitPlugin implements Plugin {
 
     @Override
     public void start(AppContext context) {
-        Utils.loadClass("com.mysql.jdbc.Driver");
-        Utils.loadClass("com.mysql.cj.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.jdbc.Driver");
+        ClassUtil.loadClass("com.mysql.cj.jdbc.Driver");
 
 
         isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
@@ -116,12 +117,12 @@ public class InitPlugin implements Plugin {
 
     //用于作行为记录
     public String getUserId(Context ctx) {
-        return ctx.attr("user_id", "0");
+        return ctx.attrOrDefault("user_id", "0");
     }
 
     public String getUserDisplayName(Context ctx) {
         if (ctx != null) {
-            return ctx.attr("user_display_name", null);
+            return ctx.attr("user_display_name");
         } else {
             return null;
         }

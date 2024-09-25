@@ -3,7 +3,7 @@ package org.noear.water.protocol.solution;
 import org.noear.esearchx.EsContext;
 import org.noear.esearchx.EsQuery;
 import org.noear.snack.ONode;
-import org.noear.solon.Utils;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.water.model.LogM;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
@@ -27,8 +27,8 @@ public class LogSourceElasticsearch implements LogSource {
         _db = db;
 
         try {
-            _stream_dsl = Utils.getResourceAsString("water/water_log_es_stream_dsl.json");
-            _policy_dsl = Utils.getResourceAsString("water/water_log_es_policy_dsl.json");
+            _stream_dsl = ResourceUtil.getResourceAsString("water/water_log_es_stream_dsl.json");
+            _policy_dsl = ResourceUtil.getResourceAsString("water/water_log_es_policy_dsl.json");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

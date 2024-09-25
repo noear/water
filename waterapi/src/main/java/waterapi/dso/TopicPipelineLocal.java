@@ -36,7 +36,7 @@ public class TopicPipelineLocal extends EventPipeline<String> {
                 }
             }
         } catch (Throwable ex) {
-            EventBus.push(ex); //todo: EventBus.pushAsyn(ex);
+            EventBus.publish(ex); //todo: EventBus.pushAsyn(ex);
         }
     }
 }

@@ -2,10 +2,10 @@ package org.noear.water.integration;
 
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
-import org.noear.solon.Utils;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.water.WaterClient;
 import org.noear.water.utils.BehaviorUtils;
 import org.noear.water.utils.TextUtils;
@@ -23,7 +23,7 @@ public class ServerPlugin implements Plugin {
     }
 
     private void initWood() {
-        Class<?> gritClz = Utils.loadClass(clz_GritUtil);
+        Class<?> gritClz = ClassUtil.loadClass(clz_GritUtil);
         final boolean isDebugMode = Solon.cfg().isDebugMode() || Solon.cfg().isFilesMode();
         final boolean isWoodStyle2 = "text2".equals(Solon.cfg().get("water.wood.log.style"));
         final boolean isTrackEnable = Solon.cfg().getBool("water.wood.track.enable", false);
@@ -102,7 +102,7 @@ public class ServerPlugin implements Plugin {
     //用于作行为记录
     private int user_puid() {
         if (Context.current() != null) {
-            String tmp = Context.current().attr("user_puid", "0");
+            String tmp = Context.current().attrOrDefault("user_puid", "0");
             return Integer.parseInt(tmp);
         } else {
             return 0;
@@ -111,7 +111,7 @@ public class ServerPlugin implements Plugin {
 
     private String user_name() {
         if (Context.current() != null) {
-            return Context.current().attr("user_name", null);
+            return Context.current().attr("user_name");
         } else {
             return null;
         }

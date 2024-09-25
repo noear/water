@@ -38,7 +38,7 @@ public class Init1WaterDbController {
                 Properties props = Utils.buildProperties(config);
                 tryInitSchema(Config.water, props);
             } catch (Exception e) {
-                EventBus.push(e);
+                EventBus.publish(e);
                 return Result.failure("出错，连接失败");
             }
         } else {

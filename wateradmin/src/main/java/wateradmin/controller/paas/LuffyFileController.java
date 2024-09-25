@@ -85,8 +85,8 @@ public class LuffyFileController extends BaseController {
     }
 
     private ModelAndView list(Context ctx, LuffyFileType type) throws SQLException {
-        String tag_name = ctx.param("tag_name", "");
-        String key = ctx.param("key", "");
+        String tag_name = ctx.paramOrDefault("tag_name", "");
+        String key = ctx.paramOrDefault("key", "");
         int act = ctx.paramAsInt("act", 11);
         int state = ctx.paramAsInt("state", 0);
 
@@ -168,13 +168,13 @@ public class LuffyFileController extends BaseController {
         data.set("link_to", ctx.param("link_to"));
         data.set("content_type", ctx.param("content_type"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
-        data.set("use_whitelist", ctx.param("use_whitelist", ""));
+        data.set("use_whitelist", ctx.paramOrDefault("use_whitelist", ""));
 
         int file_id = ctx.paramAsInt("id", 0);
 
         //处理消息订阅
-        String label = ctx.param("label", "");
-        String path = ctx.param("path", "");
+        String label = ctx.paramOrDefault("label", "");
+        String path = ctx.paramOrDefault("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
         return ajax_save(ctx, data, LuffyFileType.api);
@@ -187,9 +187,9 @@ public class LuffyFileController extends BaseController {
         int file_id = ctx.paramAsInt("id", 0);
 
         //处理消息订阅
-        String label = ctx.param("label", "");
-        String tag = ctx.param("tag", "");
-        String path = ctx.param("path", "");
+        String label = ctx.paramOrDefault("label", "");
+        String tag = ctx.paramOrDefault("tag", "");
+        String path = ctx.paramOrDefault("path", "");
         int is_disabled = ctx.paramAsInt("is_disabled");
 
         FaasUtils.trySubscribe(file_id, label, tag, path, is_disabled == 1);
@@ -217,8 +217,8 @@ public class LuffyFileController extends BaseController {
         data.set("plan_max", ctx.paramAsInt("plan_max"));
 
 
-        String tag1 = ctx.param("tag", "");
-        String tag2 = ctx.param("path", "");
+        String tag1 = ctx.paramOrDefault("tag", "");
+        String tag2 = ctx.paramOrDefault("path", "");
 
         MDC.put("tag0", "_plan");
         MDC.put("tag1", tag1);
@@ -240,11 +240,11 @@ public class LuffyFileController extends BaseController {
     }
 
     public Object ajax_save(Context ctx, DataItem data, LuffyFileType type) throws SQLException {
-        data.set("label", ctx.param("label", ""));
-        data.set("tag", ctx.param("tag", ""));
-        data.set("path", ctx.param("path", ""));
+        data.set("label", ctx.paramOrDefault("label", ""));
+        data.set("tag", ctx.paramOrDefault("tag", ""));
+        data.set("path", ctx.paramOrDefault("path", ""));
         data.set("edit_mode", ctx.param("edit_mode"));
-        data.set("note", ctx.param("note", ""));
+        data.set("note", ctx.paramOrDefault("note", ""));
         data.set("is_disabled", ctx.paramAsInt("is_disabled"));
         data.set("is_staticize", ctx.paramAsInt("is_staticize"));
 

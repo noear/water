@@ -8,6 +8,7 @@ import org.noear.luffy.dso.*;
 import org.noear.solon.SolonApp;
 import org.noear.solon.Utils;
 import org.noear.solon.core.handle.MethodType;
+import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.net.http.PreheatUtils;
 import org.noear.water.WW;
 import org.noear.water.WaterClient;
@@ -61,7 +62,7 @@ public class WaterfaasApp {
             x.sharedAdd("LocalTime", LocalTime.class);
             x.sharedAdd("LocalDateTime", LocalDateTime.class);
 
-            if(Utils.hasClass(()-> RockUtil.class)){
+            if(ClassUtil.hasClass(()-> RockUtil.class)){
                 x.sharedAdd("RockClient", RockClient.class);
                 x.sharedAdd("RockUtil", RockUtil.class);
             }
@@ -69,8 +70,7 @@ public class WaterfaasApp {
             x.pluginAdd(-1, new AppInitPlugin());
         });
 
-        app.before("**", MethodType.GET, FrmInterceptor.g());
-        app.before("**", MethodType.POST, FrmInterceptor.g());
+        app.routerInterceptor(FrmInterceptor.g());
 
         //文件代理
         app.all("**", AppHandler.g());

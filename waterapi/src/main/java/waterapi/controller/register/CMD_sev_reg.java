@@ -47,7 +47,7 @@ public class CMD_sev_reg extends UapiBase {
             tag = "";
         }
 
-        String alarm_mobile = ctx.param("alarm_mobile", "");
+        String alarm_mobile = ctx.paramOrDefault("alarm_mobile", "");
 
         if (check_type == 0) {
             if (Utils.isEmpty(check_url)) {

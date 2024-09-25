@@ -1,6 +1,6 @@
 package org.noear.water.protocol.solution;
 
-import org.noear.solon.Utils;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.water.model.LogM;
 import org.noear.water.model.TagCountsM;
 import org.noear.water.protocol.LogSource;
@@ -24,8 +24,8 @@ public class LogSourceRdb implements LogSource {
     public LogSourceRdb(DbContext db) {
         _db = db;
         try {
-            _rdbTml = Utils.getResourceAsString("water/water_log_rdb_tml.sql");
-            _chTml = Utils.getResourceAsString("water/water_log_ch_tml.sql");
+            _rdbTml = ResourceUtil.getResourceAsString("water/water_log_rdb_tml.sql");
+            _chTml = ResourceUtil.getResourceAsString("water/water_log_ch_tml.sql");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

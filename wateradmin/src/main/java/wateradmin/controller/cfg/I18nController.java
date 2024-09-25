@@ -9,6 +9,7 @@ import org.noear.solon.auth.annotation.AuthPermissions;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.ModelAndView;
 import org.noear.solon.core.handle.UploadedFile;
+import org.noear.solon.core.util.IoUtil;
 import org.noear.water.dso.NoticeUtils;
 import org.noear.water.utils.*;
 import wateradmin.controller.BaseController;
@@ -323,7 +324,7 @@ public class I18nController extends BaseController {
     }
 
     private ViewModel importFileForProfile(String tag, String bundle, UploadedFile file) throws Exception {
-        String i18nStr = Utils.transferToString(file.getContent(), "UTF-8");
+        String i18nStr = IoUtil.transferToString(file.getContent(), "UTF-8");
         Properties i18n = Utils.buildProperties(i18nStr);
 
         //初始化 _i18n.lang (_开头可以排序在前)

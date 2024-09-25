@@ -26,7 +26,7 @@ public class CMD_run_whitelist_check extends UapiBase {
     @NotEmpty({"type", "value"})
     @Mapping("/run/whitelist/check/")
     public String cmd_exec(Context ctx, String type, String value) throws Exception {
-        String tags = ctx.param("tags", "");
+        String tags = ctx.paramOrDefault("tags", "");
 
         if (tags.contains("client")) {
             if (DbWaterCfgSafeApi.whitelistIgnoreClient()) {

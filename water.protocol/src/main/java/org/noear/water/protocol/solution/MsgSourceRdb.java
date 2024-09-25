@@ -1,6 +1,7 @@
 package org.noear.water.protocol.solution;
 
 import org.noear.solon.Utils;
+import org.noear.solon.core.util.ResourceUtil;
 import org.noear.water.protocol.MsgSource;
 import org.noear.water.protocol.model.message.DistributionModel;
 import org.noear.water.protocol.model.message.MessageModel;
@@ -438,7 +439,7 @@ public class MsgSourceRdb implements MsgSource {
 
     @Override
     public void create() throws Exception {
-        String sql = Utils.getResourceAsString("water/water_msg_distribution_rdb_tml.sql", "utf-8");
+        String sql = ResourceUtil.getResourceAsString("water/water_msg_distribution_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             try {
                 _db.exe(sql);
@@ -447,7 +448,7 @@ public class MsgSourceRdb implements MsgSource {
             }
         }
 
-        sql = Utils.getResourceAsString("water/water_msg_message_all_rdb_tml.sql", "utf-8");
+        sql = ResourceUtil.getResourceAsString("water/water_msg_message_all_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             try {
                 _db.exe(sql);
@@ -456,7 +457,7 @@ public class MsgSourceRdb implements MsgSource {
             }
         }
 
-        sql = Utils.getResourceAsString("water/water_msg_message_rdb_tml.sql", "utf-8");
+        sql = ResourceUtil.getResourceAsString("water/water_msg_message_rdb_tml.sql", "utf-8");
         if (TextUtils.isNotEmpty(sql)) {
             try {
                 _db.exe(sql);

@@ -94,7 +94,7 @@ public class LogStorerImp implements LogStorer {
         for (Map.Entry<String, List<LogM>> kv : map.entrySet()) {
             try {
                 if (kv.getKey().contains(".")) {
-                    EventBus.push(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));
+                    EventBus.publish(new RuntimeException("Logger *" + kv.getKey() + " is illegal!"));
                     continue;
                 }
 
@@ -110,7 +110,7 @@ public class LogStorerImp implements LogStorer {
                 if ("water_log_api".equals(kv.getKey())) {
                     ex.printStackTrace();
                 } else {
-                    EventBus.push(ex);
+                    EventBus.publish(ex);
                 }
             }
         }

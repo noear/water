@@ -30,7 +30,7 @@ public class GlobalFilter implements Filter {
 
         } finally {
             if (ctx.status() != 404) {
-                String tag = ctx.attr("file_tag", "global");
+                String tag = ctx.attrOrDefault("file_tag", "global");
 
                 String service = Solon.cfg().appName();
                 long _times = System.currentTimeMillis() - start;

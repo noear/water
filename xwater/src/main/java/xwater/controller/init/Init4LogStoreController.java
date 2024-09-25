@@ -54,7 +54,7 @@ public class Init4LogStoreController {
             DbWaterCfgApi.updConfig(WW.water, WW.water_log_store, config);
             DbWaterCfgApi.updConfig(WW.water, Config.water_setup_step, "4");
         }catch (Exception e){
-            EventBus.push(e);
+            EventBus.publish(e);
             return Result.failure("出错，" + e.getLocalizedMessage());
         }
 
