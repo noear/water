@@ -78,6 +78,38 @@ interface JMap<K, V> {
     forEach(callbackfn: (key: K, val: V) => void): void;
 }
 
+interface JKeyValues<V>{
+    getKey(): string;
+    addValue(val:V):void;
+    setValues(vals:JList<V>):void;
+
+    getValues():JList<V>;
+
+    getFirstValue():V | null;
+    getLastValue():V | null;
+}
+
+interface JMultiMap<V> {
+    size(): number;
+    isEmpty(): boolean;
+    containsKey(key:string):boolean;
+    get(key: string): V | null;
+    getAll(key: string): JList<V> | null;
+    getOrDefault(key:string, def:V): V | null;
+    put(key: string, val:V): V | null;
+    putIfAbsent(key: string, val:V): V | null;
+    putAll(m:JMap<string,V>):void;
+    add(key: string, val:V): V | null;
+    addAll(m:JMap<string,V>):void;
+    remove(key:string): V | null;
+
+    clear(): void;
+    forEach(callbackfn: (kv:JKeyValues<V>) => void): void;
+
+    toValueMap():JMap<string,V>;
+    toValueMap():JMap<string,JList<V>>;
+}
+
 interface AConfigM{
     getString():string;
     getString(def:string):string;
@@ -388,21 +420,34 @@ interface Context{
     uri():URI;
     path():string;
     pathMap(expr:string):JMap<string,string>;
+    pathNew():string;
     pathAsUpper():string;
+    pathAsLower():string;
+
+    isSecure():boolean;
 
     userAgent():string;
     url():string;
 
     contentLength():number;
     contentType():string;
+    contentCharset():string;
+
+    queryString():string;
+    accept():string;
+    acceptNew(str:string):void;
+    acceptNew():string;
+
     body():string;
     body(charset:string):string;
+    bodyNew(str:string):void;
+    bodyNew():string;
     bodyAsBytes():Int8Array;
     bodyAsStream():InputStream;
 
     paramValues(key:string):string[];
     param(key:string):string;
-    param(key:string, def:string):string;
+    paramOrDefault(key:string, def:string):string;
     paramAsInt(key:string):number;
     paramAsInt(key:string, def:number):number;
     paramAsLong(key:string):number;
@@ -411,23 +456,27 @@ interface Context{
     paramAsDouble(key:string, def:number):number;
     paramAsDecimal(key:string):number;
     paramAsDecimal(key:string, def:number):number;
+    paramNames():JList<string>;
+    paramMap():JMultiMap<string>;
 
-    paramMap():JMap<string,string>;
-    paramSet(key:string, val:string):void;
 
-    paramsMap():JMap<string,JList<string>>;
-    paramsAdd(key:string, val:string):void;
-
-    files(key:string):JList<UploadedFile>;
+    fileValues(key:string):UploadedFile[];
     file(key:string):UploadedFile;
+    fileNames():JList<string>;
+    fileMap():JMultiMap<UploadedFile>;
+    filesDelete():void;
 
+    cookieValues(key:string):string[];
     cookie(key:string):string;
-    cookie(key:string, def:string):string;
-    cookieMap():JMap<string,string>;
+    cookieOrDefault(key:string, def:string):string;
+    cookieNames():JList<string>;
+    cookieMap():JMultiMap<string>;
 
+    headerValues(key:string):string[];
     header(key:string):string;
-    header(key:string, def:string):string;
-    headerMap():JMap<string,string>;
+    headerOrDefault(key:string, def:string):string;
+    headerNames():JList<string>;
+    headerMap():JMultiMap<string>;
 
     sessionId():string;
     session(key:string):string;
@@ -448,6 +497,9 @@ interface Context{
 
     headerSet(key:string, val:string):void;
     headerAdd(key:string, val:string):void;
+    headerOfResponse(key:string):string;
+    headerValuesOfResponse(key:string):JList<string>;
+    headerNamesOfResponse():JList<string>;
 
     cookieSet(key:string, val:string):void;
     cookieSet(key:string, val:string, maxAge:number):void;
@@ -461,12 +513,12 @@ interface Context{
     status():number;
     status(status:number):void;
 
-    attrMap():JMap<string,object>;
     attr(key:string):object;
-    attr(key:string, def:object):object;
+    attrOrDefault(key:string, def:object):object;
     attrSet(key:string, val:string):void;
     attrSet(map:JMap<string,object>):void;
-    attrClear():void;
+    attrMap():JMap<string,object>;
+    attrsClear():void;
 
     render(obj:object):void;
     render(view:string, data:JMap<string,object>):void;

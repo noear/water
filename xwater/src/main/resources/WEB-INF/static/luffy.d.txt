@@ -78,6 +78,38 @@ interface JMap<K, V> {
     forEach(callbackfn: (key: K, val: V) => void): void;
 }
 
+interface JKeyValues<V>{
+    getKey(): string;
+    addValue(val:V):void;
+    setValues(vals:JList<V>):void;
+
+    getValues():JList<V>;
+
+    getFirstValue():V | null;
+    getLastValue():V | null;
+}
+
+interface JMultiMap<V> {
+    size(): number;
+    isEmpty(): boolean;
+    containsKey(key:string):boolean;
+    get(key: string): V | null;
+    getAll(key: string): JList<V> | null;
+    getOrDefault(key:string, def:V): V | null;
+    put(key: string, val:V): V | null;
+    putIfAbsent(key: string, val:V): V | null;
+    putAll(m:JMap<string,V>):void;
+    add(key: string, val:V): V | null;
+    addAll(m:JMap<string,V>):void;
+    remove(key:string): V | null;
+
+    clear(): void;
+    forEach(callbackfn: (kv:JKeyValues<V>) => void): void;
+
+    toValueMap():JMap<string,V>;
+    toValueMap():JMap<string,JList<V>>;
+}
+
 interface AConfigM{
     getString():string;
     getString(def:string):string;
@@ -113,6 +145,7 @@ interface PagingModel{
 }
 
 interface HttpUtils{
+    timeout(timeoutSeconds:number):HttpUtils;
     multipart(multipart:boolean):HttpUtils;
     userAgent(ua:string):HttpUtils;
     charset(charset:string):HttpUtils;
@@ -125,6 +158,7 @@ interface HttpUtils{
     data(key:string, value:string):HttpUtils;
     data(key:string, filename:string, inputStream:InputStream, contentType:string):HttpUtils;
 
+    bodyJson(json:string):HttpUtils;
     bodyTxt(txt:string):HttpUtils;
     bodyTxt(txt:string, contentType:string):HttpUtils;
     bodyRaw(raw:InputStream):HttpUtils;
@@ -135,13 +169,15 @@ interface HttpUtils{
     cache(seconds:number):HttpUtils;
 
     exec(mothod:String):Response;
-    exec2(mothod:String):string;
+    execAsBody(mothod:String):string;
+    execAsCode(mothod:String):number;
 
     get():string;
     post():string;
     put():string;
     patch():string;
     delete():string;
+    head():number;
 }
 
 
@@ -384,21 +420,34 @@ interface Context{
     uri():URI;
     path():string;
     pathMap(expr:string):JMap<string,string>;
+    pathNew():string;
     pathAsUpper():string;
+    pathAsLower():string;
+
+    isSecure():boolean;
 
     userAgent():string;
     url():string;
 
     contentLength():number;
     contentType():string;
+    contentCharset():string;
+
+    queryString():string;
+    accept():string;
+    acceptNew(str:string):void;
+    acceptNew():string;
+
     body():string;
     body(charset:string):string;
+    bodyNew(str:string):void;
+    bodyNew():string;
     bodyAsBytes():Int8Array;
     bodyAsStream():InputStream;
 
     paramValues(key:string):string[];
     param(key:string):string;
-    param(key:string, def:string):string;
+    paramOrDefault(key:string, def:string):string;
     paramAsInt(key:string):number;
     paramAsInt(key:string, def:number):number;
     paramAsLong(key:string):number;
@@ -407,19 +456,27 @@ interface Context{
     paramAsDouble(key:string, def:number):number;
     paramAsDecimal(key:string):number;
     paramAsDecimal(key:string, def:number):number;
+    paramNames():JList<string>;
+    paramMap():JMultiMap<string>;
 
-    paramMap():JMap<string,string>;
 
-    fileValues(key:string):JList<UploadedFile>;
+    fileValues(key:string):UploadedFile[];
     file(key:string):UploadedFile;
+    fileNames():JList<string>;
+    fileMap():JMultiMap<UploadedFile>;
+    filesDelete():void;
 
+    cookieValues(key:string):string[];
     cookie(key:string):string;
     cookieOrDefault(key:string, def:string):string;
-    cookieMap():JMap<string,string>;
+    cookieNames():JList<string>;
+    cookieMap():JMultiMap<string>;
 
+    headerValues(key:string):string[];
     header(key:string):string;
     headerOrDefault(key:string, def:string):string;
-    headerMap():JMap<string,string>;
+    headerNames():JList<string>;
+    headerMap():JMultiMap<string>;
 
     sessionId():string;
     session(key:string):string;
@@ -440,6 +497,9 @@ interface Context{
 
     headerSet(key:string, val:string):void;
     headerAdd(key:string, val:string):void;
+    headerOfResponse(key:string):string;
+    headerValuesOfResponse(key:string):JList<string>;
+    headerNamesOfResponse():JList<string>;
 
     cookieSet(key:string, val:string):void;
     cookieSet(key:string, val:string, maxAge:number):void;
@@ -453,12 +513,12 @@ interface Context{
     status():number;
     status(status:number):void;
 
-    attrMap():JMap<string,object>;
     attr(key:string):object;
-    attr(key:string, def:object):object;
+    attrOrDefault(key:string, def:object):object;
     attrSet(key:string, val:string):void;
     attrSet(map:JMap<string,object>):void;
-    attrClear():void;
+    attrMap():JMap<string,object>;
+    attrsClear():void;
 
     render(obj:object):void;
     render(view:string, data:JMap<string,object>):void;
@@ -483,6 +543,8 @@ interface JtUtil {
     newOutputStream():OutputStream;
     newXfile():UploadedFile;
     newUri(url:string):URI;
+
+    ping(addrs:string):void;
 
     http(url:string):HttpUtils;
     htmlEncode(str:string):string;
@@ -722,106 +784,9 @@ declare var XLock: JtLock;
 declare function requireX(path:string): void;
 declare function modelAndView(path:string, model:Map<string,object>): string;
 
-/////////////// RockClient
 
-interface AppModel{
-    app_id:number;
-    app_key:string;
-    akey:string;
+//////////////
 
-    agroup_id:number;
-    ugroup_id:number;
-
-    name:string;
-    note:string;
-}
-
-interface RockClient{
-    getApp(appID:number):AppModel;
-    getApp(akey:string):AppModel;
-    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
-}
-
-interface RockUtil{
-
-}
-
-interface rock{
-    client:RockClient;
-    util:RockUtil;
-
-    app(appID:number):AppModel;
-
-    cmd(service:string, cmd:string, args:Map<string,object>):string;
-    api(service:string, fun:string, args:Map<string,object>):string;
-
-    newID(group:string, key:string, times:number):number;
-}
-
-declare var RockClient: RockClient;
-declare var RockUtil: RockUtil;
-
-declare var rock: rock;
-
-
-/////////////// WaterClient
-
-interface ConfigApi{
-
-}
-
-interface MessageApi{
-
-}
-
-interface LogApi{
-
-}
-
-interface RegistryApi{
-
-}
-
-interface TrackApi{
-
-}
-
-interface NoticeApi{
-
-}
-
-interface WhitelistApi{
-
-}
-
-interface WaterClient{
-    Config:ConfigApi;
-    Message:MessageApi;
-    Log:LogApi;
-    Registry:RegistryApi;
-    Track:TrackApi;
-    Notice:NoticeApi;
-    Whitelist:WhitelistApi;
-}
-
-interface WaterProxy{
-    job(service:string, name:string):string;
-
-    call(service:string, path:string):string;
-    call(service:string, path:string, args:Map<string,object>):string;
-
-    faas(path:string):string;
-    faas(path:string, args:Map<string,object>):string;
-
-    raas(path:string, args:Map<string,object>):string;
-    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
-
-    logTrace(logger:string, data:Map<string,object>);
-    logDebug(logger:string, data:Map<string,object>);
-    logInfo(logger:string, data:Map<string,object>);
-    logWarn(logger:string, data:Map<string,object>);
-    logError(logger:string, data:Map<string,object>);
-}
 
 interface RedisSession{
     key(key:string):RedisSession;
@@ -1011,6 +976,119 @@ interface MgContext{
     mongo():MongoX;
 }
 
+interface EsQuery{
+
+}
+
+interface EsContext{
+    stream(streamName:string):EsQuery
+    indice(indiceName:string):EsQuery
+}
+
+/////////////// RockClient
+
+interface AppModel{
+    app_id:number;
+    app_key:string;
+    akey:string;
+
+    agroup_id:number;
+    ugroup_id:number;
+
+    name:string;
+    note:string;
+}
+
+interface RockClient{
+    getApp(appID:number):AppModel;
+    getApp(akey:string):AppModel;
+    getAppsByGroup(agroupID:number, ugroupID:number):JList<AppModel>;
+}
+
+interface RockUtil{
+
+}
+
+interface rock{
+    client:RockClient;
+    util:RockUtil;
+
+    app(appID:number):AppModel;
+
+    cmd(service:string, cmd:string, args:Map<string,object>):string;
+    api(service:string, fun:string, args:Map<string,object>):string;
+
+    newID(group:string, key:string, times:number):number;
+}
+
+declare var RockClient: RockClient;
+declare var RockUtil: RockUtil;
+
+declare var rock: rock;
+
+
+/////////////// WaterClient
+
+interface ConfigApi{
+
+}
+
+interface MessageApi{
+
+}
+
+interface LogApi{
+
+}
+
+interface RegistryApi{
+
+}
+
+interface TrackApi{
+    addCount(group:string, category:string, item:string, val:number);
+    addGauge(group:string, category:string, item:string, val:number);
+    addMeter(group:string, category:string, item:string, val:number);
+}
+
+interface NoticeApi{
+
+}
+
+interface WhitelistApi{
+
+}
+
+interface WaterClient{
+    Config:ConfigApi;
+    Message:MessageApi;
+    Log:LogApi;
+    Registry:RegistryApi;
+    Track:TrackApi;
+    Notice:NoticeApi;
+    Whitelist:WhitelistApi;
+}
+
+interface WaterProxy{
+    job(service:string, name:string):string;
+
+    call(service:string, path:string):string;
+    call(service:string, path:string, args:Map<string,object>):string;
+
+    faas(path:string):string;
+    faas(path:string, args:Map<string,object>):string;
+
+    raas(path:string, args:Map<string,object>):string;
+    raas(type:string, tag:string, name:string, args:Map<string,object>):string;
+
+    logTrace(logger:string, data:Map<string,object>);
+    logDebug(logger:string, data:Map<string,object>);
+    logInfo(logger:string, data:Map<string,object>);
+    logWarn(logger:string, data:Map<string,object>);
+    logError(logger:string, data:Map<string,object>);
+}
+
+
 interface water{
     client:WaterClient;
     proxy:WaterProxy;
@@ -1019,6 +1097,7 @@ interface water{
     db(tagKey:string):DbContext;
     rd(tagKey:string, db:number):RedisClient;
     mg(tagKey:string, db:string):MgContext;
+    es(tagKey:string):EsContext;
 
     job(service:string, name:string):string;
 
