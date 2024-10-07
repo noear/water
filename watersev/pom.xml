@@ -88,7 +88,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon-cloud-httputils</artifactId>
+            <artifactId>solon-net-httputils</artifactId>
             <version>${solon.version}</version>
         </dependency>
 
